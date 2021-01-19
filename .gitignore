@@ -7,3 +7,8 @@ V4/WindowsDARIC/Release/
 V4/src/parser/bison.cpp
 V4/src/parser/flex.cpp
 
+*.iobj
+*.ipdb
+V4/src/parser/bison.cpp
+V4/DARICInstaller/setup.exe
+V4/DARICInstaller/DARIC.msi
