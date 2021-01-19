@@ -50,7 +50,7 @@ int yylex_destroy(void);
 %token CHAIN EXPECT
 
 %token RED GREEN YELLOW BLUE MAGENTA CYAN WHITE BLACK
-%token CLS CLG COLOUR COLOURBG COLOUREXP FLIP GRAPHICS FILL SHADED LINE PLOT POINT_ RECTANGLE RECTANGLEFILL TRIANGLE TRIANGLEFILL TRIANGLESHADED
+%token CLS CLG COLOUR COLOURBG COLOUREXP FLIP GRAPHICS BANKED FILL SHADED LINE PLOT POINT_ RECTANGLE RECTANGLEFILL TRIANGLE TRIANGLEFILL TRIANGLESHADED
 %token CLIPON CLIPOFF CIRCLE CIRCLEFILL 
 %token TEXT TEXTRIGHT TEXTCENTRE LOADTYPEFACE CREATEFONT
 %token MONO15 MONO20 MONO25 MONO30 MONO35 MONO40 MONO50 MONO75 MONO100
@@ -230,7 +230,9 @@ statement
     | COLOURBG expression_numeric { $$ = token1(COLOURBG, $2); } 
     | COLOURBG expression_numeric ',' expression_numeric ',' expression_numeric { $$ = token3(COLOURBG, $2, $4, $6); } 
     | GRAPHICS expression_numeric ',' expression_numeric { $$ = token2(GRAPHICS, $2, $4); } 
+    | GRAPHICS BANKED expression_numeric ',' expression_numeric { $$ = token2(BANKED, $3, $5); } 
     | GRAPHICS { $$ = token(GRAPHICS); } 
+    | GRAPHICS BANKED { $$ = token(BANKED); } 
     | FLIP { $$ = token(FLIP); }
     | CIRCLE expression_numeric ',' expression_numeric ',' expression_numeric { $$ = token3(CIRCLE, $2, $4, $6); }
     | CIRCLE FILL expression_numeric ',' expression_numeric ',' expression_numeric { $$ = token3(CIRCLEFILL, $3, $5, $7); }

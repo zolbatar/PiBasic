@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.5.1.  */
+/* A Bison parser, made by GNU Bison 3.7.1.  */
 
 /* Bison interface for Yacc-like parsers in C
 
@@ -31,11 +31,12 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_SRC_PARSER_BISON_HPP_INCLUDED
-# define YY_YY_SRC_PARSER_BISON_HPP_INCLUDED
+#ifndef YY_YY_C_USERS_D_DUD_SOURCE_REPOS_PIBASIC_V4_SRC_PARSER_BISON_HPP_INCLUDED
+# define YY_YY_C_USERS_D_DUD_SOURCE_REPOS_PIBASIC_V4_SRC_PARSER_BISON_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -44,257 +45,263 @@
 extern int yydebug;
 #endif
 
-/* Token type.  */
+/* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    LINE_NUMBER = 258,
-    LITERAL_INT = 259,
-    LITERAL_REAL = 260,
-    LITERAL_STRING = 261,
-    INTEGER_VARIABLE = 262,
-    VARIABLE = 263,
-    STRING_VARIABLE = 264,
-    TYPE_VARIABLE = 265,
-    DEFINE_PROCEDURE = 266,
-    DEFINE_INTEGER_FUNCTION = 267,
-    DEFINE_STRING_FUNCTION = 268,
-    DEFINE_REAL_FUNCTION = 269,
-    PROCEDURE = 270,
-    INTEGER_FUNCTION = 271,
-    REAL_FUNCTION = 272,
-    STRING_FUNCTION = 273,
-    NL = 274,
-    SS = 275,
-    SEMICOLON = 276,
-    COMMA = 277,
-    INTEGER_DIVIDE = 278,
-    E = 279,
-    LE = 280,
-    GE = 281,
-    NE = 282,
-    SHL = 283,
-    SHR = 284,
-    LT = 285,
-    GT = 286,
-    PLUS = 287,
-    MINUS = 288,
-    MULTIPLY = 289,
-    DIVIDE = 290,
-    TILDE = 291,
-    TICK = 292,
-    SHL_E = 293,
-    SHR_E = 294,
-    PLUS_E = 295,
-    MINUS_E = 296,
-    MULTIPLY_E = 297,
-    DIVIDE_E = 298,
-    INTEGERDIVIDE_E = 299,
-    SWAP = 300,
-    SWAP_I = 301,
-    SWAP_F = 302,
-    SWAP_S = 303,
-    END_FN = 304,
-    END_PROC = 305,
-    RETURN = 306,
-    RETURN_WITH_VALUE = 307,
-    DEFPROC = 308,
-    DEFFN = 309,
-    CALLPROC = 310,
-    CALLFN = 311,
-    RETURN_PARAMETER = 312,
-    BGET = 313,
-    BPUT = 314,
-    CLOSE = 315,
-    EOFH = 316,
-    OPENIN = 317,
-    OPENUP = 318,
-    OPENOUT = 319,
-    PTR = 320,
-    PTRA = 321,
-    GETSH = 322,
-    LISTFILES = 323,
-    CASE = 324,
-    ELSE = 325,
-    END_CASE = 326,
-    END_IF = 327,
-    END_WHILE = 328,
-    FOR = 329,
-    GOSUB = 330,
-    GOTO = 331,
-    IF = 332,
-    NEXT = 333,
-    OF = 334,
-    OTHERWISE = 335,
-    REPEAT = 336,
-    STEP = 337,
-    THEN = 338,
-    TO = 339,
-    UNTIL = 340,
-    WHEN = 341,
-    WHILE = 342,
-    IN_ = 343,
-    FORIN = 344,
-    DATA = 345,
-    READ = 346,
-    RESTORE = 347,
-    ARRAYSIZE = 348,
-    DIM = 349,
-    LOCALDIM = 350,
-    END_TYPE = 351,
-    FIELD = 352,
-    GLOBAL = 353,
-    LOCAL = 354,
-    TYPE_ = 355,
-    END = 356,
-    TRACEON = 357,
-    TRACEOFF = 358,
-    BREAKPOINT = 359,
-    RND = 360,
-    RND0 = 361,
-    RND1 = 362,
-    RNDREAL = 363,
-    RNDRANGE = 364,
-    FLOAT_ = 365,
-    INT_ = 366,
-    ACS = 367,
-    DIV = 368,
-    MOD = 369,
-    SQR = 370,
-    LN = 371,
-    LOG = 372,
-    EXP = 373,
-    ATN = 374,
-    TAN = 375,
-    COS = 376,
-    SIN = 377,
-    ASN = 378,
-    ABS = 379,
-    DEG = 380,
-    RAD = 381,
-    SGN = 382,
-    VAL = 383,
-    PI = 384,
-    BOOLFALSE = 385,
-    BOOLTRUE = 386,
-    ASC = 387,
-    CHRS = 388,
-    INSTR = 389,
-    LEFTS = 390,
-    MIDS = 391,
-    RIGHTS = 392,
-    LEN = 393,
-    STRS = 394,
-    STRSHEX = 395,
-    STRINGS = 396,
-    OSCLI = 397,
-    TIME = 398,
-    TIMES = 399,
-    AND = 400,
-    OR = 401,
-    EOR = 402,
-    NOT = 403,
-    CHAIN = 404,
-    EXPECT = 405,
-    RED = 406,
-    GREEN = 407,
-    YELLOW = 408,
-    BLUE = 409,
-    MAGENTA = 410,
-    CYAN = 411,
-    WHITE = 412,
-    BLACK = 413,
-    CLS = 414,
-    CLG = 415,
-    COLOUR = 416,
-    COLOURBG = 417,
-    COLOUREXP = 418,
-    FLIP = 419,
-    GRAPHICS = 420,
-    FILL = 421,
-    SHADED = 422,
-    LINE = 423,
-    PLOT = 424,
-    POINT_ = 425,
-    RECTANGLE = 426,
-    RECTANGLEFILL = 427,
-    TRIANGLE = 428,
-    TRIANGLEFILL = 429,
-    TRIANGLESHADED = 430,
-    CLIPON = 431,
-    CLIPOFF = 432,
-    CIRCLE = 433,
-    CIRCLEFILL = 434,
-    TEXT = 435,
-    TEXTRIGHT = 436,
-    TEXTCENTRE = 437,
-    LOADTYPEFACE = 438,
-    CREATEFONT = 439,
-    MONO15 = 440,
-    MONO20 = 441,
-    MONO25 = 442,
-    MONO30 = 443,
-    MONO35 = 444,
-    MONO40 = 445,
-    MONO50 = 446,
-    MONO75 = 447,
-    MONO100 = 448,
-    PROP15 = 449,
-    PROP20 = 450,
-    PROP25 = 451,
-    PROP30 = 452,
-    PROP35 = 453,
-    PROP40 = 454,
-    PROP50 = 455,
-    PROP75 = 456,
-    PROP100 = 457,
-    SCREENWIDTH = 458,
-    SCREENHEIGHT = 459,
-    SHOWFPS = 460,
-    LASTPOS = 461,
-    INKEY = 462,
-    INKEYS = 463,
-    INPUT_ = 464,
-    PRINT = 465,
-    SPC = 466,
-    SINKEY = 467,
-    SINKEYS = 468,
-    INPUT_NOQUESTIONMARK = 469,
-    GET = 470,
-    GETS = 471,
-    GET_S = 472,
-    GETS_S = 473,
-    MOUSE = 474,
-    CREATEVERTEX = 475,
-    CREATETRIANGLE = 476,
-    CREATESHAPE = 477,
-    CREATEOBJECT = 478,
-    TRANSLATE = 479,
-    ROTATE = 480,
-    SCALE = 481,
-    RENDERFRAME = 482,
-    DELETEOBJECT = 483,
-    SOLID = 484,
-    WIREFRAME = 485,
-    FILLEDWIREFRAME = 486,
-    INTEGERDIVIDE = 487,
-    NEG = 488
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    LINE_NUMBER = 258,             /* LINE_NUMBER  */
+    LITERAL_INT = 259,             /* LITERAL_INT  */
+    LITERAL_REAL = 260,            /* LITERAL_REAL  */
+    LITERAL_STRING = 261,          /* LITERAL_STRING  */
+    INTEGER_VARIABLE = 262,        /* INTEGER_VARIABLE  */
+    VARIABLE = 263,                /* VARIABLE  */
+    STRING_VARIABLE = 264,         /* STRING_VARIABLE  */
+    TYPE_VARIABLE = 265,           /* TYPE_VARIABLE  */
+    DEFINE_PROCEDURE = 266,        /* DEFINE_PROCEDURE  */
+    DEFINE_INTEGER_FUNCTION = 267, /* DEFINE_INTEGER_FUNCTION  */
+    DEFINE_STRING_FUNCTION = 268,  /* DEFINE_STRING_FUNCTION  */
+    DEFINE_REAL_FUNCTION = 269,    /* DEFINE_REAL_FUNCTION  */
+    PROCEDURE = 270,               /* PROCEDURE  */
+    INTEGER_FUNCTION = 271,        /* INTEGER_FUNCTION  */
+    REAL_FUNCTION = 272,           /* REAL_FUNCTION  */
+    STRING_FUNCTION = 273,         /* STRING_FUNCTION  */
+    NL = 274,                      /* NL  */
+    SS = 275,                      /* SS  */
+    SEMICOLON = 276,               /* SEMICOLON  */
+    COMMA = 277,                   /* COMMA  */
+    INTEGER_DIVIDE = 278,          /* INTEGER_DIVIDE  */
+    E = 279,                       /* E  */
+    LE = 280,                      /* LE  */
+    GE = 281,                      /* GE  */
+    NE = 282,                      /* NE  */
+    SHL = 283,                     /* SHL  */
+    SHR = 284,                     /* SHR  */
+    LT = 285,                      /* LT  */
+    GT = 286,                      /* GT  */
+    PLUS = 287,                    /* PLUS  */
+    MINUS = 288,                   /* MINUS  */
+    MULTIPLY = 289,                /* MULTIPLY  */
+    DIVIDE = 290,                  /* DIVIDE  */
+    TILDE = 291,                   /* TILDE  */
+    TICK = 292,                    /* TICK  */
+    SHL_E = 293,                   /* SHL_E  */
+    SHR_E = 294,                   /* SHR_E  */
+    PLUS_E = 295,                  /* PLUS_E  */
+    MINUS_E = 296,                 /* MINUS_E  */
+    MULTIPLY_E = 297,              /* MULTIPLY_E  */
+    DIVIDE_E = 298,                /* DIVIDE_E  */
+    INTEGERDIVIDE_E = 299,         /* INTEGERDIVIDE_E  */
+    SWAP = 300,                    /* SWAP  */
+    SWAP_I = 301,                  /* SWAP_I  */
+    SWAP_F = 302,                  /* SWAP_F  */
+    SWAP_S = 303,                  /* SWAP_S  */
+    END_FN = 304,                  /* END_FN  */
+    END_PROC = 305,                /* END_PROC  */
+    RETURN = 306,                  /* RETURN  */
+    RETURN_WITH_VALUE = 307,       /* RETURN_WITH_VALUE  */
+    DEFPROC = 308,                 /* DEFPROC  */
+    DEFFN = 309,                   /* DEFFN  */
+    CALLPROC = 310,                /* CALLPROC  */
+    CALLFN = 311,                  /* CALLFN  */
+    RETURN_PARAMETER = 312,        /* RETURN_PARAMETER  */
+    BGET = 313,                    /* BGET  */
+    BPUT = 314,                    /* BPUT  */
+    CLOSE = 315,                   /* CLOSE  */
+    EOFH = 316,                    /* EOFH  */
+    OPENIN = 317,                  /* OPENIN  */
+    OPENUP = 318,                  /* OPENUP  */
+    OPENOUT = 319,                 /* OPENOUT  */
+    PTR = 320,                     /* PTR  */
+    PTRA = 321,                    /* PTRA  */
+    GETSH = 322,                   /* GETSH  */
+    LISTFILES = 323,               /* LISTFILES  */
+    CASE = 324,                    /* CASE  */
+    ELSE = 325,                    /* ELSE  */
+    END_CASE = 326,                /* END_CASE  */
+    END_IF = 327,                  /* END_IF  */
+    END_WHILE = 328,               /* END_WHILE  */
+    FOR = 329,                     /* FOR  */
+    GOSUB = 330,                   /* GOSUB  */
+    GOTO = 331,                    /* GOTO  */
+    IF = 332,                      /* IF  */
+    NEXT = 333,                    /* NEXT  */
+    OF = 334,                      /* OF  */
+    OTHERWISE = 335,               /* OTHERWISE  */
+    REPEAT = 336,                  /* REPEAT  */
+    STEP = 337,                    /* STEP  */
+    THEN = 338,                    /* THEN  */
+    TO = 339,                      /* TO  */
+    UNTIL = 340,                   /* UNTIL  */
+    WHEN = 341,                    /* WHEN  */
+    WHILE = 342,                   /* WHILE  */
+    IN_ = 343,                     /* IN_  */
+    FORIN = 344,                   /* FORIN  */
+    DATA = 345,                    /* DATA  */
+    READ = 346,                    /* READ  */
+    RESTORE = 347,                 /* RESTORE  */
+    ARRAYSIZE = 348,               /* ARRAYSIZE  */
+    DIM = 349,                     /* DIM  */
+    LOCALDIM = 350,                /* LOCALDIM  */
+    END_TYPE = 351,                /* END_TYPE  */
+    FIELD = 352,                   /* FIELD  */
+    GLOBAL = 353,                  /* GLOBAL  */
+    LOCAL = 354,                   /* LOCAL  */
+    TYPE_ = 355,                   /* TYPE_  */
+    END = 356,                     /* END  */
+    TRACEON = 357,                 /* TRACEON  */
+    TRACEOFF = 358,                /* TRACEOFF  */
+    BREAKPOINT = 359,              /* BREAKPOINT  */
+    RND = 360,                     /* RND  */
+    RND0 = 361,                    /* RND0  */
+    RND1 = 362,                    /* RND1  */
+    RNDREAL = 363,                 /* RNDREAL  */
+    RNDRANGE = 364,                /* RNDRANGE  */
+    FLOAT_ = 365,                  /* FLOAT_  */
+    INT_ = 366,                    /* INT_  */
+    ACS = 367,                     /* ACS  */
+    DIV = 368,                     /* DIV  */
+    MOD = 369,                     /* MOD  */
+    SQR = 370,                     /* SQR  */
+    LN = 371,                      /* LN  */
+    LOG = 372,                     /* LOG  */
+    EXP = 373,                     /* EXP  */
+    ATN = 374,                     /* ATN  */
+    TAN = 375,                     /* TAN  */
+    COS = 376,                     /* COS  */
+    SIN = 377,                     /* SIN  */
+    ASN = 378,                     /* ASN  */
+    ABS = 379,                     /* ABS  */
+    DEG = 380,                     /* DEG  */
+    RAD = 381,                     /* RAD  */
+    SGN = 382,                     /* SGN  */
+    VAL = 383,                     /* VAL  */
+    PI = 384,                      /* PI  */
+    BOOLFALSE = 385,               /* BOOLFALSE  */
+    BOOLTRUE = 386,                /* BOOLTRUE  */
+    ASC = 387,                     /* ASC  */
+    CHRS = 388,                    /* CHRS  */
+    INSTR = 389,                   /* INSTR  */
+    LEFTS = 390,                   /* LEFTS  */
+    MIDS = 391,                    /* MIDS  */
+    RIGHTS = 392,                  /* RIGHTS  */
+    LEN = 393,                     /* LEN  */
+    STRS = 394,                    /* STRS  */
+    STRSHEX = 395,                 /* STRSHEX  */
+    STRINGS = 396,                 /* STRINGS  */
+    OSCLI = 397,                   /* OSCLI  */
+    TIME = 398,                    /* TIME  */
+    TIMES = 399,                   /* TIMES  */
+    AND = 400,                     /* AND  */
+    OR = 401,                      /* OR  */
+    EOR = 402,                     /* EOR  */
+    NOT = 403,                     /* NOT  */
+    CHAIN = 404,                   /* CHAIN  */
+    EXPECT = 405,                  /* EXPECT  */
+    RED = 406,                     /* RED  */
+    GREEN = 407,                   /* GREEN  */
+    YELLOW = 408,                  /* YELLOW  */
+    BLUE = 409,                    /* BLUE  */
+    MAGENTA = 410,                 /* MAGENTA  */
+    CYAN = 411,                    /* CYAN  */
+    WHITE = 412,                   /* WHITE  */
+    BLACK = 413,                   /* BLACK  */
+    CLS = 414,                     /* CLS  */
+    CLG = 415,                     /* CLG  */
+    COLOUR = 416,                  /* COLOUR  */
+    COLOURBG = 417,                /* COLOURBG  */
+    COLOUREXP = 418,               /* COLOUREXP  */
+    FLIP = 419,                    /* FLIP  */
+    GRAPHICS = 420,                /* GRAPHICS  */
+    BANKED = 421,                  /* BANKED  */
+    FILL = 422,                    /* FILL  */
+    SHADED = 423,                  /* SHADED  */
+    LINE = 424,                    /* LINE  */
+    PLOT = 425,                    /* PLOT  */
+    POINT_ = 426,                  /* POINT_  */
+    RECTANGLE = 427,               /* RECTANGLE  */
+    RECTANGLEFILL = 428,           /* RECTANGLEFILL  */
+    TRIANGLE = 429,                /* TRIANGLE  */
+    TRIANGLEFILL = 430,            /* TRIANGLEFILL  */
+    TRIANGLESHADED = 431,          /* TRIANGLESHADED  */
+    CLIPON = 432,                  /* CLIPON  */
+    CLIPOFF = 433,                 /* CLIPOFF  */
+    CIRCLE = 434,                  /* CIRCLE  */
+    CIRCLEFILL = 435,              /* CIRCLEFILL  */
+    TEXT = 436,                    /* TEXT  */
+    TEXTRIGHT = 437,               /* TEXTRIGHT  */
+    TEXTCENTRE = 438,              /* TEXTCENTRE  */
+    LOADTYPEFACE = 439,            /* LOADTYPEFACE  */
+    CREATEFONT = 440,              /* CREATEFONT  */
+    MONO15 = 441,                  /* MONO15  */
+    MONO20 = 442,                  /* MONO20  */
+    MONO25 = 443,                  /* MONO25  */
+    MONO30 = 444,                  /* MONO30  */
+    MONO35 = 445,                  /* MONO35  */
+    MONO40 = 446,                  /* MONO40  */
+    MONO50 = 447,                  /* MONO50  */
+    MONO75 = 448,                  /* MONO75  */
+    MONO100 = 449,                 /* MONO100  */
+    PROP15 = 450,                  /* PROP15  */
+    PROP20 = 451,                  /* PROP20  */
+    PROP25 = 452,                  /* PROP25  */
+    PROP30 = 453,                  /* PROP30  */
+    PROP35 = 454,                  /* PROP35  */
+    PROP40 = 455,                  /* PROP40  */
+    PROP50 = 456,                  /* PROP50  */
+    PROP75 = 457,                  /* PROP75  */
+    PROP100 = 458,                 /* PROP100  */
+    SCREENWIDTH = 459,             /* SCREENWIDTH  */
+    SCREENHEIGHT = 460,            /* SCREENHEIGHT  */
+    SHOWFPS = 461,                 /* SHOWFPS  */
+    LASTPOS = 462,                 /* LASTPOS  */
+    INKEY = 463,                   /* INKEY  */
+    INKEYS = 464,                  /* INKEYS  */
+    INPUT_ = 465,                  /* INPUT_  */
+    PRINT = 466,                   /* PRINT  */
+    SPC = 467,                     /* SPC  */
+    SINKEY = 468,                  /* SINKEY  */
+    SINKEYS = 469,                 /* SINKEYS  */
+    INPUT_NOQUESTIONMARK = 470,    /* INPUT_NOQUESTIONMARK  */
+    GET = 471,                     /* GET  */
+    GETS = 472,                    /* GETS  */
+    GET_S = 473,                   /* GET_S  */
+    GETS_S = 474,                  /* GETS_S  */
+    MOUSE = 475,                   /* MOUSE  */
+    CREATEVERTEX = 476,            /* CREATEVERTEX  */
+    CREATETRIANGLE = 477,          /* CREATETRIANGLE  */
+    CREATESHAPE = 478,             /* CREATESHAPE  */
+    CREATEOBJECT = 479,            /* CREATEOBJECT  */
+    TRANSLATE = 480,               /* TRANSLATE  */
+    ROTATE = 481,                  /* ROTATE  */
+    SCALE = 482,                   /* SCALE  */
+    RENDERFRAME = 483,             /* RENDERFRAME  */
+    DELETEOBJECT = 484,            /* DELETEOBJECT  */
+    SOLID = 485,                   /* SOLID  */
+    WIREFRAME = 486,               /* WIREFRAME  */
+    FILLEDWIREFRAME = 487,         /* FILLEDWIREFRAME  */
+    INTEGERDIVIDE = 488,           /* INTEGERDIVIDE  */
+    NEG = 489                      /* NEG  */
   };
+  typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 23 "Grammar/DARIC.y"
+#line 23 "DARIC.y"
 
     int v_int;
     double v_real;
     const char *v_string;
     struct AST *ast;
 
-#line 298 "src/parser/bison.hpp"
+#line 305 "C:\\Users\\d_dud\\source\\repos\\PiBasic\\V4\\src\\parser\\bison.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -321,4 +328,4 @@ extern YYSTYPE yylval;
 extern YYLTYPE yylloc;
 int yyparse (void);
 
-#endif /* !YY_YY_SRC_PARSER_BISON_HPP_INCLUDED  */
+#endif /* !YY_YY_C_USERS_D_DUD_SOURCE_REPOS_PIBASIC_V4_SRC_PARSER_BISON_HPP_INCLUDED  */

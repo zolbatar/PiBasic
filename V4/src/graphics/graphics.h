@@ -103,17 +103,16 @@ public:
 #endif
     void init();
     void shutdown();
-    void open(int width, int height);
+    void open(int width, int height, int mode);
     void colour(BYTE r, BYTE g, BYTE b);
     void colour_hex(UINT32 c);
     void set_colour(Colour c);
     void colour_bg(int r, int g, int b);
     void colour_bg_hex(UINT32 c);
     void cls();
-    void disable_performance_mode();
     void plot(int x, int y);
     VM_INT point(int x, int y);
-    void flip(bool fast);
+    void flip();
     void poll();
     void draw_horz_line(int x1, int x2, int y);
     void eight_way_symmetric_plot(int xc, int yc, int x, int y, bool fill);
@@ -220,7 +219,7 @@ private:
     UINT32 bank_address[3];
     int bank = 1;
 #endif
-    bool performance_mode = true;
+    bool banked = false;
     int screen_width, screen_height;
     int minX, maxX, minY, maxY;
     int last_cursor_x = 0, last_cursor_y = 0;

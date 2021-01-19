@@ -16,7 +16,6 @@ REPEAT
 	PROCLabel("J", "Test Rig (Needs write permission to file system)", ms%+(10*ys%))
 	PROCLabel("Z", "Quit", ms%+(13*ys%))
 	PROCLabel("F10", "Debugger & Manual (Core DARIC feature)", ms%+(15*ys%))
-	FLIP
 	A$=GET$
 	CASE A$ OF
 		WHEN "A","a" CHAIN "Graphics"

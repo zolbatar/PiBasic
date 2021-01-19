@@ -523,6 +523,7 @@
     <None Include="..\Examples\Menus.daric" />
     <None Include="..\Examples\Perlin.daric" />
     <None Include="..\Examples\SetupGraphics.daric" />
+    <None Include="..\Examples\SetupGraphicsBanked.daric" />
     <None Include="..\Examples\Start.daric" />
     <None Include="..\Examples\Terrain.daric" />
     <None Include="..\Examples\TerrainDemo.daric" />

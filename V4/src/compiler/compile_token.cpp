@@ -156,6 +156,7 @@ void Compiler::compile_node_token(struct AST* ast, bool expression)
         compile_node_token_string(ast);
         break;
 
+    case BANKED:
     case CIRCLE:
     case CIRCLEFILL:
     case CLIPON:

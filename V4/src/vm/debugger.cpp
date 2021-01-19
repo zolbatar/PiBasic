@@ -22,7 +22,7 @@ void VM::run_debugger()
     graphics->cache();
 
     debugger_options(-1, 0);
-    graphics->flip(false);
+    graphics->flip();
     while (true) {
         graphics->poll();
         if (graphics->inkey(-17)) {
@@ -39,7 +39,7 @@ void VM::run_debugger()
         } else if (graphics->inkey(-31)) {
             // F10
             graphics->restore();
-            graphics->flip(false);
+            graphics->flip();
             debugger_open = false;
             return;
         } else if (graphics->inkey(-117)) {
@@ -216,7 +216,7 @@ void VM::debugger_variables()
             skip--;
         }
 
-        graphics->flip(false);
+        graphics->flip();
         graphics->poll();
         if (graphics->inkey(-17)) {
             exit(0);
@@ -338,7 +338,7 @@ void VM::debugger_disassembly()
                 graphics->print_text(prop_font, "\r", -1, -1);
             }
         }
-        graphics->flip(false);
+        graphics->flip();
         graphics->poll();
         if (graphics->inkey(-17)) {
             exit(0);

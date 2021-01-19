@@ -228,9 +228,6 @@
     <None Include="..\Examples\Mandelbrot.daric">
       <Filter>Resource Files\Examples</Filter>
     </None>
-    <None Include="..\Examples\SetupGraphics.daric">
-      <Filter>Resource Files\Examples</Filter>
-    </None>
     <None Include="..\Examples\Fonts.daric">
       <Filter>Resource Files\Examples</Filter>
     </None>
@@ -1005,6 +1002,12 @@
     </None>
     <None Include="..\Examples\GIS\Zimbabwe">
       <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\SetupGraphics.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\SetupGraphicsBanked.daric">
+      <Filter>Resource Files\Examples</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

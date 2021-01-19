@@ -354,7 +354,6 @@ bool VM::opcode_INPUT_F()
     VM_INT qmark = stack_pop_int();
     if (qmark) {
         graphics->print_text(console_font, "?", -1, -1);
-        graphics->flip(false);
     }
     auto s = graphics->input();
     double v = std::stod(s);
@@ -370,7 +369,6 @@ bool VM::opcode_INPUT_I()
     VM_INT qmark = stack_pop_int();
     if (qmark) {
         graphics->print_text(console_font, "?", -1, -1);
-        graphics->flip(false);
     }
     auto s = graphics->input();
     int v = std::stoi(s);
@@ -386,7 +384,6 @@ bool VM::opcode_INPUT_S()
     VM_INT qmark = stack_pop_int();
     if (qmark) {
         graphics->print_text(console_font, "?", -1, -1);
-        graphics->flip(false);
     }
     auto v = graphics->input();
     variable->value_string = v;
@@ -419,7 +416,6 @@ bool VM::opcode_PRINT_F()
     }
     VM_STRING v(stream.str());
     graphics->print_console(v);
-    graphics->flip(false);
     if (runtime_debug)
         *logfile << std::endl;
     return false;
@@ -449,7 +445,6 @@ bool VM::opcode_PRINT_I()
     }
     VM_STRING v(stream.str());
     graphics->print_console(v);
-    graphics->flip(false);
     if (runtime_debug)
         *logfile << std::endl;
     return false;
@@ -463,7 +458,6 @@ bool VM::opcode_PRINT_S()
     if (runtime_debug)
         *logfile << "Print string: '";
     graphics->print_console(v);
-    graphics->flip(false);
     if (runtime_debug)
         *logfile << "'" << std::endl;
     return false;
@@ -479,7 +473,6 @@ bool VM::opcode_PRINT_NL()
         *logfile << std::endl;
     } else {
         graphics->print_console("\r");
-        graphics->flip(false);
     }
     return false;
 }
@@ -492,7 +485,6 @@ bool VM::opcode_PRINT_SPC()
         v2 += " ";
     }
     graphics->print_text(0, v2, -1, -1);
-    graphics->flip(false);
     if (runtime_debug)
         *logfile << "Print " << v1 << " spaces";
     return false;
@@ -839,7 +831,7 @@ bool VM::opcode_ARRAYSIZE()
         size = static_cast<VM_INT>(variable->value_string_array.size());
         break;
     case Type::TYPE_ARRAY:
-        error("Size of TYPE arrays not supported"); 
+        error("Size of TYPE arrays not supported");
     }
     stack_push_int(size);
     if (runtime_debug)
@@ -2362,8 +2354,7 @@ bool VM::opcode_COLOUREXPRESSION()
 
 bool VM::opcode_FLIP()
 {
-    VM_INT fast = stack_pop_int();
-    graphics->flip(fast);
+    graphics->flip();
     if (runtime_debug)
         *logfile << "Flip screen" << std::endl;
     return false;
@@ -2371,13 +2362,14 @@ bool VM::opcode_FLIP()
 
 bool VM::opcode_GRAPHICS()
 {
+    VM_INT mode = stack_pop_int();
     VM_INT y = stack_pop_int();
     VM_INT x = stack_pop_int();
     if (x == -1)
         x = graphics->get_screen_width();
     if (y == -1)
         y = graphics->get_screen_height();
-    graphics->open(x, y);
+    graphics->open(x, y, mode);
     if (runtime_debug)
         *logfile << "Change screen mode to " << x << " x " << y << std::endl;
     return false;
@@ -2799,7 +2791,7 @@ bool VM::opcode_MOUSE()
     return false;
 }
 
-VM::VM(Graphics* _graphics, std::stringstream *logfile)
+VM::VM(Graphics* _graphics, std::stringstream* logfile)
 {
     runtime_debug = false;
     locals = new std::vector<Boxed>(0);

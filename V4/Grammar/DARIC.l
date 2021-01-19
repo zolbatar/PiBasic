@@ -80,6 +80,7 @@ star                \*\*{alpha}+
 "<"					return LT;
 ">"					return GT;
 
+(?i:"Banked")	    return BANKED;
 (?i:"Bget#")		return BGET;
 (?i:"Bput#")		return BPUT;
 (?i:"Breakpoint")	return BREAKPOINT;
