@@ -1,3 +1,4 @@
+#define _GLIBCXX_USE_C99 1
 #pragma warning(disable : 26812)
 #include "compile.h"
 #include "../graphics/graphics.h"
@@ -7,6 +8,7 @@
 #include <iostream>
 #include <map>
 #include <memory>
+#include <sstream>
 #include <stdlib.h>
 extern std::map<std::string, int> files_index;
 
@@ -37,7 +39,7 @@ VM* compile(Graphics* graphics, std::stringstream* logfile)
         compiler.local_var_index = 0;
         vm->insert_bytecode(0, 0, compiler.write, Bytecodes::HALT);
         if (pass == 1) {
-            std::cout << "-> Bytecode is " << vm->get_pc() << " instructions." << std::endl;
+            *logfile << "-> Bytecode is " << vm->get_pc() << " instructions." << std::endl;
             vm->build_bytecode();
         }
     }

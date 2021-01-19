@@ -84,7 +84,7 @@ extern std::map<std::string, int> files_index;
     std::stringstream logfile;
     logfile << "Debug Output\n";
     logfile << "------------\n";
-    logfile << "[File :     Line :       PC : Op]  Description\n";
+    logfile << "[File :     Line :       PC : Op]  Description\n\n";
 
     auto vm = parse_and_compile(filename.c_str(), graphics, &logfile);
     current_vm = vm;
@@ -107,7 +107,7 @@ bool endsWith(const std::string& mainStr, const std::string& toMatch)
 VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstream* logfile)
 {
     using namespace std::chrono;
-    std::cout << "Filename: " << filename << std::endl;
+    *logfile << "Filename: " << filename << std::endl;
     reset_parser();
     std::string filename_with_ext(filename);
 
@@ -137,7 +137,7 @@ VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstrea
     current_vm = vm;
     high_resolution_clock::time_point t2 = high_resolution_clock::now();
     duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
-    std::cout << "-> Parsing & compilation took " << time_span.count() << " seconds." << std::endl;
+    *logfile << "-> Parsing & compilation took " << time_span.count() << " seconds." << std::endl;
 
     return vm;
 }
@@ -161,7 +161,7 @@ void run_vm(VM* vm, Graphics& graphics, std::stringstream* logfile)
     } while (!done);
     high_resolution_clock::time_point t2 = high_resolution_clock::now();
     duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
-    std::cout << "-> Runtime was " << time_span.count() << " seconds." << std::endl;
+    *logfile << "-> Runtime was " << time_span.count() << " seconds." << std::endl;
 }
 
 void reset_parser()

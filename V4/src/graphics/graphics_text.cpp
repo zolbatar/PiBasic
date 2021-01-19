@@ -11,48 +11,59 @@
 
 const int MAXIMUM_FONTS = 64;
 int font_index = 0;
-stbtt_fontinfo** fonts;
+stbtt_fontinfo **fonts;
 
-void Graphics::init_text() { fonts = new stbtt_fontinfo*[MAXIMUM_FONTS]; }
+void Graphics::init_text() { fonts = new stbtt_fontinfo *[MAXIMUM_FONTS]; }
 
-VM_INT Graphics::load_font(const char* filename)
+VM_INT Graphics::load_font(const char *filename)
 {
-    if (!is_open()) {
+    if (!is_open())
+    {
         std::cout << "Loading font '" << filename << "',";
     }
     auto index = font_face_index++;
-    if (index == MAXIMUM_FONTS) {
+    if (index == MAXIMUM_FONTS)
+    {
         std::cout << "Ran out of font slots\n";
         exit(1);
     }
 
     // Load and build the actual font, we're never going to release this memory EVER
-    fonts[index] = (stbtt_fontinfo*)malloc(sizeof(stbtt_fontinfo));
+    fonts[index] = (stbtt_fontinfo *)malloc(sizeof(stbtt_fontinfo));
 
     // Open file and calculate size
-    FILE* fp = fopen(filename, "rb");
-    if (!fp) {
-        if (!is_open()) {
+    FILE *fp = fopen(filename, "rb");
+    if (!fp)
+    {
+        if (!is_open())
+        {
             std::cout << "Error opening font file\n";
-        } else {
+        }
+        else
+        {
             print_console("Error opening font file\n");
-            flip();
+            flip(false);
         }
         exit(1);
     }
     fseek(fp, 0L, SEEK_END);
     size_t sz = ftell(fp);
     fseek(fp, 0L, SEEK_SET);
-    if (!is_open()) {
+    if (!is_open())
+    {
         std::cout << " file size is " << sz << " bytes." << std::endl;
     }
 
     // Allocate memory (we don't deallocate, so will leave a memory leak)
-    char* ttf_buffer = (char*)malloc(sz);
-    if (!ttf_buffer) {
-        if (!is_open()) {
+    char *ttf_buffer = (char *)malloc(sz);
+    if (!ttf_buffer)
+    {
+        if (!is_open())
+        {
             std::cout << "Can't allocate memory for TTF font\n";
-        } else {
+        }
+        else
+        {
             print_console("Can't allocate memory for TTF font\r");
         }
         exit(1);
@@ -64,42 +75,46 @@ VM_INT Graphics::load_font(const char* filename)
     fclose(fp);
 
     // Now create font
-    stbtt_InitFont(fonts[index], (const unsigned char*)ttf_buffer, stbtt_GetFontOffsetForIndex((const unsigned char*)ttf_buffer, 0));
+    stbtt_InitFont(fonts[index], (const unsigned char *)ttf_buffer, stbtt_GetFontOffsetForIndex((const unsigned char *)ttf_buffer, 0));
     return index;
 }
 
 VM_INT Graphics::create_font_by_size(int index, int font_size)
 {
     int index_ff = font_index++;
-    const stbtt_fontinfo* ff = (const stbtt_fontinfo*)fonts[index];
+    const stbtt_fontinfo *ff = (const stbtt_fontinfo *)fonts[index];
 
     // Row height
-    Font* f = get_glyph(index, index_ff, ' ', font_size);
+    Font *f = get_glyph(index, index_ff, ' ', font_size);
 
     int m = 0;
-    for (int c = 32; c <= 127; c++) {
+    for (int c = 32; c <= 127; c++)
+    {
         int ix0, iy0, ix1, iy1;
         stbtt_GetCodepointBitmapBox(ff, c, f->scale, f->scale, &ix0, &iy0, &ix1, &iy1);
-        if (iy1 > m) {
+        if (iy1 > m)
+        {
             m = iy1;
         }
     }
     font_heights.insert(std::pair<VM_INT, VM_INT>(index_ff, f->baseline + m));
 
-    for (int c = 32; c <= 127; c++) {
+    for (int c = 32; c <= 127; c++)
+    {
         get_glyph(index, index_ff, c, font_size);
     }
     return index_ff;
 }
 
-Font* Graphics::get_glyph(VM_INT index, VM_INT index_ff, BYTE ascii, VM_INT font_size)
+Font *Graphics::get_glyph(VM_INT index, VM_INT index_ff, BYTE ascii, VM_INT font_size)
 {
     // Have we already generated it?
     VM_INT key = (index_ff * 256) + ascii;
-    if (font_glyphs.count(key) != 0) {
+    if (font_glyphs.count(key) != 0)
+    {
         return &(*font_glyphs.find(key)).second;
     }
-    const stbtt_fontinfo* ff = (const stbtt_fontinfo*)fonts[index];
+    const stbtt_fontinfo *ff = (const stbtt_fontinfo *)fonts[index];
 
     // Create the glpyh
     Font f;
@@ -120,38 +135,43 @@ Font* Graphics::get_glyph(VM_INT index, VM_INT index_ff, BYTE ascii, VM_INT font
     return &(*font_glyphs.find(key)).second;
 }
 
-void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_y)
+void Graphics::print_character(int index_ff, char c, int *cursor_x, int *cursor_y)
 {
     auto font_row_height = (*font_heights.find(index_ff)).second;
 
     // End of page, need to scroll?
-    while (*cursor_y + font_row_height >= screen_height) {
+    while (*cursor_y + font_row_height >= screen_height)
+    {
 #ifdef RISCOS
         auto addr = get_bank_address();
         auto bg = current_bg_colour.get_as_hex();
 
         // Move each row at a time (this works either full screen or windowed)
-        for (int y = 0; y < screen_height - font_row_height; y++) {
-            UINT32 offset1 = line_address[y] + (is_windowed ? 24 : 0);
-            UINT32 offset2 = line_address[y + font_row_height] + (is_windowed ? 24 : 0);
-            memcpy((void*)&addr[offset1], (void*)&addr[offset2], screen_width * 4);
+        for (int y = 0; y < screen_height - font_row_height; y++)
+        {
+            UINT32 offset1 = line_address[y];
+            UINT32 offset2 = line_address[y + font_row_height];
+            memcpy((void *)&addr[offset1], (void *)&addr[offset2], screen_width * 4);
         }
 
         // And clear to BG
-        for (int y = screen_height - font_row_height; y < screen_height; y++) {
-            UINT32 offset = line_address[y] + (is_windowed ? 24 : 0);
-            memset((void*)&addr[offset], bg, screen_width * 4);
+        for (int y = screen_height - font_row_height; y < screen_height; y++)
+        {
+            UINT32 offset = line_address[y];
+            memset((void *)&addr[offset], bg, screen_width * 4);
         }
 #else
         UINT32 bg_hex = current_bg_colour.get_as_hex();
         SDL_LockSurface(screen);
-        auto pixels = (UINT32*)screen->pixels;
+        auto pixels = (UINT32 *)screen->pixels;
         auto offset = (screen->pitch * font_row_height) / 4;
         auto size = (screen->pitch * (screen_height - font_row_height)) / 4;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++)
+        {
             pixels[i] = pixels[i + offset];
         }
-        for (int i = 0; i < offset; i++) {
+        for (int i = 0; i < offset; i++)
+        {
             pixels[size + i] = bg_hex;
         }
         SDL_UnlockSurface(screen);
@@ -159,7 +179,8 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
         *cursor_y -= font_row_height;
     }
 
-    switch (c) {
+    switch (c)
+    {
     case '\\':
         last_char_was_slash = true;
         return;
@@ -168,8 +189,10 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
         *cursor_x = 0;
         return;
     }
-    if (last_char_was_slash) {
-        switch (c) {
+    if (last_char_was_slash)
+    {
+        switch (c)
+        {
         case 'r':
             *cursor_y += font_row_height;
             *cursor_x = 0;
@@ -180,14 +203,18 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
         }
         last_char_was_slash = false;
     }
-    Font* f = get_glyph(0, index_ff, c, 0);
-    if (f->bitmap != NULL) {
+    Font *f = get_glyph(0, index_ff, c, 0);
+    if (f->bitmap != NULL)
+    {
         auto saved_colour = current_colour;
-        for (int j = 0; j < f->height; ++j) {
-            for (int i = 0; i < f->width; ++i) {
+        for (int j = 0; j < f->height; ++j)
+        {
+            for (int i = 0; i < f->width; ++i)
+            {
                 auto idx = j * f->width + i;
                 auto v = f->bitmap[idx];
-                if (v > 0) {
+                if (v > 0)
+                {
                     Colour c;
                     double a = static_cast<double>(v) / 255.0;
                     alpha(current_bg_colour, saved_colour, c, a);
@@ -202,7 +229,8 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
     *cursor_x += f->sc_width;
 
     // End of line?
-    if (*cursor_x + f->sc_width + (margin * 2) >= screen_width) {
+    if (*cursor_x + f->sc_width + (margin * 2) >= screen_width)
+    {
         *cursor_y += font_row_height;
         *cursor_x = 0;
     }
@@ -210,17 +238,27 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
 
 void Graphics::print_console(VM_STRING text)
 {
-    performance_mode = false;
+    if (performance_mode)
+        disable_performance_mode();
+    }
     print_text(console_font, text, -1, -1);
-    flip();
+    if (text.length() == 1 && text[0] == '\r')
+    {
+        // New line, don't flip
+    }
+    else
+    {
+        flip(false);
+    }
 }
 
 void Graphics::cursor_back(int index_ff)
 {
-    Font* f = get_glyph(0, index_ff, ' ', 0);
+    Font *f = get_glyph(0, index_ff, ' ', 0);
     auto font_row_height = (*font_heights.find(index_ff)).second;
     last_cursor_x -= f->sc_width;
-    if (last_cursor_x < 0) {
+    if (last_cursor_x < 0)
+    {
         auto max_chars = screen_width / f->sc_width;
         last_cursor_x = (max_chars - 1) * f->sc_width;
         last_cursor_y -= font_row_height;
@@ -229,10 +267,11 @@ void Graphics::cursor_back(int index_ff)
 
 void Graphics::delete_character(int index_ff)
 {
-    Font* f = get_glyph(0, index_ff, ' ', 0);
+    Font *f = get_glyph(0, index_ff, ' ', 0);
     last_cursor_x -= f->sc_width;
     auto font_row_height = (*font_heights.find(index_ff)).second;
-    if (last_cursor_x < 0) {
+    if (last_cursor_x < 0)
+    {
         auto max_chars = screen_width / f->sc_width;
         last_cursor_x = (max_chars - 1) * f->sc_width;
         last_cursor_y -= font_row_height;
@@ -241,7 +280,7 @@ void Graphics::delete_character(int index_ff)
     colour(current_bg_colour.r, current_bg_colour.g, current_bg_colour.b);
     rectangle(last_cursor_x, last_cursor_y, last_cursor_x + f->sc_width, last_cursor_y + font_row_height);
     colour(saved_colour.r, saved_colour.g, saved_colour.b);
-    flip();
+    flip(false);
 }
 
 void Graphics::set_margin(int margin)
@@ -256,7 +295,8 @@ void Graphics::print_text(int index_ff, VM_STRING text, int cursor_x, int cursor
         cursor_x = last_cursor_x;
     if (cursor_y == -1)
         cursor_y = last_cursor_y;
-    for (auto it = text.begin(); it != text.end(); ++it) {
+    for (auto it = text.begin(); it != text.end(); ++it)
+    {
         auto ch = (*it);
         print_character(index_ff, ch, &cursor_x, &cursor_y);
     }
@@ -272,7 +312,8 @@ void Graphics::print_text_centre(int index_ff, VM_STRING text, int cursor_x, int
     if (cursor_y == -1)
         cursor_y = last_cursor_y;
     cursor_x -= string_width(index_ff, text) / 2;
-    for (auto it = text.begin(); it != text.end(); ++it) {
+    for (auto it = text.begin(); it != text.end(); ++it)
+    {
         auto ch = (*it);
         print_character(index_ff, ch, &cursor_x, &cursor_y);
     }
@@ -287,7 +328,8 @@ void Graphics::print_text_right(int index_ff, VM_STRING text, int cursor_x, int 
     if (cursor_y == -1)
         cursor_y = last_cursor_y;
     cursor_x -= string_width(index_ff, text);
-    for (auto it = text.begin(); it != text.end(); ++it) {
+    for (auto it = text.begin(); it != text.end(); ++it)
+    {
         auto ch = (*it);
         print_character(index_ff, ch, &cursor_x, &cursor_y);
     }
@@ -298,9 +340,10 @@ void Graphics::print_text_right(int index_ff, VM_STRING text, int cursor_x, int 
 int Graphics::string_width(int index_ff, VM_STRING text)
 {
     int w = 0;
-    for (auto it = text.begin(); it != text.end(); ++it) {
+    for (auto it = text.begin(); it != text.end(); ++it)
+    {
         auto ch = (*it);
-        Font* f = get_glyph(0, index_ff, ch, 0);
+        Font *f = get_glyph(0, index_ff, ch, 0);
         w += f->sc_width;
     }
     return w;

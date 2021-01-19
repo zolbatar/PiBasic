@@ -3,7 +3,6 @@ bison -d --output=src/parser/bison.cpp Grammar/DARIC.y
 flex --outfile=src/parser/flex.cpp Grammar/DARIC.l
 export GCCSDK_INSTALL_ENV=/home/daryl/gccsdk/env
 make -f Makefile.riscos
-make -f Makefile.riscosvfp
 
 # Create library
 #~/gccsdk/cross/bin/arm-unknown-riscos-g++ -D RISCOS -I$GCCSDK_INSTALL_ENV/include -c -g -O3 -std=c++11 src/engine/*.cpp src/graphics/*.cpp -I.
@@ -11,7 +10,6 @@ make -f Makefile.riscosvfp
 #~/gccsdk/cross/bin/arm-unknown-riscos-ar rcs build/rolib.a build/*.o
 
 cp buildriscos/daric /mnt/c/Users/d_dud/Dropbox/Emulation/Acorn\ 32-bit/RPCEmu\ -\ Direct/hostfs/Home/!Daric/daric,e1f
-cp buildriscosvfp/daricvfp /mnt/c/Users/d_dud/Dropbox/Emulation/Acorn\ 32-bit/RPCEmu\ -\ Direct/hostfs/Home/!Daric/daricvfp,e1f
 
 
 

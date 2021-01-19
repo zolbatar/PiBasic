@@ -354,7 +354,7 @@ bool VM::opcode_INPUT_F()
     VM_INT qmark = stack_pop_int();
     if (qmark) {
         graphics->print_text(console_font, "?", -1, -1);
-        graphics->flip();
+        graphics->flip(false);
     }
     auto s = graphics->input();
     double v = std::stod(s);
@@ -370,7 +370,7 @@ bool VM::opcode_INPUT_I()
     VM_INT qmark = stack_pop_int();
     if (qmark) {
         graphics->print_text(console_font, "?", -1, -1);
-        graphics->flip();
+        graphics->flip(false);
     }
     auto s = graphics->input();
     int v = std::stoi(s);
@@ -386,7 +386,7 @@ bool VM::opcode_INPUT_S()
     VM_INT qmark = stack_pop_int();
     if (qmark) {
         graphics->print_text(console_font, "?", -1, -1);
-        graphics->flip();
+        graphics->flip(false);
     }
     auto v = graphics->input();
     variable->value_string = v;
@@ -419,7 +419,7 @@ bool VM::opcode_PRINT_F()
     }
     VM_STRING v(stream.str());
     graphics->print_console(v);
-    graphics->flip();
+    graphics->flip(false);
     if (runtime_debug)
         *logfile << std::endl;
     return false;
@@ -449,7 +449,7 @@ bool VM::opcode_PRINT_I()
     }
     VM_STRING v(stream.str());
     graphics->print_console(v);
-    graphics->flip();
+    graphics->flip(false);
     if (runtime_debug)
         *logfile << std::endl;
     return false;
@@ -463,7 +463,7 @@ bool VM::opcode_PRINT_S()
     if (runtime_debug)
         *logfile << "Print string: '";
     graphics->print_console(v);
-    graphics->flip();
+    graphics->flip(false);
     if (runtime_debug)
         *logfile << "'" << std::endl;
     return false;
@@ -479,7 +479,7 @@ bool VM::opcode_PRINT_NL()
         *logfile << std::endl;
     } else {
         graphics->print_console("\r");
-        graphics->flip();
+        graphics->flip(false);
     }
     return false;
 }
@@ -492,7 +492,7 @@ bool VM::opcode_PRINT_SPC()
         v2 += " ";
     }
     graphics->print_text(0, v2, -1, -1);
-    graphics->flip();
+    graphics->flip(false);
     if (runtime_debug)
         *logfile << "Print " << v1 << " spaces";
     return false;
@@ -2362,7 +2362,8 @@ bool VM::opcode_COLOUREXPRESSION()
 
 bool VM::opcode_FLIP()
 {
-    graphics->flip();
+    VM_INT fast = stack_pop_int();
+    graphics->flip(fast);
     if (runtime_debug)
         *logfile << "Flip screen" << std::endl;
     return false;
@@ -2809,7 +2810,7 @@ VM::VM(Graphics* _graphics, std::stringstream *logfile)
 
 std::string VM::run()
 {
-    std::cout << "-> Running" << std::endl;
+    *logfile << "-> Running" << std::endl;
     pc = 0;
     data_iterator = data.begin();
     bool quit = false;

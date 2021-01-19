@@ -39,6 +39,8 @@ public:
         g = 0;
         b = 0;
     };
+    Colour(const Colour &c)
+        : r(c.r), g(c.g), b(c.b){};
     Colour(BYTE r, BYTE g, BYTE b)
         : r(r), g(g), b(b){};
     BYTE r;
@@ -108,9 +110,10 @@ public:
     void colour_bg(int r, int g, int b);
     void colour_bg_hex(UINT32 c);
     void cls();
+    void disable_performance_mode();
     void plot(int x, int y);
     VM_INT point(int x, int y);
-    void flip();
+    void flip(bool fast);
     void poll();
     void draw_horz_line(int x1, int x2, int y);
     void eight_way_symmetric_plot(int xc, int yc, int x, int y, bool fill);
@@ -120,7 +123,6 @@ public:
     void clip(int x1, int y1, int x2, int y2);
     void alpha(Colour bg, Colour fg, Colour &out, double a);
     void show_fps() { showfps = true; }
-    void set_performance_mode() { performance_mode = true; }
     void cache();
     void restore();
 #ifndef RISCOS
