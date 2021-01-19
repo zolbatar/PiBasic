@@ -1,0 +1,12 @@
+GRAPHICS 1024,768,0
+x%=0,y%=0,state%=0
+REPEAT
+	MOUSE x%,y%,state%
+	CLS
+	IF state% AND 4 TEXT PROP20,0,0, "Left"
+	IF state% AND 2 TEXT PROP20,0,20, "Middle"
+	IF state% AND 1 TEXT PROP20,0,40, "Right"
+	TEXT PROP20,0,60,STR$(x%)
+	TEXT PROP20,0,80,STR$(y%)
+	FLIP
+UNTIL INKEY(-99)

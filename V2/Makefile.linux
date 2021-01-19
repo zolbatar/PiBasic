@@ -1,0 +1,32 @@
+CC=g++
+CFLAGS=-std=c++11 -ffast-math -I. -I/usr/include/SDL2 -g -O3
+IDIR=src
+ODIR=build/objlinux
+LIBS=-lm -lSDL2
+
+_DEPS = vm/vm.h ast/ast.h compile/compile.h compile/compile_c.h engine/engine.h graphics/graphics.h types.h
+DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+
+_OBJ = 	src/main.o src/parser/parser.o src/parser/scanner.o src/vm/vm.o src/vm/stack.o src/vm/vm_debug.o src/ast/ast_debug.o src/ast/ast.o \
+		src/compile/compile.o src/compile/compile_c.o src/compile/compile_assignment.o src/compile/compile_lookahead.o src/compile/compile_util.o src/compile/optimiser.o \
+		src/graphics/graphics_barycentric.o src/graphics/graphics_clippedline.o src/graphics/graphics_triangle.o src/graphics/graphics.o \
+		src/engine/engine_normals.o src/engine/engine_object.o src/engine/engine_shape.o src/engine/engine_world.o src/engine/engine_matrix.o \
+		src/graphics/graphics_input.o src/graphics/graphics_text.o
+OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
+
+$(ODIR)/%.o: %.cpp $(DEPS)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+build/daric: $(src/parser/parser.cpp) $(src/parser/scanner.cpp) $(OBJ) 
+	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
+
+src/parser/parser.cpp: src/parser/parser.y
+	bison -d --output=src/parser/parser.cpp src/parser/parser.y
+
+src/parser/scanner.cpp: src/parser/scanner.l
+	flex --outfile=src/parser/scanner.cpp src/parser/scanner.l
+
+.PHONY: clean
+
+clean:
+	rm -f $(ODIR)/src/*.o $(ODIR)/src/parser/*.o $(ODIR)/src/ast/*.o $(ODIR)/src/vm/*.o $(ODIR)/src/compile/*.o $(ODIR)/src/engine/*.o $(ODIR)/src/graphics/*.o build/daric

@@ -1,0 +1,3771 @@
+Line: 1 Statement: 0
+-> 1swidth%=640:sheight%=480
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  swidth% (0x55b0ccd169b0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Integer operand           640
+[ 4]         Expression End            
+[0x00000000] [0x04]/[0x0001]: LOAD.I   640
+[0x00000001] [0x07]/[0x0000]: STORE.I  [swidth%]
+
+Line: 1 Statement: 1
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  sheight% (0x55b0ccd16be0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Integer operand           480
+[ 4]         Expression End            
+[0x00000002] [0x04]/[0x0003]: LOAD.I   480
+[0x00000003] [0x07]/[0x0002]: STORE.I  [sheight%]
+
+Line: 2 Statement: 0
+-> 2MODE "X"+STR$(swidth%)+" Y"+STR$(sheight%)+" C16M"
+[ 0]         Token 0x6B                MODE
+[ 1]         Expression Start          
+[ 2]         String operand            'X'
+[ 3]         Variable                  swidth% (0x55b0ccd169b0) (INTEGER)
+[ 4]         Token 0x43                STR$
+[ 5]         Operator                  +
+[ 6]         String operand            ' Y'
+[ 7]         Operator                  +
+[ 8]         Variable                  sheight% (0x55b0ccd16be0) (INTEGER)
+[ 9]         Token 0x43                STR$
+[10]         Operator                  +
+[11]         String operand            ' C16M'
+[12]         Operator                  +
+[13]         Expression End            
+[0x00000004] [0x05]/[0x0004]: LOAD.S   'X'
+[0x00000005] [0x04]/[0x0000]: LOAD.I   [swidth%]
+[0x00000006] [0x16]/[0x0000]: I.TO.S
+[0x00000007] [0x40]/[0x0000]: ADD.S
+[0x00000008] [0x05]/[0x0005]: LOAD.S   ' Y'
+[0x00000009] [0x40]/[0x0000]: ADD.S
+[0x0000000A] [0x04]/[0x0002]: LOAD.I   [sheight%]
+[0x0000000B] [0x16]/[0x0000]: I.TO.S
+[0x0000000C] [0x40]/[0x0000]: ADD.S
+[0x0000000D] [0x05]/[0x0006]: LOAD.S   ' C16M'
+[0x0000000E] [0x40]/[0x0000]: ADD.S
+[0x0000000F] [0x60]/[0x0003]: SYS      GRAPHICS-MODE (STRING)
+
+Line: 3 Empty/REM
+-> 3
+
+Line: 4 Empty/REM
+-> 4REM Create a VFP context
+
+Line: 5 Empty/REM
+-> 5REM SYS "VFPSupport_CreateContext", (1 << 31), 32 TO vfp%
+
+Line: 6 Empty/REM
+-> 6REM PRINT "VFPContext: ";vfp%
+
+Line: 7 Empty/REM
+-> 7
+
+Line: 8 Empty/REM
+-> 8REM The 0 below means no double/triple buffering, useful for debugging
+
+Line: 9 Statement: 0
+-> 9backbuffers%=1
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  backbuffers% (0x55b0ccd18f40) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Integer operand           1
+[ 4]         Expression End            
+[0x00000010] [0x04]/[0x0008]: LOAD.I   1
+[0x00000011] [0x07]/[0x0007]: STORE.I  [backbuffers%]
+
+Line: 10 Statement: 0
+-> 10SYS "Engine3D_Init", backbuffers%
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         Expression Start          
+[ 2]         Integer operand           529408
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Variable                  backbuffers% (0x55b0ccd18f40) (INTEGER)
+[ 6]         Expression End            
+[0x00000012] [0x04]/[0x0009]: LOAD.I   529408
+[0x00000013] [0x04]/[0x0007]: LOAD.I   [backbuffers%]
+[0x00000014] [0x02]/[0x0001]: CONST.I  1
+[0x00000015] [0x02]/[0x0000]: CONST.I  0
+[0x00000016] [0x60]/[0x000A]: SYS      SYS
+
+Line: 11 Statement: 0
+-> 11rendertype%=4
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  rendertype% (0x55b0ccd19410) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Integer operand           4
+[ 4]         Expression End            
+[0x00000017] [0x04]/[0x000B]: LOAD.I   4
+[0x00000018] [0x07]/[0x000A]: STORE.I  [rendertype%]
+
+Line: 12 Statement: 0
+-> 12SYS "Engine3D_SetAmbientLight", &404040
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         Expression Start          
+[ 2]         Integer operand           529426
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Integer operand           4210752
+[ 6]         Expression End            
+[0x00000019] [0x04]/[0x000C]: LOAD.I   529426
+[0x0000001A] [0x04]/[0x000D]: LOAD.I   4210752
+[0x0000001B] [0x02]/[0x0001]: CONST.I  1
+[0x0000001C] [0x02]/[0x0000]: CONST.I  0
+[0x0000001D] [0x60]/[0x000A]: SYS      SYS
+
+Line: 13 Statement: 0
+-> 13light_x%=255 * 0:light_y%=255 * -0.3:light_z%=255 * 0.7
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  light_x% (0x55b0ccd19990) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Integer operand           255
+[ 4]         Integer operand           0
+[ 5]         Operator                  *
+[ 6]         Expression End            
+[0x0000001E] [0x04]/[0x000F]: LOAD.I   255
+[0x0000001F] [0x04]/[0x0010]: LOAD.I   0
+[0x00000020] [0x44]/[0x0000]: MUL.I
+[0x00000021] [0x07]/[0x000E]: STORE.I  [light_x%]
+
+Line: 13 Statement: 1
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  light_y% (0x55b0ccd19cc0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Integer operand           255
+[ 4]         Real operand              -0.300000
+[ 5]         Operator                  *
+[ 6]         Expression End            
+[0x00000022] [0x04]/[0x000F]: LOAD.I   255
+[0x00000023] [0x03]/[0x0012]: LOAD.F   -0.300000
+[0x00000024] [0x14]/[0x0000]: I.TO.F
+[0x00000025] [0x3C]/[0x0000]: ROT.F
+[0x00000026] [0x43]/[0x0000]: MUL.F
+[0x00000027] [0x15]/[0x0000]: F.TO.I
+[0x00000028] [0x07]/[0x0011]: STORE.I  [light_y%]
+
+Line: 13 Statement: 2
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  light_z% (0x55b0ccd19f70) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Integer operand           255
+[ 4]         Real operand              0.700000
+[ 5]         Operator                  *
+[ 6]         Expression End            
+[0x00000029] [0x04]/[0x000F]: LOAD.I   255
+[0x0000002A] [0x03]/[0x0014]: LOAD.F   0.700000
+[0x0000002B] [0x14]/[0x0000]: I.TO.F
+[0x0000002C] [0x3C]/[0x0000]: ROT.F
+[0x0000002D] [0x43]/[0x0000]: MUL.F
+[0x0000002E] [0x15]/[0x0000]: F.TO.I
+[0x0000002F] [0x07]/[0x0013]: STORE.I  [light_z%]
+
+Line: 14 Statement: 0
+-> 14SYS "Engine3D_SetDirectionalLight", &FFFFFF, light_x%, light_y%, light_z%
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         Expression Start          
+[ 2]         Integer operand           529427
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Integer operand           16777215
+[ 6]         Expression End            
+[ 7]         Expression Start          
+[ 8]         Variable                  light_x% (0x55b0ccd19990) (INTEGER)
+[ 9]         Expression End            
+[10]         Expression Start          
+[11]         Variable                  light_y% (0x55b0ccd19cc0) (INTEGER)
+[12]         Expression End            
+[13]         Expression Start          
+[14]         Variable                  light_z% (0x55b0ccd19f70) (INTEGER)
+[15]         Expression End            
+[0x00000030] [0x04]/[0x0015]: LOAD.I   529427
+[0x00000031] [0x04]/[0x0016]: LOAD.I   16777215
+[0x00000032] [0x04]/[0x000E]: LOAD.I   [light_x%]
+[0x00000033] [0x04]/[0x0011]: LOAD.I   [light_y%]
+[0x00000034] [0x04]/[0x0013]: LOAD.I   [light_z%]
+[0x00000035] [0x02]/[0x0004]: CONST.I  4
+[0x00000036] [0x02]/[0x0000]: CONST.I  0
+[0x00000037] [0x60]/[0x000A]: SYS      SYS
+
+Line: 15 Statement: 0
+-> 15SYS "Engine3D_SetRenderType", rendertype%
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         Expression Start          
+[ 2]         Integer operand           529418
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Variable                  rendertype% (0x55b0ccd19410) (INTEGER)
+[ 6]         Expression End            
+[0x00000038] [0x04]/[0x0017]: LOAD.I   529418
+[0x00000039] [0x04]/[0x000A]: LOAD.I   [rendertype%]
+[0x0000003A] [0x02]/[0x0001]: CONST.I  1
+[0x0000003B] [0x02]/[0x0000]: CONST.I  0
+[0x0000003C] [0x60]/[0x000A]: SYS      SYS
+
+Line: 16 Statement: 0
+-> 16SYS "Engine3D_SetNormalsVisibility", 0
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         Expression Start          
+[ 2]         Integer operand           529428
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Integer operand           0
+[ 6]         Expression End            
+[0x0000003D] [0x04]/[0x0018]: LOAD.I   529428
+[0x0000003E] [0x04]/[0x0010]: LOAD.I   0
+[0x0000003F] [0x02]/[0x0001]: CONST.I  1
+[0x00000040] [0x02]/[0x0000]: CONST.I  0
+[0x00000041] [0x60]/[0x000A]: SYS      SYS
+
+Line: 17 Statement: 0
+-> 17SYS "Engine3D_ShapeSize" TO shape_size%
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         Expression Start          
+[ 2]         Integer operand           529420
+[ 3]         Expression End            
+[ 4]         Token 0x38                TO
+[ 5]         Variable                  shape_size% (0x55b0ccd1ad20) (INTEGER)
+[0x00000042] [0x04]/[0x0019]: LOAD.I   529420
+[0x00000043] [0x02]/[0x0000]: CONST.I  0
+[0x00000044] [0x02]/[0x0001]: CONST.I  1
+[0x00000045] [0x60]/[0x000A]: SYS      SYS
+
+Line: 18 Statement: 0
+-> 18SYS "Engine3D_VertexSize" TO vertex_size%,red
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         Expression Start          
+[ 2]         Integer operand           529421
+[ 3]         Expression End            
+[ 4]         Token 0x38                TO
+[ 5]         Variable                  vertex_size% (0x55b0ccd1aff0) (INTEGER)
+[ 6]         Comma                     ,
+[ 7]         Variable                  red (0x55b0ccd1b0f0) (FLOAT)
+[0x00000046] [0x04]/[0x001B]: LOAD.I   529421
+[0x00000047] [0x02]/[0x0000]: CONST.I  0
+[0x00000048] [0x02]/[0x0001]: CONST.I  1
+[0x00000049] [0x60]/[0x000A]: SYS      SYS
+
+Line: 19 Statement: 0
+-> 19SYS "Engine3D_FaceSize" TO face_size%
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         Expression Start          
+[ 2]         Integer operand           529422
+[ 3]         Expression End            
+[ 4]         Token 0x38                TO
+[ 5]         Variable                  face_size% (0x55b0ccd1b3c0) (INTEGER)
+[0x0000004A] [0x04]/[0x001E]: LOAD.I   529422
+[0x0000004B] [0x02]/[0x0000]: CONST.I  0
+[0x0000004C] [0x02]/[0x0001]: CONST.I  1
+[0x0000004D] [0x60]/[0x000A]: SYS      SYS
+
+Line: 20 Statement: 0
+-> 20PRINT shape_size%
+[ 0]         Token 0x71                PRINT
+[ 1]         Expression Start          
+[ 2]         Variable                  shape_size% (0x55b0ccd1ad20) (INTEGER)
+[ 3]         Expression End            
+[0x0000004E] [0x04]/[0x001A]: LOAD.I   [shape_size%]
+[0x0000004F] [0x5B]/[0x0000]: PRINT.I
+[0x00000050] [0x5E]/[0x0000]: PRINT.NL
+
+Line: 21 Statement: 0
+-> 21END
+[ 0]         Token 0x60                END
+[0x00000051] [0x01]/[0x0000]: HALT
+
+Line: 22 Statement: 0
+-> 22fa = 256: REM This is the fixed-point float adjust for points
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  fa (0x55b0ccd1b740) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Integer operand           256
+[ 4]         Expression End            
+[0x00000052] [0x04]/[0x0021]: LOAD.I   256
+[0x00000053] [0x14]/[0x0000]: I.TO.F
+[0x00000054] [0x06]/[0x0020]: STORE.F  [fa]
+
+Line: 22 Statement: 1
+
+Line: 23 Statement: 0
+-> 23DIM frames(10):REM For FPS stuff
+[ 0]         Token 0x5E                DIM
+[ 1]         Variable (with index)     frames (0x55b0ccd1ba30) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Integer operand           10
+[ 4]         Expression End            
+[0x00000055] [0x04]/[0x0023]: LOAD.I   10
+[0x00000056] [0x10]/[0x0022]: DIM.F    [frames]
+
+Line: 23 Statement: 1
+
+Line: 24 Empty/REM
+-> 24
+
+Line: 25 Statement: 0
+-> 25PROCInitPerlin
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           InitPerlin
+[0x00000057] [0x23]/[0x0158]: CALL     [344/0x158]
+
+Line: 26 Statement: 0
+-> 26PROCCreateCube
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateCube
+[0x00000058] [0x23]/[0x005A]: CALL     [90/0x5A]
+
+Line: 27 Statement: 0
+-> 27END
+[ 0]         Token 0x60                END
+[0x00000059] [0x01]/[0x0000]: HALT
+
+Line: 28 Empty/REM
+-> 28
+
+Line: 29 Statement: 0
+-> 29DEFPROCCreateCube
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x72                PROC
+[ 2]         Proc or FN Call (001)     CreateCube
+
+Line: 30 Statement: 0
+-> 30LOCAL number_of_vertices%,number_of_faces%,size%,vertex_list%,face_list%,offset%
+[ 0]         Token 0x6A                LOCAL
+[ 1]         Variable                  number_of_vertices% (0x55b0ccd1c2a0) (INTEGER)
+[ 2]         Comma                     ,
+[ 3]         Variable                  number_of_faces% (0x55b0ccd1c3a0) (INTEGER)
+[ 4]         Comma                     ,
+[ 5]         Variable                  size% (0x55b0ccd1c4a0) (INTEGER)
+[ 6]         Comma                     ,
+[ 7]         Variable                  vertex_list% (0x55b0ccd1c5a0) (INTEGER)
+[ 8]         Comma                     ,
+[ 9]         Variable                  face_list% (0x55b0ccd1c6a0) (INTEGER)
+[10]         Comma                     ,
+[11]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+
+Line: 31 Statement: 0
+-> 31  number_of_vertices%=8
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  number_of_vertices% (0x55b0ccd1c2a0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Integer operand           8
+[ 4]         Expression End            
+[0x0000005A] [0x04]/[0x002A]: LOAD.I   8
+[0x0000005B] [0x07]/[0x0024]: STORE.I  [number_of_vertices%]
+
+Line: 32 Statement: 0
+-> 32  number_of_faces%=12
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  number_of_faces% (0x55b0ccd1c3a0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Integer operand           12
+[ 4]         Expression End            
+[0x0000005C] [0x04]/[0x002B]: LOAD.I   12
+[0x0000005D] [0x07]/[0x0025]: STORE.I  [number_of_faces%]
+
+Line: 33 Empty/REM
+-> 33
+
+Line: 34 Empty/REM
+-> 34  REM Pass number of vertices as R0, number of faces as R1
+
+Line: 35 Statement: 0
+-> 35  SYS "Engine3D_ObjectSize", number_of_vertices%, number_of_faces% TO size%
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         Expression Start          
+[ 2]         Integer operand           529419
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Variable                  number_of_vertices% (0x55b0ccd1c2a0) (INTEGER)
+[ 6]         Expression End            
+[ 7]         Expression Start          
+[ 8]         Variable                  number_of_faces% (0x55b0ccd1c3a0) (INTEGER)
+[ 9]         Expression End            
+[10]         Token 0x38                TO
+[11]         Variable                  size% (0x55b0ccd1c4a0) (INTEGER)
+[0x0000005E] [0x04]/[0x002C]: LOAD.I   529419
+[0x0000005F] [0x04]/[0x0024]: LOAD.I   [number_of_vertices%]
+[0x00000060] [0x04]/[0x0025]: LOAD.I   [number_of_faces%]
+[0x00000061] [0x02]/[0x0002]: CONST.I  2
+[0x00000062] [0x02]/[0x0001]: CONST.I  1
+[0x00000063] [0x60]/[0x000A]: SYS      SYS
+
+Line: 36 Statement: 0
+-> 36  DIM cube% size%
+[ 0]         Token 0x5E                DIM
+[ 1]         Variable (storage)        cube% (0x55b0ccd1d200) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable                  size% (0x55b0ccd1c4a0) (INTEGER)
+[ 4]         Expression End            
+[0x00000064] [0x04]/[0x0026]: LOAD.I   [size%]
+[0x00000065] [0x12]/[0x002D]: DIM.IS   [cube%]
+
+Line: 37 Statement: 0
+-> 37  PRINT ~cube%
+[ 0]         Token 0x71                PRINT
+[ 1]         Expression Start          
+[ 2]         Tilde                     ~
+[ 3]         Variable                  cube% (0x55b0ccd1d200) (INTEGER)
+[ 4]         Expression End            
+[0x00000066] [0x5F]/[0x0000]: PRINT.HEX
+[0x00000067] [0x04]/[0x002D]: LOAD.I   [cube%]
+[0x00000068] [0x5B]/[0x0000]: PRINT.I
+[0x00000069] [0x5E]/[0x0000]: PRINT.NL
+
+Line: 38 Empty/REM
+-> 38
+
+Line: 39 Empty/REM
+-> 39  REM Build vertices
+
+Line: 40 Statement: 0
+-> 40  vertex_list%=cube% + shape_size%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  vertex_list% (0x55b0ccd1c5a0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable                  cube% (0x55b0ccd1d200) (INTEGER)
+[ 4]         Variable                  shape_size% (0x55b0ccd1ad20) (INTEGER)
+[ 5]         Operator                  +
+[ 6]         Expression End            
+[0x0000006A] [0x04]/[0x002D]: LOAD.I   [cube%]
+[0x0000006B] [0x04]/[0x001A]: LOAD.I   [shape_size%]
+[0x0000006C] [0x3F]/[0x0000]: ADD.I
+[0x0000006D] [0x07]/[0x0027]: STORE.I  [vertex_list%]
+
+Line: 41 Statement: 0
+-> 41  PRINT ~vertex_list%
+[ 0]         Token 0x71                PRINT
+[ 1]         Expression Start          
+[ 2]         Tilde                     ~
+[ 3]         Variable                  vertex_list% (0x55b0ccd1c5a0) (INTEGER)
+[ 4]         Expression End            
+[0x0000006E] [0x5F]/[0x0000]: PRINT.HEX
+[0x0000006F] [0x04]/[0x0027]: LOAD.I   [vertex_list%]
+[0x00000070] [0x5B]/[0x0000]: PRINT.I
+[0x00000071] [0x5E]/[0x0000]: PRINT.NL
+
+Line: 42 Statement: 0
+-> 42  offset%=vertex_list%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable                  vertex_list% (0x55b0ccd1c5a0) (INTEGER)
+[ 4]         Expression End            
+[0x00000072] [0x04]/[0x0027]: LOAD.I   [vertex_list%]
+[0x00000073] [0x07]/[0x0029]: STORE.I  [offset%]
+
+Line: 43 Statement: 0
+-> 43  PROCCreateVertex(offset%, -0.5,  0.5,  0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Expression Start          
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Real operand              -0.500000
+[ 5]         Real operand              0.500000
+[ 6]         Real operand              0.500000
+[ 7]         Token 0x24                FN
+[ 8]         Proc or FN Call           RandomColour%
+[ 9]         Expression End            
+[0x00000074] [0x04]/[0x0029]: LOAD.I   [offset%]
+[0x00000075] [0x03]/[0x002E]: LOAD.F   -0.500000
+[0x00000076] [0x03]/[0x002F]: LOAD.F   0.500000
+[0x00000077] [0x03]/[0x002F]: LOAD.F   0.500000
+[0x00000078] [0x23]/[0x00D7]: CALL     [215/0xD7]
+[0x00000079] [0x1E]/[0x0000]: PAR.I
+[0x0000007A] [0x1F]/[0x0000]: PAR.F
+[0x0000007B] [0x1F]/[0x0000]: PAR.F
+[0x0000007C] [0x1F]/[0x0000]: PAR.F
+[0x0000007D] [0x1E]/[0x0000]: PAR.I
+[0x0000007E] [0x23]/[0x0106]: CALL     [262/0x106]
+
+Line: 44 Statement: 0
+-> 44  PROCCreateVertex(offset%,  0.5,  0.5,  0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Expression Start          
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Real operand              0.500000
+[ 5]         Real operand              0.500000
+[ 6]         Real operand              0.500000
+[ 7]         Token 0x24                FN
+[ 8]         Proc or FN Call           RandomColour%
+[ 9]         Expression End            
+[0x0000007F] [0x04]/[0x0029]: LOAD.I   [offset%]
+[0x00000080] [0x03]/[0x002F]: LOAD.F   0.500000
+[0x00000081] [0x03]/[0x002F]: LOAD.F   0.500000
+[0x00000082] [0x03]/[0x002F]: LOAD.F   0.500000
+[0x00000083] [0x23]/[0x00D7]: CALL     [215/0xD7]
+[0x00000084] [0x1E]/[0x0000]: PAR.I
+[0x00000085] [0x1F]/[0x0000]: PAR.F
+[0x00000086] [0x1F]/[0x0000]: PAR.F
+[0x00000087] [0x1F]/[0x0000]: PAR.F
+[0x00000088] [0x1E]/[0x0000]: PAR.I
+[0x00000089] [0x23]/[0x0106]: CALL     [262/0x106]
+
+Line: 45 Statement: 0
+-> 45  PROCCreateVertex(offset%,  0.5, -0.5,  0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Expression Start          
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Real operand              0.500000
+[ 5]         Real operand              -0.500000
+[ 6]         Real operand              0.500000
+[ 7]         Token 0x24                FN
+[ 8]         Proc or FN Call           RandomColour%
+[ 9]         Expression End            
+[0x0000008A] [0x04]/[0x0029]: LOAD.I   [offset%]
+[0x0000008B] [0x03]/[0x002F]: LOAD.F   0.500000
+[0x0000008C] [0x03]/[0x002E]: LOAD.F   -0.500000
+[0x0000008D] [0x03]/[0x002F]: LOAD.F   0.500000
+[0x0000008E] [0x23]/[0x00D7]: CALL     [215/0xD7]
+[0x0000008F] [0x1E]/[0x0000]: PAR.I
+[0x00000090] [0x1F]/[0x0000]: PAR.F
+[0x00000091] [0x1F]/[0x0000]: PAR.F
+[0x00000092] [0x1F]/[0x0000]: PAR.F
+[0x00000093] [0x1E]/[0x0000]: PAR.I
+[0x00000094] [0x23]/[0x0106]: CALL     [262/0x106]
+
+Line: 46 Statement: 0
+-> 46  PROCCreateVertex(offset%, -0.5, -0.5,  0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Expression Start          
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Real operand              -0.500000
+[ 5]         Real operand              -0.500000
+[ 6]         Real operand              0.500000
+[ 7]         Token 0x24                FN
+[ 8]         Proc or FN Call           RandomColour%
+[ 9]         Expression End            
+[0x00000095] [0x04]/[0x0029]: LOAD.I   [offset%]
+[0x00000096] [0x03]/[0x002E]: LOAD.F   -0.500000
+[0x00000097] [0x03]/[0x002E]: LOAD.F   -0.500000
+[0x00000098] [0x03]/[0x002F]: LOAD.F   0.500000
+[0x00000099] [0x23]/[0x00D7]: CALL     [215/0xD7]
+[0x0000009A] [0x1E]/[0x0000]: PAR.I
+[0x0000009B] [0x1F]/[0x0000]: PAR.F
+[0x0000009C] [0x1F]/[0x0000]: PAR.F
+[0x0000009D] [0x1F]/[0x0000]: PAR.F
+[0x0000009E] [0x1E]/[0x0000]: PAR.I
+[0x0000009F] [0x23]/[0x0106]: CALL     [262/0x106]
+
+Line: 47 Statement: 0
+-> 47  PROCCreateVertex(offset%, -0.5,  0.5, -0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Expression Start          
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Real operand              -0.500000
+[ 5]         Real operand              0.500000
+[ 6]         Real operand              -0.500000
+[ 7]         Token 0x24                FN
+[ 8]         Proc or FN Call           RandomColour%
+[ 9]         Expression End            
+[0x000000A0] [0x04]/[0x0029]: LOAD.I   [offset%]
+[0x000000A1] [0x03]/[0x002E]: LOAD.F   -0.500000
+[0x000000A2] [0x03]/[0x002F]: LOAD.F   0.500000
+[0x000000A3] [0x03]/[0x002E]: LOAD.F   -0.500000
+[0x000000A4] [0x23]/[0x00D7]: CALL     [215/0xD7]
+[0x000000A5] [0x1E]/[0x0000]: PAR.I
+[0x000000A6] [0x1F]/[0x0000]: PAR.F
+[0x000000A7] [0x1F]/[0x0000]: PAR.F
+[0x000000A8] [0x1F]/[0x0000]: PAR.F
+[0x000000A9] [0x1E]/[0x0000]: PAR.I
+[0x000000AA] [0x23]/[0x0106]: CALL     [262/0x106]
+
+Line: 48 Statement: 0
+-> 48  PROCCreateVertex(offset%,  0.5,  0.5, -0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Expression Start          
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Real operand              0.500000
+[ 5]         Real operand              0.500000
+[ 6]         Real operand              -0.500000
+[ 7]         Token 0x24                FN
+[ 8]         Proc or FN Call           RandomColour%
+[ 9]         Expression End            
+[0x000000AB] [0x04]/[0x0029]: LOAD.I   [offset%]
+[0x000000AC] [0x03]/[0x002F]: LOAD.F   0.500000
+[0x000000AD] [0x03]/[0x002F]: LOAD.F   0.500000
+[0x000000AE] [0x03]/[0x002E]: LOAD.F   -0.500000
+[0x000000AF] [0x23]/[0x00D7]: CALL     [215/0xD7]
+[0x000000B0] [0x1E]/[0x0000]: PAR.I
+[0x000000B1] [0x1F]/[0x0000]: PAR.F
+[0x000000B2] [0x1F]/[0x0000]: PAR.F
+[0x000000B3] [0x1F]/[0x0000]: PAR.F
+[0x000000B4] [0x1E]/[0x0000]: PAR.I
+[0x000000B5] [0x23]/[0x0106]: CALL     [262/0x106]
+
+Line: 49 Statement: 0
+-> 49  PROCCreateVertex(offset%,  0.5, -0.5, -0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Expression Start          
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Real operand              0.500000
+[ 5]         Real operand              -0.500000
+[ 6]         Real operand              -0.500000
+[ 7]         Token 0x24                FN
+[ 8]         Proc or FN Call           RandomColour%
+[ 9]         Expression End            
+[0x000000B6] [0x04]/[0x0029]: LOAD.I   [offset%]
+[0x000000B7] [0x03]/[0x002F]: LOAD.F   0.500000
+[0x000000B8] [0x03]/[0x002E]: LOAD.F   -0.500000
+[0x000000B9] [0x03]/[0x002E]: LOAD.F   -0.500000
+[0x000000BA] [0x23]/[0x00D7]: CALL     [215/0xD7]
+[0x000000BB] [0x1E]/[0x0000]: PAR.I
+[0x000000BC] [0x1F]/[0x0000]: PAR.F
+[0x000000BD] [0x1F]/[0x0000]: PAR.F
+[0x000000BE] [0x1F]/[0x0000]: PAR.F
+[0x000000BF] [0x1E]/[0x0000]: PAR.I
+[0x000000C0] [0x23]/[0x0106]: CALL     [262/0x106]
+
+Line: 50 Statement: 0
+-> 50  PROCCreateVertex(offset%, -0.5, -0.5, -0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Expression Start          
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Real operand              -0.500000
+[ 5]         Real operand              -0.500000
+[ 6]         Real operand              -0.500000
+[ 7]         Token 0x24                FN
+[ 8]         Proc or FN Call           RandomColour%
+[ 9]         Expression End            
+[0x000000C1] [0x04]/[0x0029]: LOAD.I   [offset%]
+[0x000000C2] [0x03]/[0x002E]: LOAD.F   -0.500000
+[0x000000C3] [0x03]/[0x002E]: LOAD.F   -0.500000
+[0x000000C4] [0x03]/[0x002E]: LOAD.F   -0.500000
+[0x000000C5] [0x23]/[0x00D7]: CALL     [215/0xD7]
+[0x000000C6] [0x1E]/[0x0000]: PAR.I
+[0x000000C7] [0x1F]/[0x0000]: PAR.F
+[0x000000C8] [0x1F]/[0x0000]: PAR.F
+[0x000000C9] [0x1F]/[0x0000]: PAR.F
+[0x000000CA] [0x1E]/[0x0000]: PAR.I
+[0x000000CB] [0x23]/[0x0106]: CALL     [262/0x106]
+
+Line: 51 Empty/REM
+-> 51
+
+Line: 52 Empty/REM
+-> 52  REM Build faces
+
+Line: 53 Empty/REM
+-> 53REM  face_list%=offset%
+
+Line: 54 Empty/REM
+-> 54REM  colour%=FNRandomColour
+
+Line: 55 Empty/REM
+-> 55REM  PROCCreateFace(offset%, vertex_list%, 3, 1, 0, colour%): REM FRONT
+
+Line: 56 Empty/REM
+-> 56REM  PROCCreateFace(offset%, vertex_list%, 3, 2, 1, colour%)
+
+Line: 57 Empty/REM
+-> 57REM  colour%=FNRandomColour
+
+Line: 58 Empty/REM
+-> 58REM  PROCCreateFace(offset%, vertex_list%, 5, 6, 7, colour%): REM BACK
+
+Line: 59 Empty/REM
+-> 59REM  PROCCreateFace(offset%, vertex_list%, 5, 7, 4, colour%)
+
+Line: 60 Empty/REM
+-> 60REM  colour%=FNRandomColour
+
+Line: 61 Empty/REM
+-> 61REM  PROCCreateFace(offset%, vertex_list%, 3, 7, 6, colour%): REM TOP
+
+Line: 62 Empty/REM
+-> 62REM  PROCCreateFace(offset%, vertex_list%, 3, 6, 2, colour%)
+
+Line: 63 Empty/REM
+-> 63REM  colour%=FNRandomColour
+
+Line: 64 Empty/REM
+-> 64REM  PROCCreateFace(offset%, vertex_list%, 4, 0, 1, colour%): REM BOTTOM
+
+Line: 65 Empty/REM
+-> 65REM  PROCCreateFace(offset%, vertex_list%, 4, 1, 5, colour%)
+
+Line: 66 Empty/REM
+-> 66REM  colour%=FNRandomColour
+
+Line: 67 Empty/REM
+-> 67REM  PROCCreateFace(offset%, vertex_list%, 4, 7, 3, colour%): REM LEFT
+
+Line: 68 Empty/REM
+-> 68REM  PROCCreateFace(offset%, vertex_list%, 4, 3, 0, colour%)
+
+Line: 69 Empty/REM
+-> 69REM  colour%=FNRandomColour
+
+Line: 70 Empty/REM
+-> 70REM  PROCCreateFace(offset%, vertex_list%, 1, 2, 6, colour%): REM RIGHT
+
+Line: 71 Empty/REM
+-> 71REM  PROCCreateFace(offset%, vertex_list%, 1, 6, 5, colour%)
+
+Line: 72 Empty/REM
+-> 72
+
+Line: 73 Empty/REM
+-> 73  REM Build shape
+
+Line: 74 Empty/REM
+-> 74REM  cube%!0=number_of_vertices%
+
+Line: 75 Empty/REM
+-> 75REM  cube%!4=number_of_faces%
+
+Line: 76 Empty/REM
+-> 76REM  cube%!8=vertex_list%
+
+Line: 77 Empty/REM
+-> 77REM  cube%!12=face_list%
+
+Line: 78 Empty/REM
+-> 78REM  SYS "Engine3D_InitialiseObject", cube%
+
+Line: 79 Statement: 0
+-> 79ENDPROC
+[ 0]         Token 0x61                ENDPROC
+[0x000000CC] [0x24]/[0x0000]: RETURN
+
+Line: 80 Empty/REM
+-> 80
+
+Line: 81 Statement: 0
+-> 81DEFFNRandomX%
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (002)     RandomX%
+
+Line: 82 Statement: 0
+-> 82= ABS(RND MOD swidth%)
+[ 0]         Operator                  =
+[ 1]         Expression Start          
+[ 2]         Token 0x33                RND
+[ 3]         Variable                  swidth% (0x55b0ccd169b0) (INTEGER)
+[ 4]         Token 0x03                MOD
+[ 5]         Token 0x14                ABS
+[ 6]         Expression End            
+[0x000000CD] [0x52]/[0x0000]: Unknown bytecode 82
+[0x000000CE] [0x04]/[0x0000]: LOAD.I   [swidth%]
+[0x000000CF] [0x49]/[0x0000]: Unknown bytecode 73
+[0x000000D0] [0x53]/[0x0000]: ABS.I
+[0x000000D1] [0x25]/[0x0000]: RETURN FN
+
+Line: 83 Empty/REM
+-> 83
+
+Line: 84 Statement: 0
+-> 84DEFFNRandomY%
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (003)     RandomY%
+
+Line: 85 Statement: 0
+-> 85= ABS(RND MOD sheight%)
+[ 0]         Operator                  =
+[ 1]         Expression Start          
+[ 2]         Token 0x33                RND
+[ 3]         Variable                  sheight% (0x55b0ccd16be0) (INTEGER)
+[ 4]         Token 0x03                MOD
+[ 5]         Token 0x14                ABS
+[ 6]         Expression End            
+[0x000000D2] [0x52]/[0x0000]: Unknown bytecode 82
+[0x000000D3] [0x04]/[0x0002]: LOAD.I   [sheight%]
+[0x000000D4] [0x49]/[0x0000]: Unknown bytecode 73
+[0x000000D5] [0x53]/[0x0000]: ABS.I
+[0x000000D6] [0x25]/[0x0000]: RETURN FN
+
+Line: 86 Empty/REM
+-> 86
+
+Line: 87 Statement: 0
+-> 87DEFFNRandomColour%
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (004)     RandomColour%
+
+Line: 88 Statement: 0
+-> 88  b%=ABS(RND MOD 256)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  b% (0x55b0ccd218d0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Token 0x33                RND
+[ 4]         Integer operand           256
+[ 5]         Token 0x03                MOD
+[ 6]         Token 0x14                ABS
+[ 7]         Expression End            
+[0x000000D7] [0x52]/[0x0000]: Unknown bytecode 82
+[0x000000D8] [0x04]/[0x0021]: LOAD.I   256
+[0x000000D9] [0x49]/[0x0000]: Unknown bytecode 73
+[0x000000DA] [0x53]/[0x0000]: ABS.I
+[0x000000DB] [0x07]/[0x0030]: STORE.I  [b%]
+
+Line: 89 Statement: 0
+-> 89  g%=ABS(RND MOD 256)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  g% (0x55b0ccd21c20) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Token 0x33                RND
+[ 4]         Integer operand           256
+[ 5]         Token 0x03                MOD
+[ 6]         Token 0x14                ABS
+[ 7]         Expression End            
+[0x000000DC] [0x52]/[0x0000]: Unknown bytecode 82
+[0x000000DD] [0x04]/[0x0021]: LOAD.I   256
+[0x000000DE] [0x49]/[0x0000]: Unknown bytecode 73
+[0x000000DF] [0x53]/[0x0000]: ABS.I
+[0x000000E0] [0x07]/[0x0031]: STORE.I  [g%]
+
+Line: 90 Statement: 0
+-> 90  r%=ABS(RND MOD 256)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  r% (0x55b0ccd21f70) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Token 0x33                RND
+[ 4]         Integer operand           256
+[ 5]         Token 0x03                MOD
+[ 6]         Token 0x14                ABS
+[ 7]         Expression End            
+[0x000000E1] [0x52]/[0x0000]: Unknown bytecode 82
+[0x000000E2] [0x04]/[0x0021]: LOAD.I   256
+[0x000000E3] [0x49]/[0x0000]: Unknown bytecode 73
+[0x000000E4] [0x53]/[0x0000]: ABS.I
+[0x000000E5] [0x07]/[0x0032]: STORE.I  [r%]
+
+Line: 91 Statement: 0
+-> 91= (b% << 16) + (g% << 8) + r%
+[ 0]         Operator                  =
+[ 1]         Expression Start          
+[ 2]         Variable                  b% (0x55b0ccd218d0) (INTEGER)
+[ 3]         Integer operand           16
+[ 4]         Operator                  <
+[ 5]         Variable                  g% (0x55b0ccd21c20) (INTEGER)
+[ 6]         Integer operand           8
+[ 7]         Operator                  <
+[ 8]         Operator                  +
+[ 9]         Variable                  r% (0x55b0ccd21f70) (INTEGER)
+[10]         Operator                  +
+[11]         Expression End            
+[0x000000E6] [0x04]/[0x0030]: LOAD.I   [b%]
+[0x000000E7] [0x04]/[0x0033]: LOAD.I   16
+[0x000000E8] [0x37]/[0x0000]: CMP.L.I
+[0x000000E9] [0x04]/[0x0031]: LOAD.I   [g%]
+[0x000000EA] [0x04]/[0x002A]: LOAD.I   8
+[0x000000EB] [0x37]/[0x0000]: CMP.L.I
+[0x000000EC] [0x3F]/[0x0000]: ADD.I
+[0x000000ED] [0x04]/[0x0032]: LOAD.I   [r%]
+[0x000000EE] [0x3F]/[0x0000]: ADD.I
+[0x000000EF] [0x25]/[0x0000]: RETURN FN
+
+Line: 92 Empty/REM
+-> 92
+
+Line: 93 Statement: 0
+-> 93DEFFNRandomLightColour%
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (005)     RandomLightColour%
+
+Line: 94 Statement: 0
+-> 94= (((RND MOD 64) + 192) << 16) + (((RND MOD 64) + 192) << 8) + (RND MOD 64) + 192
+[ 0]         Operator                  =
+[ 1]         Expression Start          
+[ 2]         Token 0x33                RND
+[ 3]         Integer operand           64
+[ 4]         Token 0x03                MOD
+[ 5]         Integer operand           192
+[ 6]         Operator                  +
+[ 7]         Integer operand           16
+[ 8]         Operator                  <
+[ 9]         Token 0x33                RND
+[10]         Integer operand           64
+[11]         Token 0x03                MOD
+[12]         Integer operand           192
+[13]         Operator                  +
+[14]         Integer operand           8
+[15]         Operator                  <
+[16]         Operator                  +
+[17]         Token 0x33                RND
+[18]         Integer operand           64
+[19]         Token 0x03                MOD
+[20]         Operator                  +
+[21]         Integer operand           192
+[22]         Operator                  +
+[23]         Expression End            
+[0x000000F0] [0x52]/[0x0000]: Unknown bytecode 82
+[0x000000F1] [0x04]/[0x0034]: LOAD.I   64
+[0x000000F2] [0x49]/[0x0000]: Unknown bytecode 73
+[0x000000F3] [0x04]/[0x0035]: LOAD.I   192
+[0x000000F4] [0x3F]/[0x0000]: ADD.I
+[0x000000F5] [0x04]/[0x0033]: LOAD.I   16
+[0x000000F6] [0x37]/[0x0000]: CMP.L.I
+[0x000000F7] [0x52]/[0x0000]: Unknown bytecode 82
+[0x000000F8] [0x04]/[0x0034]: LOAD.I   64
+[0x000000F9] [0x49]/[0x0000]: Unknown bytecode 73
+[0x000000FA] [0x04]/[0x0035]: LOAD.I   192
+[0x000000FB] [0x3F]/[0x0000]: ADD.I
+[0x000000FC] [0x04]/[0x002A]: LOAD.I   8
+[0x000000FD] [0x37]/[0x0000]: CMP.L.I
+[0x000000FE] [0x3F]/[0x0000]: ADD.I
+[0x000000FF] [0x52]/[0x0000]: Unknown bytecode 82
+[0x00000100] [0x04]/[0x0034]: LOAD.I   64
+[0x00000101] [0x49]/[0x0000]: Unknown bytecode 73
+[0x00000102] [0x3F]/[0x0000]: ADD.I
+[0x00000103] [0x04]/[0x0035]: LOAD.I   192
+[0x00000104] [0x3F]/[0x0000]: ADD.I
+[0x00000105] [0x25]/[0x0000]: RETURN FN
+
+Line: 95 Empty/REM
+-> 95
+
+Line: 96 Statement: 0
+-> 96DEFPROCCreateVertex(RETURN address%, x, y, z, colour%)
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x72                PROC
+[ 2]         Proc or FN Call (006)     CreateVertex
+[ 3]         Token 0x78                RETURN
+[ 4]         Variable                  address% (0x55b0ccd23590) (INTEGER)
+[ 5]         Variable                  x (0x55b0ccd23690) (FLOAT)
+[ 6]         Variable                  y (0x55b0ccd23790) (FLOAT)
+[ 7]         Variable                  z (0x55b0ccd23890) (FLOAT)
+[ 8]         Variable                  colour% (0x55b0ccd23990) (INTEGER)
+[0x00000106] [0x1C]/[0x003A]: UNPCK.I  [colour%]
+[0x00000107] [0x1B]/[0x0039]: UNPCK.F  [z]
+[0x00000108] [0x1B]/[0x0038]: UNPCK.F  [y]
+[0x00000109] [0x1B]/[0x0037]: UNPCK.F  [x]
+[0x0000010A] [0x1C]/[0x0036]: UNPCK.I  [address%]
+
+Line: 97 Statement: 0
+-> 97  address%!0=x * fa
+[ 0]         Token 0x69                LET
+[ 1]         Variable (storage)        address% (0x55b0ccd23590) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Expression Start          
+[ 4]         Integer operand           0
+[ 5]         Expression End            
+[ 6]         Expression Start          
+[ 7]         Variable                  x (0x55b0ccd23690) (FLOAT)
+[ 8]         Variable                  fa (0x55b0ccd1b740) (FLOAT)
+[ 9]         Operator                  *
+[10]         Expression End            
+[0x0000010B] [0x04]/[0x0010]: LOAD.I   0
+[0x0000010C] [0x03]/[0x0037]: LOAD.F   [x]
+[0x0000010D] [0x03]/[0x0020]: LOAD.F   [fa]
+[0x0000010E] [0x43]/[0x0000]: MUL.F
+[0x0000010F] [0x15]/[0x0000]: F.TO.I
+[0x00000110] [0x09]/[0x0036]: STORE.IS [address%]
+
+Line: 98 Statement: 0
+-> 98  address%!4=y * fa
+[ 0]         Token 0x69                LET
+[ 1]         Variable (storage)        address% (0x55b0ccd23590) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Expression Start          
+[ 4]         Integer operand           4
+[ 5]         Expression End            
+[ 6]         Expression Start          
+[ 7]         Variable                  y (0x55b0ccd23790) (FLOAT)
+[ 8]         Variable                  fa (0x55b0ccd1b740) (FLOAT)
+[ 9]         Operator                  *
+[10]         Expression End            
+[0x00000111] [0x04]/[0x000B]: LOAD.I   4
+[0x00000112] [0x03]/[0x0038]: LOAD.F   [y]
+[0x00000113] [0x03]/[0x0020]: LOAD.F   [fa]
+[0x00000114] [0x43]/[0x0000]: MUL.F
+[0x00000115] [0x15]/[0x0000]: F.TO.I
+[0x00000116] [0x09]/[0x0036]: STORE.IS [address%]
+
+Line: 99 Statement: 0
+-> 99  address%!8=z * fa
+[ 0]         Token 0x69                LET
+[ 1]         Variable (storage)        address% (0x55b0ccd23590) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Expression Start          
+[ 4]         Integer operand           8
+[ 5]         Expression End            
+[ 6]         Expression Start          
+[ 7]         Variable                  z (0x55b0ccd23890) (FLOAT)
+[ 8]         Variable                  fa (0x55b0ccd1b740) (FLOAT)
+[ 9]         Operator                  *
+[10]         Expression End            
+[0x00000117] [0x04]/[0x002A]: LOAD.I   8
+[0x00000118] [0x03]/[0x0039]: LOAD.F   [z]
+[0x00000119] [0x03]/[0x0020]: LOAD.F   [fa]
+[0x0000011A] [0x43]/[0x0000]: MUL.F
+[0x0000011B] [0x15]/[0x0000]: F.TO.I
+[0x0000011C] [0x09]/[0x0036]: STORE.IS [address%]
+
+Line: 100 Statement: 0
+-> 100  address%!12=colour%
+[ 0]         Token 0x69                LET
+[ 1]         Variable (storage)        address% (0x55b0ccd23590) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Expression Start          
+[ 4]         Integer operand           12
+[ 5]         Expression End            
+[ 6]         Expression Start          
+[ 7]         Variable                  colour% (0x55b0ccd23990) (INTEGER)
+[ 8]         Expression End            
+[0x0000011D] [0x04]/[0x002B]: LOAD.I   12
+[0x0000011E] [0x04]/[0x003A]: LOAD.I   [colour%]
+[0x0000011F] [0x09]/[0x0036]: STORE.IS [address%]
+
+Line: 101 Statement: 0
+-> 101  address%+=vertex_size%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  address% (0x55b0ccd23590) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable                  address% (0x55b0ccd23590) (INTEGER)
+[ 4]         Variable                  vertex_size% (0x55b0ccd1aff0) (INTEGER)
+[ 5]         Operator                  +
+[ 6]         Expression End            
+[0x00000120] [0x04]/[0x0036]: LOAD.I   [address%]
+[0x00000121] [0x04]/[0x001C]: LOAD.I   [vertex_size%]
+[0x00000122] [0x3F]/[0x0000]: ADD.I
+[0x00000123] [0x07]/[0x0036]: STORE.I  [address%]
+
+Line: 102 Statement: 0
+-> 102ENDPROC
+[ 0]         Token 0x61                ENDPROC
+[0x00000124] [0x24]/[0x0000]: RETURN
+
+Line: 103 Empty/REM
+-> 103
+
+Line: 104 Statement: 0
+-> 104DEFPROCCreateFace(RETURN address%, vertex_list%, v1%, v2%, v3%, colour%)
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x72                PROC
+[ 2]         Proc or FN Call (007)     CreateFace
+[ 3]         Token 0x78                RETURN
+[ 4]         Variable                  address% (0x55b0ccd24950) (INTEGER)
+[ 5]         Variable                  vertex_list% (0x55b0ccd24a50) (INTEGER)
+[ 6]         Variable                  v1% (0x55b0ccd24b50) (INTEGER)
+[ 7]         Variable                  v2% (0x55b0ccd24c50) (INTEGER)
+[ 8]         Variable                  v3% (0x55b0ccd24d50) (INTEGER)
+[ 9]         Variable                  colour% (0x55b0ccd24e50) (INTEGER)
+[0x00000125] [0x1C]/[0x0040]: UNPCK.I  [colour%]
+[0x00000126] [0x1C]/[0x003F]: UNPCK.I  [v3%]
+[0x00000127] [0x1C]/[0x003E]: UNPCK.I  [v2%]
+[0x00000128] [0x1C]/[0x003D]: UNPCK.I  [v1%]
+[0x00000129] [0x1C]/[0x003C]: UNPCK.I  [vertex_list%]
+[0x0000012A] [0x1C]/[0x003B]: UNPCK.I  [address%]
+
+Line: 105 Statement: 0
+-> 105  v1address%=vertex_list% + (v1% * vertex_size%)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  v1address% (0x55b0ccd25060) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable                  vertex_list% (0x55b0ccd24a50) (INTEGER)
+[ 4]         Variable                  v1% (0x55b0ccd24b50) (INTEGER)
+[ 5]         Variable                  vertex_size% (0x55b0ccd1aff0) (INTEGER)
+[ 6]         Operator                  *
+[ 7]         Operator                  +
+[ 8]         Expression End            
+[0x0000012B] [0x04]/[0x003C]: LOAD.I   [vertex_list%]
+[0x0000012C] [0x04]/[0x003D]: LOAD.I   [v1%]
+[0x0000012D] [0x04]/[0x001C]: LOAD.I   [vertex_size%]
+[0x0000012E] [0x44]/[0x0000]: MUL.I
+[0x0000012F] [0x3F]/[0x0000]: ADD.I
+[0x00000130] [0x07]/[0x0041]: STORE.I  [v1address%]
+
+Line: 106 Statement: 0
+-> 106  v2address%=vertex_list% + (v2% * vertex_size%)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  v2address% (0x55b0ccd25410) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable                  vertex_list% (0x55b0ccd24a50) (INTEGER)
+[ 4]         Variable                  v2% (0x55b0ccd24c50) (INTEGER)
+[ 5]         Variable                  vertex_size% (0x55b0ccd1aff0) (INTEGER)
+[ 6]         Operator                  *
+[ 7]         Operator                  +
+[ 8]         Expression End            
+[0x00000131] [0x04]/[0x003C]: LOAD.I   [vertex_list%]
+[0x00000132] [0x04]/[0x003E]: LOAD.I   [v2%]
+[0x00000133] [0x04]/[0x001C]: LOAD.I   [vertex_size%]
+[0x00000134] [0x44]/[0x0000]: MUL.I
+[0x00000135] [0x3F]/[0x0000]: ADD.I
+[0x00000136] [0x07]/[0x0042]: STORE.I  [v2address%]
+
+Line: 107 Statement: 0
+-> 107  v3address%=vertex_list% + (v3% * vertex_size%)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  v3address% (0x55b0ccd257c0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable                  vertex_list% (0x55b0ccd24a50) (INTEGER)
+[ 4]         Variable                  v3% (0x55b0ccd24d50) (INTEGER)
+[ 5]         Variable                  vertex_size% (0x55b0ccd1aff0) (INTEGER)
+[ 6]         Operator                  *
+[ 7]         Operator                  +
+[ 8]         Expression End            
+[0x00000137] [0x04]/[0x003C]: LOAD.I   [vertex_list%]
+[0x00000138] [0x04]/[0x003F]: LOAD.I   [v3%]
+[0x00000139] [0x04]/[0x001C]: LOAD.I   [vertex_size%]
+[0x0000013A] [0x44]/[0x0000]: MUL.I
+[0x0000013B] [0x3F]/[0x0000]: ADD.I
+[0x0000013C] [0x07]/[0x0043]: STORE.I  [v3address%]
+
+Line: 108 Statement: 0
+-> 108  address%!0=v1address%
+[ 0]         Token 0x69                LET
+[ 1]         Variable (storage)        address% (0x55b0ccd24950) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Expression Start          
+[ 4]         Integer operand           0
+[ 5]         Expression End            
+[ 6]         Expression Start          
+[ 7]         Variable                  v1address% (0x55b0ccd25060) (INTEGER)
+[ 8]         Expression End            
+[0x0000013D] [0x04]/[0x0010]: LOAD.I   0
+[0x0000013E] [0x04]/[0x0041]: LOAD.I   [v1address%]
+[0x0000013F] [0x09]/[0x003B]: STORE.IS [address%]
+
+Line: 109 Statement: 0
+-> 109  address%!4=v2address%
+[ 0]         Token 0x69                LET
+[ 1]         Variable (storage)        address% (0x55b0ccd24950) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Expression Start          
+[ 4]         Integer operand           4
+[ 5]         Expression End            
+[ 6]         Expression Start          
+[ 7]         Variable                  v2address% (0x55b0ccd25410) (INTEGER)
+[ 8]         Expression End            
+[0x00000140] [0x04]/[0x000B]: LOAD.I   4
+[0x00000141] [0x04]/[0x0042]: LOAD.I   [v2address%]
+[0x00000142] [0x09]/[0x003B]: STORE.IS [address%]
+
+Line: 110 Statement: 0
+-> 110  address%!8=v3address%
+[ 0]         Token 0x69                LET
+[ 1]         Variable (storage)        address% (0x55b0ccd24950) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Expression Start          
+[ 4]         Integer operand           8
+[ 5]         Expression End            
+[ 6]         Expression Start          
+[ 7]         Variable                  v3address% (0x55b0ccd257c0) (INTEGER)
+[ 8]         Expression End            
+[0x00000143] [0x04]/[0x002A]: LOAD.I   8
+[0x00000144] [0x04]/[0x0043]: LOAD.I   [v3address%]
+[0x00000145] [0x09]/[0x003B]: STORE.IS [address%]
+
+Line: 111 Statement: 0
+-> 111  address%!12=colour%
+[ 0]         Token 0x69                LET
+[ 1]         Variable (storage)        address% (0x55b0ccd24950) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Expression Start          
+[ 4]         Integer operand           12
+[ 5]         Expression End            
+[ 6]         Expression Start          
+[ 7]         Variable                  colour% (0x55b0ccd24e50) (INTEGER)
+[ 8]         Expression End            
+[0x00000146] [0x04]/[0x002B]: LOAD.I   12
+[0x00000147] [0x04]/[0x0040]: LOAD.I   [colour%]
+[0x00000148] [0x09]/[0x003B]: STORE.IS [address%]
+
+Line: 112 Statement: 0
+-> 112  address%+=face_size%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  address% (0x55b0ccd24950) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable                  address% (0x55b0ccd24950) (INTEGER)
+[ 4]         Variable                  face_size% (0x55b0ccd1b3c0) (INTEGER)
+[ 5]         Operator                  +
+[ 6]         Expression End            
+[0x00000149] [0x04]/[0x003B]: LOAD.I   [address%]
+[0x0000014A] [0x04]/[0x001F]: LOAD.I   [face_size%]
+[0x0000014B] [0x3F]/[0x0000]: ADD.I
+[0x0000014C] [0x07]/[0x003B]: STORE.I  [address%]
+
+Line: 113 Statement: 0
+-> 113  PRINT ~v1address%,~v2address%,~v3address%
+[ 0]         Token 0x71                PRINT
+[ 1]         Expression Start          
+[ 2]         Tilde                     ~
+[ 3]         Variable                  v1address% (0x55b0ccd25060) (INTEGER)
+[ 4]         Expression End            
+[ 5]         Expression Start          
+[ 6]         Tilde                     ~
+[ 7]         Variable                  v2address% (0x55b0ccd25410) (INTEGER)
+[ 8]         Expression End            
+[ 9]         Expression Start          
+[10]         Tilde                     ~
+[11]         Variable                  v3address% (0x55b0ccd257c0) (INTEGER)
+[12]         Expression End            
+[0x0000014D] [0x5F]/[0x0000]: PRINT.HEX
+[0x0000014E] [0x04]/[0x0041]: LOAD.I   [v1address%]
+[0x0000014F] [0x5B]/[0x0000]: PRINT.I
+[0x00000150] [0x5F]/[0x0000]: PRINT.HEX
+[0x00000151] [0x04]/[0x0042]: LOAD.I   [v2address%]
+[0x00000152] [0x5B]/[0x0000]: PRINT.I
+[0x00000153] [0x5F]/[0x0000]: PRINT.HEX
+[0x00000154] [0x04]/[0x0043]: LOAD.I   [v3address%]
+[0x00000155] [0x5B]/[0x0000]: PRINT.I
+[0x00000156] [0x5E]/[0x0000]: PRINT.NL
+
+Line: 114 Statement: 0
+-> 114ENDPROC
+[ 0]         Token 0x61                ENDPROC
+[0x00000157] [0x24]/[0x0000]: RETURN
+
+Line: 115 Empty/REM
+-> 115
+
+Line: 116 Statement: 0
+-> 116DEFPROCInitPerlin
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x72                PROC
+[ 2]         Proc or FN Call (008)     InitPerlin
+
+Line: 117 Statement: 0
+-> 117  DIM hash%(256)
+[ 0]         Token 0x5E                DIM
+[ 1]         Variable (with index)     hash% (0x55b0ccd26b20) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Integer operand           256
+[ 4]         Expression End            
+[0x00000158] [0x04]/[0x0021]: LOAD.I   256
+[0x00000159] [0x11]/[0x0044]: DIM.I    [hash%]
+
+Line: 118 Statement: 0
+-> 118  FOR I%=0 TO 255
+[ 0]         Token 0x63                FOR
+[ 1]         Variable                  I% (0x55b0ccd26d70) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Integer operand           0
+[ 4]         Expression End            
+[ 5]         Token 0x38                TO
+[ 6]         Expression Start          
+[ 7]         Integer operand           255
+[ 8]         Expression End            
+[0x0000015A] [0x04]/[0x0010]: LOAD.I   0
+[0x0000015B] [0x07]/[0x0045]: STORE.I  [I%]
+[0x0000015C] [0x02]/[0x0003]: CONST.I  3
+[0x0000015D] [0x11]/[0x0045]: DIM.I    [I%]
+[0x0000015E] [0x02]/[0x0001]: CONST.I  1
+[0x0000015F] [0x3B]/[0x0000]: DUP.I
+[0x00000160] [0x02]/[0x0000]: CONST.I  0
+[0x00000161] [0x0A]/[0x0045]: STORE.IA [I%]
+[0x00000162] [0x04]/[0x000F]: LOAD.I   255
+[0x00000163] [0x3D]/[0x0000]: ROT.I
+[0x00000164] [0x04]/[0x0045]: LOAD.I   [I%]
+[0x00000165] [0x46]/[0x0000]: SUB.I
+[0x00000166] [0x42]/[0x0000]: DIV.I
+[0x00000167] [0x02]/[0x0001]: CONST.I  1
+[0x00000168] [0x0A]/[0x0045]: STORE.IA [I%]
+[0x00000169] [0x21]/[0x0002]: PUSH_PC  [364/0x16C]
+[0x0000016A] [0x02]/[0x0002]: CONST.I  2
+[0x0000016B] [0x0A]/[0x0045]: STORE.IA [I%]
+
+Line: 119 Statement: 0
+-> 119    READ v%
+[ 0]         Token 0x73                READ
+[ 1]         Variable                  v% (0x55b0ccd27000) (INTEGER)
+[0x0000016C] [0x13]/[0x0000]: DATA
+[0x0000016D] [0x18]/[0x0000]: CONV.I
+[0x0000016E] [0x07]/[0x0046]: STORE.I  [v%]
+
+Line: 120 Statement: 0
+-> 120    hash%(I%) = v%
+[ 0]         Token 0x69                LET
+[ 1]         Variable (with index)     hash% (0x55b0ccd26b20) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable                  I% (0x55b0ccd26d70) (INTEGER)
+[ 4]         Expression End            
+[ 5]         Expression Start          
+[ 6]         Variable                  v% (0x55b0ccd27000) (INTEGER)
+[ 7]         Expression End            
+[0x0000016F] [0x04]/[0x0045]: LOAD.I   [I%]
+[0x00000170] [0x07]/[0x0044]: STORE.I  [hash%]
+
+Line: 121 Statement: 0
+-> 121  NEXT
+[ 0]         Token 0x6D                NEXT
+[0x00000171] [0x27]/[0x0045]: NEXT.I   [I%]
+
+Line: 122 Statement: 0
+-> 122  seed%=0
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  seed% (0x55b0ccd274b0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Integer operand           0
+[ 4]         Expression End            
+[0x00000172] [0x04]/[0x0010]: LOAD.I   0
+[0x00000173] [0x07]/[0x0047]: STORE.I  [seed%]
+
+Line: 123 Statement: 0
+-> 123ENDPROC
+[ 0]         Token 0x61                ENDPROC
+[0x00000174] [0x24]/[0x0000]: RETURN
+
+Line: 124 Empty/REM
+-> 124
+
+Line: 125 Statement: 0
+-> 125DEFFNNoise2%(x%, y%)
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (009)     Noise2%
+[ 3]         Variable                  x% (0x55b0ccd278d0) (INTEGER)
+[ 4]         Variable                  y% (0x55b0ccd279d0) (INTEGER)
+[0x00000175] [0x1C]/[0x0049]: UNPCK.I  [y%]
+[0x00000176] [0x1C]/[0x0048]: UNPCK.I  [x%]
+
+Line: 126 Statement: 0
+-> 126LOCAL tmp%
+[ 0]         Token 0x6A                LOCAL
+[ 1]         Variable                  tmp% (0x55b0ccd27ba0) (INTEGER)
+
+Line: 127 Statement: 0
+-> 127  tmp%=hash%((y% + seed%) MOD 256)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  tmp% (0x55b0ccd27ba0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable (with index)     hash% (0x55b0ccd26b20) (INTEGER)
+[ 4]         Expression Start          
+[ 5]         Variable                  y% (0x55b0ccd279d0) (INTEGER)
+[ 6]         Variable                  seed% (0x55b0ccd274b0) (INTEGER)
+[ 7]         Operator                  +
+[ 8]         Integer operand           256
+[ 9]         Token 0x03                MOD
+[10]         Expression End            
+[11]         Expression End            
+[0x00000177] [0x04]/[0x0049]: LOAD.I   [y%]
+[0x00000178] [0x04]/[0x0047]: LOAD.I   [seed%]
+[0x00000179] [0x3F]/[0x0000]: ADD.I
+[0x0000017A] [0x04]/[0x0021]: LOAD.I   256
+[0x0000017B] [0x49]/[0x0000]: Unknown bytecode 73
+[0x0000017C] [0x0D]/[0x0044]: LOAD.IA  [hash%]
+[0x0000017D] [0x07]/[0x004A]: STORE.I  [tmp%]
+
+Line: 128 Statement: 0
+-> 128=hash%((tmp% + x%) MOD 256)
+[ 0]         Operator                  =
+[ 1]         Expression Start          
+[ 2]         Variable (with index)     hash% (0x55b0ccd26b20) (INTEGER)
+[ 3]         Expression Start          
+[ 4]         Variable                  tmp% (0x55b0ccd27ba0) (INTEGER)
+[ 5]         Variable                  x% (0x55b0ccd278d0) (INTEGER)
+[ 6]         Operator                  +
+[ 7]         Integer operand           256
+[ 8]         Token 0x03                MOD
+[ 9]         Expression End            
+[10]         Expression End            
+[0x0000017E] [0x04]/[0x004A]: LOAD.I   [tmp%]
+[0x0000017F] [0x04]/[0x0048]: LOAD.I   [x%]
+[0x00000180] [0x3F]/[0x0000]: ADD.I
+[0x00000181] [0x04]/[0x0021]: LOAD.I   256
+[0x00000182] [0x49]/[0x0000]: Unknown bytecode 73
+[0x00000183] [0x0D]/[0x0044]: LOAD.IA  [hash%]
+[0x00000184] [0x25]/[0x0000]: RETURN FN
+
+Line: 129 Empty/REM
+-> 129
+
+Line: 130 Statement: 0
+-> 130DEFFNLinInter(x, y, s)
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (010)     LinInter
+[ 3]         Variable                  x (0x55b0ccd285b0) (FLOAT)
+[ 4]         Variable                  y (0x55b0ccd286b0) (FLOAT)
+[ 5]         Variable                  s (0x55b0ccd287b0) (FLOAT)
+[0x00000185] [0x1B]/[0x004D]: UNPCK.F  [s]
+[0x00000186] [0x1B]/[0x004C]: UNPCK.F  [y]
+[0x00000187] [0x1B]/[0x004B]: UNPCK.F  [x]
+
+Line: 131 Statement: 0
+-> 131=x + s * (y - x)
+[ 0]         Operator                  =
+[ 1]         Expression Start          
+[ 2]         Variable                  x (0x55b0ccd285b0) (FLOAT)
+[ 3]         Variable                  s (0x55b0ccd287b0) (FLOAT)
+[ 4]         Variable                  y (0x55b0ccd286b0) (FLOAT)
+[ 5]         Variable                  x (0x55b0ccd285b0) (FLOAT)
+[ 6]         Operator                  -
+[ 7]         Operator                  *
+[ 8]         Operator                  +
+[ 9]         Expression End            
+[0x00000188] [0x03]/[0x004B]: LOAD.F   [x]
+[0x00000189] [0x03]/[0x004D]: LOAD.F   [s]
+[0x0000018A] [0x03]/[0x004C]: LOAD.F   [y]
+[0x0000018B] [0x03]/[0x004B]: LOAD.F   [x]
+[0x0000018C] [0x45]/[0x0000]: SUB.F
+[0x0000018D] [0x43]/[0x0000]: MUL.F
+[0x0000018E] [0x3E]/[0x0000]: ADD.F
+[0x0000018F] [0x25]/[0x0000]: RETURN FN
+
+Line: 132 Empty/REM
+-> 132
+
+Line: 133 Statement: 0
+-> 133DEFFNSmoothInter(x, y, s)
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (011)     SmoothInter
+[ 3]         Variable                  x (0x55b0ccd28de0) (FLOAT)
+[ 4]         Variable                  y (0x55b0ccd28ee0) (FLOAT)
+[ 5]         Variable                  s (0x55b0ccd28fe0) (FLOAT)
+[0x00000190] [0x1B]/[0x0050]: UNPCK.F  [s]
+[0x00000191] [0x1B]/[0x004F]: UNPCK.F  [y]
+[0x00000192] [0x1B]/[0x004E]: UNPCK.F  [x]
+
+Line: 134 Statement: 0
+-> 134=FNLinInter(x, y, s * s * (3 - 2 * s))
+[ 0]         Operator                  =
+[ 1]         Expression Start          
+[ 2]         Variable                  x (0x55b0ccd28de0) (FLOAT)
+[ 3]         Variable                  y (0x55b0ccd28ee0) (FLOAT)
+[ 4]         Variable                  s (0x55b0ccd28fe0) (FLOAT)
+[ 5]         Variable                  s (0x55b0ccd28fe0) (FLOAT)
+[ 6]         Operator                  *
+[ 7]         Integer operand           3
+[ 8]         Integer operand           2
+[ 9]         Variable                  s (0x55b0ccd28fe0) (FLOAT)
+[10]         Operator                  *
+[11]         Operator                  -
+[12]         Operator                  *
+[13]         Token 0x24                FN
+[14]         Proc or FN Call           LinInter
+[15]         Expression End            
+[0x00000193] [0x03]/[0x004E]: LOAD.F   [x]
+[0x00000194] [0x03]/[0x004F]: LOAD.F   [y]
+[0x00000195] [0x03]/[0x0050]: LOAD.F   [s]
+[0x00000196] [0x03]/[0x0050]: LOAD.F   [s]
+[0x00000197] [0x43]/[0x0000]: MUL.F
+[0x00000198] [0x04]/[0x0051]: LOAD.I   3
+[0x00000199] [0x04]/[0x0052]: LOAD.I   2
+[0x0000019A] [0x03]/[0x0050]: LOAD.F   [s]
+[0x0000019B] [0x14]/[0x0000]: I.TO.F
+[0x0000019C] [0x3C]/[0x0000]: ROT.F
+[0x0000019D] [0x43]/[0x0000]: MUL.F
+[0x0000019E] [0x14]/[0x0000]: I.TO.F
+[0x0000019F] [0x3C]/[0x0000]: ROT.F
+[0x000001A0] [0x45]/[0x0000]: SUB.F
+[0x000001A1] [0x43]/[0x0000]: MUL.F
+[0x000001A2] [0x1F]/[0x0000]: PAR.F
+[0x000001A3] [0x1F]/[0x0000]: PAR.F
+[0x000001A4] [0x1F]/[0x0000]: PAR.F
+[0x000001A5] [0x23]/[0x0185]: CALL     [389/0x185]
+[0x000001A6] [0x25]/[0x0000]: RETURN FN
+
+Line: 135 Empty/REM
+-> 135
+
+Line: 136 Statement: 0
+-> 136DEFFNNoise2D(x, y)
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (012)     Noise2D
+[ 3]         Variable                  x (0x55b0ccd299d0) (FLOAT)
+[ 4]         Variable                  y (0x55b0ccd29ad0) (FLOAT)
+[0x000001A7] [0x1B]/[0x0054]: UNPCK.F  [y]
+[0x000001A8] [0x1B]/[0x0053]: UNPCK.F  [x]
+
+Line: 137 Statement: 0
+-> 137LOCAL x_int%,y_int%,x_frac,y_frac,s%,t%,u%,v%,low,high
+[ 0]         Token 0x6A                LOCAL
+[ 1]         Variable                  x_int% (0x55b0ccd29ca0) (INTEGER)
+[ 2]         Comma                     ,
+[ 3]         Variable                  y_int% (0x55b0ccd29da0) (INTEGER)
+[ 4]         Comma                     ,
+[ 5]         Variable                  x_frac (0x55b0ccd29ea0) (FLOAT)
+[ 6]         Comma                     ,
+[ 7]         Variable                  y_frac (0x55b0ccd29fa0) (FLOAT)
+[ 8]         Comma                     ,
+[ 9]         Variable                  s% (0x55b0ccd2a0a0) (INTEGER)
+[10]         Comma                     ,
+[11]         Variable                  t% (0x55b0ccd2a1a0) (INTEGER)
+[12]         Comma                     ,
+[13]         Variable                  u% (0x55b0ccd2a2a0) (INTEGER)
+[14]         Comma                     ,
+[15]         Variable                  v% (0x55b0ccd2a3a0) (INTEGER)
+[16]         Comma                     ,
+[17]         Variable                  low (0x55b0ccd2a4a0) (FLOAT)
+[18]         Comma                     ,
+[19]         Variable                  high (0x55b0ccd2a5a0) (FLOAT)
+
+Line: 138 Statement: 0
+-> 138  x_int% = x
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  x_int% (0x55b0ccd29ca0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable                  x (0x55b0ccd299d0) (FLOAT)
+[ 4]         Expression End            
+[0x000001A9] [0x03]/[0x0053]: LOAD.F   [x]
+[0x000001AA] [0x15]/[0x0000]: F.TO.I
+[0x000001AB] [0x07]/[0x0055]: STORE.I  [x_int%]
+
+Line: 139 Statement: 0
+-> 139  y_int% = y
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  y_int% (0x55b0ccd29da0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable                  y (0x55b0ccd29ad0) (FLOAT)
+[ 4]         Expression End            
+[0x000001AC] [0x03]/[0x0054]: LOAD.F   [y]
+[0x000001AD] [0x15]/[0x0000]: F.TO.I
+[0x000001AE] [0x07]/[0x0056]: STORE.I  [y_int%]
+
+Line: 140 Statement: 0
+-> 140  x_frac = x - x_int%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  x_frac (0x55b0ccd29ea0) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Variable                  x (0x55b0ccd299d0) (FLOAT)
+[ 4]         Variable                  x_int% (0x55b0ccd29ca0) (INTEGER)
+[ 5]         Operator                  -
+[ 6]         Expression End            
+[0x000001AF] [0x03]/[0x0053]: LOAD.F   [x]
+[0x000001B0] [0x04]/[0x0055]: LOAD.I   [x_int%]
+[0x000001B1] [0x14]/[0x0000]: I.TO.F
+[0x000001B2] [0x45]/[0x0000]: SUB.F
+[0x000001B3] [0x06]/[0x0057]: STORE.F  [x_frac]
+
+Line: 141 Statement: 0
+-> 141  y_frac = y - y_int%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  y_frac (0x55b0ccd29fa0) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Variable                  y (0x55b0ccd29ad0) (FLOAT)
+[ 4]         Variable                  y_int% (0x55b0ccd29da0) (INTEGER)
+[ 5]         Operator                  -
+[ 6]         Expression End            
+[0x000001B4] [0x03]/[0x0054]: LOAD.F   [y]
+[0x000001B5] [0x04]/[0x0056]: LOAD.I   [y_int%]
+[0x000001B6] [0x14]/[0x0000]: I.TO.F
+[0x000001B7] [0x45]/[0x0000]: SUB.F
+[0x000001B8] [0x06]/[0x0058]: STORE.F  [y_frac]
+
+Line: 142 Statement: 0
+-> 142  s%=FNNoise2%(x_int%,     y_int%)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  s% (0x55b0ccd2a0a0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable                  x_int% (0x55b0ccd29ca0) (INTEGER)
+[ 4]         Variable                  y_int% (0x55b0ccd29da0) (INTEGER)
+[ 5]         Token 0x24                FN
+[ 6]         Proc or FN Call           Noise2%
+[ 7]         Expression End            
+[0x000001B9] [0x04]/[0x0055]: LOAD.I   [x_int%]
+[0x000001BA] [0x04]/[0x0056]: LOAD.I   [y_int%]
+[0x000001BB] [0x1E]/[0x0000]: PAR.I
+[0x000001BC] [0x1E]/[0x0000]: PAR.I
+[0x000001BD] [0x23]/[0x0175]: CALL     [373/0x175]
+[0x000001BE] [0x07]/[0x0059]: STORE.I  [s%]
+
+Line: 143 Statement: 0
+-> 143  t%=FNNoise2%(x_int% + 1, y_int%)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  t% (0x55b0ccd2a1a0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable                  x_int% (0x55b0ccd29ca0) (INTEGER)
+[ 4]         Integer operand           1
+[ 5]         Operator                  +
+[ 6]         Variable                  y_int% (0x55b0ccd29da0) (INTEGER)
+[ 7]         Token 0x24                FN
+[ 8]         Proc or FN Call           Noise2%
+[ 9]         Expression End            
+[0x000001BF] [0x04]/[0x0055]: LOAD.I   [x_int%]
+[0x000001C0] [0x04]/[0x0008]: LOAD.I   1
+[0x000001C1] [0x3F]/[0x0000]: ADD.I
+[0x000001C2] [0x04]/[0x0056]: LOAD.I   [y_int%]
+[0x000001C3] [0x1E]/[0x0000]: PAR.I
+[0x000001C4] [0x1E]/[0x0000]: PAR.I
+[0x000001C5] [0x23]/[0x0175]: CALL     [373/0x175]
+[0x000001C6] [0x07]/[0x005A]: STORE.I  [t%]
+
+Line: 144 Statement: 0
+-> 144  u%=FNNoise2%(x_int%,     y_int% + 1)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  u% (0x55b0ccd2a2a0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable                  x_int% (0x55b0ccd29ca0) (INTEGER)
+[ 4]         Variable                  y_int% (0x55b0ccd29da0) (INTEGER)
+[ 5]         Integer operand           1
+[ 6]         Operator                  +
+[ 7]         Token 0x24                FN
+[ 8]         Proc or FN Call           Noise2%
+[ 9]         Expression End            
+[0x000001C7] [0x04]/[0x0055]: LOAD.I   [x_int%]
+[0x000001C8] [0x04]/[0x0056]: LOAD.I   [y_int%]
+[0x000001C9] [0x04]/[0x0008]: LOAD.I   1
+[0x000001CA] [0x3F]/[0x0000]: ADD.I
+[0x000001CB] [0x1E]/[0x0000]: PAR.I
+[0x000001CC] [0x1E]/[0x0000]: PAR.I
+[0x000001CD] [0x23]/[0x0175]: CALL     [373/0x175]
+[0x000001CE] [0x07]/[0x005B]: STORE.I  [u%]
+
+Line: 145 Statement: 0
+-> 145  v%=FNNoise2%(x_int% + 1, y_int% + 1)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  v% (0x55b0ccd2a3a0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Variable                  x_int% (0x55b0ccd29ca0) (INTEGER)
+[ 4]         Integer operand           1
+[ 5]         Operator                  +
+[ 6]         Variable                  y_int% (0x55b0ccd29da0) (INTEGER)
+[ 7]         Integer operand           1
+[ 8]         Operator                  +
+[ 9]         Token 0x24                FN
+[10]         Proc or FN Call           Noise2%
+[11]         Expression End            
+[0x000001CF] [0x04]/[0x0055]: LOAD.I   [x_int%]
+[0x000001D0] [0x04]/[0x0008]: LOAD.I   1
+[0x000001D1] [0x3F]/[0x0000]: ADD.I
+[0x000001D2] [0x04]/[0x0056]: LOAD.I   [y_int%]
+[0x000001D3] [0x04]/[0x0008]: LOAD.I   1
+[0x000001D4] [0x3F]/[0x0000]: ADD.I
+[0x000001D5] [0x1E]/[0x0000]: PAR.I
+[0x000001D6] [0x1E]/[0x0000]: PAR.I
+[0x000001D7] [0x23]/[0x0175]: CALL     [373/0x175]
+[0x000001D8] [0x07]/[0x005C]: STORE.I  [v%]
+
+Line: 146 Statement: 0
+-> 146  low=FNSmoothInter(s%, t%, x_frac)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  low (0x55b0ccd2a4a0) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Variable                  s% (0x55b0ccd2a0a0) (INTEGER)
+[ 4]         Variable                  t% (0x55b0ccd2a1a0) (INTEGER)
+[ 5]         Variable                  x_frac (0x55b0ccd29ea0) (FLOAT)
+[ 6]         Token 0x24                FN
+[ 7]         Proc or FN Call           SmoothInter
+[ 8]         Expression End            
+[0x000001D9] [0x04]/[0x0059]: LOAD.I   [s%]
+[0x000001DA] [0x04]/[0x005A]: LOAD.I   [t%]
+[0x000001DB] [0x03]/[0x0057]: LOAD.F   [x_frac]
+[0x000001DC] [0x1F]/[0x0000]: PAR.F
+[0x000001DD] [0x14]/[0x0000]: I.TO.F
+[0x000001DE] [0x1F]/[0x0000]: PAR.F
+[0x000001DF] [0x14]/[0x0000]: I.TO.F
+[0x000001E0] [0x1F]/[0x0000]: PAR.F
+[0x000001E1] [0x23]/[0x0190]: CALL     [400/0x190]
+[0x000001E2] [0x06]/[0x005D]: STORE.F  [low]
+
+Line: 147 Statement: 0
+-> 147  high=FNSmoothInter(u%, v%, x_frac)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  high (0x55b0ccd2a5a0) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Variable                  u% (0x55b0ccd2a2a0) (INTEGER)
+[ 4]         Variable                  v% (0x55b0ccd2a3a0) (INTEGER)
+[ 5]         Variable                  x_frac (0x55b0ccd29ea0) (FLOAT)
+[ 6]         Token 0x24                FN
+[ 7]         Proc or FN Call           SmoothInter
+[ 8]         Expression End            
+[0x000001E3] [0x04]/[0x005B]: LOAD.I   [u%]
+[0x000001E4] [0x04]/[0x005C]: LOAD.I   [v%]
+[0x000001E5] [0x03]/[0x0057]: LOAD.F   [x_frac]
+[0x000001E6] [0x1F]/[0x0000]: PAR.F
+[0x000001E7] [0x14]/[0x0000]: I.TO.F
+[0x000001E8] [0x1F]/[0x0000]: PAR.F
+[0x000001E9] [0x14]/[0x0000]: I.TO.F
+[0x000001EA] [0x1F]/[0x0000]: PAR.F
+[0x000001EB] [0x23]/[0x0190]: CALL     [400/0x190]
+[0x000001EC] [0x06]/[0x005E]: STORE.F  [high]
+
+Line: 148 Statement: 0
+-> 148=FNSmoothInter(low, high, y_frac)
+[ 0]         Operator                  =
+[ 1]         Expression Start          
+[ 2]         Variable                  low (0x55b0ccd2a4a0) (FLOAT)
+[ 3]         Variable                  high (0x55b0ccd2a5a0) (FLOAT)
+[ 4]         Variable                  y_frac (0x55b0ccd29fa0) (FLOAT)
+[ 5]         Token 0x24                FN
+[ 6]         Proc or FN Call           SmoothInter
+[ 7]         Expression End            
+[0x000001ED] [0x03]/[0x005D]: LOAD.F   [low]
+[0x000001EE] [0x03]/[0x005E]: LOAD.F   [high]
+[0x000001EF] [0x03]/[0x0058]: LOAD.F   [y_frac]
+[0x000001F0] [0x1F]/[0x0000]: PAR.F
+[0x000001F1] [0x1F]/[0x0000]: PAR.F
+[0x000001F2] [0x1F]/[0x0000]: PAR.F
+[0x000001F3] [0x23]/[0x0190]: CALL     [400/0x190]
+[0x000001F4] [0x25]/[0x0000]: RETURN FN
+
+Line: 149 Empty/REM
+-> 149
+
+Line: 150 Statement: 0
+-> 150DEFFNPerlin2D(x, y, freq, depth%)
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (013)     Perlin2D
+[ 3]         Variable                  x (0x55b0ccd2c9e0) (FLOAT)
+[ 4]         Variable                  y (0x55b0ccd2cae0) (FLOAT)
+[ 5]         Variable                  freq (0x55b0ccd2cbe0) (FLOAT)
+[ 6]         Variable                  depth% (0x55b0ccd2cce0) (INTEGER)
+[0x000001F5] [0x1C]/[0x0062]: UNPCK.I  [depth%]
+[0x000001F6] [0x1B]/[0x0061]: UNPCK.F  [freq]
+[0x000001F7] [0x1B]/[0x0060]: UNPCK.F  [y]
+[0x000001F8] [0x1B]/[0x005F]: UNPCK.F  [x]
+
+Line: 151 Statement: 0
+-> 151LOCAL xa,ya,amp,fin,div,I%
+[ 0]         Token 0x6A                LOCAL
+[ 1]         Variable                  xa (0x55b0ccd2cec0) (FLOAT)
+[ 2]         Comma                     ,
+[ 3]         Variable                  ya (0x55b0ccd2cfc0) (FLOAT)
+[ 4]         Comma                     ,
+[ 5]         Variable                  amp (0x55b0ccd2d0c0) (FLOAT)
+[ 6]         Comma                     ,
+[ 7]         Variable                  fin (0x55b0ccd2d1c0) (FLOAT)
+[ 8]         Comma                     ,
+[ 9]         Variable                  div (0x55b0ccd2d2c0) (FLOAT)
+[10]         Comma                     ,
+[11]         Variable                  I% (0x55b0ccd2d3c0) (INTEGER)
+
+Line: 152 Statement: 0
+-> 152  xa=x * freq
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  xa (0x55b0ccd2cec0) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Variable                  x (0x55b0ccd2c9e0) (FLOAT)
+[ 4]         Variable                  freq (0x55b0ccd2cbe0) (FLOAT)
+[ 5]         Operator                  *
+[ 6]         Expression End            
+[0x000001F9] [0x03]/[0x005F]: LOAD.F   [x]
+[0x000001FA] [0x03]/[0x0061]: LOAD.F   [freq]
+[0x000001FB] [0x43]/[0x0000]: MUL.F
+[0x000001FC] [0x06]/[0x0063]: STORE.F  [xa]
+
+Line: 153 Statement: 0
+-> 153  ya=y * freq
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  ya (0x55b0ccd2cfc0) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Variable                  y (0x55b0ccd2cae0) (FLOAT)
+[ 4]         Variable                  freq (0x55b0ccd2cbe0) (FLOAT)
+[ 5]         Operator                  *
+[ 6]         Expression End            
+[0x000001FD] [0x03]/[0x0060]: LOAD.F   [y]
+[0x000001FE] [0x03]/[0x0061]: LOAD.F   [freq]
+[0x000001FF] [0x43]/[0x0000]: MUL.F
+[0x00000200] [0x06]/[0x0064]: STORE.F  [ya]
+
+Line: 154 Statement: 0
+-> 154  amp=1.0
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  amp (0x55b0ccd2d0c0) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Real operand              1.000000
+[ 4]         Expression End            
+[0x00000201] [0x03]/[0x0069]: LOAD.F   1.000000
+[0x00000202] [0x06]/[0x0065]: STORE.F  [amp]
+
+Line: 155 Statement: 0
+-> 155  fin=0
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  fin (0x55b0ccd2d1c0) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Integer operand           0
+[ 4]         Expression End            
+[0x00000203] [0x04]/[0x0010]: LOAD.I   0
+[0x00000204] [0x14]/[0x0000]: I.TO.F
+[0x00000205] [0x06]/[0x0066]: STORE.F  [fin]
+
+Line: 156 Statement: 0
+-> 156  div=0.0
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  div (0x55b0ccd2d2c0) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Real operand              0.000000
+[ 4]         Expression End            
+[0x00000206] [0x03]/[0x006A]: LOAD.F   0.000000
+[0x00000207] [0x06]/[0x0067]: STORE.F  [div]
+
+Line: 157 Statement: 0
+-> 157  FOR I%=0 TO depth% - 1
+[ 0]         Token 0x63                FOR
+[ 1]         Variable                  I% (0x55b0ccd2d3c0) (INTEGER)
+[ 2]         Expression Start          
+[ 3]         Integer operand           0
+[ 4]         Expression End            
+[ 5]         Token 0x38                TO
+[ 6]         Expression Start          
+[ 7]         Variable                  depth% (0x55b0ccd2cce0) (INTEGER)
+[ 8]         Integer operand           1
+[ 9]         Operator                  -
+[10]         Expression End            
+[0x00000208] [0x04]/[0x0010]: LOAD.I   0
+[0x00000209] [0x07]/[0x0068]: STORE.I  [I%]
+[0x0000020A] [0x02]/[0x0003]: CONST.I  3
+[0x0000020B] [0x11]/[0x0068]: DIM.I    [I%]
+[0x0000020C] [0x02]/[0x0001]: CONST.I  1
+[0x0000020D] [0x3B]/[0x0000]: DUP.I
+[0x0000020E] [0x02]/[0x0000]: CONST.I  0
+[0x0000020F] [0x0A]/[0x0068]: STORE.IA [I%]
+[0x00000210] [0x04]/[0x0062]: LOAD.I   [depth%]
+[0x00000211] [0x04]/[0x0008]: LOAD.I   1
+[0x00000212] [0x46]/[0x0000]: SUB.I
+[0x00000213] [0x3D]/[0x0000]: ROT.I
+[0x00000214] [0x04]/[0x0068]: LOAD.I   [I%]
+[0x00000215] [0x46]/[0x0000]: SUB.I
+[0x00000216] [0x42]/[0x0000]: DIV.I
+[0x00000217] [0x02]/[0x0001]: CONST.I  1
+[0x00000218] [0x0A]/[0x0068]: STORE.IA [I%]
+[0x00000219] [0x21]/[0x0002]: PUSH_PC  [540/0x21C]
+[0x0000021A] [0x02]/[0x0002]: CONST.I  2
+[0x0000021B] [0x0A]/[0x0068]: STORE.IA [I%]
+
+Line: 158 Statement: 0
+-> 158    div = div + (256 * amp)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  div (0x55b0ccd2d2c0) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Variable                  div (0x55b0ccd2d2c0) (FLOAT)
+[ 4]         Integer operand           256
+[ 5]         Variable                  amp (0x55b0ccd2d0c0) (FLOAT)
+[ 6]         Operator                  *
+[ 7]         Operator                  +
+[ 8]         Expression End            
+[0x0000021C] [0x03]/[0x0067]: LOAD.F   [div]
+[0x0000021D] [0x04]/[0x0021]: LOAD.I   256
+[0x0000021E] [0x03]/[0x0065]: LOAD.F   [amp]
+[0x0000021F] [0x14]/[0x0000]: I.TO.F
+[0x00000220] [0x3C]/[0x0000]: ROT.F
+[0x00000221] [0x43]/[0x0000]: MUL.F
+[0x00000222] [0x3E]/[0x0000]: ADD.F
+[0x00000223] [0x06]/[0x0067]: STORE.F  [div]
+
+Line: 159 Statement: 0
+-> 159    fin = fin + (FNNoise2D(xa, ya) * amp)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  fin (0x55b0ccd2d1c0) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Variable                  fin (0x55b0ccd2d1c0) (FLOAT)
+[ 4]         Variable                  xa (0x55b0ccd2cec0) (FLOAT)
+[ 5]         Variable                  ya (0x55b0ccd2cfc0) (FLOAT)
+[ 6]         Token 0x24                FN
+[ 7]         Proc or FN Call           Noise2D
+[ 8]         Variable                  amp (0x55b0ccd2d0c0) (FLOAT)
+[ 9]         Operator                  *
+[10]         Operator                  +
+[11]         Expression End            
+[0x00000224] [0x03]/[0x0066]: LOAD.F   [fin]
+[0x00000225] [0x03]/[0x0063]: LOAD.F   [xa]
+[0x00000226] [0x03]/[0x0064]: LOAD.F   [ya]
+[0x00000227] [0x1F]/[0x0000]: PAR.F
+[0x00000228] [0x1F]/[0x0000]: PAR.F
+[0x00000229] [0x23]/[0x01A7]: CALL     [423/0x1A7]
+[0x0000022A] [0x03]/[0x0065]: LOAD.F   [amp]
+[0x0000022B] [0x43]/[0x0000]: MUL.F
+[0x0000022C] [0x3E]/[0x0000]: ADD.F
+[0x0000022D] [0x06]/[0x0066]: STORE.F  [fin]
+
+Line: 160 Statement: 0
+-> 160    amp = amp / 2
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  amp (0x55b0ccd2d0c0) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Variable                  amp (0x55b0ccd2d0c0) (FLOAT)
+[ 4]         Integer operand           2
+[ 5]         Operator                  /
+[ 6]         Expression End            
+[0x0000022E] [0x03]/[0x0065]: LOAD.F   [amp]
+[0x0000022F] [0x04]/[0x0052]: LOAD.I   2
+[0x00000230] [0x14]/[0x0000]: I.TO.F
+[0x00000231] [0x41]/[0x0000]: DIV.F
+[0x00000232] [0x06]/[0x0065]: STORE.F  [amp]
+
+Line: 161 Statement: 0
+-> 161    xa = xa * 2
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  xa (0x55b0ccd2cec0) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Variable                  xa (0x55b0ccd2cec0) (FLOAT)
+[ 4]         Integer operand           2
+[ 5]         Operator                  *
+[ 6]         Expression End            
+[0x00000233] [0x03]/[0x0063]: LOAD.F   [xa]
+[0x00000234] [0x04]/[0x0052]: LOAD.I   2
+[0x00000235] [0x14]/[0x0000]: I.TO.F
+[0x00000236] [0x43]/[0x0000]: MUL.F
+[0x00000237] [0x06]/[0x0063]: STORE.F  [xa]
+
+Line: 162 Statement: 0
+-> 162    ya = ya * 2
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  ya (0x55b0ccd2cfc0) (FLOAT)
+[ 2]         Expression Start          
+[ 3]         Variable                  ya (0x55b0ccd2cfc0) (FLOAT)
+[ 4]         Integer operand           2
+[ 5]         Operator                  *
+[ 6]         Expression End            
+[0x00000238] [0x03]/[0x0064]: LOAD.F   [ya]
+[0x00000239] [0x04]/[0x0052]: LOAD.I   2
+[0x0000023A] [0x14]/[0x0000]: I.TO.F
+[0x0000023B] [0x43]/[0x0000]: MUL.F
+[0x0000023C] [0x06]/[0x0064]: STORE.F  [ya]
+
+Line: 163 Statement: 0
+-> 163  NEXT
+[ 0]         Token 0x6D                NEXT
+[0x0000023D] [0x27]/[0x0068]: NEXT.I   [I%]
+
+Line: 164 Statement: 0
+-> 164=fin / div
+[ 0]         Operator                  =
+[ 1]         Expression Start          
+[ 2]         Variable                  fin (0x55b0ccd2d1c0) (FLOAT)
+[ 3]         Variable                  div (0x55b0ccd2d2c0) (FLOAT)
+[ 4]         Operator                  /
+[ 5]         Expression End            
+[0x0000023E] [0x03]/[0x0066]: LOAD.F   [fin]
+[0x0000023F] [0x03]/[0x0067]: LOAD.F   [div]
+[0x00000240] [0x41]/[0x0000]: DIV.F
+[0x00000241] [0x25]/[0x0000]: RETURN FN
+
+Line: 165 Empty/REM
+-> 165
+
+Line: 166 Statement: 0
+-> 166DATA 208,34,231,213,32,248,233,56,161,78,24,140,71,48,140,254,245,255,247,247,40
+[ 0]         Token 0x5C                DATA
+[ 1]         Expression Start          
+[ 2]         Integer operand           208
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Integer operand           34
+[ 6]         Expression End            
+[ 7]         Expression Start          
+[ 8]         Integer operand           231
+[ 9]         Expression End            
+[10]         Expression Start          
+[11]         Integer operand           213
+[12]         Expression End            
+[13]         Expression Start          
+[14]         Integer operand           32
+[15]         Expression End            
+[16]         Expression Start          
+[17]         Integer operand           248
+[18]         Expression End            
+[19]         Expression Start          
+[20]         Integer operand           233
+[21]         Expression End            
+[22]         Expression Start          
+[23]         Integer operand           56
+[24]         Expression End            
+[25]         Expression Start          
+[26]         Integer operand           161
+[27]         Expression End            
+[28]         Expression Start          
+[29]         Integer operand           78
+[30]         Expression End            
+[31]         Expression Start          
+[32]         Integer operand           24
+[33]         Expression End            
+[34]         Expression Start          
+[35]         Integer operand           140
+[36]         Expression End            
+[37]         Expression Start          
+[38]         Integer operand           71
+[39]         Expression End            
+[40]         Expression Start          
+[41]         Integer operand           48
+[42]         Expression End            
+[43]         Expression Start          
+[44]         Integer operand           140
+[45]         Expression End            
+[46]         Expression Start          
+[47]         Integer operand           254
+[48]         Expression End            
+[49]         Expression Start          
+[50]         Integer operand           245
+[51]         Expression End            
+[52]         Expression Start          
+[53]         Integer operand           255
+[54]         Expression End            
+[55]         Expression Start          
+[56]         Integer operand           247
+[57]         Expression End            
+[58]         Expression Start          
+[59]         Integer operand           247
+[60]         Expression End            
+[61]         Expression Start          
+[62]         Integer operand           40
+[63]         Expression End            
+[0x00000242] [0x22]/[0x0246]: JUMP     [582/0x246]
+[0x00000243] [0x04]/[0x006B]: LOAD.I   208
+[0x00000244] [0x02]/[0x0000]: CONST.I  0
+[0x00000245] [0x26]/[0x0000]: RETURN DATA
+[0x00000246] [0x22]/[0x024A]: JUMP     [586/0x24A]
+[0x00000247] [0x04]/[0x006C]: LOAD.I   34
+[0x00000248] [0x02]/[0x0000]: CONST.I  0
+[0x00000249] [0x26]/[0x0000]: RETURN DATA
+[0x0000024A] [0x22]/[0x024E]: JUMP     [590/0x24E]
+[0x0000024B] [0x04]/[0x006D]: LOAD.I   231
+[0x0000024C] [0x02]/[0x0000]: CONST.I  0
+[0x0000024D] [0x26]/[0x0000]: RETURN DATA
+[0x0000024E] [0x22]/[0x0252]: JUMP     [594/0x252]
+[0x0000024F] [0x04]/[0x006E]: LOAD.I   213
+[0x00000250] [0x02]/[0x0000]: CONST.I  0
+[0x00000251] [0x26]/[0x0000]: RETURN DATA
+[0x00000252] [0x22]/[0x0256]: JUMP     [598/0x256]
+[0x00000253] [0x04]/[0x006F]: LOAD.I   32
+[0x00000254] [0x02]/[0x0000]: CONST.I  0
+[0x00000255] [0x26]/[0x0000]: RETURN DATA
+[0x00000256] [0x22]/[0x025A]: JUMP     [602/0x25A]
+[0x00000257] [0x04]/[0x0070]: LOAD.I   248
+[0x00000258] [0x02]/[0x0000]: CONST.I  0
+[0x00000259] [0x26]/[0x0000]: RETURN DATA
+[0x0000025A] [0x22]/[0x025E]: JUMP     [606/0x25E]
+[0x0000025B] [0x04]/[0x0071]: LOAD.I   233
+[0x0000025C] [0x02]/[0x0000]: CONST.I  0
+[0x0000025D] [0x26]/[0x0000]: RETURN DATA
+[0x0000025E] [0x22]/[0x0262]: JUMP     [610/0x262]
+[0x0000025F] [0x04]/[0x0072]: LOAD.I   56
+[0x00000260] [0x02]/[0x0000]: CONST.I  0
+[0x00000261] [0x26]/[0x0000]: RETURN DATA
+[0x00000262] [0x22]/[0x0266]: JUMP     [614/0x266]
+[0x00000263] [0x04]/[0x0073]: LOAD.I   161
+[0x00000264] [0x02]/[0x0000]: CONST.I  0
+[0x00000265] [0x26]/[0x0000]: RETURN DATA
+[0x00000266] [0x22]/[0x026A]: JUMP     [618/0x26A]
+[0x00000267] [0x04]/[0x0074]: LOAD.I   78
+[0x00000268] [0x02]/[0x0000]: CONST.I  0
+[0x00000269] [0x26]/[0x0000]: RETURN DATA
+[0x0000026A] [0x22]/[0x026E]: JUMP     [622/0x26E]
+[0x0000026B] [0x04]/[0x0075]: LOAD.I   24
+[0x0000026C] [0x02]/[0x0000]: CONST.I  0
+[0x0000026D] [0x26]/[0x0000]: RETURN DATA
+[0x0000026E] [0x22]/[0x0272]: JUMP     [626/0x272]
+[0x0000026F] [0x04]/[0x0076]: LOAD.I   140
+[0x00000270] [0x02]/[0x0000]: CONST.I  0
+[0x00000271] [0x26]/[0x0000]: RETURN DATA
+[0x00000272] [0x22]/[0x0276]: JUMP     [630/0x276]
+[0x00000273] [0x04]/[0x0077]: LOAD.I   71
+[0x00000274] [0x02]/[0x0000]: CONST.I  0
+[0x00000275] [0x26]/[0x0000]: RETURN DATA
+[0x00000276] [0x22]/[0x027A]: JUMP     [634/0x27A]
+[0x00000277] [0x04]/[0x0078]: LOAD.I   48
+[0x00000278] [0x02]/[0x0000]: CONST.I  0
+[0x00000279] [0x26]/[0x0000]: RETURN DATA
+[0x0000027A] [0x22]/[0x027E]: JUMP     [638/0x27E]
+[0x0000027B] [0x04]/[0x0076]: LOAD.I   140
+[0x0000027C] [0x02]/[0x0000]: CONST.I  0
+[0x0000027D] [0x26]/[0x0000]: RETURN DATA
+[0x0000027E] [0x22]/[0x0282]: JUMP     [642/0x282]
+[0x0000027F] [0x04]/[0x0079]: LOAD.I   254
+[0x00000280] [0x02]/[0x0000]: CONST.I  0
+[0x00000281] [0x26]/[0x0000]: RETURN DATA
+[0x00000282] [0x22]/[0x0286]: JUMP     [646/0x286]
+[0x00000283] [0x04]/[0x007A]: LOAD.I   245
+[0x00000284] [0x02]/[0x0000]: CONST.I  0
+[0x00000285] [0x26]/[0x0000]: RETURN DATA
+[0x00000286] [0x22]/[0x028A]: JUMP     [650/0x28A]
+[0x00000287] [0x04]/[0x000F]: LOAD.I   255
+[0x00000288] [0x02]/[0x0000]: CONST.I  0
+[0x00000289] [0x26]/[0x0000]: RETURN DATA
+[0x0000028A] [0x22]/[0x028E]: JUMP     [654/0x28E]
+[0x0000028B] [0x04]/[0x007B]: LOAD.I   247
+[0x0000028C] [0x02]/[0x0000]: CONST.I  0
+[0x0000028D] [0x26]/[0x0000]: RETURN DATA
+[0x0000028E] [0x22]/[0x0292]: JUMP     [658/0x292]
+[0x0000028F] [0x04]/[0x007B]: LOAD.I   247
+[0x00000290] [0x02]/[0x0000]: CONST.I  0
+[0x00000291] [0x26]/[0x0000]: RETURN DATA
+[0x00000292] [0x22]/[0x0296]: JUMP     [662/0x296]
+[0x00000293] [0x04]/[0x007C]: LOAD.I   40
+[0x00000294] [0x02]/[0x0000]: CONST.I  0
+[0x00000295] [0x26]/[0x0000]: RETURN DATA
+
+Line: 167 Statement: 0
+-> 167DATA 185,248,251,245,28,124,204,204,76,36,1,107,28,234,163,202,224,245,128,167,204
+[ 0]         Token 0x5C                DATA
+[ 1]         Expression Start          
+[ 2]         Integer operand           185
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Integer operand           248
+[ 6]         Expression End            
+[ 7]         Expression Start          
+[ 8]         Integer operand           251
+[ 9]         Expression End            
+[10]         Expression Start          
+[11]         Integer operand           245
+[12]         Expression End            
+[13]         Expression Start          
+[14]         Integer operand           28
+[15]         Expression End            
+[16]         Expression Start          
+[17]         Integer operand           124
+[18]         Expression End            
+[19]         Expression Start          
+[20]         Integer operand           204
+[21]         Expression End            
+[22]         Expression Start          
+[23]         Integer operand           204
+[24]         Expression End            
+[25]         Expression Start          
+[26]         Integer operand           76
+[27]         Expression End            
+[28]         Expression Start          
+[29]         Integer operand           36
+[30]         Expression End            
+[31]         Expression Start          
+[32]         Integer operand           1
+[33]         Expression End            
+[34]         Expression Start          
+[35]         Integer operand           107
+[36]         Expression End            
+[37]         Expression Start          
+[38]         Integer operand           28
+[39]         Expression End            
+[40]         Expression Start          
+[41]         Integer operand           234
+[42]         Expression End            
+[43]         Expression Start          
+[44]         Integer operand           163
+[45]         Expression End            
+[46]         Expression Start          
+[47]         Integer operand           202
+[48]         Expression End            
+[49]         Expression Start          
+[50]         Integer operand           224
+[51]         Expression End            
+[52]         Expression Start          
+[53]         Integer operand           245
+[54]         Expression End            
+[55]         Expression Start          
+[56]         Integer operand           128
+[57]         Expression End            
+[58]         Expression Start          
+[59]         Integer operand           167
+[60]         Expression End            
+[61]         Expression Start          
+[62]         Integer operand           204
+[63]         Expression End            
+[0x00000296] [0x22]/[0x029A]: JUMP     [666/0x29A]
+[0x00000297] [0x04]/[0x007D]: LOAD.I   185
+[0x00000298] [0x02]/[0x0000]: CONST.I  0
+[0x00000299] [0x26]/[0x0000]: RETURN DATA
+[0x0000029A] [0x22]/[0x029E]: JUMP     [670/0x29E]
+[0x0000029B] [0x04]/[0x0070]: LOAD.I   248
+[0x0000029C] [0x02]/[0x0000]: CONST.I  0
+[0x0000029D] [0x26]/[0x0000]: RETURN DATA
+[0x0000029E] [0x22]/[0x02A2]: JUMP     [674/0x2A2]
+[0x0000029F] [0x04]/[0x007E]: LOAD.I   251
+[0x000002A0] [0x02]/[0x0000]: CONST.I  0
+[0x000002A1] [0x26]/[0x0000]: RETURN DATA
+[0x000002A2] [0x22]/[0x02A6]: JUMP     [678/0x2A6]
+[0x000002A3] [0x04]/[0x007A]: LOAD.I   245
+[0x000002A4] [0x02]/[0x0000]: CONST.I  0
+[0x000002A5] [0x26]/[0x0000]: RETURN DATA
+[0x000002A6] [0x22]/[0x02AA]: JUMP     [682/0x2AA]
+[0x000002A7] [0x04]/[0x007F]: LOAD.I   28
+[0x000002A8] [0x02]/[0x0000]: CONST.I  0
+[0x000002A9] [0x26]/[0x0000]: RETURN DATA
+[0x000002AA] [0x22]/[0x02AE]: JUMP     [686/0x2AE]
+[0x000002AB] [0x04]/[0x0080]: LOAD.I   124
+[0x000002AC] [0x02]/[0x0000]: CONST.I  0
+[0x000002AD] [0x26]/[0x0000]: RETURN DATA
+[0x000002AE] [0x22]/[0x02B2]: JUMP     [690/0x2B2]
+[0x000002AF] [0x04]/[0x0081]: LOAD.I   204
+[0x000002B0] [0x02]/[0x0000]: CONST.I  0
+[0x000002B1] [0x26]/[0x0000]: RETURN DATA
+[0x000002B2] [0x22]/[0x02B6]: JUMP     [694/0x2B6]
+[0x000002B3] [0x04]/[0x0081]: LOAD.I   204
+[0x000002B4] [0x02]/[0x0000]: CONST.I  0
+[0x000002B5] [0x26]/[0x0000]: RETURN DATA
+[0x000002B6] [0x22]/[0x02BA]: JUMP     [698/0x2BA]
+[0x000002B7] [0x04]/[0x0082]: LOAD.I   76
+[0x000002B8] [0x02]/[0x0000]: CONST.I  0
+[0x000002B9] [0x26]/[0x0000]: RETURN DATA
+[0x000002BA] [0x22]/[0x02BE]: JUMP     [702/0x2BE]
+[0x000002BB] [0x04]/[0x0083]: LOAD.I   36
+[0x000002BC] [0x02]/[0x0000]: CONST.I  0
+[0x000002BD] [0x26]/[0x0000]: RETURN DATA
+[0x000002BE] [0x22]/[0x02C2]: JUMP     [706/0x2C2]
+[0x000002BF] [0x04]/[0x0008]: LOAD.I   1
+[0x000002C0] [0x02]/[0x0000]: CONST.I  0
+[0x000002C1] [0x26]/[0x0000]: RETURN DATA
+[0x000002C2] [0x22]/[0x02C6]: JUMP     [710/0x2C6]
+[0x000002C3] [0x04]/[0x0084]: LOAD.I   107
+[0x000002C4] [0x02]/[0x0000]: CONST.I  0
+[0x000002C5] [0x26]/[0x0000]: RETURN DATA
+[0x000002C6] [0x22]/[0x02CA]: JUMP     [714/0x2CA]
+[0x000002C7] [0x04]/[0x007F]: LOAD.I   28
+[0x000002C8] [0x02]/[0x0000]: CONST.I  0
+[0x000002C9] [0x26]/[0x0000]: RETURN DATA
+[0x000002CA] [0x22]/[0x02CE]: JUMP     [718/0x2CE]
+[0x000002CB] [0x04]/[0x0085]: LOAD.I   234
+[0x000002CC] [0x02]/[0x0000]: CONST.I  0
+[0x000002CD] [0x26]/[0x0000]: RETURN DATA
+[0x000002CE] [0x22]/[0x02D2]: JUMP     [722/0x2D2]
+[0x000002CF] [0x04]/[0x0086]: LOAD.I   163
+[0x000002D0] [0x02]/[0x0000]: CONST.I  0
+[0x000002D1] [0x26]/[0x0000]: RETURN DATA
+[0x000002D2] [0x22]/[0x02D6]: JUMP     [726/0x2D6]
+[0x000002D3] [0x04]/[0x0087]: LOAD.I   202
+[0x000002D4] [0x02]/[0x0000]: CONST.I  0
+[0x000002D5] [0x26]/[0x0000]: RETURN DATA
+[0x000002D6] [0x22]/[0x02DA]: JUMP     [730/0x2DA]
+[0x000002D7] [0x04]/[0x0088]: LOAD.I   224
+[0x000002D8] [0x02]/[0x0000]: CONST.I  0
+[0x000002D9] [0x26]/[0x0000]: RETURN DATA
+[0x000002DA] [0x22]/[0x02DE]: JUMP     [734/0x2DE]
+[0x000002DB] [0x04]/[0x007A]: LOAD.I   245
+[0x000002DC] [0x02]/[0x0000]: CONST.I  0
+[0x000002DD] [0x26]/[0x0000]: RETURN DATA
+[0x000002DE] [0x22]/[0x02E2]: JUMP     [738/0x2E2]
+[0x000002DF] [0x04]/[0x0089]: LOAD.I   128
+[0x000002E0] [0x02]/[0x0000]: CONST.I  0
+[0x000002E1] [0x26]/[0x0000]: RETURN DATA
+[0x000002E2] [0x22]/[0x02E6]: JUMP     [742/0x2E6]
+[0x000002E3] [0x04]/[0x008A]: LOAD.I   167
+[0x000002E4] [0x02]/[0x0000]: CONST.I  0
+[0x000002E5] [0x26]/[0x0000]: RETURN DATA
+[0x000002E6] [0x22]/[0x02EA]: JUMP     [746/0x2EA]
+[0x000002E7] [0x04]/[0x0081]: LOAD.I   204
+[0x000002E8] [0x02]/[0x0000]: CONST.I  0
+[0x000002E9] [0x26]/[0x0000]: RETURN DATA
+
+Line: 168 Statement: 0
+-> 168DATA 9,92,217,54,239,174,173,102,193,189,190,121,100,108,167,44,43,77,180,204,8,81
+[ 0]         Token 0x5C                DATA
+[ 1]         Expression Start          
+[ 2]         Integer operand           9
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Integer operand           92
+[ 6]         Expression End            
+[ 7]         Expression Start          
+[ 8]         Integer operand           217
+[ 9]         Expression End            
+[10]         Expression Start          
+[11]         Integer operand           54
+[12]         Expression End            
+[13]         Expression Start          
+[14]         Integer operand           239
+[15]         Expression End            
+[16]         Expression Start          
+[17]         Integer operand           174
+[18]         Expression End            
+[19]         Expression Start          
+[20]         Integer operand           173
+[21]         Expression End            
+[22]         Expression Start          
+[23]         Integer operand           102
+[24]         Expression End            
+[25]         Expression Start          
+[26]         Integer operand           193
+[27]         Expression End            
+[28]         Expression Start          
+[29]         Integer operand           189
+[30]         Expression End            
+[31]         Expression Start          
+[32]         Integer operand           190
+[33]         Expression End            
+[34]         Expression Start          
+[35]         Integer operand           121
+[36]         Expression End            
+[37]         Expression Start          
+[38]         Integer operand           100
+[39]         Expression End            
+[40]         Expression Start          
+[41]         Integer operand           108
+[42]         Expression End            
+[43]         Expression Start          
+[44]         Integer operand           167
+[45]         Expression End            
+[46]         Expression Start          
+[47]         Integer operand           44
+[48]         Expression End            
+[49]         Expression Start          
+[50]         Integer operand           43
+[51]         Expression End            
+[52]         Expression Start          
+[53]         Integer operand           77
+[54]         Expression End            
+[55]         Expression Start          
+[56]         Integer operand           180
+[57]         Expression End            
+[58]         Expression Start          
+[59]         Integer operand           204
+[60]         Expression End            
+[61]         Expression Start          
+[62]         Integer operand           8
+[63]         Expression End            
+[64]         Expression Start          
+[65]         Integer operand           81
+[66]         Expression End            
+[0x000002EA] [0x22]/[0x02EE]: JUMP     [750/0x2EE]
+[0x000002EB] [0x04]/[0x008B]: LOAD.I   9
+[0x000002EC] [0x02]/[0x0000]: CONST.I  0
+[0x000002ED] [0x26]/[0x0000]: RETURN DATA
+[0x000002EE] [0x22]/[0x02F2]: JUMP     [754/0x2F2]
+[0x000002EF] [0x04]/[0x008C]: LOAD.I   92
+[0x000002F0] [0x02]/[0x0000]: CONST.I  0
+[0x000002F1] [0x26]/[0x0000]: RETURN DATA
+[0x000002F2] [0x22]/[0x02F6]: JUMP     [758/0x2F6]
+[0x000002F3] [0x04]/[0x008D]: LOAD.I   217
+[0x000002F4] [0x02]/[0x0000]: CONST.I  0
+[0x000002F5] [0x26]/[0x0000]: RETURN DATA
+[0x000002F6] [0x22]/[0x02FA]: JUMP     [762/0x2FA]
+[0x000002F7] [0x04]/[0x008E]: LOAD.I   54
+[0x000002F8] [0x02]/[0x0000]: CONST.I  0
+[0x000002F9] [0x26]/[0x0000]: RETURN DATA
+[0x000002FA] [0x22]/[0x02FE]: JUMP     [766/0x2FE]
+[0x000002FB] [0x04]/[0x008F]: LOAD.I   239
+[0x000002FC] [0x02]/[0x0000]: CONST.I  0
+[0x000002FD] [0x26]/[0x0000]: RETURN DATA
+[0x000002FE] [0x22]/[0x0302]: JUMP     [770/0x302]
+[0x000002FF] [0x04]/[0x0090]: LOAD.I   174
+[0x00000300] [0x02]/[0x0000]: CONST.I  0
+[0x00000301] [0x26]/[0x0000]: RETURN DATA
+[0x00000302] [0x22]/[0x0306]: JUMP     [774/0x306]
+[0x00000303] [0x04]/[0x0091]: LOAD.I   173
+[0x00000304] [0x02]/[0x0000]: CONST.I  0
+[0x00000305] [0x26]/[0x0000]: RETURN DATA
+[0x00000306] [0x22]/[0x030A]: JUMP     [778/0x30A]
+[0x00000307] [0x04]/[0x0092]: LOAD.I   102
+[0x00000308] [0x02]/[0x0000]: CONST.I  0
+[0x00000309] [0x26]/[0x0000]: RETURN DATA
+[0x0000030A] [0x22]/[0x030E]: JUMP     [782/0x30E]
+[0x0000030B] [0x04]/[0x0093]: LOAD.I   193
+[0x0000030C] [0x02]/[0x0000]: CONST.I  0
+[0x0000030D] [0x26]/[0x0000]: RETURN DATA
+[0x0000030E] [0x22]/[0x0312]: JUMP     [786/0x312]
+[0x0000030F] [0x04]/[0x0094]: LOAD.I   189
+[0x00000310] [0x02]/[0x0000]: CONST.I  0
+[0x00000311] [0x26]/[0x0000]: RETURN DATA
+[0x00000312] [0x22]/[0x0316]: JUMP     [790/0x316]
+[0x00000313] [0x04]/[0x0095]: LOAD.I   190
+[0x00000314] [0x02]/[0x0000]: CONST.I  0
+[0x00000315] [0x26]/[0x0000]: RETURN DATA
+[0x00000316] [0x22]/[0x031A]: JUMP     [794/0x31A]
+[0x00000317] [0x04]/[0x0096]: LOAD.I   121
+[0x00000318] [0x02]/[0x0000]: CONST.I  0
+[0x00000319] [0x26]/[0x0000]: RETURN DATA
+[0x0000031A] [0x22]/[0x031E]: JUMP     [798/0x31E]
+[0x0000031B] [0x04]/[0x0097]: LOAD.I   100
+[0x0000031C] [0x02]/[0x0000]: CONST.I  0
+[0x0000031D] [0x26]/[0x0000]: RETURN DATA
+[0x0000031E] [0x22]/[0x0322]: JUMP     [802/0x322]
+[0x0000031F] [0x04]/[0x0098]: LOAD.I   108
+[0x00000320] [0x02]/[0x0000]: CONST.I  0
+[0x00000321] [0x26]/[0x0000]: RETURN DATA
+[0x00000322] [0x22]/[0x0326]: JUMP     [806/0x326]
+[0x00000323] [0x04]/[0x008A]: LOAD.I   167
+[0x00000324] [0x02]/[0x0000]: CONST.I  0
+[0x00000325] [0x26]/[0x0000]: RETURN DATA
+[0x00000326] [0x22]/[0x032A]: JUMP     [810/0x32A]
+[0x00000327] [0x04]/[0x0099]: LOAD.I   44
+[0x00000328] [0x02]/[0x0000]: CONST.I  0
+[0x00000329] [0x26]/[0x0000]: RETURN DATA
+[0x0000032A] [0x22]/[0x032E]: JUMP     [814/0x32E]
+[0x0000032B] [0x04]/[0x009A]: LOAD.I   43
+[0x0000032C] [0x02]/[0x0000]: CONST.I  0
+[0x0000032D] [0x26]/[0x0000]: RETURN DATA
+[0x0000032E] [0x22]/[0x0332]: JUMP     [818/0x332]
+[0x0000032F] [0x04]/[0x009B]: LOAD.I   77
+[0x00000330] [0x02]/[0x0000]: CONST.I  0
+[0x00000331] [0x26]/[0x0000]: RETURN DATA
+[0x00000332] [0x22]/[0x0336]: JUMP     [822/0x336]
+[0x00000333] [0x04]/[0x009C]: LOAD.I   180
+[0x00000334] [0x02]/[0x0000]: CONST.I  0
+[0x00000335] [0x26]/[0x0000]: RETURN DATA
+[0x00000336] [0x22]/[0x033A]: JUMP     [826/0x33A]
+[0x00000337] [0x04]/[0x0081]: LOAD.I   204
+[0x00000338] [0x02]/[0x0000]: CONST.I  0
+[0x00000339] [0x26]/[0x0000]: RETURN DATA
+[0x0000033A] [0x22]/[0x033E]: JUMP     [830/0x33E]
+[0x0000033B] [0x04]/[0x002A]: LOAD.I   8
+[0x0000033C] [0x02]/[0x0000]: CONST.I  0
+[0x0000033D] [0x26]/[0x0000]: RETURN DATA
+[0x0000033E] [0x22]/[0x0342]: JUMP     [834/0x342]
+[0x0000033F] [0x04]/[0x009D]: LOAD.I   81
+[0x00000340] [0x02]/[0x0000]: CONST.I  0
+[0x00000341] [0x26]/[0x0000]: RETURN DATA
+
+Line: 169 Statement: 0
+-> 169DATA 70,223,11,38,24,254,210,210,177,32,81,195,243,125,8,169,112,32,97,53,195,13
+[ 0]         Token 0x5C                DATA
+[ 1]         Expression Start          
+[ 2]         Integer operand           70
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Integer operand           223
+[ 6]         Expression End            
+[ 7]         Expression Start          
+[ 8]         Integer operand           11
+[ 9]         Expression End            
+[10]         Expression Start          
+[11]         Integer operand           38
+[12]         Expression End            
+[13]         Expression Start          
+[14]         Integer operand           24
+[15]         Expression End            
+[16]         Expression Start          
+[17]         Integer operand           254
+[18]         Expression End            
+[19]         Expression Start          
+[20]         Integer operand           210
+[21]         Expression End            
+[22]         Expression Start          
+[23]         Integer operand           210
+[24]         Expression End            
+[25]         Expression Start          
+[26]         Integer operand           177
+[27]         Expression End            
+[28]         Expression Start          
+[29]         Integer operand           32
+[30]         Expression End            
+[31]         Expression Start          
+[32]         Integer operand           81
+[33]         Expression End            
+[34]         Expression Start          
+[35]         Integer operand           195
+[36]         Expression End            
+[37]         Expression Start          
+[38]         Integer operand           243
+[39]         Expression End            
+[40]         Expression Start          
+[41]         Integer operand           125
+[42]         Expression End            
+[43]         Expression Start          
+[44]         Integer operand           8
+[45]         Expression End            
+[46]         Expression Start          
+[47]         Integer operand           169
+[48]         Expression End            
+[49]         Expression Start          
+[50]         Integer operand           112
+[51]         Expression End            
+[52]         Expression Start          
+[53]         Integer operand           32
+[54]         Expression End            
+[55]         Expression Start          
+[56]         Integer operand           97
+[57]         Expression End            
+[58]         Expression Start          
+[59]         Integer operand           53
+[60]         Expression End            
+[61]         Expression Start          
+[62]         Integer operand           195
+[63]         Expression End            
+[64]         Expression Start          
+[65]         Integer operand           13
+[66]         Expression End            
+[0x00000342] [0x22]/[0x0346]: JUMP     [838/0x346]
+[0x00000343] [0x04]/[0x009E]: LOAD.I   70
+[0x00000344] [0x02]/[0x0000]: CONST.I  0
+[0x00000345] [0x26]/[0x0000]: RETURN DATA
+[0x00000346] [0x22]/[0x034A]: JUMP     [842/0x34A]
+[0x00000347] [0x04]/[0x009F]: LOAD.I   223
+[0x00000348] [0x02]/[0x0000]: CONST.I  0
+[0x00000349] [0x26]/[0x0000]: RETURN DATA
+[0x0000034A] [0x22]/[0x034E]: JUMP     [846/0x34E]
+[0x0000034B] [0x04]/[0x00A0]: LOAD.I   11
+[0x0000034C] [0x02]/[0x0000]: CONST.I  0
+[0x0000034D] [0x26]/[0x0000]: RETURN DATA
+[0x0000034E] [0x22]/[0x0352]: JUMP     [850/0x352]
+[0x0000034F] [0x04]/[0x00A1]: LOAD.I   38
+[0x00000350] [0x02]/[0x0000]: CONST.I  0
+[0x00000351] [0x26]/[0x0000]: RETURN DATA
+[0x00000352] [0x22]/[0x0356]: JUMP     [854/0x356]
+[0x00000353] [0x04]/[0x0075]: LOAD.I   24
+[0x00000354] [0x02]/[0x0000]: CONST.I  0
+[0x00000355] [0x26]/[0x0000]: RETURN DATA
+[0x00000356] [0x22]/[0x035A]: JUMP     [858/0x35A]
+[0x00000357] [0x04]/[0x0079]: LOAD.I   254
+[0x00000358] [0x02]/[0x0000]: CONST.I  0
+[0x00000359] [0x26]/[0x0000]: RETURN DATA
+[0x0000035A] [0x22]/[0x035E]: JUMP     [862/0x35E]
+[0x0000035B] [0x04]/[0x00A2]: LOAD.I   210
+[0x0000035C] [0x02]/[0x0000]: CONST.I  0
+[0x0000035D] [0x26]/[0x0000]: RETURN DATA
+[0x0000035E] [0x22]/[0x0362]: JUMP     [866/0x362]
+[0x0000035F] [0x04]/[0x00A2]: LOAD.I   210
+[0x00000360] [0x02]/[0x0000]: CONST.I  0
+[0x00000361] [0x26]/[0x0000]: RETURN DATA
+[0x00000362] [0x22]/[0x0366]: JUMP     [870/0x366]
+[0x00000363] [0x04]/[0x00A3]: LOAD.I   177
+[0x00000364] [0x02]/[0x0000]: CONST.I  0
+[0x00000365] [0x26]/[0x0000]: RETURN DATA
+[0x00000366] [0x22]/[0x036A]: JUMP     [874/0x36A]
+[0x00000367] [0x04]/[0x006F]: LOAD.I   32
+[0x00000368] [0x02]/[0x0000]: CONST.I  0
+[0x00000369] [0x26]/[0x0000]: RETURN DATA
+[0x0000036A] [0x22]/[0x036E]: JUMP     [878/0x36E]
+[0x0000036B] [0x04]/[0x009D]: LOAD.I   81
+[0x0000036C] [0x02]/[0x0000]: CONST.I  0
+[0x0000036D] [0x26]/[0x0000]: RETURN DATA
+[0x0000036E] [0x22]/[0x0372]: JUMP     [882/0x372]
+[0x0000036F] [0x04]/[0x00A4]: LOAD.I   195
+[0x00000370] [0x02]/[0x0000]: CONST.I  0
+[0x00000371] [0x26]/[0x0000]: RETURN DATA
+[0x00000372] [0x22]/[0x0376]: JUMP     [886/0x376]
+[0x00000373] [0x04]/[0x00A5]: LOAD.I   243
+[0x00000374] [0x02]/[0x0000]: CONST.I  0
+[0x00000375] [0x26]/[0x0000]: RETURN DATA
+[0x00000376] [0x22]/[0x037A]: JUMP     [890/0x37A]
+[0x00000377] [0x04]/[0x00A6]: LOAD.I   125
+[0x00000378] [0x02]/[0x0000]: CONST.I  0
+[0x00000379] [0x26]/[0x0000]: RETURN DATA
+[0x0000037A] [0x22]/[0x037E]: JUMP     [894/0x37E]
+[0x0000037B] [0x04]/[0x002A]: LOAD.I   8
+[0x0000037C] [0x02]/[0x0000]: CONST.I  0
+[0x0000037D] [0x26]/[0x0000]: RETURN DATA
+[0x0000037E] [0x22]/[0x0382]: JUMP     [898/0x382]
+[0x0000037F] [0x04]/[0x00A7]: LOAD.I   169
+[0x00000380] [0x02]/[0x0000]: CONST.I  0
+[0x00000381] [0x26]/[0x0000]: RETURN DATA
+[0x00000382] [0x22]/[0x0386]: JUMP     [902/0x386]
+[0x00000383] [0x04]/[0x00A8]: LOAD.I   112
+[0x00000384] [0x02]/[0x0000]: CONST.I  0
+[0x00000385] [0x26]/[0x0000]: RETURN DATA
+[0x00000386] [0x22]/[0x038A]: JUMP     [906/0x38A]
+[0x00000387] [0x04]/[0x006F]: LOAD.I   32
+[0x00000388] [0x02]/[0x0000]: CONST.I  0
+[0x00000389] [0x26]/[0x0000]: RETURN DATA
+[0x0000038A] [0x22]/[0x038E]: JUMP     [910/0x38E]
+[0x0000038B] [0x04]/[0x00A9]: LOAD.I   97
+[0x0000038C] [0x02]/[0x0000]: CONST.I  0
+[0x0000038D] [0x26]/[0x0000]: RETURN DATA
+[0x0000038E] [0x22]/[0x0392]: JUMP     [914/0x392]
+[0x0000038F] [0x04]/[0x00AA]: LOAD.I   53
+[0x00000390] [0x02]/[0x0000]: CONST.I  0
+[0x00000391] [0x26]/[0x0000]: RETURN DATA
+[0x00000392] [0x22]/[0x0396]: JUMP     [918/0x396]
+[0x00000393] [0x04]/[0x00A4]: LOAD.I   195
+[0x00000394] [0x02]/[0x0000]: CONST.I  0
+[0x00000395] [0x26]/[0x0000]: RETURN DATA
+[0x00000396] [0x22]/[0x039A]: JUMP     [922/0x39A]
+[0x00000397] [0x04]/[0x00AB]: LOAD.I   13
+[0x00000398] [0x02]/[0x0000]: CONST.I  0
+[0x00000399] [0x26]/[0x0000]: RETURN DATA
+
+Line: 170 Statement: 0
+-> 170DATA 203,9,47,104,125,117,114,124,165,203,181,235,193,206,70,180,174,0,167,181,41
+[ 0]         Token 0x5C                DATA
+[ 1]         Expression Start          
+[ 2]         Integer operand           203
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Integer operand           9
+[ 6]         Expression End            
+[ 7]         Expression Start          
+[ 8]         Integer operand           47
+[ 9]         Expression End            
+[10]         Expression Start          
+[11]         Integer operand           104
+[12]         Expression End            
+[13]         Expression Start          
+[14]         Integer operand           125
+[15]         Expression End            
+[16]         Expression Start          
+[17]         Integer operand           117
+[18]         Expression End            
+[19]         Expression Start          
+[20]         Integer operand           114
+[21]         Expression End            
+[22]         Expression Start          
+[23]         Integer operand           124
+[24]         Expression End            
+[25]         Expression Start          
+[26]         Integer operand           165
+[27]         Expression End            
+[28]         Expression Start          
+[29]         Integer operand           203
+[30]         Expression End            
+[31]         Expression Start          
+[32]         Integer operand           181
+[33]         Expression End            
+[34]         Expression Start          
+[35]         Integer operand           235
+[36]         Expression End            
+[37]         Expression Start          
+[38]         Integer operand           193
+[39]         Expression End            
+[40]         Expression Start          
+[41]         Integer operand           206
+[42]         Expression End            
+[43]         Expression Start          
+[44]         Integer operand           70
+[45]         Expression End            
+[46]         Expression Start          
+[47]         Integer operand           180
+[48]         Expression End            
+[49]         Expression Start          
+[50]         Integer operand           174
+[51]         Expression End            
+[52]         Expression Start          
+[53]         Integer operand           0
+[54]         Expression End            
+[55]         Expression Start          
+[56]         Integer operand           167
+[57]         Expression End            
+[58]         Expression Start          
+[59]         Integer operand           181
+[60]         Expression End            
+[61]         Expression Start          
+[62]         Integer operand           41
+[63]         Expression End            
+[0x0000039A] [0x22]/[0x039E]: JUMP     [926/0x39E]
+[0x0000039B] [0x04]/[0x00AC]: LOAD.I   203
+[0x0000039C] [0x02]/[0x0000]: CONST.I  0
+[0x0000039D] [0x26]/[0x0000]: RETURN DATA
+[0x0000039E] [0x22]/[0x03A2]: JUMP     [930/0x3A2]
+[0x0000039F] [0x04]/[0x008B]: LOAD.I   9
+[0x000003A0] [0x02]/[0x0000]: CONST.I  0
+[0x000003A1] [0x26]/[0x0000]: RETURN DATA
+[0x000003A2] [0x22]/[0x03A6]: JUMP     [934/0x3A6]
+[0x000003A3] [0x04]/[0x00AD]: LOAD.I   47
+[0x000003A4] [0x02]/[0x0000]: CONST.I  0
+[0x000003A5] [0x26]/[0x0000]: RETURN DATA
+[0x000003A6] [0x22]/[0x03AA]: JUMP     [938/0x3AA]
+[0x000003A7] [0x04]/[0x00AE]: LOAD.I   104
+[0x000003A8] [0x02]/[0x0000]: CONST.I  0
+[0x000003A9] [0x26]/[0x0000]: RETURN DATA
+[0x000003AA] [0x22]/[0x03AE]: JUMP     [942/0x3AE]
+[0x000003AB] [0x04]/[0x00A6]: LOAD.I   125
+[0x000003AC] [0x02]/[0x0000]: CONST.I  0
+[0x000003AD] [0x26]/[0x0000]: RETURN DATA
+[0x000003AE] [0x22]/[0x03B2]: JUMP     [946/0x3B2]
+[0x000003AF] [0x04]/[0x00AF]: LOAD.I   117
+[0x000003B0] [0x02]/[0x0000]: CONST.I  0
+[0x000003B1] [0x26]/[0x0000]: RETURN DATA
+[0x000003B2] [0x22]/[0x03B6]: JUMP     [950/0x3B6]
+[0x000003B3] [0x04]/[0x00B0]: LOAD.I   114
+[0x000003B4] [0x02]/[0x0000]: CONST.I  0
+[0x000003B5] [0x26]/[0x0000]: RETURN DATA
+[0x000003B6] [0x22]/[0x03BA]: JUMP     [954/0x3BA]
+[0x000003B7] [0x04]/[0x0080]: LOAD.I   124
+[0x000003B8] [0x02]/[0x0000]: CONST.I  0
+[0x000003B9] [0x26]/[0x0000]: RETURN DATA
+[0x000003BA] [0x22]/[0x03BE]: JUMP     [958/0x3BE]
+[0x000003BB] [0x04]/[0x00B1]: LOAD.I   165
+[0x000003BC] [0x02]/[0x0000]: CONST.I  0
+[0x000003BD] [0x26]/[0x0000]: RETURN DATA
+[0x000003BE] [0x22]/[0x03C2]: JUMP     [962/0x3C2]
+[0x000003BF] [0x04]/[0x00AC]: LOAD.I   203
+[0x000003C0] [0x02]/[0x0000]: CONST.I  0
+[0x000003C1] [0x26]/[0x0000]: RETURN DATA
+[0x000003C2] [0x22]/[0x03C6]: JUMP     [966/0x3C6]
+[0x000003C3] [0x04]/[0x00B2]: LOAD.I   181
+[0x000003C4] [0x02]/[0x0000]: CONST.I  0
+[0x000003C5] [0x26]/[0x0000]: RETURN DATA
+[0x000003C6] [0x22]/[0x03CA]: JUMP     [970/0x3CA]
+[0x000003C7] [0x04]/[0x00B3]: LOAD.I   235
+[0x000003C8] [0x02]/[0x0000]: CONST.I  0
+[0x000003C9] [0x26]/[0x0000]: RETURN DATA
+[0x000003CA] [0x22]/[0x03CE]: JUMP     [974/0x3CE]
+[0x000003CB] [0x04]/[0x0093]: LOAD.I   193
+[0x000003CC] [0x02]/[0x0000]: CONST.I  0
+[0x000003CD] [0x26]/[0x0000]: RETURN DATA
+[0x000003CE] [0x22]/[0x03D2]: JUMP     [978/0x3D2]
+[0x000003CF] [0x04]/[0x00B4]: LOAD.I   206
+[0x000003D0] [0x02]/[0x0000]: CONST.I  0
+[0x000003D1] [0x26]/[0x0000]: RETURN DATA
+[0x000003D2] [0x22]/[0x03D6]: JUMP     [982/0x3D6]
+[0x000003D3] [0x04]/[0x009E]: LOAD.I   70
+[0x000003D4] [0x02]/[0x0000]: CONST.I  0
+[0x000003D5] [0x26]/[0x0000]: RETURN DATA
+[0x000003D6] [0x22]/[0x03DA]: JUMP     [986/0x3DA]
+[0x000003D7] [0x04]/[0x009C]: LOAD.I   180
+[0x000003D8] [0x02]/[0x0000]: CONST.I  0
+[0x000003D9] [0x26]/[0x0000]: RETURN DATA
+[0x000003DA] [0x22]/[0x03DE]: JUMP     [990/0x3DE]
+[0x000003DB] [0x04]/[0x0090]: LOAD.I   174
+[0x000003DC] [0x02]/[0x0000]: CONST.I  0
+[0x000003DD] [0x26]/[0x0000]: RETURN DATA
+[0x000003DE] [0x22]/[0x03E2]: JUMP     [994/0x3E2]
+[0x000003DF] [0x04]/[0x0010]: LOAD.I   0
+[0x000003E0] [0x02]/[0x0000]: CONST.I  0
+[0x000003E1] [0x26]/[0x0000]: RETURN DATA
+[0x000003E2] [0x22]/[0x03E6]: JUMP     [998/0x3E6]
+[0x000003E3] [0x04]/[0x008A]: LOAD.I   167
+[0x000003E4] [0x02]/[0x0000]: CONST.I  0
+[0x000003E5] [0x26]/[0x0000]: RETURN DATA
+[0x000003E6] [0x22]/[0x03EA]: JUMP     [1002/0x3EA]
+[0x000003E7] [0x04]/[0x00B2]: LOAD.I   181
+[0x000003E8] [0x02]/[0x0000]: CONST.I  0
+[0x000003E9] [0x26]/[0x0000]: RETURN DATA
+[0x000003EA] [0x22]/[0x03EE]: JUMP     [1006/0x3EE]
+[0x000003EB] [0x04]/[0x00B5]: LOAD.I   41
+[0x000003EC] [0x02]/[0x0000]: CONST.I  0
+[0x000003ED] [0x26]/[0x0000]: RETURN DATA
+
+Line: 171 Statement: 0
+-> 171DATA 164,30,116,127,198,245,146,87,224,149,206,57,4,192,210,65,210,129,240,178,105
+[ 0]         Token 0x5C                DATA
+[ 1]         Expression Start          
+[ 2]         Integer operand           164
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Integer operand           30
+[ 6]         Expression End            
+[ 7]         Expression Start          
+[ 8]         Integer operand           116
+[ 9]         Expression End            
+[10]         Expression Start          
+[11]         Integer operand           127
+[12]         Expression End            
+[13]         Expression Start          
+[14]         Integer operand           198
+[15]         Expression End            
+[16]         Expression Start          
+[17]         Integer operand           245
+[18]         Expression End            
+[19]         Expression Start          
+[20]         Integer operand           146
+[21]         Expression End            
+[22]         Expression Start          
+[23]         Integer operand           87
+[24]         Expression End            
+[25]         Expression Start          
+[26]         Integer operand           224
+[27]         Expression End            
+[28]         Expression Start          
+[29]         Integer operand           149
+[30]         Expression End            
+[31]         Expression Start          
+[32]         Integer operand           206
+[33]         Expression End            
+[34]         Expression Start          
+[35]         Integer operand           57
+[36]         Expression End            
+[37]         Expression Start          
+[38]         Integer operand           4
+[39]         Expression End            
+[40]         Expression Start          
+[41]         Integer operand           192
+[42]         Expression End            
+[43]         Expression Start          
+[44]         Integer operand           210
+[45]         Expression End            
+[46]         Expression Start          
+[47]         Integer operand           65
+[48]         Expression End            
+[49]         Expression Start          
+[50]         Integer operand           210
+[51]         Expression End            
+[52]         Expression Start          
+[53]         Integer operand           129
+[54]         Expression End            
+[55]         Expression Start          
+[56]         Integer operand           240
+[57]         Expression End            
+[58]         Expression Start          
+[59]         Integer operand           178
+[60]         Expression End            
+[61]         Expression Start          
+[62]         Integer operand           105
+[63]         Expression End            
+[0x000003EE] [0x22]/[0x03F2]: JUMP     [1010/0x3F2]
+[0x000003EF] [0x04]/[0x00B6]: LOAD.I   164
+[0x000003F0] [0x02]/[0x0000]: CONST.I  0
+[0x000003F1] [0x26]/[0x0000]: RETURN DATA
+[0x000003F2] [0x22]/[0x03F6]: JUMP     [1014/0x3F6]
+[0x000003F3] [0x04]/[0x00B7]: LOAD.I   30
+[0x000003F4] [0x02]/[0x0000]: CONST.I  0
+[0x000003F5] [0x26]/[0x0000]: RETURN DATA
+[0x000003F6] [0x22]/[0x03FA]: JUMP     [1018/0x3FA]
+[0x000003F7] [0x04]/[0x00B8]: LOAD.I   116
+[0x000003F8] [0x02]/[0x0000]: CONST.I  0
+[0x000003F9] [0x26]/[0x0000]: RETURN DATA
+[0x000003FA] [0x22]/[0x03FE]: JUMP     [1022/0x3FE]
+[0x000003FB] [0x04]/[0x00B9]: LOAD.I   127
+[0x000003FC] [0x02]/[0x0000]: CONST.I  0
+[0x000003FD] [0x26]/[0x0000]: RETURN DATA
+[0x000003FE] [0x22]/[0x0402]: JUMP     [1026/0x402]
+[0x000003FF] [0x04]/[0x00BA]: LOAD.I   198
+[0x00000400] [0x02]/[0x0000]: CONST.I  0
+[0x00000401] [0x26]/[0x0000]: RETURN DATA
+[0x00000402] [0x22]/[0x0406]: JUMP     [1030/0x406]
+[0x00000403] [0x04]/[0x007A]: LOAD.I   245
+[0x00000404] [0x02]/[0x0000]: CONST.I  0
+[0x00000405] [0x26]/[0x0000]: RETURN DATA
+[0x00000406] [0x22]/[0x040A]: JUMP     [1034/0x40A]
+[0x00000407] [0x04]/[0x00BB]: LOAD.I   146
+[0x00000408] [0x02]/[0x0000]: CONST.I  0
+[0x00000409] [0x26]/[0x0000]: RETURN DATA
+[0x0000040A] [0x22]/[0x040E]: JUMP     [1038/0x40E]
+[0x0000040B] [0x04]/[0x00BC]: LOAD.I   87
+[0x0000040C] [0x02]/[0x0000]: CONST.I  0
+[0x0000040D] [0x26]/[0x0000]: RETURN DATA
+[0x0000040E] [0x22]/[0x0412]: JUMP     [1042/0x412]
+[0x0000040F] [0x04]/[0x0088]: LOAD.I   224
+[0x00000410] [0x02]/[0x0000]: CONST.I  0
+[0x00000411] [0x26]/[0x0000]: RETURN DATA
+[0x00000412] [0x22]/[0x0416]: JUMP     [1046/0x416]
+[0x00000413] [0x04]/[0x00BD]: LOAD.I   149
+[0x00000414] [0x02]/[0x0000]: CONST.I  0
+[0x00000415] [0x26]/[0x0000]: RETURN DATA
+[0x00000416] [0x22]/[0x041A]: JUMP     [1050/0x41A]
+[0x00000417] [0x04]/[0x00B4]: LOAD.I   206
+[0x00000418] [0x02]/[0x0000]: CONST.I  0
+[0x00000419] [0x26]/[0x0000]: RETURN DATA
+[0x0000041A] [0x22]/[0x041E]: JUMP     [1054/0x41E]
+[0x0000041B] [0x04]/[0x00BE]: LOAD.I   57
+[0x0000041C] [0x02]/[0x0000]: CONST.I  0
+[0x0000041D] [0x26]/[0x0000]: RETURN DATA
+[0x0000041E] [0x22]/[0x0422]: JUMP     [1058/0x422]
+[0x0000041F] [0x04]/[0x000B]: LOAD.I   4
+[0x00000420] [0x02]/[0x0000]: CONST.I  0
+[0x00000421] [0x26]/[0x0000]: RETURN DATA
+[0x00000422] [0x22]/[0x0426]: JUMP     [1062/0x426]
+[0x00000423] [0x04]/[0x0035]: LOAD.I   192
+[0x00000424] [0x02]/[0x0000]: CONST.I  0
+[0x00000425] [0x26]/[0x0000]: RETURN DATA
+[0x00000426] [0x22]/[0x042A]: JUMP     [1066/0x42A]
+[0x00000427] [0x04]/[0x00A2]: LOAD.I   210
+[0x00000428] [0x02]/[0x0000]: CONST.I  0
+[0x00000429] [0x26]/[0x0000]: RETURN DATA
+[0x0000042A] [0x22]/[0x042E]: JUMP     [1070/0x42E]
+[0x0000042B] [0x04]/[0x00BF]: LOAD.I   65
+[0x0000042C] [0x02]/[0x0000]: CONST.I  0
+[0x0000042D] [0x26]/[0x0000]: RETURN DATA
+[0x0000042E] [0x22]/[0x0432]: JUMP     [1074/0x432]
+[0x0000042F] [0x04]/[0x00A2]: LOAD.I   210
+[0x00000430] [0x02]/[0x0000]: CONST.I  0
+[0x00000431] [0x26]/[0x0000]: RETURN DATA
+[0x00000432] [0x22]/[0x0436]: JUMP     [1078/0x436]
+[0x00000433] [0x04]/[0x00C0]: LOAD.I   129
+[0x00000434] [0x02]/[0x0000]: CONST.I  0
+[0x00000435] [0x26]/[0x0000]: RETURN DATA
+[0x00000436] [0x22]/[0x043A]: JUMP     [1082/0x43A]
+[0x00000437] [0x04]/[0x00C1]: LOAD.I   240
+[0x00000438] [0x02]/[0x0000]: CONST.I  0
+[0x00000439] [0x26]/[0x0000]: RETURN DATA
+[0x0000043A] [0x22]/[0x043E]: JUMP     [1086/0x43E]
+[0x0000043B] [0x04]/[0x00C2]: LOAD.I   178
+[0x0000043C] [0x02]/[0x0000]: CONST.I  0
+[0x0000043D] [0x26]/[0x0000]: RETURN DATA
+[0x0000043E] [0x22]/[0x0442]: JUMP     [1090/0x442]
+[0x0000043F] [0x04]/[0x00C3]: LOAD.I   105
+[0x00000440] [0x02]/[0x0000]: CONST.I  0
+[0x00000441] [0x26]/[0x0000]: RETURN DATA
+
+Line: 172 Statement: 0
+-> 172DATA 228,108,245,148,140,40,35,195,38,58,65,207,215,253,65,85,208,76,62,3,237,55,89
+[ 0]         Token 0x5C                DATA
+[ 1]         Expression Start          
+[ 2]         Integer operand           228
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Integer operand           108
+[ 6]         Expression End            
+[ 7]         Expression Start          
+[ 8]         Integer operand           245
+[ 9]         Expression End            
+[10]         Expression Start          
+[11]         Integer operand           148
+[12]         Expression End            
+[13]         Expression Start          
+[14]         Integer operand           140
+[15]         Expression End            
+[16]         Expression Start          
+[17]         Integer operand           40
+[18]         Expression End            
+[19]         Expression Start          
+[20]         Integer operand           35
+[21]         Expression End            
+[22]         Expression Start          
+[23]         Integer operand           195
+[24]         Expression End            
+[25]         Expression Start          
+[26]         Integer operand           38
+[27]         Expression End            
+[28]         Expression Start          
+[29]         Integer operand           58
+[30]         Expression End            
+[31]         Expression Start          
+[32]         Integer operand           65
+[33]         Expression End            
+[34]         Expression Start          
+[35]         Integer operand           207
+[36]         Expression End            
+[37]         Expression Start          
+[38]         Integer operand           215
+[39]         Expression End            
+[40]         Expression Start          
+[41]         Integer operand           253
+[42]         Expression End            
+[43]         Expression Start          
+[44]         Integer operand           65
+[45]         Expression End            
+[46]         Expression Start          
+[47]         Integer operand           85
+[48]         Expression End            
+[49]         Expression Start          
+[50]         Integer operand           208
+[51]         Expression End            
+[52]         Expression Start          
+[53]         Integer operand           76
+[54]         Expression End            
+[55]         Expression Start          
+[56]         Integer operand           62
+[57]         Expression End            
+[58]         Expression Start          
+[59]         Integer operand           3
+[60]         Expression End            
+[61]         Expression Start          
+[62]         Integer operand           237
+[63]         Expression End            
+[64]         Expression Start          
+[65]         Integer operand           55
+[66]         Expression End            
+[67]         Expression Start          
+[68]         Integer operand           89
+[69]         Expression End            
+[0x00000442] [0x22]/[0x0446]: JUMP     [1094/0x446]
+[0x00000443] [0x04]/[0x00C4]: LOAD.I   228
+[0x00000444] [0x02]/[0x0000]: CONST.I  0
+[0x00000445] [0x26]/[0x0000]: RETURN DATA
+[0x00000446] [0x22]/[0x044A]: JUMP     [1098/0x44A]
+[0x00000447] [0x04]/[0x0098]: LOAD.I   108
+[0x00000448] [0x02]/[0x0000]: CONST.I  0
+[0x00000449] [0x26]/[0x0000]: RETURN DATA
+[0x0000044A] [0x22]/[0x044E]: JUMP     [1102/0x44E]
+[0x0000044B] [0x04]/[0x007A]: LOAD.I   245
+[0x0000044C] [0x02]/[0x0000]: CONST.I  0
+[0x0000044D] [0x26]/[0x0000]: RETURN DATA
+[0x0000044E] [0x22]/[0x0452]: JUMP     [1106/0x452]
+[0x0000044F] [0x04]/[0x00C5]: LOAD.I   148
+[0x00000450] [0x02]/[0x0000]: CONST.I  0
+[0x00000451] [0x26]/[0x0000]: RETURN DATA
+[0x00000452] [0x22]/[0x0456]: JUMP     [1110/0x456]
+[0x00000453] [0x04]/[0x0076]: LOAD.I   140
+[0x00000454] [0x02]/[0x0000]: CONST.I  0
+[0x00000455] [0x26]/[0x0000]: RETURN DATA
+[0x00000456] [0x22]/[0x045A]: JUMP     [1114/0x45A]
+[0x00000457] [0x04]/[0x007C]: LOAD.I   40
+[0x00000458] [0x02]/[0x0000]: CONST.I  0
+[0x00000459] [0x26]/[0x0000]: RETURN DATA
+[0x0000045A] [0x22]/[0x045E]: JUMP     [1118/0x45E]
+[0x0000045B] [0x04]/[0x00C6]: LOAD.I   35
+[0x0000045C] [0x02]/[0x0000]: CONST.I  0
+[0x0000045D] [0x26]/[0x0000]: RETURN DATA
+[0x0000045E] [0x22]/[0x0462]: JUMP     [1122/0x462]
+[0x0000045F] [0x04]/[0x00A4]: LOAD.I   195
+[0x00000460] [0x02]/[0x0000]: CONST.I  0
+[0x00000461] [0x26]/[0x0000]: RETURN DATA
+[0x00000462] [0x22]/[0x0466]: JUMP     [1126/0x466]
+[0x00000463] [0x04]/[0x00A1]: LOAD.I   38
+[0x00000464] [0x02]/[0x0000]: CONST.I  0
+[0x00000465] [0x26]/[0x0000]: RETURN DATA
+[0x00000466] [0x22]/[0x046A]: JUMP     [1130/0x46A]
+[0x00000467] [0x04]/[0x00C7]: LOAD.I   58
+[0x00000468] [0x02]/[0x0000]: CONST.I  0
+[0x00000469] [0x26]/[0x0000]: RETURN DATA
+[0x0000046A] [0x22]/[0x046E]: JUMP     [1134/0x46E]
+[0x0000046B] [0x04]/[0x00BF]: LOAD.I   65
+[0x0000046C] [0x02]/[0x0000]: CONST.I  0
+[0x0000046D] [0x26]/[0x0000]: RETURN DATA
+[0x0000046E] [0x22]/[0x0472]: JUMP     [1138/0x472]
+[0x0000046F] [0x04]/[0x00C8]: LOAD.I   207
+[0x00000470] [0x02]/[0x0000]: CONST.I  0
+[0x00000471] [0x26]/[0x0000]: RETURN DATA
+[0x00000472] [0x22]/[0x0476]: JUMP     [1142/0x476]
+[0x00000473] [0x04]/[0x00C9]: LOAD.I   215
+[0x00000474] [0x02]/[0x0000]: CONST.I  0
+[0x00000475] [0x26]/[0x0000]: RETURN DATA
+[0x00000476] [0x22]/[0x047A]: JUMP     [1146/0x47A]
+[0x00000477] [0x04]/[0x00CA]: LOAD.I   253
+[0x00000478] [0x02]/[0x0000]: CONST.I  0
+[0x00000479] [0x26]/[0x0000]: RETURN DATA
+[0x0000047A] [0x22]/[0x047E]: JUMP     [1150/0x47E]
+[0x0000047B] [0x04]/[0x00BF]: LOAD.I   65
+[0x0000047C] [0x02]/[0x0000]: CONST.I  0
+[0x0000047D] [0x26]/[0x0000]: RETURN DATA
+[0x0000047E] [0x22]/[0x0482]: JUMP     [1154/0x482]
+[0x0000047F] [0x04]/[0x00CB]: LOAD.I   85
+[0x00000480] [0x02]/[0x0000]: CONST.I  0
+[0x00000481] [0x26]/[0x0000]: RETURN DATA
+[0x00000482] [0x22]/[0x0486]: JUMP     [1158/0x486]
+[0x00000483] [0x04]/[0x006B]: LOAD.I   208
+[0x00000484] [0x02]/[0x0000]: CONST.I  0
+[0x00000485] [0x26]/[0x0000]: RETURN DATA
+[0x00000486] [0x22]/[0x048A]: JUMP     [1162/0x48A]
+[0x00000487] [0x04]/[0x0082]: LOAD.I   76
+[0x00000488] [0x02]/[0x0000]: CONST.I  0
+[0x00000489] [0x26]/[0x0000]: RETURN DATA
+[0x0000048A] [0x22]/[0x048E]: JUMP     [1166/0x48E]
+[0x0000048B] [0x04]/[0x00CC]: LOAD.I   62
+[0x0000048C] [0x02]/[0x0000]: CONST.I  0
+[0x0000048D] [0x26]/[0x0000]: RETURN DATA
+[0x0000048E] [0x22]/[0x0492]: JUMP     [1170/0x492]
+[0x0000048F] [0x04]/[0x0051]: LOAD.I   3
+[0x00000490] [0x02]/[0x0000]: CONST.I  0
+[0x00000491] [0x26]/[0x0000]: RETURN DATA
+[0x00000492] [0x22]/[0x0496]: JUMP     [1174/0x496]
+[0x00000493] [0x04]/[0x00CD]: LOAD.I   237
+[0x00000494] [0x02]/[0x0000]: CONST.I  0
+[0x00000495] [0x26]/[0x0000]: RETURN DATA
+[0x00000496] [0x22]/[0x049A]: JUMP     [1178/0x49A]
+[0x00000497] [0x04]/[0x00CE]: LOAD.I   55
+[0x00000498] [0x02]/[0x0000]: CONST.I  0
+[0x00000499] [0x26]/[0x0000]: RETURN DATA
+[0x0000049A] [0x22]/[0x049E]: JUMP     [1182/0x49E]
+[0x0000049B] [0x04]/[0x00CF]: LOAD.I   89
+[0x0000049C] [0x02]/[0x0000]: CONST.I  0
+[0x0000049D] [0x26]/[0x0000]: RETURN DATA
+
+Line: 173 Statement: 0
+-> 173DATA 232,50,217,64,244,157,199,121,252,90,17,212,203,149,152,140,187,234,177,73,174
+[ 0]         Token 0x5C                DATA
+[ 1]         Expression Start          
+[ 2]         Integer operand           232
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Integer operand           50
+[ 6]         Expression End            
+[ 7]         Expression Start          
+[ 8]         Integer operand           217
+[ 9]         Expression End            
+[10]         Expression Start          
+[11]         Integer operand           64
+[12]         Expression End            
+[13]         Expression Start          
+[14]         Integer operand           244
+[15]         Expression End            
+[16]         Expression Start          
+[17]         Integer operand           157
+[18]         Expression End            
+[19]         Expression Start          
+[20]         Integer operand           199
+[21]         Expression End            
+[22]         Expression Start          
+[23]         Integer operand           121
+[24]         Expression End            
+[25]         Expression Start          
+[26]         Integer operand           252
+[27]         Expression End            
+[28]         Expression Start          
+[29]         Integer operand           90
+[30]         Expression End            
+[31]         Expression Start          
+[32]         Integer operand           17
+[33]         Expression End            
+[34]         Expression Start          
+[35]         Integer operand           212
+[36]         Expression End            
+[37]         Expression Start          
+[38]         Integer operand           203
+[39]         Expression End            
+[40]         Expression Start          
+[41]         Integer operand           149
+[42]         Expression End            
+[43]         Expression Start          
+[44]         Integer operand           152
+[45]         Expression End            
+[46]         Expression Start          
+[47]         Integer operand           140
+[48]         Expression End            
+[49]         Expression Start          
+[50]         Integer operand           187
+[51]         Expression End            
+[52]         Expression Start          
+[53]         Integer operand           234
+[54]         Expression End            
+[55]         Expression Start          
+[56]         Integer operand           177
+[57]         Expression End            
+[58]         Expression Start          
+[59]         Integer operand           73
+[60]         Expression End            
+[61]         Expression Start          
+[62]         Integer operand           174
+[63]         Expression End            
+[0x0000049E] [0x22]/[0x04A2]: JUMP     [1186/0x4A2]
+[0x0000049F] [0x04]/[0x00D0]: LOAD.I   232
+[0x000004A0] [0x02]/[0x0000]: CONST.I  0
+[0x000004A1] [0x26]/[0x0000]: RETURN DATA
+[0x000004A2] [0x22]/[0x04A6]: JUMP     [1190/0x4A6]
+[0x000004A3] [0x04]/[0x00D1]: LOAD.I   50
+[0x000004A4] [0x02]/[0x0000]: CONST.I  0
+[0x000004A5] [0x26]/[0x0000]: RETURN DATA
+[0x000004A6] [0x22]/[0x04AA]: JUMP     [1194/0x4AA]
+[0x000004A7] [0x04]/[0x008D]: LOAD.I   217
+[0x000004A8] [0x02]/[0x0000]: CONST.I  0
+[0x000004A9] [0x26]/[0x0000]: RETURN DATA
+[0x000004AA] [0x22]/[0x04AE]: JUMP     [1198/0x4AE]
+[0x000004AB] [0x04]/[0x0034]: LOAD.I   64
+[0x000004AC] [0x02]/[0x0000]: CONST.I  0
+[0x000004AD] [0x26]/[0x0000]: RETURN DATA
+[0x000004AE] [0x22]/[0x04B2]: JUMP     [1202/0x4B2]
+[0x000004AF] [0x04]/[0x00D2]: LOAD.I   244
+[0x000004B0] [0x02]/[0x0000]: CONST.I  0
+[0x000004B1] [0x26]/[0x0000]: RETURN DATA
+[0x000004B2] [0x22]/[0x04B6]: JUMP     [1206/0x4B6]
+[0x000004B3] [0x04]/[0x00D3]: LOAD.I   157
+[0x000004B4] [0x02]/[0x0000]: CONST.I  0
+[0x000004B5] [0x26]/[0x0000]: RETURN DATA
+[0x000004B6] [0x22]/[0x04BA]: JUMP     [1210/0x4BA]
+[0x000004B7] [0x04]/[0x00D4]: LOAD.I   199
+[0x000004B8] [0x02]/[0x0000]: CONST.I  0
+[0x000004B9] [0x26]/[0x0000]: RETURN DATA
+[0x000004BA] [0x22]/[0x04BE]: JUMP     [1214/0x4BE]
+[0x000004BB] [0x04]/[0x0096]: LOAD.I   121
+[0x000004BC] [0x02]/[0x0000]: CONST.I  0
+[0x000004BD] [0x26]/[0x0000]: RETURN DATA
+[0x000004BE] [0x22]/[0x04C2]: JUMP     [1218/0x4C2]
+[0x000004BF] [0x04]/[0x00D5]: LOAD.I   252
+[0x000004C0] [0x02]/[0x0000]: CONST.I  0
+[0x000004C1] [0x26]/[0x0000]: RETURN DATA
+[0x000004C2] [0x22]/[0x04C6]: JUMP     [1222/0x4C6]
+[0x000004C3] [0x04]/[0x00D6]: LOAD.I   90
+[0x000004C4] [0x02]/[0x0000]: CONST.I  0
+[0x000004C5] [0x26]/[0x0000]: RETURN DATA
+[0x000004C6] [0x22]/[0x04CA]: JUMP     [1226/0x4CA]
+[0x000004C7] [0x04]/[0x00D7]: LOAD.I   17
+[0x000004C8] [0x02]/[0x0000]: CONST.I  0
+[0x000004C9] [0x26]/[0x0000]: RETURN DATA
+[0x000004CA] [0x22]/[0x04CE]: JUMP     [1230/0x4CE]
+[0x000004CB] [0x04]/[0x00D8]: LOAD.I   212
+[0x000004CC] [0x02]/[0x0000]: CONST.I  0
+[0x000004CD] [0x26]/[0x0000]: RETURN DATA
+[0x000004CE] [0x22]/[0x04D2]: JUMP     [1234/0x4D2]
+[0x000004CF] [0x04]/[0x00AC]: LOAD.I   203
+[0x000004D0] [0x02]/[0x0000]: CONST.I  0
+[0x000004D1] [0x26]/[0x0000]: RETURN DATA
+[0x000004D2] [0x22]/[0x04D6]: JUMP     [1238/0x4D6]
+[0x000004D3] [0x04]/[0x00BD]: LOAD.I   149
+[0x000004D4] [0x02]/[0x0000]: CONST.I  0
+[0x000004D5] [0x26]/[0x0000]: RETURN DATA
+[0x000004D6] [0x22]/[0x04DA]: JUMP     [1242/0x4DA]
+[0x000004D7] [0x04]/[0x00D9]: LOAD.I   152
+[0x000004D8] [0x02]/[0x0000]: CONST.I  0
+[0x000004D9] [0x26]/[0x0000]: RETURN DATA
+[0x000004DA] [0x22]/[0x04DE]: JUMP     [1246/0x4DE]
+[0x000004DB] [0x04]/[0x0076]: LOAD.I   140
+[0x000004DC] [0x02]/[0x0000]: CONST.I  0
+[0x000004DD] [0x26]/[0x0000]: RETURN DATA
+[0x000004DE] [0x22]/[0x04E2]: JUMP     [1250/0x4E2]
+[0x000004DF] [0x04]/[0x00DA]: LOAD.I   187
+[0x000004E0] [0x02]/[0x0000]: CONST.I  0
+[0x000004E1] [0x26]/[0x0000]: RETURN DATA
+[0x000004E2] [0x22]/[0x04E6]: JUMP     [1254/0x4E6]
+[0x000004E3] [0x04]/[0x0085]: LOAD.I   234
+[0x000004E4] [0x02]/[0x0000]: CONST.I  0
+[0x000004E5] [0x26]/[0x0000]: RETURN DATA
+[0x000004E6] [0x22]/[0x04EA]: JUMP     [1258/0x4EA]
+[0x000004E7] [0x04]/[0x00A3]: LOAD.I   177
+[0x000004E8] [0x02]/[0x0000]: CONST.I  0
+[0x000004E9] [0x26]/[0x0000]: RETURN DATA
+[0x000004EA] [0x22]/[0x04EE]: JUMP     [1262/0x4EE]
+[0x000004EB] [0x04]/[0x00DB]: LOAD.I   73
+[0x000004EC] [0x02]/[0x0000]: CONST.I  0
+[0x000004ED] [0x26]/[0x0000]: RETURN DATA
+[0x000004EE] [0x22]/[0x04F2]: JUMP     [1266/0x4F2]
+[0x000004EF] [0x04]/[0x0090]: LOAD.I   174
+[0x000004F0] [0x02]/[0x0000]: CONST.I  0
+[0x000004F1] [0x26]/[0x0000]: RETURN DATA
+
+Line: 174 Statement: 0
+-> 174DATA 193,100,192,143,97,53,145,135,19,103,13,90,135,151,199,91,239,247,33,39,145
+[ 0]         Token 0x5C                DATA
+[ 1]         Expression Start          
+[ 2]         Integer operand           193
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Integer operand           100
+[ 6]         Expression End            
+[ 7]         Expression Start          
+[ 8]         Integer operand           192
+[ 9]         Expression End            
+[10]         Expression Start          
+[11]         Integer operand           143
+[12]         Expression End            
+[13]         Expression Start          
+[14]         Integer operand           97
+[15]         Expression End            
+[16]         Expression Start          
+[17]         Integer operand           53
+[18]         Expression End            
+[19]         Expression Start          
+[20]         Integer operand           145
+[21]         Expression End            
+[22]         Expression Start          
+[23]         Integer operand           135
+[24]         Expression End            
+[25]         Expression Start          
+[26]         Integer operand           19
+[27]         Expression End            
+[28]         Expression Start          
+[29]         Integer operand           103
+[30]         Expression End            
+[31]         Expression Start          
+[32]         Integer operand           13
+[33]         Expression End            
+[34]         Expression Start          
+[35]         Integer operand           90
+[36]         Expression End            
+[37]         Expression Start          
+[38]         Integer operand           135
+[39]         Expression End            
+[40]         Expression Start          
+[41]         Integer operand           151
+[42]         Expression End            
+[43]         Expression Start          
+[44]         Integer operand           199
+[45]         Expression End            
+[46]         Expression Start          
+[47]         Integer operand           91
+[48]         Expression End            
+[49]         Expression Start          
+[50]         Integer operand           239
+[51]         Expression End            
+[52]         Expression Start          
+[53]         Integer operand           247
+[54]         Expression End            
+[55]         Expression Start          
+[56]         Integer operand           33
+[57]         Expression End            
+[58]         Expression Start          
+[59]         Integer operand           39
+[60]         Expression End            
+[61]         Expression Start          
+[62]         Integer operand           145
+[63]         Expression End            
+[0x000004F2] [0x22]/[0x04F6]: JUMP     [1270/0x4F6]
+[0x000004F3] [0x04]/[0x0093]: LOAD.I   193
+[0x000004F4] [0x02]/[0x0000]: CONST.I  0
+[0x000004F5] [0x26]/[0x0000]: RETURN DATA
+[0x000004F6] [0x22]/[0x04FA]: JUMP     [1274/0x4FA]
+[0x000004F7] [0x04]/[0x0097]: LOAD.I   100
+[0x000004F8] [0x02]/[0x0000]: CONST.I  0
+[0x000004F9] [0x26]/[0x0000]: RETURN DATA
+[0x000004FA] [0x22]/[0x04FE]: JUMP     [1278/0x4FE]
+[0x000004FB] [0x04]/[0x0035]: LOAD.I   192
+[0x000004FC] [0x02]/[0x0000]: CONST.I  0
+[0x000004FD] [0x26]/[0x0000]: RETURN DATA
+[0x000004FE] [0x22]/[0x0502]: JUMP     [1282/0x502]
+[0x000004FF] [0x04]/[0x00DC]: LOAD.I   143
+[0x00000500] [0x02]/[0x0000]: CONST.I  0
+[0x00000501] [0x26]/[0x0000]: RETURN DATA
+[0x00000502] [0x22]/[0x0506]: JUMP     [1286/0x506]
+[0x00000503] [0x04]/[0x00A9]: LOAD.I   97
+[0x00000504] [0x02]/[0x0000]: CONST.I  0
+[0x00000505] [0x26]/[0x0000]: RETURN DATA
+[0x00000506] [0x22]/[0x050A]: JUMP     [1290/0x50A]
+[0x00000507] [0x04]/[0x00AA]: LOAD.I   53
+[0x00000508] [0x02]/[0x0000]: CONST.I  0
+[0x00000509] [0x26]/[0x0000]: RETURN DATA
+[0x0000050A] [0x22]/[0x050E]: JUMP     [1294/0x50E]
+[0x0000050B] [0x04]/[0x00DD]: LOAD.I   145
+[0x0000050C] [0x02]/[0x0000]: CONST.I  0
+[0x0000050D] [0x26]/[0x0000]: RETURN DATA
+[0x0000050E] [0x22]/[0x0512]: JUMP     [1298/0x512]
+[0x0000050F] [0x04]/[0x00DE]: LOAD.I   135
+[0x00000510] [0x02]/[0x0000]: CONST.I  0
+[0x00000511] [0x26]/[0x0000]: RETURN DATA
+[0x00000512] [0x22]/[0x0516]: JUMP     [1302/0x516]
+[0x00000513] [0x04]/[0x00DF]: LOAD.I   19
+[0x00000514] [0x02]/[0x0000]: CONST.I  0
+[0x00000515] [0x26]/[0x0000]: RETURN DATA
+[0x00000516] [0x22]/[0x051A]: JUMP     [1306/0x51A]
+[0x00000517] [0x04]/[0x00E0]: LOAD.I   103
+[0x00000518] [0x02]/[0x0000]: CONST.I  0
+[0x00000519] [0x26]/[0x0000]: RETURN DATA
+[0x0000051A] [0x22]/[0x051E]: JUMP     [1310/0x51E]
+[0x0000051B] [0x04]/[0x00AB]: LOAD.I   13
+[0x0000051C] [0x02]/[0x0000]: CONST.I  0
+[0x0000051D] [0x26]/[0x0000]: RETURN DATA
+[0x0000051E] [0x22]/[0x0522]: JUMP     [1314/0x522]
+[0x0000051F] [0x04]/[0x00D6]: LOAD.I   90
+[0x00000520] [0x02]/[0x0000]: CONST.I  0
+[0x00000521] [0x26]/[0x0000]: RETURN DATA
+[0x00000522] [0x22]/[0x0526]: JUMP     [1318/0x526]
+[0x00000523] [0x04]/[0x00DE]: LOAD.I   135
+[0x00000524] [0x02]/[0x0000]: CONST.I  0
+[0x00000525] [0x26]/[0x0000]: RETURN DATA
+[0x00000526] [0x22]/[0x052A]: JUMP     [1322/0x52A]
+[0x00000527] [0x04]/[0x00E1]: LOAD.I   151
+[0x00000528] [0x02]/[0x0000]: CONST.I  0
+[0x00000529] [0x26]/[0x0000]: RETURN DATA
+[0x0000052A] [0x22]/[0x052E]: JUMP     [1326/0x52E]
+[0x0000052B] [0x04]/[0x00D4]: LOAD.I   199
+[0x0000052C] [0x02]/[0x0000]: CONST.I  0
+[0x0000052D] [0x26]/[0x0000]: RETURN DATA
+[0x0000052E] [0x22]/[0x0532]: JUMP     [1330/0x532]
+[0x0000052F] [0x04]/[0x00E2]: LOAD.I   91
+[0x00000530] [0x02]/[0x0000]: CONST.I  0
+[0x00000531] [0x26]/[0x0000]: RETURN DATA
+[0x00000532] [0x22]/[0x0536]: JUMP     [1334/0x536]
+[0x00000533] [0x04]/[0x008F]: LOAD.I   239
+[0x00000534] [0x02]/[0x0000]: CONST.I  0
+[0x00000535] [0x26]/[0x0000]: RETURN DATA
+[0x00000536] [0x22]/[0x053A]: JUMP     [1338/0x53A]
+[0x00000537] [0x04]/[0x007B]: LOAD.I   247
+[0x00000538] [0x02]/[0x0000]: CONST.I  0
+[0x00000539] [0x26]/[0x0000]: RETURN DATA
+[0x0000053A] [0x22]/[0x053E]: JUMP     [1342/0x53E]
+[0x0000053B] [0x04]/[0x00E3]: LOAD.I   33
+[0x0000053C] [0x02]/[0x0000]: CONST.I  0
+[0x0000053D] [0x26]/[0x0000]: RETURN DATA
+[0x0000053E] [0x22]/[0x0542]: JUMP     [1346/0x542]
+[0x0000053F] [0x04]/[0x00E4]: LOAD.I   39
+[0x00000540] [0x02]/[0x0000]: CONST.I  0
+[0x00000541] [0x26]/[0x0000]: RETURN DATA
+[0x00000542] [0x22]/[0x0546]: JUMP     [1350/0x546]
+[0x00000543] [0x04]/[0x00DD]: LOAD.I   145
+[0x00000544] [0x02]/[0x0000]: CONST.I  0
+[0x00000545] [0x26]/[0x0000]: RETURN DATA
+
+Line: 175 Statement: 0
+-> 175DATA 101,120,99,3,186,86,99,41,237,203,111,79,220,135,158,42,30,154,120,67,87,167
+[ 0]         Token 0x5C                DATA
+[ 1]         Expression Start          
+[ 2]         Integer operand           101
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Integer operand           120
+[ 6]         Expression End            
+[ 7]         Expression Start          
+[ 8]         Integer operand           99
+[ 9]         Expression End            
+[10]         Expression Start          
+[11]         Integer operand           3
+[12]         Expression End            
+[13]         Expression Start          
+[14]         Integer operand           186
+[15]         Expression End            
+[16]         Expression Start          
+[17]         Integer operand           86
+[18]         Expression End            
+[19]         Expression Start          
+[20]         Integer operand           99
+[21]         Expression End            
+[22]         Expression Start          
+[23]         Integer operand           41
+[24]         Expression End            
+[25]         Expression Start          
+[26]         Integer operand           237
+[27]         Expression End            
+[28]         Expression Start          
+[29]         Integer operand           203
+[30]         Expression End            
+[31]         Expression Start          
+[32]         Integer operand           111
+[33]         Expression End            
+[34]         Expression Start          
+[35]         Integer operand           79
+[36]         Expression End            
+[37]         Expression Start          
+[38]         Integer operand           220
+[39]         Expression End            
+[40]         Expression Start          
+[41]         Integer operand           135
+[42]         Expression End            
+[43]         Expression Start          
+[44]         Integer operand           158
+[45]         Expression End            
+[46]         Expression Start          
+[47]         Integer operand           42
+[48]         Expression End            
+[49]         Expression Start          
+[50]         Integer operand           30
+[51]         Expression End            
+[52]         Expression Start          
+[53]         Integer operand           154
+[54]         Expression End            
+[55]         Expression Start          
+[56]         Integer operand           120
+[57]         Expression End            
+[58]         Expression Start          
+[59]         Integer operand           67
+[60]         Expression End            
+[61]         Expression Start          
+[62]         Integer operand           87
+[63]         Expression End            
+[64]         Expression Start          
+[65]         Integer operand           167
+[66]         Expression End            
+[0x00000546] [0x22]/[0x054A]: JUMP     [1354/0x54A]
+[0x00000547] [0x04]/[0x00E5]: LOAD.I   101
+[0x00000548] [0x02]/[0x0000]: CONST.I  0
+[0x00000549] [0x26]/[0x0000]: RETURN DATA
+[0x0000054A] [0x22]/[0x054E]: JUMP     [1358/0x54E]
+[0x0000054B] [0x04]/[0x00E6]: LOAD.I   120
+[0x0000054C] [0x02]/[0x0000]: CONST.I  0
+[0x0000054D] [0x26]/[0x0000]: RETURN DATA
+[0x0000054E] [0x22]/[0x0552]: JUMP     [1362/0x552]
+[0x0000054F] [0x04]/[0x00E7]: LOAD.I   99
+[0x00000550] [0x02]/[0x0000]: CONST.I  0
+[0x00000551] [0x26]/[0x0000]: RETURN DATA
+[0x00000552] [0x22]/[0x0556]: JUMP     [1366/0x556]
+[0x00000553] [0x04]/[0x0051]: LOAD.I   3
+[0x00000554] [0x02]/[0x0000]: CONST.I  0
+[0x00000555] [0x26]/[0x0000]: RETURN DATA
+[0x00000556] [0x22]/[0x055A]: JUMP     [1370/0x55A]
+[0x00000557] [0x04]/[0x00E8]: LOAD.I   186
+[0x00000558] [0x02]/[0x0000]: CONST.I  0
+[0x00000559] [0x26]/[0x0000]: RETURN DATA
+[0x0000055A] [0x22]/[0x055E]: JUMP     [1374/0x55E]
+[0x0000055B] [0x04]/[0x00E9]: LOAD.I   86
+[0x0000055C] [0x02]/[0x0000]: CONST.I  0
+[0x0000055D] [0x26]/[0x0000]: RETURN DATA
+[0x0000055E] [0x22]/[0x0562]: JUMP     [1378/0x562]
+[0x0000055F] [0x04]/[0x00E7]: LOAD.I   99
+[0x00000560] [0x02]/[0x0000]: CONST.I  0
+[0x00000561] [0x26]/[0x0000]: RETURN DATA
+[0x00000562] [0x22]/[0x0566]: JUMP     [1382/0x566]
+[0x00000563] [0x04]/[0x00B5]: LOAD.I   41
+[0x00000564] [0x02]/[0x0000]: CONST.I  0
+[0x00000565] [0x26]/[0x0000]: RETURN DATA
+[0x00000566] [0x22]/[0x056A]: JUMP     [1386/0x56A]
+[0x00000567] [0x04]/[0x00CD]: LOAD.I   237
+[0x00000568] [0x02]/[0x0000]: CONST.I  0
+[0x00000569] [0x26]/[0x0000]: RETURN DATA
+[0x0000056A] [0x22]/[0x056E]: JUMP     [1390/0x56E]
+[0x0000056B] [0x04]/[0x00AC]: LOAD.I   203
+[0x0000056C] [0x02]/[0x0000]: CONST.I  0
+[0x0000056D] [0x26]/[0x0000]: RETURN DATA
+[0x0000056E] [0x22]/[0x0572]: JUMP     [1394/0x572]
+[0x0000056F] [0x04]/[0x00EA]: LOAD.I   111
+[0x00000570] [0x02]/[0x0000]: CONST.I  0
+[0x00000571] [0x26]/[0x0000]: RETURN DATA
+[0x00000572] [0x22]/[0x0576]: JUMP     [1398/0x576]
+[0x00000573] [0x04]/[0x00EB]: LOAD.I   79
+[0x00000574] [0x02]/[0x0000]: CONST.I  0
+[0x00000575] [0x26]/[0x0000]: RETURN DATA
+[0x00000576] [0x22]/[0x057A]: JUMP     [1402/0x57A]
+[0x00000577] [0x04]/[0x00EC]: LOAD.I   220
+[0x00000578] [0x02]/[0x0000]: CONST.I  0
+[0x00000579] [0x26]/[0x0000]: RETURN DATA
+[0x0000057A] [0x22]/[0x057E]: JUMP     [1406/0x57E]
+[0x0000057B] [0x04]/[0x00DE]: LOAD.I   135
+[0x0000057C] [0x02]/[0x0000]: CONST.I  0
+[0x0000057D] [0x26]/[0x0000]: RETURN DATA
+[0x0000057E] [0x22]/[0x0582]: JUMP     [1410/0x582]
+[0x0000057F] [0x04]/[0x00ED]: LOAD.I   158
+[0x00000580] [0x02]/[0x0000]: CONST.I  0
+[0x00000581] [0x26]/[0x0000]: RETURN DATA
+[0x00000582] [0x22]/[0x0586]: JUMP     [1414/0x586]
+[0x00000583] [0x04]/[0x00EE]: LOAD.I   42
+[0x00000584] [0x02]/[0x0000]: CONST.I  0
+[0x00000585] [0x26]/[0x0000]: RETURN DATA
+[0x00000586] [0x22]/[0x058A]: JUMP     [1418/0x58A]
+[0x00000587] [0x04]/[0x00B7]: LOAD.I   30
+[0x00000588] [0x02]/[0x0000]: CONST.I  0
+[0x00000589] [0x26]/[0x0000]: RETURN DATA
+[0x0000058A] [0x22]/[0x058E]: JUMP     [1422/0x58E]
+[0x0000058B] [0x04]/[0x00EF]: LOAD.I   154
+[0x0000058C] [0x02]/[0x0000]: CONST.I  0
+[0x0000058D] [0x26]/[0x0000]: RETURN DATA
+[0x0000058E] [0x22]/[0x0592]: JUMP     [1426/0x592]
+[0x0000058F] [0x04]/[0x00E6]: LOAD.I   120
+[0x00000590] [0x02]/[0x0000]: CONST.I  0
+[0x00000591] [0x26]/[0x0000]: RETURN DATA
+[0x00000592] [0x22]/[0x0596]: JUMP     [1430/0x596]
+[0x00000593] [0x04]/[0x00F0]: LOAD.I   67
+[0x00000594] [0x02]/[0x0000]: CONST.I  0
+[0x00000595] [0x26]/[0x0000]: RETURN DATA
+[0x00000596] [0x22]/[0x059A]: JUMP     [1434/0x59A]
+[0x00000597] [0x04]/[0x00BC]: LOAD.I   87
+[0x00000598] [0x02]/[0x0000]: CONST.I  0
+[0x00000599] [0x26]/[0x0000]: RETURN DATA
+[0x0000059A] [0x22]/[0x059E]: JUMP     [1438/0x59E]
+[0x0000059B] [0x04]/[0x008A]: LOAD.I   167
+[0x0000059C] [0x02]/[0x0000]: CONST.I  0
+[0x0000059D] [0x26]/[0x0000]: RETURN DATA
+
+Line: 176 Statement: 0
+-> 176DATA 135,176,183,191,253,115,184,21,233,58,129,233,142,39,128,211,118,137,139,255
+[ 0]         Token 0x5C                DATA
+[ 1]         Expression Start          
+[ 2]         Integer operand           135
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Integer operand           176
+[ 6]         Expression End            
+[ 7]         Expression Start          
+[ 8]         Integer operand           183
+[ 9]         Expression End            
+[10]         Expression Start          
+[11]         Integer operand           191
+[12]         Expression End            
+[13]         Expression Start          
+[14]         Integer operand           253
+[15]         Expression End            
+[16]         Expression Start          
+[17]         Integer operand           115
+[18]         Expression End            
+[19]         Expression Start          
+[20]         Integer operand           184
+[21]         Expression End            
+[22]         Expression Start          
+[23]         Integer operand           21
+[24]         Expression End            
+[25]         Expression Start          
+[26]         Integer operand           233
+[27]         Expression End            
+[28]         Expression Start          
+[29]         Integer operand           58
+[30]         Expression End            
+[31]         Expression Start          
+[32]         Integer operand           129
+[33]         Expression End            
+[34]         Expression Start          
+[35]         Integer operand           233
+[36]         Expression End            
+[37]         Expression Start          
+[38]         Integer operand           142
+[39]         Expression End            
+[40]         Expression Start          
+[41]         Integer operand           39
+[42]         Expression End            
+[43]         Expression Start          
+[44]         Integer operand           128
+[45]         Expression End            
+[46]         Expression Start          
+[47]         Integer operand           211
+[48]         Expression End            
+[49]         Expression Start          
+[50]         Integer operand           118
+[51]         Expression End            
+[52]         Expression Start          
+[53]         Integer operand           137
+[54]         Expression End            
+[55]         Expression Start          
+[56]         Integer operand           139
+[57]         Expression End            
+[58]         Expression Start          
+[59]         Integer operand           255
+[60]         Expression End            
+[0x0000059E] [0x22]/[0x05A2]: JUMP     [1442/0x5A2]
+[0x0000059F] [0x04]/[0x00DE]: LOAD.I   135
+[0x000005A0] [0x02]/[0x0000]: CONST.I  0
+[0x000005A1] [0x26]/[0x0000]: RETURN DATA
+[0x000005A2] [0x22]/[0x05A6]: JUMP     [1446/0x5A6]
+[0x000005A3] [0x04]/[0x00F1]: LOAD.I   176
+[0x000005A4] [0x02]/[0x0000]: CONST.I  0
+[0x000005A5] [0x26]/[0x0000]: RETURN DATA
+[0x000005A6] [0x22]/[0x05AA]: JUMP     [1450/0x5AA]
+[0x000005A7] [0x04]/[0x00F2]: LOAD.I   183
+[0x000005A8] [0x02]/[0x0000]: CONST.I  0
+[0x000005A9] [0x26]/[0x0000]: RETURN DATA
+[0x000005AA] [0x22]/[0x05AE]: JUMP     [1454/0x5AE]
+[0x000005AB] [0x04]/[0x00F3]: LOAD.I   191
+[0x000005AC] [0x02]/[0x0000]: CONST.I  0
+[0x000005AD] [0x26]/[0x0000]: RETURN DATA
+[0x000005AE] [0x22]/[0x05B2]: JUMP     [1458/0x5B2]
+[0x000005AF] [0x04]/[0x00CA]: LOAD.I   253
+[0x000005B0] [0x02]/[0x0000]: CONST.I  0
+[0x000005B1] [0x26]/[0x0000]: RETURN DATA
+[0x000005B2] [0x22]/[0x05B6]: JUMP     [1462/0x5B6]
+[0x000005B3] [0x04]/[0x00F4]: LOAD.I   115
+[0x000005B4] [0x02]/[0x0000]: CONST.I  0
+[0x000005B5] [0x26]/[0x0000]: RETURN DATA
+[0x000005B6] [0x22]/[0x05BA]: JUMP     [1466/0x5BA]
+[0x000005B7] [0x04]/[0x00F5]: LOAD.I   184
+[0x000005B8] [0x02]/[0x0000]: CONST.I  0
+[0x000005B9] [0x26]/[0x0000]: RETURN DATA
+[0x000005BA] [0x22]/[0x05BE]: JUMP     [1470/0x5BE]
+[0x000005BB] [0x04]/[0x00F6]: LOAD.I   21
+[0x000005BC] [0x02]/[0x0000]: CONST.I  0
+[0x000005BD] [0x26]/[0x0000]: RETURN DATA
+[0x000005BE] [0x22]/[0x05C2]: JUMP     [1474/0x5C2]
+[0x000005BF] [0x04]/[0x0071]: LOAD.I   233
+[0x000005C0] [0x02]/[0x0000]: CONST.I  0
+[0x000005C1] [0x26]/[0x0000]: RETURN DATA
+[0x000005C2] [0x22]/[0x05C6]: JUMP     [1478/0x5C6]
+[0x000005C3] [0x04]/[0x00C7]: LOAD.I   58
+[0x000005C4] [0x02]/[0x0000]: CONST.I  0
+[0x000005C5] [0x26]/[0x0000]: RETURN DATA
+[0x000005C6] [0x22]/[0x05CA]: JUMP     [1482/0x5CA]
+[0x000005C7] [0x04]/[0x00C0]: LOAD.I   129
+[0x000005C8] [0x02]/[0x0000]: CONST.I  0
+[0x000005C9] [0x26]/[0x0000]: RETURN DATA
+[0x000005CA] [0x22]/[0x05CE]: JUMP     [1486/0x5CE]
+[0x000005CB] [0x04]/[0x0071]: LOAD.I   233
+[0x000005CC] [0x02]/[0x0000]: CONST.I  0
+[0x000005CD] [0x26]/[0x0000]: RETURN DATA
+[0x000005CE] [0x22]/[0x05D2]: JUMP     [1490/0x5D2]
+[0x000005CF] [0x04]/[0x00F7]: LOAD.I   142
+[0x000005D0] [0x02]/[0x0000]: CONST.I  0
+[0x000005D1] [0x26]/[0x0000]: RETURN DATA
+[0x000005D2] [0x22]/[0x05D6]: JUMP     [1494/0x5D6]
+[0x000005D3] [0x04]/[0x00E4]: LOAD.I   39
+[0x000005D4] [0x02]/[0x0000]: CONST.I  0
+[0x000005D5] [0x26]/[0x0000]: RETURN DATA
+[0x000005D6] [0x22]/[0x05DA]: JUMP     [1498/0x5DA]
+[0x000005D7] [0x04]/[0x0089]: LOAD.I   128
+[0x000005D8] [0x02]/[0x0000]: CONST.I  0
+[0x000005D9] [0x26]/[0x0000]: RETURN DATA
+[0x000005DA] [0x22]/[0x05DE]: JUMP     [1502/0x5DE]
+[0x000005DB] [0x04]/[0x00F8]: LOAD.I   211
+[0x000005DC] [0x02]/[0x0000]: CONST.I  0
+[0x000005DD] [0x26]/[0x0000]: RETURN DATA
+[0x000005DE] [0x22]/[0x05E2]: JUMP     [1506/0x5E2]
+[0x000005DF] [0x04]/[0x00F9]: LOAD.I   118
+[0x000005E0] [0x02]/[0x0000]: CONST.I  0
+[0x000005E1] [0x26]/[0x0000]: RETURN DATA
+[0x000005E2] [0x22]/[0x05E6]: JUMP     [1510/0x5E6]
+[0x000005E3] [0x04]/[0x00FA]: LOAD.I   137
+[0x000005E4] [0x02]/[0x0000]: CONST.I  0
+[0x000005E5] [0x26]/[0x0000]: RETURN DATA
+[0x000005E6] [0x22]/[0x05EA]: JUMP     [1514/0x5EA]
+[0x000005E7] [0x04]/[0x00FB]: LOAD.I   139
+[0x000005E8] [0x02]/[0x0000]: CONST.I  0
+[0x000005E9] [0x26]/[0x0000]: RETURN DATA
+[0x000005EA] [0x22]/[0x05EE]: JUMP     [1518/0x5EE]
+[0x000005EB] [0x04]/[0x000F]: LOAD.I   255
+[0x000005EC] [0x02]/[0x0000]: CONST.I  0
+[0x000005ED] [0x26]/[0x0000]: RETURN DATA
+
+Line: 177 Statement: 0
+-> 177DATA 114,20,218,113,154,27,127,246,250,1,8,198,250,209,92,222,173,21,88,102,219
+[ 0]         Token 0x5C                DATA
+[ 1]         Expression Start          
+[ 2]         Integer operand           114
+[ 3]         Expression End            
+[ 4]         Expression Start          
+[ 5]         Integer operand           20
+[ 6]         Expression End            
+[ 7]         Expression Start          
+[ 8]         Integer operand           218
+[ 9]         Expression End            
+[10]         Expression Start          
+[11]         Integer operand           113
+[12]         Expression End            
+[13]         Expression Start          
+[14]         Integer operand           154
+[15]         Expression End            
+[16]         Expression Start          
+[17]         Integer operand           27
+[18]         Expression End            
+[19]         Expression Start          
+[20]         Integer operand           127
+[21]         Expression End            
+[22]         Expression Start          
+[23]         Integer operand           246
+[24]         Expression End            
+[25]         Expression Start          
+[26]         Integer operand           250
+[27]         Expression End            
+[28]         Expression Start          
+[29]         Integer operand           1
+[30]         Expression End            
+[31]         Expression Start          
+[32]         Integer operand           8
+[33]         Expression End            
+[34]         Expression Start          
+[35]         Integer operand           198
+[36]         Expression End            
+[37]         Expression Start          
+[38]         Integer operand           250
+[39]         Expression End            
+[40]         Expression Start          
+[41]         Integer operand           209
+[42]         Expression End            
+[43]         Expression Start          
+[44]         Integer operand           92
+[45]         Expression End            
+[46]         Expression Start          
+[47]         Integer operand           222
+[48]         Expression End            
+[49]         Expression Start          
+[50]         Integer operand           173
+[51]         Expression End            
+[52]         Expression Start          
+[53]         Integer operand           21
+[54]         Expression End            
+[55]         Expression Start          
+[56]         Integer operand           88
+[57]         Expression End            
+[58]         Expression Start          
+[59]         Integer operand           102
+[60]         Expression End            
+[61]         Expression Start          
+[62]         Integer operand           219
+[63]         Expression End            
+[0x000005EE] [0x22]/[0x05F2]: JUMP     [1522/0x5F2]
+[0x000005EF] [0x04]/[0x00B0]: LOAD.I   114
+[0x000005F0] [0x02]/[0x0000]: CONST.I  0
+[0x000005F1] [0x26]/[0x0000]: RETURN DATA
+[0x000005F2] [0x22]/[0x05F6]: JUMP     [1526/0x5F6]
+[0x000005F3] [0x04]/[0x00FC]: LOAD.I   20
+[0x000005F4] [0x02]/[0x0000]: CONST.I  0
+[0x000005F5] [0x26]/[0x0000]: RETURN DATA
+[0x000005F6] [0x22]/[0x05FA]: JUMP     [1530/0x5FA]
+[0x000005F7] [0x04]/[0x00FD]: LOAD.I   218
+[0x000005F8] [0x02]/[0x0000]: CONST.I  0
+[0x000005F9] [0x26]/[0x0000]: RETURN DATA
+[0x000005FA] [0x22]/[0x05FE]: JUMP     [1534/0x5FE]
+[0x000005FB] [0x04]/[0x00FE]: LOAD.I   113
+[0x000005FC] [0x02]/[0x0000]: CONST.I  0
+[0x000005FD] [0x26]/[0x0000]: RETURN DATA
+[0x000005FE] [0x22]/[0x0602]: JUMP     [1538/0x602]
+[0x000005FF] [0x04]/[0x00EF]: LOAD.I   154
+[0x00000600] [0x02]/[0x0000]: CONST.I  0
+[0x00000601] [0x26]/[0x0000]: RETURN DATA
+[0x00000602] [0x22]/[0x0606]: JUMP     [1542/0x606]
+[0x00000603] [0x04]/[0x00FF]: LOAD.I   27
+[0x00000604] [0x02]/[0x0000]: CONST.I  0
+[0x00000605] [0x26]/[0x0000]: RETURN DATA
+[0x00000606] [0x22]/[0x060A]: JUMP     [1546/0x60A]
+[0x00000607] [0x04]/[0x00B9]: LOAD.I   127
+[0x00000608] [0x02]/[0x0000]: CONST.I  0
+[0x00000609] [0x26]/[0x0000]: RETURN DATA
+[0x0000060A] [0x22]/[0x060E]: JUMP     [1550/0x60E]
+[0x0000060B] [0x04]/[0x0100]: LOAD.I   246
+[0x0000060C] [0x02]/[0x0000]: CONST.I  0
+[0x0000060D] [0x26]/[0x0000]: RETURN DATA
+[0x0000060E] [0x22]/[0x0612]: JUMP     [1554/0x612]
+[0x0000060F] [0x04]/[0x0101]: LOAD.I   250
+[0x00000610] [0x02]/[0x0000]: CONST.I  0
+[0x00000611] [0x26]/[0x0000]: RETURN DATA
+[0x00000612] [0x22]/[0x0616]: JUMP     [1558/0x616]
+[0x00000613] [0x04]/[0x0008]: LOAD.I   1
+[0x00000614] [0x02]/[0x0000]: CONST.I  0
+[0x00000615] [0x26]/[0x0000]: RETURN DATA
+[0x00000616] [0x22]/[0x061A]: JUMP     [1562/0x61A]
+[0x00000617] [0x04]/[0x002A]: LOAD.I   8
+[0x00000618] [0x02]/[0x0000]: CONST.I  0
+[0x00000619] [0x26]/[0x0000]: RETURN DATA
+[0x0000061A] [0x22]/[0x061E]: JUMP     [1566/0x61E]
+[0x0000061B] [0x04]/[0x00BA]: LOAD.I   198
+[0x0000061C] [0x02]/[0x0000]: CONST.I  0
+[0x0000061D] [0x26]/[0x0000]: RETURN DATA
+[0x0000061E] [0x22]/[0x0622]: JUMP     [1570/0x622]
+[0x0000061F] [0x04]/[0x0101]: LOAD.I   250
+[0x00000620] [0x02]/[0x0000]: CONST.I  0
+[0x00000621] [0x26]/[0x0000]: RETURN DATA
+[0x00000622] [0x22]/[0x0626]: JUMP     [1574/0x626]
+[0x00000623] [0x04]/[0x0102]: LOAD.I   209
+[0x00000624] [0x02]/[0x0000]: CONST.I  0
+[0x00000625] [0x26]/[0x0000]: RETURN DATA
+[0x00000626] [0x22]/[0x062A]: JUMP     [1578/0x62A]
+[0x00000627] [0x04]/[0x008C]: LOAD.I   92
+[0x00000628] [0x02]/[0x0000]: CONST.I  0
+[0x00000629] [0x26]/[0x0000]: RETURN DATA
+[0x0000062A] [0x22]/[0x062E]: JUMP     [1582/0x62E]
+[0x0000062B] [0x04]/[0x0103]: LOAD.I   222
+[0x0000062C] [0x02]/[0x0000]: CONST.I  0
+[0x0000062D] [0x26]/[0x0000]: RETURN DATA
+[0x0000062E] [0x22]/[0x0632]: JUMP     [1586/0x632]
+[0x0000062F] [0x04]/[0x0091]: LOAD.I   173
+[0x00000630] [0x02]/[0x0000]: CONST.I  0
+[0x00000631] [0x26]/[0x0000]: RETURN DATA
+[0x00000632] [0x22]/[0x0636]: JUMP     [1590/0x636]
+[0x00000633] [0x04]/[0x00F6]: LOAD.I   21
+[0x00000634] [0x02]/[0x0000]: CONST.I  0
+[0x00000635] [0x26]/[0x0000]: RETURN DATA
+[0x00000636] [0x22]/[0x063A]: JUMP     [1594/0x63A]
+[0x00000637] [0x04]/[0x0104]: LOAD.I   88
+[0x00000638] [0x02]/[0x0000]: CONST.I  0
+[0x00000639] [0x26]/[0x0000]: RETURN DATA
+[0x0000063A] [0x22]/[0x063E]: JUMP     [1598/0x63E]
+[0x0000063B] [0x04]/[0x0092]: LOAD.I   102
+[0x0000063C] [0x02]/[0x0000]: CONST.I  0
+[0x0000063D] [0x26]/[0x0000]: RETURN DATA
+[0x0000063E] [0x22]/[0x0642]: JUMP     [1602/0x642]
+[0x0000063F] [0x04]/[0x0105]: LOAD.I   219
+[0x00000640] [0x02]/[0x0000]: CONST.I  0
+[0x00000641] [0x26]/[0x0000]: RETURN DATA
+

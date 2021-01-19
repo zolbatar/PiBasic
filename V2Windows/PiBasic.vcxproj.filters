@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\Demo">
+      <UniqueIdentifier>{427e94af-7e77-410b-a5e4-8424b757304a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Flex &amp; Bison">
+      <UniqueIdentifier>{4005b276-3b1b-4c86-b3c1-9eaa7aa55f6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\BBC">
+      <UniqueIdentifier>{3d95aa20-6cfe-42cb-9955-1633ff7f3e3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler">
+      <UniqueIdentifier>{3713560a-ca38-4bb1-a667-6f10784cdcc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{6d007992-3954-42b8-89e3-e09d3eb462ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM">
+      <UniqueIdentifier>{0ffdba4d-9503-4d8f-b4a6-20584bfaeecf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parser">
+      <UniqueIdentifier>{c1218351-4152-46a3-b6f2-d8cb1b298739}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{2376be73-fb59-4ef6-bc90-fb08356789ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\INPUT">
+      <UniqueIdentifier>{0927935f-fa3c-4edf-9a29-4449048cf957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\INPUT\Volume1">
+      <UniqueIdentifier>{2581a11e-f5fa-475f-913e-ec5d6a684ccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\INPUT\Volume1\Issue1">
+      <UniqueIdentifier>{b13c3643-1c58-430e-a323-37bc8ebc702b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\V2\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_assignment.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_c.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_util.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\graphics\graphics.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\graphics\graphics_barycentric.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\graphics\graphics_clippedline.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\graphics\graphics_triangle.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\optimiser.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\vm\stack.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\vm\vm.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\vm\vm_debug.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\ast\ast.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\ast\ast_debug.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\parser\parser.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\parser\scanner.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\engine\engine_object.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\engine\engine_world.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\engine\engine_shape.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\engine\engine_normals.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\engine\engine_matrix.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_lookahead.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\graphics\graphics_input.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\graphics\graphics_text.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_printinput.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_io.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_maths.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_string.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_graphics.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_graphics_3d.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_functions.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_expression.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_literal.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_data.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_variable.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\compile\compile_looping.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\V2\src\graphics\graphics_circle.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\V2\src\ast\ast.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\V2\src\compile\compile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\V2\src\vm\vm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\V2\src\parser\parser.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\V2\src\engine\engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\V2\src\graphics\graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\V2\src\types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\V2\src\compile\compile_c.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\V2\src\vm\clock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\V2\src\graphics\stb_truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\V2\test\BBC\CLOCK3.bas">
+      <Filter>Resource Files\BBC</Filter>
+    </None>
+    <None Include="..\V2\test\BBC\Schedule.bas">
+      <Filter>Resource Files\BBC</Filter>
+    </None>
+    <None Include="..\V2\test\BBC\SCHORG.bas">
+      <Filter>Resource Files\BBC</Filter>
+    </None>
+    <None Include="..\V2\test\Demos\DATA">
+      <Filter>Resource Files\Demo</Filter>
+    </None>
+    <None Include="..\V2\test\BBC\3DDEMO.bas">
+      <Filter>Resource Files\BBC</Filter>
+    </None>
+    <None Include="..\V2\test\Demos\Cubes.bas">
+      <Filter>Resource Files\Demo</Filter>
+    </None>
+    <None Include="..\V2\test\Demos\Graphics.bas">
+      <Filter>Resource Files\Demo</Filter>
+    </None>
+    <None Include="..\V2\test\Demos\Greedy.bas">
+      <Filter>Resource Files\Demo</Filter>
+    </None>
+    <None Include="..\V2\test\Demos\Mandelbrot.bas">
+      <Filter>Resource Files\Demo</Filter>
+    </None>
+    <None Include="..\V2\test\Demos\Outrun!.bas">
+      <Filter>Resource Files\Demo</Filter>
+    </None>
+    <None Include="..\V2\test\Demos\Perlin.bas">
+      <Filter>Resource Files\Demo</Filter>
+    </None>
+    <None Include="..\V2\test\Demos\Scratch.bas">
+      <Filter>Resource Files\Demo</Filter>
+    </None>
+    <None Include="..\V2\test\Demos\Terrain.bas">
+      <Filter>Resource Files\Demo</Filter>
+    </None>
+    <None Include="..\V2\test\Demos\TestRig.bas">
+      <Filter>Resource Files\Demo</Filter>
+    </None>
+    <None Include="..\V2\Makefile.linux">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\V2\Makefile.riscos">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\V2\Test\Demos\Clock.bas">
+      <Filter>Resource Files\Demo</Filter>
+    </None>
+    <None Include="..\V2\test\Demos\fonts.bas">
+      <Filter>Resource Files\Demo</Filter>
+    </None>
+    <None Include="..\V2\test\INPUT\Volume1\Issue1\p2.bas">
+      <Filter>Resource Files\INPUT\Volume1\Issue1</Filter>
+    </None>
+    <None Include="..\V2\test\INPUT\Volume1\Issue1\p3.bas">
+      <Filter>Resource Files\INPUT\Volume1\Issue1</Filter>
+    </None>
+    <None Include="..\V2\test\INPUT\Volume1\Issue1\p4.bas">
+      <Filter>Resource Files\INPUT\Volume1\Issue1</Filter>
+    </None>
+    <None Include="..\V2\test\INPUT\Volume1\Issue1\p4a.bas">
+      <Filter>Resource Files\INPUT\Volume1\Issue1</Filter>
+    </None>
+    <None Include="..\V2\test\INPUT\Volume1\Issue1\p17.bas">
+      <Filter>Resource Files\INPUT\Volume1\Issue1</Filter>
+    </None>
+    <None Include="..\V2\test\INPUT\Volume1\Issue1\p18.bas">
+      <Filter>Resource Files\INPUT\Volume1\Issue1</Filter>
+    </None>
+    <None Include="..\V2\test\Demos\Load3D.bas">
+      <Filter>Resource Files\Demo</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\V2\Supported.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="..\V2\test\Test.bas">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="parse-debug.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Bison Include="..\V2\src\parser\parser.y">
+      <Filter>Flex &amp; Bison</Filter>
+    </Bison>
+  </ItemGroup>
+  <ItemGroup>
+    <Flex Include="..\V2\src\parser\scanner.l">
+      <Filter>Flex &amp; Bison</Filter>
+    </Flex>
+  </ItemGroup>
+</Project>

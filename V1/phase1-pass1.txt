@@ -1,0 +1,1910 @@
+Line: 1 Statement: 0
+-> 1swidth%=640:sheight%=480
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  swidth% (0x55b0ccd169b0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Integer operand           640
+
+Line: 1 Statement: 1
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  sheight% (0x55b0ccd16be0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Integer operand           480
+
+Line: 2 Statement: 0
+-> 2MODE "X"+STR$(swidth%)+" Y"+STR$(sheight%)+" C16M"
+[ 0]         Token 0x6B                MODE
+[ 1]         String operand            'X'
+[ 2]         Operator                  +
+[ 3]         Token 0x43                STR$
+[ 4]         Open Parens               (
+[ 5]         Variable                  swidth% (0x55b0ccd169b0) (INTEGER)
+[ 6]         Close Parens              )
+[ 7]         Operator                  +
+[ 8]         String operand            ' Y'
+[ 9]         Operator                  +
+[10]         Token 0x43                STR$
+[11]         Open Parens               (
+[12]         Variable                  sheight% (0x55b0ccd16be0) (INTEGER)
+[13]         Close Parens              )
+[14]         Operator                  +
+[15]         String operand            ' C16M'
+
+Line: 3 Empty/REM
+-> 3
+
+Line: 4 Empty/REM
+-> 4REM Create a VFP context
+
+Line: 5 Empty/REM
+-> 5REM SYS "VFPSupport_CreateContext", (1 << 31), 32 TO vfp%
+
+Line: 6 Empty/REM
+-> 6REM PRINT "VFPContext: ";vfp%
+
+Line: 7 Empty/REM
+-> 7
+
+Line: 8 Empty/REM
+-> 8REM The 0 below means no double/triple buffering, useful for debugging
+
+Line: 9 Statement: 0
+-> 9backbuffers%=1
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  backbuffers% (0x55b0ccd18f40) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Integer operand           1
+
+Line: 10 Statement: 0
+-> 10SYS "Engine3D_Init", backbuffers%
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         String operand            'Engine3D_Init'
+[ 2]         Comma                     ,
+[ 3]         Variable                  backbuffers% (0x55b0ccd18f40) (INTEGER)
+
+Line: 11 Statement: 0
+-> 11rendertype%=4
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  rendertype% (0x55b0ccd19410) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Integer operand           4
+
+Line: 12 Statement: 0
+-> 12SYS "Engine3D_SetAmbientLight", &404040
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         String operand            'Engine3D_SetAmbientLight'
+[ 2]         Comma                     ,
+[ 3]         Integer operand           4210752
+
+Line: 13 Statement: 0
+-> 13light_x%=255 * 0:light_y%=255 * -0.3:light_z%=255 * 0.7
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  light_x% (0x55b0ccd19990) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Integer operand           255
+[ 4]         Operator                  *
+[ 5]         Integer operand           0
+
+Line: 13 Statement: 1
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  light_y% (0x55b0ccd19cc0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Integer operand           255
+[ 4]         Operator                  *
+[ 5]         Real operand              -0.300000
+
+Line: 13 Statement: 2
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  light_z% (0x55b0ccd19f70) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Integer operand           255
+[ 4]         Operator                  *
+[ 5]         Real operand              0.700000
+
+Line: 14 Statement: 0
+-> 14SYS "Engine3D_SetDirectionalLight", &FFFFFF, light_x%, light_y%, light_z%
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         String operand            'Engine3D_SetDirectionalLight'
+[ 2]         Comma                     ,
+[ 3]         Integer operand           16777215
+[ 4]         Comma                     ,
+[ 5]         Variable                  light_x% (0x55b0ccd19990) (INTEGER)
+[ 6]         Comma                     ,
+[ 7]         Variable                  light_y% (0x55b0ccd19cc0) (INTEGER)
+[ 8]         Comma                     ,
+[ 9]         Variable                  light_z% (0x55b0ccd19f70) (INTEGER)
+
+Line: 15 Statement: 0
+-> 15SYS "Engine3D_SetRenderType", rendertype%
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         String operand            'Engine3D_SetRenderType'
+[ 2]         Comma                     ,
+[ 3]         Variable                  rendertype% (0x55b0ccd19410) (INTEGER)
+
+Line: 16 Statement: 0
+-> 16SYS "Engine3D_SetNormalsVisibility", 0
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         String operand            'Engine3D_SetNormalsVisibility'
+[ 2]         Comma                     ,
+[ 3]         Integer operand           0
+
+Line: 17 Statement: 0
+-> 17SYS "Engine3D_ShapeSize" TO shape_size%
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         String operand            'Engine3D_ShapeSize'
+[ 2]         Token 0x38                TO
+[ 3]         Variable                  shape_size% (0x55b0ccd1ad20) (INTEGER)
+
+Line: 18 Statement: 0
+-> 18SYS "Engine3D_VertexSize" TO vertex_size%,red
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         String operand            'Engine3D_VertexSize'
+[ 2]         Token 0x38                TO
+[ 3]         Variable                  vertex_size% (0x55b0ccd1aff0) (INTEGER)
+[ 4]         Comma                     ,
+[ 5]         Variable                  red (0x55b0ccd1b0f0) (FLOAT)
+
+Line: 19 Statement: 0
+-> 19SYS "Engine3D_FaceSize" TO face_size%
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         String operand            'Engine3D_FaceSize'
+[ 2]         Token 0x38                TO
+[ 3]         Variable                  face_size% (0x55b0ccd1b3c0) (INTEGER)
+
+Line: 20 Statement: 0
+-> 20PRINT shape_size%
+[ 0]         Token 0x71                PRINT
+[ 1]         Variable                  shape_size% (0x55b0ccd1ad20) (INTEGER)
+
+Line: 21 Statement: 0
+-> 21END
+[ 0]         Token 0x60                END
+
+Line: 22 Statement: 0
+-> 22fa = 256: REM This is the fixed-point float adjust for points
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  fa (0x55b0ccd1b740) (FLOAT)
+[ 2]         Operator                  =
+[ 3]         Integer operand           256
+
+Line: 22 Statement: 1
+
+Line: 23 Statement: 0
+-> 23DIM frames(10):REM For FPS stuff
+[ 0]         Token 0x5E                DIM
+[ 1]         Variable                  frames (0x55b0ccd1ba30) (FLOAT)
+[ 2]         Open Parens               (
+[ 3]         Integer operand           10
+[ 4]         Close Parens              )
+
+Line: 23 Statement: 1
+
+Line: 24 Empty/REM
+-> 24
+
+Line: 25 Statement: 0
+-> 25PROCInitPerlin
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           InitPerlin
+
+Line: 26 Statement: 0
+-> 26PROCCreateCube
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateCube
+
+Line: 27 Statement: 0
+-> 27END
+[ 0]         Token 0x60                END
+
+Line: 28 Empty/REM
+-> 28
+
+Line: 29 Statement: 0
+-> 29DEFPROCCreateCube
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x72                PROC
+[ 2]         Proc or FN Call (001)     CreateCube
+
+Line: 30 Statement: 0
+-> 30LOCAL number_of_vertices%,number_of_faces%,size%,vertex_list%,face_list%,offset%
+[ 0]         Token 0x6A                LOCAL
+[ 1]         Variable                  number_of_vertices% (0x55b0ccd1c2a0) (INTEGER)
+[ 2]         Comma                     ,
+[ 3]         Variable                  number_of_faces% (0x55b0ccd1c3a0) (INTEGER)
+[ 4]         Comma                     ,
+[ 5]         Variable                  size% (0x55b0ccd1c4a0) (INTEGER)
+[ 6]         Comma                     ,
+[ 7]         Variable                  vertex_list% (0x55b0ccd1c5a0) (INTEGER)
+[ 8]         Comma                     ,
+[ 9]         Variable                  face_list% (0x55b0ccd1c6a0) (INTEGER)
+[10]         Comma                     ,
+[11]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+
+Line: 31 Statement: 0
+-> 31  number_of_vertices%=8
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  number_of_vertices% (0x55b0ccd1c2a0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Integer operand           8
+
+Line: 32 Statement: 0
+-> 32  number_of_faces%=12
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  number_of_faces% (0x55b0ccd1c3a0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Integer operand           12
+
+Line: 33 Empty/REM
+-> 33
+
+Line: 34 Empty/REM
+-> 34  REM Pass number of vertices as R0, number of faces as R1
+
+Line: 35 Statement: 0
+-> 35  SYS "Engine3D_ObjectSize", number_of_vertices%, number_of_faces% TO size%
+[ 0]         Token (statement) 0x19    SYS
+[ 1]         String operand            'Engine3D_ObjectSize'
+[ 2]         Comma                     ,
+[ 3]         Variable                  number_of_vertices% (0x55b0ccd1c2a0) (INTEGER)
+[ 4]         Comma                     ,
+[ 5]         Variable                  number_of_faces% (0x55b0ccd1c3a0) (INTEGER)
+[ 6]         Token 0x38                TO
+[ 7]         Variable                  size% (0x55b0ccd1c4a0) (INTEGER)
+
+Line: 36 Statement: 0
+-> 36  DIM cube% size%
+[ 0]         Token 0x5E                DIM
+[ 1]         Variable                  cube% (0x55b0ccd1d200) (INTEGER)
+[ 2]         Variable                  size% (0x55b0ccd1c4a0) (INTEGER)
+
+Line: 37 Statement: 0
+-> 37  PRINT ~cube%
+[ 0]         Token 0x71                PRINT
+[ 1]         Tilde                     ~
+[ 2]         Variable                  cube% (0x55b0ccd1d200) (INTEGER)
+
+Line: 38 Empty/REM
+-> 38
+
+Line: 39 Empty/REM
+-> 39  REM Build vertices
+
+Line: 40 Statement: 0
+-> 40  vertex_list%=cube% + shape_size%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  vertex_list% (0x55b0ccd1c5a0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Variable                  cube% (0x55b0ccd1d200) (INTEGER)
+[ 4]         Operator                  +
+[ 5]         Variable                  shape_size% (0x55b0ccd1ad20) (INTEGER)
+
+Line: 41 Statement: 0
+-> 41  PRINT ~vertex_list%
+[ 0]         Token 0x71                PRINT
+[ 1]         Tilde                     ~
+[ 2]         Variable                  vertex_list% (0x55b0ccd1c5a0) (INTEGER)
+
+Line: 42 Statement: 0
+-> 42  offset%=vertex_list%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Variable                  vertex_list% (0x55b0ccd1c5a0) (INTEGER)
+
+Line: 43 Statement: 0
+-> 43  PROCCreateVertex(offset%, -0.5,  0.5,  0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Open Parens               (
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Comma                     ,
+[ 5]         Real operand              -0.500000
+[ 6]         Comma                     ,
+[ 7]         Real operand              0.500000
+[ 8]         Comma                     ,
+[ 9]         Real operand              0.500000
+[10]         Comma                     ,
+[11]         Token 0x24                FN
+[12]         Proc or FN Call           RandomColour%
+[13]         Close Parens              )
+
+Line: 44 Statement: 0
+-> 44  PROCCreateVertex(offset%,  0.5,  0.5,  0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Open Parens               (
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Comma                     ,
+[ 5]         Real operand              0.500000
+[ 6]         Comma                     ,
+[ 7]         Real operand              0.500000
+[ 8]         Comma                     ,
+[ 9]         Real operand              0.500000
+[10]         Comma                     ,
+[11]         Token 0x24                FN
+[12]         Proc or FN Call           RandomColour%
+[13]         Close Parens              )
+
+Line: 45 Statement: 0
+-> 45  PROCCreateVertex(offset%,  0.5, -0.5,  0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Open Parens               (
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Comma                     ,
+[ 5]         Real operand              0.500000
+[ 6]         Comma                     ,
+[ 7]         Real operand              -0.500000
+[ 8]         Comma                     ,
+[ 9]         Real operand              0.500000
+[10]         Comma                     ,
+[11]         Token 0x24                FN
+[12]         Proc or FN Call           RandomColour%
+[13]         Close Parens              )
+
+Line: 46 Statement: 0
+-> 46  PROCCreateVertex(offset%, -0.5, -0.5,  0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Open Parens               (
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Comma                     ,
+[ 5]         Real operand              -0.500000
+[ 6]         Comma                     ,
+[ 7]         Real operand              -0.500000
+[ 8]         Comma                     ,
+[ 9]         Real operand              0.500000
+[10]         Comma                     ,
+[11]         Token 0x24                FN
+[12]         Proc or FN Call           RandomColour%
+[13]         Close Parens              )
+
+Line: 47 Statement: 0
+-> 47  PROCCreateVertex(offset%, -0.5,  0.5, -0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Open Parens               (
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Comma                     ,
+[ 5]         Real operand              -0.500000
+[ 6]         Comma                     ,
+[ 7]         Real operand              0.500000
+[ 8]         Comma                     ,
+[ 9]         Real operand              -0.500000
+[10]         Comma                     ,
+[11]         Token 0x24                FN
+[12]         Proc or FN Call           RandomColour%
+[13]         Close Parens              )
+
+Line: 48 Statement: 0
+-> 48  PROCCreateVertex(offset%,  0.5,  0.5, -0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Open Parens               (
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Comma                     ,
+[ 5]         Real operand              0.500000
+[ 6]         Comma                     ,
+[ 7]         Real operand              0.500000
+[ 8]         Comma                     ,
+[ 9]         Real operand              -0.500000
+[10]         Comma                     ,
+[11]         Token 0x24                FN
+[12]         Proc or FN Call           RandomColour%
+[13]         Close Parens              )
+
+Line: 49 Statement: 0
+-> 49  PROCCreateVertex(offset%,  0.5, -0.5, -0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Open Parens               (
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Comma                     ,
+[ 5]         Real operand              0.500000
+[ 6]         Comma                     ,
+[ 7]         Real operand              -0.500000
+[ 8]         Comma                     ,
+[ 9]         Real operand              -0.500000
+[10]         Comma                     ,
+[11]         Token 0x24                FN
+[12]         Proc or FN Call           RandomColour%
+[13]         Close Parens              )
+
+Line: 50 Statement: 0
+-> 50  PROCCreateVertex(offset%, -0.5, -0.5, -0.5, FNRandomColour%)
+[ 0]         Token 0x72                PROC
+[ 1]         Proc or FN Call           CreateVertex
+[ 2]         Open Parens               (
+[ 3]         Variable                  offset% (0x55b0ccd1c7a0) (INTEGER)
+[ 4]         Comma                     ,
+[ 5]         Real operand              -0.500000
+[ 6]         Comma                     ,
+[ 7]         Real operand              -0.500000
+[ 8]         Comma                     ,
+[ 9]         Real operand              -0.500000
+[10]         Comma                     ,
+[11]         Token 0x24                FN
+[12]         Proc or FN Call           RandomColour%
+[13]         Close Parens              )
+
+Line: 51 Empty/REM
+-> 51
+
+Line: 52 Empty/REM
+-> 52  REM Build faces
+
+Line: 53 Empty/REM
+-> 53REM  face_list%=offset%
+
+Line: 54 Empty/REM
+-> 54REM  colour%=FNRandomColour
+
+Line: 55 Empty/REM
+-> 55REM  PROCCreateFace(offset%, vertex_list%, 3, 1, 0, colour%): REM FRONT
+
+Line: 56 Empty/REM
+-> 56REM  PROCCreateFace(offset%, vertex_list%, 3, 2, 1, colour%)
+
+Line: 57 Empty/REM
+-> 57REM  colour%=FNRandomColour
+
+Line: 58 Empty/REM
+-> 58REM  PROCCreateFace(offset%, vertex_list%, 5, 6, 7, colour%): REM BACK
+
+Line: 59 Empty/REM
+-> 59REM  PROCCreateFace(offset%, vertex_list%, 5, 7, 4, colour%)
+
+Line: 60 Empty/REM
+-> 60REM  colour%=FNRandomColour
+
+Line: 61 Empty/REM
+-> 61REM  PROCCreateFace(offset%, vertex_list%, 3, 7, 6, colour%): REM TOP
+
+Line: 62 Empty/REM
+-> 62REM  PROCCreateFace(offset%, vertex_list%, 3, 6, 2, colour%)
+
+Line: 63 Empty/REM
+-> 63REM  colour%=FNRandomColour
+
+Line: 64 Empty/REM
+-> 64REM  PROCCreateFace(offset%, vertex_list%, 4, 0, 1, colour%): REM BOTTOM
+
+Line: 65 Empty/REM
+-> 65REM  PROCCreateFace(offset%, vertex_list%, 4, 1, 5, colour%)
+
+Line: 66 Empty/REM
+-> 66REM  colour%=FNRandomColour
+
+Line: 67 Empty/REM
+-> 67REM  PROCCreateFace(offset%, vertex_list%, 4, 7, 3, colour%): REM LEFT
+
+Line: 68 Empty/REM
+-> 68REM  PROCCreateFace(offset%, vertex_list%, 4, 3, 0, colour%)
+
+Line: 69 Empty/REM
+-> 69REM  colour%=FNRandomColour
+
+Line: 70 Empty/REM
+-> 70REM  PROCCreateFace(offset%, vertex_list%, 1, 2, 6, colour%): REM RIGHT
+
+Line: 71 Empty/REM
+-> 71REM  PROCCreateFace(offset%, vertex_list%, 1, 6, 5, colour%)
+
+Line: 72 Empty/REM
+-> 72
+
+Line: 73 Empty/REM
+-> 73  REM Build shape
+
+Line: 74 Empty/REM
+-> 74REM  cube%!0=number_of_vertices%
+
+Line: 75 Empty/REM
+-> 75REM  cube%!4=number_of_faces%
+
+Line: 76 Empty/REM
+-> 76REM  cube%!8=vertex_list%
+
+Line: 77 Empty/REM
+-> 77REM  cube%!12=face_list%
+
+Line: 78 Empty/REM
+-> 78REM  SYS "Engine3D_InitialiseObject", cube%
+
+Line: 79 Statement: 0
+-> 79ENDPROC
+[ 0]         Token 0x61                ENDPROC
+
+Line: 80 Empty/REM
+-> 80
+
+Line: 81 Statement: 0
+-> 81DEFFNRandomX%
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (002)     RandomX%
+
+Line: 82 Statement: 0
+-> 82= ABS(RND MOD swidth%)
+[ 0]         Operator                  =
+[ 1]         Token 0x14                ABS
+[ 2]         Open Parens               (
+[ 3]         Token 0x33                RND
+[ 4]         Token 0x03                MOD
+[ 5]         Variable                  swidth% (0x55b0ccd169b0) (INTEGER)
+[ 6]         Close Parens              )
+
+Line: 83 Empty/REM
+-> 83
+
+Line: 84 Statement: 0
+-> 84DEFFNRandomY%
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (003)     RandomY%
+
+Line: 85 Statement: 0
+-> 85= ABS(RND MOD sheight%)
+[ 0]         Operator                  =
+[ 1]         Token 0x14                ABS
+[ 2]         Open Parens               (
+[ 3]         Token 0x33                RND
+[ 4]         Token 0x03                MOD
+[ 5]         Variable                  sheight% (0x55b0ccd16be0) (INTEGER)
+[ 6]         Close Parens              )
+
+Line: 86 Empty/REM
+-> 86
+
+Line: 87 Statement: 0
+-> 87DEFFNRandomColour%
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (004)     RandomColour%
+
+Line: 88 Statement: 0
+-> 88  b%=ABS(RND MOD 256)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  b% (0x55b0ccd218d0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Token 0x14                ABS
+[ 4]         Open Parens               (
+[ 5]         Token 0x33                RND
+[ 6]         Token 0x03                MOD
+[ 7]         Integer operand           256
+[ 8]         Close Parens              )
+
+Line: 89 Statement: 0
+-> 89  g%=ABS(RND MOD 256)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  g% (0x55b0ccd21c20) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Token 0x14                ABS
+[ 4]         Open Parens               (
+[ 5]         Token 0x33                RND
+[ 6]         Token 0x03                MOD
+[ 7]         Integer operand           256
+[ 8]         Close Parens              )
+
+Line: 90 Statement: 0
+-> 90  r%=ABS(RND MOD 256)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  r% (0x55b0ccd21f70) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Token 0x14                ABS
+[ 4]         Open Parens               (
+[ 5]         Token 0x33                RND
+[ 6]         Token 0x03                MOD
+[ 7]         Integer operand           256
+[ 8]         Close Parens              )
+
+Line: 91 Statement: 0
+-> 91= (b% << 16) + (g% << 8) + r%
+[ 0]         Operator                  =
+[ 1]         Open Parens               (
+[ 2]         Variable                  b% (0x55b0ccd218d0) (INTEGER)
+[ 3]         Operator                  <
+[ 4]         Integer operand           16
+[ 5]         Close Parens              )
+[ 6]         Operator                  +
+[ 7]         Open Parens               (
+[ 8]         Variable                  g% (0x55b0ccd21c20) (INTEGER)
+[ 9]         Operator                  <
+[10]         Integer operand           8
+[11]         Close Parens              )
+[12]         Operator                  +
+[13]         Variable                  r% (0x55b0ccd21f70) (INTEGER)
+
+Line: 92 Empty/REM
+-> 92
+
+Line: 93 Statement: 0
+-> 93DEFFNRandomLightColour%
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (005)     RandomLightColour%
+
+Line: 94 Statement: 0
+-> 94= (((RND MOD 64) + 192) << 16) + (((RND MOD 64) + 192) << 8) + (RND MOD 64) + 192
+[ 0]         Operator                  =
+[ 1]         Open Parens               (
+[ 2]         Open Parens               (
+[ 3]         Open Parens               (
+[ 4]         Token 0x33                RND
+[ 5]         Token 0x03                MOD
+[ 6]         Integer operand           64
+[ 7]         Close Parens              )
+[ 8]         Operator                  +
+[ 9]         Integer operand           192
+[10]         Close Parens              )
+[11]         Operator                  <
+[12]         Integer operand           16
+[13]         Close Parens              )
+[14]         Operator                  +
+[15]         Open Parens               (
+[16]         Open Parens               (
+[17]         Open Parens               (
+[18]         Token 0x33                RND
+[19]         Token 0x03                MOD
+[20]         Integer operand           64
+[21]         Close Parens              )
+[22]         Operator                  +
+[23]         Integer operand           192
+[24]         Close Parens              )
+[25]         Operator                  <
+[26]         Integer operand           8
+[27]         Close Parens              )
+[28]         Operator                  +
+[29]         Open Parens               (
+[30]         Token 0x33                RND
+[31]         Token 0x03                MOD
+[32]         Integer operand           64
+[33]         Close Parens              )
+[34]         Operator                  +
+[35]         Integer operand           192
+
+Line: 95 Empty/REM
+-> 95
+
+Line: 96 Statement: 0
+-> 96DEFPROCCreateVertex(RETURN address%, x, y, z, colour%)
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x72                PROC
+[ 2]         Proc or FN Call (006)     CreateVertex
+[ 3]         Open Parens               (
+[ 4]         Token 0x78                RETURN
+[ 5]         Variable                  address% (0x55b0ccd23590) (INTEGER)
+[ 6]         Comma                     ,
+[ 7]         Variable                  x (0x55b0ccd23690) (FLOAT)
+[ 8]         Comma                     ,
+[ 9]         Variable                  y (0x55b0ccd23790) (FLOAT)
+[10]         Comma                     ,
+[11]         Variable                  z (0x55b0ccd23890) (FLOAT)
+[12]         Comma                     ,
+[13]         Variable                  colour% (0x55b0ccd23990) (INTEGER)
+[14]         Close Parens              )
+
+Line: 97 Statement: 0
+-> 97  address%!0=x * fa
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  address% (0x55b0ccd23590) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Integer operand           0
+[ 4]         Operator                  =
+[ 5]         Variable                  x (0x55b0ccd23690) (FLOAT)
+[ 6]         Operator                  *
+[ 7]         Variable                  fa (0x55b0ccd1b740) (FLOAT)
+
+Line: 98 Statement: 0
+-> 98  address%!4=y * fa
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  address% (0x55b0ccd23590) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Integer operand           4
+[ 4]         Operator                  =
+[ 5]         Variable                  y (0x55b0ccd23790) (FLOAT)
+[ 6]         Operator                  *
+[ 7]         Variable                  fa (0x55b0ccd1b740) (FLOAT)
+
+Line: 99 Statement: 0
+-> 99  address%!8=z * fa
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  address% (0x55b0ccd23590) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Integer operand           8
+[ 4]         Operator                  =
+[ 5]         Variable                  z (0x55b0ccd23890) (FLOAT)
+[ 6]         Operator                  *
+[ 7]         Variable                  fa (0x55b0ccd1b740) (FLOAT)
+
+Line: 100 Statement: 0
+-> 100  address%!12=colour%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  address% (0x55b0ccd23590) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Integer operand           12
+[ 4]         Operator                  =
+[ 5]         Variable                  colour% (0x55b0ccd23990) (INTEGER)
+
+Line: 101 Statement: 0
+-> 101  address%+=vertex_size%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  address% (0x55b0ccd23590) (INTEGER)
+[ 2]         Operator                  +=
+[ 3]         Variable                  vertex_size% (0x55b0ccd1aff0) (INTEGER)
+
+Line: 102 Statement: 0
+-> 102ENDPROC
+[ 0]         Token 0x61                ENDPROC
+
+Line: 103 Empty/REM
+-> 103
+
+Line: 104 Statement: 0
+-> 104DEFPROCCreateFace(RETURN address%, vertex_list%, v1%, v2%, v3%, colour%)
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x72                PROC
+[ 2]         Proc or FN Call (007)     CreateFace
+[ 3]         Open Parens               (
+[ 4]         Token 0x78                RETURN
+[ 5]         Variable                  address% (0x55b0ccd24950) (INTEGER)
+[ 6]         Comma                     ,
+[ 7]         Variable                  vertex_list% (0x55b0ccd24a50) (INTEGER)
+[ 8]         Comma                     ,
+[ 9]         Variable                  v1% (0x55b0ccd24b50) (INTEGER)
+[10]         Comma                     ,
+[11]         Variable                  v2% (0x55b0ccd24c50) (INTEGER)
+[12]         Comma                     ,
+[13]         Variable                  v3% (0x55b0ccd24d50) (INTEGER)
+[14]         Comma                     ,
+[15]         Variable                  colour% (0x55b0ccd24e50) (INTEGER)
+[16]         Close Parens              )
+
+Line: 105 Statement: 0
+-> 105  v1address%=vertex_list% + (v1% * vertex_size%)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  v1address% (0x55b0ccd25060) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Variable                  vertex_list% (0x55b0ccd24a50) (INTEGER)
+[ 4]         Operator                  +
+[ 5]         Open Parens               (
+[ 6]         Variable                  v1% (0x55b0ccd24b50) (INTEGER)
+[ 7]         Operator                  *
+[ 8]         Variable                  vertex_size% (0x55b0ccd1aff0) (INTEGER)
+[ 9]         Close Parens              )
+
+Line: 106 Statement: 0
+-> 106  v2address%=vertex_list% + (v2% * vertex_size%)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  v2address% (0x55b0ccd25410) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Variable                  vertex_list% (0x55b0ccd24a50) (INTEGER)
+[ 4]         Operator                  +
+[ 5]         Open Parens               (
+[ 6]         Variable                  v2% (0x55b0ccd24c50) (INTEGER)
+[ 7]         Operator                  *
+[ 8]         Variable                  vertex_size% (0x55b0ccd1aff0) (INTEGER)
+[ 9]         Close Parens              )
+
+Line: 107 Statement: 0
+-> 107  v3address%=vertex_list% + (v3% * vertex_size%)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  v3address% (0x55b0ccd257c0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Variable                  vertex_list% (0x55b0ccd24a50) (INTEGER)
+[ 4]         Operator                  +
+[ 5]         Open Parens               (
+[ 6]         Variable                  v3% (0x55b0ccd24d50) (INTEGER)
+[ 7]         Operator                  *
+[ 8]         Variable                  vertex_size% (0x55b0ccd1aff0) (INTEGER)
+[ 9]         Close Parens              )
+
+Line: 108 Statement: 0
+-> 108  address%!0=v1address%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  address% (0x55b0ccd24950) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Integer operand           0
+[ 4]         Operator                  =
+[ 5]         Variable                  v1address% (0x55b0ccd25060) (INTEGER)
+
+Line: 109 Statement: 0
+-> 109  address%!4=v2address%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  address% (0x55b0ccd24950) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Integer operand           4
+[ 4]         Operator                  =
+[ 5]         Variable                  v2address% (0x55b0ccd25410) (INTEGER)
+
+Line: 110 Statement: 0
+-> 110  address%!8=v3address%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  address% (0x55b0ccd24950) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Integer operand           8
+[ 4]         Operator                  =
+[ 5]         Variable                  v3address% (0x55b0ccd257c0) (INTEGER)
+
+Line: 111 Statement: 0
+-> 111  address%!12=colour%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  address% (0x55b0ccd24950) (INTEGER)
+[ 2]         Bang                      !
+[ 3]         Integer operand           12
+[ 4]         Operator                  =
+[ 5]         Variable                  colour% (0x55b0ccd24e50) (INTEGER)
+
+Line: 112 Statement: 0
+-> 112  address%+=face_size%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  address% (0x55b0ccd24950) (INTEGER)
+[ 2]         Operator                  +=
+[ 3]         Variable                  face_size% (0x55b0ccd1b3c0) (INTEGER)
+
+Line: 113 Statement: 0
+-> 113  PRINT ~v1address%,~v2address%,~v3address%
+[ 0]         Token 0x71                PRINT
+[ 1]         Tilde                     ~
+[ 2]         Variable                  v1address% (0x55b0ccd25060) (INTEGER)
+[ 3]         Comma                     ,
+[ 4]         Tilde                     ~
+[ 5]         Variable                  v2address% (0x55b0ccd25410) (INTEGER)
+[ 6]         Comma                     ,
+[ 7]         Tilde                     ~
+[ 8]         Variable                  v3address% (0x55b0ccd257c0) (INTEGER)
+
+Line: 114 Statement: 0
+-> 114ENDPROC
+[ 0]         Token 0x61                ENDPROC
+
+Line: 115 Empty/REM
+-> 115
+
+Line: 116 Statement: 0
+-> 116DEFPROCInitPerlin
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x72                PROC
+[ 2]         Proc or FN Call (008)     InitPerlin
+
+Line: 117 Statement: 0
+-> 117  DIM hash%(256)
+[ 0]         Token 0x5E                DIM
+[ 1]         Variable                  hash% (0x55b0ccd26b20) (INTEGER)
+[ 2]         Open Parens               (
+[ 3]         Integer operand           256
+[ 4]         Close Parens              )
+
+Line: 118 Statement: 0
+-> 118  FOR I%=0 TO 255
+[ 0]         Token 0x63                FOR
+[ 1]         Variable                  I% (0x55b0ccd26d70) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Integer operand           0
+[ 4]         Token 0x38                TO
+[ 5]         Integer operand           255
+
+Line: 119 Statement: 0
+-> 119    READ v%
+[ 0]         Token 0x73                READ
+[ 1]         Variable                  v% (0x55b0ccd27000) (INTEGER)
+
+Line: 120 Statement: 0
+-> 120    hash%(I%) = v%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  hash% (0x55b0ccd26b20) (INTEGER)
+[ 2]         Open Parens               (
+[ 3]         Variable                  I% (0x55b0ccd26d70) (INTEGER)
+[ 4]         Close Parens              )
+[ 5]         Operator                  =
+[ 6]         Variable                  v% (0x55b0ccd27000) (INTEGER)
+
+Line: 121 Statement: 0
+-> 121  NEXT
+[ 0]         Token 0x6D                NEXT
+
+Line: 122 Statement: 0
+-> 122  seed%=0
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  seed% (0x55b0ccd274b0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Integer operand           0
+
+Line: 123 Statement: 0
+-> 123ENDPROC
+[ 0]         Token 0x61                ENDPROC
+
+Line: 124 Empty/REM
+-> 124
+
+Line: 125 Statement: 0
+-> 125DEFFNNoise2%(x%, y%)
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (009)     Noise2%
+[ 3]         Open Parens               (
+[ 4]         Variable                  x% (0x55b0ccd278d0) (INTEGER)
+[ 5]         Comma                     ,
+[ 6]         Variable                  y% (0x55b0ccd279d0) (INTEGER)
+[ 7]         Close Parens              )
+
+Line: 126 Statement: 0
+-> 126LOCAL tmp%
+[ 0]         Token 0x6A                LOCAL
+[ 1]         Variable                  tmp% (0x55b0ccd27ba0) (INTEGER)
+
+Line: 127 Statement: 0
+-> 127  tmp%=hash%((y% + seed%) MOD 256)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  tmp% (0x55b0ccd27ba0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Variable                  hash% (0x55b0ccd26b20) (INTEGER)
+[ 4]         Open Parens               (
+[ 5]         Open Parens               (
+[ 6]         Variable                  y% (0x55b0ccd279d0) (INTEGER)
+[ 7]         Operator                  +
+[ 8]         Variable                  seed% (0x55b0ccd274b0) (INTEGER)
+[ 9]         Close Parens              )
+[10]         Token 0x03                MOD
+[11]         Integer operand           256
+[12]         Close Parens              )
+
+Line: 128 Statement: 0
+-> 128=hash%((tmp% + x%) MOD 256)
+[ 0]         Operator                  =
+[ 1]         Variable                  hash% (0x55b0ccd26b20) (INTEGER)
+[ 2]         Open Parens               (
+[ 3]         Open Parens               (
+[ 4]         Variable                  tmp% (0x55b0ccd27ba0) (INTEGER)
+[ 5]         Operator                  +
+[ 6]         Variable                  x% (0x55b0ccd278d0) (INTEGER)
+[ 7]         Close Parens              )
+[ 8]         Token 0x03                MOD
+[ 9]         Integer operand           256
+[10]         Close Parens              )
+
+Line: 129 Empty/REM
+-> 129
+
+Line: 130 Statement: 0
+-> 130DEFFNLinInter(x, y, s)
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (010)     LinInter
+[ 3]         Open Parens               (
+[ 4]         Variable                  x (0x55b0ccd285b0) (FLOAT)
+[ 5]         Comma                     ,
+[ 6]         Variable                  y (0x55b0ccd286b0) (FLOAT)
+[ 7]         Comma                     ,
+[ 8]         Variable                  s (0x55b0ccd287b0) (FLOAT)
+[ 9]         Close Parens              )
+
+Line: 131 Statement: 0
+-> 131=x + s * (y - x)
+[ 0]         Operator                  =
+[ 1]         Variable                  x (0x55b0ccd285b0) (FLOAT)
+[ 2]         Operator                  +
+[ 3]         Variable                  s (0x55b0ccd287b0) (FLOAT)
+[ 4]         Operator                  *
+[ 5]         Open Parens               (
+[ 6]         Variable                  y (0x55b0ccd286b0) (FLOAT)
+[ 7]         Operator                  -
+[ 8]         Variable                  x (0x55b0ccd285b0) (FLOAT)
+[ 9]         Close Parens              )
+
+Line: 132 Empty/REM
+-> 132
+
+Line: 133 Statement: 0
+-> 133DEFFNSmoothInter(x, y, s)
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (011)     SmoothInter
+[ 3]         Open Parens               (
+[ 4]         Variable                  x (0x55b0ccd28de0) (FLOAT)
+[ 5]         Comma                     ,
+[ 6]         Variable                  y (0x55b0ccd28ee0) (FLOAT)
+[ 7]         Comma                     ,
+[ 8]         Variable                  s (0x55b0ccd28fe0) (FLOAT)
+[ 9]         Close Parens              )
+
+Line: 134 Statement: 0
+-> 134=FNLinInter(x, y, s * s * (3 - 2 * s))
+[ 0]         Operator                  =
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call           LinInter
+[ 3]         Open Parens               (
+[ 4]         Variable                  x (0x55b0ccd28de0) (FLOAT)
+[ 5]         Comma                     ,
+[ 6]         Variable                  y (0x55b0ccd28ee0) (FLOAT)
+[ 7]         Comma                     ,
+[ 8]         Variable                  s (0x55b0ccd28fe0) (FLOAT)
+[ 9]         Operator                  *
+[10]         Variable                  s (0x55b0ccd28fe0) (FLOAT)
+[11]         Operator                  *
+[12]         Open Parens               (
+[13]         Integer operand           3
+[14]         Operator                  -
+[15]         Integer operand           2
+[16]         Operator                  *
+[17]         Variable                  s (0x55b0ccd28fe0) (FLOAT)
+[18]         Close Parens              )
+[19]         Close Parens              )
+
+Line: 135 Empty/REM
+-> 135
+
+Line: 136 Statement: 0
+-> 136DEFFNNoise2D(x, y)
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (012)     Noise2D
+[ 3]         Open Parens               (
+[ 4]         Variable                  x (0x55b0ccd299d0) (FLOAT)
+[ 5]         Comma                     ,
+[ 6]         Variable                  y (0x55b0ccd29ad0) (FLOAT)
+[ 7]         Close Parens              )
+
+Line: 137 Statement: 0
+-> 137LOCAL x_int%,y_int%,x_frac,y_frac,s%,t%,u%,v%,low,high
+[ 0]         Token 0x6A                LOCAL
+[ 1]         Variable                  x_int% (0x55b0ccd29ca0) (INTEGER)
+[ 2]         Comma                     ,
+[ 3]         Variable                  y_int% (0x55b0ccd29da0) (INTEGER)
+[ 4]         Comma                     ,
+[ 5]         Variable                  x_frac (0x55b0ccd29ea0) (FLOAT)
+[ 6]         Comma                     ,
+[ 7]         Variable                  y_frac (0x55b0ccd29fa0) (FLOAT)
+[ 8]         Comma                     ,
+[ 9]         Variable                  s% (0x55b0ccd2a0a0) (INTEGER)
+[10]         Comma                     ,
+[11]         Variable                  t% (0x55b0ccd2a1a0) (INTEGER)
+[12]         Comma                     ,
+[13]         Variable                  u% (0x55b0ccd2a2a0) (INTEGER)
+[14]         Comma                     ,
+[15]         Variable                  v% (0x55b0ccd2a3a0) (INTEGER)
+[16]         Comma                     ,
+[17]         Variable                  low (0x55b0ccd2a4a0) (FLOAT)
+[18]         Comma                     ,
+[19]         Variable                  high (0x55b0ccd2a5a0) (FLOAT)
+
+Line: 138 Statement: 0
+-> 138  x_int% = x
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  x_int% (0x55b0ccd29ca0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Variable                  x (0x55b0ccd299d0) (FLOAT)
+
+Line: 139 Statement: 0
+-> 139  y_int% = y
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  y_int% (0x55b0ccd29da0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Variable                  y (0x55b0ccd29ad0) (FLOAT)
+
+Line: 140 Statement: 0
+-> 140  x_frac = x - x_int%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  x_frac (0x55b0ccd29ea0) (FLOAT)
+[ 2]         Operator                  =
+[ 3]         Variable                  x (0x55b0ccd299d0) (FLOAT)
+[ 4]         Operator                  -
+[ 5]         Variable                  x_int% (0x55b0ccd29ca0) (INTEGER)
+
+Line: 141 Statement: 0
+-> 141  y_frac = y - y_int%
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  y_frac (0x55b0ccd29fa0) (FLOAT)
+[ 2]         Operator                  =
+[ 3]         Variable                  y (0x55b0ccd29ad0) (FLOAT)
+[ 4]         Operator                  -
+[ 5]         Variable                  y_int% (0x55b0ccd29da0) (INTEGER)
+
+Line: 142 Statement: 0
+-> 142  s%=FNNoise2%(x_int%,     y_int%)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  s% (0x55b0ccd2a0a0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Token 0x24                FN
+[ 4]         Proc or FN Call           Noise2%
+[ 5]         Open Parens               (
+[ 6]         Variable                  x_int% (0x55b0ccd29ca0) (INTEGER)
+[ 7]         Comma                     ,
+[ 8]         Variable                  y_int% (0x55b0ccd29da0) (INTEGER)
+[ 9]         Close Parens              )
+
+Line: 143 Statement: 0
+-> 143  t%=FNNoise2%(x_int% + 1, y_int%)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  t% (0x55b0ccd2a1a0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Token 0x24                FN
+[ 4]         Proc or FN Call           Noise2%
+[ 5]         Open Parens               (
+[ 6]         Variable                  x_int% (0x55b0ccd29ca0) (INTEGER)
+[ 7]         Operator                  +
+[ 8]         Integer operand           1
+[ 9]         Comma                     ,
+[10]         Variable                  y_int% (0x55b0ccd29da0) (INTEGER)
+[11]         Close Parens              )
+
+Line: 144 Statement: 0
+-> 144  u%=FNNoise2%(x_int%,     y_int% + 1)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  u% (0x55b0ccd2a2a0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Token 0x24                FN
+[ 4]         Proc or FN Call           Noise2%
+[ 5]         Open Parens               (
+[ 6]         Variable                  x_int% (0x55b0ccd29ca0) (INTEGER)
+[ 7]         Comma                     ,
+[ 8]         Variable                  y_int% (0x55b0ccd29da0) (INTEGER)
+[ 9]         Operator                  +
+[10]         Integer operand           1
+[11]         Close Parens              )
+
+Line: 145 Statement: 0
+-> 145  v%=FNNoise2%(x_int% + 1, y_int% + 1)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  v% (0x55b0ccd2a3a0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Token 0x24                FN
+[ 4]         Proc or FN Call           Noise2%
+[ 5]         Open Parens               (
+[ 6]         Variable                  x_int% (0x55b0ccd29ca0) (INTEGER)
+[ 7]         Operator                  +
+[ 8]         Integer operand           1
+[ 9]         Comma                     ,
+[10]         Variable                  y_int% (0x55b0ccd29da0) (INTEGER)
+[11]         Operator                  +
+[12]         Integer operand           1
+[13]         Close Parens              )
+
+Line: 146 Statement: 0
+-> 146  low=FNSmoothInter(s%, t%, x_frac)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  low (0x55b0ccd2a4a0) (FLOAT)
+[ 2]         Operator                  =
+[ 3]         Token 0x24                FN
+[ 4]         Proc or FN Call           SmoothInter
+[ 5]         Open Parens               (
+[ 6]         Variable                  s% (0x55b0ccd2a0a0) (INTEGER)
+[ 7]         Comma                     ,
+[ 8]         Variable                  t% (0x55b0ccd2a1a0) (INTEGER)
+[ 9]         Comma                     ,
+[10]         Variable                  x_frac (0x55b0ccd29ea0) (FLOAT)
+[11]         Close Parens              )
+
+Line: 147 Statement: 0
+-> 147  high=FNSmoothInter(u%, v%, x_frac)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  high (0x55b0ccd2a5a0) (FLOAT)
+[ 2]         Operator                  =
+[ 3]         Token 0x24                FN
+[ 4]         Proc or FN Call           SmoothInter
+[ 5]         Open Parens               (
+[ 6]         Variable                  u% (0x55b0ccd2a2a0) (INTEGER)
+[ 7]         Comma                     ,
+[ 8]         Variable                  v% (0x55b0ccd2a3a0) (INTEGER)
+[ 9]         Comma                     ,
+[10]         Variable                  x_frac (0x55b0ccd29ea0) (FLOAT)
+[11]         Close Parens              )
+
+Line: 148 Statement: 0
+-> 148=FNSmoothInter(low, high, y_frac)
+[ 0]         Operator                  =
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call           SmoothInter
+[ 3]         Open Parens               (
+[ 4]         Variable                  low (0x55b0ccd2a4a0) (FLOAT)
+[ 5]         Comma                     ,
+[ 6]         Variable                  high (0x55b0ccd2a5a0) (FLOAT)
+[ 7]         Comma                     ,
+[ 8]         Variable                  y_frac (0x55b0ccd29fa0) (FLOAT)
+[ 9]         Close Parens              )
+
+Line: 149 Empty/REM
+-> 149
+
+Line: 150 Statement: 0
+-> 150DEFFNPerlin2D(x, y, freq, depth%)
+[ 0]         Token 0x5D                DEF
+[ 1]         Token 0x24                FN
+[ 2]         Proc or FN Call (013)     Perlin2D
+[ 3]         Open Parens               (
+[ 4]         Variable                  x (0x55b0ccd2c9e0) (FLOAT)
+[ 5]         Comma                     ,
+[ 6]         Variable                  y (0x55b0ccd2cae0) (FLOAT)
+[ 7]         Comma                     ,
+[ 8]         Variable                  freq (0x55b0ccd2cbe0) (FLOAT)
+[ 9]         Comma                     ,
+[10]         Variable                  depth% (0x55b0ccd2cce0) (INTEGER)
+[11]         Close Parens              )
+
+Line: 151 Statement: 0
+-> 151LOCAL xa,ya,amp,fin,div,I%
+[ 0]         Token 0x6A                LOCAL
+[ 1]         Variable                  xa (0x55b0ccd2cec0) (FLOAT)
+[ 2]         Comma                     ,
+[ 3]         Variable                  ya (0x55b0ccd2cfc0) (FLOAT)
+[ 4]         Comma                     ,
+[ 5]         Variable                  amp (0x55b0ccd2d0c0) (FLOAT)
+[ 6]         Comma                     ,
+[ 7]         Variable                  fin (0x55b0ccd2d1c0) (FLOAT)
+[ 8]         Comma                     ,
+[ 9]         Variable                  div (0x55b0ccd2d2c0) (FLOAT)
+[10]         Comma                     ,
+[11]         Variable                  I% (0x55b0ccd2d3c0) (INTEGER)
+
+Line: 152 Statement: 0
+-> 152  xa=x * freq
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  xa (0x55b0ccd2cec0) (FLOAT)
+[ 2]         Operator                  =
+[ 3]         Variable                  x (0x55b0ccd2c9e0) (FLOAT)
+[ 4]         Operator                  *
+[ 5]         Variable                  freq (0x55b0ccd2cbe0) (FLOAT)
+
+Line: 153 Statement: 0
+-> 153  ya=y * freq
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  ya (0x55b0ccd2cfc0) (FLOAT)
+[ 2]         Operator                  =
+[ 3]         Variable                  y (0x55b0ccd2cae0) (FLOAT)
+[ 4]         Operator                  *
+[ 5]         Variable                  freq (0x55b0ccd2cbe0) (FLOAT)
+
+Line: 154 Statement: 0
+-> 154  amp=1.0
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  amp (0x55b0ccd2d0c0) (FLOAT)
+[ 2]         Operator                  =
+[ 3]         Real operand              1.000000
+
+Line: 155 Statement: 0
+-> 155  fin=0
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  fin (0x55b0ccd2d1c0) (FLOAT)
+[ 2]         Operator                  =
+[ 3]         Integer operand           0
+
+Line: 156 Statement: 0
+-> 156  div=0.0
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  div (0x55b0ccd2d2c0) (FLOAT)
+[ 2]         Operator                  =
+[ 3]         Real operand              0.000000
+
+Line: 157 Statement: 0
+-> 157  FOR I%=0 TO depth% - 1
+[ 0]         Token 0x63                FOR
+[ 1]         Variable                  I% (0x55b0ccd2d3c0) (INTEGER)
+[ 2]         Operator                  =
+[ 3]         Integer operand           0
+[ 4]         Token 0x38                TO
+[ 5]         Variable                  depth% (0x55b0ccd2cce0) (INTEGER)
+[ 6]         Operator                  -
+[ 7]         Integer operand           1
+
+Line: 158 Statement: 0
+-> 158    div = div + (256 * amp)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  div (0x55b0ccd2d2c0) (FLOAT)
+[ 2]         Operator                  =
+[ 3]         Variable                  div (0x55b0ccd2d2c0) (FLOAT)
+[ 4]         Operator                  +
+[ 5]         Open Parens               (
+[ 6]         Integer operand           256
+[ 7]         Operator                  *
+[ 8]         Variable                  amp (0x55b0ccd2d0c0) (FLOAT)
+[ 9]         Close Parens              )
+
+Line: 159 Statement: 0
+-> 159    fin = fin + (FNNoise2D(xa, ya) * amp)
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  fin (0x55b0ccd2d1c0) (FLOAT)
+[ 2]         Operator                  =
+[ 3]         Variable                  fin (0x55b0ccd2d1c0) (FLOAT)
+[ 4]         Operator                  +
+[ 5]         Open Parens               (
+[ 6]         Token 0x24                FN
+[ 7]         Proc or FN Call           Noise2D
+[ 8]         Open Parens               (
+[ 9]         Variable                  xa (0x55b0ccd2cec0) (FLOAT)
+[10]         Comma                     ,
+[11]         Variable                  ya (0x55b0ccd2cfc0) (FLOAT)
+[12]         Close Parens              )
+[13]         Operator                  *
+[14]         Variable                  amp (0x55b0ccd2d0c0) (FLOAT)
+[15]         Close Parens              )
+
+Line: 160 Statement: 0
+-> 160    amp = amp / 2
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  amp (0x55b0ccd2d0c0) (FLOAT)
+[ 2]         Operator                  =
+[ 3]         Variable                  amp (0x55b0ccd2d0c0) (FLOAT)
+[ 4]         Operator                  /
+[ 5]         Integer operand           2
+
+Line: 161 Statement: 0
+-> 161    xa = xa * 2
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  xa (0x55b0ccd2cec0) (FLOAT)
+[ 2]         Operator                  =
+[ 3]         Variable                  xa (0x55b0ccd2cec0) (FLOAT)
+[ 4]         Operator                  *
+[ 5]         Integer operand           2
+
+Line: 162 Statement: 0
+-> 162    ya = ya * 2
+[ 0]         Token 0x69                LET
+[ 1]         Variable                  ya (0x55b0ccd2cfc0) (FLOAT)
+[ 2]         Operator                  =
+[ 3]         Variable                  ya (0x55b0ccd2cfc0) (FLOAT)
+[ 4]         Operator                  *
+[ 5]         Integer operand           2
+
+Line: 163 Statement: 0
+-> 163  NEXT
+[ 0]         Token 0x6D                NEXT
+
+Line: 164 Statement: 0
+-> 164=fin / div
+[ 0]         Operator                  =
+[ 1]         Variable                  fin (0x55b0ccd2d1c0) (FLOAT)
+[ 2]         Operator                  /
+[ 3]         Variable                  div (0x55b0ccd2d2c0) (FLOAT)
+
+Line: 165 Empty/REM
+-> 165
+
+Line: 166 Statement: 0
+-> 166DATA 208,34,231,213,32,248,233,56,161,78,24,140,71,48,140,254,245,255,247,247,40
+[ 0]         Token 0x5C                DATA
+[ 1]         Integer operand           208
+[ 2]         Comma                     ,
+[ 3]         Integer operand           34
+[ 4]         Comma                     ,
+[ 5]         Integer operand           231
+[ 6]         Comma                     ,
+[ 7]         Integer operand           213
+[ 8]         Comma                     ,
+[ 9]         Integer operand           32
+[10]         Comma                     ,
+[11]         Integer operand           248
+[12]         Comma                     ,
+[13]         Integer operand           233
+[14]         Comma                     ,
+[15]         Integer operand           56
+[16]         Comma                     ,
+[17]         Integer operand           161
+[18]         Comma                     ,
+[19]         Integer operand           78
+[20]         Comma                     ,
+[21]         Integer operand           24
+[22]         Comma                     ,
+[23]         Integer operand           140
+[24]         Comma                     ,
+[25]         Integer operand           71
+[26]         Comma                     ,
+[27]         Integer operand           48
+[28]         Comma                     ,
+[29]         Integer operand           140
+[30]         Comma                     ,
+[31]         Integer operand           254
+[32]         Comma                     ,
+[33]         Integer operand           245
+[34]         Comma                     ,
+[35]         Integer operand           255
+[36]         Comma                     ,
+[37]         Integer operand           247
+[38]         Comma                     ,
+[39]         Integer operand           247
+[40]         Comma                     ,
+[41]         Integer operand           40
+
+Line: 167 Statement: 0
+-> 167DATA 185,248,251,245,28,124,204,204,76,36,1,107,28,234,163,202,224,245,128,167,204
+[ 0]         Token 0x5C                DATA
+[ 1]         Integer operand           185
+[ 2]         Comma                     ,
+[ 3]         Integer operand           248
+[ 4]         Comma                     ,
+[ 5]         Integer operand           251
+[ 6]         Comma                     ,
+[ 7]         Integer operand           245
+[ 8]         Comma                     ,
+[ 9]         Integer operand           28
+[10]         Comma                     ,
+[11]         Integer operand           124
+[12]         Comma                     ,
+[13]         Integer operand           204
+[14]         Comma                     ,
+[15]         Integer operand           204
+[16]         Comma                     ,
+[17]         Integer operand           76
+[18]         Comma                     ,
+[19]         Integer operand           36
+[20]         Comma                     ,
+[21]         Integer operand           1
+[22]         Comma                     ,
+[23]         Integer operand           107
+[24]         Comma                     ,
+[25]         Integer operand           28
+[26]         Comma                     ,
+[27]         Integer operand           234
+[28]         Comma                     ,
+[29]         Integer operand           163
+[30]         Comma                     ,
+[31]         Integer operand           202
+[32]         Comma                     ,
+[33]         Integer operand           224
+[34]         Comma                     ,
+[35]         Integer operand           245
+[36]         Comma                     ,
+[37]         Integer operand           128
+[38]         Comma                     ,
+[39]         Integer operand           167
+[40]         Comma                     ,
+[41]         Integer operand           204
+
+Line: 168 Statement: 0
+-> 168DATA 9,92,217,54,239,174,173,102,193,189,190,121,100,108,167,44,43,77,180,204,8,81
+[ 0]         Token 0x5C                DATA
+[ 1]         Integer operand           9
+[ 2]         Comma                     ,
+[ 3]         Integer operand           92
+[ 4]         Comma                     ,
+[ 5]         Integer operand           217
+[ 6]         Comma                     ,
+[ 7]         Integer operand           54
+[ 8]         Comma                     ,
+[ 9]         Integer operand           239
+[10]         Comma                     ,
+[11]         Integer operand           174
+[12]         Comma                     ,
+[13]         Integer operand           173
+[14]         Comma                     ,
+[15]         Integer operand           102
+[16]         Comma                     ,
+[17]         Integer operand           193
+[18]         Comma                     ,
+[19]         Integer operand           189
+[20]         Comma                     ,
+[21]         Integer operand           190
+[22]         Comma                     ,
+[23]         Integer operand           121
+[24]         Comma                     ,
+[25]         Integer operand           100
+[26]         Comma                     ,
+[27]         Integer operand           108
+[28]         Comma                     ,
+[29]         Integer operand           167
+[30]         Comma                     ,
+[31]         Integer operand           44
+[32]         Comma                     ,
+[33]         Integer operand           43
+[34]         Comma                     ,
+[35]         Integer operand           77
+[36]         Comma                     ,
+[37]         Integer operand           180
+[38]         Comma                     ,
+[39]         Integer operand           204
+[40]         Comma                     ,
+[41]         Integer operand           8
+[42]         Comma                     ,
+[43]         Integer operand           81
+
+Line: 169 Statement: 0
+-> 169DATA 70,223,11,38,24,254,210,210,177,32,81,195,243,125,8,169,112,32,97,53,195,13
+[ 0]         Token 0x5C                DATA
+[ 1]         Integer operand           70
+[ 2]         Comma                     ,
+[ 3]         Integer operand           223
+[ 4]         Comma                     ,
+[ 5]         Integer operand           11
+[ 6]         Comma                     ,
+[ 7]         Integer operand           38
+[ 8]         Comma                     ,
+[ 9]         Integer operand           24
+[10]         Comma                     ,
+[11]         Integer operand           254
+[12]         Comma                     ,
+[13]         Integer operand           210
+[14]         Comma                     ,
+[15]         Integer operand           210
+[16]         Comma                     ,
+[17]         Integer operand           177
+[18]         Comma                     ,
+[19]         Integer operand           32
+[20]         Comma                     ,
+[21]         Integer operand           81
+[22]         Comma                     ,
+[23]         Integer operand           195
+[24]         Comma                     ,
+[25]         Integer operand           243
+[26]         Comma                     ,
+[27]         Integer operand           125
+[28]         Comma                     ,
+[29]         Integer operand           8
+[30]         Comma                     ,
+[31]         Integer operand           169
+[32]         Comma                     ,
+[33]         Integer operand           112
+[34]         Comma                     ,
+[35]         Integer operand           32
+[36]         Comma                     ,
+[37]         Integer operand           97
+[38]         Comma                     ,
+[39]         Integer operand           53
+[40]         Comma                     ,
+[41]         Integer operand           195
+[42]         Comma                     ,
+[43]         Integer operand           13
+
+Line: 170 Statement: 0
+-> 170DATA 203,9,47,104,125,117,114,124,165,203,181,235,193,206,70,180,174,0,167,181,41
+[ 0]         Token 0x5C                DATA
+[ 1]         Integer operand           203
+[ 2]         Comma                     ,
+[ 3]         Integer operand           9
+[ 4]         Comma                     ,
+[ 5]         Integer operand           47
+[ 6]         Comma                     ,
+[ 7]         Integer operand           104
+[ 8]         Comma                     ,
+[ 9]         Integer operand           125
+[10]         Comma                     ,
+[11]         Integer operand           117
+[12]         Comma                     ,
+[13]         Integer operand           114
+[14]         Comma                     ,
+[15]         Integer operand           124
+[16]         Comma                     ,
+[17]         Integer operand           165
+[18]         Comma                     ,
+[19]         Integer operand           203
+[20]         Comma                     ,
+[21]         Integer operand           181
+[22]         Comma                     ,
+[23]         Integer operand           235
+[24]         Comma                     ,
+[25]         Integer operand           193
+[26]         Comma                     ,
+[27]         Integer operand           206
+[28]         Comma                     ,
+[29]         Integer operand           70
+[30]         Comma                     ,
+[31]         Integer operand           180
+[32]         Comma                     ,
+[33]         Integer operand           174
+[34]         Comma                     ,
+[35]         Integer operand           0
+[36]         Comma                     ,
+[37]         Integer operand           167
+[38]         Comma                     ,
+[39]         Integer operand           181
+[40]         Comma                     ,
+[41]         Integer operand           41
+
+Line: 171 Statement: 0
+-> 171DATA 164,30,116,127,198,245,146,87,224,149,206,57,4,192,210,65,210,129,240,178,105
+[ 0]         Token 0x5C                DATA
+[ 1]         Integer operand           164
+[ 2]         Comma                     ,
+[ 3]         Integer operand           30
+[ 4]         Comma                     ,
+[ 5]         Integer operand           116
+[ 6]         Comma                     ,
+[ 7]         Integer operand           127
+[ 8]         Comma                     ,
+[ 9]         Integer operand           198
+[10]         Comma                     ,
+[11]         Integer operand           245
+[12]         Comma                     ,
+[13]         Integer operand           146
+[14]         Comma                     ,
+[15]         Integer operand           87
+[16]         Comma                     ,
+[17]         Integer operand           224
+[18]         Comma                     ,
+[19]         Integer operand           149
+[20]         Comma                     ,
+[21]         Integer operand           206
+[22]         Comma                     ,
+[23]         Integer operand           57
+[24]         Comma                     ,
+[25]         Integer operand           4
+[26]         Comma                     ,
+[27]         Integer operand           192
+[28]         Comma                     ,
+[29]         Integer operand           210
+[30]         Comma                     ,
+[31]         Integer operand           65
+[32]         Comma                     ,
+[33]         Integer operand           210
+[34]         Comma                     ,
+[35]         Integer operand           129
+[36]         Comma                     ,
+[37]         Integer operand           240
+[38]         Comma                     ,
+[39]         Integer operand           178
+[40]         Comma                     ,
+[41]         Integer operand           105
+
+Line: 172 Statement: 0
+-> 172DATA 228,108,245,148,140,40,35,195,38,58,65,207,215,253,65,85,208,76,62,3,237,55,89
+[ 0]         Token 0x5C                DATA
+[ 1]         Integer operand           228
+[ 2]         Comma                     ,
+[ 3]         Integer operand           108
+[ 4]         Comma                     ,
+[ 5]         Integer operand           245
+[ 6]         Comma                     ,
+[ 7]         Integer operand           148
+[ 8]         Comma                     ,
+[ 9]         Integer operand           140
+[10]         Comma                     ,
+[11]         Integer operand           40
+[12]         Comma                     ,
+[13]         Integer operand           35
+[14]         Comma                     ,
+[15]         Integer operand           195
+[16]         Comma                     ,
+[17]         Integer operand           38
+[18]         Comma                     ,
+[19]         Integer operand           58
+[20]         Comma                     ,
+[21]         Integer operand           65
+[22]         Comma                     ,
+[23]         Integer operand           207
+[24]         Comma                     ,
+[25]         Integer operand           215
+[26]         Comma                     ,
+[27]         Integer operand           253
+[28]         Comma                     ,
+[29]         Integer operand           65
+[30]         Comma                     ,
+[31]         Integer operand           85
+[32]         Comma                     ,
+[33]         Integer operand           208
+[34]         Comma                     ,
+[35]         Integer operand           76
+[36]         Comma                     ,
+[37]         Integer operand           62
+[38]         Comma                     ,
+[39]         Integer operand           3
+[40]         Comma                     ,
+[41]         Integer operand           237
+[42]         Comma                     ,
+[43]         Integer operand           55
+[44]         Comma                     ,
+[45]         Integer operand           89
+
+Line: 173 Statement: 0
+-> 173DATA 232,50,217,64,244,157,199,121,252,90,17,212,203,149,152,140,187,234,177,73,174
+[ 0]         Token 0x5C                DATA
+[ 1]         Integer operand           232
+[ 2]         Comma                     ,
+[ 3]         Integer operand           50
+[ 4]         Comma                     ,
+[ 5]         Integer operand           217
+[ 6]         Comma                     ,
+[ 7]         Integer operand           64
+[ 8]         Comma                     ,
+[ 9]         Integer operand           244
+[10]         Comma                     ,
+[11]         Integer operand           157
+[12]         Comma                     ,
+[13]         Integer operand           199
+[14]         Comma                     ,
+[15]         Integer operand           121
+[16]         Comma                     ,
+[17]         Integer operand           252
+[18]         Comma                     ,
+[19]         Integer operand           90
+[20]         Comma                     ,
+[21]         Integer operand           17
+[22]         Comma                     ,
+[23]         Integer operand           212
+[24]         Comma                     ,
+[25]         Integer operand           203
+[26]         Comma                     ,
+[27]         Integer operand           149
+[28]         Comma                     ,
+[29]         Integer operand           152
+[30]         Comma                     ,
+[31]         Integer operand           140
+[32]         Comma                     ,
+[33]         Integer operand           187
+[34]         Comma                     ,
+[35]         Integer operand           234
+[36]         Comma                     ,
+[37]         Integer operand           177
+[38]         Comma                     ,
+[39]         Integer operand           73
+[40]         Comma                     ,
+[41]         Integer operand           174
+
+Line: 174 Statement: 0
+-> 174DATA 193,100,192,143,97,53,145,135,19,103,13,90,135,151,199,91,239,247,33,39,145
+[ 0]         Token 0x5C                DATA
+[ 1]         Integer operand           193
+[ 2]         Comma                     ,
+[ 3]         Integer operand           100
+[ 4]         Comma                     ,
+[ 5]         Integer operand           192
+[ 6]         Comma                     ,
+[ 7]         Integer operand           143
+[ 8]         Comma                     ,
+[ 9]         Integer operand           97
+[10]         Comma                     ,
+[11]         Integer operand           53
+[12]         Comma                     ,
+[13]         Integer operand           145
+[14]         Comma                     ,
+[15]         Integer operand           135
+[16]         Comma                     ,
+[17]         Integer operand           19
+[18]         Comma                     ,
+[19]         Integer operand           103
+[20]         Comma                     ,
+[21]         Integer operand           13
+[22]         Comma                     ,
+[23]         Integer operand           90
+[24]         Comma                     ,
+[25]         Integer operand           135
+[26]         Comma                     ,
+[27]         Integer operand           151
+[28]         Comma                     ,
+[29]         Integer operand           199
+[30]         Comma                     ,
+[31]         Integer operand           91
+[32]         Comma                     ,
+[33]         Integer operand           239
+[34]         Comma                     ,
+[35]         Integer operand           247
+[36]         Comma                     ,
+[37]         Integer operand           33
+[38]         Comma                     ,
+[39]         Integer operand           39
+[40]         Comma                     ,
+[41]         Integer operand           145
+
+Line: 175 Statement: 0
+-> 175DATA 101,120,99,3,186,86,99,41,237,203,111,79,220,135,158,42,30,154,120,67,87,167
+[ 0]         Token 0x5C                DATA
+[ 1]         Integer operand           101
+[ 2]         Comma                     ,
+[ 3]         Integer operand           120
+[ 4]         Comma                     ,
+[ 5]         Integer operand           99
+[ 6]         Comma                     ,
+[ 7]         Integer operand           3
+[ 8]         Comma                     ,
+[ 9]         Integer operand           186
+[10]         Comma                     ,
+[11]         Integer operand           86
+[12]         Comma                     ,
+[13]         Integer operand           99
+[14]         Comma                     ,
+[15]         Integer operand           41
+[16]         Comma                     ,
+[17]         Integer operand           237
+[18]         Comma                     ,
+[19]         Integer operand           203
+[20]         Comma                     ,
+[21]         Integer operand           111
+[22]         Comma                     ,
+[23]         Integer operand           79
+[24]         Comma                     ,
+[25]         Integer operand           220
+[26]         Comma                     ,
+[27]         Integer operand           135
+[28]         Comma                     ,
+[29]         Integer operand           158
+[30]         Comma                     ,
+[31]         Integer operand           42
+[32]         Comma                     ,
+[33]         Integer operand           30
+[34]         Comma                     ,
+[35]         Integer operand           154
+[36]         Comma                     ,
+[37]         Integer operand           120
+[38]         Comma                     ,
+[39]         Integer operand           67
+[40]         Comma                     ,
+[41]         Integer operand           87
+[42]         Comma                     ,
+[43]         Integer operand           167
+
+Line: 176 Statement: 0
+-> 176DATA 135,176,183,191,253,115,184,21,233,58,129,233,142,39,128,211,118,137,139,255
+[ 0]         Token 0x5C                DATA
+[ 1]         Integer operand           135
+[ 2]         Comma                     ,
+[ 3]         Integer operand           176
+[ 4]         Comma                     ,
+[ 5]         Integer operand           183
+[ 6]         Comma                     ,
+[ 7]         Integer operand           191
+[ 8]         Comma                     ,
+[ 9]         Integer operand           253
+[10]         Comma                     ,
+[11]         Integer operand           115
+[12]         Comma                     ,
+[13]         Integer operand           184
+[14]         Comma                     ,
+[15]         Integer operand           21
+[16]         Comma                     ,
+[17]         Integer operand           233
+[18]         Comma                     ,
+[19]         Integer operand           58
+[20]         Comma                     ,
+[21]         Integer operand           129
+[22]         Comma                     ,
+[23]         Integer operand           233
+[24]         Comma                     ,
+[25]         Integer operand           142
+[26]         Comma                     ,
+[27]         Integer operand           39
+[28]         Comma                     ,
+[29]         Integer operand           128
+[30]         Comma                     ,
+[31]         Integer operand           211
+[32]         Comma                     ,
+[33]         Integer operand           118
+[34]         Comma                     ,
+[35]         Integer operand           137
+[36]         Comma                     ,
+[37]         Integer operand           139
+[38]         Comma                     ,
+[39]         Integer operand           255
+
+Line: 177 Statement: 0
+-> 177DATA 114,20,218,113,154,27,127,246,250,1,8,198,250,209,92,222,173,21,88,102,219
+[ 0]         Token 0x5C                DATA
+[ 1]         Integer operand           114
+[ 2]         Comma                     ,
+[ 3]         Integer operand           20
+[ 4]         Comma                     ,
+[ 5]         Integer operand           218
+[ 6]         Comma                     ,
+[ 7]         Integer operand           113
+[ 8]         Comma                     ,
+[ 9]         Integer operand           154
+[10]         Comma                     ,
+[11]         Integer operand           27
+[12]         Comma                     ,
+[13]         Integer operand           127
+[14]         Comma                     ,
+[15]         Integer operand           246
+[16]         Comma                     ,
+[17]         Integer operand           250
+[18]         Comma                     ,
+[19]         Integer operand           1
+[20]         Comma                     ,
+[21]         Integer operand           8
+[22]         Comma                     ,
+[23]         Integer operand           198
+[24]         Comma                     ,
+[25]         Integer operand           250
+[26]         Comma                     ,
+[27]         Integer operand           209
+[28]         Comma                     ,
+[29]         Integer operand           92
+[30]         Comma                     ,
+[31]         Integer operand           222
+[32]         Comma                     ,
+[33]         Integer operand           173
+[34]         Comma                     ,
+[35]         Integer operand           21
+[36]         Comma                     ,
+[37]         Integer operand           88
+[38]         Comma                     ,
+[39]         Integer operand           102
+[40]         Comma                     ,
+[41]         Integer operand           219
+
+

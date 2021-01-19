@@ -1,0 +1,42 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
+#include "module.h"
+#include "graphics.h"
+#include "engine.h"
+#include "test.h"
+#include "mymath.h"
+
+void module_service(int service, _kernel_swi_regs *r);
+
+_kernel_oserror *module_init(const char *cmd_tail, int podule_base, void *pw) {
+	puts("Initialising 2D/3D Engine...");
+	return NULL;
+}
+
+_kernel_oserror *module_final(int fatal, int podule, void *pw) {
+	puts("Shutting down 2D/3D Engine...");
+	return NULL;
+}
+
+clock_t t;
+
+void time_start() {
+	t = clock();
+}
+
+void time_end() {
+	clock_t tt = clock() - t;
+	printf("Took %d centiseconds to execute \n", (int)tt);
+}
+
+_kernel_oserror *module_service (int service, _kernel_swi_regs *r, void *pw) {
+	module_service(service, r);
+	return NULL;
+}
+
+_kernel_oserror *module_handler(const char *arg_string, int argc, int cmd_no, void *pw) {
+	switch (cmd_no) {
+	}
+	return NULL;
+}

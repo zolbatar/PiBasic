@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\V2\src\ast\ast.cpp" />
+    <ClCompile Include="..\V2\src\ast\ast_debug.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_looping.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_assignment.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_c.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_data.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_expression.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_functions.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_graphics.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_graphics_3d.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_io.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_literal.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_lookahead.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_maths.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_printinput.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_string.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_util.cpp" />
+    <ClCompile Include="..\V2\src\compile\compile_variable.cpp" />
+    <ClCompile Include="..\V2\src\compile\optimiser.cpp" />
+    <ClCompile Include="..\V2\src\engine\engine_matrix.cpp" />
+    <ClCompile Include="..\V2\src\engine\engine_normals.cpp" />
+    <ClCompile Include="..\V2\src\engine\engine_shape.cpp" />
+    <ClCompile Include="..\V2\src\engine\engine_object.cpp" />
+    <ClCompile Include="..\V2\src\engine\engine_world.cpp" />
+    <ClCompile Include="..\V2\src\graphics\graphics.cpp" />
+    <ClCompile Include="..\V2\src\graphics\graphics_barycentric.cpp" />
+    <ClCompile Include="..\V2\src\graphics\graphics_circle.cpp" />
+    <ClCompile Include="..\V2\src\graphics\graphics_clippedline.cpp" />
+    <ClCompile Include="..\V2\src\graphics\graphics_triangle.cpp" />
+    <ClCompile Include="..\V2\src\graphics\graphics_input.cpp" />
+    <ClCompile Include="..\V2\src\graphics\graphics_text.cpp" />
+    <ClCompile Include="..\V2\src\main.cpp" />
+    <ClCompile Include="..\V2\src\parser\parser.cpp" />
+    <ClCompile Include="..\V2\src\parser\scanner.cpp" />
+    <ClCompile Include="..\V2\src\vm\stack.cpp" />
+    <ClCompile Include="..\V2\src\vm\vm.cpp" />
+    <ClCompile Include="..\V2\src\vm\vm_debug.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\V2\src\ast\ast.h" />
+    <ClInclude Include="..\V2\src\compile\compile_c.h" />
+    <ClInclude Include="..\V2\src\compile\compile.h" />
+    <ClInclude Include="..\V2\src\engine\engine.h" />
+    <ClInclude Include="..\V2\src\graphics\graphics.h" />
+    <ClInclude Include="..\V2\src\graphics\stb_truetype.h" />
+    <ClInclude Include="..\V2\src\parser\parser.hpp" />
+    <ClInclude Include="..\V2\src\types.h" />
+    <ClInclude Include="..\V2\src\vm\clock.h" />
+    <ClInclude Include="..\V2\src\vm\vm.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Bison Include="..\V2\src\parser\parser.y">
+      <Verbose Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</Verbose>
+      <Verbose Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</Verbose>
+    </Bison>
+  </ItemGroup>
+  <ItemGroup>
+    <Flex Include="..\V2\src\parser\scanner.l" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\V2\Makefile.linux" />
+    <None Include="..\V2\Makefile.riscos" />
+    <None Include="..\V2\test\BBC\3DDEMO.bas" />
+    <None Include="..\V2\test\BBC\CLOCK3.bas" />
+    <None Include="..\V2\test\BBC\Schedule.bas" />
+    <None Include="..\V2\test\BBC\SCHORG.bas" />
+    <None Include="..\V2\Test\Demos\Clock.bas" />
+    <None Include="..\V2\test\Demos\Cubes.bas" />
+    <None Include="..\V2\test\Demos\DATA" />
+    <None Include="..\V2\test\Demos\fonts.bas" />
+    <None Include="..\V2\test\Demos\Graphics.bas" />
+    <None Include="..\V2\test\Demos\Greedy.bas" />
+    <None Include="..\V2\test\Demos\Load3D.bas" />
+    <None Include="..\V2\test\Demos\Mandelbrot.bas" />
+    <None Include="..\V2\test\Demos\Outrun!.bas" />
+    <None Include="..\V2\test\Demos\Perlin.bas" />
+    <None Include="..\V2\test\Demos\Scratch.bas" />
+    <None Include="..\V2\test\Demos\Terrain.bas" />
+    <None Include="..\V2\test\Demos\TestRig.bas" />
+    <None Include="..\V2\test\INPUT\Volume1\Issue1\p17.bas" />
+    <None Include="..\V2\test\INPUT\Volume1\Issue1\p18.bas" />
+    <None Include="..\V2\test\INPUT\Volume1\Issue1\p2.bas" />
+    <None Include="..\V2\test\INPUT\Volume1\Issue1\p3.bas" />
+    <None Include="..\V2\test\INPUT\Volume1\Issue1\p4.bas" />
+    <None Include="..\V2\test\INPUT\Volume1\Issue1\p4a.bas" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\V2\Supported.txt" />
+    <Text Include="..\V2\test\Test.bas" />
+    <Text Include="parse-debug.txt" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{16cdcae5-e42d-4d1b-a570-73e880da161b}</ProjectGuid>
+    <RootNamespace>PiBasic</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="C:\Users\d_dud\Development\win_flex_bison-2.5.23\custom_build_rules\win_flex_bison\win_flex_bison_custom_build.props" />
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\include;C:\Users\d_dud\source\repos\PiBasic\V2\src\ast;C:\Users\d_dud\source\repos\PiBasic\V2\src\graphics;C:\Users\d_dud\source\repos\PiBasic\V2\src\engine;C:\Users\d_dud\source\repos\PiBasic\V2\src\compile;C:\Users\d_dud\source\repos\PiBasic\V2\src;C:\Users\d_dud\source\repos\PiBasic\V2\src\vm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Manifest />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\include;C:\Users\d_dud\source\repos\PiBasic\V2\src\ast;C:\Users\d_dud\source\repos\PiBasic\V2\src\graphics;C:\Users\d_dud\source\repos\PiBasic\V2\src\engine;C:\Users\d_dud\source\repos\PiBasic\V2\src\compile;C:\Users\d_dud\source\repos\PiBasic\V2\src;C:\Users\d_dud\source\repos\PiBasic\V2\src\vm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <Profile>true</Profile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\include;C:\Users\d_dud\source\repos\PiBasic\V2\src\ast;C:\Users\d_dud\source\repos\PiBasic\V2\src\graphics;C:\Users\d_dud\source\repos\PiBasic\V2\src\engine;C:\Users\d_dud\source\repos\PiBasic\V2\src\compile;C:\Users\d_dud\source\repos\PiBasic\V2\src;C:\Users\d_dud\source\repos\PiBasic\V2\src\vm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Bison>
+      <OutputFile>%(Filename).cpp</OutputFile>
+    </Bison>
+    <Bison>
+      <DefinesFile>%(Filename).hpp</DefinesFile>
+    </Bison>
+    <Flex>
+      <OutputFile>%(Filename).cpp</OutputFile>
+    </Flex>
+    <Manifest />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\include;C:\Users\d_dud\source\repos\PiBasic\V2\src\ast;C:\Users\d_dud\source\repos\PiBasic\V2\src\graphics;C:\Users\d_dud\source\repos\PiBasic\V2\src\engine;C:\Users\d_dud\source\repos\PiBasic\V2\src\compile;C:\Users\d_dud\source\repos\PiBasic\V2\src;C:\Users\d_dud\source\repos\PiBasic\V2\src\vm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <Profile>true</Profile>
+    </Link>
+    <Bison>
+      <OutputFile>%(Filename).cpp</OutputFile>
+      <DefinesFile>%(Filename).hpp</DefinesFile>
+    </Bison>
+    <Flex>
+      <OutputFile>%(Filename).cpp</OutputFile>
+    </Flex>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="C:\Users\d_dud\Development\win_flex_bison-2.5.23\custom_build_rules\win_flex_bison\win_flex_bison_custom_build.targets" />
+  </ImportGroup>
+</Project>

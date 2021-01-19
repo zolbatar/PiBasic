@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{42279381-dc7d-43f8-939f-b9252f2d0b1f}</ProjectGuid>
+    <RootNamespace>WindowsDARIC</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>DARIC</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="..\..\..\..\..\Development\win_flex_bison-2.5.23\custom_build_rules\win_flex_bison\win_flex_bison_custom_build.props" />
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\d_dud\Development\SDL2-2.0.14\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Flex>
+      <Cpp>
+      </Cpp>
+      <OutputFile>C:\Users\d_dud\source\repos\PiBasic\V4\src\parser\flex.cpp</OutputFile>
+    </Flex>
+    <Bison>
+      <OutputFile>C:\Users\d_dud\source\repos\PiBasic\V4\src\parser\bison.cpp</OutputFile>
+    </Bison>
+    <Bison>
+      <DefinesFile>C:\Users\d_dud\source\repos\PiBasic\V4\src\parser\bison.hpp</DefinesFile>
+    </Bison>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\d_dud\Development\SDL2-2.0.14\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <Profile>true</Profile>
+    </Link>
+    <Flex>
+      <Cpp>
+      </Cpp>
+      <OutputFile>C:\Users\d_dud\source\repos\PiBasic\V4\src\parser\flex.cpp</OutputFile>
+    </Flex>
+    <Bison>
+      <OutputFile>C:\Users\d_dud\source\repos\PiBasic\V4\src\parser\bison.cpp</OutputFile>
+    </Bison>
+    <Bison>
+      <DefinesFile>C:\Users\d_dud\source\repos\PiBasic\V4\src\parser\bison.hpp</DefinesFile>
+    </Bison>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\d_dud\Development\SDL2-2.0.14\include</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64</AdditionalLibraryDirectories>
+    </Link>
+    <Flex>
+      <Cpp>
+      </Cpp>
+      <OutputFile>C:\Users\d_dud\source\repos\PiBasic\V4\src\parser\flex.cpp</OutputFile>
+    </Flex>
+    <Bison>
+      <OutputFile>C:\Users\d_dud\source\repos\PiBasic\V4\src\parser\bison.cpp</OutputFile>
+    </Bison>
+    <Bison>
+      <DefinesFile>C:\Users\d_dud\source\repos\PiBasic\V4\src\parser\bison.hpp</DefinesFile>
+    </Bison>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\d_dud\Development\SDL2-2.0.14\include</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64</AdditionalLibraryDirectories>
+      <Profile>true</Profile>
+    </Link>
+    <Flex>
+      <Cpp>
+      </Cpp>
+      <OutputFile>C:\Users\d_dud\source\repos\PiBasic\V4\src\parser\flex.cpp</OutputFile>
+    </Flex>
+    <Bison>
+      <OutputFile>C:\Users\d_dud\source\repos\PiBasic\V4\src\parser\bison.cpp</OutputFile>
+    </Bison>
+    <Bison>
+      <DefinesFile>C:\Users\d_dud\source\repos\PiBasic\V4\src\parser\bison.hpp</DefinesFile>
+    </Bison>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\compiler\compile.cpp" />
+    <ClCompile Include="..\src\compiler\compile_graphics3d.cpp" />
+    <ClCompile Include="..\src\compiler\compile_looping.cpp" />
+    <ClCompile Include="..\src\compiler\compile_printinput.cpp" />
+    <ClCompile Include="..\src\compiler\compile_variable2d.cpp" />
+    <ClCompile Include="..\src\compiler\compile_data.cpp" />
+    <ClCompile Include="..\src\compiler\compile_assignment.cpp" />
+    <ClCompile Include="..\src\compiler\compile_expression.cpp" />
+    <ClCompile Include="..\src\compiler\compile_functions.cpp" />
+    <ClCompile Include="..\src\compiler\compile_graphics.cpp" />
+    <ClCompile Include="..\src\compiler\compile_io.cpp" />
+    <ClCompile Include="..\src\compiler\compile_literal.cpp" />
+    <ClCompile Include="..\src\compiler\compile_lookahead.cpp" />
+    <ClCompile Include="..\src\compiler\compile_maths.cpp" />
+    <ClCompile Include="..\src\compiler\compile_string.cpp" />
+    <ClCompile Include="..\src\compiler\compile_token.cpp" />
+    <ClCompile Include="..\src\compiler\compile_util.cpp" />
+    <ClCompile Include="..\src\compiler\compile_variable.cpp" />
+    <ClCompile Include="..\src\compiler\compile_variable1d.cpp" />
+    <ClCompile Include="..\src\engine\engine_matrix.cpp" />
+    <ClCompile Include="..\src\engine\engine_normals.cpp" />
+    <ClCompile Include="..\src\engine\engine_object.cpp" />
+    <ClCompile Include="..\src\engine\engine_shape.cpp" />
+    <ClCompile Include="..\src\engine\engine_world.cpp" />
+    <ClCompile Include="..\src\graphics\graphics.cpp" />
+    <ClCompile Include="..\src\graphics\graphics_barycentric.cpp" />
+    <ClCompile Include="..\src\graphics\graphics_circle.cpp" />
+    <ClCompile Include="..\src\graphics\graphics_clippedline.cpp" />
+    <ClCompile Include="..\src\graphics\graphics_input.cpp" />
+    <ClCompile Include="..\src\graphics\graphics_text.cpp" />
+    <ClCompile Include="..\src\graphics\graphics_triangle.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\parser\ast.cpp" />
+    <ClCompile Include="..\src\parser\bison.cpp" />
+    <ClCompile Include="..\src\parser\flex.cpp" />
+    <ClCompile Include="..\src\vm\debugger.cpp" />
+    <ClCompile Include="..\src\vm\manual.cpp" />
+    <ClCompile Include="..\src\vm\manual\manual_2d.cpp" />
+    <ClCompile Include="..\src\vm\manual\manual_3d.cpp" />
+    <ClCompile Include="..\src\vm\manual\manual_boolean.cpp" />
+    <ClCompile Include="..\src\vm\manual\manual_debugging.cpp" />
+    <ClCompile Include="..\src\vm\manual\manual_fn_proc.cpp" />
+    <ClCompile Include="..\src\vm\manual\manual_io.cpp" />
+    <ClCompile Include="..\src\vm\manual\manual_keyboardmouse.cpp" />
+    <ClCompile Include="..\src\vm\manual\manual_looping.cpp" />
+    <ClCompile Include="..\src\vm\manual\manual_maths.cpp" />
+    <ClCompile Include="..\src\vm\manual\manual_operators.cpp" />
+    <ClCompile Include="..\src\vm\manual\manual_string.cpp" />
+    <ClCompile Include="..\src\vm\manual\manual_variables_types.cpp" />
+    <ClCompile Include="..\src\vm\stack.cpp" />
+    <ClCompile Include="..\src\vm\vm.cpp" />
+    <ClCompile Include="..\src\vm\disassembly.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Flex Include="..\Grammar\DARIC.l" />
+  </ItemGroup>
+  <ItemGroup>
+    <Bison Include="..\Grammar\DARIC.y" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\DARICInstaller\DARIC.vdproj" />
+    <None Include="..\Examples\Cubes.daric" />
+    <None Include="..\Examples\DARIC.daric" />
+    <None Include="..\Examples\Fonts.daric" />
+    <None Include="..\Examples\GIS\Afghanistan" />
+    <None Include="..\Examples\GIS\Aland Islands" />
+    <None Include="..\Examples\GIS\Albania" />
+    <None Include="..\Examples\GIS\Algeria" />
+    <None Include="..\Examples\GIS\American Samoa" />
+    <None Include="..\Examples\GIS\Andorra" />
+    <None Include="..\Examples\GIS\Angola" />
+    <None Include="..\Examples\GIS\Anguilla" />
+    <None Include="..\Examples\GIS\Antarctica" />
+    <None Include="..\Examples\GIS\Antigua and Barbuda" />
+    <None Include="..\Examples\GIS\Argentina" />
+    <None Include="..\Examples\GIS\Armenia" />
+    <None Include="..\Examples\GIS\Aruba" />
+    <None Include="..\Examples\GIS\Australia" />
+    <None Include="..\Examples\GIS\Austria" />
+    <None Include="..\Examples\GIS\Azerbaijan" />
+    <None Include="..\Examples\GIS\Bahamas" />
+    <None Include="..\Examples\GIS\Bahrain" />
+    <None Include="..\Examples\GIS\Bangladesh" />
+    <None Include="..\Examples\GIS\Barbados" />
+    <None Include="..\Examples\GIS\Belarus" />
+    <None Include="..\Examples\GIS\Belgium" />
+    <None Include="..\Examples\GIS\Belize" />
+    <None Include="..\Examples\GIS\Benin" />
+    <None Include="..\Examples\GIS\Bermuda" />
+    <None Include="..\Examples\GIS\Bhutan" />
+    <None Include="..\Examples\GIS\Bolivia" />
+    <None Include="..\Examples\GIS\Bosnia and Herzegovina" />
+    <None Include="..\Examples\GIS\Botswana" />
+    <None Include="..\Examples\GIS\Bouvet Island" />
+    <None Include="..\Examples\GIS\Brazil" />
+    <None Include="..\Examples\GIS\British Indian Ocean Territory" />
+    <None Include="..\Examples\GIS\British Virgin Islands" />
+    <None Include="..\Examples\GIS\Brunei Darussalam" />
+    <None Include="..\Examples\GIS\Bulgaria" />
+    <None Include="..\Examples\GIS\Burkina Faso" />
+    <None Include="..\Examples\GIS\Burma" />
+    <None Include="..\Examples\GIS\Burundi" />
+    <None Include="..\Examples\GIS\Cambodia" />
+    <None Include="..\Examples\GIS\Cameroon" />
+    <None Include="..\Examples\GIS\Canada" />
+    <None Include="..\Examples\GIS\Cape Verde" />
+    <None Include="..\Examples\GIS\Cayman Islands" />
+    <None Include="..\Examples\GIS\Central African Republic" />
+    <None Include="..\Examples\GIS\Chad" />
+    <None Include="..\Examples\GIS\Chile" />
+    <None Include="..\Examples\GIS\China" />
+    <None Include="..\Examples\GIS\Christmas Island" />
+    <None Include="..\Examples\GIS\Cocos (Keeling) Islands" />
+    <None Include="..\Examples\GIS\Colombia" />
+    <None Include="..\Examples\GIS\Comoros" />
+    <None Include="..\Examples\GIS\Congo" />
+    <None Include="..\Examples\GIS\Cook Islands" />
+    <None Include="..\Examples\GIS\Costa Rica" />
+    <None Include="..\Examples\GIS\Cote d%27Ivoire" />
+    <None Include="..\Examples\GIS\Croatia" />
+    <None Include="..\Examples\GIS\Cuba" />
+    <None Include="..\Examples\GIS\Cyprus" />
+    <None Include="..\Examples\GIS\Czech Republic" />
+    <None Include="..\Examples\GIS\Democratic Republic of the Congo" />
+    <None Include="..\Examples\GIS\Denmark" />
+    <None Include="..\Examples\GIS\Djibouti" />
+    <None Include="..\Examples\GIS\Dominica" />
+    <None Include="..\Examples\GIS\Dominican Republic" />
+    <None Include="..\Examples\GIS\Ecuador" />
+    <None Include="..\Examples\GIS\Egypt" />
+    <None Include="..\Examples\GIS\El Salvador" />
+    <None Include="..\Examples\GIS\Equatorial Guinea" />
+    <None Include="..\Examples\GIS\Eritrea" />
+    <None Include="..\Examples\GIS\Estonia" />
+    <None Include="..\Examples\GIS\Ethiopia" />
+    <None Include="..\Examples\GIS\Falkland Islands (Malvinas)" />
+    <None Include="..\Examples\GIS\Faroe Islands" />
+    <None Include="..\Examples\GIS\Fiji" />
+    <None Include="..\Examples\GIS\Finland" />
+    <None Include="..\Examples\GIS\France" />
+    <None Include="..\Examples\GIS\French Guiana" />
+    <None Include="..\Examples\GIS\French Polynesia" />
+    <None Include="..\Examples\GIS\French Southern and Antarctic Lands" />
+    <None Include="..\Examples\GIS\Gabon" />
+    <None Include="..\Examples\GIS\Gambia" />
+    <None Include="..\Examples\GIS\Georgia" />
+    <None Include="..\Examples\GIS\Germany" />
+    <None Include="..\Examples\GIS\Ghana" />
+    <None Include="..\Examples\GIS\Gibraltar" />
+    <None Include="..\Examples\GIS\Greece" />
+    <None Include="..\Examples\GIS\Greenland" />
+    <None Include="..\Examples\GIS\Grenada" />
+    <None Include="..\Examples\GIS\Guadeloupe" />
+    <None Include="..\Examples\GIS\Guam" />
+    <None Include="..\Examples\GIS\Guatemala" />
+    <None Include="..\Examples\GIS\Guernsey" />
+    <None Include="..\Examples\GIS\Guinea" />
+    <None Include="..\Examples\GIS\Guinea-Bissau" />
+    <None Include="..\Examples\GIS\Guyana" />
+    <None Include="..\Examples\GIS\Haiti" />
+    <None Include="..\Examples\GIS\Heard Island and McDonald Islands" />
+    <None Include="..\Examples\GIS\Holy See (Vatican City)" />
+    <None Include="..\Examples\GIS\Honduras" />
+    <None Include="..\Examples\GIS\Hong Kong" />
+    <None Include="..\Examples\GIS\Hungary" />
+    <None Include="..\Examples\GIS\Iceland" />
+    <None Include="..\Examples\GIS\India" />
+    <None Include="..\Examples\GIS\Indonesia" />
+    <None Include="..\Examples\GIS\Iran (Islamic Republic of)" />
+    <None Include="..\Examples\GIS\Iraq" />
+    <None Include="..\Examples\GIS\Ireland" />
+    <None Include="..\Examples\GIS\Isle of Man" />
+    <None Include="..\Examples\GIS\Israel" />
+    <None Include="..\Examples\GIS\Italy" />
+    <None Include="..\Examples\GIS\Jamaica" />
+    <None Include="..\Examples\GIS\Japan" />
+    <None Include="..\Examples\GIS\Jersey" />
+    <None Include="..\Examples\GIS\Jordan" />
+    <None Include="..\Examples\GIS\Kazakhstan" />
+    <None Include="..\Examples\GIS\Kenya" />
+    <None Include="..\Examples\GIS\Kiribati" />
+    <None Include="..\Examples\GIS\Korea, Democratic People%27s Republic of" />
+    <None Include="..\Examples\GIS\Korea, Republic of" />
+    <None Include="..\Examples\GIS\Kuwait" />
+    <None Include="..\Examples\GIS\Kyrgyzstan" />
+    <None Include="..\Examples\GIS\Lao People%27s Democratic Republic" />
+    <None Include="..\Examples\GIS\Latvia" />
+    <None Include="..\Examples\GIS\Lebanon" />
+    <None Include="..\Examples\GIS\Lesotho" />
+    <None Include="..\Examples\GIS\Liberia" />
+    <None Include="..\Examples\GIS\Libyan Arab Jamahiriya" />
+    <None Include="..\Examples\GIS\Liechtenstein" />
+    <None Include="..\Examples\GIS\Lithuania" />
+    <None Include="..\Examples\GIS\Luxembourg" />
+    <None Include="..\Examples\GIS\Macau" />
+    <None Include="..\Examples\GIS\Madagascar" />
+    <None Include="..\Examples\GIS\Malawi" />
+    <None Include="..\Examples\GIS\Malaysia" />
+    <None Include="..\Examples\GIS\Maldives" />
+    <None Include="..\Examples\GIS\Mali" />
+    <None Include="..\Examples\GIS\Malta" />
+    <None Include="..\Examples\GIS\Marshall Islands" />
+    <None Include="..\Examples\GIS\Martinique" />
+    <None Include="..\Examples\GIS\Mauritania" />
+    <None Include="..\Examples\GIS\Mauritius" />
+    <None Include="..\Examples\GIS\Mayotte" />
+    <None Include="..\Examples\GIS\Mexico" />
+    <None Include="..\Examples\GIS\Micronesia, Federated States of" />
+    <None Include="..\Examples\GIS\Monaco" />
+    <None Include="..\Examples\GIS\Mongolia" />
+    <None Include="..\Examples\GIS\Montenegro" />
+    <None Include="..\Examples\GIS\Montserrat" />
+    <None Include="..\Examples\GIS\Morocco" />
+    <None Include="..\Examples\GIS\Mozambique" />
+    <None Include="..\Examples\GIS\Namibia" />
+    <None Include="..\Examples\GIS\Nauru" />
+    <None Include="..\Examples\GIS\Nepal" />
+    <None Include="..\Examples\GIS\Netherlands" />
+    <None Include="..\Examples\GIS\Netherlands Antilles" />
+    <None Include="..\Examples\GIS\New Caledonia" />
+    <None Include="..\Examples\GIS\New Zealand" />
+    <None Include="..\Examples\GIS\Nicaragua" />
+    <None Include="..\Examples\GIS\Niger" />
+    <None Include="..\Examples\GIS\Nigeria" />
+    <None Include="..\Examples\GIS\Niue" />
+    <None Include="..\Examples\GIS\Norfolk Island" />
+    <None Include="..\Examples\GIS\Northern Mariana Islands" />
+    <None Include="..\Examples\GIS\Norway" />
+    <None Include="..\Examples\GIS\Oman" />
+    <None Include="..\Examples\GIS\Pakistan" />
+    <None Include="..\Examples\GIS\Palau" />
+    <None Include="..\Examples\GIS\Palestine" />
+    <None Include="..\Examples\GIS\Panama" />
+    <None Include="..\Examples\GIS\Papua New Guinea" />
+    <None Include="..\Examples\GIS\Paraguay" />
+    <None Include="..\Examples\GIS\Peru" />
+    <None Include="..\Examples\GIS\Philippines" />
+    <None Include="..\Examples\GIS\Pitcairn Islands" />
+    <None Include="..\Examples\GIS\Poland" />
+    <None Include="..\Examples\GIS\Portugal" />
+    <None Include="..\Examples\GIS\Puerto Rico" />
+    <None Include="..\Examples\GIS\Qatar" />
+    <None Include="..\Examples\GIS\Republic of Moldova" />
+    <None Include="..\Examples\GIS\Reunion" />
+    <None Include="..\Examples\GIS\Romania" />
+    <None Include="..\Examples\GIS\Russia" />
+    <None Include="..\Examples\GIS\Rwanda" />
+    <None Include="..\Examples\GIS\Saint Barthelemy" />
+    <None Include="..\Examples\GIS\Saint Helena" />
+    <None Include="..\Examples\GIS\Saint Kitts and Nevis" />
+    <None Include="..\Examples\GIS\Saint Lucia" />
+    <None Include="..\Examples\GIS\Saint Martin" />
+    <None Include="..\Examples\GIS\Saint Pierre and Miquelon" />
+    <None Include="..\Examples\GIS\Saint Vincent and the Grenadines" />
+    <None Include="..\Examples\GIS\Samoa" />
+    <None Include="..\Examples\GIS\San Marino" />
+    <None Include="..\Examples\GIS\Sao Tome and Principe" />
+    <None Include="..\Examples\GIS\Saudi Arabia" />
+    <None Include="..\Examples\GIS\Senegal" />
+    <None Include="..\Examples\GIS\Serbia" />
+    <None Include="..\Examples\GIS\Seychelles" />
+    <None Include="..\Examples\GIS\Sierra Leone" />
+    <None Include="..\Examples\GIS\Singapore" />
+    <None Include="..\Examples\GIS\Slovakia" />
+    <None Include="..\Examples\GIS\Slovenia" />
+    <None Include="..\Examples\GIS\Solomon Islands" />
+    <None Include="..\Examples\GIS\Somalia" />
+    <None Include="..\Examples\GIS\South Africa" />
+    <None Include="..\Examples\GIS\South Georgia South Sandwich Islands" />
+    <None Include="..\Examples\GIS\Spain" />
+    <None Include="..\Examples\GIS\Sri Lanka" />
+    <None Include="..\Examples\GIS\Sudan" />
+    <None Include="..\Examples\GIS\Suriname" />
+    <None Include="..\Examples\GIS\Svalbard" />
+    <None Include="..\Examples\GIS\Swaziland" />
+    <None Include="..\Examples\GIS\Sweden" />
+    <None Include="..\Examples\GIS\Switzerland" />
+    <None Include="..\Examples\GIS\Syrian Arab Republic" />
+    <None Include="..\Examples\GIS\Taiwan" />
+    <None Include="..\Examples\GIS\Tajikistan" />
+    <None Include="..\Examples\GIS\Thailand" />
+    <None Include="..\Examples\GIS\The former Yugoslav Republic of Macedonia" />
+    <None Include="..\Examples\GIS\Timor-Leste" />
+    <None Include="..\Examples\GIS\Togo" />
+    <None Include="..\Examples\GIS\Tokelau" />
+    <None Include="..\Examples\GIS\Tonga" />
+    <None Include="..\Examples\GIS\Trinidad and Tobago" />
+    <None Include="..\Examples\GIS\Tunisia" />
+    <None Include="..\Examples\GIS\Turkey" />
+    <None Include="..\Examples\GIS\Turkmenistan" />
+    <None Include="..\Examples\GIS\Turks and Caicos Islands" />
+    <None Include="..\Examples\GIS\Tuvalu" />
+    <None Include="..\Examples\GIS\Uganda" />
+    <None Include="..\Examples\GIS\United Arab Emirates" />
+    <None Include="..\Examples\GIS\United Kingdom" />
+    <None Include="..\Examples\GIS\United Republic of Tanzania" />
+    <None Include="..\Examples\GIS\United States" />
+    <None Include="..\Examples\GIS\United States Minor Outlying Islands" />
+    <None Include="..\Examples\GIS\United States Virgin Islands" />
+    <None Include="..\Examples\GIS\Uruguay" />
+    <None Include="..\Examples\GIS\Uzbekistan" />
+    <None Include="..\Examples\GIS\Vanuatu" />
+    <None Include="..\Examples\GIS\Venezuela" />
+    <None Include="..\Examples\GIS\Viet Nam" />
+    <None Include="..\Examples\GIS\Wallis and Futuna Islands" />
+    <None Include="..\Examples\GIS\Western Sahara" />
+    <None Include="..\Examples\GIS\Yemen" />
+    <None Include="..\Examples\GIS\Zambia" />
+    <None Include="..\Examples\GIS\Zimbabwe" />
+    <None Include="..\Examples\Graphics.daric" />
+    <None Include="..\Examples\Greedy.daric" />
+    <None Include="..\Examples\Load3D.daric" />
+    <None Include="..\Examples\Mandelbrot.daric" />
+    <None Include="..\Examples\Menus.daric" />
+    <None Include="..\Examples\Perlin.daric" />
+    <None Include="..\Examples\SetupGraphics.daric" />
+    <None Include="..\Examples\Start.daric" />
+    <None Include="..\Examples\Terrain.daric" />
+    <None Include="..\Examples\TerrainDemo.daric" />
+    <None Include="..\Examples\Tester.daric" />
+    <None Include="..\Examples\Welcome.daric" />
+    <None Include="..\Examples\WorldInLines.daric" />
+    <None Include="..\Makefile.linux" />
+    <None Include="..\Makefile.riscos" />
+    <None Include="..\Scratch.daric" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\compiler\compile.h" />
+    <ClInclude Include="..\src\engine\engine.h" />
+    <ClInclude Include="..\src\graphics\graphics.h" />
+    <ClInclude Include="..\src\graphics\stb_truetype.h" />
+    <ClInclude Include="..\src\parser\ast.h" />
+    <ClInclude Include="..\src\types.h" />
+    <ClInclude Include="..\src\vm\clock.h" />
+    <ClInclude Include="..\src\vm\manual\manual.h" />
+    <ClInclude Include="..\src\vm\vm.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\src\optimiser\Patterns.txt" />
+    <Text Include="..\Supported.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\IBMPlexMono-Regular.ttf">
+      <DeploymentContent>false</DeploymentContent>
+    </Font>
+    <Font Include="..\IBMPlexSans-Regular.ttf">
+      <DeploymentContent>false</DeploymentContent>
+    </Font>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\..\..\..\Development\win_flex_bison-2.5.23\custom_build_rules\win_flex_bison\win_flex_bison_custom_build.targets" />
+  </ImportGroup>
+</Project>

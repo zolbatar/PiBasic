@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DARIC", "WindowsDARIC.vcxproj", "{42279381-DC7D-43F8-939F-B9252F2D0B1F}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DARICInstaller", "..\DARICInstaller\DARICInstaller.vdproj", "{F6791C59-539C-4BED-B88A-7DD6A4B0CCBF}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Website", "..\..\..\DARICWebsite\Website.pyproj", "{0285AEC9-FEDA-473A-BBA5-76A11E1B10AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{42279381-DC7D-43F8-939F-B9252F2D0B1F}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{42279381-DC7D-43F8-939F-B9252F2D0B1F}.Debug|x64.ActiveCfg = Debug|x64
+		{42279381-DC7D-43F8-939F-B9252F2D0B1F}.Debug|x64.Build.0 = Debug|x64
+		{42279381-DC7D-43F8-939F-B9252F2D0B1F}.Debug|x86.ActiveCfg = Debug|Win32
+		{42279381-DC7D-43F8-939F-B9252F2D0B1F}.Debug|x86.Build.0 = Debug|Win32
+		{42279381-DC7D-43F8-939F-B9252F2D0B1F}.Release|Any CPU.ActiveCfg = Release|Win32
+		{42279381-DC7D-43F8-939F-B9252F2D0B1F}.Release|x64.ActiveCfg = Release|x64
+		{42279381-DC7D-43F8-939F-B9252F2D0B1F}.Release|x64.Build.0 = Release|x64
+		{42279381-DC7D-43F8-939F-B9252F2D0B1F}.Release|x86.ActiveCfg = Release|Win32
+		{42279381-DC7D-43F8-939F-B9252F2D0B1F}.Release|x86.Build.0 = Release|Win32
+		{F6791C59-539C-4BED-B88A-7DD6A4B0CCBF}.Debug|Any CPU.ActiveCfg = Debug
+		{F6791C59-539C-4BED-B88A-7DD6A4B0CCBF}.Debug|Any CPU.Build.0 = Debug
+		{F6791C59-539C-4BED-B88A-7DD6A4B0CCBF}.Debug|x64.ActiveCfg = Debug
+		{F6791C59-539C-4BED-B88A-7DD6A4B0CCBF}.Debug|x86.ActiveCfg = Debug
+		{F6791C59-539C-4BED-B88A-7DD6A4B0CCBF}.Release|Any CPU.ActiveCfg = Release
+		{F6791C59-539C-4BED-B88A-7DD6A4B0CCBF}.Release|Any CPU.Build.0 = Release
+		{F6791C59-539C-4BED-B88A-7DD6A4B0CCBF}.Release|x64.ActiveCfg = Release
+		{F6791C59-539C-4BED-B88A-7DD6A4B0CCBF}.Release|x86.ActiveCfg = Release
+		{0285AEC9-FEDA-473A-BBA5-76A11E1B10AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0285AEC9-FEDA-473A-BBA5-76A11E1B10AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0285AEC9-FEDA-473A-BBA5-76A11E1B10AD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0285AEC9-FEDA-473A-BBA5-76A11E1B10AD}.Debug|x64.Build.0 = Debug|Any CPU
+		{0285AEC9-FEDA-473A-BBA5-76A11E1B10AD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0285AEC9-FEDA-473A-BBA5-76A11E1B10AD}.Debug|x86.Build.0 = Debug|Any CPU
+		{0285AEC9-FEDA-473A-BBA5-76A11E1B10AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0285AEC9-FEDA-473A-BBA5-76A11E1B10AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0285AEC9-FEDA-473A-BBA5-76A11E1B10AD}.Release|x64.ActiveCfg = Release|Any CPU
+		{0285AEC9-FEDA-473A-BBA5-76A11E1B10AD}.Release|x64.Build.0 = Release|Any CPU
+		{0285AEC9-FEDA-473A-BBA5-76A11E1B10AD}.Release|x86.ActiveCfg = Release|Any CPU
+		{0285AEC9-FEDA-473A-BBA5-76A11E1B10AD}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {96C99EC8-D07F-4A89-9C5D-AF245AA44CAA}
+	EndGlobalSection
+EndGlobal

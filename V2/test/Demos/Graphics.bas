@@ -1,0 +1,34 @@
+ScreenX% = 1024, ScreenY% = 768
+GRAPHICS ScreenX%, ScreenY%, FALSE
+COLOUR &000000
+CLS
+
+FOR I% = 0 TO 99
+	COLOUR RND(255), RND(255), RND(255)
+	LINE RND(ScreenX%), RND(ScreenY%), RND(ScreenX%), RND(ScreenY%)
+NEXT
+FLIP
+
+FOR I% = 0 TO 99
+	COLOUR RND(255), RND(255), RND(255)
+	TRIANGLE FILL	RND(ScreenX%), RND(ScreenY%),
+					RND(ScreenX%), RND(ScreenY%),
+					RND(ScreenX%), RND(ScreenY%)
+	FLIP
+NEXT
+
+FOR I% = 0 TO 19
+	TRIANGLE SHADED RND(ScreenX%), RND(ScreenY%), COLOUR(RND(255), RND(255), RND(255)),
+					RND(ScreenX%), RND(ScreenY%), COLOUR(RND(255), RND(255), RND(255)),
+					RND(ScreenX%), RND(ScreenY%), COLOUR(RND(255), RND(255), RND(255))
+	FLIP
+NEXT
+
+FOR I% = 0 TO 99
+	COLOUR RND(255), RND(255), RND(255)
+	CIRCLE RND(ScreenX%), RND(ScreenY%), RND(50)+20
+	CIRCLE FILL RND(ScreenX%), RND(ScreenY%), RND(50)+20
+	FLIP
+NEXT
+
+INKEY(1000)

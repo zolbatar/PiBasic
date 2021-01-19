@@ -1,0 +1,1055 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Grammar">
+      <UniqueIdentifier>{f23ee716-b2c0-4693-ae03-9fd58b2e4ca5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parser">
+      <UniqueIdentifier>{6784f4db-933d-466a-a72c-1caa972f3888}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Examples">
+      <UniqueIdentifier>{893f474f-38de-4e34-8a0d-3c17adf54eac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler">
+      <UniqueIdentifier>{725cd665-820b-480a-b916-58191434370a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{70f88155-278f-4ab0-a90a-1c5e8efabb92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{81e0ee31-62f5-47ef-b42f-4759ae6113d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM">
+      <UniqueIdentifier>{bca485ac-b4e1-4f00-8cce-7ae119d23991}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Optimiser">
+      <UniqueIdentifier>{041c8e96-6b2d-4520-919f-714a1e7e2851}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Examples\GIS">
+      <UniqueIdentifier>{f601110a-0ea1-4258-8137-885c035e8caa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM\Manual">
+      <UniqueIdentifier>{b98fc3fa-96c9-4b8e-be9e-c4abd33a30bc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\parser\flex.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\parser\bison.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\parser\ast.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\engine_matrix.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\engine_normals.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\engine_object.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\engine_shape.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\engine_world.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\graphics.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\graphics_barycentric.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\graphics_circle.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\graphics_clippedline.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\graphics_input.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\graphics_text.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\graphics_triangle.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\stack.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\vm.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_lookahead.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_token.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_util.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_literal.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_variable.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_functions.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_assignment.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_io.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_maths.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_string.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_expression.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_graphics.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_data.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_variable1d.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_variable2d.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_printinput.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_looping.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compile_graphics3d.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\debugger.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\disassembly.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\manual.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\manual\manual_2d.cpp">
+      <Filter>Source Files\VM\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\manual\manual_keyboardmouse.cpp">
+      <Filter>Source Files\VM\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\manual\manual_maths.cpp">
+      <Filter>Source Files\VM\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\manual\manual_3d.cpp">
+      <Filter>Source Files\VM\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\manual\manual_io.cpp">
+      <Filter>Source Files\VM\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\manual\manual_looping.cpp">
+      <Filter>Source Files\VM\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\manual\manual_fn_proc.cpp">
+      <Filter>Source Files\VM\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\manual\manual_variables_types.cpp">
+      <Filter>Source Files\VM\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\manual\manual_string.cpp">
+      <Filter>Source Files\VM\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\manual\manual_debugging.cpp">
+      <Filter>Source Files\VM\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\manual\manual_boolean.cpp">
+      <Filter>Source Files\VM\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\manual\manual_operators.cpp">
+      <Filter>Source Files\VM\Manual</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Flex Include="..\Grammar\DARIC.l">
+      <Filter>Grammar</Filter>
+    </Flex>
+  </ItemGroup>
+  <ItemGroup>
+    <Bison Include="..\Grammar\DARIC.y">
+      <Filter>Grammar</Filter>
+    </Bison>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Makefile.linux">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Makefile.riscos">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Examples\Welcome.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Graphics.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Mandelbrot.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\SetupGraphics.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Fonts.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Cubes.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Load3D.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Perlin.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Terrain.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\TerrainDemo.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\DARIC.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Greedy.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Tester.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Menus.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\WorldInLines.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\DARICInstaller\DARIC.vdproj" />
+    <None Include="..\Scratch.daric">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Examples\Start.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Afghanistan">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Aland Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Albania">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Algeria">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\American Samoa">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Andorra">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Angola">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Anguilla">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Antarctica">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Antigua and Barbuda">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Argentina">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Armenia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Aruba">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Australia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Austria">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Azerbaijan">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Bahamas">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Bahrain">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Bangladesh">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Barbados">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Belarus">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Belgium">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Belize">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Benin">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Bermuda">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Bhutan">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Bolivia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Bosnia and Herzegovina">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Botswana">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Bouvet Island">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Brazil">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\British Indian Ocean Territory">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\British Virgin Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Brunei Darussalam">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Bulgaria">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Burkina Faso">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Burma">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Burundi">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Cambodia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Cameroon">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Canada">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Cape Verde">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Cayman Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Central African Republic">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Chad">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Chile">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\China">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Christmas Island">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Cocos (Keeling) Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Colombia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Comoros">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Congo">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Cook Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Costa Rica">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Cote d%27Ivoire">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Croatia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Cuba">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Cyprus">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Czech Republic">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Democratic Republic of the Congo">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Denmark">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Djibouti">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Dominica">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Dominican Republic">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Ecuador">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Egypt">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\El Salvador">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Equatorial Guinea">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Eritrea">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Estonia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Ethiopia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Falkland Islands (Malvinas)">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Faroe Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Fiji">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Finland">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\France">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\French Guiana">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\French Polynesia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\French Southern and Antarctic Lands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Gabon">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Gambia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Georgia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Germany">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Ghana">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Gibraltar">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Greece">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Greenland">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Grenada">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Guadeloupe">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Guam">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Guatemala">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Guernsey">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Guinea">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Guinea-Bissau">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Guyana">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Haiti">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Heard Island and McDonald Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Holy See (Vatican City)">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Honduras">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Hong Kong">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Hungary">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Iceland">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\India">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Indonesia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Iran (Islamic Republic of)">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Iraq">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Ireland">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Isle of Man">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Israel">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Italy">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Jamaica">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Japan">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Jersey">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Jordan">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Kazakhstan">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Kenya">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Kiribati">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Korea, Democratic People%27s Republic of">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Korea, Republic of">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Kuwait">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Kyrgyzstan">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Lao People%27s Democratic Republic">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Latvia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Lebanon">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Lesotho">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Liberia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Libyan Arab Jamahiriya">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Liechtenstein">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Lithuania">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Luxembourg">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Macau">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Madagascar">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Malawi">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Malaysia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Maldives">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Mali">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Malta">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Marshall Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Martinique">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Mauritania">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Mauritius">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Mayotte">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Mexico">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Micronesia, Federated States of">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Monaco">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Mongolia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Montenegro">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Montserrat">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Morocco">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Mozambique">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Namibia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Nauru">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Nepal">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Netherlands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Netherlands Antilles">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\New Caledonia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\New Zealand">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Nicaragua">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Niger">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Nigeria">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Niue">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Norfolk Island">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Northern Mariana Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Norway">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Oman">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Pakistan">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Palau">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Palestine">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Panama">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Papua New Guinea">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Paraguay">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Peru">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Philippines">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Pitcairn Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Poland">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Portugal">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Puerto Rico">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Qatar">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Republic of Moldova">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Reunion">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Romania">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Russia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Rwanda">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Saint Barthelemy">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Saint Helena">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Saint Kitts and Nevis">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Saint Lucia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Saint Martin">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Saint Pierre and Miquelon">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Saint Vincent and the Grenadines">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Samoa">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\San Marino">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Sao Tome and Principe">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Saudi Arabia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Senegal">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Serbia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Seychelles">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Sierra Leone">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Singapore">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Slovakia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Slovenia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Solomon Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Somalia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\South Africa">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\South Georgia South Sandwich Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Spain">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Sri Lanka">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Sudan">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Suriname">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Svalbard">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Swaziland">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Sweden">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Switzerland">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Syrian Arab Republic">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Taiwan">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Tajikistan">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Thailand">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\The former Yugoslav Republic of Macedonia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Timor-Leste">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Togo">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Tokelau">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Tonga">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Trinidad and Tobago">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Tunisia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Turkey">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Turkmenistan">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Turks and Caicos Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Tuvalu">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Uganda">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\United Arab Emirates">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\United Kingdom">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\United Republic of Tanzania">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\United States">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\United States Minor Outlying Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\United States Virgin Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Uruguay">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Uzbekistan">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Vanuatu">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Venezuela">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Viet Nam">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Wallis and Futuna Islands">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Western Sahara">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Yemen">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Zambia">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+    <None Include="..\Examples\GIS\Zimbabwe">
+      <Filter>Resource Files\Examples\GIS</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\parser\ast.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\engine\engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\stb_truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vm\clock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vm\vm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\compiler\compile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vm\manual\manual.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\src\optimiser\Patterns.txt">
+      <Filter>Source Files\Optimiser</Filter>
+    </Text>
+    <Text Include="..\Supported.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\IBMPlexMono-Regular.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
+    <Font Include="..\IBMPlexSans-Regular.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
+  </ItemGroup>
+</Project>
