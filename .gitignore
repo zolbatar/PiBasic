@@ -12,3 +12,6 @@ V4/src/parser/flex.cpp
 V4/src/parser/bison.cpp
 V4/DARICInstaller/setup.exe
 V4/DARICInstaller/DARIC.msi
+V4/buildriscos/daric
+V4/buildriscosvfp/daricvfp
+

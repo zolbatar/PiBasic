@@ -25,10 +25,8 @@ For Y%=0 To MAXY%
 		Plot X%,Y%	
 	    IF INKEY(0) <> -1 CHAIN "Welcome"
 	Next
-	IF Y% MOD 5 = 0 Flip
+	IF Y% MOD 5 = 0 BLIT
 Next
-CLS
-Print Time - T%
-Print "Complete"
+BLIT
 INKEY(1000)
 CHAIN "Welcome"
