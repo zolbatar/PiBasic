@@ -87,7 +87,7 @@ DEFPROCRotateTerrain()
 		FLIP	
 	    IF INKEY(0) <> -1 
 			DELETEOBJECT terrain1%
-			CHAIN "Welcome",full%
+			CHAIN "Welcome"
 		ENDIF
 	NEXT
 	DELETEOBJECT terrain1%

@@ -71,7 +71,7 @@ DEFPROCAnimate()
 	FOR LOCAL I%=1 TO 30
 		gRound*=1.25
 		PROCRender()
-	    IF INKEY(0) <> -1 CHAIN "Welcome",full%
+	    IF INKEY(0) <> -1 CHAIN "Welcome"
 	NEXT
 	gRound=100.0
 ENDPROC

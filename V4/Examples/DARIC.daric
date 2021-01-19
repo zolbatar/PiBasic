@@ -87,4 +87,4 @@ COLOUR BLUE:RECTANGLE FILL w%/2+110,h%/2+40,w%/2+300,h%/2+50
 FLIP
 DELETEOBJECT terrain1%
 INKEY(1000)
-CHAIN "Welcome",full%
+CHAIN "Welcome"

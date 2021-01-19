@@ -71,14 +71,12 @@ void Compiler::compile_node_token_graphics(struct AST* ast)
         vm->insert_bytecode(line_number, file_number, write, Bytecodes::FLIP);
         break;
     case GRAPHICS:
-        if (ast->items.size() == 3) {   
+        if (ast->items.size() == 2) {   
             get_ensure_is_integer_pop(ast->items[0]);
             get_ensure_is_integer_pop(ast->items[1]);
-            get_ensure_is_integer_pop(ast->items[2]);
         } else {
             vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, -1);
             vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, -1);
-            vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 10);
         }
         vm->insert_bytecode(line_number, file_number, write, Bytecodes::GRAPHICS);
         break;

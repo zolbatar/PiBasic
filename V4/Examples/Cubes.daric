@@ -45,7 +45,7 @@ DEFPROCTwoShapes()
 	    IF INKEY(0) <> -1 
 			DELETEOBJECT cube1%
 			DELETEOBJECT cube2%
-			CHAIN "Welcome",full%
+			CHAIN "Welcome"
 		ENDIF
 	NEXT
 	DELETEOBJECT cube1%
@@ -54,4 +54,4 @@ ENDPROC
 
 PROCTwoShapes()
 INKEY(1000)
-CHAIN "Welcome",full%
+CHAIN "Welcome"

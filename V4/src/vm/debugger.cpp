@@ -17,6 +17,7 @@ void VM::run_debugger()
     if (debugger_open)
         return;
     debugger_open = true;
+    graphics->set_performance_mode();
 
     // Save the current screen
     graphics->cache();

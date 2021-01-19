@@ -19,8 +19,6 @@ VM_INT Graphics::load_font(const char* filename)
 {
     if (!is_open()) {
         std::cout << "Loading font '" << filename << "',";
-    } else {
-        print_console("Loading font '" + std::string(filename) + "',");
     }
     auto index = font_face_index++;
     if (index == MAXIMUM_FONTS) {
@@ -47,9 +45,6 @@ VM_INT Graphics::load_font(const char* filename)
     fseek(fp, 0L, SEEK_SET);
     if (!is_open()) {
         std::cout << " file size is " << sz << " bytes." << std::endl;
-    } else {
-        print_console(" file size is " + std::to_string(sz) + " bytes.\r");
-        flip();
     }
 
     // Allocate memory (we don't deallocate, so will leave a memory leak)
@@ -59,7 +54,6 @@ VM_INT Graphics::load_font(const char* filename)
             std::cout << "Can't allocate memory for TTF font\n";
         } else {
             print_console("Can't allocate memory for TTF font\r");
-            flip();
         }
         exit(1);
     }
@@ -216,7 +210,9 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
 
 void Graphics::print_console(VM_STRING text)
 {
+    performance_mode = false;
     print_text(console_font, text, -1, -1);
+    flip();
 }
 
 void Graphics::cursor_back(int index_ff)

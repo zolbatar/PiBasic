@@ -28,4 +28,4 @@ FOR I% = 0 TO 19
 NEXT
 
 INKEY(1000)
-CHAIN "Welcome",full%
+CHAIN "Welcome"

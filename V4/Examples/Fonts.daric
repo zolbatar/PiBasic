@@ -39,4 +39,4 @@ TEXT MONO75, 10, (25 * C%) + 200, "Mono 75":TEXT PROP75, 400, (25 * C%) + 200, "
 TEXT MONO100, 10, (25 * C%) + 225, "Mono 100":TEXT PROP100, 400, (25 * C%) + 225, "Prop 100"
 FLIP	
 INKEY(1000)
-CHAIN "Welcome",full%
+CHAIN "Welcome"

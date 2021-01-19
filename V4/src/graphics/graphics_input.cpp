@@ -46,6 +46,7 @@ void Graphics::poll()
 
 VM_STRING Graphics::input()
 {
+    performance_mode = false;
     VM_STRING out;
     while (true) {
         auto c = get();

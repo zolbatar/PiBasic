@@ -2,4 +2,4 @@ INSTALL "SetupGraphics"
 INSTALL "Terrain"
 PROCRotateTerrain()
 INKEY(1000)
-CHAIN "Welcome",full%
+CHAIN "Welcome"

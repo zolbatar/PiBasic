@@ -897,6 +897,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_89E756E390A745D893C35B7C5D7A1324"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_8B4A02AA125B4F95829D76DD793F04FC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -4640,6 +4646,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_89E756E390A745D893C35B7C5D7A1324"
+            {
+            "SourcePath" = "8:..\\Examples\\Start.daric"
+            "TargetName" = "8:Start.daric"
+            "Tag" = "8:"
+            "Folder" = "8:_B8290C52AE8842FF82594620CB881B0D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8B4A02AA125B4F95829D76DD793F04FC"
             {
             "SourcePath" = "8:..\\Examples\\GIS\\Uzbekistan"
@@ -7212,19 +7238,19 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DARIC"
-        "ProductCode" = "8:{DD6259E4-D5ED-4CCD-8E41-2C754BCBA539}"
-        "PackageCode" = "8:{7CCC749F-8689-42A8-BC06-E0EEDE2E3C64}"
+        "ProductCode" = "8:{3194CD00-1463-4C7E-995E-68DF04A5A467}"
+        "PackageCode" = "8:{223F6A60-CA95-407D-8A65-061AF7E6E5AE}"
         "UpgradeCode" = "8:{56733413-ED93-4F06-97BA-7BDF8BC8AC97}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:21.01.18"
+        "ProductVersion" = "8:21.01.19"
         "Manufacturer" = "8:DARIC"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:DARICInstaller"
+        "Title" = "8:DARIC Installer"
         "Subject" = "8:"
         "ARPCONTACT" = "8:DARIC"
         "Keywords" = "8:"
@@ -7336,7 +7362,7 @@
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F83D58E6FA6B4AC8B14A6D5FF7EF2DE0"
             {
             "Name" = "8:DARIC Examples & Demos"
-            "Arguments" = "8:Examples/Welcome"
+            "Arguments" = "8:Examples/Start"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"

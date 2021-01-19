@@ -92,7 +92,7 @@ DEFPROCGreedy()
                 used%(L%)=1
                 total=total + O
             Next
-            IF INKEY(0) <> -1 CHAIN "Welcome",full%
+            IF INKEY(0) <> -1 CHAIN "Welcome"
         Next
         Print total
     Next
@@ -103,4 +103,4 @@ PROCLoad()
 PROCGreedy()
 Print Time - T%
 Print "Complete"
-CHAIN "Welcome",full%
+CHAIN "Welcome"

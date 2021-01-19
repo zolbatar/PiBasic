@@ -113,15 +113,14 @@ UINT32 Graphics::get_screen_height()
 }
 #endif
 
-void Graphics::open(int width, int height, int mode)
+void Graphics::open(int width, int height)
 {
     showfps = false;
     bool reinit = false;
     if (is_open()) {
-        auto this_is_windowed = mode == 0;
 
         // Is this different?
-        if (width != screen_width || height != screen_height || is_windowed != is_windowed) {
+        if (width != screen_width || height != screen_height) {
             shutdown();
             reinit = true;
         } else {
@@ -130,8 +129,7 @@ void Graphics::open(int width, int height, int mode)
     }
 
     // Process mode
-    is_windowed = mode < 10;
-    performance_mode = mode == 1 || mode == 11;
+    performance_mode = true;
     screen_width = width;
     screen_height = height;
     minX = 0;
@@ -140,11 +138,6 @@ void Graphics::open(int width, int height, int mode)
     maxY = height - 1;
     world.x_origin = width / 2;
     world.y_origin = height / 2;
-    if (!is_windowed) {
-        std::cout << "Fullscreen mode." << std::endl;
-    } else {
-        std::cout << "Windowed mode." << std::endl;
-    }
 
     // Load standard fonts
     if (!reinit) {
@@ -258,24 +251,15 @@ void Graphics::open(int width, int height, int mode)
     flip();
 #else
     int params = SDL_WINDOW_ALLOW_HIGHDPI;
-    if (!is_windowed) {
-        params |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-        //params |= SDL_WINDOW_FULLSCREEN;
-    }
+    params |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+    //params |= SDL_WINDOW_FULLSCREEN;
+
     window = SDL_CreateWindow("DARIC", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, params);
     if (!window) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
         exit(1);
     }
     screen = SDL_GetWindowSurface(window);
-
-    // Validate the size is what we requested
-    if (mode == 1 && (screen->w != screen_width || screen->h != screen_height)) {
-        SDL_Quit();
-        std::cout << "Actual resolution (" << screen->w << "," << screen->h << ") doesn't match requested (" << screen_width << "," << screen_height << ")\n";
-        exit(1);
-    }
-
     SDL_StopTextInput();
 
     // Format

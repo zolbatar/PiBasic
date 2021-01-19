@@ -11,8 +11,8 @@ CASE A$ OF
 	WHEN "1" filename$="911-gt2-rim.obj"
 	WHEN "2" filename$="MaleHead.obj"
 	WHEN "3" filename$="Teapot.obj"
-    WHEN "Q","q" CHAIN "Welcome",full%
-    OTHERWISE CHAIN "Welcome",full%
+    WHEN "Q","q" CHAIN "Welcome"
+    OTHERWISE CHAIN "Welcome"
 ENDCASE
 
 CLS
@@ -26,8 +26,8 @@ FLIP
 B$=GET$
 CASE B$ OF
 	WHEN "1","2","3","4" obj%=FNLoadOBJFile%(filename$,B$)
-    WHEN "Q","q" CHAIN "Welcome",full%
-    OTHERWISE CHAIN "Welcome",full%
+    WHEN "Q","q" CHAIN "Welcome"
+    OTHERWISE CHAIN "Welcome"
 ENDCASE
 
 SHOWFPS
@@ -39,12 +39,12 @@ FOR I=0 TO 360 STEP 1
 	FLIP	
     IF INKEY(0) <> -1 
         DELETEOBJECT obj%
-        CHAIN "Welcome",full%
+        CHAIN "Welcome"
     ENDIF
 NEXT
 DELETEOBJECT obj%
 INKEY(1000)
-CHAIN "Welcome",full%
+CHAIN "Welcome"
 
 DEFFNLoadOBJFile%(filename$, type$)
 CLS

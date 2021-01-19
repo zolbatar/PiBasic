@@ -229,7 +229,7 @@ statement
     | COLOUR expression_numeric ',' expression_numeric ',' expression_numeric { $$ = token3(COLOUR, $2, $4, $6); } 
     | COLOURBG expression_numeric { $$ = token1(COLOURBG, $2); } 
     | COLOURBG expression_numeric ',' expression_numeric ',' expression_numeric { $$ = token3(COLOURBG, $2, $4, $6); } 
-    | GRAPHICS expression_numeric ',' expression_numeric ',' expression_numeric { $$ = token3(GRAPHICS, $2, $4, $6); } 
+    | GRAPHICS expression_numeric ',' expression_numeric { $$ = token2(GRAPHICS, $2, $4); } 
     | GRAPHICS { $$ = token(GRAPHICS); } 
     | FLIP { $$ = token(FLIP); }
     | CIRCLE expression_numeric ',' expression_numeric ',' expression_numeric { $$ = token3(CIRCLE, $2, $4, $6); }

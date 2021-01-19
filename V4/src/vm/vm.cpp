@@ -2370,14 +2370,13 @@ bool VM::opcode_FLIP()
 
 bool VM::opcode_GRAPHICS()
 {
-    VM_INT mode = stack_pop_int();
     VM_INT y = stack_pop_int();
     VM_INT x = stack_pop_int();
     if (x == -1)
         x = graphics->get_screen_width();
     if (y == -1)
         y = graphics->get_screen_height();
-    graphics->open(x, y, mode);
+    graphics->open(x, y);
     if (runtime_debug)
         *logfile << "Change screen mode to " << x << " x " << y << std::endl;
     return false;

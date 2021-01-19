@@ -101,7 +101,7 @@ public:
 #endif
     void init();
     void shutdown();
-    void open(int width, int height, int mode);
+    void open(int width, int height);
     void colour(BYTE r, BYTE g, BYTE b);
     void colour_hex(UINT32 c);
     void set_colour(Colour c);
@@ -120,6 +120,7 @@ public:
     void clip(int x1, int y1, int x2, int y2);
     void alpha(Colour bg, Colour fg, Colour &out, double a);
     void show_fps() { showfps = true; }
+    void set_performance_mode() { performance_mode = true; }
     void cache();
     void restore();
 #ifndef RISCOS
@@ -217,8 +218,7 @@ private:
     UINT32 bank_address[3];
     int bank = 1;
 #endif
-    bool is_windowed = false;
-    bool performance_mode = false;
+    bool performance_mode = true;
     int screen_width, screen_height;
     int minX, maxX, minY, maxY;
     int last_cursor_x = 0, last_cursor_y = 0;

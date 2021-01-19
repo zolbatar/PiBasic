@@ -40,7 +40,7 @@ extern std::map<std::string, int> files_index;
     int main(int argc, char* argv[])
 {
     using namespace std::chrono;
-    std::cout << "DARIC 21.01.18, https://dariclang.com\n";
+    std::cout << "DARIC 21.01.19, https://dariclang.com\n";
     if (argc < 1) {
         std::cout << "Interactive mode is not supported yet." << std::endl;
         exit(0);

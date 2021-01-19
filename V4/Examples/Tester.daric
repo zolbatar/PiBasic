@@ -258,7 +258,7 @@ Print "Inkey (wait)       = ";:IF INKEY(1000) <> -1 Then PROCPass() Else PROCFai
 
 Print
 Print "Complete in ";:Print ((Time-T%)/100.0);:Print " seconds"
-CHAIN "Welcome",full%
+CHAIN "Welcome"
 END
 
 REM Check forward FN/PROC calls
