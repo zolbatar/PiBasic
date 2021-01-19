@@ -1,27 +1,23 @@
 #include "../vm/clock.h"
-#include "graphics.h"
 #include "../vm/vm.h"
+#include "graphics.h"
 #include <iostream>
 
-extern VM *current_vm;
+extern VM* current_vm;
 
 void Graphics::poll()
 {
 #ifdef RISCOS
 #else
     SDL_Event event;
-    while (SDL_PollEvent(&event))
-    {
-        switch (event.type)
-        {
+    while (SDL_PollEvent(&event)) {
+        switch (event.type) {
         case SDL_QUIT:
             SDL_Quit();
             exit(1);
-        case SDL_TEXTINPUT:
-        {
+        case SDL_TEXTINPUT: {
             int i = 0;
-            while (event.text.text[i] != 0)
-            {
+            while (event.text.text[i] != 0) {
                 Event e;
                 e.type = EventType::Text;
                 e.ascii = event.text.text[i++];
@@ -29,20 +25,16 @@ void Graphics::poll()
             }
             break;
         }
-        case SDL_KEYDOWN:
-        {
+        case SDL_KEYDOWN: {
             auto key_code = key_riscos_translate(event.key.keysym);
-            if (key_code > 0)
-            {
+            if (key_code > 0) {
                 key_pressed[key_code] = true;
             }
             break;
         }
-        case SDL_KEYUP:
-        {
+        case SDL_KEYUP: {
             auto key_code = key_riscos_translate(event.key.keysym);
-            if (key_code > 0)
-            {
+            if (key_code > 0) {
                 key_pressed[key_code] = false;
             }
             break;
@@ -55,17 +47,13 @@ void Graphics::poll()
 VM_STRING Graphics::input()
 {
     VM_STRING out;
-    while (true)
-    {
+    while (true) {
         auto c = get();
         auto cc = static_cast<char>(c);
-        if (c < 32)
-        {
-            switch (c)
-            {
+        if (c < 32) {
+            switch (c) {
             case 8:
-                if (out.length() >= 1)
-                {
+                if (out.length() >= 1) {
                     delete_character(console_font);
                     out.pop_back();
                 }
@@ -74,9 +62,7 @@ VM_STRING Graphics::input()
                 print_text(console_font, "\r", -1, -1);
                 return out;
             }
-        }
-        else
-        {
+        } else {
             auto t = VM_STRING(1, cc);
             out += t;
             print_text(console_font, t, -1, -1);
@@ -85,7 +71,7 @@ VM_STRING Graphics::input()
     }
 }
 
-void Graphics::mouse(VM_INT &x, VM_INT &y, VM_INT &state)
+void Graphics::mouse(VM_INT& x, VM_INT& y, VM_INT& state)
 {
 #ifdef RISCOS
     _kernel_swi_regs regs;
@@ -110,17 +96,17 @@ void Graphics::mouse(VM_INT &x, VM_INT &y, VM_INT &state)
 
 void Graphics::RISCOS_debugger_key_check()
 {
+#ifdef RISCOS
     // Debugger?
     int v = _kernel_osbyte(121, 30 | 0x80, 0) & 0xFF;
-    if (v == 0xff)
-    {
+    if (v == 0xff) {
         // Wait until not pressed
-        do
-        {
+        do {
             v = _kernel_osbyte(121, 30 | 0x80, 0) & 0xFF;
         } while (v == 0xff);
         current_vm->run_debugger();
     }
+#endif
 }
 
 VM_INT Graphics::get()
@@ -132,16 +118,13 @@ VM_INT Graphics::get()
     return regs.r[0];
 #else
     SDL_StartTextInput();
-    while (1)
-    {
-        while (key_events.empty())
-        {
+    while (1) {
+        while (key_events.empty()) {
             poll();
         }
         auto s = key_events.front();
         key_events.pop();
-        if (s.type == EventType::Text)
-        {
+        if (s.type == EventType::Text) {
             SDL_StopTextInput();
             return s.ascii;
         }
@@ -158,18 +141,15 @@ VM_STRING Graphics::gets()
     return VM_STRING(1, static_cast<char>(regs.r[0]));
 #else
     SDL_StartTextInput();
-    while (1)
-    {
-        while (key_events.empty())
-        {
+    while (1) {
+        while (key_events.empty()) {
             poll();
         }
         auto s = key_events.front();
         key_events.pop();
-        if (s.type == EventType::Text)
-        {
+        if (s.type == EventType::Text) {
             SDL_StopTextInput();
-            Did return VM_STRING(1, s.ascii);
+            return VM_STRING(1, s.ascii);
         }
     }
 #endif
@@ -177,8 +157,7 @@ VM_STRING Graphics::gets()
 
 VM_INT Graphics::inkey(VM_INT timeout_or_keycode)
 {
-    if (timeout_or_keycode <= -1)
-    {
+    if (timeout_or_keycode <= -1) {
 #ifdef RISCOS
         auto c = -timeout_or_keycode - 1;
         auto v = _kernel_osbyte(121, c | 0x80, 0) & 0xFF;
@@ -187,32 +166,24 @@ VM_INT Graphics::inkey(VM_INT timeout_or_keycode)
 #else
         return key_pressed[static_cast<size_t>(-timeout_or_keycode) - 1];
 #endif
-    }
-    else
-    {
+    } else {
 #ifdef RISCOS
         auto r = _kernel_osbyte(129, timeout_or_keycode & 0xff, (timeout_or_keycode & 0xff00) >> 8);
         BYTE b1 = r & 0xff;
         BYTE b2 = (r & 0xff00) >> 8;
-        if (b2 == 0)
-        {
+        if (b2 == 0) {
             return b1;
-        }
-        else
-        {
+        } else {
             return -1;
         }
 #else
         VM_INT clock = get_clock();
-        do
-        {
+        do {
             // Scan
-            while (!key_events.empty())
-            { // Scan until we find a keydown
+            while (!key_events.empty()) { // Scan until we find a keydown
                 auto s = key_events.front();
                 key_events.pop();
-                if (s.type == EventType::Text)
-                {
+                if (s.type == EventType::Text) {
                     return s.ascii;
                 }
             }
@@ -234,8 +205,7 @@ VM_STRING Graphics::inkeys(VM_INT timeout_or_keycode)
 #ifndef RISCOS
 int Graphics::key_riscos_translate(SDL_Keysym key)
 {
-    switch (key.scancode)
-    {
+    switch (key.scancode) {
         // Top row
     case SDL_SCANCODE_ESCAPE:
         return 112;

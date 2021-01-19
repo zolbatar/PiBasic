@@ -1,6 +1,6 @@
-#line 2 "src/parser/flex.cpp"
+#line 1 "C:\\Users\\d_dud\\source\\repos\\PiBasic\\V4\\src\\parser\\flex.cpp"
 
-#line 4 "src/parser/flex.cpp"
+#line 3 "C:\\Users\\d_dud\\source\\repos\\PiBasic\\V4\\src\\parser\\flex.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -9,10 +9,88 @@
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 6
-#define YY_FLEX_SUBMINOR_VERSION 4
+#define YY_FLEX_SUBMINOR_VERSION 3
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
 #endif
+
+    #define yy_create_buffer yy_create_buffer
+
+    #define yy_delete_buffer yy_delete_buffer
+
+    #define yy_scan_buffer yy_scan_buffer
+
+    #define yy_scan_string yy_scan_string
+
+    #define yy_scan_bytes yy_scan_bytes
+
+    #define yy_init_buffer yy_init_buffer
+
+    #define yy_flush_buffer yy_flush_buffer
+
+    #define yy_load_buffer_state yy_load_buffer_state
+
+    #define yy_switch_to_buffer yy_switch_to_buffer
+
+    #define yypush_buffer_state yypush_buffer_state
+
+    #define yypop_buffer_state yypop_buffer_state
+
+    #define yyensure_buffer_stack yyensure_buffer_stack
+
+    #define yylex yylex
+
+    #define yyrestart yyrestart
+
+    #define yylex_init yylex_init
+
+    #define yylex_init_extra yylex_init_extra
+
+    #define yylex_destroy yylex_destroy
+
+    #define yyget_debug yyget_debug
+
+    #define yyset_debug yyset_debug
+
+    #define yyget_extra yyget_extra
+
+    #define yyset_extra yyset_extra
+
+    #define yyget_in yyget_in
+
+    #define yyset_in yyset_in
+
+    #define yyget_out yyget_out
+
+    #define yyset_out yyset_out
+
+    #define yyget_leng yyget_leng
+
+    #define yyget_text yyget_text
+
+    #define yyget_lineno yyget_lineno
+
+    #define yyset_lineno yyset_lineno
+
+    #define yywrap yywrap
+
+    #define yyalloc yyalloc
+
+    #define yyrealloc yyrealloc
+
+    #define yyfree yyfree
+
+    #define yytext yytext
+
+    #define yyleng yyleng
+
+    #define yyin yyin
+
+    #define yyout yyout
+
+    #define yy_flex_debug yy_flex_debug
+
+    #define yylineno yylineno
 
 /* First, we deal with  platform-specific or compiler-specific issues. */
 
@@ -84,15 +162,9 @@ typedef unsigned int flex_uint32_t;
 #define UINT32_MAX             (4294967295U)
 #endif
 
-#ifndef SIZE_MAX
-#define SIZE_MAX               (~(size_t)0)
-#endif
-
 #endif /* ! C99 */
 
 #endif /* ! FLEXINT_H */
-
-/* begin standard C++ headers. */
 
 /* TODO: this is always defined, so inline it */
 #define yyconst const
@@ -125,7 +197,7 @@ typedef unsigned int flex_uint32_t;
 /* Action number for EOF rule of a given start state. */
 #define YY_STATE_EOF(state) (YY_END_OF_BUFFER + state + 1)
 /* Special action meaning "start processing a new file". */
-#define YY_NEW_FILE yyrestart( yyin  )
+#define YY_NEW_FILE yyrestart(yyin  )
 #define YY_END_OF_BUFFER_CHAR 0
 
 /* Size of default input buffer. */
@@ -310,7 +382,7 @@ void yypop_buffer_state ( void );
 static void yyensure_buffer_stack ( void );
 static void yy_load_buffer_state ( void );
 static void yy_init_buffer ( YY_BUFFER_STATE b, FILE *file  );
-#define YY_FLUSH_BUFFER yy_flush_buffer( YY_CURRENT_BUFFER )
+#define YY_FLUSH_BUFFER yy_flush_buffer(YY_CURRENT_BUFFER )
 
 YY_BUFFER_STATE yy_scan_buffer ( char *base, yy_size_t size  );
 YY_BUFFER_STATE yy_scan_string ( const char *yy_str  );
@@ -326,7 +398,7 @@ void yyfree ( void *  );
 	if ( ! YY_CURRENT_BUFFER ){ \
         yyensure_buffer_stack (); \
 		YY_CURRENT_BUFFER_LVALUE =    \
-            yy_create_buffer( yyin, YY_BUF_SIZE ); \
+            yy_create_buffer(yyin,YY_BUF_SIZE ); \
 	} \
 	YY_CURRENT_BUFFER_LVALUE->yy_is_interactive = is_interactive; \
 	}
@@ -335,7 +407,7 @@ void yyfree ( void *  );
 	if ( ! YY_CURRENT_BUFFER ){\
         yyensure_buffer_stack (); \
 		YY_CURRENT_BUFFER_LVALUE =    \
-            yy_create_buffer( yyin, YY_BUF_SIZE ); \
+            yy_create_buffer(yyin,YY_BUF_SIZE ); \
 	} \
 	YY_CURRENT_BUFFER_LVALUE->yy_at_bol = at_bol; \
 	}
@@ -1963,8 +2035,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "Grammar/DARIC.l"
-#line 6 "Grammar/DARIC.l"
+#line 1 "DARIC.l"
+#line 6 "DARIC.l"
 #pragma warning(disable : 4996) //_CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
 #define _GLIBCXX_USE_C99 1
@@ -1980,19 +2052,16 @@ std::unordered_set<std::string> included_files;
 std::map<std::string, int> files_index;
 std::stack<std::string> file_stack;
 std::stack<int> yylineno_stack;
-#line 1984 "src/parser/flex.cpp"
-#line 1985 "src/parser/flex.cpp"
+#line 2055 "C:\\Users\\d_dud\\source\\repos\\PiBasic\\V4\\src\\parser\\flex.cpp"
+#line 2056 "C:\\Users\\d_dud\\source\\repos\\PiBasic\\V4\\src\\parser\\flex.cpp"
 
 #define INITIAL 0
 
-#ifndef YY_NO_UNISTD_H
-/* Special case for "unistd.h", since it is non-ANSI. We include it way
- * down here because we want the user's section 1 to have been scanned first.
- * The user has a chance to override it with an option.
- */
-#include <unistd.h>
-#endif
-
+/*windows compatibility case*/
+#include <io.h>
+#define isatty _isatty
+#define fileno _fileno
+    
 #ifndef YY_EXTRA_TYPE
 #define YY_EXTRA_TYPE void *
 #endif
@@ -2194,17 +2263,17 @@ YY_DECL
 		if ( ! YY_CURRENT_BUFFER ) {
 			yyensure_buffer_stack ();
 			YY_CURRENT_BUFFER_LVALUE =
-				yy_create_buffer( yyin, YY_BUF_SIZE );
+				yy_create_buffer(yyin,YY_BUF_SIZE );
 		}
 
-		yy_load_buffer_state(  );
+		yy_load_buffer_state( );
 		}
 
 	{
-#line 51 "Grammar/DARIC.l"
+#line 51 "DARIC.l"
 
 
-#line 2208 "src/parser/flex.cpp"
+#line 2276 "C:\\Users\\d_dud\\source\\repos\\PiBasic\\V4\\src\\parser\\flex.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -2275,994 +2344,994 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 53 "Grammar/DARIC.l"
+#line 53 "DARIC.l"
 /* skip comments */
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 54 "Grammar/DARIC.l"
+#line 54 "DARIC.l"
 /* skip blanks and tabs */
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 55 "Grammar/DARIC.l"
+#line 55 "DARIC.l"
 return NL;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 56 "Grammar/DARIC.l"
+#line 56 "DARIC.l"
 return SS;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 57 "Grammar/DARIC.l"
+#line 57 "DARIC.l"
 return INTEGER_DIVIDE;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 58 "Grammar/DARIC.l"
+#line 58 "DARIC.l"
 return TILDE;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 59 "Grammar/DARIC.l"
+#line 59 "DARIC.l"
 return TICK;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 60 "Grammar/DARIC.l"
+#line 60 "DARIC.l"
 return E;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 61 "Grammar/DARIC.l"
+#line 61 "DARIC.l"
 return SEMICOLON;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 62 "Grammar/DARIC.l"
+#line 62 "DARIC.l"
 return LE;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 63 "Grammar/DARIC.l"
+#line 63 "DARIC.l"
 return GE;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 65 "Grammar/DARIC.l"
+#line 65 "DARIC.l"
 return SHL_E;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 66 "Grammar/DARIC.l"
+#line 66 "DARIC.l"
 return SHR_E;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 67 "Grammar/DARIC.l"
+#line 67 "DARIC.l"
 return PLUS_E;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 68 "Grammar/DARIC.l"
+#line 68 "DARIC.l"
 return MINUS_E;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 69 "Grammar/DARIC.l"
+#line 69 "DARIC.l"
 return MULTIPLY_E;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 70 "Grammar/DARIC.l"
+#line 70 "DARIC.l"
 return DIVIDE_E;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 71 "Grammar/DARIC.l"
+#line 71 "DARIC.l"
 return INTEGERDIVIDE_E;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 73 "Grammar/DARIC.l"
+#line 73 "DARIC.l"
 return NE;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 74 "Grammar/DARIC.l"
+#line 74 "DARIC.l"
 return SHL;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 75 "Grammar/DARIC.l"
+#line 75 "DARIC.l"
 return SHR;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 76 "Grammar/DARIC.l"
+#line 76 "DARIC.l"
 return PLUS;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 77 "Grammar/DARIC.l"
+#line 77 "DARIC.l"
 return MINUS;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 78 "Grammar/DARIC.l"
+#line 78 "DARIC.l"
 return MULTIPLY;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 79 "Grammar/DARIC.l"
+#line 79 "DARIC.l"
 return DIVIDE;
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 80 "Grammar/DARIC.l"
+#line 80 "DARIC.l"
 return LT;
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 81 "Grammar/DARIC.l"
+#line 81 "DARIC.l"
 return GT;
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 83 "Grammar/DARIC.l"
+#line 83 "DARIC.l"
 return BGET;
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 84 "Grammar/DARIC.l"
+#line 84 "DARIC.l"
 return BPUT;
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 85 "Grammar/DARIC.l"
+#line 85 "DARIC.l"
 return BREAKPOINT;
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 86 "Grammar/DARIC.l"
+#line 86 "DARIC.l"
 return CASE;
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 87 "Grammar/DARIC.l"
+#line 87 "DARIC.l"
 return CHAIN;
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 88 "Grammar/DARIC.l"
+#line 88 "DARIC.l"
 return CLOSE;
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 89 "Grammar/DARIC.l"
+#line 89 "DARIC.l"
 return DATA;
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 90 "Grammar/DARIC.l"
+#line 90 "DARIC.l"
 return DIM;
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 91 "Grammar/DARIC.l"
+#line 91 "DARIC.l"
 return ELSE;
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 92 "Grammar/DARIC.l"
+#line 92 "DARIC.l"
 return END;
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 93 "Grammar/DARIC.l"
+#line 93 "DARIC.l"
 return END_CASE;
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 94 "Grammar/DARIC.l"
+#line 94 "DARIC.l"
 return END_IF;
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 95 "Grammar/DARIC.l"
+#line 95 "DARIC.l"
 return END_FN;
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 96 "Grammar/DARIC.l"
+#line 96 "DARIC.l"
 return END_FN;
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 97 "Grammar/DARIC.l"
+#line 97 "DARIC.l"
 return END_PROC;
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 98 "Grammar/DARIC.l"
+#line 98 "DARIC.l"
 return END_TYPE;
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 99 "Grammar/DARIC.l"
+#line 99 "DARIC.l"
 return END_WHILE;
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 100 "Grammar/DARIC.l"
+#line 100 "DARIC.l"
 return END_CASE;
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 101 "Grammar/DARIC.l"
+#line 101 "DARIC.l"
 return END_IF;
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 102 "Grammar/DARIC.l"
+#line 102 "DARIC.l"
 return END_FN;
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 103 "Grammar/DARIC.l"
+#line 103 "DARIC.l"
 return END_FN;
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 104 "Grammar/DARIC.l"
+#line 104 "DARIC.l"
 return END_PROC;
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 105 "Grammar/DARIC.l"
+#line 105 "DARIC.l"
 return END_TYPE;
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 106 "Grammar/DARIC.l"
+#line 106 "DARIC.l"
 return END_WHILE;
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 107 "Grammar/DARIC.l"
+#line 107 "DARIC.l"
 return EOFH;
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 108 "Grammar/DARIC.l"
+#line 108 "DARIC.l"
 return EXPECT;
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 109 "Grammar/DARIC.l"
+#line 109 "DARIC.l"
 return FIELD;
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 110 "Grammar/DARIC.l"
+#line 110 "DARIC.l"
 return FOR;
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 111 "Grammar/DARIC.l"
+#line 111 "DARIC.l"
 return GET;
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 112 "Grammar/DARIC.l"
+#line 112 "DARIC.l"
 return GETS;
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 113 "Grammar/DARIC.l"
+#line 113 "DARIC.l"
 return GETSH;
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 114 "Grammar/DARIC.l"
+#line 114 "DARIC.l"
 return GLOBAL;
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 115 "Grammar/DARIC.l"
+#line 115 "DARIC.l"
 return GOSUB;
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 116 "Grammar/DARIC.l"
+#line 116 "DARIC.l"
 return GOTO;
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 117 "Grammar/DARIC.l"
+#line 117 "DARIC.l"
 return INKEY;
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 118 "Grammar/DARIC.l"
+#line 118 "DARIC.l"
 return INKEYS;
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 119 "Grammar/DARIC.l"
+#line 119 "DARIC.l"
 return INPUT_;
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 120 "Grammar/DARIC.l"
+#line 120 "DARIC.l"
 return GLOBAL;
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 121 "Grammar/DARIC.l"
+#line 121 "DARIC.l"
 return IF;
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 122 "Grammar/DARIC.l"
+#line 122 "DARIC.l"
 return IN_;
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 123 "Grammar/DARIC.l"
+#line 123 "DARIC.l"
 return LISTFILES;
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 124 "Grammar/DARIC.l"
+#line 124 "DARIC.l"
 return LOCAL;
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 125 "Grammar/DARIC.l"
+#line 125 "DARIC.l"
 return MOUSE;
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 126 "Grammar/DARIC.l"
+#line 126 "DARIC.l"
 return NEXT;
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 127 "Grammar/DARIC.l"
+#line 127 "DARIC.l"
 return OF;
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 128 "Grammar/DARIC.l"
+#line 128 "DARIC.l"
 return OPENIN;
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 129 "Grammar/DARIC.l"
+#line 129 "DARIC.l"
 return OPENOUT;
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 130 "Grammar/DARIC.l"
+#line 130 "DARIC.l"
 return OPENUP;
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 131 "Grammar/DARIC.l"
+#line 131 "DARIC.l"
 return OTHERWISE;
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 132 "Grammar/DARIC.l"
+#line 132 "DARIC.l"
 return PRINT;
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 133 "Grammar/DARIC.l"
+#line 133 "DARIC.l"
 return PTR;
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 134 "Grammar/DARIC.l"
+#line 134 "DARIC.l"
 return READ;
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 135 "Grammar/DARIC.l"
+#line 135 "DARIC.l"
 return REPEAT;
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 136 "Grammar/DARIC.l"
+#line 136 "DARIC.l"
 return RESTORE;
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 137 "Grammar/DARIC.l"
+#line 137 "DARIC.l"
 return RND;
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 138 "Grammar/DARIC.l"
+#line 138 "DARIC.l"
 return RND0;
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 139 "Grammar/DARIC.l"
+#line 139 "DARIC.l"
 return RND1;
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 140 "Grammar/DARIC.l"
+#line 140 "DARIC.l"
 return OSCLI;
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 141 "Grammar/DARIC.l"
+#line 141 "DARIC.l"
 return RETURN;
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 142 "Grammar/DARIC.l"
+#line 142 "DARIC.l"
 return SPC;
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 143 "Grammar/DARIC.l"
+#line 143 "DARIC.l"
 return STEP;
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 144 "Grammar/DARIC.l"
+#line 144 "DARIC.l"
 return SWAP;
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 145 "Grammar/DARIC.l"
+#line 145 "DARIC.l"
 return THEN;
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 146 "Grammar/DARIC.l"
+#line 146 "DARIC.l"
 return TO;
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 147 "Grammar/DARIC.l"
+#line 147 "DARIC.l"
 return TIME;
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 148 "Grammar/DARIC.l"
+#line 148 "DARIC.l"
 return TIMES;
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 149 "Grammar/DARIC.l"
+#line 149 "DARIC.l"
 return TRACEON;
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 150 "Grammar/DARIC.l"
+#line 150 "DARIC.l"
 return TRACEOFF;
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 151 "Grammar/DARIC.l"
+#line 151 "DARIC.l"
 return TYPE_;
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 152 "Grammar/DARIC.l"
+#line 152 "DARIC.l"
 return UNTIL;
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 153 "Grammar/DARIC.l"
+#line 153 "DARIC.l"
 return WHEN;
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
-#line 154 "Grammar/DARIC.l"
+#line 154 "DARIC.l"
 return WHILE;
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 156 "Grammar/DARIC.l"
+#line 156 "DARIC.l"
 return ASC;
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 157 "Grammar/DARIC.l"
+#line 157 "DARIC.l"
 return CHRS;
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 158 "Grammar/DARIC.l"
+#line 158 "DARIC.l"
 return INSTR;
 	YY_BREAK
 case 103:
 YY_RULE_SETUP
-#line 159 "Grammar/DARIC.l"
+#line 159 "DARIC.l"
 return LEFTS;
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
-#line 160 "Grammar/DARIC.l"
+#line 160 "DARIC.l"
 return MIDS;
 	YY_BREAK
 case 105:
 YY_RULE_SETUP
-#line 161 "Grammar/DARIC.l"
+#line 161 "DARIC.l"
 return RIGHTS;
 	YY_BREAK
 case 106:
 YY_RULE_SETUP
-#line 162 "Grammar/DARIC.l"
+#line 162 "DARIC.l"
 return LEN;
 	YY_BREAK
 case 107:
 YY_RULE_SETUP
-#line 163 "Grammar/DARIC.l"
+#line 163 "DARIC.l"
 return STRS;
 	YY_BREAK
 case 108:
 YY_RULE_SETUP
-#line 164 "Grammar/DARIC.l"
+#line 164 "DARIC.l"
 return STRINGS;
 	YY_BREAK
 case 109:
 YY_RULE_SETUP
-#line 166 "Grammar/DARIC.l"
+#line 166 "DARIC.l"
 return AND;
 	YY_BREAK
 case 110:
 YY_RULE_SETUP
-#line 167 "Grammar/DARIC.l"
+#line 167 "DARIC.l"
 return OR;
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 168 "Grammar/DARIC.l"
+#line 168 "DARIC.l"
 return EOR;
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
-#line 169 "Grammar/DARIC.l"
+#line 169 "DARIC.l"
 return NOT; 
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
-#line 171 "Grammar/DARIC.l"
+#line 171 "DARIC.l"
 return FLOAT_;
 	YY_BREAK
 case 114:
 YY_RULE_SETUP
-#line 172 "Grammar/DARIC.l"
+#line 172 "DARIC.l"
 return INT_;
 	YY_BREAK
 case 115:
 YY_RULE_SETUP
-#line 173 "Grammar/DARIC.l"
+#line 173 "DARIC.l"
 return ACS;
 	YY_BREAK
 case 116:
 YY_RULE_SETUP
-#line 174 "Grammar/DARIC.l"
+#line 174 "DARIC.l"
 return DIV;
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-#line 175 "Grammar/DARIC.l"
+#line 175 "DARIC.l"
 return MOD;
 	YY_BREAK
 case 118:
 YY_RULE_SETUP
-#line 176 "Grammar/DARIC.l"
+#line 176 "DARIC.l"
 return SQR; 
 	YY_BREAK
 case 119:
 YY_RULE_SETUP
-#line 177 "Grammar/DARIC.l"
+#line 177 "DARIC.l"
 return LN;
 	YY_BREAK
 case 120:
 YY_RULE_SETUP
-#line 178 "Grammar/DARIC.l"
+#line 178 "DARIC.l"
 return LOG;
 	YY_BREAK
 case 121:
 YY_RULE_SETUP
-#line 179 "Grammar/DARIC.l"
+#line 179 "DARIC.l"
 return EXP;
 	YY_BREAK
 case 122:
 YY_RULE_SETUP
-#line 180 "Grammar/DARIC.l"
+#line 180 "DARIC.l"
 return ATN;
 	YY_BREAK
 case 123:
 YY_RULE_SETUP
-#line 181 "Grammar/DARIC.l"
+#line 181 "DARIC.l"
 return TAN;
 	YY_BREAK
 case 124:
 YY_RULE_SETUP
-#line 182 "Grammar/DARIC.l"
+#line 182 "DARIC.l"
 return COS;
 	YY_BREAK
 case 125:
 YY_RULE_SETUP
-#line 183 "Grammar/DARIC.l"
+#line 183 "DARIC.l"
 return SIN; 
 	YY_BREAK
 case 126:
 YY_RULE_SETUP
-#line 184 "Grammar/DARIC.l"
+#line 184 "DARIC.l"
 return ASN; 
 	YY_BREAK
 case 127:
 YY_RULE_SETUP
-#line 185 "Grammar/DARIC.l"
+#line 185 "DARIC.l"
 return ABS; 
 	YY_BREAK
 case 128:
 YY_RULE_SETUP
-#line 186 "Grammar/DARIC.l"
+#line 186 "DARIC.l"
 return DEG; 
 	YY_BREAK
 case 129:
 YY_RULE_SETUP
-#line 187 "Grammar/DARIC.l"
+#line 187 "DARIC.l"
 return RAD; 
 	YY_BREAK
 case 130:
 YY_RULE_SETUP
-#line 188 "Grammar/DARIC.l"
+#line 188 "DARIC.l"
 return SGN; 
 	YY_BREAK
 case 131:
 YY_RULE_SETUP
-#line 189 "Grammar/DARIC.l"
+#line 189 "DARIC.l"
 return PI; 
 	YY_BREAK
 case 132:
 YY_RULE_SETUP
-#line 191 "Grammar/DARIC.l"
+#line 191 "DARIC.l"
 return VAL; 
 	YY_BREAK
 case 133:
 YY_RULE_SETUP
-#line 193 "Grammar/DARIC.l"
+#line 193 "DARIC.l"
 return BOOLFALSE; 
 	YY_BREAK
 case 134:
 YY_RULE_SETUP
-#line 194 "Grammar/DARIC.l"
+#line 194 "DARIC.l"
 return BOOLTRUE; 
 	YY_BREAK
 case 135:
 YY_RULE_SETUP
-#line 196 "Grammar/DARIC.l"
+#line 196 "DARIC.l"
 return CIRCLE;
 	YY_BREAK
 case 136:
 YY_RULE_SETUP
-#line 197 "Grammar/DARIC.l"
+#line 197 "DARIC.l"
 return CLS;
 	YY_BREAK
 case 137:
 YY_RULE_SETUP
-#line 198 "Grammar/DARIC.l"
+#line 198 "DARIC.l"
 return CLIPON;
 	YY_BREAK
 case 138:
 YY_RULE_SETUP
-#line 199 "Grammar/DARIC.l"
+#line 199 "DARIC.l"
 return CLIPOFF;
 	YY_BREAK
 case 139:
 YY_RULE_SETUP
-#line 200 "Grammar/DARIC.l"
+#line 200 "DARIC.l"
 return COLOUR;
 	YY_BREAK
 case 140:
 YY_RULE_SETUP
-#line 201 "Grammar/DARIC.l"
+#line 201 "DARIC.l"
 return COLOURBG;
 	YY_BREAK
 case 141:
 YY_RULE_SETUP
-#line 202 "Grammar/DARIC.l"
+#line 202 "DARIC.l"
 return FILL;
 	YY_BREAK
 case 142:
 YY_RULE_SETUP
-#line 203 "Grammar/DARIC.l"
+#line 203 "DARIC.l"
 return FLIP;
 	YY_BREAK
 case 143:
 YY_RULE_SETUP
-#line 204 "Grammar/DARIC.l"
+#line 204 "DARIC.l"
 return SHOWFPS;
 	YY_BREAK
 case 144:
 YY_RULE_SETUP
-#line 205 "Grammar/DARIC.l"
+#line 205 "DARIC.l"
 return GRAPHICS;
 	YY_BREAK
 case 145:
 YY_RULE_SETUP
-#line 206 "Grammar/DARIC.l"
+#line 206 "DARIC.l"
 return LINE;
 	YY_BREAK
 case 146:
 YY_RULE_SETUP
-#line 207 "Grammar/DARIC.l"
+#line 207 "DARIC.l"
 return RECTANGLE;
 	YY_BREAK
 case 147:
 YY_RULE_SETUP
-#line 208 "Grammar/DARIC.l"
+#line 208 "DARIC.l"
 return PLOT;
 	YY_BREAK
 case 148:
 YY_RULE_SETUP
-#line 209 "Grammar/DARIC.l"
+#line 209 "DARIC.l"
 return POINT_;
 	YY_BREAK
 case 149:
 YY_RULE_SETUP
-#line 210 "Grammar/DARIC.l"
+#line 210 "DARIC.l"
 return SHADED;
 	YY_BREAK
 case 150:
 YY_RULE_SETUP
-#line 211 "Grammar/DARIC.l"
+#line 211 "DARIC.l"
 return TEXT;
 	YY_BREAK
 case 151:
 YY_RULE_SETUP
-#line 212 "Grammar/DARIC.l"
+#line 212 "DARIC.l"
 return TEXTRIGHT;
 	YY_BREAK
 case 152:
 YY_RULE_SETUP
-#line 213 "Grammar/DARIC.l"
+#line 213 "DARIC.l"
 return TEXTCENTRE;
 	YY_BREAK
 case 153:
 YY_RULE_SETUP
-#line 214 "Grammar/DARIC.l"
+#line 214 "DARIC.l"
 return TEXTCENTRE;
 	YY_BREAK
 case 154:
 YY_RULE_SETUP
-#line 215 "Grammar/DARIC.l"
+#line 215 "DARIC.l"
 return LOADTYPEFACE;
 	YY_BREAK
 case 155:
 YY_RULE_SETUP
-#line 216 "Grammar/DARIC.l"
+#line 216 "DARIC.l"
 return CREATEFONT;
 	YY_BREAK
 case 156:
 YY_RULE_SETUP
-#line 217 "Grammar/DARIC.l"
+#line 217 "DARIC.l"
 return MONO15;
 	YY_BREAK
 case 157:
 YY_RULE_SETUP
-#line 218 "Grammar/DARIC.l"
+#line 218 "DARIC.l"
 return MONO20;
 	YY_BREAK
 case 158:
 YY_RULE_SETUP
-#line 219 "Grammar/DARIC.l"
+#line 219 "DARIC.l"
 return MONO25;
 	YY_BREAK
 case 159:
 YY_RULE_SETUP
-#line 220 "Grammar/DARIC.l"
+#line 220 "DARIC.l"
 return MONO30;
 	YY_BREAK
 case 160:
 YY_RULE_SETUP
-#line 221 "Grammar/DARIC.l"
+#line 221 "DARIC.l"
 return MONO35;
 	YY_BREAK
 case 161:
 YY_RULE_SETUP
-#line 222 "Grammar/DARIC.l"
+#line 222 "DARIC.l"
 return MONO40;
 	YY_BREAK
 case 162:
 YY_RULE_SETUP
-#line 223 "Grammar/DARIC.l"
+#line 223 "DARIC.l"
 return MONO50;
 	YY_BREAK
 case 163:
 YY_RULE_SETUP
-#line 224 "Grammar/DARIC.l"
+#line 224 "DARIC.l"
 return MONO75;
 	YY_BREAK
 case 164:
 YY_RULE_SETUP
-#line 225 "Grammar/DARIC.l"
+#line 225 "DARIC.l"
 return MONO100;
 	YY_BREAK
 case 165:
 YY_RULE_SETUP
-#line 226 "Grammar/DARIC.l"
+#line 226 "DARIC.l"
 return PROP15;
 	YY_BREAK
 case 166:
 YY_RULE_SETUP
-#line 227 "Grammar/DARIC.l"
+#line 227 "DARIC.l"
 return PROP20;
 	YY_BREAK
 case 167:
 YY_RULE_SETUP
-#line 228 "Grammar/DARIC.l"
+#line 228 "DARIC.l"
 return PROP25;
 	YY_BREAK
 case 168:
 YY_RULE_SETUP
-#line 229 "Grammar/DARIC.l"
+#line 229 "DARIC.l"
 return PROP30;
 	YY_BREAK
 case 169:
 YY_RULE_SETUP
-#line 230 "Grammar/DARIC.l"
+#line 230 "DARIC.l"
 return PROP35;
 	YY_BREAK
 case 170:
 YY_RULE_SETUP
-#line 231 "Grammar/DARIC.l"
+#line 231 "DARIC.l"
 return PROP40;
 	YY_BREAK
 case 171:
 YY_RULE_SETUP
-#line 232 "Grammar/DARIC.l"
+#line 232 "DARIC.l"
 return PROP50;
 	YY_BREAK
 case 172:
 YY_RULE_SETUP
-#line 233 "Grammar/DARIC.l"
+#line 233 "DARIC.l"
 return PROP75;
 	YY_BREAK
 case 173:
 YY_RULE_SETUP
-#line 234 "Grammar/DARIC.l"
+#line 234 "DARIC.l"
 return PROP100;
 	YY_BREAK
 case 174:
 YY_RULE_SETUP
-#line 235 "Grammar/DARIC.l"
+#line 235 "DARIC.l"
 return TRIANGLE;
 	YY_BREAK
 case 175:
 YY_RULE_SETUP
-#line 236 "Grammar/DARIC.l"
+#line 236 "DARIC.l"
 return SCREENWIDTH;
 	YY_BREAK
 case 176:
 YY_RULE_SETUP
-#line 237 "Grammar/DARIC.l"
+#line 237 "DARIC.l"
 return SCREENHEIGHT;
 	YY_BREAK
 case 177:
 YY_RULE_SETUP
-#line 238 "Grammar/DARIC.l"
+#line 238 "DARIC.l"
 return RED;
 	YY_BREAK
 case 178:
 YY_RULE_SETUP
-#line 239 "Grammar/DARIC.l"
+#line 239 "DARIC.l"
 return GREEN;
 	YY_BREAK
 case 179:
 YY_RULE_SETUP
-#line 240 "Grammar/DARIC.l"
+#line 240 "DARIC.l"
 return YELLOW;
 	YY_BREAK
 case 180:
 YY_RULE_SETUP
-#line 241 "Grammar/DARIC.l"
+#line 241 "DARIC.l"
 return BLUE;
 	YY_BREAK
 case 181:
 YY_RULE_SETUP
-#line 242 "Grammar/DARIC.l"
+#line 242 "DARIC.l"
 return MAGENTA;
 	YY_BREAK
 case 182:
 YY_RULE_SETUP
-#line 243 "Grammar/DARIC.l"
+#line 243 "DARIC.l"
 return CYAN;
 	YY_BREAK
 case 183:
 YY_RULE_SETUP
-#line 244 "Grammar/DARIC.l"
+#line 244 "DARIC.l"
 return WHITE;
 	YY_BREAK
 case 184:
 YY_RULE_SETUP
-#line 245 "Grammar/DARIC.l"
+#line 245 "DARIC.l"
 return BLACK;
 	YY_BREAK
 case 185:
 YY_RULE_SETUP
-#line 246 "Grammar/DARIC.l"
+#line 246 "DARIC.l"
 return LASTPOS;
 	YY_BREAK
 case 186:
 YY_RULE_SETUP
-#line 248 "Grammar/DARIC.l"
+#line 248 "DARIC.l"
 return DELETEOBJECT;
 	YY_BREAK
 case 187:
 YY_RULE_SETUP
-#line 249 "Grammar/DARIC.l"
+#line 249 "DARIC.l"
 return CREATEVERTEX;
 	YY_BREAK
 case 188:
 YY_RULE_SETUP
-#line 250 "Grammar/DARIC.l"
+#line 250 "DARIC.l"
 return CREATETRIANGLE;
 	YY_BREAK
 case 189:
 YY_RULE_SETUP
-#line 251 "Grammar/DARIC.l"
+#line 251 "DARIC.l"
 return CREATESHAPE;
 	YY_BREAK
 case 190:
 YY_RULE_SETUP
-#line 252 "Grammar/DARIC.l"
+#line 252 "DARIC.l"
 return RENDERFRAME;
 	YY_BREAK
 case 191:
 YY_RULE_SETUP
-#line 253 "Grammar/DARIC.l"
+#line 253 "DARIC.l"
 return CREATEOBJECT;
 	YY_BREAK
 case 192:
 YY_RULE_SETUP
-#line 254 "Grammar/DARIC.l"
+#line 254 "DARIC.l"
 return TRANSLATE;
 	YY_BREAK
 case 193:
 YY_RULE_SETUP
-#line 255 "Grammar/DARIC.l"
+#line 255 "DARIC.l"
 return ROTATE;
 	YY_BREAK
 case 194:
 YY_RULE_SETUP
-#line 256 "Grammar/DARIC.l"
+#line 256 "DARIC.l"
 return SCALE; 
 	YY_BREAK
 case 195:
 YY_RULE_SETUP
-#line 257 "Grammar/DARIC.l"
+#line 257 "DARIC.l"
 return SOLID; 
 	YY_BREAK
 case 196:
 YY_RULE_SETUP
-#line 258 "Grammar/DARIC.l"
+#line 258 "DARIC.l"
 return WIREFRAME; 
 	YY_BREAK
 case 197:
 YY_RULE_SETUP
-#line 259 "Grammar/DARIC.l"
+#line 259 "DARIC.l"
 return FILLEDWIREFRAME;
 	YY_BREAK
 case 198:
 /* rule 198 can match eol */
 YY_RULE_SETUP
-#line 261 "Grammar/DARIC.l"
+#line 261 "DARIC.l"
 { 
                         strcpy(yytext, yytext + 7); 
                         auto s = std::string(yytext);
@@ -3299,7 +3368,7 @@ YY_RULE_SETUP
                     }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 295 "Grammar/DARIC.l"
+#line 295 "DARIC.l"
 {
                         static int once = 0; 
                         if (once = !once)
@@ -3318,119 +3387,119 @@ case YY_STATE_EOF(INITIAL):
 	YY_BREAK
 case 199:
 YY_RULE_SETUP
-#line 310 "Grammar/DARIC.l"
+#line 310 "DARIC.l"
 { yylval.v_int = std::stoi(yytext, nullptr, 10); return LINE_NUMBER; }
 	YY_BREAK
 case 200:
 YY_RULE_SETUP
-#line 311 "Grammar/DARIC.l"
+#line 311 "DARIC.l"
 { yylval.v_int = std::stoi(yytext, nullptr, 10); return LITERAL_INT; }
 	YY_BREAK
 case 201:
 YY_RULE_SETUP
-#line 312 "Grammar/DARIC.l"
+#line 312 "DARIC.l"
 { auto v = std::string(yytext); v.erase(0, 1); yylval.v_int = std::stoi(v, nullptr, 16); return LITERAL_INT; }
 	YY_BREAK
 case 202:
 YY_RULE_SETUP
-#line 313 "Grammar/DARIC.l"
+#line 313 "DARIC.l"
 { auto v = std::string(yytext); v.erase(0, 1); yylval.v_int = std::stoi(v, nullptr, 2); return LITERAL_INT; }
 	YY_BREAK
 case 203:
 YY_RULE_SETUP
-#line 314 "Grammar/DARIC.l"
+#line 314 "DARIC.l"
 { yylval.v_real = std::stod(yytext); return LITERAL_REAL; }
 	YY_BREAK
 case 204:
 /* rule 204 can match eol */
 YY_RULE_SETUP
-#line 315 "Grammar/DARIC.l"
+#line 315 "DARIC.l"
 { yylval.v_string = strdup(yytext); return LITERAL_STRING; }
 	YY_BREAK
 case 205:
 YY_RULE_SETUP
-#line 316 "Grammar/DARIC.l"
+#line 316 "DARIC.l"
 { strcpy(yytext, yytext + 3); yylval.v_string = strdup(yytext); return DEFINE_PROCEDURE; }
 	YY_BREAK
 case 206:
 YY_RULE_SETUP
-#line 317 "Grammar/DARIC.l"
+#line 317 "DARIC.l"
 { strcpy(yytext, yytext + 3); yylval.v_string = strdup(yytext); return DEFINE_INTEGER_FUNCTION; }
 	YY_BREAK
 case 207:
 YY_RULE_SETUP
-#line 318 "Grammar/DARIC.l"
+#line 318 "DARIC.l"
 { strcpy(yytext, yytext + 3); yylval.v_string = strdup(yytext); return DEFINE_STRING_FUNCTION; }
 	YY_BREAK
 case 208:
 YY_RULE_SETUP
-#line 319 "Grammar/DARIC.l"
+#line 319 "DARIC.l"
 { strcpy(yytext, yytext + 3); yylval.v_string = strdup(yytext); return DEFINE_REAL_FUNCTION; }
 	YY_BREAK
 case 209:
 YY_RULE_SETUP
-#line 320 "Grammar/DARIC.l"
+#line 320 "DARIC.l"
 { yylval.v_string = strdup(yytext); return STRING_FUNCTION; }
 	YY_BREAK
 case 210:
 YY_RULE_SETUP
-#line 321 "Grammar/DARIC.l"
+#line 321 "DARIC.l"
 { yylval.v_string = strdup(yytext); return INTEGER_FUNCTION; }
 	YY_BREAK
 case 211:
 YY_RULE_SETUP
-#line 322 "Grammar/DARIC.l"
+#line 322 "DARIC.l"
 { yylval.v_string = strdup(yytext); return REAL_FUNCTION; }
 	YY_BREAK
 case 212:
 YY_RULE_SETUP
-#line 323 "Grammar/DARIC.l"
+#line 323 "DARIC.l"
 { yylval.v_string = strdup(yytext); return PROCEDURE; }
 	YY_BREAK
 case 213:
 YY_RULE_SETUP
-#line 324 "Grammar/DARIC.l"
+#line 324 "DARIC.l"
 { yylval.v_string = strdup(yytext); return INTEGER_VARIABLE; }
 	YY_BREAK
 case 214:
 YY_RULE_SETUP
-#line 325 "Grammar/DARIC.l"
+#line 325 "DARIC.l"
 { yylval.v_string = strdup(yytext); return STRING_VARIABLE; }
 	YY_BREAK
 case 215:
 YY_RULE_SETUP
-#line 326 "Grammar/DARIC.l"
+#line 326 "DARIC.l"
 { yylval.v_string = strdup(yytext); return TYPE_VARIABLE; }
 	YY_BREAK
 case 216:
 YY_RULE_SETUP
-#line 327 "Grammar/DARIC.l"
+#line 327 "DARIC.l"
 { yylval.v_string = strdup(yytext); return VARIABLE; }
 	YY_BREAK
 case 217:
-#line 330 "Grammar/DARIC.l"
+#line 330 "DARIC.l"
 case 218:
-#line 331 "Grammar/DARIC.l"
+#line 331 "DARIC.l"
 case 219:
-#line 332 "Grammar/DARIC.l"
+#line 332 "DARIC.l"
 case 220:
-#line 333 "Grammar/DARIC.l"
+#line 333 "DARIC.l"
 case 221:
 YY_RULE_SETUP
-#line 333 "Grammar/DARIC.l"
+#line 333 "DARIC.l"
 { return yytext[0]; }
 	YY_BREAK
 case 222:
 YY_RULE_SETUP
-#line 335 "Grammar/DARIC.l"
+#line 335 "DARIC.l"
 /* do nothing */
 	YY_BREAK
 case 223:
 YY_RULE_SETUP
-#line 337 "Grammar/DARIC.l"
+#line 337 "DARIC.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 3434 "src/parser/flex.cpp"
+#line 3502 "C:\\Users\\d_dud\\source\\repos\\PiBasic\\V4\\src\\parser\\flex.cpp"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -3506,7 +3575,7 @@ YY_FATAL_ERROR( "flex scanner jammed" );
 				{
 				(yy_did_buffer_switch_on_eof) = 0;
 
-				if ( yywrap(  ) )
+				if ( yywrap( ) )
 					{
 					/* Note: because we've taken care in
 					 * yy_get_next_buffer() to have set up
@@ -3638,8 +3707,7 @@ static int yy_get_next_buffer (void)
 
 				b->yy_ch_buf = (char *)
 					/* Include room in for 2 EOB chars. */
-					yyrealloc( (void *) b->yy_ch_buf,
-							 (yy_size_t) (b->yy_buf_size + 2)  );
+					yyrealloc((void *) b->yy_ch_buf,(yy_size_t) (b->yy_buf_size + 2)  );
 				}
 			else
 				/* Can't grow it, we don't own it. */
@@ -3671,7 +3739,7 @@ static int yy_get_next_buffer (void)
 		if ( number_to_move == YY_MORE_ADJ )
 			{
 			ret_val = EOB_ACT_END_OF_FILE;
-			yyrestart( yyin  );
+			yyrestart(yyin  );
 			}
 
 		else
@@ -3688,12 +3756,9 @@ static int yy_get_next_buffer (void)
 	if (((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
 		/* Extend the array by 50%, plus the number we really need. */
 		int new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
-		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) yyrealloc(
-			(void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf, (yy_size_t) new_size  );
+		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) yyrealloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,(yy_size_t) new_size  );
 		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
 			YY_FATAL_ERROR( "out of dynamic memory in yy_get_next_buffer()" );
-		/* "- 2" to take care of EOB's */
-		YY_CURRENT_BUFFER_LVALUE->yy_buf_size = (int) (new_size - 2);
 	}
 
 	(yy_n_chars) += number_to_move;
@@ -3849,13 +3914,13 @@ static int yy_get_next_buffer (void)
 					 */
 
 					/* Reset buffer status. */
-					yyrestart( yyin );
+					yyrestart(yyin );
 
 					/*FALLTHROUGH*/
 
 				case EOB_ACT_END_OF_FILE:
 					{
-					if ( yywrap(  ) )
+					if ( yywrap( ) )
 						return 0;
 
 					if ( ! (yy_did_buffer_switch_on_eof) )
@@ -3899,11 +3964,11 @@ static int yy_get_next_buffer (void)
 	if ( ! YY_CURRENT_BUFFER ){
         yyensure_buffer_stack ();
 		YY_CURRENT_BUFFER_LVALUE =
-            yy_create_buffer( yyin, YY_BUF_SIZE );
+            yy_create_buffer(yyin,YY_BUF_SIZE );
 	}
 
-	yy_init_buffer( YY_CURRENT_BUFFER, input_file );
-	yy_load_buffer_state(  );
+	yy_init_buffer(YY_CURRENT_BUFFER,input_file );
+	yy_load_buffer_state( );
 }
 
 /** Switch to a different input buffer.
@@ -3931,7 +3996,7 @@ static int yy_get_next_buffer (void)
 		}
 
 	YY_CURRENT_BUFFER_LVALUE = new_buffer;
-	yy_load_buffer_state(  );
+	yy_load_buffer_state( );
 
 	/* We don't actually know whether we did this switch during
 	 * EOF (yywrap()) processing, but the only time this flag
@@ -3959,7 +4024,7 @@ static void yy_load_buffer_state  (void)
 {
 	YY_BUFFER_STATE b;
     
-	b = (YY_BUFFER_STATE) yyalloc( sizeof( struct yy_buffer_state )  );
+	b = (YY_BUFFER_STATE) yyalloc(sizeof( struct yy_buffer_state )  );
 	if ( ! b )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
 
@@ -3968,13 +4033,13 @@ static void yy_load_buffer_state  (void)
 	/* yy_ch_buf has to be 2 characters longer than the size given because
 	 * we need to put in 2 end-of-buffer characters.
 	 */
-	b->yy_ch_buf = (char *) yyalloc( (yy_size_t) (b->yy_buf_size + 2)  );
+	b->yy_ch_buf = (char *) yyalloc((yy_size_t) (b->yy_buf_size + 2)  );
 	if ( ! b->yy_ch_buf )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
 
 	b->yy_is_our_buffer = 1;
 
-	yy_init_buffer( b, file );
+	yy_init_buffer(b,file );
 
 	return b;
 }
@@ -3993,9 +4058,9 @@ static void yy_load_buffer_state  (void)
 		YY_CURRENT_BUFFER_LVALUE = (YY_BUFFER_STATE) 0;
 
 	if ( b->yy_is_our_buffer )
-		yyfree( (void *) b->yy_ch_buf  );
+		yyfree((void *) b->yy_ch_buf  );
 
-	yyfree( (void *) b  );
+	yyfree((void *) b  );
 }
 
 /* Initializes or reinitializes a buffer.
@@ -4007,7 +4072,7 @@ static void yy_load_buffer_state  (void)
 {
 	int oerrno = errno;
     
-	yy_flush_buffer( b );
+	yy_flush_buffer(b );
 
 	b->yy_input_file = file;
 	b->yy_fill_buffer = 1;
@@ -4050,7 +4115,7 @@ static void yy_load_buffer_state  (void)
 	b->yy_buffer_status = YY_BUFFER_NEW;
 
 	if ( b == YY_CURRENT_BUFFER )
-		yy_load_buffer_state(  );
+		yy_load_buffer_state( );
 }
 
 /** Pushes the new state onto the stack. The new state becomes
@@ -4081,7 +4146,7 @@ void yypush_buffer_state (YY_BUFFER_STATE new_buffer )
 	YY_CURRENT_BUFFER_LVALUE = new_buffer;
 
 	/* copied from yy_switch_to_buffer. */
-	yy_load_buffer_state(  );
+	yy_load_buffer_state( );
 	(yy_did_buffer_switch_on_eof) = 1;
 }
 
@@ -4100,7 +4165,7 @@ void yypop_buffer_state (void)
 		--(yy_buffer_stack_top);
 
 	if (YY_CURRENT_BUFFER) {
-		yy_load_buffer_state(  );
+		yy_load_buffer_state( );
 		(yy_did_buffer_switch_on_eof) = 1;
 	}
 }
@@ -4167,7 +4232,7 @@ YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )
 		/* They forgot to leave room for the EOB's. */
 		return NULL;
 
-	b = (YY_BUFFER_STATE) yyalloc( sizeof( struct yy_buffer_state )  );
+	b = (YY_BUFFER_STATE) yyalloc(sizeof( struct yy_buffer_state )  );
 	if ( ! b )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_scan_buffer()" );
 
@@ -4181,7 +4246,7 @@ YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )
 	b->yy_fill_buffer = 0;
 	b->yy_buffer_status = YY_BUFFER_NEW;
 
-	yy_switch_to_buffer( b  );
+	yy_switch_to_buffer(b  );
 
 	return b;
 }
@@ -4197,7 +4262,7 @@ YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )
 YY_BUFFER_STATE yy_scan_string (const char * yystr )
 {
     
-	return yy_scan_bytes( yystr, (int) strlen(yystr) );
+	return yy_scan_bytes(yystr,(int) strlen(yystr) );
 }
 
 /** Setup the input buffer state to scan the given bytes. The next call to yylex() will
@@ -4216,7 +4281,7 @@ YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len )
     
 	/* Get memory for full buffer, including space for trailing EOB's. */
 	n = (yy_size_t) (_yybytes_len + 2);
-	buf = (char *) yyalloc( n  );
+	buf = (char *) yyalloc(n  );
 	if ( ! buf )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_scan_bytes()" );
 
@@ -4225,7 +4290,7 @@ YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len )
 
 	buf[_yybytes_len] = buf[_yybytes_len+1] = YY_END_OF_BUFFER_CHAR;
 
-	b = yy_scan_buffer( buf, n );
+	b = yy_scan_buffer(buf,n );
 	if ( ! b )
 		YY_FATAL_ERROR( "bad buffer in yy_scan_bytes()" );
 
@@ -4243,7 +4308,7 @@ YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len )
 
 static void yynoreturn yy_fatal_error (const char* msg )
 {
-			fprintf( stderr, "%s\n", msg );
+			(void) fprintf( stderr, "%s\n", msg );
 	exit( YY_EXIT_FAILURE );
 }
 
@@ -4381,7 +4446,7 @@ int yylex_destroy  (void)
     
     /* Pop the buffer stack, destroying each element. */
 	while(YY_CURRENT_BUFFER){
-		yy_delete_buffer( YY_CURRENT_BUFFER  );
+		yy_delete_buffer(YY_CURRENT_BUFFER  );
 		YY_CURRENT_BUFFER_LVALUE = NULL;
 		yypop_buffer_state();
 	}
@@ -4447,5 +4512,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 337 "Grammar/DARIC.l"
+#line 337 "DARIC.l"
 
