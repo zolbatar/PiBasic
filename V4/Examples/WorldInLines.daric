@@ -1,5 +1,5 @@
 gCentreX = 0.0, gCentreY = 0.0, gScale = 3.0, pointSkip=1, gRound=100.0
-INSTALL "SetupGraphics"
+INSTALL "SetupGraphicsBanked"
 INSTALL "Menus"
 
 PROCTitle("'World in Lines' - Choose point skipping")

@@ -31,4 +31,6 @@ void Graphics::circle(int xc, int yc, int r, bool fill) {
         x = x + 1;
         eight_way_symmetric_plot(xc, yc, x, y, fill);
     }
+    if (!banked)
+        flip(false);
 }

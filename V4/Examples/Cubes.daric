@@ -1,4 +1,4 @@
-INSTALL "SetupGraphics"
+INSTALL "SetupGraphicsBanked"
 SHOWFPS
 
 REM ** Create a random RGB colour **

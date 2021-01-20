@@ -22,7 +22,6 @@ void VM::run_debugger()
     graphics->cache();
 
     debugger_options(-1, 0);
-    graphics->flip();
     while (true) {
         graphics->poll();
         if (graphics->inkey(-17)) {
@@ -39,7 +38,6 @@ void VM::run_debugger()
         } else if (graphics->inkey(-31)) {
             // F10
             graphics->restore();
-            graphics->flip();
             debugger_open = false;
             return;
         } else if (graphics->inkey(-117)) {
@@ -216,7 +214,6 @@ void VM::debugger_variables()
             skip--;
         }
 
-        graphics->flip();
         graphics->poll();
         if (graphics->inkey(-17)) {
             exit(0);
@@ -271,74 +268,79 @@ void VM::debugger_disassembly()
     auto dis = disassemble_entire_file();
 
     int pos = pc - 1;
+    bool rerender = true;
     while (true) {
-        debugger_options(0, 1);
-        graphics->print_text(disassembly_font, "\r\r", -1, -1);
+        if (rerender) {
+            debugger_options(0, 1);
+            graphics->print_text(disassembly_font, "\r\r", -1, -1);
 
-        // Show current file and PC
-        Bytecode cur_bc = code[pos];
-        graphics->colour(128, 128, 128);
-        graphics->print_text(disassembly_font, "File: ", -1, -1);
-        graphics->colour(255, 255, 255);
-        graphics->print_text(disassembly_font, file_names[cur_bc.file_number], -1, -1);
-        graphics->print_text(disassembly_font, "\r", -1, -1);
-        graphics->colour(128, 128, 128);
-        graphics->print_text(disassembly_font, "Line: ", -1, -1);
-        graphics->colour(255, 255, 255);
-        graphics->print_text(disassembly_font, std::to_string(cur_bc.line_number), -1, -1);
-        graphics->print_text(disassembly_font, " ", -1, -1);
-        graphics->colour(255, 255, 255);
-        auto ff = line_cache[cur_bc.file_number];
-        auto p = cur_bc.line_number - 1;
-        if (p >= ff.size()) {
-            p = static_cast<int>(ff.size()) - 1;
-        }
-        graphics->print_text(disassembly_font, ff[p], -1, -1);
-        graphics->print_text(disassembly_font, "\r\r", -1, -1);
+            // Show current file and PC
+            Bytecode cur_bc = code[pos];
+            graphics->colour(128, 128, 128);
+            graphics->print_text(disassembly_font, "File: ", -1, -1);
+            graphics->colour(255, 255, 255);
+            graphics->print_text(disassembly_font, file_names[cur_bc.file_number], -1, -1);
+            graphics->print_text(disassembly_font, "\r", -1, -1);
+            graphics->colour(128, 128, 128);
+            graphics->print_text(disassembly_font, "Line: ", -1, -1);
+            graphics->colour(255, 255, 255);
+            graphics->print_text(disassembly_font, std::to_string(cur_bc.line_number), -1, -1);
+            graphics->print_text(disassembly_font, " ", -1, -1);
+            graphics->colour(255, 255, 255);
+            auto ff = line_cache[cur_bc.file_number];
+            auto p = cur_bc.line_number - 1;
+            if (p >= ff.size()) {
+                p = static_cast<int>(ff.size()) - 1;
+            }
+            graphics->print_text(disassembly_font, ff[p], -1, -1);
+            graphics->print_text(disassembly_font, "\r\r", -1, -1);
 
-        // Bytecode output
-        graphics->colour(180, 180, 180);
-        for (UINT32 i = 0; i < debugger_lines; i++) {
-            if (pos + i < size) {
-                Bytecode bc = code[pos + i];
-                if (pos + i == pc - 1) {
+            // Bytecode output
+            graphics->colour(180, 180, 180);
+            for (UINT32 i = 0; i < debugger_lines; i++) {
+                if (pos + i < size) {
+                    Bytecode bc = code[pos + i];
+                    if (pos + i == pc - 1) {
+                        graphics->colour(255, 255, 0);
+                        graphics->print_text(disassembly_font, "-> ", -1, -1);
+                    } else {
+                        graphics->print_text(disassembly_font, "   ", -1, -1);
+                    }
+                    graphics->colour(255, 255, 255);
+                    auto s = disassemble_instruction(bc, pos + i);
+                    graphics->colour(255, 255, 255);
+                    graphics->print_text(disassembly_font, s.header, -1, -1);
                     graphics->colour(255, 255, 0);
-                    graphics->print_text(disassembly_font, "-> ", -1, -1);
-                } else {
-                    graphics->print_text(disassembly_font, "   ", -1, -1);
-                }
-                graphics->colour(255, 255, 255);
-                auto s = disassemble_instruction(bc, pos + i);
-                graphics->colour(255, 255, 255);
-                graphics->print_text(disassembly_font, s.header, -1, -1);
-                graphics->colour(255, 255, 0);
-                graphics->print_text(disassembly_font, s.opcode, -1, -1);
+                    graphics->print_text(disassembly_font, s.opcode, -1, -1);
 
-                // Pad out with near invisible dots
-                graphics->colour(40, 40, 40);
-                int a = 15 - static_cast<int>(s.opcode.length());
-                for (int i = 0; i < a; i++) {
-                    graphics->print_text(disassembly_font, ".", -1, -1);
-                }
-
-                graphics->colour(0, 100, 255);
-                graphics->print_text(disassembly_font, s.operand, -1, -1);
-
-                // Pad out with near invisible dots
-                if (s.description.length() > 0) {
+                    // Pad out with near invisible dots
                     graphics->colour(40, 40, 40);
-                    a = 40 - static_cast<int>(s.operand.length());
+                    int a = 15 - static_cast<int>(s.opcode.length());
                     for (int i = 0; i < a; i++) {
                         graphics->print_text(disassembly_font, ".", -1, -1);
                     }
-                }
 
-                graphics->colour(128, 128, 128);
-                graphics->print_text(prop_font, s.description, -1, -1);
-                graphics->print_text(prop_font, "\r", -1, -1);
+                    graphics->colour(0, 100, 255);
+                    graphics->print_text(disassembly_font, s.operand, -1, -1);
+
+                    // Pad out with near invisible dots
+                    if (s.description.length() > 0) {
+                        graphics->colour(40, 40, 40);
+                        a = 40 - static_cast<int>(s.operand.length());
+                        for (int i = 0; i < a; i++) {
+                            graphics->print_text(disassembly_font, ".", -1, -1);
+                        }
+                    }
+
+                    graphics->colour(128, 128, 128);
+                    graphics->print_text(prop_font, s.description, -1, -1);
+                    graphics->print_text(prop_font, "\r", -1, -1);
+                }
             }
+            rerender = false;
+            graphics->flip(true);
         }
-        graphics->flip();
+
         graphics->poll();
         if (graphics->inkey(-17)) {
             exit(0);
@@ -346,18 +348,22 @@ void VM::debugger_disassembly()
             while (graphics->inkey(-58))
                 graphics->poll();
             pos--;
+            rerender = true;
         } else if (graphics->inkey(-42)) {
             while (graphics->inkey(-42))
                 graphics->poll();
             pos++;
+            rerender = true;
         } else if (graphics->inkey(-64)) {
             while (graphics->inkey(-64))
                 graphics->poll();
             pos -= debugger_lines;
+            rerender = true;
         } else if (graphics->inkey(-79)) {
             while (graphics->inkey(-79))
                 graphics->poll();
             pos += debugger_lines;
+            rerender = true;
         } else if (graphics->inkey(-115) || graphics->inkey(-31) || graphics->inkey(-120)) {
             return;
         }

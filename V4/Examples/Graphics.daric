@@ -1,11 +1,11 @@
 INSTALL "SetupGraphics"
 
-FOR I% = 0 TO 99
+FOR I% = 0 TO 499
 	COLOUR RND(255), RND(255), RND(255)
 	LINE RND(w%), RND(h%), RND(w%), RND(h%)
 NEXT
 
-FOR I% = 0 TO 49
+FOR I% = 0 TO 99
 	COLOUR RND(255), RND(255), RND(255)
 	TRIANGLE FILL	RND(w%), RND(h%), RND(w%), RND(h%), RND(w%), RND(h%)
 NEXT
@@ -17,12 +17,11 @@ FOR I% = 0 TO 19
 	TRIANGLE SHADED RND(w%), RND(h%), COL1%, RND(w%), RND(h%), COL2%, RND(w%), RND(h%), COL3%
 NEXT
 
-FOR I% = 0 TO 19
+FOR I% = 0 TO 99
 	COLOUR RND(255), RND(255), RND(255)
 	CIRCLE RND(w%), RND(h%), RND(50)+20
 	CIRCLE FILL RND(w%), RND(h%), RND(50)+20
 NEXT
-FLIP
 
 INKEY(1000)
 CHAIN "Welcome"

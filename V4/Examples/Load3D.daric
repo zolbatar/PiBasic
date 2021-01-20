@@ -1,4 +1,4 @@
-INSTALL "SetupGraphics"
+INSTALL "SetupGraphicsBanked"
 INSTALL "Menus"
 PROCTitle("Select a 3D Model to Load")
 PROCLabel("1", "911 GT2 Rim", ms%+(0*ys%))

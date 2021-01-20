@@ -115,16 +115,17 @@ UINT32 Graphics::get_screen_height()
 
 void Graphics::open(int width, int height, int mode)
 {
+/*    width /= 2;
+    height /= 2;*/
     showfps = false;
     bool reinit = false;
+    bool initial = !is_open();
     if (is_open()) {
 
         // Is this different?
         if (width != screen_width || height != screen_height) {
             shutdown();
             reinit = true;
-        } else {
-            return;
         }
     }
 
@@ -133,11 +134,11 @@ void Graphics::open(int width, int height, int mode)
     screen_width = width;
     screen_height = height;
     minX = 0;
-    maxX = width - 1;
+    maxX = screen_width - 1;
     minY = 0;
-    maxY = height - 1;
-    world.x_origin = width / 2;
-    world.y_origin = height / 2;
+    maxY = screen_height - 1;
+    world.x_origin = screen_width / 2;
+    world.y_origin = screen_height / 2;
 
     // Load standard fonts
     if (!reinit) {
@@ -245,35 +246,38 @@ void Graphics::open(int width, int height, int mode)
     current_colour = Colour(0, 0, 0);
     hide_cursors();
 #else
-    int params = SDL_WINDOW_ALLOW_HIGHDPI;
-    params |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-    //params |= SDL_WINDOW_FULLSCREEN;
+    if (reinit || initial) {
+        int params = SDL_WINDOW_ALLOW_HIGHDPI;
+        params |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+        //params |= SDL_WINDOW_FULLSCREEN;
 
-    window = SDL_CreateWindow("DARIC", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, params);
-    if (!window) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
-        exit(1);
+        window = SDL_CreateWindow("DARIC", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, params);
+        if (!window) {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
+            exit(1);
+        }
+        screen = SDL_GetWindowSurface(window);
+        SDL_StopTextInput();
+
+        // Format
+        SDL_PixelFormat* pixelFormat = screen->format;
+        Uint32 pixelFormatEnum = pixelFormat->format;
+        const char* surfacePixelFormatName = SDL_GetPixelFormatName(pixelFormatEnum);
+        std::cout << "Pixel format: " << surfacePixelFormatName << std::endl;
+
+        // Fast lookup of line addresses
+        line_address.resize(screen_height);
+        UINT32 offset = 0;
+        for (int i = 0; i < screen_height; i++) {
+            line_address[i] = offset;
+            offset += screen->w;
+        }
+        bank_cache = new UINT32[screen_width * screen_height];
     }
-    screen = SDL_GetWindowSurface(window);
-    SDL_StopTextInput();
-
-    // Format
-    SDL_PixelFormat* pixelFormat = screen->format;
-    Uint32 pixelFormatEnum = pixelFormat->format;
-    const char* surfacePixelFormatName = SDL_GetPixelFormatName(pixelFormatEnum);
-    std::cout << "Pixel format: " << surfacePixelFormatName << std::endl;
-
-    // Fast lookup of line addresses
-    line_address.resize(screen_height);
-    UINT32 offset = 0;
-    for (int i = 0; i < screen_height; i++) {
-        line_address[i] = offset;
-        offset += screen->w;
-    }
-    bank_cache = new UINT32[screen_width * screen_height];
 #endif
+    last_render = std::chrono::high_resolution_clock::now();
     cls();
-    flip();
+    flip(true);
 }
 
 void Graphics::cache()
@@ -323,10 +327,6 @@ void Graphics::alpha(Colour bg, Colour fg, Colour& out, double a)
 
 void Graphics::colour(BYTE r, BYTE g, BYTE b)
 {
-    if (!is_open()) {
-        std::cout << "Use GRAPHICS before COLOUR" << std::endl;
-        exit(1);
-    }
     current_colour.r = r;
     current_colour.g = g;
     current_colour.b = b;
@@ -334,10 +334,6 @@ void Graphics::colour(BYTE r, BYTE g, BYTE b)
 
 void Graphics::colour_bg(int r, int g, int b)
 {
-    if (!is_open()) {
-        std::cout << "Use GRAPHICS before COLOUR" << std::endl;
-        exit(1);
-    }
     current_bg_colour.r = r;
     current_bg_colour.g = g;
     current_bg_colour.b = b;
@@ -345,10 +341,6 @@ void Graphics::colour_bg(int r, int g, int b)
 
 void Graphics::colour_hex(UINT32 c)
 {
-    if (!is_open()) {
-        std::cout << "Use GRAPHICS before COLOUR" << std::endl;
-        exit(1);
-    }
     current_colour.r = (c & 0xFF0000) >> 16;
     current_colour.g = (c & 0xFF00) >> 8;
     current_colour.b = (c & 0xFF);
@@ -361,10 +353,6 @@ void Graphics::set_colour(Colour c)
 
 void Graphics::colour_bg_hex(UINT32 c)
 {
-    if (!is_open()) {
-        std::cout << "Use GRAPHICS before COLOUR" << std::endl;
-        exit(1);
-    }
     current_bg_colour.r = (c & 0xFF0000) >> 16;
     current_bg_colour.g = (c & 0xFF00) >> 8;
     current_bg_colour.b = (c & 0xFF);
@@ -372,10 +360,6 @@ void Graphics::colour_bg_hex(UINT32 c)
 
 void Graphics::plot(int x, int y)
 {
-    if (!is_open()) {
-        std::cout << "Use GRAPHICS before PLOT" << std::endl;
-        exit(1);
-    }
     if (x < minX || x > maxX || y < minY || y > maxY)
         return;
 #ifdef RISCOS
@@ -393,10 +377,6 @@ void Graphics::plot(int x, int y)
 
 VM_INT Graphics::point(int x, int y)
 {
-    if (!is_open()) {
-        std::cout << "Use GRAPHICS before POINT" << std::endl;
-        exit(1);
-    }
     if (x < minX || x > maxX || y < minY || y > maxY)
         return 0;
 #ifdef RISCOS
@@ -421,10 +401,6 @@ VM_INT Graphics::point(int x, int y)
 
 void Graphics::cls()
 {
-    if (!is_open()) {
-        std::cout << "Use GRAPHICS before CLS" << std::endl;
-        exit(1);
-    }
 #ifdef RISCOS
     auto bg = current_bg_colour.get_as_hex();
     auto addr = get_bank_address();
@@ -432,16 +408,28 @@ void Graphics::cls()
 #else
     SDL_FillRect(screen, 0, current_bg_colour.get_as_hex());
 #endif
+    if (!banked)
+        flip(false);
     last_cursor_x = 0;
     last_cursor_y = 0;
 }
 
-void Graphics::flip()
+void Graphics::flip(bool user_specified)
 {
-    if (!is_open()) {
-        std::cout << "Use GRAPHICS before FLIP" << std::endl;
-        exit(1);
+    // Only allow user banked CLS
+    if (!user_specified && banked) {
+        return;
     }
+
+    if (!banked && !user_specified) {
+        // We only want to do update at a certain frame rate to avoid unnecessary constant flipping
+        auto t = std::chrono::high_resolution_clock::now();
+        auto time_span = std::chrono::duration_cast<std::chrono::milliseconds>(t - last_render);
+        if (time_span.count() < 50) {
+            return;
+        }
+    }
+    last_render = std::chrono::high_resolution_clock::now();
 
     // Are we doing FPS timings?
     if (showfps) {
@@ -472,7 +460,6 @@ void Graphics::flip()
         bank = (bank % max_banks) + 1;
         graphics_set_vdu_bank(bank);
     }
-
 #else
     SDL_UpdateWindowSurface(window);
 #endif
@@ -502,10 +489,6 @@ void Graphics::draw_horz_line(int x1, int x2, int y)
 
 void Graphics::rectangle(int x1, int y1, int x2, int y2)
 {
-    if (!is_open()) {
-        std::cout << "Use GRAPHICS before RECTANGLE" << std::endl;
-        exit(1);
-    }
     for (int y = y1; y <= y2; y++) {
         draw_horz_line(x1, x2, y);
     }
@@ -513,10 +496,6 @@ void Graphics::rectangle(int x1, int y1, int x2, int y2)
 
 void Graphics::clip(int x1, int y1, int x2, int y2)
 {
-    if (!is_open()) {
-        std::cout << "Use GRAPHICS before CLIPON" << std::endl;
-        exit(1);
-    }
     minX = x1;
     maxX = x2;
     minY = y1;
@@ -525,10 +504,6 @@ void Graphics::clip(int x1, int y1, int x2, int y2)
 
 void Graphics::clipoff()
 {
-    if (!is_open()) {
-        std::cout << "Use GRAPHICS before CLIPOFF" << std::endl;
-        exit(1);
-    }
     minX = 0;
     maxX = screen_width - 1;
     minY = 0;

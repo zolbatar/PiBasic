@@ -108,5 +108,7 @@ void Graphics::line(int x0, int y0, int x1, int y1) {
 
     if (accept) {
         draw_line_raw(x0, y0, x1, y1);
+        if (!banked)
+            flip(false);
     }
 }

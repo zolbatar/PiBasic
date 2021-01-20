@@ -238,9 +238,8 @@ void Graphics::delete_character(int index_ff)
     colour(current_bg_colour.r, current_bg_colour.g, current_bg_colour.b);
     rectangle(last_cursor_x, last_cursor_y, last_cursor_x + f->sc_width, last_cursor_y + font_row_height);
     colour(saved_colour.r, saved_colour.g, saved_colour.b);
-    if (!banked) {
-        flip();
-    }
+    if (!banked)
+        flip(false);
 }
 
 void Graphics::set_margin(int margin)
@@ -261,9 +260,8 @@ void Graphics::print_text(int index_ff, VM_STRING text, int cursor_x, int cursor
     }
     last_cursor_x = cursor_x;
     last_cursor_y = cursor_y;
-    if (!banked) {
-        flip();
-    }
+    if (!banked)
+        flip(false);
 }
 
 void Graphics::print_text_centre(int index_ff, VM_STRING text, int cursor_x, int cursor_y)

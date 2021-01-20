@@ -7,6 +7,7 @@ extern VM* current_vm;
 
 void Graphics::poll()
 {
+    flip(false);
 #ifdef RISCOS
 #else
     SDL_Event event;
@@ -176,6 +177,7 @@ VM_INT Graphics::inkey(VM_INT timeout_or_keycode)
             return -1;
         }
 #else
+        SDL_StartTextInput();
         VM_INT clock = get_clock();
         do {
             // Scan
@@ -183,6 +185,7 @@ VM_INT Graphics::inkey(VM_INT timeout_or_keycode)
                 auto s = key_events.front();
                 key_events.pop();
                 if (s.type == EventType::Text) {
+                    SDL_StopTextInput();
                     return s.ascii;
                 }
             }

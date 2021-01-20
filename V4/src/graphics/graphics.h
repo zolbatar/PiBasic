@@ -100,7 +100,7 @@ public:
     {
         return opened;
     }
-#endif
+#endif 
     void init();
     void shutdown();
     void open(int width, int height, int mode);
@@ -112,7 +112,7 @@ public:
     void cls();
     void plot(int x, int y);
     VM_INT point(int x, int y);
-    void flip();
+    void flip(bool user_specified);
     void poll();
     void draw_horz_line(int x1, int x2, int y);
     void eight_way_symmetric_plot(int xc, int yc, int x, int y, bool fill);
@@ -187,6 +187,7 @@ public:
     Colour current_bg_colour = Colour(0, 0, 0);
 
 private:
+    std::chrono::high_resolution_clock::time_point last_render;
     std::queue<Event> key_events;
     std::queue<Event> mouse_events;
     std::map<VM_INT, Font> font_glyphs;

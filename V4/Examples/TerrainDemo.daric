@@ -1,4 +1,4 @@
-INSTALL "SetupGraphics"
+INSTALL "SetupGraphicsBanked"
 INSTALL "Terrain"
 PROCRotateTerrain()
 INKEY(1000)

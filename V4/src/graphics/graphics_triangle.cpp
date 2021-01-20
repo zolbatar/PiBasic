@@ -86,4 +86,6 @@ void Graphics::triangle(int x1, int y1, int x2, int y2, int x3, int y3)
     for (int y = 0; y < height; y++) {
         draw_horz_line(x_left[y], x_right[y], y + miny);
     }
+    if (!banked)
+        flip(false);
 }

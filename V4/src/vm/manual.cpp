@@ -195,7 +195,6 @@ void VM::debugger_manual()
             updated=false;
         }
 
-        graphics->flip();
         graphics->poll();
         if (graphics->inkey(-17))
         {
@@ -372,7 +371,6 @@ void VM::debugger_manual_keyword(std::string keyword)
         graphics->colour(255, 255, 0);
         graphics->print_text(10, "\r\r(Hit Space to return)", -1, -1);
 
-        graphics->flip();
         graphics->poll();
         graphics->set_margin(0);
         if (graphics->inkey(-17))

@@ -86,7 +86,12 @@ extern std::map<std::string, int> files_index;
     logfile << "------------\n";
     logfile << "[File :     Line :       PC : Op]  Description\n\n";
 
+    // Parse
     auto vm = parse_and_compile(filename.c_str(), graphics, &logfile);
+
+    // Fire up graphics now
+    graphics.open(graphics.get_screen_width(), graphics.get_screen_height(), 0);
+
     current_vm = vm;
     run_vm(vm, graphics, &logfile);
 

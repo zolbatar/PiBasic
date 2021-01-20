@@ -36,8 +36,8 @@ extern World world;
 std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 VM_INT get_clock()
 {
-    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-    std::chrono::milliseconds time_span = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
+    auto t2 = std::chrono::high_resolution_clock::now();
+    auto time_span = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
     double d = time_span.count() / 10.0;
     return static_cast<VM_INT>(d);
 }
@@ -227,6 +227,10 @@ bool VM::opcode_DIVIDE_F()
 bool VM::opcode_DIVIDE_I()
 {
     VM_INT v2 = stack_pop_int();
+    if (v2 == 0) {
+        std::cout << "Divide by zero error\n";
+        exit(1);
+    }
     VM_INT v1 = stack_pop_int();
     VM_INT v3 = v1 / v2;
     stack_push_int(v3);
@@ -394,8 +398,6 @@ bool VM::opcode_INPUT_S()
 
 bool VM::opcode_PRINT_F()
 {
-    if (!graphics->is_open())
-        error("Use GRAPHICS before PRINT");
     VM_FLOAT v1 = stack_pop_float();
     print_right_justify = bc.data & 1;
     print_hex = bc.data & 2;
@@ -423,8 +425,6 @@ bool VM::opcode_PRINT_F()
 
 bool VM::opcode_PRINT_I()
 {
-    if (!graphics->is_open())
-        error("Use GRAPHICS before PRINT");
     VM_INT v1 = stack_pop_int();
     print_right_justify = bc.data & 1;
     print_hex = bc.data & 2;
@@ -452,8 +452,6 @@ bool VM::opcode_PRINT_I()
 
 bool VM::opcode_PRINT_S()
 {
-    if (!graphics->is_open())
-        error("Use GRAPHICS before PRINT");
     VM_STRING v = stack_pop_string();
     if (runtime_debug)
         *logfile << "Print string: '";
@@ -465,8 +463,6 @@ bool VM::opcode_PRINT_S()
 
 bool VM::opcode_PRINT_NL()
 {
-    if (!graphics->is_open())
-        error("Use GRAPHICS before PRINT");
     if (runtime_debug)
         *logfile << "Print newline: ";
     if (!graphics->is_open()) {
@@ -2354,7 +2350,7 @@ bool VM::opcode_COLOUREXPRESSION()
 
 bool VM::opcode_FLIP()
 {
-    graphics->flip();
+    graphics->flip(true);
     if (runtime_debug)
         *logfile << "Flip screen" << std::endl;
     return false;
@@ -2744,8 +2740,6 @@ bool VM::opcode_TRIANGLESHADED()
 
 bool VM::opcode_INKEY()
 {
-    if (!graphics->is_open())
-        error("Use GRAPHICS before INKEY");
     VM_INT timeout = stack_pop_int();
     VM_INT v = graphics->inkey(timeout);
     stack_push_int(v);
@@ -2754,8 +2748,6 @@ bool VM::opcode_INKEY()
 
 bool VM::opcode_INKEYS()
 {
-    if (!graphics->is_open())
-        error("Use GRAPHICS before INKEY$");
     VM_INT timeout = stack_pop_int();
     VM_STRING v = graphics->inkeys(timeout);
     stack_push_string(v);
@@ -2764,8 +2756,6 @@ bool VM::opcode_INKEYS()
 
 bool VM::opcode_GET()
 {
-    if (!graphics->is_open())
-        error("Use GRAPHICS before GET");
     VM_INT v = graphics->get();
     stack_push_int(v);
     return false;
@@ -2773,8 +2763,6 @@ bool VM::opcode_GET()
 
 bool VM::opcode_GETS()
 {
-    if (!graphics->is_open())
-        error("Use GRAPHICS before GET$");
     VM_STRING v = graphics->gets();
     stack_push_string(v);
     return false;

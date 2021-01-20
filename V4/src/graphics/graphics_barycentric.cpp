@@ -90,6 +90,8 @@ void Graphics::gouraud_triangle(const int x1, const int y1, const int x2, const 
         w1_row += B20;
         w2_row += B01;
     }
+    if (!banked)
+        flip(false);
 }
 
 void Graphics::gouraud_triangle_with_colour(const int x1, const int y1, const int x2, const int y2, const int x3, const int y3, const BYTE r1, const BYTE g1,
@@ -157,4 +159,6 @@ void Graphics::gouraud_triangle_with_colour(const int x1, const int y1, const in
         w1_row += B20;
         w2_row += B01;
     }
+    if (!banked)
+        flip(false);
 }
