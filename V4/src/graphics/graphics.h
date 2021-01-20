@@ -90,17 +90,10 @@ public:
         minY = 0;
         maxY = 0;
     }
-#ifndef RISCOS
-    bool is_open()
-    {
-        return window != NULL;
-    }
-#else
     bool is_open()
     {
         return opened;
     }
-#endif 
     void init();
     void shutdown();
     void open(int width, int height, int mode);
@@ -221,6 +214,7 @@ private:
     int bank = 1;
 #endif
     bool banked = false;
+    int mode;
     int screen_width, screen_height;
     int minX, maxX, minY, maxY;
     int last_cursor_x = 0, last_cursor_y = 0;

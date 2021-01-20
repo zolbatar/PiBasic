@@ -269,7 +269,9 @@ star                \*\*{alpha}+
                         while ((pos = s.find("\"")) != std::string::npos) {
                             s.replace(pos, 1, "");
                         }
+#ifdef __WINDOWS__
                         s += ".daric";
+#endif
 
                         // Have we already included?
                         if (included_files.count(s) > 0) {
