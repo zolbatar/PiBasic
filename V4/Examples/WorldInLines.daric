@@ -17,7 +17,7 @@ CASE A$ OF
 	WHEN "4" pointSkip=25
 ENDCASE
 PROCLoadPolygons()
-CHAIN "Welcome",full%
+CHAIN "Welcome"
 
 TYPE MapPoint
 	FIELD x
