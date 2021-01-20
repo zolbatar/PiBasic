@@ -1,5 +1,327 @@
-PRINT "Hello"
-BREAKPOINT
-INKEY(1000)
-PRINT 4 // 100
+INSTALL "SetupGraphics"
+
+T% = Time
+Print "DARIC Test Rig"
+Print "--------------"
+Print
+
+Print "::Arrays::"
+Dim A%(6)
+A%(0) = 10
+A%(5) = 15
+Print "Index 0            = ";:If A%(0) = 10 Then PROCPass() Else PROCFail()
+Print "Index 5            = ";:If A%(5) = 15 Then PROCPass() Else PROCFail()
+Dim ta1$(2)
+ta1$(0) = "Test"
+ta1$(1) = ta1$(0)
+Print "String arrays      = ";:If ta1$(1) = "Test" Then PROCPass() Else PROCFail()
+Dim ta2$(2, 3)
+ta2$(0, 1) = "Test"
+ta2$(1, 2) = ta2$(0, 1)
+Print "2D arrays          = ";:If ta2$(1, 2) = "Test" Then PROCPass() Else PROCFail()
+Print
+
+REM Print "::BBC Basic Compatibility::"
+REM PRINT "LET                = ";:LETA=1:If A = 1 Then PROCPass() Else PROCFail()
+Print
+
+Print "::Boolean::"
+Print "Or                 = ";:If (&F0 Or &F0 = &F0) And (&F0 Or &0F = &FF) Then PROCPass() Else PROCFail()
+Print "Eor                = ";:If (1 Eor 1 = 0) And (1 Eor 0 = 1) And (0 Eor 0 = 0) Then PROCPass() Else PROCFail()
+Print "And                = ";:If ((&F0 And &F0) = &F0) And ((&F0 And &0F) = &0) Then PROCPass() Else PROCFail()
+Print "Not                = ";:If Not 1 = 0 Then PROCPass() Else PROCFail()
+Print "True               = ";:If True = 1 Then PROCPass() Else PROCFail()
+Print "False              = ";:If False = 0 Then PROCPass() Else PROCFail()
+Print
+
+Print "::Comparison::"
+Print "Int =              = ";:If 5 = 5 Then PROCPass() Else PROCFail()
+Print "Int <>             = ";:If 5 <> 6 Then PROCPass() Else PROCFail()
+Print "Int <              = ";:If 5 < 10 Then PROCPass() Else PROCFail()
+Print "Int <= (<)         = ";:If 4 <= 5 Then PROCPass() Else PROCFail()
+Print "Int <= (=)         = ";:If 5 <= 5 Then PROCPass() Else PROCFail()
+Print "Int >              = ";:If 10 > 5 Then PROCPass() Else PROCFail()
+Print "Int >= (>)         = ";:If 10 >= 5 Then PROCPass() Else PROCFail()
+Print "Int >= (>=)        = ";:If 5 >= 5 Then PROCPass() Else PROCFail()
+Print "Float =            = ";:If 5.0 = 5.0 Then PROCPass() Else PROCFail()
+Print "Float <>           = ";:If 5.0 <> 6.0 Then PROCPass() Else PROCFail()
+Print "Float <            = ";:If 5.0 < 10.0 Then PROCPass() Else PROCFail()
+Print "Float <= (<)       = ";:If 4.0 <= 5.0 Then PROCPass() Else PROCFail()
+Print "Float <= (=)       = ";:If 5.0 <= 5.0 Then PROCPass() Else PROCFail()
+Print "Float >            = ";:If 10.0 > 5.0 Then PROCPass() Else PROCFail()
+Print "Float >= (>)       = ";:If 10.0 >= 5.0 Then PROCPass() Else PROCFail()
+Print "Float >= (>=)      = ";:If 5.0 >= 5.0 Then PROCPass() Else PROCFail()
+Print "String =           = ";:If "Fred" = "Fred" Then PROCPass() Else PROCFail()
+Print "String <>          = ";:If "Fred" <> "fred" Then PROCPass() Else PROCFail()
+Print "String <           = ";:If "Fred" < "fred" Then PROCPass() Else PROCFail()
+Print "String <= (<)      = ";:If "Fred" <= "fred" Then PROCPass() Else PROCFail()
+Print "String <= (=)      = ";:If "Fred" <= "Fred" Then PROCPass() Else PROCFail()
+Print "String >           = ";:If "fred" > "Fred" Then PROCPass() Else PROCFail()
+Print "String >= (>)      = ";:If "fred" >= "Fred" Then PROCPass() Else PROCFail()
+Print "String >= (>=)     = ";:If "Fred" >= "Fred" Then PROCPass() Else PROCFail()
+Print
+
+Print "::Conversion::"
+Print "10 + 15.5          = ";:If 10 + 15.5 = 25.5 Then PROCPass() Else PROCFail()
+Print
+
+Print "::Data::"
+Let d1% = 0, d2$ = "", d3 = 0.0
+Dim dat%(5)
+Read d1%, d2$, d3
+Data 100, "Fred", 10.5
+Print "Data (Int)         = ";:If d1% = 100 Then PROCPass() Else PROCFail()
+Print "Data (Float)       = ";:If d3 = 10.5 Then PROCPass() Else PROCFail()
+Print "Data (String)      = ";:If d2$ = "Fred" Then PROCPass() Else PROCFail()
+For I% = 0 To 4
+	Read dat%(I%)
+Next
+Data 1, 2, 3, 4, 5
+Print "Data (Array)       = ";:If dat%(0) + dat%(1) + dat%(2) + dat%(3) + dat%(4) = 15 Then PROCPass() Else PROCFail()
+Data 1, 2, 3, 4, 5:REM used by function FuncTestLocalVariables. Data can't be inside functions yet
+PROCTestLocalVariables()
+Restore
+Read d1%
+Print "Restore            = ";:If d1% = 100 Then PROCPass() Else PROCFail()
+Print
+
+Print "::File I/O::"
+Print "Write then Read    = ";;
+C%=OpenOut("Test")
+BPUT# C%, ASC("A")
+Close# C%
+C%=OpenIn("Test")
+V%=BGET# C%
+If V% = 65 Then PROCPass() Else PROCFail()
+Close# C%
+PRINT
+
+Print "::Functions::"
+Print "Function (Return)  = ";:PROCTest()
+Print "Function (Int)     = ";:If FNTestReturn%(10, 5.5) = 20 Then PROCPass() Else PROCFail()
+Print "Function (Float)   = ";:If FNTestReturn(10, 5.5) = 20.5 Then PROCPass() Else PROCFail()
+Print "Proc (RETURN)      = ";:AA%=1:BB%=2:PROCTestRet(AA%, BB%):IF AA% = 100 And BB%=200 Then PROCPass() Else PROCFail()
+Print	
+
+Print "::Locals & Globals::"
+G%=5
+PROCLocalVars()
+Print "Preserving Global  = ";:If G% = 5 Then PROCPass() Else PROCFail()
+Print
+
+Print "::Looping::"	
+Print "One line IF        = ";:If 1 = 1 Then PROCPass() Else PROCFail()
+Print "Multiline IF       = ";
+If 1 = 1
+	PROCPass()
+Else
+	PROCFail()
+EndIf
+I% = 0
+Repeat
+	I% = I% + 1
+Until I% = 10
+Print "Repeat             = ";:If I% = 10 Then PROCPass() Else PROCFail()
+I% = 0
+While I% < 10
+	I% = I% + 1
+EndWhile
+Print "While              = ";:If I% = 10 Then PROCPass() Else PROCFail()
+I% = 0
+For J% = 0 To 9
+	I% = I% + 1
+Next
+Print "For (Int)          = ";:If I% = 10 Then PROCPass() Else PROCFail()
+I% = 0
+For J% = 0 To 9 Step 2
+	I% = I% + 1
+Next
+Print "For + Step (Int)   = ";:If I% = 5 Then PROCPass() Else PROCFail()
+I% = 0
+For J = 0 To 9
+	I% = I% + 1
+Next
+Print "For (Float)        = ";:If I% = 10 Then PROCPass() Else PROCFail()
+I% = 0
+For J = 0 To 9 Step 2
+	I% = I% + 1
+Next
+Print "For + Step (Float) = ";:If I% = 5 Then PROCPass() Else PROCFail()
+Print "Case               = ";
+I%=1
+Case I% Of
+	When 0, 1, 2 PROCPass()
+	When 3 PROCFail()
+	Otherwise Print "Neither"
+EndCase
+Print "Case (Otherwise)   = ";
+I%=4
+Case I% Of
+	When 0, 1, 2 PROCFail()
+	When 3 PROCFail()
+	Otherwise PROCPass()
+EndCase
+PRINT
+
+Print "::Maths::"
+Print "- (Unary)          = ";:If 2 - -2 = 4 Then PROCPass() Else PROCFail()
+Print "- (Int)            = ";:If 10 - 8 = 2 Then PROCPass() Else PROCFail()
+Print "+ (Int)            = ";:If 10 + 8 = 18 Then PROCPass() Else PROCFail()
+Print "* (Int)            = ";:If 10 * 8 = 80 Then PROCPass() Else PROCFail()
+Print "/ (Int)            = ";:If 17 / 5 = 3.4 Then PROCPass() Else PROCFail()
+Print "// (Int)           = ";:If 17 // 5 = 3 Then PROCPass() Else PROCFail()
+Print "Mod (Int)          = ";:If 11 Mod 5 = 1 Then PROCPass() Else PROCFail()
+Print "Div (Int)          = ";:If 11 Div 5 = 2 Then PROCPass() Else PROCFail()
+Print "Abs (Int)          = ";:If Abs(-10) = 10 Then PROCPass() Else PROCFail()
+Print "- (Float)          = ";:If 10.5 - 8.25 = 2.25 Then PROCPass() Else PROCFail()
+Print "+ (Float)          = ";:If 10.4 + 8.1 = 18.5 Then PROCPass() Else PROCFail()
+Print "* (Float)          = ";:If 2.5 * 4.5 = 11.25 Then PROCPass() Else PROCFail()
+Print "/ (Float)          = ";:If 8.4 / 4.2 = 2.0 Then PROCPass() Else PROCFail()
+Print "Mod (Float)        = ";:If 11.0 Mod 5.0 = 1 Then PROCPass() Else PROCFail()
+Print "Div (Float)        = ";:If 11.0 Div 5.0 = 2 Then PROCPass() Else PROCFail()
+Print "Abs (Float)        = ";:If Abs(-10.5) = 10.5 Then PROCPass() Else PROCFail()
+Print "Sqr                = ";:If Sqr(16) = 4 Then PROCPass() Else PROCFail()
+Print "Ln                 = ";:If Int(Ln(16) * 100.0) = 277 Then PROCPass() Else PROCFail()
+Print "Log                = ";:If Int(Log(16) * 100.0) = 120 Then PROCPass() Else PROCFail()
+Print "Exp                = ";:If Int(Exp(1) * 100.0) = 271 Then PROCPass() Else PROCFail()
+Print "Atn                = ";:If Int(Atn(3) * 100.0) = 124 Then PROCPass() Else PROCFail()
+Print "Tan                = ";:If Int(Tan(3) * 100.0) = -15 Then PROCPass() Else PROCFail()
+Print "Sin                = ";:If Int(Sin(3) * 100.0) = 14 Then PROCPass() Else PROCFail()
+Print "Cos                = ";:If Int(Cos(3) * 100.0) = -99 Then PROCPass() Else PROCFail()
+Print "Acs                = ";:If Int(Acs(0.5) * 100.0) = 104 Then PROCPass() Else PROCFail()
+Print "Asn                = ";:If Int(Asn(0.5) * 100.0) = 52 Then PROCPass() Else PROCFail()
+Print "Rad                = ";:If Int(Rad(90) * 100.0) = 157 Then PROCPass() Else PROCFail()
+Print "Deg                = ";:If Int(Deg(1.5)) = 85 Then PROCPass() Else PROCFail()
+Print "Sgn (-)            = ";:If Sgn(-10) = -1 Then PROCPass() Else PROCFail()
+Print "Sgn                = ";:If Sgn(0) = 0 Then PROCPass() Else PROCFail()
+Print "Sgn (+)            = ";:If Sgn(10) = 1 Then PROCPass() Else PROCFail()
+Print "<< (Shift left)    = ";:If 60 << 2 = 240 Then PROCPass() Else PROCFail()
+Print ">> (Shift right)   = ";:If 200 >> 2 = 50 Then PROCPass() Else PROCFail()
+Print "<<=                = ";:AA%=1:AA%<<=4:If AA%=16 Then PROCPass() Else PROCFail()
+Print
+
+Print "::Numbers::"
+Print "Hex                = ";:IF &40 = 64 Then PROCPass() Else PROCFail()
+Print "Binary             = ";:IF %100 = 4 Then PROCPass() Else PROCFail()
+Print
+
+Print "::Print & Input::"
+Print "Multi-print ,      = ";:Print 10,151.2,"Test"
+Print "Multi-print ;      = ";:Print 10;151.2;"Test"
+Print "Multi-print end ;  = ";:Print 10;151.2;"Test";:Print
+Print
+
+Print "::Strings::"
+Print "+                  = ";:If "Bob" + "Jack" = "BobJack" Then PROCPass() Else PROCFail()
+Print "Asc                = ";:If (Asc("Fred") = 70) And (Asc("") = -1) Then PROCPass() Else PROCFail()
+Print "Chr$               = ";:If Chr$(65) = "A" Then PROCPass() Else PROCFail()
+Print "Instr              = ";:If Instr("Test this this string", "this") = 6 Then PROCPass() Else PROCFail()
+Print "Instr (with start) = ";:If Instr("Test this this string", "this", 8) = 11 Then PROCPass() Else PROCFail()
+Print "Left$              = ";:If Left$("A test string", 6) = "A test" Then PROCPass() Else PROCFail()
+Print "Mid$               = ";:If Mid$("A test string", 3, 4) = "test" Then PROCPass() Else PROCFail()
+Print "Right$             = ";:If Right$("A test string", 6) = "string" Then PROCPass() Else PROCFail()
+Print "Len                = ";:If Len("A test string") = 13 Then PROCPass() Else PROCFail()
+Print "Val                = ";:If Val("10.5") = 10.5 Then PROCPass() Else PROCFail()
+Print "Str$               = ";:If Str$(10.5) = "10.5" Then PROCPass() Else PROCFail()
+Print "Str$ (Hex)         = ";:If Str$~(15) = "F" Then PROCPass() Else PROCFail()
+Print "String$            = ";:If String$(4, "A") = "AAAA" Then PROCPass() Else PROCFail()
+Print
+
+Print "::Tokens::"
+Print "Swap               = ";:SWAPA%=1:SWAPB%=2:SWAP SWAPA%,SWAPB%:IF SWAPA%=2 AND SWAPB%=1 THEN PROCPass() Else PROCFail()
+Print
+
+Print "::System/OS::"
+Print "Oscli              = ";:Oscli "FX0":Print " - NOT TESTED"
+Print "Time               = ";:If Time > 0 Then PROCPass() Else PROCFail()
+Print "Time$              = ";:If Len(Time$) = 22 Then PROCPass() Else PROCFail()
+Print 
+
+Print "::Types::"
+PROCTestTypes()
+Print 
+
+170 Print "::Goto & Gosub::"
+175 Print "Goto               = ";
+180 GOTO 200
+190 PROCFail()
+200 PROCPass()
+175 Print "Gosub              = ";
+180 GOSUB%=0
+210 GOSUB 300
+220 If GOSUB%=1 Then PROCPass() ELSE PROCFail()
+PRINT
+
+Print "::Keyboard::"
+Print "Inkey (timeout)    = ";:IF INKEY(10) = -1 Then PROCPass() Else PROCFail()
+Print "Inkey (wait)       = ";:IF INKEY(1000) <> -1 Then PROCPass() Else PROCFail()
+
+Print
+Print "Complete in ";:Print ((Time-T%)/100.0);:Print " seconds"
+CHAIN "Welcome"
 END
+
+REM Check forward FN/PROC calls
+Type VertexTest
+	Field x
+	Field y
+	Field z
+	Field rgb%
+EndType
+
+DEFPROCLocalVars()
+	Local G% = 10
+EndProc
+
+DEFPROCTestTypes()
+	Local A! = VertexTest
+	A!x = 50.0
+	A!y = 100.5
+	A!rgb% = &FF2080
+	Print "Load field (float) = ";: If A!y = 100.5 Then PROCPass() Else PROCFail()
+	Print "Load field (int)   = ";: If A!rgb% = &FF2080 Then PROCPass() Else PROCFail()
+	Dim B!(5, VertexTest)
+	B!(4)y = 100.0
+	Print "Load field (array) = ";: If B!(4)y = 100.0 Then PROCPass() Else PROCFail()
+EndProc
+
+DEFPROCTest()
+	PROCPass()
+	Return
+	Print "FAIL"
+EndProc
+
+DEFPROCTestRet(RETURN a%, RETURN b%)
+	a%=100
+	b%=200
+EndProc
+
+DEFFNTestReturn%(x%, y) 
+	RETURN Int(x% + y + 5)
+ENDFN
+
+DEFFNTestReturn(x%, y) 
+	RETURN x% + y + 5.0
+ENDFN
+
+DEFPROCTestLocalVariables()
+	Local Dim C%(5)
+	For LOCAL J% = 0 To 4
+		Read C%(J%)
+	Next
+	Print "Func Local (Array) = ";:If C%(0) + C%(1) + C%(2) + C%(3) + C%(4) = 15 Then PROCPass() Else PROCFail()
+EndProc
+
+300 GOSUB%=1:RETURN
+
+DEFPROCFail()
+	COLOUR RED
+	PRINT  "!! FAILED TEST !!"
+	END
+ENDPROC
+
+DEFPROCPass()
+	COLOUR GREEN
+	PRINT "PASS"
+	COLOUR WHITE
+ENDPROC

@@ -79,6 +79,8 @@ void Compiler::compile_node_expression(struct AST* ast)
             { Type::REAL, Bytecodes::DIVIDE_F },
         });
         stack_pop();
+        stack_pop();
+        stack_push(Type::INTEGER);
         break;
     case MOD:
         switch (peek_type()) {

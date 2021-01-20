@@ -216,6 +216,10 @@ bool VM::opcode_MULTIPLY_I()
 bool VM::opcode_DIVIDE_F()
 {
     VM_FLOAT v2 = stack_pop_float();
+    if (v2 == 0.0) {
+        std::cout << "Divide by zero error\n";
+        exit(1);
+    }
     VM_FLOAT v1 = stack_pop_float();
     VM_FLOAT v3 = v1 / v2;
     stack_push_float(v3);

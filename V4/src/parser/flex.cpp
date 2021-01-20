@@ -2378,7 +2378,7 @@ return SS;
 case 5:
 YY_RULE_SETUP
 #line 57 "DARIC.l"
-return INTEGER_DIVIDE;
+return INTEGERDIVIDE;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP

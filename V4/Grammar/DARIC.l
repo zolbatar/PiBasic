@@ -54,7 +54,7 @@ star                \*\*{alpha}+
 {ws}                /* skip blanks and tabs */
 {nl}                return NL;
 {ss}                return SS;
-"//"                return INTEGER_DIVIDE;
+"//"                return INTEGERDIVIDE;
 "~"					return TILDE;
 "'"					return TICK;
 "="					return E;

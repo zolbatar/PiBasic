@@ -66,7 +66,7 @@ extern int yydebug;
      SS = 275,
      SEMICOLON = 276,
      COMMA = 277,
-     INTEGER_DIVIDE = 278,
+     INTEGERDIVIDE = 278,
      E = 279,
      LE = 280,
      GE = 281,
@@ -276,8 +276,7 @@ extern int yydebug;
      SOLID = 485,
      WIREFRAME = 486,
      FILLEDWIREFRAME = 487,
-     INTEGERDIVIDE = 488,
-     NEG = 489
+     NEG = 488
    };
 #endif
 
@@ -295,7 +294,7 @@ typedef union YYSTYPE
 
 
 /* Line 2058 of yacc.c  */
-#line 299 "C:\\Users\\d_dud\\source\\repos\\PiBasic\\V4\\src\\parser\\bison.hpp"
+#line 298 "C:\\Users\\d_dud\\source\\repos\\PiBasic\\V4\\src\\parser\\bison.hpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

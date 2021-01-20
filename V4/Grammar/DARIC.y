@@ -33,7 +33,7 @@ int yylex_destroy(void);
 %token <v_string> DEFINE_PROCEDURE DEFINE_INTEGER_FUNCTION DEFINE_STRING_FUNCTION DEFINE_REAL_FUNCTION 
 %token <v_string> PROCEDURE INTEGER_FUNCTION REAL_FUNCTION STRING_FUNCTION
 %token NL SS SEMICOLON COMMA
-%token INTEGER_DIVIDE
+%token INTEGERDIVIDE
 %token E LE GE NE SHL SHR LT GT PLUS MINUS MULTIPLY DIVIDE TILDE TICK
 %token SHL_E SHR_E PLUS_E MINUS_E MULTIPLY_E DIVIDE_E INTEGERDIVIDE_E
 %token SWAP SWAP_I SWAP_F SWAP_S
@@ -67,7 +67,7 @@ int yylex_destroy(void);
 %left AND
 %left E GE LE NE LT GT
 %left PLUS MINUS
-%left MULTIPLY DIVIDE MOD DIV INTEGERDIVIDE
+%left MULTIPLY DIVIDE INTEGERDIVIDE MOD DIV 
 %left SHL SHR
 %left NOT
 %left NEG  /* negation--unary minus */
@@ -273,7 +273,7 @@ expression_numeric
     | expression_numeric MINUS expression_numeric { $$ = token2(MINUS, $1, $3); }
     | expression_numeric MULTIPLY expression_numeric { $$ = token2(MULTIPLY, $1, $3); }
     | expression_numeric DIVIDE expression_numeric { $$ = token2(DIVIDE, $1, $3); }
-    | expression_numeric INTEGER_DIVIDE expression_numeric { $$ = token2(INTEGERDIVIDE, $1, $3); }
+    | expression_numeric INTEGERDIVIDE expression_numeric { $$ = token2(INTEGERDIVIDE, $1, $3); }
     | expression_numeric DIV expression_numeric { $$ = token2(DIV, $1, $3); }
     | expression_numeric MOD expression_numeric { $$ = token2(MOD, $1, $3); }
     | expression_numeric SHL expression_numeric { $$ = token2(SHL, $1, $3); }
