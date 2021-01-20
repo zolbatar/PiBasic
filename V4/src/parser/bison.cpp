@@ -1,19 +1,20 @@
-/* A Bison parser, made by GNU Bison 2.7.  */
+/* A Bison parser, made by GNU Bison 3.5.1.  */
 
 /* Bison implementation for Yacc-like parsers in C
-   
-      Copyright (C) 1984, 1989-1990, 2000-2012 Free Software Foundation, Inc.
-   
+
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
+   Inc.
+
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-   
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
@@ -26,7 +27,7 @@
    special exception, which will cause the skeleton and the resulting
    Bison output files to be licensed under the GNU General Public
    License without this special exception.
-   
+
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
@@ -40,11 +41,14 @@
    define necessary library symbols; they are noted "INFRINGES ON
    USER NAME SPACE" below.  */
 
+/* Undocumented macros, especially those whose name start with YY_,
+   are private implementation details.  Do not rely on them.  */
+
 /* Identify Bison output.  */
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "2.7"
+#define YYBISON_VERSION "3.5.1"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -61,9 +65,8 @@
 
 
 
-/* Copy the first part of user declarations.  */
-/* Line 371 of yacc.c  */
-#line 1 "DARIC.y"
+/* First part of user prologue.  */
+#line 1 "Grammar/DARIC.y"
 
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
@@ -83,14 +86,26 @@ std::map<int, std::list<AST *>> ast_lines;
 void yyerror(const char *e);
 int yylex_destroy(void);
 
-/* Line 371 of yacc.c  */
-#line 88 "C:\\Users\\d_dud\\source\\repos\\PiBasic\\V4\\src\\parser\\bison.cpp"
+#line 90 "src/parser/bison.cpp"
 
-# ifndef YY_NULL
-#  if defined __cplusplus && 201103L <= __cplusplus
-#   define YY_NULL nullptr
+# ifndef YY_CAST
+#  ifdef __cplusplus
+#   define YY_CAST(Type, Val) static_cast<Type> (Val)
+#   define YY_REINTERPRET_CAST(Type, Val) reinterpret_cast<Type> (Val)
 #  else
-#   define YY_NULL 0
+#   define YY_CAST(Type, Val) ((Type) (Val))
+#   define YY_REINTERPRET_CAST(Type, Val) ((Type) (Val))
+#  endif
+# endif
+# ifndef YY_NULLPTR
+#  if defined __cplusplus
+#   if 201103L <= __cplusplus
+#    define YY_NULLPTR nullptr
+#   else
+#    define YY_NULLPTR 0
+#   endif
+#  else
+#   define YY_NULLPTR ((void*)0)
 #  endif
 # endif
 
@@ -102,11 +117,11 @@ int yylex_destroy(void);
 # define YYERROR_VERBOSE 0
 #endif
 
-/* In a future release of Bison, this section will be replaced
-   by #include "bison.hpp".  */
-#ifndef YY_YY_C_USERS_D_DUD_SOURCE_REPOS_PIBASIC_V4_SRC_PARSER_BISON_HPP_INCLUDED
-# define YY_YY_C_USERS_D_DUD_SOURCE_REPOS_PIBASIC_V4_SRC_PARSER_BISON_HPP_INCLUDED
-/* Enabling traces.  */
+/* Use api.header.include to #include this header
+   instead of duplicating it here.  */
+#ifndef YY_YY_SRC_PARSER_BISON_HPP_INCLUDED
+# define YY_YY_SRC_PARSER_BISON_HPP_INCLUDED
+/* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
 #endif
@@ -114,332 +129,360 @@ int yylex_destroy(void);
 extern int yydebug;
 #endif
 
-/* Tokens.  */
+/* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-   /* Put the tokens into the symbol table, so that GDB and other debuggers
-      know about them.  */
-   enum yytokentype {
-     LINE_NUMBER = 258,
-     LITERAL_INT = 259,
-     LITERAL_REAL = 260,
-     LITERAL_STRING = 261,
-     INTEGER_VARIABLE = 262,
-     VARIABLE = 263,
-     STRING_VARIABLE = 264,
-     TYPE_VARIABLE = 265,
-     DEFINE_PROCEDURE = 266,
-     DEFINE_INTEGER_FUNCTION = 267,
-     DEFINE_STRING_FUNCTION = 268,
-     DEFINE_REAL_FUNCTION = 269,
-     PROCEDURE = 270,
-     INTEGER_FUNCTION = 271,
-     REAL_FUNCTION = 272,
-     STRING_FUNCTION = 273,
-     NL = 274,
-     SS = 275,
-     SEMICOLON = 276,
-     COMMA = 277,
-     INTEGERDIVIDE = 278,
-     E = 279,
-     LE = 280,
-     GE = 281,
-     NE = 282,
-     SHL = 283,
-     SHR = 284,
-     LT = 285,
-     GT = 286,
-     PLUS = 287,
-     MINUS = 288,
-     MULTIPLY = 289,
-     DIVIDE = 290,
-     TILDE = 291,
-     TICK = 292,
-     SHL_E = 293,
-     SHR_E = 294,
-     PLUS_E = 295,
-     MINUS_E = 296,
-     MULTIPLY_E = 297,
-     DIVIDE_E = 298,
-     INTEGERDIVIDE_E = 299,
-     SWAP = 300,
-     SWAP_I = 301,
-     SWAP_F = 302,
-     SWAP_S = 303,
-     END_FN = 304,
-     END_PROC = 305,
-     RETURN = 306,
-     RETURN_WITH_VALUE = 307,
-     DEFPROC = 308,
-     DEFFN = 309,
-     CALLPROC = 310,
-     CALLFN = 311,
-     RETURN_PARAMETER = 312,
-     BGET = 313,
-     BPUT = 314,
-     CLOSE = 315,
-     EOFH = 316,
-     OPENIN = 317,
-     OPENUP = 318,
-     OPENOUT = 319,
-     PTR = 320,
-     PTRA = 321,
-     GETSH = 322,
-     LISTFILES = 323,
-     CASE = 324,
-     ELSE = 325,
-     END_CASE = 326,
-     END_IF = 327,
-     END_WHILE = 328,
-     FOR = 329,
-     GOSUB = 330,
-     GOTO = 331,
-     IF = 332,
-     NEXT = 333,
-     OF = 334,
-     OTHERWISE = 335,
-     REPEAT = 336,
-     STEP = 337,
-     THEN = 338,
-     TO = 339,
-     UNTIL = 340,
-     WHEN = 341,
-     WHILE = 342,
-     IN_ = 343,
-     FORIN = 344,
-     DATA = 345,
-     READ = 346,
-     RESTORE = 347,
-     ARRAYSIZE = 348,
-     DIM = 349,
-     LOCALDIM = 350,
-     END_TYPE = 351,
-     FIELD = 352,
-     GLOBAL = 353,
-     LOCAL = 354,
-     TYPE_ = 355,
-     END = 356,
-     TRACEON = 357,
-     TRACEOFF = 358,
-     BREAKPOINT = 359,
-     RND = 360,
-     RND0 = 361,
-     RND1 = 362,
-     RNDREAL = 363,
-     RNDRANGE = 364,
-     FLOAT_ = 365,
-     INT_ = 366,
-     ACS = 367,
-     DIV = 368,
-     MOD = 369,
-     SQR = 370,
-     LN = 371,
-     LOG = 372,
-     EXP = 373,
-     ATN = 374,
-     TAN = 375,
-     COS = 376,
-     SIN = 377,
-     ASN = 378,
-     ABS = 379,
-     DEG = 380,
-     RAD = 381,
-     SGN = 382,
-     VAL = 383,
-     PI = 384,
-     BOOLFALSE = 385,
-     BOOLTRUE = 386,
-     ASC = 387,
-     CHRS = 388,
-     INSTR = 389,
-     LEFTS = 390,
-     MIDS = 391,
-     RIGHTS = 392,
-     LEN = 393,
-     STRS = 394,
-     STRSHEX = 395,
-     STRINGS = 396,
-     OSCLI = 397,
-     TIME = 398,
-     TIMES = 399,
-     AND = 400,
-     OR = 401,
-     EOR = 402,
-     NOT = 403,
-     CHAIN = 404,
-     EXPECT = 405,
-     RED = 406,
-     GREEN = 407,
-     YELLOW = 408,
-     BLUE = 409,
-     MAGENTA = 410,
-     CYAN = 411,
-     WHITE = 412,
-     BLACK = 413,
-     CLS = 414,
-     CLG = 415,
-     COLOUR = 416,
-     COLOURBG = 417,
-     COLOUREXP = 418,
-     FLIP = 419,
-     GRAPHICS = 420,
-     BANKED = 421,
-     FILL = 422,
-     SHADED = 423,
-     LINE = 424,
-     PLOT = 425,
-     POINT_ = 426,
-     RECTANGLE = 427,
-     RECTANGLEFILL = 428,
-     TRIANGLE = 429,
-     TRIANGLEFILL = 430,
-     TRIANGLESHADED = 431,
-     CLIPON = 432,
-     CLIPOFF = 433,
-     CIRCLE = 434,
-     CIRCLEFILL = 435,
-     TEXT = 436,
-     TEXTRIGHT = 437,
-     TEXTCENTRE = 438,
-     LOADTYPEFACE = 439,
-     CREATEFONT = 440,
-     MONO15 = 441,
-     MONO20 = 442,
-     MONO25 = 443,
-     MONO30 = 444,
-     MONO35 = 445,
-     MONO40 = 446,
-     MONO50 = 447,
-     MONO75 = 448,
-     MONO100 = 449,
-     PROP15 = 450,
-     PROP20 = 451,
-     PROP25 = 452,
-     PROP30 = 453,
-     PROP35 = 454,
-     PROP40 = 455,
-     PROP50 = 456,
-     PROP75 = 457,
-     PROP100 = 458,
-     SCREENWIDTH = 459,
-     SCREENHEIGHT = 460,
-     SHOWFPS = 461,
-     LASTPOS = 462,
-     INKEY = 463,
-     INKEYS = 464,
-     INPUT_ = 465,
-     PRINT = 466,
-     SPC = 467,
-     SINKEY = 468,
-     SINKEYS = 469,
-     INPUT_NOQUESTIONMARK = 470,
-     GET = 471,
-     GETS = 472,
-     GET_S = 473,
-     GETS_S = 474,
-     MOUSE = 475,
-     CREATEVERTEX = 476,
-     CREATETRIANGLE = 477,
-     CREATESHAPE = 478,
-     CREATEOBJECT = 479,
-     TRANSLATE = 480,
-     ROTATE = 481,
-     SCALE = 482,
-     RENDERFRAME = 483,
-     DELETEOBJECT = 484,
-     SOLID = 485,
-     WIREFRAME = 486,
-     FILLEDWIREFRAME = 487,
-     NEG = 488
-   };
+  enum yytokentype
+  {
+    LINE_NUMBER = 258,
+    LITERAL_INT = 259,
+    LITERAL_REAL = 260,
+    LITERAL_STRING = 261,
+    INTEGER_VARIABLE = 262,
+    VARIABLE = 263,
+    STRING_VARIABLE = 264,
+    TYPE_VARIABLE = 265,
+    DEFINE_PROCEDURE = 266,
+    DEFINE_INTEGER_FUNCTION = 267,
+    DEFINE_STRING_FUNCTION = 268,
+    DEFINE_REAL_FUNCTION = 269,
+    PROCEDURE = 270,
+    INTEGER_FUNCTION = 271,
+    REAL_FUNCTION = 272,
+    STRING_FUNCTION = 273,
+    NL = 274,
+    SS = 275,
+    SEMICOLON = 276,
+    COMMA = 277,
+    INTEGERDIVIDE = 278,
+    E = 279,
+    LE = 280,
+    GE = 281,
+    NE = 282,
+    SHL = 283,
+    SHR = 284,
+    LT = 285,
+    GT = 286,
+    PLUS = 287,
+    MINUS = 288,
+    MULTIPLY = 289,
+    DIVIDE = 290,
+    TILDE = 291,
+    TICK = 292,
+    SHL_E = 293,
+    SHR_E = 294,
+    PLUS_E = 295,
+    MINUS_E = 296,
+    MULTIPLY_E = 297,
+    DIVIDE_E = 298,
+    INTEGERDIVIDE_E = 299,
+    SWAP = 300,
+    SWAP_I = 301,
+    SWAP_F = 302,
+    SWAP_S = 303,
+    END_FN = 304,
+    END_PROC = 305,
+    RETURN = 306,
+    RETURN_WITH_VALUE = 307,
+    DEFPROC = 308,
+    DEFFN = 309,
+    CALLPROC = 310,
+    CALLFN = 311,
+    RETURN_PARAMETER = 312,
+    BGET = 313,
+    BPUT = 314,
+    CLOSE = 315,
+    EOFH = 316,
+    OPENIN = 317,
+    OPENUP = 318,
+    OPENOUT = 319,
+    PTR = 320,
+    PTRA = 321,
+    GETSH = 322,
+    LISTFILES = 323,
+    CASE = 324,
+    ELSE = 325,
+    END_CASE = 326,
+    END_IF = 327,
+    END_WHILE = 328,
+    FOR = 329,
+    GOSUB = 330,
+    GOTO = 331,
+    IF = 332,
+    NEXT = 333,
+    OF = 334,
+    OTHERWISE = 335,
+    REPEAT = 336,
+    STEP = 337,
+    THEN = 338,
+    TO = 339,
+    UNTIL = 340,
+    WHEN = 341,
+    WHILE = 342,
+    IN_ = 343,
+    FORIN = 344,
+    DATA = 345,
+    READ = 346,
+    RESTORE = 347,
+    ARRAYSIZE = 348,
+    DIM = 349,
+    LOCALDIM = 350,
+    END_TYPE = 351,
+    FIELD = 352,
+    GLOBAL = 353,
+    LOCAL = 354,
+    TYPE_ = 355,
+    END = 356,
+    TRACEON = 357,
+    TRACEOFF = 358,
+    BREAKPOINT = 359,
+    RND = 360,
+    RND0 = 361,
+    RND1 = 362,
+    RNDREAL = 363,
+    RNDRANGE = 364,
+    FLOAT_ = 365,
+    INT_ = 366,
+    ACS = 367,
+    DIV = 368,
+    MOD = 369,
+    SQR = 370,
+    LN = 371,
+    LOG = 372,
+    EXP = 373,
+    ATN = 374,
+    TAN = 375,
+    COS = 376,
+    SIN = 377,
+    ASN = 378,
+    ABS = 379,
+    DEG = 380,
+    RAD = 381,
+    SGN = 382,
+    VAL = 383,
+    PI = 384,
+    BOOLFALSE = 385,
+    BOOLTRUE = 386,
+    ASC = 387,
+    CHRS = 388,
+    INSTR = 389,
+    LEFTS = 390,
+    MIDS = 391,
+    RIGHTS = 392,
+    LEN = 393,
+    STRS = 394,
+    STRSHEX = 395,
+    STRINGS = 396,
+    OSCLI = 397,
+    TIME = 398,
+    TIMES = 399,
+    AND = 400,
+    OR = 401,
+    EOR = 402,
+    NOT = 403,
+    CHAIN = 404,
+    EXPECT = 405,
+    RED = 406,
+    GREEN = 407,
+    YELLOW = 408,
+    BLUE = 409,
+    MAGENTA = 410,
+    CYAN = 411,
+    WHITE = 412,
+    BLACK = 413,
+    CLS = 414,
+    CLG = 415,
+    COLOUR = 416,
+    COLOURBG = 417,
+    COLOUREXP = 418,
+    FLIP = 419,
+    GRAPHICS = 420,
+    BANKED = 421,
+    FILL = 422,
+    SHADED = 423,
+    LINE = 424,
+    PLOT = 425,
+    POINT_ = 426,
+    RECTANGLE = 427,
+    RECTANGLEFILL = 428,
+    TRIANGLE = 429,
+    TRIANGLEFILL = 430,
+    TRIANGLESHADED = 431,
+    CLIPON = 432,
+    CLIPOFF = 433,
+    CIRCLE = 434,
+    CIRCLEFILL = 435,
+    TEXT = 436,
+    TEXTRIGHT = 437,
+    TEXTCENTRE = 438,
+    LOADTYPEFACE = 439,
+    CREATEFONT = 440,
+    MONO15 = 441,
+    MONO20 = 442,
+    MONO25 = 443,
+    MONO30 = 444,
+    MONO35 = 445,
+    MONO40 = 446,
+    MONO50 = 447,
+    MONO75 = 448,
+    MONO100 = 449,
+    PROP15 = 450,
+    PROP20 = 451,
+    PROP25 = 452,
+    PROP30 = 453,
+    PROP35 = 454,
+    PROP40 = 455,
+    PROP50 = 456,
+    PROP75 = 457,
+    PROP100 = 458,
+    SCREENWIDTH = 459,
+    SCREENHEIGHT = 460,
+    SHOWFPS = 461,
+    LASTPOS = 462,
+    INKEY = 463,
+    INKEYS = 464,
+    INPUT_ = 465,
+    PRINT = 466,
+    SPC = 467,
+    SINKEY = 468,
+    SINKEYS = 469,
+    INPUT_NOQUESTIONMARK = 470,
+    GET = 471,
+    GETS = 472,
+    GET_S = 473,
+    GETS_S = 474,
+    MOUSE = 475,
+    CREATEVERTEX = 476,
+    CREATETRIANGLE = 477,
+    CREATESHAPE = 478,
+    CREATEOBJECT = 479,
+    TRANSLATE = 480,
+    ROTATE = 481,
+    SCALE = 482,
+    RENDERFRAME = 483,
+    DELETEOBJECT = 484,
+    SOLID = 485,
+    WIREFRAME = 486,
+    FILLEDWIREFRAME = 487,
+    NEG = 488
+  };
 #endif
 
-
+/* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE
+union YYSTYPE
 {
-/* Line 387 of yacc.c  */
-#line 23 "DARIC.y"
+#line 23 "Grammar/DARIC.y"
 
     int v_int;
     double v_real;
     const char *v_string;
     struct AST *ast;
 
+#line 383 "src/parser/bison.cpp"
 
-/* Line 387 of yacc.c  */
-#line 372 "C:\\Users\\d_dud\\source\\repos\\PiBasic\\V4\\src\\parser\\bison.cpp"
-} YYSTYPE;
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
-# define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
+/* Location type.  */
 #if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
-typedef struct YYLTYPE
+typedef struct YYLTYPE YYLTYPE;
+struct YYLTYPE
 {
   int first_line;
   int first_column;
   int last_line;
   int last_column;
-} YYLTYPE;
-# define yyltype YYLTYPE /* obsolescent; will be withdrawn */
+};
 # define YYLTYPE_IS_DECLARED 1
 # define YYLTYPE_IS_TRIVIAL 1
 #endif
 
+
 extern YYSTYPE yylval;
 extern YYLTYPE yylloc;
-#ifdef YYPARSE_PARAM
-#if defined __STDC__ || defined __cplusplus
-int yyparse (void *YYPARSE_PARAM);
-#else
-int yyparse ();
-#endif
-#else /* ! YYPARSE_PARAM */
-#if defined __STDC__ || defined __cplusplus
 int yyparse (void);
-#else
-int yyparse ();
-#endif
-#endif /* ! YYPARSE_PARAM */
 
-#endif /* !YY_YY_C_USERS_D_DUD_SOURCE_REPOS_PIBASIC_V4_SRC_PARSER_BISON_HPP_INCLUDED  */
+#endif /* !YY_YY_SRC_PARSER_BISON_HPP_INCLUDED  */
 
-/* Copy the second part of user declarations.  */
 
-/* Line 390 of yacc.c  */
-#line 413 "C:\\Users\\d_dud\\source\\repos\\PiBasic\\V4\\src\\parser\\bison.cpp"
 
 #ifdef short
 # undef short
 #endif
 
-#ifdef YYTYPE_UINT8
-typedef YYTYPE_UINT8 yytype_uint8;
-#else
-typedef unsigned char yytype_uint8;
+/* On compilers that do not define __PTRDIFF_MAX__ etc., make sure
+   <limits.h> and (if available) <stdint.h> are included
+   so that the code can choose integer types of a good width.  */
+
+#ifndef __PTRDIFF_MAX__
+# include <limits.h> /* INFRINGES ON USER NAME SPACE */
+# if defined __STDC_VERSION__ && 199901 <= __STDC_VERSION__
+#  include <stdint.h> /* INFRINGES ON USER NAME SPACE */
+#  define YY_STDINT_H
+# endif
 #endif
 
-#ifdef YYTYPE_INT8
-typedef YYTYPE_INT8 yytype_int8;
-#elif (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
+/* Narrow types that promote to a signed type and that can represent a
+   signed or unsigned integer of at least N bits.  In tables they can
+   save space and decrease cache pressure.  Promoting to a signed type
+   helps avoid bugs in integer arithmetic.  */
+
+#ifdef __INT_LEAST8_MAX__
+typedef __INT_LEAST8_TYPE__ yytype_int8;
+#elif defined YY_STDINT_H
+typedef int_least8_t yytype_int8;
+#else
 typedef signed char yytype_int8;
-#else
-typedef short int yytype_int8;
 #endif
 
-#ifdef YYTYPE_UINT16
-typedef YYTYPE_UINT16 yytype_uint16;
+#ifdef __INT_LEAST16_MAX__
+typedef __INT_LEAST16_TYPE__ yytype_int16;
+#elif defined YY_STDINT_H
+typedef int_least16_t yytype_int16;
 #else
-typedef unsigned short int yytype_uint16;
+typedef short yytype_int16;
 #endif
 
-#ifdef YYTYPE_INT16
-typedef YYTYPE_INT16 yytype_int16;
+#if defined __UINT_LEAST8_MAX__ && __UINT_LEAST8_MAX__ <= __INT_MAX__
+typedef __UINT_LEAST8_TYPE__ yytype_uint8;
+#elif (!defined __UINT_LEAST8_MAX__ && defined YY_STDINT_H \
+       && UINT_LEAST8_MAX <= INT_MAX)
+typedef uint_least8_t yytype_uint8;
+#elif !defined __UINT_LEAST8_MAX__ && UCHAR_MAX <= INT_MAX
+typedef unsigned char yytype_uint8;
 #else
-typedef short int yytype_int16;
+typedef short yytype_uint8;
+#endif
+
+#if defined __UINT_LEAST16_MAX__ && __UINT_LEAST16_MAX__ <= __INT_MAX__
+typedef __UINT_LEAST16_TYPE__ yytype_uint16;
+#elif (!defined __UINT_LEAST16_MAX__ && defined YY_STDINT_H \
+       && UINT_LEAST16_MAX <= INT_MAX)
+typedef uint_least16_t yytype_uint16;
+#elif !defined __UINT_LEAST16_MAX__ && USHRT_MAX <= INT_MAX
+typedef unsigned short yytype_uint16;
+#else
+typedef int yytype_uint16;
+#endif
+
+#ifndef YYPTRDIFF_T
+# if defined __PTRDIFF_TYPE__ && defined __PTRDIFF_MAX__
+#  define YYPTRDIFF_T __PTRDIFF_TYPE__
+#  define YYPTRDIFF_MAXIMUM __PTRDIFF_MAX__
+# elif defined PTRDIFF_MAX
+#  ifndef ptrdiff_t
+#   include <stddef.h> /* INFRINGES ON USER NAME SPACE */
+#  endif
+#  define YYPTRDIFF_T ptrdiff_t
+#  define YYPTRDIFF_MAXIMUM PTRDIFF_MAX
+# else
+#  define YYPTRDIFF_T long
+#  define YYPTRDIFF_MAXIMUM LONG_MAX
+# endif
 #endif
 
 #ifndef YYSIZE_T
@@ -447,16 +490,27 @@ typedef short int yytype_int16;
 #  define YYSIZE_T __SIZE_TYPE__
 # elif defined size_t
 #  define YYSIZE_T size_t
-# elif ! defined YYSIZE_T && (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
+# elif defined __STDC_VERSION__ && 199901 <= __STDC_VERSION__
 #  include <stddef.h> /* INFRINGES ON USER NAME SPACE */
 #  define YYSIZE_T size_t
 # else
-#  define YYSIZE_T unsigned int
+#  define YYSIZE_T unsigned
 # endif
 #endif
 
-#define YYSIZE_MAXIMUM ((YYSIZE_T) -1)
+#define YYSIZE_MAXIMUM                                  \
+  YY_CAST (YYPTRDIFF_T,                                 \
+           (YYPTRDIFF_MAXIMUM < YY_CAST (YYSIZE_T, -1)  \
+            ? YYPTRDIFF_MAXIMUM                         \
+            : YY_CAST (YYSIZE_T, -1)))
+
+#define YYSIZEOF(X) YY_CAST (YYPTRDIFF_T, sizeof (X))
+
+/* Stored state numbers (used for stacks). */
+typedef yytype_int16 yy_state_t;
+
+/* State numbers in computations.  */
+typedef int yy_state_fast_t;
 
 #ifndef YY_
 # if defined YYENABLE_NLS && YYENABLE_NLS
@@ -470,6 +524,22 @@ typedef short int yytype_int16;
 # endif
 #endif
 
+#ifndef YY_ATTRIBUTE_PURE
+# if defined __GNUC__ && 2 < __GNUC__ + (96 <= __GNUC_MINOR__)
+#  define YY_ATTRIBUTE_PURE __attribute__ ((__pure__))
+# else
+#  define YY_ATTRIBUTE_PURE
+# endif
+#endif
+
+#ifndef YY_ATTRIBUTE_UNUSED
+# if defined __GNUC__ && 2 < __GNUC__ + (7 <= __GNUC_MINOR__)
+#  define YY_ATTRIBUTE_UNUSED __attribute__ ((__unused__))
+# else
+#  define YY_ATTRIBUTE_UNUSED
+# endif
+#endif
+
 /* Suppress unused-variable warnings by "using" E.  */
 #if ! defined lint || defined __GNUC__
 # define YYUSE(E) ((void) (E))
@@ -477,23 +547,39 @@ typedef short int yytype_int16;
 # define YYUSE(E) /* empty */
 #endif
 
-/* Identity function, used to suppress warnings about constant conditions.  */
-#ifndef lint
-# define YYID(N) (N)
+#if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
+/* Suppress an incorrect diagnostic about yylval being uninitialized.  */
+# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                            \
+    _Pragma ("GCC diagnostic push")                                     \
+    _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")              \
+    _Pragma ("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
+# define YY_IGNORE_MAYBE_UNINITIALIZED_END      \
+    _Pragma ("GCC diagnostic pop")
 #else
-#if (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
-static int
-YYID (int yyi)
-#else
-static int
-YYID (yyi)
-    int yyi;
+# define YY_INITIAL_VALUE(Value) Value
 #endif
-{
-  return yyi;
-}
+#ifndef YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
+# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
+# define YY_IGNORE_MAYBE_UNINITIALIZED_END
 #endif
+#ifndef YY_INITIAL_VALUE
+# define YY_INITIAL_VALUE(Value) /* Nothing. */
+#endif
+
+#if defined __cplusplus && defined __GNUC__ && ! defined __ICC && 6 <= __GNUC__
+# define YY_IGNORE_USELESS_CAST_BEGIN                          \
+    _Pragma ("GCC diagnostic push")                            \
+    _Pragma ("GCC diagnostic ignored \"-Wuseless-cast\"")
+# define YY_IGNORE_USELESS_CAST_END            \
+    _Pragma ("GCC diagnostic pop")
+#endif
+#ifndef YY_IGNORE_USELESS_CAST_BEGIN
+# define YY_IGNORE_USELESS_CAST_BEGIN
+# define YY_IGNORE_USELESS_CAST_END
+#endif
+
+
+#define YY_ASSERT(E) ((void) (0 && (E)))
 
 #if ! defined yyoverflow || YYERROR_VERBOSE
 
@@ -512,8 +598,7 @@ YYID (yyi)
 #    define alloca _alloca
 #   else
 #    define YYSTACK_ALLOC alloca
-#    if ! defined _ALLOCA_H && ! defined EXIT_SUCCESS && (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
+#    if ! defined _ALLOCA_H && ! defined EXIT_SUCCESS
 #     include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
       /* Use EXIT_SUCCESS as a witness for stdlib.h.  */
 #     ifndef EXIT_SUCCESS
@@ -525,8 +610,8 @@ YYID (yyi)
 # endif
 
 # ifdef YYSTACK_ALLOC
-   /* Pacify GCC's `empty if-body' warning.  */
-#  define YYSTACK_FREE(Ptr) do { /* empty */; } while (YYID (0))
+   /* Pacify GCC's 'empty if-body' warning.  */
+#  define YYSTACK_FREE(Ptr) do { /* empty */; } while (0)
 #  ifndef YYSTACK_ALLOC_MAXIMUM
     /* The OS might guarantee only one guard page at the bottom of the stack,
        and a page size can be as small as 4096 bytes.  So we cannot safely
@@ -542,7 +627,7 @@ YYID (yyi)
 #  endif
 #  if (defined __cplusplus && ! defined EXIT_SUCCESS \
        && ! ((defined YYMALLOC || defined malloc) \
-	     && (defined YYFREE || defined free)))
+             && (defined YYFREE || defined free)))
 #   include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
 #   ifndef EXIT_SUCCESS
 #    define EXIT_SUCCESS 0
@@ -550,15 +635,13 @@ YYID (yyi)
 #  endif
 #  ifndef YYMALLOC
 #   define YYMALLOC malloc
-#   if ! defined malloc && ! defined EXIT_SUCCESS && (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
+#   if ! defined malloc && ! defined EXIT_SUCCESS
 void *malloc (YYSIZE_T); /* INFRINGES ON USER NAME SPACE */
 #   endif
 #  endif
 #  ifndef YYFREE
 #   define YYFREE free
-#   if ! defined free && ! defined EXIT_SUCCESS && (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
+#   if ! defined free && ! defined EXIT_SUCCESS
 void free (void *); /* INFRINGES ON USER NAME SPACE */
 #   endif
 #  endif
@@ -568,24 +651,25 @@ void free (void *); /* INFRINGES ON USER NAME SPACE */
 
 #if (! defined yyoverflow \
      && (! defined __cplusplus \
-	 || (defined YYLTYPE_IS_TRIVIAL && YYLTYPE_IS_TRIVIAL \
-	     && defined YYSTYPE_IS_TRIVIAL && YYSTYPE_IS_TRIVIAL)))
+         || (defined YYLTYPE_IS_TRIVIAL && YYLTYPE_IS_TRIVIAL \
+             && defined YYSTYPE_IS_TRIVIAL && YYSTYPE_IS_TRIVIAL)))
 
 /* A type that is properly aligned for any stack member.  */
 union yyalloc
 {
-  yytype_int16 yyss_alloc;
+  yy_state_t yyss_alloc;
   YYSTYPE yyvs_alloc;
   YYLTYPE yyls_alloc;
 };
 
 /* The size of the maximum gap between one aligned stack and the next.  */
-# define YYSTACK_GAP_MAXIMUM (sizeof (union yyalloc) - 1)
+# define YYSTACK_GAP_MAXIMUM (YYSIZEOF (union yyalloc) - 1)
 
 /* The size of an array large to enough to hold all stacks, each with
    N elements.  */
 # define YYSTACK_BYTES(N) \
-     ((N) * (sizeof (yytype_int16) + sizeof (YYSTYPE) + sizeof (YYLTYPE)) \
+     ((N) * (YYSIZEOF (yy_state_t) + YYSIZEOF (YYSTYPE) \
+             + YYSIZEOF (YYLTYPE)) \
       + 2 * YYSTACK_GAP_MAXIMUM)
 
 # define YYCOPY_NEEDED 1
@@ -595,16 +679,16 @@ union yyalloc
    elements in the stack, and YYPTR gives the new location of the
    stack.  Advance YYPTR to a properly aligned location for the next
    stack.  */
-# define YYSTACK_RELOCATE(Stack_alloc, Stack)				\
-    do									\
-      {									\
-	YYSIZE_T yynewbytes;						\
-	YYCOPY (&yyptr->Stack_alloc, Stack, yysize);			\
-	Stack = &yyptr->Stack_alloc;					\
-	yynewbytes = yystacksize * sizeof (*Stack) + YYSTACK_GAP_MAXIMUM; \
-	yyptr += yynewbytes / sizeof (*yyptr);				\
-      }									\
-    while (YYID (0))
+# define YYSTACK_RELOCATE(Stack_alloc, Stack)                           \
+    do                                                                  \
+      {                                                                 \
+        YYPTRDIFF_T yynewbytes;                                         \
+        YYCOPY (&yyptr->Stack_alloc, Stack, yysize);                    \
+        Stack = &yyptr->Stack_alloc;                                    \
+        yynewbytes = yystacksize * YYSIZEOF (*Stack) + YYSTACK_GAP_MAXIMUM; \
+        yyptr += yynewbytes / YYSIZEOF (*yyptr);                        \
+      }                                                                 \
+    while (0)
 
 #endif
 
@@ -614,16 +698,16 @@ union yyalloc
 # ifndef YYCOPY
 #  if defined __GNUC__ && 1 < __GNUC__
 #   define YYCOPY(Dst, Src, Count) \
-      __builtin_memcpy (Dst, Src, (Count) * sizeof (*(Src)))
+      __builtin_memcpy (Dst, Src, YY_CAST (YYSIZE_T, (Count)) * sizeof (*(Src)))
 #  else
 #   define YYCOPY(Dst, Src, Count)              \
       do                                        \
         {                                       \
-          YYSIZE_T yyi;                         \
+          YYPTRDIFF_T yyi;                      \
           for (yyi = 0; yyi < (Count); yyi++)   \
             (Dst)[yyi] = (Src)[yyi];            \
         }                                       \
-      while (YYID (0))
+      while (0)
 #  endif
 # endif
 #endif /* !YYCOPY_NEEDED */
@@ -639,17 +723,20 @@ union yyalloc
 #define YYNNTS  41
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  349
-/* YYNRULES -- Number of states.  */
+/* YYNSTATES -- Number of states.  */
 #define YYNSTATES  1019
 
-/* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   488
 
-#define YYTRANSLATE(YYX)						\
-  ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
 
-/* YYTRANSLATE[YYLEX] -- Bison symbol number corresponding to YYLEX.  */
+/* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
+   as returned by yylex, with out-of-bounds checking.  */
+#define YYTRANSLATE(YYX)                                                \
+  (0 <= (YYX) && (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
+
+/* YYTRANSLATE[TOKEN-NUM] -- Symbol number corresponding to TOKEN-NUM
+   as returned by yylex.  */
 static const yytype_uint8 yytranslate[] =
 {
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -704,219 +791,8 @@ static const yytype_uint8 yytranslate[] =
 };
 
 #if YYDEBUG
-/* YYPRHS[YYN] -- Index of the first RHS symbol of rule number YYN in
-   YYRHS.  */
-static const yytype_uint16 yyprhs[] =
-{
-       0,     0,     3,     5,     7,    10,    13,    15,    19,    21,
-      24,    26,    30,    32,    34,    36,    39,    44,    47,    49,
-      51,    56,    61,    66,    71,    74,    77,    79,    81,    84,
-      86,    88,    90,    93,    97,   102,   105,   110,   113,   122,
-     132,   135,   138,   141,   144,   148,   153,   160,   165,   170,
-     172,   174,   178,   184,   190,   199,   204,   211,   218,   228,
-     234,   238,   244,   249,   254,   259,   269,   279,   289,   298,
-     307,   316,   327,   338,   349,   359,   369,   379,   389,   399,
-     408,   417,   429,   441,   452,   463,   474,   485,   495,   505,
-     518,   531,   543,   555,   562,   572,   574,   577,   579,   593,
-     607,   616,   625,   630,   633,   635,   638,   645,   648,   655,
-     660,   666,   668,   671,   673,   680,   688,   697,   706,   716,
-     729,   743,   763,   768,   777,   779,   788,   797,   806,   808,
-     810,   813,   815,   818,   820,   822,   824,   828,   833,   838,
-     841,   844,   848,   852,   856,   860,   864,   868,   872,   876,
-     880,   884,   888,   892,   896,   900,   904,   908,   912,   916,
-     921,   926,   935,   944,   953,   956,   958,   963,   965,   967,
-     969,   971,   973,   975,   977,   982,  1001,  1003,  1005,  1007,
-    1009,  1011,  1013,  1015,  1017,  1019,  1028,  1035,  1037,  1039,
-    1042,  1047,  1049,  1051,  1053,  1055,  1057,  1059,  1061,  1063,
-    1065,  1067,  1069,  1071,  1073,  1075,  1077,  1079,  1081,  1083,
-    1086,  1089,  1094,  1099,  1104,  1106,  1108,  1110,  1115,  1117,
-    1120,  1125,  1130,  1135,  1140,  1145,  1150,  1155,  1160,  1165,
-    1170,  1175,  1180,  1185,  1190,  1195,  1200,  1207,  1216,  1221,
-    1223,  1228,  1235,  1238,  1244,  1246,  1251,  1258,  1261,  1267,
-    1269,  1271,  1273,  1278,  1285,  1291,  1293,  1295,  1297,  1301,
-    1303,  1305,  1307,  1309,  1313,  1318,  1325,  1330,  1337,  1342,
-    1349,  1356,  1358,  1362,  1364,  1369,  1375,  1378,  1381,  1385,
-    1387,  1389,  1391,  1395,  1399,  1403,  1407,  1411,  1415,  1419,
-    1422,  1427,  1429,  1434,  1436,  1441,  1447,  1454,  1459,  1466,
-    1475,  1482,  1484,  1486,  1487,  1489,  1493,  1497,  1501,  1505,
-    1510,  1512,  1516,  1518,  1521,  1524,  1528,  1532,  1536,  1540,
-    1544,  1548,  1552,  1554,  1556,  1558,  1560,  1562,  1567,  1569,
-    1571,  1574,  1576,  1578,  1582,  1583,  1585,  1588,  1590,  1594,
-    1595,  1597,  1599,  1603,  1608,  1610,  1613,  1621,  1629,  1637
-};
-
-/* YYRHS -- A `-1'-separated list of the rules' RHS.  */
-static const yytype_int16 yyrhs[] =
-{
-     238,     0,    -1,   239,    -1,   240,    -1,   240,   239,    -1,
-     242,    19,    -1,    19,    -1,     3,   242,    19,    -1,   240,
-      -1,   240,   241,    -1,   243,    -1,   243,    20,   242,    -1,
-     266,    -1,   277,    -1,   257,    -1,   149,   261,    -1,   149,
-     261,   234,   253,    -1,   150,   253,    -1,   101,    -1,    15,
-      -1,    15,   235,   263,   236,    -1,    16,   235,   263,   236,
-      -1,    17,   235,   263,   236,    -1,    18,   235,   263,   236,
-      -1,    90,   263,    -1,    91,   251,    -1,    92,    -1,    51,
-      -1,    51,   262,    -1,   102,    -1,   103,    -1,   104,    -1,
-      94,   255,    -1,    99,    94,   255,    -1,    59,   245,   234,
-     245,    -1,    58,   245,    -1,    65,   245,    24,   245,    -1,
-      60,   245,    -1,     9,   235,   236,    24,    68,   235,   261,
-     236,    -1,    99,     9,   235,   236,    24,    68,   235,   261,
-     236,    -1,   142,   261,    -1,    75,     4,    -1,    76,     4,
-      -1,   210,   270,    -1,   210,     6,   270,    -1,   210,     6,
-     234,   270,    -1,   220,     7,   234,     7,   234,     7,    -1,
-     208,   235,   245,   236,    -1,   209,   235,   245,   236,    -1,
-     216,    -1,   217,    -1,    77,   262,   242,    -1,    77,   262,
-     243,    70,   243,    -1,    77,   262,    19,   241,    72,    -1,
-      77,   262,    19,   241,    70,    19,   241,    72,    -1,    77,
-     262,    83,   242,    -1,    77,   262,    83,   242,    70,   242,
-      -1,    77,   262,    83,    19,   241,    72,    -1,    77,   262,
-      83,    19,   241,    70,    19,   241,    72,    -1,    81,    19,
-     241,    85,   262,    -1,    81,    85,   262,    -1,    87,   262,
-      19,   241,    73,    -1,    45,     7,   234,     7,    -1,    45,
-       8,   234,     8,    -1,    45,     9,   234,     9,    -1,    74,
-       8,    88,     8,   235,   236,    19,   241,    78,    -1,    74,
-       7,    88,     7,   235,   236,    19,   241,    78,    -1,    74,
-       9,    88,     9,   235,   236,    19,   241,    78,    -1,    74,
-       8,    88,     8,   235,   236,   242,    78,    -1,    74,     7,
-      88,     7,   235,   236,   242,    78,    -1,    74,     9,    88,
-       9,   235,   236,   242,    78,    -1,    74,    99,     8,    88,
-       8,   235,   236,    19,   241,    78,    -1,    74,    99,     7,
-      88,     7,   235,   236,    19,   241,    78,    -1,    74,    99,
-       9,    88,     9,   235,   236,    19,   241,    78,    -1,    74,
-      99,     8,    88,     8,   235,   236,   242,    78,    -1,    74,
-      99,     7,    88,     7,   235,   236,   242,    78,    -1,    74,
-      99,     9,    88,     9,   235,   236,   242,    78,    -1,    74,
-       7,    24,   245,    84,   245,    19,   241,    78,    -1,    74,
-       8,    24,   245,    84,   245,    19,   241,    78,    -1,    74,
-       7,    24,   245,    84,   245,   242,    78,    -1,    74,     8,
-      24,   245,    84,   245,   242,    78,    -1,    74,     7,    24,
-     245,    84,   245,    82,   245,    19,   241,    78,    -1,    74,
-       8,    24,   245,    84,   245,    82,   245,    19,   241,    78,
-      -1,    74,     7,    24,   245,    84,   245,    82,   245,   242,
-      78,    -1,    74,     8,    24,   245,    84,   245,    82,   245,
-     242,    78,    -1,    74,    99,     7,    24,   245,    84,   245,
-      19,   241,    78,    -1,    74,    99,     8,    24,   245,    84,
-     245,    19,   241,    78,    -1,    74,    99,     7,    24,   245,
-      84,   245,   242,    78,    -1,    74,    99,     8,    24,   245,
-      84,   245,   242,    78,    -1,    74,    99,     7,    24,   245,
-      84,   245,    82,   245,    19,   241,    78,    -1,    74,    99,
-       8,    24,   245,    84,   245,    82,   245,    19,   241,    78,
-      -1,    74,    99,     7,    24,   245,    84,   245,    82,   245,
-     242,    78,    -1,    74,    99,     8,    24,   245,    84,   245,
-      82,   245,   242,    78,    -1,    69,   262,    79,    19,   276,
-      71,    -1,    69,   262,    79,    19,   276,    80,   243,    19,
-      71,    -1,   211,    -1,   211,   268,    -1,   228,    -1,   221,
-      10,   235,   245,   236,   234,   245,   234,   245,   234,   245,
-     234,   245,    -1,   222,    10,   235,   245,   236,   234,   245,
-     234,   245,   234,   245,   234,   245,    -1,   225,   245,   234,
-     245,   234,   245,   234,   245,    -1,   226,   245,   234,   245,
-     234,   245,   234,   245,    -1,   227,   245,   234,   245,    -1,
-     229,   245,    -1,   159,    -1,   161,   245,    -1,   161,   245,
-     234,   245,   234,   245,    -1,   162,   245,    -1,   162,   245,
-     234,   245,   234,   245,    -1,   165,   245,   234,   245,    -1,
-     165,   166,   245,   234,   245,    -1,   165,    -1,   165,   166,
-      -1,   164,    -1,   179,   245,   234,   245,   234,   245,    -1,
-     179,   167,   245,   234,   245,   234,   245,    -1,   169,   245,
-     234,   245,   234,   245,   234,   245,    -1,   172,   245,   234,
-     245,   234,   245,   234,   245,    -1,   172,   167,   245,   234,
-     245,   234,   245,   234,   245,    -1,   174,   245,   234,   245,
-     234,   245,   234,   245,   234,   245,   234,   245,    -1,   174,
-     167,   245,   234,   245,   234,   245,   234,   245,   234,   245,
-     234,   245,    -1,   174,   168,   245,   234,   245,   234,   245,
-     234,   245,   234,   245,   234,   245,   234,   245,   234,   245,
-     234,   245,    -1,   170,   245,   234,   245,    -1,   177,   245,
-     234,   245,   234,   245,   234,   245,    -1,   178,    -1,   181,
-     245,   234,   245,   234,   245,   234,   261,    -1,   182,   245,
-     234,   245,   234,   245,   234,   261,    -1,   183,   245,   234,
-     245,   234,   245,   234,   261,    -1,   206,    -1,     4,    -1,
-      33,     4,    -1,     5,    -1,    33,     5,    -1,   244,    -1,
-     246,    -1,   247,    -1,   235,   245,   236,    -1,   110,   235,
-     245,   236,    -1,   111,   235,   245,   236,    -1,    33,   246,
-      -1,    33,   247,    -1,   245,    32,   245,    -1,   245,    33,
-     245,    -1,   245,    34,   245,    -1,   245,    35,   245,    -1,
-     245,    23,   245,    -1,   245,   113,   245,    -1,   245,   114,
-     245,    -1,   245,    28,   245,    -1,   245,    29,   245,    -1,
-     245,    24,   245,    -1,   245,    27,   245,    -1,   245,    26,
-     245,    -1,   245,    25,   245,    -1,   245,    30,   245,    -1,
-     245,    31,   245,    -1,   245,   145,   245,    -1,   245,   146,
-     245,    -1,   245,   147,   245,    -1,    16,   235,   263,   236,
-      -1,    17,   235,   263,   236,    -1,    94,   235,     8,   235,
-     236,   234,   244,   236,    -1,    94,   235,     7,   235,   236,
-     234,   244,   236,    -1,    94,   235,     9,   235,   236,   234,
-     244,   236,    -1,    65,   245,    -1,   216,    -1,   208,   235,
-     245,   236,    -1,   131,    -1,   130,    -1,   143,    -1,   230,
-      -1,   231,    -1,   168,    -1,   232,    -1,   223,    10,   234,
-      10,    -1,   224,   245,   234,   245,   234,   245,   234,   245,
-     234,   245,   234,   245,   234,   245,   234,   245,   234,   245,
-      -1,   151,    -1,   152,    -1,   153,    -1,   154,    -1,   155,
-      -1,   156,    -1,   157,    -1,   158,    -1,   207,    -1,   161,
-     235,   245,   234,   245,   234,   245,   236,    -1,   171,   235,
-     245,   234,   245,   236,    -1,   204,    -1,   205,    -1,   184,
-     261,    -1,   185,   245,   234,   245,    -1,   186,    -1,   187,
-      -1,   188,    -1,   189,    -1,   190,    -1,   191,    -1,   192,
-      -1,   193,    -1,   194,    -1,   195,    -1,   196,    -1,   197,
-      -1,   198,    -1,   199,    -1,   200,    -1,   201,    -1,   202,
-      -1,   203,    -1,    61,   245,    -1,    58,   245,    -1,    62,
-     235,   261,   236,    -1,    64,   235,   261,   236,    -1,    63,
-     235,   261,   236,    -1,   105,    -1,   106,    -1,   107,    -1,
-     105,   235,   245,   236,    -1,   129,    -1,   148,   245,    -1,
-     115,   235,   245,   236,    -1,   116,   235,   245,   236,    -1,
-     117,   235,   245,   236,    -1,   118,   235,   245,   236,    -1,
-     119,   235,   245,   236,    -1,   120,   235,   245,   236,    -1,
-     121,   235,   245,   236,    -1,   122,   235,   245,   236,    -1,
-     124,   235,   245,   236,    -1,   112,   235,   245,   236,    -1,
-     123,   235,   245,   236,    -1,   125,   235,   245,   236,    -1,
-     126,   235,   245,   236,    -1,   127,   235,   245,   236,    -1,
-     132,   235,   261,   236,    -1,   138,   235,   261,   236,    -1,
-     134,   235,   261,   234,   261,   236,    -1,   134,   235,   261,
-     234,   261,   234,   245,   236,    -1,   128,   235,   261,   236,
-      -1,     7,    -1,     7,   235,   245,   236,    -1,     7,   235,
-     245,   234,   245,   236,    -1,    10,     7,    -1,    10,   235,
-     245,   236,     7,    -1,     8,    -1,     8,   235,   245,   236,
-      -1,     8,   235,   245,   234,   245,   236,    -1,    10,     8,
-      -1,    10,   235,   245,   236,     8,    -1,   246,    -1,   247,
-      -1,     9,    -1,     9,   235,   245,   236,    -1,     9,   235,
-     245,   234,   245,   236,    -1,    10,   235,   245,   236,     9,
-      -1,   248,    -1,   249,    -1,   250,    -1,   250,   234,   251,
-      -1,     7,    -1,     8,    -1,     9,    -1,   252,    -1,   252,
-     234,   253,    -1,     7,   235,   245,   236,    -1,     7,   235,
-     245,   234,   245,   236,    -1,     8,   235,   245,   236,    -1,
-       8,   235,   245,   234,   245,   236,    -1,     9,   235,   245,
-     236,    -1,     9,   235,   245,   234,   245,   236,    -1,    10,
-     235,   245,   234,     8,   236,    -1,   254,    -1,   254,   234,
-     255,    -1,    10,    -1,    10,   235,   245,   236,    -1,   100,
-       8,    19,   259,    96,    -1,    97,   250,    -1,   258,    19,
-      -1,   258,    19,   259,    -1,     6,    -1,   260,    -1,   249,
-      -1,   261,    32,   261,    -1,   261,    24,   261,    -1,   261,
-      27,   261,    -1,   261,    26,   261,    -1,   261,    25,   261,
-      -1,   261,    30,   261,    -1,   261,    31,   261,    -1,    67,
-     245,    -1,    18,   235,   263,   236,    -1,   217,    -1,   209,
-     235,   245,   236,    -1,   144,    -1,   139,   235,   245,   236,
-      -1,   139,    36,   235,   245,   236,    -1,   141,   235,   245,
-     234,   261,   236,    -1,   133,   235,   245,   236,    -1,   135,
-     235,   261,   234,   245,   236,    -1,   136,   235,   261,   234,
-     245,   234,   245,   236,    -1,   137,   235,   261,   234,   245,
-     236,    -1,   245,    -1,   261,    -1,    -1,   262,    -1,   262,
-     234,   263,    -1,   248,    24,   245,    -1,   249,    24,   261,
-      -1,   256,    24,   262,    -1,   256,   250,    24,   262,    -1,
-     264,    -1,   264,   234,   265,    -1,   265,    -1,    99,   265,
-      -1,    98,   265,    -1,   248,    38,   245,    -1,   248,    39,
-     245,    -1,   248,    40,   245,    -1,   248,    41,   245,    -1,
-     248,    42,   245,    -1,   248,    43,   245,    -1,   248,    44,
-     245,    -1,   261,    -1,   245,    -1,   234,    -1,    36,    -1,
-      37,    -1,   212,   235,   245,   236,    -1,    21,    -1,   267,
-      -1,   267,   268,    -1,   250,    -1,   269,    -1,   269,   234,
-     270,    -1,    -1,   250,    -1,    51,   250,    -1,   271,    -1,
-     271,   234,   272,    -1,    -1,   250,    -1,   273,    -1,   273,
-     234,   274,    -1,    86,   263,   242,    19,    -1,   275,    -1,
-     275,   276,    -1,    11,   235,   272,   236,    19,   241,    50,
-      -1,    12,   235,   274,   236,    19,   241,    49,    -1,    14,
-     235,   274,   236,    19,   241,    49,    -1,    13,   235,   274,
-     236,    19,   241,    49,    -1
-};
-
-/* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
-static const yytype_uint16 yyrline[] =
+  /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
+static const yytype_int16 yyrline[] =
 {
        0,    90,    90,    94,    95,    99,   100,   101,   104,   105,
      109,   110,   113,   114,   115,   116,   117,   118,   119,   120,
@@ -1007,14 +883,14 @@ static const char *const yytname[] =
   "assignment_single", "assignment_list", "assignment", "expression_print",
   "expression_print_list", "expression_input", "expression_input_list",
   "proc_parameter", "proc_parameter_list", "fn_parameter",
-  "fn_parameter_list", "when", "when_list", "define_function", YY_NULL
+  "fn_parameter_list", "when", "when_list", "define_function", YY_NULLPTR
 };
 #endif
 
 # ifdef YYPRINT
-/* YYTOKNUM[YYLEX-NUM] -- Internal token number corresponding to
-   token YYLEX-NUM.  */
-static const yytype_uint16 yytoknum[] =
+/* YYTOKNUM[NUM] -- (External) token number corresponding to the
+   (internal) symbol number NUM (which must be that of a token).  */
+static const yytype_int16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
@@ -1043,208 +919,18 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
-/* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
-static const yytype_uint16 yyr1[] =
-{
-       0,   237,   238,   239,   239,   240,   240,   240,   241,   241,
-     242,   242,   243,   243,   243,   243,   243,   243,   243,   243,
-     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
-     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
-     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
-     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
-     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
-     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
-     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
-     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
-     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
-     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
-     243,   243,   243,   243,   243,   243,   243,   243,   243,   244,
-     244,   244,   244,   245,   245,   245,   245,   245,   245,   245,
-     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
-     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
-     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
-     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
-     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
-     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
-     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
-     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
-     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
-     245,   245,   245,   245,   245,   245,   245,   245,   245,   246,
-     246,   246,   246,   246,   247,   247,   247,   247,   247,   248,
-     248,   249,   249,   249,   249,   250,   250,   251,   251,   252,
-     252,   252,   253,   253,   254,   254,   254,   254,   254,   254,
-     254,   255,   255,   256,   256,   257,   258,   259,   259,   260,
-     261,   261,   261,   261,   261,   261,   261,   261,   261,   261,
-     261,   261,   261,   261,   261,   261,   261,   261,   261,   261,
-     261,   262,   262,   263,   263,   263,   264,   264,   264,   264,
-     265,   265,   266,   266,   266,   266,   266,   266,   266,   266,
-     266,   266,   267,   267,   267,   267,   267,   267,   267,   268,
-     268,   269,   270,   270,   271,   271,   271,   272,   272,   273,
-     273,   274,   274,   275,   276,   276,   277,   277,   277,   277
-};
+#define YYPACT_NINF (-642)
 
-/* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
-static const yytype_uint8 yyr2[] =
-{
-       0,     2,     1,     1,     2,     2,     1,     3,     1,     2,
-       1,     3,     1,     1,     1,     2,     4,     2,     1,     1,
-       4,     4,     4,     4,     2,     2,     1,     1,     2,     1,
-       1,     1,     2,     3,     4,     2,     4,     2,     8,     9,
-       2,     2,     2,     2,     3,     4,     6,     4,     4,     1,
-       1,     3,     5,     5,     8,     4,     6,     6,     9,     5,
-       3,     5,     4,     4,     4,     9,     9,     9,     8,     8,
-       8,    10,    10,    10,     9,     9,     9,     9,     9,     8,
-       8,    11,    11,    10,    10,    10,    10,     9,     9,    12,
-      12,    11,    11,     6,     9,     1,     2,     1,    13,    13,
-       8,     8,     4,     2,     1,     2,     6,     2,     6,     4,
-       5,     1,     2,     1,     6,     7,     8,     8,     9,    12,
-      13,    19,     4,     8,     1,     8,     8,     8,     1,     1,
-       2,     1,     2,     1,     1,     1,     3,     4,     4,     2,
-       2,     3,     3,     3,     3,     3,     3,     3,     3,     3,
-       3,     3,     3,     3,     3,     3,     3,     3,     3,     4,
-       4,     8,     8,     8,     2,     1,     4,     1,     1,     1,
-       1,     1,     1,     1,     4,    18,     1,     1,     1,     1,
-       1,     1,     1,     1,     1,     8,     6,     1,     1,     2,
-       4,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     1,     2,
-       2,     4,     4,     4,     1,     1,     1,     4,     1,     2,
-       4,     4,     4,     4,     4,     4,     4,     4,     4,     4,
-       4,     4,     4,     4,     4,     4,     6,     8,     4,     1,
-       4,     6,     2,     5,     1,     4,     6,     2,     5,     1,
-       1,     1,     4,     6,     5,     1,     1,     1,     3,     1,
-       1,     1,     1,     3,     4,     6,     4,     6,     4,     6,
-       6,     1,     3,     1,     4,     5,     2,     2,     3,     1,
-       1,     1,     3,     3,     3,     3,     3,     3,     3,     2,
-       4,     1,     4,     1,     4,     5,     6,     4,     6,     8,
-       6,     1,     1,     0,     1,     3,     3,     3,     3,     4,
-       1,     3,     1,     2,     2,     3,     3,     3,     3,     3,
-       3,     3,     1,     1,     1,     1,     1,     4,     1,     1,
-       2,     1,     1,     3,     0,     1,     2,     1,     3,     0,
-       1,     1,     3,     4,     1,     2,     7,     7,     7,     7
-};
+#define yypact_value_is_default(Yyn) \
+  ((Yyn) == YYPACT_NINF)
 
-/* YYDEFACT[STATE-NAME] -- Default reduction number in state STATE-NUM.
-   Performed when YYTABLE doesn't specify something else to do.  Zero
-   means the default is an error.  */
-static const yytype_uint16 yydefact[] =
-{
-       0,     0,   239,   244,   251,   273,     0,     0,     0,     0,
-      19,     0,     0,     0,     6,     0,    27,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,   303,     0,
-      26,     0,     0,     0,     0,    18,    29,    30,    31,     0,
-       0,     0,   104,     0,     0,   113,   111,     0,     0,     0,
-       0,     0,   124,     0,     0,     0,     0,   128,     0,     0,
-       0,    95,    49,    50,     0,     0,     0,     0,     0,     0,
-      97,     0,     0,     2,     3,     0,    10,   249,   250,     0,
-       0,     0,    14,   310,   312,    12,    13,     0,     0,     0,
-       0,   242,   247,     0,   334,   339,   339,   339,   303,   303,
-     303,   303,     0,     0,     0,   129,   131,   279,   251,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,   214,   215,   216,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,   218,   168,   167,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,   169,   293,     0,   176,   177,   178,
-     179,   180,   181,   182,   183,     0,   172,     0,     0,     0,
-     191,   192,   193,   194,   195,   196,   197,   198,   199,   200,
-     201,   202,   203,   204,   205,   206,   207,   208,   187,   188,
-     184,     0,     0,   165,   291,     0,     0,   170,   171,   173,
-       0,   133,   301,   134,   135,   281,   280,   302,    28,     0,
-      35,     0,    37,     0,     0,     0,     0,     0,     0,    41,
-      42,     0,     0,     0,     0,   304,    24,   255,   256,   257,
-      25,     0,     0,     0,     0,   271,    32,     0,   314,   251,
-       0,   313,     0,     0,    40,    15,   259,   260,   261,   262,
-      17,   105,   107,   112,     0,     0,     0,     0,     0,     0,
-     172,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,   331,   332,    43,   328,   325,   326,     0,   324,   323,
-     322,   329,    96,     0,     0,     0,     0,     0,     0,   103,
-       1,     4,     5,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     7,     0,     0,     0,
-       0,     0,     0,   335,   337,     0,   340,   341,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-     303,   303,   303,   130,   132,   139,   140,   210,   209,     0,
-       0,     0,   164,   289,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,   219,     0,     0,   189,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,    51,    10,     8,     0,    60,     0,   303,     0,
-       0,     0,     0,     0,     0,     0,    33,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,    44,     0,     0,   330,     0,     0,     0,     0,     0,
-       0,    11,   306,   315,   316,   317,   318,   319,   320,   321,
-     307,   308,     0,   311,     0,   240,     0,   245,     0,     0,
-     252,   274,   336,   334,     0,   339,     0,     0,     0,    20,
-      21,    22,    23,    62,    63,    64,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,   136,   145,   150,   153,   152,   151,   148,   149,   154,
-     155,   141,   142,   143,   144,   146,   147,   156,   157,   158,
-     283,   286,   285,   284,   287,   288,   282,     0,    34,   150,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,    55,     0,     9,     0,     0,   305,   258,
-       0,     0,     0,     0,   272,     0,     0,     0,     0,     0,
-      16,   263,     0,     0,     0,   109,     0,   122,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,    47,
-      48,    45,   333,     0,     0,     0,     0,     0,     0,   102,
-     309,     0,     0,     0,     0,   243,   248,   254,   338,     0,
-     342,     0,     0,     0,     0,   159,   160,   290,   211,   213,
-     212,     0,     0,     0,   217,   137,   138,   229,   220,   221,
-     222,   223,   224,   225,   226,   227,   230,   228,   231,   232,
-     233,   238,   234,   297,     0,     0,     0,     0,   235,     0,
-     294,     0,     0,     0,   190,   166,   292,   174,     0,     0,
-     303,   344,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,    53,     0,     0,    52,    59,    61,
-       0,   264,     0,   266,     0,   268,     0,     0,   276,   277,
-     275,     0,     0,     0,   110,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,   327,     0,     0,
-       0,     0,     0,   241,   246,     0,   253,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,   295,     0,
-       0,     0,     0,     0,   345,    93,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,    57,
-      56,     0,     0,     0,     0,     0,   278,   106,   108,     0,
-       0,     0,     0,     0,     0,     0,     0,   114,     0,     0,
-       0,    46,     0,     0,     0,     0,     0,   346,   347,   349,
-     348,     0,     0,     0,     0,   236,   298,     0,   300,   296,
-       0,   186,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,   265,   267,   269,   270,     0,     0,
-       0,     0,     0,     0,     0,     0,   115,     0,     0,     0,
-       0,     0,     0,     0,    38,     0,     0,     0,     0,     0,
-       0,     0,     0,   343,     0,     0,     0,    79,     0,    69,
-       0,     0,    80,     0,    68,     0,    70,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,    54,
-       0,     0,   116,     0,   117,     0,     0,     0,   123,   125,
-     126,   127,     0,     0,   100,   101,   162,   161,   163,   237,
-     299,   185,     0,    94,    77,     0,     0,    66,    78,     0,
-       0,    65,    67,     0,     0,    87,     0,    75,     0,     0,
-      88,     0,    74,     0,    76,    58,    39,   118,     0,     0,
-       0,     0,     0,     0,     0,    83,     0,    84,    85,     0,
-       0,    72,    86,     0,     0,    71,    73,     0,     0,     0,
-       0,     0,     0,    81,    82,     0,    91,     0,    92,     0,
-       0,     0,     0,     0,     0,    89,    90,     0,     0,   119,
-       0,     0,     0,   120,     0,    98,    99,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,   175,   121
-};
+#define YYTABLE_NINF (-37)
 
-/* YYDEFGOTO[NTERM-NUM].  */
-static const yytype_int16 yydefgoto[] =
-{
-      -1,    72,    73,   424,   425,    75,    76,   201,   202,   203,
-     204,    79,    80,   271,   230,   249,   250,   235,   236,    81,
-      82,   607,   608,   206,   207,   225,   226,    83,    84,    85,
-     281,   282,   272,   273,   314,   315,   317,   318,   701,   702,
-      86
-};
+#define yytable_value_is_error(Yyn) \
+  0
 
-/* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
-   STATE-NUM.  */
-#define YYPACT_NINF -642
+  /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
+     STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
     3746,  7141,  -221,  -213,  -200,    -1,  -193,  -182,  -131,  -107,
@@ -1351,7 +1037,116 @@ static const yytype_int16 yypact[] =
    10101,  3516,  3516, 10128, 10141,  3516,  3516, 10360, 10360
 };
 
-/* YYPGOTO[NTERM-NUM].  */
+  /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
+     Performed when YYTABLE does not specify something else to do.  Zero
+     means the default is an error.  */
+static const yytype_int16 yydefact[] =
+{
+       0,     0,   239,   244,   251,   273,     0,     0,     0,     0,
+      19,     0,     0,     0,     6,     0,    27,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,   303,     0,
+      26,     0,     0,     0,     0,    18,    29,    30,    31,     0,
+       0,     0,   104,     0,     0,   113,   111,     0,     0,     0,
+       0,     0,   124,     0,     0,     0,     0,   128,     0,     0,
+       0,    95,    49,    50,     0,     0,     0,     0,     0,     0,
+      97,     0,     0,     2,     3,     0,    10,   249,   250,     0,
+       0,     0,    14,   310,   312,    12,    13,     0,     0,     0,
+       0,   242,   247,     0,   334,   339,   339,   339,   303,   303,
+     303,   303,     0,     0,     0,   129,   131,   279,   251,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,   214,   215,   216,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,   218,   168,   167,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,   169,   293,     0,   176,   177,   178,
+     179,   180,   181,   182,   183,     0,   172,     0,     0,     0,
+     191,   192,   193,   194,   195,   196,   197,   198,   199,   200,
+     201,   202,   203,   204,   205,   206,   207,   208,   187,   188,
+     184,     0,     0,   165,   291,     0,     0,   170,   171,   173,
+       0,   133,   301,   134,   135,   281,   280,   302,    28,     0,
+      35,     0,    37,     0,     0,     0,     0,     0,     0,    41,
+      42,     0,     0,     0,     0,   304,    24,   255,   256,   257,
+      25,     0,     0,     0,     0,   271,    32,     0,   314,   251,
+       0,   313,     0,     0,    40,    15,   259,   260,   261,   262,
+      17,   105,   107,   112,     0,     0,     0,     0,     0,     0,
+     172,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,   331,   332,    43,   328,   325,   326,     0,   324,   323,
+     322,   329,    96,     0,     0,     0,     0,     0,     0,   103,
+       1,     4,     5,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     7,     0,     0,     0,
+       0,     0,     0,   335,   337,     0,   340,   341,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     303,   303,   303,   130,   132,   139,   140,   210,   209,     0,
+       0,     0,   164,   289,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,   219,     0,     0,   189,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,    51,    10,     8,     0,    60,     0,   303,     0,
+       0,     0,     0,     0,     0,     0,    33,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,    44,     0,     0,   330,     0,     0,     0,     0,     0,
+       0,    11,   306,   315,   316,   317,   318,   319,   320,   321,
+     307,   308,     0,   311,     0,   240,     0,   245,     0,     0,
+     252,   274,   336,   334,     0,   339,     0,     0,     0,    20,
+      21,    22,    23,    62,    63,    64,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,   136,   145,   150,   153,   152,   151,   148,   149,   154,
+     155,   141,   142,   143,   144,   146,   147,   156,   157,   158,
+     283,   286,   285,   284,   287,   288,   282,     0,    34,   150,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,    55,     0,     9,     0,     0,   305,   258,
+       0,     0,     0,     0,   272,     0,     0,     0,     0,     0,
+      16,   263,     0,     0,     0,   109,     0,   122,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,    47,
+      48,    45,   333,     0,     0,     0,     0,     0,     0,   102,
+     309,     0,     0,     0,     0,   243,   248,   254,   338,     0,
+     342,     0,     0,     0,     0,   159,   160,   290,   211,   213,
+     212,     0,     0,     0,   217,   137,   138,   229,   220,   221,
+     222,   223,   224,   225,   226,   227,   230,   228,   231,   232,
+     233,   238,   234,   297,     0,     0,     0,     0,   235,     0,
+     294,     0,     0,     0,   190,   166,   292,   174,     0,     0,
+     303,   344,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,    53,     0,     0,    52,    59,    61,
+       0,   264,     0,   266,     0,   268,     0,     0,   276,   277,
+     275,     0,     0,     0,   110,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,   327,     0,     0,
+       0,     0,     0,   241,   246,     0,   253,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,   295,     0,
+       0,     0,     0,     0,   345,    93,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,    57,
+      56,     0,     0,     0,     0,     0,   278,   106,   108,     0,
+       0,     0,     0,     0,     0,     0,     0,   114,     0,     0,
+       0,    46,     0,     0,     0,     0,     0,   346,   347,   349,
+     348,     0,     0,     0,     0,   236,   298,     0,   300,   296,
+       0,   186,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,   265,   267,   269,   270,     0,     0,
+       0,     0,     0,     0,     0,     0,   115,     0,     0,     0,
+       0,     0,     0,     0,    38,     0,     0,     0,     0,     0,
+       0,     0,     0,   343,     0,     0,     0,    79,     0,    69,
+       0,     0,    80,     0,    68,     0,    70,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,    54,
+       0,     0,   116,     0,   117,     0,     0,     0,   123,   125,
+     126,   127,     0,     0,   100,   101,   162,   161,   163,   237,
+     299,   185,     0,    94,    77,     0,     0,    66,    78,     0,
+       0,    65,    67,     0,     0,    87,     0,    75,     0,     0,
+      88,     0,    74,     0,    76,    58,    39,   118,     0,     0,
+       0,     0,     0,     0,     0,    83,     0,    84,    85,     0,
+       0,    72,    86,     0,     0,    71,    73,     0,     0,     0,
+       0,     0,     0,    81,    82,     0,    91,     0,    92,     0,
+       0,     0,     0,     0,     0,    89,    90,     0,     0,   119,
+       0,     0,     0,   120,     0,    98,    99,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,   175,   121
+};
+
+  /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
     -642,  -642,   741,    49,   182,    24,  -210,  -641,   -17,   463,
@@ -1361,10 +1156,19 @@ static const yytype_int16 yypgoto[] =
     -642
 };
 
-/* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
-   positive, shift that token.  If negative, reduce the rule which
-   number is the opposite.  If YYTABLE_NINF, syntax error.  */
-#define YYTABLE_NINF -37
+  /* YYDEFGOTO[NTERM-NUM].  */
+static const yytype_int16 yydefgoto[] =
+{
+      -1,    72,    73,   424,   425,    75,    76,   201,   202,   203,
+     204,    79,    80,   271,   230,   249,   250,   235,   236,    81,
+      82,   607,   608,   206,   207,   225,   226,    83,    84,    85,
+     281,   282,   272,   273,   314,   315,   317,   318,   701,   702,
+      86
+};
+
+  /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
+     positive, shift that token.  If negative, reduce the rule whose
+     number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int16 yytable[] =
 {
      210,   211,   212,   213,   319,   320,    91,    92,   436,    91,
@@ -2421,12 +2225,6 @@ static const yytype_int16 yytable[] =
        0,     0,     0,     0,     0,     0,     0,     0,   398,   399,
      400
 };
-
-#define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-642)))
-
-#define yytable_value_is_error(Yytable_value) \
-  YYID (0)
 
 static const yytype_int16 yycheck[] =
 {
@@ -3485,9 +3283,9 @@ static const yytype_int16 yycheck[] =
      147
 };
 
-/* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
-   symbol of state STATE-NUM.  */
-static const yytype_uint16 yystos[] =
+  /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
+     symbol of state STATE-NUM.  */
+static const yytype_int16 yystos[] =
 {
        0,     3,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    45,    51,    58,    59,    60,
@@ -3593,53 +3391,119 @@ static const yytype_uint16 yystos[] =
      245,   234,   234,   245,   245,   234,   234,   245,   245
 };
 
-#define yyerrok		(yyerrstatus = 0)
-#define yyclearin	(yychar = YYEMPTY)
-#define YYEMPTY		(-2)
-#define YYEOF		0
+  /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
+static const yytype_int16 yyr1[] =
+{
+       0,   237,   238,   239,   239,   240,   240,   240,   241,   241,
+     242,   242,   243,   243,   243,   243,   243,   243,   243,   243,
+     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
+     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
+     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
+     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
+     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
+     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
+     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
+     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
+     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
+     243,   243,   243,   243,   243,   243,   243,   243,   243,   243,
+     243,   243,   243,   243,   243,   243,   243,   243,   243,   244,
+     244,   244,   244,   245,   245,   245,   245,   245,   245,   245,
+     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
+     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
+     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
+     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
+     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
+     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
+     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
+     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
+     245,   245,   245,   245,   245,   245,   245,   245,   245,   245,
+     245,   245,   245,   245,   245,   245,   245,   245,   245,   246,
+     246,   246,   246,   246,   247,   247,   247,   247,   247,   248,
+     248,   249,   249,   249,   249,   250,   250,   251,   251,   252,
+     252,   252,   253,   253,   254,   254,   254,   254,   254,   254,
+     254,   255,   255,   256,   256,   257,   258,   259,   259,   260,
+     261,   261,   261,   261,   261,   261,   261,   261,   261,   261,
+     261,   261,   261,   261,   261,   261,   261,   261,   261,   261,
+     261,   262,   262,   263,   263,   263,   264,   264,   264,   264,
+     265,   265,   266,   266,   266,   266,   266,   266,   266,   266,
+     266,   266,   267,   267,   267,   267,   267,   267,   267,   268,
+     268,   269,   270,   270,   271,   271,   271,   272,   272,   273,
+     273,   274,   274,   275,   276,   276,   277,   277,   277,   277
+};
 
-#define YYACCEPT	goto yyacceptlab
-#define YYABORT		goto yyabortlab
-#define YYERROR		goto yyerrorlab
+  /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
+static const yytype_int8 yyr2[] =
+{
+       0,     2,     1,     1,     2,     2,     1,     3,     1,     2,
+       1,     3,     1,     1,     1,     2,     4,     2,     1,     1,
+       4,     4,     4,     4,     2,     2,     1,     1,     2,     1,
+       1,     1,     2,     3,     4,     2,     4,     2,     8,     9,
+       2,     2,     2,     2,     3,     4,     6,     4,     4,     1,
+       1,     3,     5,     5,     8,     4,     6,     6,     9,     5,
+       3,     5,     4,     4,     4,     9,     9,     9,     8,     8,
+       8,    10,    10,    10,     9,     9,     9,     9,     9,     8,
+       8,    11,    11,    10,    10,    10,    10,     9,     9,    12,
+      12,    11,    11,     6,     9,     1,     2,     1,    13,    13,
+       8,     8,     4,     2,     1,     2,     6,     2,     6,     4,
+       5,     1,     2,     1,     6,     7,     8,     8,     9,    12,
+      13,    19,     4,     8,     1,     8,     8,     8,     1,     1,
+       2,     1,     2,     1,     1,     1,     3,     4,     4,     2,
+       2,     3,     3,     3,     3,     3,     3,     3,     3,     3,
+       3,     3,     3,     3,     3,     3,     3,     3,     3,     4,
+       4,     8,     8,     8,     2,     1,     4,     1,     1,     1,
+       1,     1,     1,     1,     4,    18,     1,     1,     1,     1,
+       1,     1,     1,     1,     1,     8,     6,     1,     1,     2,
+       4,     1,     1,     1,     1,     1,     1,     1,     1,     1,
+       1,     1,     1,     1,     1,     1,     1,     1,     1,     2,
+       2,     4,     4,     4,     1,     1,     1,     4,     1,     2,
+       4,     4,     4,     4,     4,     4,     4,     4,     4,     4,
+       4,     4,     4,     4,     4,     4,     6,     8,     4,     1,
+       4,     6,     2,     5,     1,     4,     6,     2,     5,     1,
+       1,     1,     4,     6,     5,     1,     1,     1,     3,     1,
+       1,     1,     1,     3,     4,     6,     4,     6,     4,     6,
+       6,     1,     3,     1,     4,     5,     2,     2,     3,     1,
+       1,     1,     3,     3,     3,     3,     3,     3,     3,     2,
+       4,     1,     4,     1,     4,     5,     6,     4,     6,     8,
+       6,     1,     1,     0,     1,     3,     3,     3,     3,     4,
+       1,     3,     1,     2,     2,     3,     3,     3,     3,     3,
+       3,     3,     1,     1,     1,     1,     1,     4,     1,     1,
+       2,     1,     1,     3,     0,     1,     2,     1,     3,     0,
+       1,     1,     3,     4,     1,     2,     7,     7,     7,     7
+};
 
 
-/* Like YYERROR except do call yyerror.  This remains here temporarily
-   to ease the transition to the new meaning of YYERROR, for GCC.
-   Once GCC version 2 has supplanted version 1, this can go.  However,
-   YYFAIL appears to be in use.  Nevertheless, it is formally deprecated
-   in Bison 2.4.2's NEWS entry, where a plan to phase it out is
-   discussed.  */
+#define yyerrok         (yyerrstatus = 0)
+#define yyclearin       (yychar = YYEMPTY)
+#define YYEMPTY         (-2)
+#define YYEOF           0
 
-#define YYFAIL		goto yyerrlab
-#if defined YYFAIL
-  /* This is here to suppress warnings from the GCC cpp's
-     -Wunused-macros.  Normally we don't worry about that warning, but
-     some users do, and we want to make it easy for users to remove
-     YYFAIL uses, which will produce warnings from Bison 2.5.  */
-#endif
+#define YYACCEPT        goto yyacceptlab
+#define YYABORT         goto yyabortlab
+#define YYERROR         goto yyerrorlab
+
 
 #define YYRECOVERING()  (!!yyerrstatus)
 
-#define YYBACKUP(Token, Value)                                  \
-do                                                              \
-  if (yychar == YYEMPTY)                                        \
-    {                                                           \
-      yychar = (Token);                                         \
-      yylval = (Value);                                         \
-      YYPOPSTACK (yylen);                                       \
-      yystate = *yyssp;                                         \
-      goto yybackup;                                            \
-    }                                                           \
-  else                                                          \
-    {                                                           \
-      yyerror (YY_("syntax error: cannot back up")); \
-      YYERROR;							\
-    }								\
-while (YYID (0))
+#define YYBACKUP(Token, Value)                                    \
+  do                                                              \
+    if (yychar == YYEMPTY)                                        \
+      {                                                           \
+        yychar = (Token);                                         \
+        yylval = (Value);                                         \
+        YYPOPSTACK (yylen);                                       \
+        yystate = *yyssp;                                         \
+        goto yybackup;                                            \
+      }                                                           \
+    else                                                          \
+      {                                                           \
+        yyerror (YY_("syntax error: cannot back up")); \
+        YYERROR;                                                  \
+      }                                                           \
+  while (0)
 
 /* Error token number */
-#define YYTERROR	1
-#define YYERRCODE	256
+#define YYTERROR        1
+#define YYERRCODE       256
 
 
 /* YYLLOC_DEFAULT -- Set CURRENT to span from RHS[1] to RHS[N].
@@ -3649,7 +3513,7 @@ while (YYID (0))
 #ifndef YYLLOC_DEFAULT
 # define YYLLOC_DEFAULT(Current, Rhs, N)                                \
     do                                                                  \
-      if (YYID (N))                                                     \
+      if (N)                                                            \
         {                                                               \
           (Current).first_line   = YYRHSLOC (Rhs, 1).first_line;        \
           (Current).first_column = YYRHSLOC (Rhs, 1).first_column;      \
@@ -3663,59 +3527,58 @@ while (YYID (0))
           (Current).first_column = (Current).last_column =              \
             YYRHSLOC (Rhs, 0).last_column;                              \
         }                                                               \
-    while (YYID (0))
+    while (0)
 #endif
 
 #define YYRHSLOC(Rhs, K) ((Rhs)[K])
+
+
+/* Enable debugging if requested.  */
+#if YYDEBUG
+
+# ifndef YYFPRINTF
+#  include <stdio.h> /* INFRINGES ON USER NAME SPACE */
+#  define YYFPRINTF fprintf
+# endif
+
+# define YYDPRINTF(Args)                        \
+do {                                            \
+  if (yydebug)                                  \
+    YYFPRINTF Args;                             \
+} while (0)
 
 
 /* YY_LOCATION_PRINT -- Print the location on the stream.
    This macro was not mandated originally: define only if we know
    we won't break user code: when these are the locations we know.  */
 
-#ifndef __attribute__
-/* This feature is available in gcc versions 2.5 and later.  */
-# if (! defined __GNUC__ || __GNUC__ < 2 \
-      || (__GNUC__ == 2 && __GNUC_MINOR__ < 5))
-#  define __attribute__(Spec) /* empty */
-# endif
-#endif
-
 #ifndef YY_LOCATION_PRINT
 # if defined YYLTYPE_IS_TRIVIAL && YYLTYPE_IS_TRIVIAL
 
 /* Print *YYLOCP on YYO.  Private, do not rely on its existence. */
 
-__attribute__((__unused__))
-#if (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
-static unsigned
+YY_ATTRIBUTE_UNUSED
+static int
 yy_location_print_ (FILE *yyo, YYLTYPE const * const yylocp)
-#else
-static unsigned
-yy_location_print_ (yyo, yylocp)
-    FILE *yyo;
-    YYLTYPE const * const yylocp;
-#endif
 {
-  unsigned res = 0;
+  int res = 0;
   int end_col = 0 != yylocp->last_column ? yylocp->last_column - 1 : 0;
   if (0 <= yylocp->first_line)
     {
-      res += fprintf (yyo, "%d", yylocp->first_line);
+      res += YYFPRINTF (yyo, "%d", yylocp->first_line);
       if (0 <= yylocp->first_column)
-        res += fprintf (yyo, ".%d", yylocp->first_column);
+        res += YYFPRINTF (yyo, ".%d", yylocp->first_column);
     }
   if (0 <= yylocp->last_line)
     {
       if (yylocp->first_line < yylocp->last_line)
         {
-          res += fprintf (yyo, "-%d", yylocp->last_line);
+          res += YYFPRINTF (yyo, "-%d", yylocp->last_line);
           if (0 <= end_col)
-            res += fprintf (yyo, ".%d", end_col);
+            res += YYFPRINTF (yyo, ".%d", end_col);
         }
       else if (0 <= end_col && yylocp->first_column < end_col)
-        res += fprintf (yyo, "-%d", end_col);
+        res += YYFPRINTF (yyo, "-%d", end_col);
     }
   return res;
  }
@@ -3729,102 +3592,54 @@ yy_location_print_ (yyo, yylocp)
 #endif
 
 
-/* YYLEX -- calling `yylex' with the right arguments.  */
-#ifdef YYLEX_PARAM
-# define YYLEX yylex (YYLEX_PARAM)
-#else
-# define YYLEX yylex ()
-#endif
-
-/* Enable debugging if requested.  */
-#if YYDEBUG
-
-# ifndef YYFPRINTF
-#  include <stdio.h> /* INFRINGES ON USER NAME SPACE */
-#  define YYFPRINTF fprintf
-# endif
-
-# define YYDPRINTF(Args)			\
-do {						\
-  if (yydebug)					\
-    YYFPRINTF Args;				\
-} while (YYID (0))
-
-# define YY_SYMBOL_PRINT(Title, Type, Value, Location)			  \
-do {									  \
-  if (yydebug)								  \
-    {									  \
-      YYFPRINTF (stderr, "%s ", Title);					  \
-      yy_symbol_print (stderr,						  \
-		  Type, Value, Location); \
-      YYFPRINTF (stderr, "\n");						  \
-    }									  \
-} while (YYID (0))
+# define YY_SYMBOL_PRINT(Title, Type, Value, Location)                    \
+do {                                                                      \
+  if (yydebug)                                                            \
+    {                                                                     \
+      YYFPRINTF (stderr, "%s ", Title);                                   \
+      yy_symbol_print (stderr,                                            \
+                  Type, Value, Location); \
+      YYFPRINTF (stderr, "\n");                                           \
+    }                                                                     \
+} while (0)
 
 
-/*--------------------------------.
-| Print this symbol on YYOUTPUT.  |
-`--------------------------------*/
+/*-----------------------------------.
+| Print this symbol's value on YYO.  |
+`-----------------------------------*/
 
-/*ARGSUSED*/
-#if (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
 static void
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp)
-#else
-static void
-yy_symbol_value_print (yyoutput, yytype, yyvaluep, yylocationp)
-    FILE *yyoutput;
-    int yytype;
-    YYSTYPE const * const yyvaluep;
-    YYLTYPE const * const yylocationp;
-#endif
+yy_symbol_value_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp)
 {
-  FILE *yyo = yyoutput;
-  YYUSE (yyo);
+  FILE *yyoutput = yyo;
+  YYUSE (yyoutput);
+  YYUSE (yylocationp);
   if (!yyvaluep)
     return;
-  YYUSE (yylocationp);
 # ifdef YYPRINT
   if (yytype < YYNTOKENS)
-    YYPRINT (yyoutput, yytoknum[yytype], *yyvaluep);
-# else
-  YYUSE (yyoutput);
+    YYPRINT (yyo, yytoknum[yytype], *yyvaluep);
 # endif
-  switch (yytype)
-    {
-      default:
-        break;
-    }
+  YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
+  YYUSE (yytype);
+  YY_IGNORE_MAYBE_UNINITIALIZED_END
 }
 
 
-/*--------------------------------.
-| Print this symbol on YYOUTPUT.  |
-`--------------------------------*/
+/*---------------------------.
+| Print this symbol on YYO.  |
+`---------------------------*/
 
-#if (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
 static void
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp)
-#else
-static void
-yy_symbol_print (yyoutput, yytype, yyvaluep, yylocationp)
-    FILE *yyoutput;
-    int yytype;
-    YYSTYPE const * const yyvaluep;
-    YYLTYPE const * const yylocationp;
-#endif
+yy_symbol_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp)
 {
-  if (yytype < YYNTOKENS)
-    YYFPRINTF (yyoutput, "token %s (", yytname[yytype]);
-  else
-    YYFPRINTF (yyoutput, "nterm %s (", yytname[yytype]);
+  YYFPRINTF (yyo, "%s %s (",
+             yytype < YYNTOKENS ? "token" : "nterm", yytname[yytype]);
 
-  YY_LOCATION_PRINT (yyoutput, *yylocationp);
-  YYFPRINTF (yyoutput, ": ");
-  yy_symbol_value_print (yyoutput, yytype, yyvaluep, yylocationp);
-  YYFPRINTF (yyoutput, ")");
+  YY_LOCATION_PRINT (yyo, *yylocationp);
+  YYFPRINTF (yyo, ": ");
+  yy_symbol_value_print (yyo, yytype, yyvaluep, yylocationp);
+  YYFPRINTF (yyo, ")");
 }
 
 /*------------------------------------------------------------------.
@@ -3832,16 +3647,8 @@ yy_symbol_print (yyoutput, yytype, yyvaluep, yylocationp)
 | TOP (included).                                                   |
 `------------------------------------------------------------------*/
 
-#if (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
 static void
-yy_stack_print (yytype_int16 *yybottom, yytype_int16 *yytop)
-#else
-static void
-yy_stack_print (yybottom, yytop)
-    yytype_int16 *yybottom;
-    yytype_int16 *yytop;
-#endif
+yy_stack_print (yy_state_t *yybottom, yy_state_t *yytop)
 {
   YYFPRINTF (stderr, "Stack now");
   for (; yybottom <= yytop; yybottom++)
@@ -3852,50 +3659,42 @@ yy_stack_print (yybottom, yytop)
   YYFPRINTF (stderr, "\n");
 }
 
-# define YY_STACK_PRINT(Bottom, Top)				\
-do {								\
-  if (yydebug)							\
-    yy_stack_print ((Bottom), (Top));				\
-} while (YYID (0))
+# define YY_STACK_PRINT(Bottom, Top)                            \
+do {                                                            \
+  if (yydebug)                                                  \
+    yy_stack_print ((Bottom), (Top));                           \
+} while (0)
 
 
 /*------------------------------------------------.
 | Report that the YYRULE is going to be reduced.  |
 `------------------------------------------------*/
 
-#if (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
 static void
-yy_reduce_print (YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule)
-#else
-static void
-yy_reduce_print (yyvsp, yylsp, yyrule)
-    YYSTYPE *yyvsp;
-    YYLTYPE *yylsp;
-    int yyrule;
-#endif
+yy_reduce_print (yy_state_t *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule)
 {
+  int yylno = yyrline[yyrule];
   int yynrhs = yyr2[yyrule];
   int yyi;
-  unsigned long int yylno = yyrline[yyrule];
-  YYFPRINTF (stderr, "Reducing stack by rule %d (line %lu):\n",
-	     yyrule - 1, yylno);
+  YYFPRINTF (stderr, "Reducing stack by rule %d (line %d):\n",
+             yyrule - 1, yylno);
   /* The symbols being reduced.  */
   for (yyi = 0; yyi < yynrhs; yyi++)
     {
       YYFPRINTF (stderr, "   $%d = ", yyi + 1);
-      yy_symbol_print (stderr, yyrhs[yyprhs[yyrule] + yyi],
-		       &(yyvsp[(yyi + 1) - (yynrhs)])
-		       , &(yylsp[(yyi + 1) - (yynrhs)])		       );
+      yy_symbol_print (stderr,
+                       yystos[+yyssp[yyi + 1 - yynrhs]],
+                       &yyvsp[(yyi + 1) - (yynrhs)]
+                       , &(yylsp[(yyi + 1) - (yynrhs)])                       );
       YYFPRINTF (stderr, "\n");
     }
 }
 
-# define YY_REDUCE_PRINT(Rule)		\
-do {					\
-  if (yydebug)				\
-    yy_reduce_print (yyvsp, yylsp, Rule); \
-} while (YYID (0))
+# define YY_REDUCE_PRINT(Rule)          \
+do {                                    \
+  if (yydebug)                          \
+    yy_reduce_print (yyssp, yyvsp, yylsp, Rule); \
+} while (0)
 
 /* Nonzero means print parse trace.  It is left uninitialized so that
    multiple parsers can coexist.  */
@@ -3909,7 +3708,7 @@ int yydebug;
 
 
 /* YYINITDEPTH -- initial size of the parser's stacks.  */
-#ifndef	YYINITDEPTH
+#ifndef YYINITDEPTH
 # define YYINITDEPTH 200
 #endif
 
@@ -3929,20 +3728,13 @@ int yydebug;
 
 # ifndef yystrlen
 #  if defined __GLIBC__ && defined _STRING_H
-#   define yystrlen strlen
+#   define yystrlen(S) (YY_CAST (YYPTRDIFF_T, strlen (S)))
 #  else
 /* Return the length of YYSTR.  */
-#if (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
-static YYSIZE_T
+static YYPTRDIFF_T
 yystrlen (const char *yystr)
-#else
-static YYSIZE_T
-yystrlen (yystr)
-    const char *yystr;
-#endif
 {
-  YYSIZE_T yylen;
+  YYPTRDIFF_T yylen;
   for (yylen = 0; yystr[yylen]; yylen++)
     continue;
   return yylen;
@@ -3956,16 +3748,8 @@ yystrlen (yystr)
 #  else
 /* Copy YYSRC to YYDEST, returning the address of the terminating '\0' in
    YYDEST.  */
-#if (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
 static char *
 yystpcpy (char *yydest, const char *yysrc)
-#else
-static char *
-yystpcpy (yydest, yysrc)
-    char *yydest;
-    const char *yysrc;
-#endif
 {
   char *yyd = yydest;
   const char *yys = yysrc;
@@ -3986,43 +3770,46 @@ yystpcpy (yydest, yysrc)
    backslash-backslash).  YYSTR is taken from yytname.  If YYRES is
    null, do not copy; instead, return the length of what the result
    would have been.  */
-static YYSIZE_T
+static YYPTRDIFF_T
 yytnamerr (char *yyres, const char *yystr)
 {
   if (*yystr == '"')
     {
-      YYSIZE_T yyn = 0;
+      YYPTRDIFF_T yyn = 0;
       char const *yyp = yystr;
 
       for (;;)
-	switch (*++yyp)
-	  {
-	  case '\'':
-	  case ',':
-	    goto do_not_strip_quotes;
+        switch (*++yyp)
+          {
+          case '\'':
+          case ',':
+            goto do_not_strip_quotes;
 
-	  case '\\':
-	    if (*++yyp != '\\')
-	      goto do_not_strip_quotes;
-	    /* Fall through.  */
-	  default:
-	    if (yyres)
-	      yyres[yyn] = *yyp;
-	    yyn++;
-	    break;
+          case '\\':
+            if (*++yyp != '\\')
+              goto do_not_strip_quotes;
+            else
+              goto append;
 
-	  case '"':
-	    if (yyres)
-	      yyres[yyn] = '\0';
-	    return yyn;
-	  }
+          append:
+          default:
+            if (yyres)
+              yyres[yyn] = *yyp;
+            yyn++;
+            break;
+
+          case '"':
+            if (yyres)
+              yyres[yyn] = '\0';
+            return yyn;
+          }
     do_not_strip_quotes: ;
     }
 
-  if (! yyres)
+  if (yyres)
+    return yystpcpy (yyres, yystr) - yyres;
+  else
     return yystrlen (yystr);
-
-  return yystpcpy (yyres, yystr) - yyres;
 }
 # endif
 
@@ -4035,25 +3822,21 @@ yytnamerr (char *yyres, const char *yystr)
    *YYMSG_ALLOC to the required number of bytes.  Return 2 if the
    required number of bytes is too large to store.  */
 static int
-yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
-                yytype_int16 *yyssp, int yytoken)
+yysyntax_error (YYPTRDIFF_T *yymsg_alloc, char **yymsg,
+                yy_state_t *yyssp, int yytoken)
 {
-  YYSIZE_T yysize0 = yytnamerr (YY_NULL, yytname[yytoken]);
-  YYSIZE_T yysize = yysize0;
   enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };
   /* Internationalized format string. */
-  const char *yyformat = YY_NULL;
-  /* Arguments of yyformat. */
+  const char *yyformat = YY_NULLPTR;
+  /* Arguments of yyformat: reported tokens (one for the "unexpected",
+     one per "expected"). */
   char const *yyarg[YYERROR_VERBOSE_ARGS_MAXIMUM];
-  /* Number of reported tokens (one for the "unexpected", one per
-     "expected"). */
+  /* Actual size of YYARG. */
   int yycount = 0;
+  /* Cumulated lengths of YYARG.  */
+  YYPTRDIFF_T yysize = 0;
 
   /* There are many possibilities here to consider:
-     - Assume YYFAIL is not used.  It's too flawed to consider.  See
-       <http://lists.gnu.org/archive/html/bison-patches/2009-12/msg00024.html>
-       for details.  YYERROR is fine as it does not invoke this
-       function.
      - If this state is a consistent state with a default action, then
        the only way this function was invoked is if the default action
        is an error action.  In that case, don't check for expected
@@ -4078,7 +3861,9 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
   */
   if (yytoken != YYEMPTY)
     {
-      int yyn = yypact[*yyssp];
+      int yyn = yypact[+*yyssp];
+      YYPTRDIFF_T yysize0 = yytnamerr (YY_NULLPTR, yytname[yytoken]);
+      yysize = yysize0;
       yyarg[yycount++] = yytname[yytoken];
       if (!yypact_value_is_default (yyn))
         {
@@ -4103,11 +3888,12 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
                   }
                 yyarg[yycount++] = yytname[yyx];
                 {
-                  YYSIZE_T yysize1 = yysize + yytnamerr (YY_NULL, yytname[yyx]);
-                  if (! (yysize <= yysize1
-                         && yysize1 <= YYSTACK_ALLOC_MAXIMUM))
+                  YYPTRDIFF_T yysize1
+                    = yysize + yytnamerr (YY_NULLPTR, yytname[yyx]);
+                  if (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM)
+                    yysize = yysize1;
+                  else
                     return 2;
-                  yysize = yysize1;
                 }
               }
         }
@@ -4119,6 +3905,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
       case N:                               \
         yyformat = S;                       \
       break
+    default: /* Avoid compiler warnings. */
       YYCASE_(0, YY_("syntax error"));
       YYCASE_(1, YY_("syntax error, unexpected %s"));
       YYCASE_(2, YY_("syntax error, unexpected %s, expecting %s"));
@@ -4129,10 +3916,13 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
     }
 
   {
-    YYSIZE_T yysize1 = yysize + yystrlen (yyformat);
-    if (! (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM))
+    /* Don't count the "%s"s in the final size, but reserve room for
+       the terminator.  */
+    YYPTRDIFF_T yysize1 = yysize + (yystrlen (yyformat) - 2 * yycount) + 1;
+    if (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM)
+      yysize = yysize1;
+    else
       return 2;
-    yysize = yysize1;
   }
 
   if (*yymsg_alloc < yysize)
@@ -4158,8 +3948,8 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
         }
       else
         {
-          yyp++;
-          yyformat++;
+          ++yyp;
+          ++yyformat;
         }
   }
   return 0;
@@ -4170,33 +3960,18 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
 | Release the memory associated to this symbol.  |
 `-----------------------------------------------*/
 
-/*ARGSUSED*/
-#if (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
 static void
 yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocationp)
-#else
-static void
-yydestruct (yymsg, yytype, yyvaluep, yylocationp)
-    const char *yymsg;
-    int yytype;
-    YYSTYPE *yyvaluep;
-    YYLTYPE *yylocationp;
-#endif
 {
   YYUSE (yyvaluep);
   YYUSE (yylocationp);
-
   if (!yymsg)
     yymsg = "Deleting";
   YY_SYMBOL_PRINT (yymsg, yytype, yyvaluep, yylocationp);
 
-  switch (yytype)
-    {
-
-      default:
-        break;
-    }
+  YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
+  YYUSE (yytype);
+  YY_IGNORE_MAYBE_UNINITIALIZED_END
 }
 
 
@@ -4205,26 +3980,14 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
 /* The lookahead symbol.  */
 int yychar;
 
-
-#ifndef YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
-# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
-# define YY_IGNORE_MAYBE_UNINITIALIZED_END
-#endif
-#ifndef YY_INITIAL_VALUE
-# define YY_INITIAL_VALUE(Value) /* Nothing. */
-#endif
-
 /* The semantic value of the lookahead symbol.  */
-YYSTYPE yylval YY_INITIAL_VALUE(yyval_default);
-
+YYSTYPE yylval;
 /* Location data for the lookahead symbol.  */
 YYLTYPE yylloc
 # if defined YYLTYPE_IS_TRIVIAL && YYLTYPE_IS_TRIVIAL
   = { 1, 1, 1, 1 }
 # endif
 ;
-
-
 /* Number of syntax errors so far.  */
 int yynerrs;
 
@@ -4233,44 +3996,25 @@ int yynerrs;
 | yyparse.  |
 `----------*/
 
-#ifdef YYPARSE_PARAM
-#if (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
-int
-yyparse (void *YYPARSE_PARAM)
-#else
-int
-yyparse (YYPARSE_PARAM)
-    void *YYPARSE_PARAM;
-#endif
-#else /* ! YYPARSE_PARAM */
-#if (defined __STDC__ || defined __C99__FUNC__ \
-     || defined __cplusplus || defined _MSC_VER)
 int
 yyparse (void)
-#else
-int
-yyparse ()
-
-#endif
-#endif
 {
-    int yystate;
+    yy_state_fast_t yystate;
     /* Number of tokens to shift before error messages enabled.  */
     int yyerrstatus;
 
     /* The stacks and their tools:
-       `yyss': related to states.
-       `yyvs': related to semantic values.
-       `yyls': related to locations.
+       'yyss': related to states.
+       'yyvs': related to semantic values.
+       'yyls': related to locations.
 
        Refer to the stacks through separate pointers, to allow yyoverflow
        to reallocate them elsewhere.  */
 
     /* The state stack.  */
-    yytype_int16 yyssa[YYINITDEPTH];
-    yytype_int16 *yyss;
-    yytype_int16 *yyssp;
+    yy_state_t yyssa[YYINITDEPTH];
+    yy_state_t *yyss;
+    yy_state_t *yyssp;
 
     /* The semantic value stack.  */
     YYSTYPE yyvsa[YYINITDEPTH];
@@ -4285,7 +4029,7 @@ yyparse ()
     /* The locations where the error started and ended.  */
     YYLTYPE yyerror_range[3];
 
-    YYSIZE_T yystacksize;
+    YYPTRDIFF_T yystacksize;
 
   int yyn;
   int yyresult;
@@ -4300,7 +4044,7 @@ yyparse ()
   /* Buffer for error messages, and its allocated size.  */
   char yymsgbuf[128];
   char *yymsg = yymsgbuf;
-  YYSIZE_T yymsg_alloc = sizeof yymsgbuf;
+  YYPTRDIFF_T yymsg_alloc = sizeof yymsgbuf;
 #endif
 
 #define YYPOPSTACK(N)   (yyvsp -= (N), yyssp -= (N), yylsp -= (N))
@@ -4323,95 +4067,104 @@ yyparse ()
   yylsp[0] = yylloc;
   goto yysetstate;
 
+
 /*------------------------------------------------------------.
-| yynewstate -- Push a new state, which is found in yystate.  |
+| yynewstate -- push a new state, which is found in yystate.  |
 `------------------------------------------------------------*/
- yynewstate:
+yynewstate:
   /* In all cases, when you get here, the value and location stacks
      have just been pushed.  So pushing a state here evens the stacks.  */
   yyssp++;
 
- yysetstate:
-  *yyssp = yystate;
+
+/*--------------------------------------------------------------------.
+| yysetstate -- set current state (the top of the stack) to yystate.  |
+`--------------------------------------------------------------------*/
+yysetstate:
+  YYDPRINTF ((stderr, "Entering state %d\n", yystate));
+  YY_ASSERT (0 <= yystate && yystate < YYNSTATES);
+  YY_IGNORE_USELESS_CAST_BEGIN
+  *yyssp = YY_CAST (yy_state_t, yystate);
+  YY_IGNORE_USELESS_CAST_END
 
   if (yyss + yystacksize - 1 <= yyssp)
+#if !defined yyoverflow && !defined YYSTACK_RELOCATE
+    goto yyexhaustedlab;
+#else
     {
       /* Get the current used size of the three stacks, in elements.  */
-      YYSIZE_T yysize = yyssp - yyss + 1;
+      YYPTRDIFF_T yysize = yyssp - yyss + 1;
 
-#ifdef yyoverflow
+# if defined yyoverflow
       {
-	/* Give user a chance to reallocate the stack.  Use copies of
-	   these so that the &'s don't force the real ones into
-	   memory.  */
-	YYSTYPE *yyvs1 = yyvs;
-	yytype_int16 *yyss1 = yyss;
-	YYLTYPE *yyls1 = yyls;
+        /* Give user a chance to reallocate the stack.  Use copies of
+           these so that the &'s don't force the real ones into
+           memory.  */
+        yy_state_t *yyss1 = yyss;
+        YYSTYPE *yyvs1 = yyvs;
+        YYLTYPE *yyls1 = yyls;
 
-	/* Each stack pointer address is followed by the size of the
-	   data in use in that stack, in bytes.  This used to be a
-	   conditional around just the two extra args, but that might
-	   be undefined if yyoverflow is a macro.  */
-	yyoverflow (YY_("memory exhausted"),
-		    &yyss1, yysize * sizeof (*yyssp),
-		    &yyvs1, yysize * sizeof (*yyvsp),
-		    &yyls1, yysize * sizeof (*yylsp),
-		    &yystacksize);
-
-	yyls = yyls1;
-	yyss = yyss1;
-	yyvs = yyvs1;
+        /* Each stack pointer address is followed by the size of the
+           data in use in that stack, in bytes.  This used to be a
+           conditional around just the two extra args, but that might
+           be undefined if yyoverflow is a macro.  */
+        yyoverflow (YY_("memory exhausted"),
+                    &yyss1, yysize * YYSIZEOF (*yyssp),
+                    &yyvs1, yysize * YYSIZEOF (*yyvsp),
+                    &yyls1, yysize * YYSIZEOF (*yylsp),
+                    &yystacksize);
+        yyss = yyss1;
+        yyvs = yyvs1;
+        yyls = yyls1;
       }
-#else /* no yyoverflow */
-# ifndef YYSTACK_RELOCATE
-      goto yyexhaustedlab;
-# else
+# else /* defined YYSTACK_RELOCATE */
       /* Extend the stack our own way.  */
       if (YYMAXDEPTH <= yystacksize)
-	goto yyexhaustedlab;
+        goto yyexhaustedlab;
       yystacksize *= 2;
       if (YYMAXDEPTH < yystacksize)
-	yystacksize = YYMAXDEPTH;
+        yystacksize = YYMAXDEPTH;
 
       {
-	yytype_int16 *yyss1 = yyss;
-	union yyalloc *yyptr =
-	  (union yyalloc *) YYSTACK_ALLOC (YYSTACK_BYTES (yystacksize));
-	if (! yyptr)
-	  goto yyexhaustedlab;
-	YYSTACK_RELOCATE (yyss_alloc, yyss);
-	YYSTACK_RELOCATE (yyvs_alloc, yyvs);
-	YYSTACK_RELOCATE (yyls_alloc, yyls);
-#  undef YYSTACK_RELOCATE
-	if (yyss1 != yyssa)
-	  YYSTACK_FREE (yyss1);
+        yy_state_t *yyss1 = yyss;
+        union yyalloc *yyptr =
+          YY_CAST (union yyalloc *,
+                   YYSTACK_ALLOC (YY_CAST (YYSIZE_T, YYSTACK_BYTES (yystacksize))));
+        if (! yyptr)
+          goto yyexhaustedlab;
+        YYSTACK_RELOCATE (yyss_alloc, yyss);
+        YYSTACK_RELOCATE (yyvs_alloc, yyvs);
+        YYSTACK_RELOCATE (yyls_alloc, yyls);
+# undef YYSTACK_RELOCATE
+        if (yyss1 != yyssa)
+          YYSTACK_FREE (yyss1);
       }
 # endif
-#endif /* no yyoverflow */
 
       yyssp = yyss + yysize - 1;
       yyvsp = yyvs + yysize - 1;
       yylsp = yyls + yysize - 1;
 
-      YYDPRINTF ((stderr, "Stack size increased to %lu\n",
-		  (unsigned long int) yystacksize));
+      YY_IGNORE_USELESS_CAST_BEGIN
+      YYDPRINTF ((stderr, "Stack size increased to %ld\n",
+                  YY_CAST (long, yystacksize)));
+      YY_IGNORE_USELESS_CAST_END
 
       if (yyss + yystacksize - 1 <= yyssp)
-	YYABORT;
+        YYABORT;
     }
-
-  YYDPRINTF ((stderr, "Entering state %d\n", yystate));
+#endif /* !defined yyoverflow && !defined YYSTACK_RELOCATE */
 
   if (yystate == YYFINAL)
     YYACCEPT;
 
   goto yybackup;
 
+
 /*-----------.
 | yybackup.  |
 `-----------*/
 yybackup:
-
   /* Do appropriate processing given the current state.  Read a
      lookahead token if we need one and don't already have one.  */
 
@@ -4426,7 +4179,7 @@ yybackup:
   if (yychar == YYEMPTY)
     {
       YYDPRINTF ((stderr, "Reading a token: "));
-      yychar = YYLEX;
+      yychar = yylex ();
     }
 
   if (yychar <= YYEOF)
@@ -4461,15 +4214,14 @@ yybackup:
 
   /* Shift the lookahead token.  */
   YY_SYMBOL_PRINT ("Shifting", yytoken, &yylval, &yylloc);
-
-  /* Discard the shifted token.  */
-  yychar = YYEMPTY;
-
   yystate = yyn;
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
   *++yyvsp = yylval;
   YY_IGNORE_MAYBE_UNINITIALIZED_END
   *++yylsp = yylloc;
+
+  /* Discard the shifted token.  */
+  yychar = YYEMPTY;
   goto yynewstate;
 
 
@@ -4484,14 +4236,14 @@ yydefault:
 
 
 /*-----------------------------.
-| yyreduce -- Do a reduction.  |
+| yyreduce -- do a reduction.  |
 `-----------------------------*/
 yyreduce:
   /* yyn is the number of a rule to reduce with.  */
   yylen = yyr2[yyn];
 
   /* If YYLEN is nonzero, implement the default value of the action:
-     `$$ = $1'.
+     '$$ = $1'.
 
      Otherwise, the following line sets YYVAL to garbage.
      This behavior is undocumented and Bison
@@ -4500,2078 +4252,2079 @@ yyreduce:
      GCC warning that YYVAL may be used uninitialized.  */
   yyval = yyvsp[1-yylen];
 
-  /* Default location.  */
+  /* Default location. */
   YYLLOC_DEFAULT (yyloc, (yylsp - yylen), yylen);
+  yyerror_range[1] = yyloc;
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 2:
-/* Line 1792 of yacc.c  */
-#line 90 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+  case 2:
+#line 90 "Grammar/DARIC.y"
+            { (yyval.ast) = (yyvsp[0].ast); }
+#line 4265 "src/parser/bison.cpp"
     break;
 
   case 3:
-/* Line 1792 of yacc.c  */
-#line 94 "DARIC.y"
-    { ast_lines[yyfileno].push_front((yyvsp[(1) - (1)].ast)); (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 94 "Grammar/DARIC.y"
+           { ast_lines[yyfileno].push_front((yyvsp[0].ast)); (yyval.ast) = (yyvsp[0].ast); }
+#line 4271 "src/parser/bison.cpp"
     break;
 
   case 4:
-/* Line 1792 of yacc.c  */
-#line 95 "DARIC.y"
-    { ast_lines[yyfileno].push_front((yyvsp[(1) - (2)].ast)); (yyval.ast) = link((yyvsp[(1) - (2)].ast), (yyvsp[(2) - (2)].ast)); }
+#line 95 "Grammar/DARIC.y"
+                 { ast_lines[yyfileno].push_front((yyvsp[-1].ast)); (yyval.ast) = link((yyvsp[-1].ast), (yyvsp[0].ast)); }
+#line 4277 "src/parser/bison.cpp"
     break;
 
   case 5:
-/* Line 1792 of yacc.c  */
-#line 99 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (2)].ast); }
+#line 99 "Grammar/DARIC.y"
+                    { (yyval.ast) = (yyvsp[-1].ast); }
+#line 4283 "src/parser/bison.cpp"
     break;
 
   case 6:
-/* Line 1792 of yacc.c  */
-#line 100 "DARIC.y"
-    { (yyval.ast) = NULL; }
+#line 100 "Grammar/DARIC.y"
+         { (yyval.ast) = NULL; }
+#line 4289 "src/parser/bison.cpp"
     break;
 
   case 7:
-/* Line 1792 of yacc.c  */
-#line 101 "DARIC.y"
-    { (yyval.ast) = link(linenumber((yyvsp[(1) - (3)].v_int)), (yyvsp[(2) - (3)].ast)); }
+#line 101 "Grammar/DARIC.y"
+                                { (yyval.ast) = link(linenumber((yyvsp[-2].v_int)), (yyvsp[-1].ast)); }
+#line 4295 "src/parser/bison.cpp"
     break;
 
   case 8:
-/* Line 1792 of yacc.c  */
-#line 104 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 104 "Grammar/DARIC.y"
+           { (yyval.ast) = (yyvsp[0].ast); }
+#line 4301 "src/parser/bison.cpp"
     break;
 
   case 9:
-/* Line 1792 of yacc.c  */
-#line 105 "DARIC.y"
-    { (yyval.ast) = link((yyvsp[(1) - (2)].ast), (yyvsp[(2) - (2)].ast)); }
+#line 105 "Grammar/DARIC.y"
+                       { (yyval.ast) = link((yyvsp[-1].ast), (yyvsp[0].ast)); }
+#line 4307 "src/parser/bison.cpp"
     break;
 
   case 10:
-/* Line 1792 of yacc.c  */
-#line 109 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 109 "Grammar/DARIC.y"
+                { (yyval.ast) = (yyvsp[0].ast); }
+#line 4313 "src/parser/bison.cpp"
     break;
 
   case 11:
-/* Line 1792 of yacc.c  */
-#line 110 "DARIC.y"
-    { (yyval.ast) = link((yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 110 "Grammar/DARIC.y"
+                              { (yyval.ast) = link((yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4319 "src/parser/bison.cpp"
     break;
 
   case 15:
-/* Line 1792 of yacc.c  */
-#line 116 "DARIC.y"
-    { (yyval.ast) = token1(CHAIN, (yyvsp[(2) - (2)].ast)); }
+#line 116 "Grammar/DARIC.y"
+                              { (yyval.ast) = token1(CHAIN, (yyvsp[0].ast)); }
+#line 4325 "src/parser/bison.cpp"
     break;
 
   case 16:
-/* Line 1792 of yacc.c  */
-#line 117 "DARIC.y"
-    { (yyval.ast) = token2(CHAIN, (yyvsp[(2) - (4)].ast), (yyvsp[(4) - (4)].ast)); }
+#line 117 "Grammar/DARIC.y"
+                                                      { (yyval.ast) = token2(CHAIN, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4331 "src/parser/bison.cpp"
     break;
 
   case 17:
-/* Line 1792 of yacc.c  */
-#line 118 "DARIC.y"
-    { (yyval.ast) = token1(EXPECT, (yyvsp[(2) - (2)].ast)); }
+#line 118 "Grammar/DARIC.y"
+                                 { (yyval.ast) = token1(EXPECT, (yyvsp[0].ast)); }
+#line 4337 "src/parser/bison.cpp"
     break;
 
   case 18:
-/* Line 1792 of yacc.c  */
-#line 119 "DARIC.y"
-    { (yyval.ast) = token(END); }
+#line 119 "Grammar/DARIC.y"
+          { (yyval.ast) = token(END); }
+#line 4343 "src/parser/bison.cpp"
     break;
 
   case 19:
-/* Line 1792 of yacc.c  */
-#line 120 "DARIC.y"
-    { (yyval.ast) = token1(CALLPROC, string((yyvsp[(1) - (1)].v_string))); }
+#line 120 "Grammar/DARIC.y"
+                { (yyval.ast) = token1(CALLPROC, string((yyvsp[0].v_string))); }
+#line 4349 "src/parser/bison.cpp"
     break;
 
   case 20:
-/* Line 1792 of yacc.c  */
-#line 121 "DARIC.y"
-    { (yyval.ast) = token2(CALLPROC, string((yyvsp[(1) - (4)].v_string)), (yyvsp[(3) - (4)].ast)); }
+#line 121 "Grammar/DARIC.y"
+                                        { (yyval.ast) = token2(CALLPROC, string((yyvsp[-3].v_string)), (yyvsp[-1].ast)); }
+#line 4355 "src/parser/bison.cpp"
     break;
 
   case 21:
-/* Line 1792 of yacc.c  */
-#line 122 "DARIC.y"
-    { (yyval.ast) = token2(CALLFN, string((yyvsp[(1) - (4)].v_string)), (yyvsp[(3) - (4)].ast)); }
+#line 122 "Grammar/DARIC.y"
+                                               { (yyval.ast) = token2(CALLFN, string((yyvsp[-3].v_string)), (yyvsp[-1].ast)); }
+#line 4361 "src/parser/bison.cpp"
     break;
 
   case 22:
-/* Line 1792 of yacc.c  */
-#line 123 "DARIC.y"
-    { (yyval.ast) = token2(CALLFN, string((yyvsp[(1) - (4)].v_string)), (yyvsp[(3) - (4)].ast)); }
+#line 123 "Grammar/DARIC.y"
+                                            { (yyval.ast) = token2(CALLFN, string((yyvsp[-3].v_string)), (yyvsp[-1].ast)); }
+#line 4367 "src/parser/bison.cpp"
     break;
 
   case 23:
-/* Line 1792 of yacc.c  */
-#line 124 "DARIC.y"
-    { (yyval.ast) = token2(CALLFN, string((yyvsp[(1) - (4)].v_string)), (yyvsp[(3) - (4)].ast)); }
+#line 124 "Grammar/DARIC.y"
+                                              { (yyval.ast) = token2(CALLFN, string((yyvsp[-3].v_string)), (yyvsp[-1].ast)); }
+#line 4373 "src/parser/bison.cpp"
     break;
 
   case 24:
-/* Line 1792 of yacc.c  */
-#line 125 "DARIC.y"
-    { (yyval.ast) = token1(DATA, (yyvsp[(2) - (2)].ast)); }
+#line 125 "Grammar/DARIC.y"
+                           { (yyval.ast) = token1(DATA, (yyvsp[0].ast)); }
+#line 4379 "src/parser/bison.cpp"
     break;
 
   case 25:
-/* Line 1792 of yacc.c  */
-#line 126 "DARIC.y"
-    { (yyval.ast) = token1(READ, (yyvsp[(2) - (2)].ast)); }
+#line 126 "Grammar/DARIC.y"
+                         { (yyval.ast) = token1(READ, (yyvsp[0].ast)); }
+#line 4385 "src/parser/bison.cpp"
     break;
 
   case 26:
-/* Line 1792 of yacc.c  */
-#line 127 "DARIC.y"
-    { (yyval.ast) = token(RESTORE); }
+#line 127 "Grammar/DARIC.y"
+              { (yyval.ast) = token(RESTORE); }
+#line 4391 "src/parser/bison.cpp"
     break;
 
   case 27:
-/* Line 1792 of yacc.c  */
-#line 128 "DARIC.y"
-    { (yyval.ast) = token(RETURN); }
+#line 128 "Grammar/DARIC.y"
+             { (yyval.ast) = token(RETURN); }
+#line 4397 "src/parser/bison.cpp"
     break;
 
   case 28:
-/* Line 1792 of yacc.c  */
-#line 129 "DARIC.y"
-    { (yyval.ast) = token1(RETURN_WITH_VALUE, (yyvsp[(2) - (2)].ast)); }
+#line 129 "Grammar/DARIC.y"
+                        { (yyval.ast) = token1(RETURN_WITH_VALUE, (yyvsp[0].ast)); }
+#line 4403 "src/parser/bison.cpp"
     break;
 
   case 29:
-/* Line 1792 of yacc.c  */
-#line 130 "DARIC.y"
-    { (yyval.ast) = token(TRACEON); }
+#line 130 "Grammar/DARIC.y"
+              { (yyval.ast) = token(TRACEON); }
+#line 4409 "src/parser/bison.cpp"
     break;
 
   case 30:
-/* Line 1792 of yacc.c  */
-#line 131 "DARIC.y"
-    { (yyval.ast) = token(TRACEOFF); }
+#line 131 "Grammar/DARIC.y"
+               { (yyval.ast) = token(TRACEOFF); }
+#line 4415 "src/parser/bison.cpp"
     break;
 
   case 31:
-/* Line 1792 of yacc.c  */
-#line 132 "DARIC.y"
-    { (yyval.ast) = token(BREAKPOINT); }
+#line 132 "Grammar/DARIC.y"
+                 { (yyval.ast) = token(BREAKPOINT); }
+#line 4421 "src/parser/bison.cpp"
     break;
 
   case 32:
-/* Line 1792 of yacc.c  */
-#line 134 "DARIC.y"
-    { (yyval.ast) = token1(DIM, (yyvsp[(2) - (2)].ast)); }
+#line 134 "Grammar/DARIC.y"
+                            { (yyval.ast) = token1(DIM, (yyvsp[0].ast)); }
+#line 4427 "src/parser/bison.cpp"
     break;
 
   case 33:
-/* Line 1792 of yacc.c  */
-#line 135 "DARIC.y"
-    { (yyval.ast) = token1(LOCALDIM, (yyvsp[(3) - (3)].ast)); }
+#line 135 "Grammar/DARIC.y"
+                                  { (yyval.ast) = token1(LOCALDIM, (yyvsp[0].ast)); }
+#line 4433 "src/parser/bison.cpp"
     break;
 
   case 34:
-/* Line 1792 of yacc.c  */
-#line 137 "DARIC.y"
-    { (yyval.ast) = token2(BPUT, (yyvsp[(2) - (4)].ast), (yyvsp[(4) - (4)].ast)); }
+#line 137 "Grammar/DARIC.y"
+                                                     { (yyval.ast) = token2(BPUT, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4439 "src/parser/bison.cpp"
     break;
 
   case 35:
-/* Line 1792 of yacc.c  */
-#line 138 "DARIC.y"
-    { (yyval.ast) = token1(BGET, (yyvsp[(2) - (2)].ast)); }
+#line 138 "Grammar/DARIC.y"
+                              { (yyval.ast) = token1(BGET, (yyvsp[0].ast)); }
+#line 4445 "src/parser/bison.cpp"
     break;
 
   case 36:
-/* Line 1792 of yacc.c  */
-#line 139 "DARIC.y"
-    { (yyval.ast) = token2(PTRA, (yyvsp[(2) - (4)].ast), (yyvsp[(4) - (4)].ast)); }
+#line 139 "Grammar/DARIC.y"
+                                                  { (yyval.ast) = token2(PTRA, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4451 "src/parser/bison.cpp"
     break;
 
   case 37:
-/* Line 1792 of yacc.c  */
-#line 140 "DARIC.y"
-    { (yyval.ast) = token1(CLOSE, (yyvsp[(2) - (2)].ast)); }
+#line 140 "Grammar/DARIC.y"
+                               { (yyval.ast) = token1(CLOSE, (yyvsp[0].ast)); }
+#line 4457 "src/parser/bison.cpp"
     break;
 
   case 38:
-/* Line 1792 of yacc.c  */
-#line 141 "DARIC.y"
-    { (yyval.ast) = token3(LISTFILES, variable((yyvsp[(1) - (8)].v_string), Type::STRING_ARRAY), (yyvsp[(7) - (8)].ast), token(GLOBAL)); }
+#line 141 "Grammar/DARIC.y"
+                                                                    { (yyval.ast) = token3(LISTFILES, variable((yyvsp[-7].v_string), Type::STRING_ARRAY), (yyvsp[-1].ast), token(GLOBAL)); }
+#line 4463 "src/parser/bison.cpp"
     break;
 
   case 39:
-/* Line 1792 of yacc.c  */
-#line 142 "DARIC.y"
-    { (yyval.ast) = token3(LISTFILES, variable((yyvsp[(2) - (9)].v_string), Type::STRING_ARRAY), (yyvsp[(8) - (9)].ast), token(LOCAL)); }
+#line 142 "Grammar/DARIC.y"
+                                                                          { (yyval.ast) = token3(LISTFILES, variable((yyvsp[-7].v_string), Type::STRING_ARRAY), (yyvsp[-1].ast), token(LOCAL)); }
+#line 4469 "src/parser/bison.cpp"
     break;
 
   case 40:
-/* Line 1792 of yacc.c  */
-#line 144 "DARIC.y"
-    { (yyval.ast) = token1(OSCLI, (yyvsp[(2) - (2)].ast)); }
+#line 144 "Grammar/DARIC.y"
+                              { (yyval.ast) = token1(OSCLI, (yyvsp[0].ast)); }
+#line 4475 "src/parser/bison.cpp"
     break;
 
   case 41:
-/* Line 1792 of yacc.c  */
-#line 146 "DARIC.y"
-    { (yyval.ast) = token1(GOSUB, integer((yyvsp[(2) - (2)].v_int))); }
+#line 146 "Grammar/DARIC.y"
+                        { (yyval.ast) = token1(GOSUB, integer((yyvsp[0].v_int))); }
+#line 4481 "src/parser/bison.cpp"
     break;
 
   case 42:
-/* Line 1792 of yacc.c  */
-#line 147 "DARIC.y"
-    { (yyval.ast) = token1(GOTO, integer((yyvsp[(2) - (2)].v_int))); }
+#line 147 "Grammar/DARIC.y"
+                       { (yyval.ast) = token1(GOTO, integer((yyvsp[0].v_int))); }
+#line 4487 "src/parser/bison.cpp"
     break;
 
   case 43:
-/* Line 1792 of yacc.c  */
-#line 149 "DARIC.y"
-    { (yyval.ast) = token1(INPUT_, (yyvsp[(2) - (2)].ast)); }
+#line 149 "Grammar/DARIC.y"
+                                   { (yyval.ast) = token1(INPUT_, (yyvsp[0].ast)); }
+#line 4493 "src/parser/bison.cpp"
     break;
 
   case 44:
-/* Line 1792 of yacc.c  */
-#line 150 "DARIC.y"
-    { (yyval.ast) = token2(INPUT_NOQUESTIONMARK, string((yyvsp[(2) - (3)].v_string)), (yyvsp[(3) - (3)].ast)); }
+#line 150 "Grammar/DARIC.y"
+                                                  { (yyval.ast) = token2(INPUT_NOQUESTIONMARK, string((yyvsp[-1].v_string)), (yyvsp[0].ast)); }
+#line 4499 "src/parser/bison.cpp"
     break;
 
   case 45:
-/* Line 1792 of yacc.c  */
-#line 151 "DARIC.y"
-    { (yyval.ast) = token2(INPUT_, string((yyvsp[(2) - (4)].v_string)), (yyvsp[(4) - (4)].ast)); }
+#line 151 "Grammar/DARIC.y"
+                                                      { (yyval.ast) = token2(INPUT_, string((yyvsp[-2].v_string)), (yyvsp[0].ast)); }
+#line 4505 "src/parser/bison.cpp"
     break;
 
   case 46:
-/* Line 1792 of yacc.c  */
-#line 152 "DARIC.y"
-    { (yyval.ast) = token3(MOUSE, string((yyvsp[(2) - (6)].v_string)), string((yyvsp[(4) - (6)].v_string)), string((yyvsp[(6) - (6)].v_string)) ); }
+#line 152 "Grammar/DARIC.y"
+                                                                       { (yyval.ast) = token3(MOUSE, string((yyvsp[-4].v_string)), string((yyvsp[-2].v_string)), string((yyvsp[0].v_string)) ); }
+#line 4511 "src/parser/bison.cpp"
     break;
 
   case 47:
-/* Line 1792 of yacc.c  */
-#line 154 "DARIC.y"
-    { (yyval.ast) = token1(SINKEY, (yyvsp[(3) - (4)].ast)); }
+#line 154 "Grammar/DARIC.y"
+                                       { (yyval.ast) = token1(SINKEY, (yyvsp[-1].ast)); }
+#line 4517 "src/parser/bison.cpp"
     break;
 
   case 48:
-/* Line 1792 of yacc.c  */
-#line 155 "DARIC.y"
-    { (yyval.ast) = token1(SINKEYS, (yyvsp[(3) - (4)].ast)); }
+#line 155 "Grammar/DARIC.y"
+                                        { (yyval.ast) = token1(SINKEYS, (yyvsp[-1].ast)); }
+#line 4523 "src/parser/bison.cpp"
     break;
 
   case 49:
-/* Line 1792 of yacc.c  */
-#line 156 "DARIC.y"
-    { (yyval.ast) = token(GET_S); }
+#line 156 "Grammar/DARIC.y"
+          { (yyval.ast) = token(GET_S); }
+#line 4529 "src/parser/bison.cpp"
     break;
 
   case 50:
-/* Line 1792 of yacc.c  */
-#line 157 "DARIC.y"
-    { (yyval.ast) = token(GETS_S); }
+#line 157 "Grammar/DARIC.y"
+           { (yyval.ast) = token(GETS_S); }
+#line 4535 "src/parser/bison.cpp"
     break;
 
   case 51:
-/* Line 1792 of yacc.c  */
-#line 159 "DARIC.y"
-    { (yyval.ast) = token2(IF, (yyvsp[(2) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 159 "Grammar/DARIC.y"
+                               { (yyval.ast) = token2(IF, (yyvsp[-1].ast), (yyvsp[0].ast)); }
+#line 4541 "src/parser/bison.cpp"
     break;
 
   case 52:
-/* Line 1792 of yacc.c  */
-#line 160 "DARIC.y"
-    { (yyval.ast) = token3(IF, (yyvsp[(2) - (5)].ast), (yyvsp[(3) - (5)].ast), (yyvsp[(5) - (5)].ast)); }
+#line 160 "Grammar/DARIC.y"
+                                             { (yyval.ast) = token3(IF, (yyvsp[-3].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4547 "src/parser/bison.cpp"
     break;
 
   case 53:
-/* Line 1792 of yacc.c  */
-#line 161 "DARIC.y"
-    { (yyval.ast) = token2(IF, (yyvsp[(2) - (5)].ast), (yyvsp[(4) - (5)].ast)); }
+#line 161 "Grammar/DARIC.y"
+                                          { (yyval.ast) = token2(IF, (yyvsp[-3].ast), (yyvsp[-1].ast)); }
+#line 4553 "src/parser/bison.cpp"
     break;
 
   case 54:
-/* Line 1792 of yacc.c  */
-#line 162 "DARIC.y"
-    { (yyval.ast) = token3(IF, (yyvsp[(2) - (8)].ast), (yyvsp[(4) - (8)].ast), (yyvsp[(7) - (8)].ast)); }
+#line 162 "Grammar/DARIC.y"
+                                                              { (yyval.ast) = token3(IF, (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-1].ast)); }
+#line 4559 "src/parser/bison.cpp"
     break;
 
   case 55:
-/* Line 1792 of yacc.c  */
-#line 164 "DARIC.y"
-    { (yyval.ast) = token2(IF, (yyvsp[(2) - (4)].ast), (yyvsp[(4) - (4)].ast)); }
+#line 164 "Grammar/DARIC.y"
+                                    { (yyval.ast) = token2(IF, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4565 "src/parser/bison.cpp"
     break;
 
   case 56:
-/* Line 1792 of yacc.c  */
-#line 165 "DARIC.y"
-    { (yyval.ast) = token3(IF, (yyvsp[(2) - (6)].ast), (yyvsp[(4) - (6)].ast), (yyvsp[(6) - (6)].ast)); }
+#line 165 "Grammar/DARIC.y"
+                                                    { (yyval.ast) = token3(IF, (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4571 "src/parser/bison.cpp"
     break;
 
   case 57:
-/* Line 1792 of yacc.c  */
-#line 166 "DARIC.y"
-    { (yyval.ast) = token2(IF, (yyvsp[(2) - (6)].ast), (yyvsp[(5) - (6)].ast)); }
+#line 166 "Grammar/DARIC.y"
+                                               { (yyval.ast) = token2(IF, (yyvsp[-4].ast), (yyvsp[-1].ast)); }
+#line 4577 "src/parser/bison.cpp"
     break;
 
   case 58:
-/* Line 1792 of yacc.c  */
-#line 167 "DARIC.y"
-    { (yyval.ast) = token3(IF, (yyvsp[(2) - (9)].ast), (yyvsp[(5) - (9)].ast), (yyvsp[(8) - (9)].ast)); }
+#line 167 "Grammar/DARIC.y"
+                                                                   { (yyval.ast) = token3(IF, (yyvsp[-7].ast), (yyvsp[-4].ast), (yyvsp[-1].ast)); }
+#line 4583 "src/parser/bison.cpp"
     break;
 
   case 59:
-/* Line 1792 of yacc.c  */
-#line 169 "DARIC.y"
-    { (yyval.ast) = token2(REPEAT, (yyvsp[(3) - (5)].ast), (yyvsp[(5) - (5)].ast)); }
+#line 169 "Grammar/DARIC.y"
+                                             { (yyval.ast) = token2(REPEAT, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4589 "src/parser/bison.cpp"
     break;
 
   case 60:
-/* Line 1792 of yacc.c  */
-#line 170 "DARIC.y"
-    { (yyval.ast) = token2(REPEAT, NULL, (yyvsp[(3) - (3)].ast)); }
+#line 170 "Grammar/DARIC.y"
+                              { (yyval.ast) = token2(REPEAT, NULL, (yyvsp[0].ast)); }
+#line 4595 "src/parser/bison.cpp"
     break;
 
   case 61:
-/* Line 1792 of yacc.c  */
-#line 171 "DARIC.y"
-    { (yyval.ast) = token2(WHILE, (yyvsp[(2) - (5)].ast), (yyvsp[(4) - (5)].ast)); }
+#line 171 "Grammar/DARIC.y"
+                                                { (yyval.ast) = token2(WHILE, (yyvsp[-3].ast), (yyvsp[-1].ast)); }
+#line 4601 "src/parser/bison.cpp"
     break;
 
   case 62:
-/* Line 1792 of yacc.c  */
-#line 173 "DARIC.y"
-    { (yyval.ast) = token2(SWAP_I, string((yyvsp[(2) - (4)].v_string)), string((yyvsp[(4) - (4)].v_string))); }
+#line 173 "Grammar/DARIC.y"
+                                                 { (yyval.ast) = token2(SWAP_I, string((yyvsp[-2].v_string)), string((yyvsp[0].v_string))); }
+#line 4607 "src/parser/bison.cpp"
     break;
 
   case 63:
-/* Line 1792 of yacc.c  */
-#line 174 "DARIC.y"
-    { (yyval.ast) = token2(SWAP_F, string((yyvsp[(2) - (4)].v_string)), string((yyvsp[(4) - (4)].v_string))); }
+#line 174 "Grammar/DARIC.y"
+                                 { (yyval.ast) = token2(SWAP_F, string((yyvsp[-2].v_string)), string((yyvsp[0].v_string))); }
+#line 4613 "src/parser/bison.cpp"
     break;
 
   case 64:
-/* Line 1792 of yacc.c  */
-#line 175 "DARIC.y"
-    { (yyval.ast) = token2(SWAP_S, string((yyvsp[(2) - (4)].v_string)), string((yyvsp[(4) - (4)].v_string))); }
+#line 175 "Grammar/DARIC.y"
+                                                { (yyval.ast) = token2(SWAP_S, string((yyvsp[-2].v_string)), string((yyvsp[0].v_string))); }
+#line 4619 "src/parser/bison.cpp"
     break;
 
   case 65:
-/* Line 1792 of yacc.c  */
-#line 178 "DARIC.y"
-    { (yyval.ast) = token4typed(FORIN, string((yyvsp[(2) - (9)].v_string)), string((yyvsp[(4) - (9)].v_string)), (yyvsp[(8) - (9)].ast), token(GLOBAL), Type::REAL); }
+#line 178 "Grammar/DARIC.y"
+                                                                                      { (yyval.ast) = token4typed(FORIN, string((yyvsp[-7].v_string)), string((yyvsp[-5].v_string)), (yyvsp[-1].ast), token(GLOBAL), Type::REAL); }
+#line 4625 "src/parser/bison.cpp"
     break;
 
   case 66:
-/* Line 1792 of yacc.c  */
-#line 179 "DARIC.y"
-    { (yyval.ast) = token4typed(FORIN, string((yyvsp[(2) - (9)].v_string)), string((yyvsp[(4) - (9)].v_string)), (yyvsp[(8) - (9)].ast), token(GLOBAL), Type::INTEGER); }
+#line 179 "Grammar/DARIC.y"
+                                                                                      { (yyval.ast) = token4typed(FORIN, string((yyvsp[-7].v_string)), string((yyvsp[-5].v_string)), (yyvsp[-1].ast), token(GLOBAL), Type::INTEGER); }
+#line 4631 "src/parser/bison.cpp"
     break;
 
   case 67:
-/* Line 1792 of yacc.c  */
-#line 180 "DARIC.y"
-    { (yyval.ast) = token4typed(FORIN, string((yyvsp[(2) - (9)].v_string)), string((yyvsp[(4) - (9)].v_string)), (yyvsp[(8) - (9)].ast), token(GLOBAL), Type::STRING); }
+#line 180 "Grammar/DARIC.y"
+                                                                                      { (yyval.ast) = token4typed(FORIN, string((yyvsp[-7].v_string)), string((yyvsp[-5].v_string)), (yyvsp[-1].ast), token(GLOBAL), Type::STRING); }
+#line 4637 "src/parser/bison.cpp"
     break;
 
   case 68:
-/* Line 1792 of yacc.c  */
-#line 181 "DARIC.y"
-    { (yyval.ast) = token4typed(FORIN, string((yyvsp[(2) - (8)].v_string)), string((yyvsp[(4) - (8)].v_string)), (yyvsp[(7) - (8)].ast), token(GLOBAL), Type::REAL); }
+#line 181 "Grammar/DARIC.y"
+                                                                                      { (yyval.ast) = token4typed(FORIN, string((yyvsp[-6].v_string)), string((yyvsp[-4].v_string)), (yyvsp[-1].ast), token(GLOBAL), Type::REAL); }
+#line 4643 "src/parser/bison.cpp"
     break;
 
   case 69:
-/* Line 1792 of yacc.c  */
-#line 182 "DARIC.y"
-    { (yyval.ast) = token4typed(FORIN, string((yyvsp[(2) - (8)].v_string)), string((yyvsp[(4) - (8)].v_string)), (yyvsp[(7) - (8)].ast), token(GLOBAL), Type::INTEGER); }
+#line 182 "Grammar/DARIC.y"
+                                                                                      { (yyval.ast) = token4typed(FORIN, string((yyvsp[-6].v_string)), string((yyvsp[-4].v_string)), (yyvsp[-1].ast), token(GLOBAL), Type::INTEGER); }
+#line 4649 "src/parser/bison.cpp"
     break;
 
   case 70:
-/* Line 1792 of yacc.c  */
-#line 183 "DARIC.y"
-    { (yyval.ast) = token4typed(FORIN, string((yyvsp[(2) - (8)].v_string)), string((yyvsp[(4) - (8)].v_string)), (yyvsp[(7) - (8)].ast), token(GLOBAL), Type::STRING); }
+#line 183 "Grammar/DARIC.y"
+                                                                                      { (yyval.ast) = token4typed(FORIN, string((yyvsp[-6].v_string)), string((yyvsp[-4].v_string)), (yyvsp[-1].ast), token(GLOBAL), Type::STRING); }
+#line 4655 "src/parser/bison.cpp"
     break;
 
   case 71:
-/* Line 1792 of yacc.c  */
-#line 184 "DARIC.y"
-    { (yyval.ast) = token4typed(FORIN, string((yyvsp[(3) - (10)].v_string)), string((yyvsp[(5) - (10)].v_string)), (yyvsp[(9) - (10)].ast), token(LOCAL), Type::REAL); }
+#line 184 "Grammar/DARIC.y"
+                                                                                      { (yyval.ast) = token4typed(FORIN, string((yyvsp[-7].v_string)), string((yyvsp[-5].v_string)), (yyvsp[-1].ast), token(LOCAL), Type::REAL); }
+#line 4661 "src/parser/bison.cpp"
     break;
 
   case 72:
-/* Line 1792 of yacc.c  */
-#line 185 "DARIC.y"
-    { (yyval.ast) = token4typed(FORIN, string((yyvsp[(3) - (10)].v_string)), string((yyvsp[(5) - (10)].v_string)), (yyvsp[(9) - (10)].ast), token(LOCAL), Type::INTEGER); }
+#line 185 "Grammar/DARIC.y"
+                                                                                      { (yyval.ast) = token4typed(FORIN, string((yyvsp[-7].v_string)), string((yyvsp[-5].v_string)), (yyvsp[-1].ast), token(LOCAL), Type::INTEGER); }
+#line 4667 "src/parser/bison.cpp"
     break;
 
   case 73:
-/* Line 1792 of yacc.c  */
-#line 186 "DARIC.y"
-    { (yyval.ast) = token4typed(FORIN, string((yyvsp[(3) - (10)].v_string)), string((yyvsp[(5) - (10)].v_string)), (yyvsp[(9) - (10)].ast), token(LOCAL), Type::STRING); }
+#line 186 "Grammar/DARIC.y"
+                                                                                      { (yyval.ast) = token4typed(FORIN, string((yyvsp[-7].v_string)), string((yyvsp[-5].v_string)), (yyvsp[-1].ast), token(LOCAL), Type::STRING); }
+#line 4673 "src/parser/bison.cpp"
     break;
 
   case 74:
-/* Line 1792 of yacc.c  */
-#line 187 "DARIC.y"
-    { (yyval.ast) = token4typed(FORIN, string((yyvsp[(3) - (9)].v_string)), string((yyvsp[(5) - (9)].v_string)), (yyvsp[(8) - (9)].ast), token(LOCAL), Type::REAL); }
+#line 187 "Grammar/DARIC.y"
+                                                                                      { (yyval.ast) = token4typed(FORIN, string((yyvsp[-6].v_string)), string((yyvsp[-4].v_string)), (yyvsp[-1].ast), token(LOCAL), Type::REAL); }
+#line 4679 "src/parser/bison.cpp"
     break;
 
   case 75:
-/* Line 1792 of yacc.c  */
-#line 188 "DARIC.y"
-    { (yyval.ast) = token4typed(FORIN, string((yyvsp[(3) - (9)].v_string)), string((yyvsp[(5) - (9)].v_string)), (yyvsp[(8) - (9)].ast), token(LOCAL), Type::INTEGER); }
+#line 188 "Grammar/DARIC.y"
+                                                                                      { (yyval.ast) = token4typed(FORIN, string((yyvsp[-6].v_string)), string((yyvsp[-4].v_string)), (yyvsp[-1].ast), token(LOCAL), Type::INTEGER); }
+#line 4685 "src/parser/bison.cpp"
     break;
 
   case 76:
-/* Line 1792 of yacc.c  */
-#line 189 "DARIC.y"
-    { (yyval.ast) = token4typed(FORIN, string((yyvsp[(3) - (9)].v_string)), string((yyvsp[(5) - (9)].v_string)), (yyvsp[(8) - (9)].ast), token(LOCAL), Type::STRING); }
+#line 189 "Grammar/DARIC.y"
+                                                                                      { (yyval.ast) = token4typed(FORIN, string((yyvsp[-6].v_string)), string((yyvsp[-4].v_string)), (yyvsp[-1].ast), token(LOCAL), Type::STRING); }
+#line 4691 "src/parser/bison.cpp"
     break;
 
   case 77:
-/* Line 1792 of yacc.c  */
-#line 192 "DARIC.y"
-    { (yyval.ast) = token5typed(FOR, string((yyvsp[(2) - (9)].v_string)), (yyvsp[(4) - (9)].ast), (yyvsp[(6) - (9)].ast), (yyvsp[(8) - (9)].ast), token(GLOBAL), Type::INTEGER); }
+#line 192 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token5typed(FOR, string((yyvsp[-7].v_string)), (yyvsp[-5].ast), (yyvsp[-3].ast), (yyvsp[-1].ast), token(GLOBAL), Type::INTEGER); }
+#line 4697 "src/parser/bison.cpp"
     break;
 
   case 78:
-/* Line 1792 of yacc.c  */
-#line 193 "DARIC.y"
-    { (yyval.ast) = token5typed(FOR, string((yyvsp[(2) - (9)].v_string)), (yyvsp[(4) - (9)].ast), (yyvsp[(6) - (9)].ast), (yyvsp[(8) - (9)].ast), token(GLOBAL), Type::REAL); }
+#line 193 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token5typed(FOR, string((yyvsp[-7].v_string)), (yyvsp[-5].ast), (yyvsp[-3].ast), (yyvsp[-1].ast), token(GLOBAL), Type::REAL); }
+#line 4703 "src/parser/bison.cpp"
     break;
 
   case 79:
-/* Line 1792 of yacc.c  */
-#line 194 "DARIC.y"
-    { (yyval.ast) = token5typed(FOR, string((yyvsp[(2) - (8)].v_string)), (yyvsp[(4) - (8)].ast), (yyvsp[(6) - (8)].ast), (yyvsp[(7) - (8)].ast), token(GLOBAL), Type::INTEGER); }
+#line 194 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token5typed(FOR, string((yyvsp[-6].v_string)), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[-1].ast), token(GLOBAL), Type::INTEGER); }
+#line 4709 "src/parser/bison.cpp"
     break;
 
   case 80:
-/* Line 1792 of yacc.c  */
-#line 195 "DARIC.y"
-    { (yyval.ast) = token5typed(FOR, string((yyvsp[(2) - (8)].v_string)), (yyvsp[(4) - (8)].ast), (yyvsp[(6) - (8)].ast), (yyvsp[(7) - (8)].ast), token(GLOBAL), Type::REAL); }
+#line 195 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token5typed(FOR, string((yyvsp[-6].v_string)), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[-1].ast), token(GLOBAL), Type::REAL); }
+#line 4715 "src/parser/bison.cpp"
     break;
 
   case 81:
-/* Line 1792 of yacc.c  */
-#line 196 "DARIC.y"
-    { (yyval.ast) = token6typed(FOR, string((yyvsp[(2) - (11)].v_string)), (yyvsp[(4) - (11)].ast), (yyvsp[(6) - (11)].ast), (yyvsp[(8) - (11)].ast), (yyvsp[(10) - (11)].ast), token(GLOBAL), Type::INTEGER); }
+#line 196 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token6typed(FOR, string((yyvsp[-9].v_string)), (yyvsp[-7].ast), (yyvsp[-5].ast), (yyvsp[-3].ast), (yyvsp[-1].ast), token(GLOBAL), Type::INTEGER); }
+#line 4721 "src/parser/bison.cpp"
     break;
 
   case 82:
-/* Line 1792 of yacc.c  */
-#line 197 "DARIC.y"
-    { (yyval.ast) = token6typed(FOR, string((yyvsp[(2) - (11)].v_string)), (yyvsp[(4) - (11)].ast), (yyvsp[(6) - (11)].ast), (yyvsp[(8) - (11)].ast), (yyvsp[(10) - (11)].ast), token(GLOBAL), Type::REAL); }
+#line 197 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token6typed(FOR, string((yyvsp[-9].v_string)), (yyvsp[-7].ast), (yyvsp[-5].ast), (yyvsp[-3].ast), (yyvsp[-1].ast), token(GLOBAL), Type::REAL); }
+#line 4727 "src/parser/bison.cpp"
     break;
 
   case 83:
-/* Line 1792 of yacc.c  */
-#line 198 "DARIC.y"
-    { (yyval.ast) = token6typed(FOR, string((yyvsp[(2) - (10)].v_string)), (yyvsp[(4) - (10)].ast), (yyvsp[(6) - (10)].ast), (yyvsp[(8) - (10)].ast), (yyvsp[(9) - (10)].ast), token(GLOBAL), Type::INTEGER); }
+#line 198 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token6typed(FOR, string((yyvsp[-8].v_string)), (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[-1].ast), token(GLOBAL), Type::INTEGER); }
+#line 4733 "src/parser/bison.cpp"
     break;
 
   case 84:
-/* Line 1792 of yacc.c  */
-#line 199 "DARIC.y"
-    { (yyval.ast) = token6typed(FOR, string((yyvsp[(2) - (10)].v_string)), (yyvsp[(4) - (10)].ast), (yyvsp[(6) - (10)].ast), (yyvsp[(8) - (10)].ast), (yyvsp[(9) - (10)].ast), token(GLOBAL), Type::REAL); }
+#line 199 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token6typed(FOR, string((yyvsp[-8].v_string)), (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[-1].ast), token(GLOBAL), Type::REAL); }
+#line 4739 "src/parser/bison.cpp"
     break;
 
   case 85:
-/* Line 1792 of yacc.c  */
-#line 200 "DARIC.y"
-    { (yyval.ast) = token5typed(FOR, string((yyvsp[(3) - (10)].v_string)), (yyvsp[(5) - (10)].ast), (yyvsp[(7) - (10)].ast), (yyvsp[(9) - (10)].ast), token(LOCAL), Type::INTEGER); }
+#line 200 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token5typed(FOR, string((yyvsp[-7].v_string)), (yyvsp[-5].ast), (yyvsp[-3].ast), (yyvsp[-1].ast), token(LOCAL), Type::INTEGER); }
+#line 4745 "src/parser/bison.cpp"
     break;
 
   case 86:
-/* Line 1792 of yacc.c  */
-#line 201 "DARIC.y"
-    { (yyval.ast) = token5typed(FOR, string((yyvsp[(3) - (10)].v_string)), (yyvsp[(5) - (10)].ast), (yyvsp[(7) - (10)].ast), (yyvsp[(9) - (10)].ast), token(LOCAL), Type::REAL); }
+#line 201 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token5typed(FOR, string((yyvsp[-7].v_string)), (yyvsp[-5].ast), (yyvsp[-3].ast), (yyvsp[-1].ast), token(LOCAL), Type::REAL); }
+#line 4751 "src/parser/bison.cpp"
     break;
 
   case 87:
-/* Line 1792 of yacc.c  */
-#line 202 "DARIC.y"
-    { (yyval.ast) = token5typed(FOR, string((yyvsp[(3) - (9)].v_string)), (yyvsp[(5) - (9)].ast), (yyvsp[(7) - (9)].ast), (yyvsp[(8) - (9)].ast), token(LOCAL), Type::INTEGER); }
+#line 202 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token5typed(FOR, string((yyvsp[-6].v_string)), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[-1].ast), token(LOCAL), Type::INTEGER); }
+#line 4757 "src/parser/bison.cpp"
     break;
 
   case 88:
-/* Line 1792 of yacc.c  */
-#line 203 "DARIC.y"
-    { (yyval.ast) = token5typed(FOR, string((yyvsp[(3) - (9)].v_string)), (yyvsp[(5) - (9)].ast), (yyvsp[(7) - (9)].ast), (yyvsp[(8) - (9)].ast), token(LOCAL), Type::REAL); }
+#line 203 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token5typed(FOR, string((yyvsp[-6].v_string)), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[-1].ast), token(LOCAL), Type::REAL); }
+#line 4763 "src/parser/bison.cpp"
     break;
 
   case 89:
-/* Line 1792 of yacc.c  */
-#line 204 "DARIC.y"
-    { (yyval.ast) = token6typed(FOR, string((yyvsp[(3) - (12)].v_string)), (yyvsp[(5) - (12)].ast), (yyvsp[(7) - (12)].ast), (yyvsp[(9) - (12)].ast), (yyvsp[(11) - (12)].ast), token(LOCAL), Type::INTEGER); }
+#line 204 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token6typed(FOR, string((yyvsp[-9].v_string)), (yyvsp[-7].ast), (yyvsp[-5].ast), (yyvsp[-3].ast), (yyvsp[-1].ast), token(LOCAL), Type::INTEGER); }
+#line 4769 "src/parser/bison.cpp"
     break;
 
   case 90:
-/* Line 1792 of yacc.c  */
-#line 205 "DARIC.y"
-    { (yyval.ast) = token6typed(FOR, string((yyvsp[(3) - (12)].v_string)), (yyvsp[(5) - (12)].ast), (yyvsp[(7) - (12)].ast), (yyvsp[(9) - (12)].ast), (yyvsp[(11) - (12)].ast), token(LOCAL), Type::REAL); }
+#line 205 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token6typed(FOR, string((yyvsp[-9].v_string)), (yyvsp[-7].ast), (yyvsp[-5].ast), (yyvsp[-3].ast), (yyvsp[-1].ast), token(LOCAL), Type::REAL); }
+#line 4775 "src/parser/bison.cpp"
     break;
 
   case 91:
-/* Line 1792 of yacc.c  */
-#line 206 "DARIC.y"
-    { (yyval.ast) = token6typed(FOR, string((yyvsp[(3) - (11)].v_string)), (yyvsp[(5) - (11)].ast), (yyvsp[(7) - (11)].ast), (yyvsp[(9) - (11)].ast), (yyvsp[(10) - (11)].ast), token(LOCAL), Type::INTEGER); }
+#line 206 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token6typed(FOR, string((yyvsp[-8].v_string)), (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[-1].ast), token(LOCAL), Type::INTEGER); }
+#line 4781 "src/parser/bison.cpp"
     break;
 
   case 92:
-/* Line 1792 of yacc.c  */
-#line 207 "DARIC.y"
-    { (yyval.ast) = token6typed(FOR, string((yyvsp[(3) - (11)].v_string)), (yyvsp[(5) - (11)].ast), (yyvsp[(7) - (11)].ast), (yyvsp[(9) - (11)].ast), (yyvsp[(10) - (11)].ast), token(LOCAL), Type::REAL); }
+#line 207 "Grammar/DARIC.y"
+                                                                                                                             { (yyval.ast) = token6typed(FOR, string((yyvsp[-8].v_string)), (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[-1].ast), token(LOCAL), Type::REAL); }
+#line 4787 "src/parser/bison.cpp"
     break;
 
   case 93:
-/* Line 1792 of yacc.c  */
-#line 209 "DARIC.y"
-    { (yyval.ast) = token2(CASE, (yyvsp[(2) - (6)].ast), (yyvsp[(5) - (6)].ast));  }
+#line 209 "Grammar/DARIC.y"
+                                               { (yyval.ast) = token2(CASE, (yyvsp[-4].ast), (yyvsp[-1].ast));  }
+#line 4793 "src/parser/bison.cpp"
     break;
 
   case 94:
-/* Line 1792 of yacc.c  */
-#line 210 "DARIC.y"
-    { (yyval.ast) = token3(CASE, (yyvsp[(2) - (9)].ast), (yyvsp[(5) - (9)].ast), (yyvsp[(7) - (9)].ast));  }
+#line 210 "Grammar/DARIC.y"
+                                                                      { (yyval.ast) = token3(CASE, (yyvsp[-7].ast), (yyvsp[-4].ast), (yyvsp[-2].ast));  }
+#line 4799 "src/parser/bison.cpp"
     break;
 
   case 95:
-/* Line 1792 of yacc.c  */
-#line 212 "DARIC.y"
-    { (yyval.ast) = token(PRINT); }
+#line 212 "Grammar/DARIC.y"
+            { (yyval.ast) = token(PRINT); }
+#line 4805 "src/parser/bison.cpp"
     break;
 
   case 96:
-/* Line 1792 of yacc.c  */
-#line 213 "DARIC.y"
-    { (yyval.ast) = token1(PRINT, (yyvsp[(2) - (2)].ast)); }
+#line 213 "Grammar/DARIC.y"
+                                  { (yyval.ast) = token1(PRINT, (yyvsp[0].ast)); }
+#line 4811 "src/parser/bison.cpp"
     break;
 
   case 97:
-/* Line 1792 of yacc.c  */
-#line 215 "DARIC.y"
-    { (yyval.ast) = token(RENDERFRAME); }
+#line 215 "Grammar/DARIC.y"
+                  { (yyval.ast) = token(RENDERFRAME); }
+#line 4817 "src/parser/bison.cpp"
     break;
 
   case 98:
-/* Line 1792 of yacc.c  */
-#line 218 "DARIC.y"
-    { (yyval.ast) = token6(CREATEVERTEX, string((yyvsp[(2) - (13)].v_string)), (yyvsp[(4) - (13)].ast), (yyvsp[(7) - (13)].ast), (yyvsp[(9) - (13)].ast), (yyvsp[(11) - (13)].ast), (yyvsp[(13) - (13)].ast)); }
+#line 218 "Grammar/DARIC.y"
+                                                      { (yyval.ast) = token6(CREATEVERTEX, string((yyvsp[-11].v_string)), (yyvsp[-9].ast), (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4823 "src/parser/bison.cpp"
     break;
 
   case 99:
-/* Line 1792 of yacc.c  */
-#line 221 "DARIC.y"
-    { (yyval.ast) = token6(CREATETRIANGLE, string((yyvsp[(2) - (13)].v_string)), (yyvsp[(4) - (13)].ast), (yyvsp[(7) - (13)].ast), (yyvsp[(9) - (13)].ast), (yyvsp[(11) - (13)].ast), (yyvsp[(13) - (13)].ast)); }
+#line 221 "Grammar/DARIC.y"
+                                                  { (yyval.ast) = token6(CREATETRIANGLE, string((yyvsp[-11].v_string)), (yyvsp[-9].ast), (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4829 "src/parser/bison.cpp"
     break;
 
   case 100:
-/* Line 1792 of yacc.c  */
-#line 222 "DARIC.y"
-    { (yyval.ast) = token4(TRANSLATE, (yyvsp[(2) - (8)].ast), (yyvsp[(4) - (8)].ast), (yyvsp[(6) - (8)].ast), (yyvsp[(8) - (8)].ast)); }
+#line 222 "Grammar/DARIC.y"
+                                                                                                        { (yyval.ast) = token4(TRANSLATE, (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4835 "src/parser/bison.cpp"
     break;
 
   case 101:
-/* Line 1792 of yacc.c  */
-#line 223 "DARIC.y"
-    { (yyval.ast) = token4(ROTATE, (yyvsp[(2) - (8)].ast), (yyvsp[(4) - (8)].ast), (yyvsp[(6) - (8)].ast), (yyvsp[(8) - (8)].ast)); }
+#line 223 "Grammar/DARIC.y"
+                                                                                                      { (yyval.ast) = token4(ROTATE, (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4841 "src/parser/bison.cpp"
     break;
 
   case 102:
-/* Line 1792 of yacc.c  */
-#line 224 "DARIC.y"
-    { (yyval.ast) = token2(SCALE, (yyvsp[(2) - (4)].ast), (yyvsp[(4) - (4)].ast)); }
+#line 224 "Grammar/DARIC.y"
+                                                      { (yyval.ast) = token2(SCALE, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4847 "src/parser/bison.cpp"
     break;
 
   case 103:
-/* Line 1792 of yacc.c  */
-#line 225 "DARIC.y"
-    { (yyval.ast) = token1(DELETEOBJECT, (yyvsp[(2) - (2)].ast)); }
+#line 225 "Grammar/DARIC.y"
+                                      { (yyval.ast) = token1(DELETEOBJECT, (yyvsp[0].ast)); }
+#line 4853 "src/parser/bison.cpp"
     break;
 
   case 104:
-/* Line 1792 of yacc.c  */
-#line 227 "DARIC.y"
-    { (yyval.ast) = token(CLS); }
+#line 227 "Grammar/DARIC.y"
+          { (yyval.ast) = token(CLS); }
+#line 4859 "src/parser/bison.cpp"
     break;
 
   case 105:
-/* Line 1792 of yacc.c  */
-#line 228 "DARIC.y"
-    { (yyval.ast) = token1(COLOUR, (yyvsp[(2) - (2)].ast)); }
+#line 228 "Grammar/DARIC.y"
+                                { (yyval.ast) = token1(COLOUR, (yyvsp[0].ast)); }
+#line 4865 "src/parser/bison.cpp"
     break;
 
   case 106:
-/* Line 1792 of yacc.c  */
-#line 229 "DARIC.y"
-    { (yyval.ast) = token3(COLOUR, (yyvsp[(2) - (6)].ast), (yyvsp[(4) - (6)].ast), (yyvsp[(6) - (6)].ast)); }
+#line 229 "Grammar/DARIC.y"
+                                                                              { (yyval.ast) = token3(COLOUR, (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4871 "src/parser/bison.cpp"
     break;
 
   case 107:
-/* Line 1792 of yacc.c  */
-#line 230 "DARIC.y"
-    { (yyval.ast) = token1(COLOURBG, (yyvsp[(2) - (2)].ast)); }
+#line 230 "Grammar/DARIC.y"
+                                  { (yyval.ast) = token1(COLOURBG, (yyvsp[0].ast)); }
+#line 4877 "src/parser/bison.cpp"
     break;
 
   case 108:
-/* Line 1792 of yacc.c  */
-#line 231 "DARIC.y"
-    { (yyval.ast) = token3(COLOURBG, (yyvsp[(2) - (6)].ast), (yyvsp[(4) - (6)].ast), (yyvsp[(6) - (6)].ast)); }
+#line 231 "Grammar/DARIC.y"
+                                                                                { (yyval.ast) = token3(COLOURBG, (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4883 "src/parser/bison.cpp"
     break;
 
   case 109:
-/* Line 1792 of yacc.c  */
-#line 232 "DARIC.y"
-    { (yyval.ast) = token2(GRAPHICS, (yyvsp[(2) - (4)].ast), (yyvsp[(4) - (4)].ast)); }
+#line 232 "Grammar/DARIC.y"
+                                                         { (yyval.ast) = token2(GRAPHICS, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4889 "src/parser/bison.cpp"
     break;
 
   case 110:
-/* Line 1792 of yacc.c  */
-#line 233 "DARIC.y"
-    { (yyval.ast) = token2(BANKED, (yyvsp[(3) - (5)].ast), (yyvsp[(5) - (5)].ast)); }
+#line 233 "Grammar/DARIC.y"
+                                                                { (yyval.ast) = token2(BANKED, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4895 "src/parser/bison.cpp"
     break;
 
   case 111:
-/* Line 1792 of yacc.c  */
-#line 234 "DARIC.y"
-    { (yyval.ast) = token(GRAPHICS); }
+#line 234 "Grammar/DARIC.y"
+               { (yyval.ast) = token(GRAPHICS); }
+#line 4901 "src/parser/bison.cpp"
     break;
 
   case 112:
-/* Line 1792 of yacc.c  */
-#line 235 "DARIC.y"
-    { (yyval.ast) = token(BANKED); }
+#line 235 "Grammar/DARIC.y"
+                      { (yyval.ast) = token(BANKED); }
+#line 4907 "src/parser/bison.cpp"
     break;
 
   case 113:
-/* Line 1792 of yacc.c  */
-#line 236 "DARIC.y"
-    { (yyval.ast) = token(FLIP); }
+#line 236 "Grammar/DARIC.y"
+           { (yyval.ast) = token(FLIP); }
+#line 4913 "src/parser/bison.cpp"
     break;
 
   case 114:
-/* Line 1792 of yacc.c  */
-#line 237 "DARIC.y"
-    { (yyval.ast) = token3(CIRCLE, (yyvsp[(2) - (6)].ast), (yyvsp[(4) - (6)].ast), (yyvsp[(6) - (6)].ast)); }
+#line 237 "Grammar/DARIC.y"
+                                                                              { (yyval.ast) = token3(CIRCLE, (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4919 "src/parser/bison.cpp"
     break;
 
   case 115:
-/* Line 1792 of yacc.c  */
-#line 238 "DARIC.y"
-    { (yyval.ast) = token3(CIRCLEFILL, (yyvsp[(3) - (7)].ast), (yyvsp[(5) - (7)].ast), (yyvsp[(7) - (7)].ast)); }
+#line 238 "Grammar/DARIC.y"
+                                                                                   { (yyval.ast) = token3(CIRCLEFILL, (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4925 "src/parser/bison.cpp"
     break;
 
   case 116:
-/* Line 1792 of yacc.c  */
-#line 239 "DARIC.y"
-    { (yyval.ast) = token4(LINE, (yyvsp[(2) - (8)].ast), (yyvsp[(4) - (8)].ast), (yyvsp[(6) - (8)].ast), (yyvsp[(8) - (8)].ast)); }
+#line 239 "Grammar/DARIC.y"
+                                                                                                   { (yyval.ast) = token4(LINE, (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4931 "src/parser/bison.cpp"
     break;
 
   case 117:
-/* Line 1792 of yacc.c  */
-#line 240 "DARIC.y"
-    { (yyval.ast) = token4(RECTANGLE, (yyvsp[(2) - (8)].ast), (yyvsp[(4) - (8)].ast), (yyvsp[(6) - (8)].ast), (yyvsp[(8) - (8)].ast)); }
+#line 240 "Grammar/DARIC.y"
+                                                                                                        { (yyval.ast) = token4(RECTANGLE, (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4937 "src/parser/bison.cpp"
     break;
 
   case 118:
-/* Line 1792 of yacc.c  */
-#line 241 "DARIC.y"
-    { (yyval.ast) = token4(RECTANGLEFILL, (yyvsp[(3) - (9)].ast), (yyvsp[(5) - (9)].ast), (yyvsp[(7) - (9)].ast), (yyvsp[(9) - (9)].ast)); }
+#line 241 "Grammar/DARIC.y"
+                                                                                                             { (yyval.ast) = token4(RECTANGLEFILL, (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4943 "src/parser/bison.cpp"
     break;
 
   case 119:
-/* Line 1792 of yacc.c  */
-#line 242 "DARIC.y"
-    { (yyval.ast) = token6(TRIANGLE, (yyvsp[(2) - (12)].ast), (yyvsp[(4) - (12)].ast), (yyvsp[(6) - (12)].ast), (yyvsp[(8) - (12)].ast), (yyvsp[(10) - (12)].ast), (yyvsp[(12) - (12)].ast)); }
+#line 242 "Grammar/DARIC.y"
+                                                                                                                                                     { (yyval.ast) = token6(TRIANGLE, (yyvsp[-10].ast), (yyvsp[-8].ast), (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4949 "src/parser/bison.cpp"
     break;
 
   case 120:
-/* Line 1792 of yacc.c  */
-#line 243 "DARIC.y"
-    { (yyval.ast) = token6(TRIANGLEFILL, (yyvsp[(3) - (13)].ast), (yyvsp[(5) - (13)].ast), (yyvsp[(7) - (13)].ast), (yyvsp[(9) - (13)].ast), (yyvsp[(11) - (13)].ast), (yyvsp[(13) - (13)].ast)); }
+#line 243 "Grammar/DARIC.y"
+                                                                                                                                                          { (yyval.ast) = token6(TRIANGLEFILL, (yyvsp[-10].ast), (yyvsp[-8].ast), (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4955 "src/parser/bison.cpp"
     break;
 
   case 121:
-/* Line 1792 of yacc.c  */
-#line 246 "DARIC.y"
-    { (yyval.ast) = token9(TRIANGLESHADED, (yyvsp[(3) - (19)].ast), (yyvsp[(5) - (19)].ast), (yyvsp[(7) - (19)].ast), (yyvsp[(9) - (19)].ast), (yyvsp[(11) - (19)].ast), (yyvsp[(13) - (19)].ast), (yyvsp[(15) - (19)].ast), (yyvsp[(17) - (19)].ast), (yyvsp[(19) - (19)].ast)); }
+#line 246 "Grammar/DARIC.y"
+                                                                                         { (yyval.ast) = token9(TRIANGLESHADED, (yyvsp[-16].ast), (yyvsp[-14].ast), (yyvsp[-12].ast), (yyvsp[-10].ast), (yyvsp[-8].ast), (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4961 "src/parser/bison.cpp"
     break;
 
   case 122:
-/* Line 1792 of yacc.c  */
-#line 247 "DARIC.y"
-    { (yyval.ast) = token2(PLOT, (yyvsp[(2) - (4)].ast), (yyvsp[(4) - (4)].ast)); }
+#line 247 "Grammar/DARIC.y"
+                                                     { (yyval.ast) = token2(PLOT, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4967 "src/parser/bison.cpp"
     break;
 
   case 123:
-/* Line 1792 of yacc.c  */
-#line 248 "DARIC.y"
-    { (yyval.ast) = token4(CLIPON, (yyvsp[(2) - (8)].ast), (yyvsp[(4) - (8)].ast), (yyvsp[(6) - (8)].ast), (yyvsp[(8) - (8)].ast)); }
+#line 248 "Grammar/DARIC.y"
+                                                                                                     { (yyval.ast) = token4(CLIPON, (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4973 "src/parser/bison.cpp"
     break;
 
   case 124:
-/* Line 1792 of yacc.c  */
-#line 249 "DARIC.y"
-    { (yyval.ast) = token(CLIPOFF); }
+#line 249 "Grammar/DARIC.y"
+              { (yyval.ast) = token(CLIPOFF); }
+#line 4979 "src/parser/bison.cpp"
     break;
 
   case 125:
-/* Line 1792 of yacc.c  */
-#line 250 "DARIC.y"
-    { (yyval.ast) = token4(TEXT, (yyvsp[(2) - (8)].ast), (yyvsp[(4) - (8)].ast), (yyvsp[(6) - (8)].ast), (yyvsp[(8) - (8)].ast)); }
+#line 250 "Grammar/DARIC.y"
+                                                                                                  { (yyval.ast) = token4(TEXT, (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4985 "src/parser/bison.cpp"
     break;
 
   case 126:
-/* Line 1792 of yacc.c  */
-#line 251 "DARIC.y"
-    { (yyval.ast) = token4(TEXTRIGHT, (yyvsp[(2) - (8)].ast), (yyvsp[(4) - (8)].ast), (yyvsp[(6) - (8)].ast), (yyvsp[(8) - (8)].ast)); }
+#line 251 "Grammar/DARIC.y"
+                                                                                                       { (yyval.ast) = token4(TEXTRIGHT, (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4991 "src/parser/bison.cpp"
     break;
 
   case 127:
-/* Line 1792 of yacc.c  */
-#line 252 "DARIC.y"
-    { (yyval.ast) = token4(TEXTCENTRE, (yyvsp[(2) - (8)].ast), (yyvsp[(4) - (8)].ast), (yyvsp[(6) - (8)].ast), (yyvsp[(8) - (8)].ast)); }
+#line 252 "Grammar/DARIC.y"
+                                                                                                        { (yyval.ast) = token4(TEXTCENTRE, (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 4997 "src/parser/bison.cpp"
     break;
 
   case 128:
-/* Line 1792 of yacc.c  */
-#line 253 "DARIC.y"
-    { (yyval.ast) = token(SHOWFPS); }
+#line 253 "Grammar/DARIC.y"
+              { (yyval.ast) = token(SHOWFPS); }
+#line 5003 "src/parser/bison.cpp"
     break;
 
   case 129:
-/* Line 1792 of yacc.c  */
-#line 257 "DARIC.y"
-    { (yyval.ast) = integer((yyvsp[(1) - (1)].v_int)); }
+#line 257 "Grammar/DARIC.y"
+                  { (yyval.ast) = integer((yyvsp[0].v_int)); }
+#line 5009 "src/parser/bison.cpp"
     break;
 
   case 130:
-/* Line 1792 of yacc.c  */
-#line 258 "DARIC.y"
-    { (yyval.ast) = integer(-(yyvsp[(2) - (2)].v_int)); }
+#line 258 "Grammar/DARIC.y"
+                                  { (yyval.ast) = integer(-(yyvsp[0].v_int)); }
+#line 5015 "src/parser/bison.cpp"
     break;
 
   case 131:
-/* Line 1792 of yacc.c  */
-#line 259 "DARIC.y"
-    { (yyval.ast) = real((yyvsp[(1) - (1)].v_real)); }
+#line 259 "Grammar/DARIC.y"
+                   { (yyval.ast) = real((yyvsp[0].v_real)); }
+#line 5021 "src/parser/bison.cpp"
     break;
 
   case 132:
-/* Line 1792 of yacc.c  */
-#line 260 "DARIC.y"
-    { (yyval.ast) = real(-(yyvsp[(2) - (2)].v_real)); }
+#line 260 "Grammar/DARIC.y"
+                                   { (yyval.ast) = real(-(yyvsp[0].v_real)); }
+#line 5027 "src/parser/bison.cpp"
     break;
 
   case 133:
-/* Line 1792 of yacc.c  */
-#line 264 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 264 "Grammar/DARIC.y"
+             { (yyval.ast) = (yyvsp[0].ast); }
+#line 5033 "src/parser/bison.cpp"
     break;
 
   case 134:
-/* Line 1792 of yacc.c  */
-#line 265 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 265 "Grammar/DARIC.y"
+                       { (yyval.ast) = (yyvsp[0].ast); }
+#line 5039 "src/parser/bison.cpp"
     break;
 
   case 135:
-/* Line 1792 of yacc.c  */
-#line 266 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 266 "Grammar/DARIC.y"
+                    { (yyval.ast) = (yyvsp[0].ast); }
+#line 5045 "src/parser/bison.cpp"
     break;
 
   case 136:
-/* Line 1792 of yacc.c  */
-#line 267 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(2) - (3)].ast); }
+#line 267 "Grammar/DARIC.y"
+                                 { (yyval.ast) = (yyvsp[-1].ast); }
+#line 5051 "src/parser/bison.cpp"
     break;
 
   case 137:
-/* Line 1792 of yacc.c  */
-#line 268 "DARIC.y"
-    { (yyval.ast) = token1(FLOAT_, (yyvsp[(3) - (4)].ast)); }
+#line 268 "Grammar/DARIC.y"
+                                        { (yyval.ast) = token1(FLOAT_, (yyvsp[-1].ast)); }
+#line 5057 "src/parser/bison.cpp"
     break;
 
   case 138:
-/* Line 1792 of yacc.c  */
-#line 269 "DARIC.y"
-    { (yyval.ast) = token1(INT_, (yyvsp[(3) - (4)].ast)); }
+#line 269 "Grammar/DARIC.y"
+                                      { (yyval.ast) = token1(INT_, (yyvsp[-1].ast)); }
+#line 5063 "src/parser/bison.cpp"
     break;
 
   case 139:
-/* Line 1792 of yacc.c  */
-#line 270 "DARIC.y"
-    { (yyval.ast) = token2(MINUS, integer(0), (yyvsp[(2) - (2)].ast)); }
+#line 270 "Grammar/DARIC.y"
+                             { (yyval.ast) = token2(MINUS, integer(0), (yyvsp[0].ast)); }
+#line 5069 "src/parser/bison.cpp"
     break;
 
   case 140:
-/* Line 1792 of yacc.c  */
-#line 271 "DARIC.y"
-    { (yyval.ast) = token2(MINUS, real(0.0), (yyvsp[(2) - (2)].ast)); }
+#line 271 "Grammar/DARIC.y"
+                          { (yyval.ast) = token2(MINUS, real(0.0), (yyvsp[0].ast)); }
+#line 5075 "src/parser/bison.cpp"
     break;
 
   case 141:
-/* Line 1792 of yacc.c  */
-#line 272 "DARIC.y"
-    { (yyval.ast) = token2(PLUS, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 272 "Grammar/DARIC.y"
+                                                 { (yyval.ast) = token2(PLUS, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5081 "src/parser/bison.cpp"
     break;
 
   case 142:
-/* Line 1792 of yacc.c  */
-#line 273 "DARIC.y"
-    { (yyval.ast) = token2(MINUS, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 273 "Grammar/DARIC.y"
+                                                  { (yyval.ast) = token2(MINUS, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5087 "src/parser/bison.cpp"
     break;
 
   case 143:
-/* Line 1792 of yacc.c  */
-#line 274 "DARIC.y"
-    { (yyval.ast) = token2(MULTIPLY, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 274 "Grammar/DARIC.y"
+                                                     { (yyval.ast) = token2(MULTIPLY, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5093 "src/parser/bison.cpp"
     break;
 
   case 144:
-/* Line 1792 of yacc.c  */
-#line 275 "DARIC.y"
-    { (yyval.ast) = token2(DIVIDE, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 275 "Grammar/DARIC.y"
+                                                   { (yyval.ast) = token2(DIVIDE, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5099 "src/parser/bison.cpp"
     break;
 
   case 145:
-/* Line 1792 of yacc.c  */
-#line 276 "DARIC.y"
-    { (yyval.ast) = token2(INTEGERDIVIDE, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 276 "Grammar/DARIC.y"
+                                                          { (yyval.ast) = token2(INTEGERDIVIDE, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5105 "src/parser/bison.cpp"
     break;
 
   case 146:
-/* Line 1792 of yacc.c  */
-#line 277 "DARIC.y"
-    { (yyval.ast) = token2(DIV, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 277 "Grammar/DARIC.y"
+                                                { (yyval.ast) = token2(DIV, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5111 "src/parser/bison.cpp"
     break;
 
   case 147:
-/* Line 1792 of yacc.c  */
-#line 278 "DARIC.y"
-    { (yyval.ast) = token2(MOD, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 278 "Grammar/DARIC.y"
+                                                { (yyval.ast) = token2(MOD, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5117 "src/parser/bison.cpp"
     break;
 
   case 148:
-/* Line 1792 of yacc.c  */
-#line 279 "DARIC.y"
-    { (yyval.ast) = token2(SHL, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 279 "Grammar/DARIC.y"
+                                                { (yyval.ast) = token2(SHL, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5123 "src/parser/bison.cpp"
     break;
 
   case 149:
-/* Line 1792 of yacc.c  */
-#line 280 "DARIC.y"
-    { (yyval.ast) = token2(SHR, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 280 "Grammar/DARIC.y"
+                                                { (yyval.ast) = token2(SHR, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5129 "src/parser/bison.cpp"
     break;
 
   case 150:
-/* Line 1792 of yacc.c  */
-#line 281 "DARIC.y"
-    { (yyval.ast) = token2(E, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 281 "Grammar/DARIC.y"
+                                              { (yyval.ast) = token2(E, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5135 "src/parser/bison.cpp"
     break;
 
   case 151:
-/* Line 1792 of yacc.c  */
-#line 282 "DARIC.y"
-    { (yyval.ast) = token2(NE, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 282 "Grammar/DARIC.y"
+                                               { (yyval.ast) = token2(NE, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5141 "src/parser/bison.cpp"
     break;
 
   case 152:
-/* Line 1792 of yacc.c  */
-#line 283 "DARIC.y"
-    { (yyval.ast) = token2(GE, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 283 "Grammar/DARIC.y"
+                                               { (yyval.ast) = token2(GE, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5147 "src/parser/bison.cpp"
     break;
 
   case 153:
-/* Line 1792 of yacc.c  */
-#line 284 "DARIC.y"
-    { (yyval.ast) = token2(LE, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 284 "Grammar/DARIC.y"
+                                               { (yyval.ast) = token2(LE, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5153 "src/parser/bison.cpp"
     break;
 
   case 154:
-/* Line 1792 of yacc.c  */
-#line 285 "DARIC.y"
-    { (yyval.ast) = token2(LT, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 285 "Grammar/DARIC.y"
+                                               { (yyval.ast) = token2(LT, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5159 "src/parser/bison.cpp"
     break;
 
   case 155:
-/* Line 1792 of yacc.c  */
-#line 286 "DARIC.y"
-    { (yyval.ast) = token2(GT, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 286 "Grammar/DARIC.y"
+                                               { (yyval.ast) = token2(GT, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5165 "src/parser/bison.cpp"
     break;
 
   case 156:
-/* Line 1792 of yacc.c  */
-#line 287 "DARIC.y"
-    { (yyval.ast) = token2(AND, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 287 "Grammar/DARIC.y"
+                                                { (yyval.ast) = token2(AND, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5171 "src/parser/bison.cpp"
     break;
 
   case 157:
-/* Line 1792 of yacc.c  */
-#line 288 "DARIC.y"
-    { (yyval.ast) = token2(OR, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 288 "Grammar/DARIC.y"
+                                               { (yyval.ast) = token2(OR, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5177 "src/parser/bison.cpp"
     break;
 
   case 158:
-/* Line 1792 of yacc.c  */
-#line 289 "DARIC.y"
-    { (yyval.ast) = token2(EOR, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 289 "Grammar/DARIC.y"
+                                                { (yyval.ast) = token2(EOR, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5183 "src/parser/bison.cpp"
     break;
 
   case 159:
-/* Line 1792 of yacc.c  */
-#line 291 "DARIC.y"
-    { (yyval.ast) = token2(CALLFN, string((yyvsp[(1) - (4)].v_string)), (yyvsp[(3) - (4)].ast)); }
+#line 291 "Grammar/DARIC.y"
+                                               { (yyval.ast) = token2(CALLFN, string((yyvsp[-3].v_string)), (yyvsp[-1].ast)); }
+#line 5189 "src/parser/bison.cpp"
     break;
 
   case 160:
-/* Line 1792 of yacc.c  */
-#line 292 "DARIC.y"
-    { (yyval.ast) = token2(CALLFN, string((yyvsp[(1) - (4)].v_string)), (yyvsp[(3) - (4)].ast)); }
+#line 292 "Grammar/DARIC.y"
+                                            { (yyval.ast) = token2(CALLFN, string((yyvsp[-3].v_string)), (yyvsp[-1].ast)); }
+#line 5195 "src/parser/bison.cpp"
     break;
 
   case 161:
-/* Line 1792 of yacc.c  */
-#line 294 "DARIC.y"
-    { (yyval.ast) = token2(ARRAYSIZE, variable((yyvsp[(3) - (8)].v_string), Type::REAL), (yyvsp[(7) - (8)].ast)); }
+#line 294 "Grammar/DARIC.y"
+                                              { (yyval.ast) = token2(ARRAYSIZE, variable((yyvsp[-5].v_string), Type::REAL), (yyvsp[-1].ast)); }
+#line 5201 "src/parser/bison.cpp"
     break;
 
   case 162:
-/* Line 1792 of yacc.c  */
-#line 295 "DARIC.y"
-    { (yyval.ast) = token2(ARRAYSIZE, variable((yyvsp[(3) - (8)].v_string), Type::INTEGER), (yyvsp[(7) - (8)].ast)); }
+#line 295 "Grammar/DARIC.y"
+                                                      { (yyval.ast) = token2(ARRAYSIZE, variable((yyvsp[-5].v_string), Type::INTEGER), (yyvsp[-1].ast)); }
+#line 5207 "src/parser/bison.cpp"
     break;
 
   case 163:
-/* Line 1792 of yacc.c  */
-#line 296 "DARIC.y"
-    { (yyval.ast) = token2(ARRAYSIZE, variable((yyvsp[(3) - (8)].v_string), Type::STRING), (yyvsp[(7) - (8)].ast)); }
+#line 296 "Grammar/DARIC.y"
+                                                     { (yyval.ast) = token2(ARRAYSIZE, variable((yyvsp[-5].v_string), Type::STRING), (yyvsp[-1].ast)); }
+#line 5213 "src/parser/bison.cpp"
     break;
 
   case 164:
-/* Line 1792 of yacc.c  */
-#line 298 "DARIC.y"
-    { (yyval.ast) = token1(PTR, (yyvsp[(2) - (2)].ast)); }
+#line 298 "Grammar/DARIC.y"
+                             { (yyval.ast) = token1(PTR, (yyvsp[0].ast)); }
+#line 5219 "src/parser/bison.cpp"
     break;
 
   case 165:
-/* Line 1792 of yacc.c  */
-#line 300 "DARIC.y"
-    { (yyval.ast) = token(GET); }
+#line 300 "Grammar/DARIC.y"
+          { (yyval.ast) = token(GET); }
+#line 5225 "src/parser/bison.cpp"
     break;
 
   case 166:
-/* Line 1792 of yacc.c  */
-#line 301 "DARIC.y"
-    { (yyval.ast) = token1(INKEY, (yyvsp[(3) - (4)].ast)); }
+#line 301 "Grammar/DARIC.y"
+                                       { (yyval.ast) = token1(INKEY, (yyvsp[-1].ast)); }
+#line 5231 "src/parser/bison.cpp"
     break;
 
   case 167:
-/* Line 1792 of yacc.c  */
-#line 303 "DARIC.y"
-    { (yyval.ast) = integer(1); }
+#line 303 "Grammar/DARIC.y"
+               { (yyval.ast) = integer(1); }
+#line 5237 "src/parser/bison.cpp"
     break;
 
   case 168:
-/* Line 1792 of yacc.c  */
-#line 304 "DARIC.y"
-    { (yyval.ast) = integer(0); }
+#line 304 "Grammar/DARIC.y"
+                { (yyval.ast) = integer(0); }
+#line 5243 "src/parser/bison.cpp"
     break;
 
   case 169:
-/* Line 1792 of yacc.c  */
-#line 305 "DARIC.y"
-    { (yyval.ast) = token(TIME); }
+#line 305 "Grammar/DARIC.y"
+           { (yyval.ast) = token(TIME); }
+#line 5249 "src/parser/bison.cpp"
     break;
 
   case 170:
-/* Line 1792 of yacc.c  */
-#line 307 "DARIC.y"
-    { (yyval.ast) = integer(0); }
+#line 307 "Grammar/DARIC.y"
+                        { (yyval.ast) = integer(0); }
+#line 5255 "src/parser/bison.cpp"
     break;
 
   case 171:
-/* Line 1792 of yacc.c  */
-#line 308 "DARIC.y"
-    { (yyval.ast) = integer(1); }
+#line 308 "Grammar/DARIC.y"
+                        { (yyval.ast) = integer(1); }
+#line 5261 "src/parser/bison.cpp"
     break;
 
   case 172:
-/* Line 1792 of yacc.c  */
-#line 309 "DARIC.y"
-    { (yyval.ast) = integer(2); }
+#line 309 "Grammar/DARIC.y"
+                        { (yyval.ast) = integer(2); }
+#line 5267 "src/parser/bison.cpp"
     break;
 
   case 173:
-/* Line 1792 of yacc.c  */
-#line 310 "DARIC.y"
-    { (yyval.ast) = integer(3); }
+#line 310 "Grammar/DARIC.y"
+                        { (yyval.ast) = integer(3); }
+#line 5273 "src/parser/bison.cpp"
     break;
 
   case 174:
-/* Line 1792 of yacc.c  */
-#line 312 "DARIC.y"
-    { (yyval.ast) = token2(CREATESHAPE, string((yyvsp[(2) - (4)].v_string)), string((yyvsp[(4) - (4)].v_string))); }
+#line 312 "Grammar/DARIC.y"
+                                                  { (yyval.ast) = token2(CREATESHAPE, string((yyvsp[-2].v_string)), string((yyvsp[0].v_string))); }
+#line 5279 "src/parser/bison.cpp"
     break;
 
   case 175:
-/* Line 1792 of yacc.c  */
-#line 317 "DARIC.y"
-    { (yyval.ast) = token9(CREATEOBJECT, (yyvsp[(2) - (18)].ast), (yyvsp[(4) - (18)].ast), (yyvsp[(6) - (18)].ast), (yyvsp[(8) - (18)].ast), (yyvsp[(10) - (18)].ast), (yyvsp[(12) - (18)].ast), (yyvsp[(14) - (18)].ast), (yyvsp[(16) - (18)].ast), (yyvsp[(18) - (18)].ast)); }
+#line 317 "Grammar/DARIC.y"
+                                                  { (yyval.ast) = token9(CREATEOBJECT, (yyvsp[-16].ast), (yyvsp[-14].ast), (yyvsp[-12].ast), (yyvsp[-10].ast), (yyvsp[-8].ast), (yyvsp[-6].ast), (yyvsp[-4].ast), (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5285 "src/parser/bison.cpp"
     break;
 
   case 176:
-/* Line 1792 of yacc.c  */
-#line 319 "DARIC.y"
-    { (yyval.ast) = integer(0xFF0000); }
+#line 319 "Grammar/DARIC.y"
+                { (yyval.ast) = integer(0xFF0000); }
+#line 5291 "src/parser/bison.cpp"
     break;
 
   case 177:
-/* Line 1792 of yacc.c  */
-#line 320 "DARIC.y"
-    { (yyval.ast) = integer(0x00FF00); }
+#line 320 "Grammar/DARIC.y"
+                { (yyval.ast) = integer(0x00FF00); }
+#line 5297 "src/parser/bison.cpp"
     break;
 
   case 178:
-/* Line 1792 of yacc.c  */
-#line 321 "DARIC.y"
-    { (yyval.ast) = integer(0xFFFF00); }
+#line 321 "Grammar/DARIC.y"
+                { (yyval.ast) = integer(0xFFFF00); }
+#line 5303 "src/parser/bison.cpp"
     break;
 
   case 179:
-/* Line 1792 of yacc.c  */
-#line 322 "DARIC.y"
-    { (yyval.ast) = integer(0x0000FF); }
+#line 322 "Grammar/DARIC.y"
+                { (yyval.ast) = integer(0x0000FF); }
+#line 5309 "src/parser/bison.cpp"
     break;
 
   case 180:
-/* Line 1792 of yacc.c  */
-#line 323 "DARIC.y"
-    { (yyval.ast) = integer(0xFF00FF); }
+#line 323 "Grammar/DARIC.y"
+                { (yyval.ast) = integer(0xFF00FF); }
+#line 5315 "src/parser/bison.cpp"
     break;
 
   case 181:
-/* Line 1792 of yacc.c  */
-#line 324 "DARIC.y"
-    { (yyval.ast) = integer(0x00FFFF); }
+#line 324 "Grammar/DARIC.y"
+                { (yyval.ast) = integer(0x00FFFF); }
+#line 5321 "src/parser/bison.cpp"
     break;
 
   case 182:
-/* Line 1792 of yacc.c  */
-#line 325 "DARIC.y"
-    { (yyval.ast) = integer(0xFFFFFF); }
+#line 325 "Grammar/DARIC.y"
+                { (yyval.ast) = integer(0xFFFFFF); }
+#line 5327 "src/parser/bison.cpp"
     break;
 
   case 183:
-/* Line 1792 of yacc.c  */
-#line 326 "DARIC.y"
-    { (yyval.ast) = integer(0); }
+#line 326 "Grammar/DARIC.y"
+                { (yyval.ast) = integer(0); }
+#line 5333 "src/parser/bison.cpp"
     break;
 
   case 184:
-/* Line 1792 of yacc.c  */
-#line 327 "DARIC.y"
-    { (yyval.ast) = integer(-1); }
+#line 327 "Grammar/DARIC.y"
+                { (yyval.ast) = integer(-1); }
+#line 5339 "src/parser/bison.cpp"
     break;
 
   case 185:
-/* Line 1792 of yacc.c  */
-#line 328 "DARIC.y"
-    { (yyval.ast) = token3(COLOUREXP, (yyvsp[(3) - (8)].ast), (yyvsp[(5) - (8)].ast), (yyvsp[(7) - (8)].ast)); }
+#line 328 "Grammar/DARIC.y"
+                                                                                      { (yyval.ast) = token3(COLOUREXP, (yyvsp[-5].ast), (yyvsp[-3].ast), (yyvsp[-1].ast)); }
+#line 5345 "src/parser/bison.cpp"
     break;
 
   case 186:
-/* Line 1792 of yacc.c  */
-#line 329 "DARIC.y"
-    { (yyval.ast) = token2(POINT_, (yyvsp[(3) - (6)].ast), (yyvsp[(5) - (6)].ast)); }
+#line 329 "Grammar/DARIC.y"
+                                                               { (yyval.ast) = token2(POINT_, (yyvsp[-3].ast), (yyvsp[-1].ast)); }
+#line 5351 "src/parser/bison.cpp"
     break;
 
   case 187:
-/* Line 1792 of yacc.c  */
-#line 330 "DARIC.y"
-    { (yyval.ast) = token(SCREENWIDTH); }
+#line 330 "Grammar/DARIC.y"
+                  { (yyval.ast) = token(SCREENWIDTH); }
+#line 5357 "src/parser/bison.cpp"
     break;
 
   case 188:
-/* Line 1792 of yacc.c  */
-#line 331 "DARIC.y"
-    { (yyval.ast) = token(SCREENHEIGHT); }
+#line 331 "Grammar/DARIC.y"
+                   { (yyval.ast) = token(SCREENHEIGHT); }
+#line 5363 "src/parser/bison.cpp"
     break;
 
   case 189:
-/* Line 1792 of yacc.c  */
-#line 332 "DARIC.y"
-    { (yyval.ast) = token1(LOADTYPEFACE, (yyvsp[(2) - (2)].ast)); }
+#line 332 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(LOADTYPEFACE, (yyvsp[0].ast)); }
+#line 5369 "src/parser/bison.cpp"
     break;
 
   case 190:
-/* Line 1792 of yacc.c  */
-#line 333 "DARIC.y"
-    { (yyval.ast) = token2(CREATEFONT, (yyvsp[(2) - (4)].ast), (yyvsp[(4) - (4)].ast)); }
+#line 333 "Grammar/DARIC.y"
+                                                           { (yyval.ast) = token2(CREATEFONT, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5375 "src/parser/bison.cpp"
     break;
 
   case 191:
-/* Line 1792 of yacc.c  */
-#line 334 "DARIC.y"
-    { (yyval.ast) = integer(0); }
+#line 334 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(0); }
+#line 5381 "src/parser/bison.cpp"
     break;
 
   case 192:
-/* Line 1792 of yacc.c  */
-#line 335 "DARIC.y"
-    { (yyval.ast) = integer(1); }
+#line 335 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(1); }
+#line 5387 "src/parser/bison.cpp"
     break;
 
   case 193:
-/* Line 1792 of yacc.c  */
-#line 336 "DARIC.y"
-    { (yyval.ast) = integer(2); }
+#line 336 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(2); }
+#line 5393 "src/parser/bison.cpp"
     break;
 
   case 194:
-/* Line 1792 of yacc.c  */
-#line 337 "DARIC.y"
-    { (yyval.ast) = integer(3); }
+#line 337 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(3); }
+#line 5399 "src/parser/bison.cpp"
     break;
 
   case 195:
-/* Line 1792 of yacc.c  */
-#line 338 "DARIC.y"
-    { (yyval.ast) = integer(4); }
+#line 338 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(4); }
+#line 5405 "src/parser/bison.cpp"
     break;
 
   case 196:
-/* Line 1792 of yacc.c  */
-#line 339 "DARIC.y"
-    { (yyval.ast) = integer(5); }
+#line 339 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(5); }
+#line 5411 "src/parser/bison.cpp"
     break;
 
   case 197:
-/* Line 1792 of yacc.c  */
-#line 340 "DARIC.y"
-    { (yyval.ast) = integer(6); }
+#line 340 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(6); }
+#line 5417 "src/parser/bison.cpp"
     break;
 
   case 198:
-/* Line 1792 of yacc.c  */
-#line 341 "DARIC.y"
-    { (yyval.ast) = integer(7); }
+#line 341 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(7); }
+#line 5423 "src/parser/bison.cpp"
     break;
 
   case 199:
-/* Line 1792 of yacc.c  */
-#line 342 "DARIC.y"
-    { (yyval.ast) = integer(8); }
+#line 342 "Grammar/DARIC.y"
+              { (yyval.ast) = integer(8); }
+#line 5429 "src/parser/bison.cpp"
     break;
 
   case 200:
-/* Line 1792 of yacc.c  */
-#line 343 "DARIC.y"
-    { (yyval.ast) = integer(9); }
+#line 343 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(9); }
+#line 5435 "src/parser/bison.cpp"
     break;
 
   case 201:
-/* Line 1792 of yacc.c  */
-#line 344 "DARIC.y"
-    { (yyval.ast) = integer(10); }
+#line 344 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(10); }
+#line 5441 "src/parser/bison.cpp"
     break;
 
   case 202:
-/* Line 1792 of yacc.c  */
-#line 345 "DARIC.y"
-    { (yyval.ast) = integer(11); }
+#line 345 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(11); }
+#line 5447 "src/parser/bison.cpp"
     break;
 
   case 203:
-/* Line 1792 of yacc.c  */
-#line 346 "DARIC.y"
-    { (yyval.ast) = integer(12); }
+#line 346 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(12); }
+#line 5453 "src/parser/bison.cpp"
     break;
 
   case 204:
-/* Line 1792 of yacc.c  */
-#line 347 "DARIC.y"
-    { (yyval.ast) = integer(13); }
+#line 347 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(13); }
+#line 5459 "src/parser/bison.cpp"
     break;
 
   case 205:
-/* Line 1792 of yacc.c  */
-#line 348 "DARIC.y"
-    { (yyval.ast) = integer(14); }
+#line 348 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(14); }
+#line 5465 "src/parser/bison.cpp"
     break;
 
   case 206:
-/* Line 1792 of yacc.c  */
-#line 349 "DARIC.y"
-    { (yyval.ast) = integer(15); }
+#line 349 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(15); }
+#line 5471 "src/parser/bison.cpp"
     break;
 
   case 207:
-/* Line 1792 of yacc.c  */
-#line 350 "DARIC.y"
-    { (yyval.ast) = integer(16); }
+#line 350 "Grammar/DARIC.y"
+             { (yyval.ast) = integer(16); }
+#line 5477 "src/parser/bison.cpp"
     break;
 
   case 208:
-/* Line 1792 of yacc.c  */
-#line 351 "DARIC.y"
-    { (yyval.ast) = integer(17); }
+#line 351 "Grammar/DARIC.y"
+              { (yyval.ast) = integer(17); }
+#line 5483 "src/parser/bison.cpp"
     break;
 
   case 209:
-/* Line 1792 of yacc.c  */
-#line 352 "DARIC.y"
-    { (yyval.ast) = token1(EOFH, (yyvsp[(2) - (2)].ast)); }
+#line 352 "Grammar/DARIC.y"
+                              { (yyval.ast) = token1(EOFH, (yyvsp[0].ast)); }
+#line 5489 "src/parser/bison.cpp"
     break;
 
   case 210:
-/* Line 1792 of yacc.c  */
-#line 353 "DARIC.y"
-    { (yyval.ast) = token1(BGET, (yyvsp[(2) - (2)].ast)); }
+#line 353 "Grammar/DARIC.y"
+                              { (yyval.ast) = token1(BGET, (yyvsp[0].ast)); }
+#line 5495 "src/parser/bison.cpp"
     break;
 
   case 211:
-/* Line 1792 of yacc.c  */
-#line 354 "DARIC.y"
-    { (yyval.ast) = token1(OPENIN, (yyvsp[(3) - (4)].ast)); }
+#line 354 "Grammar/DARIC.y"
+                                       { (yyval.ast) = token1(OPENIN, (yyvsp[-1].ast)); }
+#line 5501 "src/parser/bison.cpp"
     break;
 
   case 212:
-/* Line 1792 of yacc.c  */
-#line 355 "DARIC.y"
-    { (yyval.ast) = token1(OPENOUT, (yyvsp[(3) - (4)].ast)); }
+#line 355 "Grammar/DARIC.y"
+                                        { (yyval.ast) = token1(OPENOUT, (yyvsp[-1].ast)); }
+#line 5507 "src/parser/bison.cpp"
     break;
 
   case 213:
-/* Line 1792 of yacc.c  */
-#line 356 "DARIC.y"
-    { (yyval.ast) = token1(OPENUP, (yyvsp[(3) - (4)].ast)); }
+#line 356 "Grammar/DARIC.y"
+                                       { (yyval.ast) = token1(OPENUP, (yyvsp[-1].ast)); }
+#line 5513 "src/parser/bison.cpp"
     break;
 
   case 214:
-/* Line 1792 of yacc.c  */
-#line 358 "DARIC.y"
-    { (yyval.ast) = token(RND); }
+#line 358 "Grammar/DARIC.y"
+          { (yyval.ast) = token(RND); }
+#line 5519 "src/parser/bison.cpp"
     break;
 
   case 215:
-/* Line 1792 of yacc.c  */
-#line 359 "DARIC.y"
-    { (yyval.ast) = token1(RNDREAL, integer(0)); }
+#line 359 "Grammar/DARIC.y"
+           { (yyval.ast) = token1(RNDREAL, integer(0)); }
+#line 5525 "src/parser/bison.cpp"
     break;
 
   case 216:
-/* Line 1792 of yacc.c  */
-#line 360 "DARIC.y"
-    { (yyval.ast) = token1(RNDREAL, integer(1)); }
+#line 360 "Grammar/DARIC.y"
+           { (yyval.ast) = token1(RNDREAL, integer(1)); }
+#line 5531 "src/parser/bison.cpp"
     break;
 
   case 217:
-/* Line 1792 of yacc.c  */
-#line 361 "DARIC.y"
-    { (yyval.ast) = token1(RNDRANGE, (yyvsp[(3) - (4)].ast)); }
+#line 361 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(RNDRANGE, (yyvsp[-1].ast)); }
+#line 5537 "src/parser/bison.cpp"
     break;
 
   case 218:
-/* Line 1792 of yacc.c  */
-#line 363 "DARIC.y"
-    { (yyval.ast) = token(PI); }
+#line 363 "Grammar/DARIC.y"
+         { (yyval.ast) = token(PI); }
+#line 5543 "src/parser/bison.cpp"
     break;
 
   case 219:
-/* Line 1792 of yacc.c  */
-#line 364 "DARIC.y"
-    { (yyval.ast) = token1(NOT, (yyvsp[(2) - (2)].ast)); }
+#line 364 "Grammar/DARIC.y"
+                             { (yyval.ast) = token1(NOT, (yyvsp[0].ast)); }
+#line 5549 "src/parser/bison.cpp"
     break;
 
   case 220:
-/* Line 1792 of yacc.c  */
-#line 365 "DARIC.y"
-    { (yyval.ast) = token1(SQR, (yyvsp[(3) - (4)].ast)); }
+#line 365 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(SQR, (yyvsp[-1].ast)); }
+#line 5555 "src/parser/bison.cpp"
     break;
 
   case 221:
-/* Line 1792 of yacc.c  */
-#line 366 "DARIC.y"
-    { (yyval.ast) = token1(LN, (yyvsp[(3) - (4)].ast)); }
+#line 366 "Grammar/DARIC.y"
+                                    { (yyval.ast) = token1(LN, (yyvsp[-1].ast)); }
+#line 5561 "src/parser/bison.cpp"
     break;
 
   case 222:
-/* Line 1792 of yacc.c  */
-#line 367 "DARIC.y"
-    { (yyval.ast) = token1(LOG, (yyvsp[(3) - (4)].ast)); }
+#line 367 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(LOG, (yyvsp[-1].ast)); }
+#line 5567 "src/parser/bison.cpp"
     break;
 
   case 223:
-/* Line 1792 of yacc.c  */
-#line 368 "DARIC.y"
-    { (yyval.ast) = token1(EXP, (yyvsp[(3) - (4)].ast)); }
+#line 368 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(EXP, (yyvsp[-1].ast)); }
+#line 5573 "src/parser/bison.cpp"
     break;
 
   case 224:
-/* Line 1792 of yacc.c  */
-#line 369 "DARIC.y"
-    { (yyval.ast) = token1(ATN, (yyvsp[(3) - (4)].ast)); }
+#line 369 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(ATN, (yyvsp[-1].ast)); }
+#line 5579 "src/parser/bison.cpp"
     break;
 
   case 225:
-/* Line 1792 of yacc.c  */
-#line 370 "DARIC.y"
-    { (yyval.ast) = token1(TAN, (yyvsp[(3) - (4)].ast)); }
+#line 370 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(TAN, (yyvsp[-1].ast)); }
+#line 5585 "src/parser/bison.cpp"
     break;
 
   case 226:
-/* Line 1792 of yacc.c  */
-#line 371 "DARIC.y"
-    { (yyval.ast) = token1(COS, (yyvsp[(3) - (4)].ast)); }
+#line 371 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(COS, (yyvsp[-1].ast)); }
+#line 5591 "src/parser/bison.cpp"
     break;
 
   case 227:
-/* Line 1792 of yacc.c  */
-#line 372 "DARIC.y"
-    { (yyval.ast) = token1(SIN, (yyvsp[(3) - (4)].ast)); }
+#line 372 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(SIN, (yyvsp[-1].ast)); }
+#line 5597 "src/parser/bison.cpp"
     break;
 
   case 228:
-/* Line 1792 of yacc.c  */
-#line 373 "DARIC.y"
-    { (yyval.ast) = token1(ABS, (yyvsp[(3) - (4)].ast)); }
+#line 373 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(ABS, (yyvsp[-1].ast)); }
+#line 5603 "src/parser/bison.cpp"
     break;
 
   case 229:
-/* Line 1792 of yacc.c  */
-#line 374 "DARIC.y"
-    { (yyval.ast) = token1(ACS, (yyvsp[(3) - (4)].ast)); }
+#line 374 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(ACS, (yyvsp[-1].ast)); }
+#line 5609 "src/parser/bison.cpp"
     break;
 
   case 230:
-/* Line 1792 of yacc.c  */
-#line 375 "DARIC.y"
-    { (yyval.ast) = token1(ASN, (yyvsp[(3) - (4)].ast)); }
+#line 375 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(ASN, (yyvsp[-1].ast)); }
+#line 5615 "src/parser/bison.cpp"
     break;
 
   case 231:
-/* Line 1792 of yacc.c  */
-#line 376 "DARIC.y"
-    { (yyval.ast) = token1(DEG, (yyvsp[(3) - (4)].ast)); }
+#line 376 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(DEG, (yyvsp[-1].ast)); }
+#line 5621 "src/parser/bison.cpp"
     break;
 
   case 232:
-/* Line 1792 of yacc.c  */
-#line 377 "DARIC.y"
-    { (yyval.ast) = token1(RAD, (yyvsp[(3) - (4)].ast)); }
+#line 377 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(RAD, (yyvsp[-1].ast)); }
+#line 5627 "src/parser/bison.cpp"
     break;
 
   case 233:
-/* Line 1792 of yacc.c  */
-#line 378 "DARIC.y"
-    { (yyval.ast) = token1(SGN, (yyvsp[(3) - (4)].ast)); }
+#line 378 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(SGN, (yyvsp[-1].ast)); }
+#line 5633 "src/parser/bison.cpp"
     break;
 
   case 234:
-/* Line 1792 of yacc.c  */
-#line 380 "DARIC.y"
-    { (yyval.ast) = token1(ASC, (yyvsp[(3) - (4)].ast)); }
+#line 380 "Grammar/DARIC.y"
+                                    { (yyval.ast) = token1(ASC, (yyvsp[-1].ast)); }
+#line 5639 "src/parser/bison.cpp"
     break;
 
   case 235:
-/* Line 1792 of yacc.c  */
-#line 381 "DARIC.y"
-    { (yyval.ast) = token1(LEN, (yyvsp[(3) - (4)].ast)); }
+#line 381 "Grammar/DARIC.y"
+                                    { (yyval.ast) = token1(LEN, (yyvsp[-1].ast)); }
+#line 5645 "src/parser/bison.cpp"
     break;
 
   case 236:
-/* Line 1792 of yacc.c  */
-#line 382 "DARIC.y"
-    { (yyval.ast) = token3(INSTR, (yyvsp[(3) - (6)].ast), (yyvsp[(5) - (6)].ast), integer(1)); }
+#line 382 "Grammar/DARIC.y"
+                                                            { (yyval.ast) = token3(INSTR, (yyvsp[-3].ast), (yyvsp[-1].ast), integer(1)); }
+#line 5651 "src/parser/bison.cpp"
     break;
 
   case 237:
-/* Line 1792 of yacc.c  */
-#line 383 "DARIC.y"
-    { (yyval.ast) = token3(INSTR, (yyvsp[(3) - (8)].ast), (yyvsp[(5) - (8)].ast), (yyvsp[(7) - (8)].ast)); }
+#line 383 "Grammar/DARIC.y"
+                                                                                   { (yyval.ast) = token3(INSTR, (yyvsp[-5].ast), (yyvsp[-3].ast), (yyvsp[-1].ast)); }
+#line 5657 "src/parser/bison.cpp"
     break;
 
   case 238:
-/* Line 1792 of yacc.c  */
-#line 384 "DARIC.y"
-    { (yyval.ast) = token1(VAL, (yyvsp[(3) - (4)].ast)); }
+#line 384 "Grammar/DARIC.y"
+                                    { (yyval.ast) = token1(VAL, (yyvsp[-1].ast)); }
+#line 5663 "src/parser/bison.cpp"
     break;
 
   case 239:
-/* Line 1792 of yacc.c  */
-#line 388 "DARIC.y"
-    { (yyval.ast) = variable((yyvsp[(1) - (1)].v_string), Type::INTEGER); }
+#line 388 "Grammar/DARIC.y"
+                       { (yyval.ast) = variable((yyvsp[0].v_string), Type::INTEGER); }
+#line 5669 "src/parser/bison.cpp"
     break;
 
   case 240:
-/* Line 1792 of yacc.c  */
-#line 389 "DARIC.y"
-    { (yyval.ast) = variable1d((yyvsp[(1) - (4)].v_string), (yyvsp[(3) - (4)].ast), Type::INTEGER_ARRAY); }
+#line 389 "Grammar/DARIC.y"
+                                                  { (yyval.ast) = variable1d((yyvsp[-3].v_string), (yyvsp[-1].ast), Type::INTEGER_ARRAY); }
+#line 5675 "src/parser/bison.cpp"
     break;
 
   case 241:
-/* Line 1792 of yacc.c  */
-#line 390 "DARIC.y"
-    { (yyval.ast) = variable2d((yyvsp[(1) - (6)].v_string), (yyvsp[(3) - (6)].ast), (yyvsp[(5) - (6)].ast), Type::INTEGER_ARRAY); }
+#line 390 "Grammar/DARIC.y"
+                                                                         { (yyval.ast) = variable2d((yyvsp[-5].v_string), (yyvsp[-3].ast), (yyvsp[-1].ast), Type::INTEGER_ARRAY); }
+#line 5681 "src/parser/bison.cpp"
     break;
 
   case 242:
-/* Line 1792 of yacc.c  */
-#line 391 "DARIC.y"
-    { (yyval.ast) = typevariable((yyvsp[(1) - (2)].v_string), (yyvsp[(2) - (2)].v_string), Type::TYPE); }
+#line 391 "Grammar/DARIC.y"
+                                     { (yyval.ast) = typevariable((yyvsp[-1].v_string), (yyvsp[0].v_string), Type::TYPE); }
+#line 5687 "src/parser/bison.cpp"
     break;
 
   case 243:
-/* Line 1792 of yacc.c  */
-#line 392 "DARIC.y"
-    { (yyval.ast) = typevariable1d((yyvsp[(1) - (5)].v_string), (yyvsp[(5) - (5)].v_string), (yyvsp[(3) - (5)].ast), Type::TYPE_ARRAY); }
+#line 392 "Grammar/DARIC.y"
+                                                                { (yyval.ast) = typevariable1d((yyvsp[-4].v_string), (yyvsp[0].v_string), (yyvsp[-2].ast), Type::TYPE_ARRAY); }
+#line 5693 "src/parser/bison.cpp"
     break;
 
   case 244:
-/* Line 1792 of yacc.c  */
-#line 396 "DARIC.y"
-    { (yyval.ast) = variable((yyvsp[(1) - (1)].v_string), Type::REAL); }
+#line 396 "Grammar/DARIC.y"
+               { (yyval.ast) = variable((yyvsp[0].v_string), Type::REAL); }
+#line 5699 "src/parser/bison.cpp"
     break;
 
   case 245:
-/* Line 1792 of yacc.c  */
-#line 397 "DARIC.y"
-    { (yyval.ast) = variable1d((yyvsp[(1) - (4)].v_string), (yyvsp[(3) - (4)].ast), Type::REAL_ARRAY); }
+#line 397 "Grammar/DARIC.y"
+                                          { (yyval.ast) = variable1d((yyvsp[-3].v_string), (yyvsp[-1].ast), Type::REAL_ARRAY); }
+#line 5705 "src/parser/bison.cpp"
     break;
 
   case 246:
-/* Line 1792 of yacc.c  */
-#line 398 "DARIC.y"
-    { (yyval.ast) = variable2d((yyvsp[(1) - (6)].v_string), (yyvsp[(3) - (6)].ast), (yyvsp[(5) - (6)].ast), Type::REAL_ARRAY); }
+#line 398 "Grammar/DARIC.y"
+                                                                 { (yyval.ast) = variable2d((yyvsp[-5].v_string), (yyvsp[-3].ast), (yyvsp[-1].ast), Type::REAL_ARRAY); }
+#line 5711 "src/parser/bison.cpp"
     break;
 
   case 247:
-/* Line 1792 of yacc.c  */
-#line 399 "DARIC.y"
-    { (yyval.ast) = typevariable((yyvsp[(1) - (2)].v_string), (yyvsp[(2) - (2)].v_string), Type::TYPE); }
+#line 399 "Grammar/DARIC.y"
+                             { (yyval.ast) = typevariable((yyvsp[-1].v_string), (yyvsp[0].v_string), Type::TYPE); }
+#line 5717 "src/parser/bison.cpp"
     break;
 
   case 248:
-/* Line 1792 of yacc.c  */
-#line 400 "DARIC.y"
-    { (yyval.ast) = typevariable1d((yyvsp[(1) - (5)].v_string), (yyvsp[(5) - (5)].v_string), (yyvsp[(3) - (5)].ast), Type::TYPE_ARRAY); }
+#line 400 "Grammar/DARIC.y"
+                                                        { (yyval.ast) = typevariable1d((yyvsp[-4].v_string), (yyvsp[0].v_string), (yyvsp[-2].ast), Type::TYPE_ARRAY); }
+#line 5723 "src/parser/bison.cpp"
     break;
 
   case 249:
-/* Line 1792 of yacc.c  */
-#line 404 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 404 "Grammar/DARIC.y"
+                       { (yyval.ast) = (yyvsp[0].ast); }
+#line 5729 "src/parser/bison.cpp"
     break;
 
   case 250:
-/* Line 1792 of yacc.c  */
-#line 405 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 405 "Grammar/DARIC.y"
+                    { (yyval.ast) = (yyvsp[0].ast); }
+#line 5735 "src/parser/bison.cpp"
     break;
 
   case 251:
-/* Line 1792 of yacc.c  */
-#line 409 "DARIC.y"
-    { (yyval.ast) = variable((yyvsp[(1) - (1)].v_string), Type::STRING); }
+#line 409 "Grammar/DARIC.y"
+                      { (yyval.ast) = variable((yyvsp[0].v_string), Type::STRING); }
+#line 5741 "src/parser/bison.cpp"
     break;
 
   case 252:
-/* Line 1792 of yacc.c  */
-#line 410 "DARIC.y"
-    { (yyval.ast) = variable1d((yyvsp[(1) - (4)].v_string), (yyvsp[(3) - (4)].ast), Type::STRING_ARRAY); }
+#line 410 "Grammar/DARIC.y"
+                                                 { (yyval.ast) = variable1d((yyvsp[-3].v_string), (yyvsp[-1].ast), Type::STRING_ARRAY); }
+#line 5747 "src/parser/bison.cpp"
     break;
 
   case 253:
-/* Line 1792 of yacc.c  */
-#line 411 "DARIC.y"
-    { (yyval.ast) = variable2d((yyvsp[(1) - (6)].v_string), (yyvsp[(3) - (6)].ast), (yyvsp[(5) - (6)].ast), Type::STRING_ARRAY); }
+#line 411 "Grammar/DARIC.y"
+                                                                        { (yyval.ast) = variable2d((yyvsp[-5].v_string), (yyvsp[-3].ast), (yyvsp[-1].ast), Type::STRING_ARRAY); }
+#line 5753 "src/parser/bison.cpp"
     break;
 
   case 254:
-/* Line 1792 of yacc.c  */
-#line 412 "DARIC.y"
-    { (yyval.ast) = typevariable1d((yyvsp[(1) - (5)].v_string), (yyvsp[(5) - (5)].v_string), (yyvsp[(3) - (5)].ast), Type::TYPE_ARRAY); }
+#line 412 "Grammar/DARIC.y"
+                                                               { (yyval.ast) = typevariable1d((yyvsp[-4].v_string), (yyvsp[0].v_string), (yyvsp[-2].ast), Type::TYPE_ARRAY); }
+#line 5759 "src/parser/bison.cpp"
     break;
 
   case 255:
-/* Line 1792 of yacc.c  */
-#line 416 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 416 "Grammar/DARIC.y"
+                       { (yyval.ast) = (yyvsp[0].ast); }
+#line 5765 "src/parser/bison.cpp"
     break;
 
   case 256:
-/* Line 1792 of yacc.c  */
-#line 417 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 417 "Grammar/DARIC.y"
+                      { (yyval.ast) = (yyvsp[0].ast); }
+#line 5771 "src/parser/bison.cpp"
     break;
 
   case 257:
-/* Line 1792 of yacc.c  */
-#line 421 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 421 "Grammar/DARIC.y"
+               { (yyval.ast) = (yyvsp[0].ast); }
+#line 5777 "src/parser/bison.cpp"
     break;
 
   case 258:
-/* Line 1792 of yacc.c  */
-#line 422 "DARIC.y"
-    { (yyval.ast) = link((yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 422 "Grammar/DARIC.y"
+                                 { (yyval.ast) = link((yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5783 "src/parser/bison.cpp"
     break;
 
   case 259:
-/* Line 1792 of yacc.c  */
-#line 426 "DARIC.y"
-    { (yyval.ast) = variable((yyvsp[(1) - (1)].v_string), Type::INTEGER); }
+#line 426 "Grammar/DARIC.y"
+                       { (yyval.ast) = variable((yyvsp[0].v_string), Type::INTEGER); }
+#line 5789 "src/parser/bison.cpp"
     break;
 
   case 260:
-/* Line 1792 of yacc.c  */
-#line 427 "DARIC.y"
-    { (yyval.ast) = variable((yyvsp[(1) - (1)].v_string), Type::REAL); }
+#line 427 "Grammar/DARIC.y"
+               { (yyval.ast) = variable((yyvsp[0].v_string), Type::REAL); }
+#line 5795 "src/parser/bison.cpp"
     break;
 
   case 261:
-/* Line 1792 of yacc.c  */
-#line 428 "DARIC.y"
-    { (yyval.ast) = variable((yyvsp[(1) - (1)].v_string), Type::STRING); }
+#line 428 "Grammar/DARIC.y"
+                      { (yyval.ast) = variable((yyvsp[0].v_string), Type::STRING); }
+#line 5801 "src/parser/bison.cpp"
     break;
 
   case 262:
-/* Line 1792 of yacc.c  */
-#line 432 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 432 "Grammar/DARIC.y"
+                     { (yyval.ast) = (yyvsp[0].ast); }
+#line 5807 "src/parser/bison.cpp"
     break;
 
   case 263:
-/* Line 1792 of yacc.c  */
-#line 433 "DARIC.y"
-    { (yyval.ast) = link((yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 433 "Grammar/DARIC.y"
+                                             { (yyval.ast) = link((yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5813 "src/parser/bison.cpp"
     break;
 
   case 264:
-/* Line 1792 of yacc.c  */
-#line 437 "DARIC.y"
-    { (yyval.ast) = variable1d((yyvsp[(1) - (4)].v_string), (yyvsp[(3) - (4)].ast), Type::INTEGER_ARRAY); }
+#line 437 "Grammar/DARIC.y"
+                                                  { (yyval.ast) = variable1d((yyvsp[-3].v_string), (yyvsp[-1].ast), Type::INTEGER_ARRAY); }
+#line 5819 "src/parser/bison.cpp"
     break;
 
   case 265:
-/* Line 1792 of yacc.c  */
-#line 438 "DARIC.y"
-    { (yyval.ast) = variable2d((yyvsp[(1) - (6)].v_string), (yyvsp[(3) - (6)].ast), (yyvsp[(5) - (6)].ast), Type::INTEGER_ARRAY); }
+#line 438 "Grammar/DARIC.y"
+                                                                         { (yyval.ast) = variable2d((yyvsp[-5].v_string), (yyvsp[-3].ast), (yyvsp[-1].ast), Type::INTEGER_ARRAY); }
+#line 5825 "src/parser/bison.cpp"
     break;
 
   case 266:
-/* Line 1792 of yacc.c  */
-#line 439 "DARIC.y"
-    { (yyval.ast) = variable1d((yyvsp[(1) - (4)].v_string), (yyvsp[(3) - (4)].ast), Type::REAL_ARRAY); }
+#line 439 "Grammar/DARIC.y"
+                                          { (yyval.ast) = variable1d((yyvsp[-3].v_string), (yyvsp[-1].ast), Type::REAL_ARRAY); }
+#line 5831 "src/parser/bison.cpp"
     break;
 
   case 267:
-/* Line 1792 of yacc.c  */
-#line 440 "DARIC.y"
-    { (yyval.ast) = variable2d((yyvsp[(1) - (6)].v_string), (yyvsp[(3) - (6)].ast), (yyvsp[(5) - (6)].ast), Type::REAL_ARRAY); }
+#line 440 "Grammar/DARIC.y"
+                                                                 { (yyval.ast) = variable2d((yyvsp[-5].v_string), (yyvsp[-3].ast), (yyvsp[-1].ast), Type::REAL_ARRAY); }
+#line 5837 "src/parser/bison.cpp"
     break;
 
   case 268:
-/* Line 1792 of yacc.c  */
-#line 441 "DARIC.y"
-    { (yyval.ast) = variable1d((yyvsp[(1) - (4)].v_string), (yyvsp[(3) - (4)].ast), Type::STRING_ARRAY); }
+#line 441 "Grammar/DARIC.y"
+                                                 { (yyval.ast) = variable1d((yyvsp[-3].v_string), (yyvsp[-1].ast), Type::STRING_ARRAY); }
+#line 5843 "src/parser/bison.cpp"
     break;
 
   case 269:
-/* Line 1792 of yacc.c  */
-#line 442 "DARIC.y"
-    { (yyval.ast) = variable2d((yyvsp[(1) - (6)].v_string), (yyvsp[(3) - (6)].ast), (yyvsp[(5) - (6)].ast), Type::STRING_ARRAY); }
+#line 442 "Grammar/DARIC.y"
+                                                                         { (yyval.ast) = variable2d((yyvsp[-5].v_string), (yyvsp[-3].ast), (yyvsp[-1].ast), Type::STRING_ARRAY); }
+#line 5849 "src/parser/bison.cpp"
     break;
 
   case 270:
-/* Line 1792 of yacc.c  */
-#line 443 "DARIC.y"
-    { (yyval.ast) = typevariable1d((yyvsp[(1) - (6)].v_string), (yyvsp[(5) - (6)].v_string), (yyvsp[(3) - (6)].ast), Type::TYPE_ARRAY); }
+#line 443 "Grammar/DARIC.y"
+                                                            { (yyval.ast) = typevariable1d((yyvsp[-5].v_string), (yyvsp[-1].v_string), (yyvsp[-3].ast), Type::TYPE_ARRAY); }
+#line 5855 "src/parser/bison.cpp"
     break;
 
   case 271:
-/* Line 1792 of yacc.c  */
-#line 447 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 447 "Grammar/DARIC.y"
+                   { (yyval.ast) = (yyvsp[0].ast); }
+#line 5861 "src/parser/bison.cpp"
     break;
 
   case 272:
-/* Line 1792 of yacc.c  */
-#line 448 "DARIC.y"
-    { (yyval.ast) = link((yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 448 "Grammar/DARIC.y"
+                                         { (yyval.ast) = link((yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5867 "src/parser/bison.cpp"
     break;
 
   case 273:
-/* Line 1792 of yacc.c  */
-#line 452 "DARIC.y"
-    { (yyval.ast) = variable((yyvsp[(1) - (1)].v_string), Type::TYPE); }
+#line 452 "Grammar/DARIC.y"
+                    { (yyval.ast) = variable((yyvsp[0].v_string), Type::TYPE); }
+#line 5873 "src/parser/bison.cpp"
     break;
 
   case 274:
-/* Line 1792 of yacc.c  */
-#line 453 "DARIC.y"
-    { (yyval.ast) = variable1d((yyvsp[(1) - (4)].v_string), (yyvsp[(3) - (4)].ast), Type::TYPE_ARRAY); }
+#line 453 "Grammar/DARIC.y"
+                                               { (yyval.ast) = variable1d((yyvsp[-3].v_string), (yyvsp[-1].ast), Type::TYPE_ARRAY); }
+#line 5879 "src/parser/bison.cpp"
     break;
 
   case 275:
-/* Line 1792 of yacc.c  */
-#line 457 "DARIC.y"
-    { (yyval.ast) = token2(TYPE_, string((yyvsp[(2) - (5)].v_string)), (yyvsp[(4) - (5)].ast)); }
+#line 457 "Grammar/DARIC.y"
+                                            { (yyval.ast) = token2(TYPE_, string((yyvsp[-3].v_string)), (yyvsp[-1].ast)); }
+#line 5885 "src/parser/bison.cpp"
     break;
 
   case 276:
-/* Line 1792 of yacc.c  */
-#line 461 "DARIC.y"
-    { (yyval.ast) = token1(FIELD, (yyvsp[(2) - (2)].ast)); }
+#line 461 "Grammar/DARIC.y"
+                     { (yyval.ast) = token1(FIELD, (yyvsp[0].ast)); }
+#line 5891 "src/parser/bison.cpp"
     break;
 
   case 277:
-/* Line 1792 of yacc.c  */
-#line 465 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (2)].ast); }
+#line 465 "Grammar/DARIC.y"
+              { (yyval.ast) = (yyvsp[-1].ast); }
+#line 5897 "src/parser/bison.cpp"
     break;
 
   case 278:
-/* Line 1792 of yacc.c  */
-#line 466 "DARIC.y"
-    { (yyval.ast) = link((yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 466 "Grammar/DARIC.y"
+                          { (yyval.ast) = link((yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5903 "src/parser/bison.cpp"
     break;
 
   case 279:
-/* Line 1792 of yacc.c  */
-#line 470 "DARIC.y"
-    { (yyval.ast) = string((yyvsp[(1) - (1)].v_string)); }
+#line 470 "Grammar/DARIC.y"
+                     { (yyval.ast) = string((yyvsp[0].v_string)); }
+#line 5909 "src/parser/bison.cpp"
     break;
 
   case 280:
-/* Line 1792 of yacc.c  */
-#line 474 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 474 "Grammar/DARIC.y"
+             { (yyval.ast) = (yyvsp[0].ast); }
+#line 5915 "src/parser/bison.cpp"
     break;
 
   case 281:
-/* Line 1792 of yacc.c  */
-#line 475 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 475 "Grammar/DARIC.y"
+                      { (yyval.ast) = (yyvsp[0].ast); }
+#line 5921 "src/parser/bison.cpp"
     break;
 
   case 282:
-/* Line 1792 of yacc.c  */
-#line 476 "DARIC.y"
-    { (yyval.ast) = token2(PLUS, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 476 "Grammar/DARIC.y"
+                                               { (yyval.ast) = token2(PLUS, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5927 "src/parser/bison.cpp"
     break;
 
   case 283:
-/* Line 1792 of yacc.c  */
-#line 477 "DARIC.y"
-    { (yyval.ast) = token2(E, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 477 "Grammar/DARIC.y"
+                                            { (yyval.ast) = token2(E, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5933 "src/parser/bison.cpp"
     break;
 
   case 284:
-/* Line 1792 of yacc.c  */
-#line 478 "DARIC.y"
-    { (yyval.ast) = token2(NE, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 478 "Grammar/DARIC.y"
+                                             { (yyval.ast) = token2(NE, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5939 "src/parser/bison.cpp"
     break;
 
   case 285:
-/* Line 1792 of yacc.c  */
-#line 479 "DARIC.y"
-    { (yyval.ast) = token2(GE, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 479 "Grammar/DARIC.y"
+                                             { (yyval.ast) = token2(GE, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5945 "src/parser/bison.cpp"
     break;
 
   case 286:
-/* Line 1792 of yacc.c  */
-#line 480 "DARIC.y"
-    { (yyval.ast) = token2(LE, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 480 "Grammar/DARIC.y"
+                                             { (yyval.ast) = token2(LE, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5951 "src/parser/bison.cpp"
     break;
 
   case 287:
-/* Line 1792 of yacc.c  */
-#line 481 "DARIC.y"
-    { (yyval.ast) = token2(LT, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 481 "Grammar/DARIC.y"
+                                             { (yyval.ast) = token2(LT, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5957 "src/parser/bison.cpp"
     break;
 
   case 288:
-/* Line 1792 of yacc.c  */
-#line 482 "DARIC.y"
-    { (yyval.ast) = token2(GT, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 482 "Grammar/DARIC.y"
+                                             { (yyval.ast) = token2(GT, (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 5963 "src/parser/bison.cpp"
     break;
 
   case 289:
-/* Line 1792 of yacc.c  */
-#line 484 "DARIC.y"
-    { (yyval.ast) = token1(GETSH, (yyvsp[(2) - (2)].ast)); }
+#line 484 "Grammar/DARIC.y"
+                               { (yyval.ast) = token1(GETSH, (yyvsp[0].ast)); }
+#line 5969 "src/parser/bison.cpp"
     break;
 
   case 290:
-/* Line 1792 of yacc.c  */
-#line 486 "DARIC.y"
-    { (yyval.ast) = token2(CALLFN, string((yyvsp[(1) - (4)].v_string)), (yyvsp[(3) - (4)].ast)); }
+#line 486 "Grammar/DARIC.y"
+                                              { (yyval.ast) = token2(CALLFN, string((yyvsp[-3].v_string)), (yyvsp[-1].ast)); }
+#line 5975 "src/parser/bison.cpp"
     break;
 
   case 291:
-/* Line 1792 of yacc.c  */
-#line 488 "DARIC.y"
-    { (yyval.ast) = token(GETS); }
+#line 488 "Grammar/DARIC.y"
+           { (yyval.ast) = token(GETS); }
+#line 5981 "src/parser/bison.cpp"
     break;
 
   case 292:
-/* Line 1792 of yacc.c  */
-#line 489 "DARIC.y"
-    { (yyval.ast) = token1(INKEYS, (yyvsp[(3) - (4)].ast)); }
+#line 489 "Grammar/DARIC.y"
+                                        { (yyval.ast) = token1(INKEYS, (yyvsp[-1].ast)); }
+#line 5987 "src/parser/bison.cpp"
     break;
 
   case 293:
-/* Line 1792 of yacc.c  */
-#line 491 "DARIC.y"
-    { (yyval.ast) = token(TIMES); }
+#line 491 "Grammar/DARIC.y"
+            { (yyval.ast) = token(TIMES); }
+#line 5993 "src/parser/bison.cpp"
     break;
 
   case 294:
-/* Line 1792 of yacc.c  */
-#line 492 "DARIC.y"
-    { (yyval.ast) = token1(STRS, (yyvsp[(3) - (4)].ast)); }
+#line 492 "Grammar/DARIC.y"
+                                      { (yyval.ast) = token1(STRS, (yyvsp[-1].ast)); }
+#line 5999 "src/parser/bison.cpp"
     break;
 
   case 295:
-/* Line 1792 of yacc.c  */
-#line 493 "DARIC.y"
-    { (yyval.ast) = token1(STRSHEX, (yyvsp[(4) - (5)].ast)); }
+#line 493 "Grammar/DARIC.y"
+                                            { (yyval.ast) = token1(STRSHEX, (yyvsp[-1].ast)); }
+#line 6005 "src/parser/bison.cpp"
     break;
 
   case 296:
-/* Line 1792 of yacc.c  */
-#line 494 "DARIC.y"
-    { (yyval.ast) = token2(STRINGS, (yyvsp[(3) - (6)].ast), (yyvsp[(5) - (6)].ast)); }
+#line 494 "Grammar/DARIC.y"
+                                                               { (yyval.ast) = token2(STRINGS, (yyvsp[-3].ast), (yyvsp[-1].ast)); }
+#line 6011 "src/parser/bison.cpp"
     break;
 
   case 297:
-/* Line 1792 of yacc.c  */
-#line 495 "DARIC.y"
-    { (yyval.ast) = token1(CHRS, (yyvsp[(3) - (4)].ast)); }
+#line 495 "Grammar/DARIC.y"
+                                      { (yyval.ast) = token1(CHRS, (yyvsp[-1].ast)); }
+#line 6017 "src/parser/bison.cpp"
     break;
 
   case 298:
-/* Line 1792 of yacc.c  */
-#line 496 "DARIC.y"
-    { (yyval.ast) = token2(LEFTS, (yyvsp[(3) - (6)].ast), (yyvsp[(5) - (6)].ast)); }
+#line 496 "Grammar/DARIC.y"
+                                                             { (yyval.ast) = token2(LEFTS, (yyvsp[-3].ast), (yyvsp[-1].ast)); }
+#line 6023 "src/parser/bison.cpp"
     break;
 
   case 299:
-/* Line 1792 of yacc.c  */
-#line 497 "DARIC.y"
-    { (yyval.ast) = token3(MIDS, (yyvsp[(3) - (8)].ast), (yyvsp[(5) - (8)].ast), (yyvsp[(7) - (8)].ast)); }
+#line 497 "Grammar/DARIC.y"
+                                                                                   { (yyval.ast) = token3(MIDS, (yyvsp[-5].ast), (yyvsp[-3].ast), (yyvsp[-1].ast)); }
+#line 6029 "src/parser/bison.cpp"
     break;
 
   case 300:
-/* Line 1792 of yacc.c  */
-#line 498 "DARIC.y"
-    { (yyval.ast) = token2(RIGHTS, (yyvsp[(3) - (6)].ast), (yyvsp[(5) - (6)].ast)); }
+#line 498 "Grammar/DARIC.y"
+                                                              { (yyval.ast) = token2(RIGHTS, (yyvsp[-3].ast), (yyvsp[-1].ast)); }
+#line 6035 "src/parser/bison.cpp"
     break;
 
   case 301:
-/* Line 1792 of yacc.c  */
-#line 502 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 502 "Grammar/DARIC.y"
+                         { (yyval.ast) = (yyvsp[0].ast); }
+#line 6041 "src/parser/bison.cpp"
     break;
 
   case 302:
-/* Line 1792 of yacc.c  */
-#line 503 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 503 "Grammar/DARIC.y"
+                        { (yyval.ast) = (yyvsp[0].ast); }
+#line 6047 "src/parser/bison.cpp"
     break;
 
   case 303:
-/* Line 1792 of yacc.c  */
-#line 507 "DARIC.y"
-    { (yyval.ast) = NULL; }
+#line 507 "Grammar/DARIC.y"
+                     { (yyval.ast) = NULL; }
+#line 6053 "src/parser/bison.cpp"
     break;
 
   case 304:
-/* Line 1792 of yacc.c  */
-#line 508 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 508 "Grammar/DARIC.y"
+                 { (yyval.ast) = (yyvsp[0].ast); }
+#line 6059 "src/parser/bison.cpp"
     break;
 
   case 305:
-/* Line 1792 of yacc.c  */
-#line 509 "DARIC.y"
-    { (yyval.ast) = link((yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 509 "Grammar/DARIC.y"
+                                     { (yyval.ast) = link((yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 6065 "src/parser/bison.cpp"
     break;
 
   case 306:
-/* Line 1792 of yacc.c  */
-#line 513 "DARIC.y"
-    { (yyval.ast) = assignment((yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 513 "Grammar/DARIC.y"
+                                            { (yyval.ast) = assignment((yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 6071 "src/parser/bison.cpp"
     break;
 
   case 307:
-/* Line 1792 of yacc.c  */
-#line 514 "DARIC.y"
-    { (yyval.ast) = assignment((yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 514 "Grammar/DARIC.y"
+                                          { (yyval.ast) = assignment((yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 6077 "src/parser/bison.cpp"
     break;
 
   case 308:
-/* Line 1792 of yacc.c  */
-#line 515 "DARIC.y"
-    { (yyval.ast) = assignment((yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 515 "Grammar/DARIC.y"
+                                 { (yyval.ast) = assignment((yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 6083 "src/parser/bison.cpp"
     break;
 
   case 309:
-/* Line 1792 of yacc.c  */
-#line 516 "DARIC.y"
-    { (yyval.ast) = assignment(link((yyvsp[(1) - (4)].ast), (yyvsp[(2) - (4)].ast)), (yyvsp[(4) - (4)].ast)); }
+#line 516 "Grammar/DARIC.y"
+                                          { (yyval.ast) = assignment(link((yyvsp[-3].ast), (yyvsp[-2].ast)), (yyvsp[0].ast)); }
+#line 6089 "src/parser/bison.cpp"
     break;
 
   case 310:
-/* Line 1792 of yacc.c  */
-#line 520 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 520 "Grammar/DARIC.y"
+                        { (yyval.ast) = (yyvsp[0].ast); }
+#line 6095 "src/parser/bison.cpp"
     break;
 
   case 311:
-/* Line 1792 of yacc.c  */
-#line 521 "DARIC.y"
-    { (yyval.ast) = link((yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 521 "Grammar/DARIC.y"
+                                            { (yyval.ast) = link((yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 6101 "src/parser/bison.cpp"
     break;
 
   case 312:
-/* Line 1792 of yacc.c  */
-#line 525 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 525 "Grammar/DARIC.y"
+                      { (yyval.ast) = (yyvsp[0].ast); }
+#line 6107 "src/parser/bison.cpp"
     break;
 
   case 313:
-/* Line 1792 of yacc.c  */
-#line 526 "DARIC.y"
-    { (yyval.ast) = token1(LOCAL, (yyvsp[(2) - (2)].ast)); }
+#line 526 "Grammar/DARIC.y"
+                            { (yyval.ast) = token1(LOCAL, (yyvsp[0].ast)); }
+#line 6113 "src/parser/bison.cpp"
     break;
 
   case 314:
-/* Line 1792 of yacc.c  */
-#line 527 "DARIC.y"
-    { (yyval.ast) = token1(GLOBAL, (yyvsp[(2) - (2)].ast)); }
+#line 527 "Grammar/DARIC.y"
+                             { (yyval.ast) = token1(GLOBAL, (yyvsp[0].ast)); }
+#line 6119 "src/parser/bison.cpp"
     break;
 
   case 315:
-/* Line 1792 of yacc.c  */
-#line 528 "DARIC.y"
-    { (yyval.ast) = assignment((yyvsp[(1) - (3)].ast), token2(SHL, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast))); }
+#line 528 "Grammar/DARIC.y"
+                                                { (yyval.ast) = assignment((yyvsp[-2].ast), token2(SHL, (yyvsp[-2].ast), (yyvsp[0].ast))); }
+#line 6125 "src/parser/bison.cpp"
     break;
 
   case 316:
-/* Line 1792 of yacc.c  */
-#line 529 "DARIC.y"
-    { (yyval.ast) = assignment((yyvsp[(1) - (3)].ast), token2(SHR, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast))); }
+#line 529 "Grammar/DARIC.y"
+                                                { (yyval.ast) = assignment((yyvsp[-2].ast), token2(SHR, (yyvsp[-2].ast), (yyvsp[0].ast))); }
+#line 6131 "src/parser/bison.cpp"
     break;
 
   case 317:
-/* Line 1792 of yacc.c  */
-#line 530 "DARIC.y"
-    { (yyval.ast) = assignment((yyvsp[(1) - (3)].ast), token2(PLUS, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast))); }
+#line 530 "Grammar/DARIC.y"
+                                                 { (yyval.ast) = assignment((yyvsp[-2].ast), token2(PLUS, (yyvsp[-2].ast), (yyvsp[0].ast))); }
+#line 6137 "src/parser/bison.cpp"
     break;
 
   case 318:
-/* Line 1792 of yacc.c  */
-#line 531 "DARIC.y"
-    { (yyval.ast) = assignment((yyvsp[(1) - (3)].ast), token2(MINUS, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast))); }
+#line 531 "Grammar/DARIC.y"
+                                                  { (yyval.ast) = assignment((yyvsp[-2].ast), token2(MINUS, (yyvsp[-2].ast), (yyvsp[0].ast))); }
+#line 6143 "src/parser/bison.cpp"
     break;
 
   case 319:
-/* Line 1792 of yacc.c  */
-#line 532 "DARIC.y"
-    { (yyval.ast) = assignment((yyvsp[(1) - (3)].ast), token2(MULTIPLY, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast))); }
+#line 532 "Grammar/DARIC.y"
+                                                     { (yyval.ast) = assignment((yyvsp[-2].ast), token2(MULTIPLY, (yyvsp[-2].ast), (yyvsp[0].ast))); }
+#line 6149 "src/parser/bison.cpp"
     break;
 
   case 320:
-/* Line 1792 of yacc.c  */
-#line 533 "DARIC.y"
-    { (yyval.ast) = assignment((yyvsp[(1) - (3)].ast), token2(DIVIDE, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast))); }
+#line 533 "Grammar/DARIC.y"
+                                                   { (yyval.ast) = assignment((yyvsp[-2].ast), token2(DIVIDE, (yyvsp[-2].ast), (yyvsp[0].ast))); }
+#line 6155 "src/parser/bison.cpp"
     break;
 
   case 321:
-/* Line 1792 of yacc.c  */
-#line 534 "DARIC.y"
-    { (yyval.ast) = assignment((yyvsp[(1) - (3)].ast), token2(INTEGERDIVIDE, (yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast))); }
+#line 534 "Grammar/DARIC.y"
+                                                          { (yyval.ast) = assignment((yyvsp[-2].ast), token2(INTEGERDIVIDE, (yyvsp[-2].ast), (yyvsp[0].ast))); }
+#line 6161 "src/parser/bison.cpp"
     break;
 
   case 322:
-/* Line 1792 of yacc.c  */
-#line 538 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 538 "Grammar/DARIC.y"
+                        { (yyval.ast) = (yyvsp[0].ast); }
+#line 6167 "src/parser/bison.cpp"
     break;
 
   case 323:
-/* Line 1792 of yacc.c  */
-#line 539 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 539 "Grammar/DARIC.y"
+                         { (yyval.ast) = (yyvsp[0].ast); }
+#line 6173 "src/parser/bison.cpp"
     break;
 
   case 324:
-/* Line 1792 of yacc.c  */
-#line 540 "DARIC.y"
-    { (yyval.ast) = token(COMMA); }
+#line 540 "Grammar/DARIC.y"
+          { (yyval.ast) = token(COMMA); }
+#line 6179 "src/parser/bison.cpp"
     break;
 
   case 325:
-/* Line 1792 of yacc.c  */
-#line 541 "DARIC.y"
-    { (yyval.ast) = token(TILDE); }
+#line 541 "Grammar/DARIC.y"
+            { (yyval.ast) = token(TILDE); }
+#line 6185 "src/parser/bison.cpp"
     break;
 
   case 326:
-/* Line 1792 of yacc.c  */
-#line 542 "DARIC.y"
-    { (yyval.ast) = token(TICK); }
+#line 542 "Grammar/DARIC.y"
+           { (yyval.ast) = token(TICK); }
+#line 6191 "src/parser/bison.cpp"
     break;
 
   case 327:
-/* Line 1792 of yacc.c  */
-#line 543 "DARIC.y"
-    { (yyval.ast) = token1(SPC, (yyvsp[(3) - (4)].ast)); }
+#line 543 "Grammar/DARIC.y"
+                                     { (yyval.ast) = token1(SPC, (yyvsp[-1].ast)); }
+#line 6197 "src/parser/bison.cpp"
     break;
 
   case 328:
-/* Line 1792 of yacc.c  */
-#line 544 "DARIC.y"
-    { (yyval.ast) = token(SEMICOLON); }
+#line 544 "Grammar/DARIC.y"
+                { (yyval.ast) = token(SEMICOLON); }
+#line 6203 "src/parser/bison.cpp"
     break;
 
   case 329:
-/* Line 1792 of yacc.c  */
-#line 548 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 548 "Grammar/DARIC.y"
+                       { (yyval.ast) = (yyvsp[0].ast); }
+#line 6209 "src/parser/bison.cpp"
     break;
 
   case 330:
-/* Line 1792 of yacc.c  */
-#line 549 "DARIC.y"
-    { (yyval.ast) = link((yyvsp[(1) - (2)].ast), (yyvsp[(2) - (2)].ast)); }
+#line 549 "Grammar/DARIC.y"
+                                             { (yyval.ast) = link((yyvsp[-1].ast), (yyvsp[0].ast)); }
+#line 6215 "src/parser/bison.cpp"
     break;
 
   case 332:
-/* Line 1792 of yacc.c  */
-#line 557 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 557 "Grammar/DARIC.y"
+                       { (yyval.ast) = (yyvsp[0].ast); }
+#line 6221 "src/parser/bison.cpp"
     break;
 
   case 333:
-/* Line 1792 of yacc.c  */
-#line 558 "DARIC.y"
-    { (yyval.ast) = link((yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 558 "Grammar/DARIC.y"
+                                                 { (yyval.ast) = link((yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 6227 "src/parser/bison.cpp"
     break;
 
   case 334:
-/* Line 1792 of yacc.c  */
-#line 562 "DARIC.y"
-    { (yyval.ast) = NULL; }
+#line 562 "Grammar/DARIC.y"
+                    { (yyval.ast) = NULL; }
+#line 6233 "src/parser/bison.cpp"
     break;
 
   case 335:
-/* Line 1792 of yacc.c  */
-#line 563 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 563 "Grammar/DARIC.y"
+               { (yyval.ast) = (yyvsp[0].ast); }
+#line 6239 "src/parser/bison.cpp"
     break;
 
   case 336:
-/* Line 1792 of yacc.c  */
-#line 564 "DARIC.y"
-    { (yyval.ast) = token1(RETURN_PARAMETER, (yyvsp[(2) - (2)].ast)); }
+#line 564 "Grammar/DARIC.y"
+                      { (yyval.ast) = token1(RETURN_PARAMETER, (yyvsp[0].ast)); }
+#line 6245 "src/parser/bison.cpp"
     break;
 
   case 337:
-/* Line 1792 of yacc.c  */
-#line 568 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 568 "Grammar/DARIC.y"
+                     { (yyval.ast) = (yyvsp[0].ast); }
+#line 6251 "src/parser/bison.cpp"
     break;
 
   case 338:
-/* Line 1792 of yacc.c  */
-#line 569 "DARIC.y"
-    { (yyval.ast) = link((yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 569 "Grammar/DARIC.y"
+                                             { (yyval.ast) = link((yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 6257 "src/parser/bison.cpp"
     break;
 
   case 339:
-/* Line 1792 of yacc.c  */
-#line 573 "DARIC.y"
-    { (yyval.ast) = NULL; }
+#line 573 "Grammar/DARIC.y"
+                    { (yyval.ast) = NULL; }
+#line 6263 "src/parser/bison.cpp"
     break;
 
   case 340:
-/* Line 1792 of yacc.c  */
-#line 574 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 574 "Grammar/DARIC.y"
+               { (yyval.ast) = (yyvsp[0].ast); }
+#line 6269 "src/parser/bison.cpp"
     break;
 
   case 341:
-/* Line 1792 of yacc.c  */
-#line 578 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 578 "Grammar/DARIC.y"
+                   { (yyval.ast) = (yyvsp[0].ast); }
+#line 6275 "src/parser/bison.cpp"
     break;
 
   case 342:
-/* Line 1792 of yacc.c  */
-#line 579 "DARIC.y"
-    { (yyval.ast) = link((yyvsp[(1) - (3)].ast), (yyvsp[(3) - (3)].ast)); }
+#line 579 "Grammar/DARIC.y"
+                                         { (yyval.ast) = link((yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 6281 "src/parser/bison.cpp"
     break;
 
   case 343:
-/* Line 1792 of yacc.c  */
-#line 583 "DARIC.y"
-    { (yyval.ast) = token2(WHEN, (yyvsp[(2) - (4)].ast), (yyvsp[(3) - (4)].ast)); }
+#line 583 "Grammar/DARIC.y"
+                                         { (yyval.ast) = token2(WHEN, (yyvsp[-2].ast), (yyvsp[-1].ast)); }
+#line 6287 "src/parser/bison.cpp"
     break;
 
   case 344:
-/* Line 1792 of yacc.c  */
-#line 587 "DARIC.y"
-    { (yyval.ast) = (yyvsp[(1) - (1)].ast); }
+#line 587 "Grammar/DARIC.y"
+           { (yyval.ast) = (yyvsp[0].ast); }
+#line 6293 "src/parser/bison.cpp"
     break;
 
   case 345:
-/* Line 1792 of yacc.c  */
-#line 588 "DARIC.y"
-    { (yyval.ast) = link((yyvsp[(1) - (2)].ast), (yyvsp[(2) - (2)].ast)); }
+#line 588 "Grammar/DARIC.y"
+                     { (yyval.ast) = link((yyvsp[-1].ast), (yyvsp[0].ast)); }
+#line 6299 "src/parser/bison.cpp"
     break;
 
   case 346:
-/* Line 1792 of yacc.c  */
-#line 591 "DARIC.y"
-    { (yyval.ast) = token3typed(DEFPROC, string((yyvsp[(1) - (7)].v_string)), (yyvsp[(3) - (7)].ast), (yyvsp[(6) - (7)].ast), Type::NOTYPE); }
+#line 591 "Grammar/DARIC.y"
+                                                                           { (yyval.ast) = token3typed(DEFPROC, string((yyvsp[-6].v_string)), (yyvsp[-4].ast), (yyvsp[-1].ast), Type::NOTYPE); }
+#line 6305 "src/parser/bison.cpp"
     break;
 
   case 347:
-/* Line 1792 of yacc.c  */
-#line 592 "DARIC.y"
-    { (yyval.ast) = token3typed(DEFFN, string((yyvsp[(1) - (7)].v_string)), (yyvsp[(3) - (7)].ast), (yyvsp[(6) - (7)].ast), Type::INTEGER); }
+#line 592 "Grammar/DARIC.y"
+                                                                              { (yyval.ast) = token3typed(DEFFN, string((yyvsp[-6].v_string)), (yyvsp[-4].ast), (yyvsp[-1].ast), Type::INTEGER); }
+#line 6311 "src/parser/bison.cpp"
     break;
 
   case 348:
-/* Line 1792 of yacc.c  */
-#line 593 "DARIC.y"
-    { (yyval.ast) = token3typed(DEFFN, string((yyvsp[(1) - (7)].v_string)), (yyvsp[(3) - (7)].ast), (yyvsp[(6) - (7)].ast), Type::REAL); }
+#line 593 "Grammar/DARIC.y"
+                                                                           { (yyval.ast) = token3typed(DEFFN, string((yyvsp[-6].v_string)), (yyvsp[-4].ast), (yyvsp[-1].ast), Type::REAL); }
+#line 6317 "src/parser/bison.cpp"
     break;
 
   case 349:
-/* Line 1792 of yacc.c  */
-#line 594 "DARIC.y"
-    { (yyval.ast) = token3typed(DEFFN, string((yyvsp[(1) - (7)].v_string)), (yyvsp[(3) - (7)].ast), (yyvsp[(6) - (7)].ast), Type::STRING); }
+#line 594 "Grammar/DARIC.y"
+                                                                             { (yyval.ast) = token3typed(DEFFN, string((yyvsp[-6].v_string)), (yyvsp[-4].ast), (yyvsp[-1].ast), Type::STRING); }
+#line 6323 "src/parser/bison.cpp"
     break;
 
 
-/* Line 1792 of yacc.c  */
-#line 6575 "C:\\Users\\d_dud\\source\\repos\\PiBasic\\V4\\src\\parser\\bison.cpp"
+#line 6327 "src/parser/bison.cpp"
+
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -6594,24 +6347,23 @@ yyreduce:
   *++yyvsp = yyval;
   *++yylsp = yyloc;
 
-  /* Now `shift' the result of the reduction.  Determine what state
+  /* Now 'shift' the result of the reduction.  Determine what state
      that goes to, based on the state we popped back to and the rule
      number reduced by.  */
-
-  yyn = yyr1[yyn];
-
-  yystate = yypgoto[yyn - YYNTOKENS] + *yyssp;
-  if (0 <= yystate && yystate <= YYLAST && yycheck[yystate] == *yyssp)
-    yystate = yytable[yystate];
-  else
-    yystate = yydefgoto[yyn - YYNTOKENS];
+  {
+    const int yylhs = yyr1[yyn] - YYNTOKENS;
+    const int yyi = yypgoto[yylhs] + *yyssp;
+    yystate = (0 <= yyi && yyi <= YYLAST && yycheck[yyi] == *yyssp
+               ? yytable[yyi]
+               : yydefgoto[yylhs]);
+  }
 
   goto yynewstate;
 
 
-/*------------------------------------.
-| yyerrlab -- here on detecting error |
-`------------------------------------*/
+/*--------------------------------------.
+| yyerrlab -- here on detecting error.  |
+`--------------------------------------*/
 yyerrlab:
   /* Make sure we have latest lookahead translation.  See comments at
      user semantic actions for why this is necessary.  */
@@ -6636,7 +6388,7 @@ yyerrlab:
           {
             if (yymsg != yymsgbuf)
               YYSTACK_FREE (yymsg);
-            yymsg = (char *) YYSTACK_ALLOC (yymsg_alloc);
+            yymsg = YY_CAST (char *, YYSTACK_ALLOC (YY_CAST (YYSIZE_T, yymsg_alloc)));
             if (!yymsg)
               {
                 yymsg = yymsgbuf;
@@ -6662,20 +6414,20 @@ yyerrlab:
   if (yyerrstatus == 3)
     {
       /* If just tried and failed to reuse lookahead token after an
-	 error, discard it.  */
+         error, discard it.  */
 
       if (yychar <= YYEOF)
-	{
-	  /* Return failure if at end of input.  */
-	  if (yychar == YYEOF)
-	    YYABORT;
-	}
+        {
+          /* Return failure if at end of input.  */
+          if (yychar == YYEOF)
+            YYABORT;
+        }
       else
-	{
-	  yydestruct ("Error: discarding",
-		      yytoken, &yylval, &yylloc);
-	  yychar = YYEMPTY;
-	}
+        {
+          yydestruct ("Error: discarding",
+                      yytoken, &yylval, &yylloc);
+          yychar = YYEMPTY;
+        }
     }
 
   /* Else will try to reuse lookahead token after shifting the error
@@ -6687,15 +6439,12 @@ yyerrlab:
 | yyerrorlab -- error raised explicitly by YYERROR.  |
 `---------------------------------------------------*/
 yyerrorlab:
+  /* Pacify compilers when the user code never invokes YYERROR and the
+     label yyerrorlab therefore never appears in user code.  */
+  if (0)
+    YYERROR;
 
-  /* Pacify compilers like GCC when the user code never invokes
-     YYERROR and the label yyerrorlab therefore never appears in user
-     code.  */
-  if (/*CONSTCOND*/ 0)
-     goto yyerrorlab;
-
-  yyerror_range[1] = yylsp[1-yylen];
-  /* Do not reclaim the symbols of the rule which action triggered
+  /* Do not reclaim the symbols of the rule whose action triggered
      this YYERROR.  */
   YYPOPSTACK (yylen);
   yylen = 0;
@@ -6708,29 +6457,29 @@ yyerrorlab:
 | yyerrlab1 -- common code for both syntax error and YYERROR.  |
 `-------------------------------------------------------------*/
 yyerrlab1:
-  yyerrstatus = 3;	/* Each real token shifted decrements this.  */
+  yyerrstatus = 3;      /* Each real token shifted decrements this.  */
 
   for (;;)
     {
       yyn = yypact[yystate];
       if (!yypact_value_is_default (yyn))
-	{
-	  yyn += YYTERROR;
-	  if (0 <= yyn && yyn <= YYLAST && yycheck[yyn] == YYTERROR)
-	    {
-	      yyn = yytable[yyn];
-	      if (0 < yyn)
-		break;
-	    }
-	}
+        {
+          yyn += YYTERROR;
+          if (0 <= yyn && yyn <= YYLAST && yycheck[yyn] == YYTERROR)
+            {
+              yyn = yytable[yyn];
+              if (0 < yyn)
+                break;
+            }
+        }
 
       /* Pop the current state because it cannot handle the error token.  */
       if (yyssp == yyss)
-	YYABORT;
+        YYABORT;
 
       yyerror_range[1] = *yylsp;
       yydestruct ("Error: popping",
-		  yystos[yystate], yyvsp, yylsp);
+                  yystos[yystate], yyvsp, yylsp);
       YYPOPSTACK (1);
       yystate = *yyssp;
       YY_STACK_PRINT (yyss, yyssp);
@@ -6760,12 +6509,14 @@ yyacceptlab:
   yyresult = 0;
   goto yyreturn;
 
+
 /*-----------------------------------.
 | yyabortlab -- YYABORT comes here.  |
 `-----------------------------------*/
 yyabortlab:
   yyresult = 1;
   goto yyreturn;
+
 
 #if !defined yyoverflow || YYERROR_VERBOSE
 /*-------------------------------------------------.
@@ -6777,6 +6528,10 @@ yyexhaustedlab:
   /* Fall through.  */
 #endif
 
+
+/*-----------------------------------------------------.
+| yyreturn -- parsing is finished, return the result.  |
+`-----------------------------------------------------*/
 yyreturn:
   if (yychar != YYEMPTY)
     {
@@ -6786,14 +6541,14 @@ yyreturn:
       yydestruct ("Cleanup: discarding lookahead",
                   yytoken, &yylval, &yylloc);
     }
-  /* Do not reclaim the symbols of the rule which action triggered
+  /* Do not reclaim the symbols of the rule whose action triggered
      this YYABORT or YYACCEPT.  */
   YYPOPSTACK (yylen);
   YY_STACK_PRINT (yyss, yyssp);
   while (yyssp != yyss)
     {
       yydestruct ("Cleanup: popping",
-		  yystos[*yyssp], yyvsp, yylsp);
+                  yystos[+*yyssp], yyvsp, yylsp);
       YYPOPSTACK (1);
     }
 #ifndef yyoverflow
@@ -6804,13 +6559,9 @@ yyreturn:
   if (yymsg != yymsgbuf)
     YYSTACK_FREE (yymsg);
 #endif
-  /* Make sure YYID is used.  */
-  return YYID (yyresult);
+  return yyresult;
 }
-
-
-/* Line 2055 of yacc.c  */
-#line 597 "DARIC.y"
+#line 597 "Grammar/DARIC.y"
 
 
 void parse(const char *filename) {
