@@ -144,7 +144,7 @@ void Graphics::open(int width, int height, int mode)
     if (!reinit) {
         std::string fp = std::string(cwd) + "/IBMPlexMono-Regular.ttf";
         int index = load_font(fp.c_str());
-        create_font_by_size(index, 15);
+        create_font_by_size(index, 17.5);
         create_font_by_size(index, 20);
         create_font_by_size(index, 25);
         create_font_by_size(index, 30);
@@ -155,7 +155,7 @@ void Graphics::open(int width, int height, int mode)
         create_font_by_size(index, 100);
         fp = std::string(cwd) + "/IBMPlexSans-Regular.ttf";
         index = load_font(fp.c_str());
-        create_font_by_size(index, 15);
+        create_font_by_size(index, 17.5);
         create_font_by_size(index, 20);
         create_font_by_size(index, 25);
         create_font_by_size(index, 30);
@@ -272,7 +272,7 @@ void Graphics::open(int width, int height, int mode)
             line_address[i] = offset;
             offset += screen->w;
         }
-        bank_cache = new UINT32[screen_width * screen_height];
+        bank_cache = new UINT32[screen->pitch * screen_height];
     }
 #endif
     last_render = std::chrono::high_resolution_clock::now();

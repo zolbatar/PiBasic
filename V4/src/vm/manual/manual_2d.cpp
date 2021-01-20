@@ -187,11 +187,13 @@ void create_manual_2d()
         "Statement starting graphics mode or changing graphics mode options.",
         {
             new ManualSyntaxSpace(),
-            new ManualSyntaxOptional("<numeric_expression1>,<numeric_expression2>,<numeric_expression3>"),
+            new ManualSyntaxOptional("BANKED"),
+            new ManualSyntaxComma(),
+            new ManualSyntaxOptional("<numeric_expression1>,<numeric_expression2>"),
         },
-        "If no arguments are specified, then this statement will default to full screen compatibility mode, otherwise\r  <expression1> and <expression2> are the width and height of the requested screen mode.\r  <expression3> = 0 is windowed compatibility mode, PRINT/INPUT/etc. work.\r  <expression3> = 1 is windowed performance mode using banking.\r  <expression3> = 10 is fullscreen compatibility mode, PRINT/INPUT/etc. work.\r  <expression3> = 11 is fullscreen performance mode using banking.",
+        "If no arguments are specified, then this statement will default to full screen compatibility mode, otherwise\r  <expression1> and <expression2> are the width and height of the requested screen mode.\r  If BANKED is specified then the graphics engine runs in high performance banked mode where FLIP is needed to flip rendering buffers, this is mostly for games and 3D.",
         "The graphics mode is changed.",
-        "GRAPHICS 800,600,0\rGRAPHICS"));
+        "GRAPHICS BANKED 800,600\rGRAPHICS"));
     keywords.push_back(ManualKeyword(
         "LINE",
         "LINE",

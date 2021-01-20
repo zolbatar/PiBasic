@@ -7,9 +7,9 @@ extern VM* current_vm;
 
 void Graphics::poll()
 {
-    flip(false);
 #ifdef RISCOS
 #else
+    flip(false);
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         switch (event.type) {

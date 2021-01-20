@@ -37,7 +37,7 @@ void initialise_manual()
 int VM::debugger_manual_keyword_section(KeywordCategory category, int *index, int selected, std::string *selected_keyword)
 {
     graphics->colour(0, 128, 255);
-    graphics->print_text(fixed_font, "   ", column * 300, -1);
+    graphics->print_text(fixed_font, "   ", column * manual_column_width, -1);
     switch (category)
     {
     case KeywordCategory::OPERATORS:
@@ -62,7 +62,7 @@ int VM::debugger_manual_keyword_section(KeywordCategory category, int *index, in
         graphics->print_text(manual_font, "Conditional & Looping\r", -1, -1);
         break;
     case KeywordCategory::FN_AND_PROC:
-        graphics->print_text(manual_font, "Functions, Procedures and Subroutines\r", -1, -1);
+        graphics->print_text(manual_font, "Functions and Procedures\r", -1, -1);
         break;
     case KeywordCategory::VARIABLES_TYPES:
         graphics->print_text(manual_font, "Variables, Structured Types and Data\r", -1, -1);
@@ -88,11 +88,11 @@ int VM::debugger_manual_keyword_section(KeywordCategory category, int *index, in
             {
                 *selected_keyword = (*it).keywordLong;
                 graphics->colour(255, 255, 0);
-                graphics->print_text(fixed_font, "->", column * 300, -1);
+                graphics->print_text(fixed_font, "->", column * manual_column_width, -1);
             }
             else
             {
-                graphics->print_text(fixed_font, "  ", column * 300, -1);
+                graphics->print_text(fixed_font, "  ", column * manual_column_width, -1);
             }
             if ((*it).description.length() == 0)
             {
@@ -117,7 +117,7 @@ int VM::debugger_manual_keyword_section(KeywordCategory category, int *index, in
             if (graphics->get_cursor_y() > graphics->get_actual_height() - 100)
             {
                 column++;
-                graphics->print_text(fixed_font, "", column * 100, 50);
+                graphics->print_text(fixed_font, "", column * manual_column_width, 50);
             }
 
             (*index)++;
@@ -302,7 +302,7 @@ void VM::debugger_manual_keyword(std::string keyword)
             graphics->print_text(manual_font + 2, "(Conditional & Looping)\r\r", -1, -1);
             break;
         case KeywordCategory::FN_AND_PROC:
-            graphics->print_text(manual_font + 2, "(Functions, Procedures and Subroutines)\r\r", -1, -1);
+            graphics->print_text(manual_font + 2, "(Functions and Procedures)\r\r", -1, -1);
             break;
         case KeywordCategory::VARIABLES_TYPES:
             graphics->print_text(manual_font + 2, "(Variables, Structured Types and Data)\r\r", -1, -1);

@@ -6,8 +6,8 @@
 const int debugger_height = 30;
 const int open_height = 300;
 const int debugger_lines = 12;
-const int disassembly_font = console_font;
-const int prop_font = console_font + 9;
+const int disassembly_font = 1;
+const int prop_font = 10;
 extern std::map<std::string, int> files_index;
 bool debugger_open = false;
 const int menu_font = 11;
@@ -77,141 +77,147 @@ void VM::debugger_options(int selected, int open_mode)
 void VM::debugger_variables()
 {
     int selected = 0;
+    bool rerender = true;
+    int max = 0;
     while (true) {
-        debugger_options(1, 1);
-        graphics->print_text(disassembly_font, "\r\r", -1, -1);
+        if (rerender) {
+            debugger_options(1, 1);
+            graphics->print_text(disassembly_font, "\r\r", -1, -1);
 
-        // Count number of ACTUAL local and variables (not just constants)
-        std::vector<Boxed*> dis_globals;
-        for (auto it = variables.begin(); it != variables.end(); ++it) {
-            if (!(*it).constant) {
-                dis_globals.push_back(&(*it));
-            }
-        }
-        std::vector<Boxed*> dis_locals;
-        for (auto it = locals->begin(); it != locals->end(); ++it) {
-            if (!(*it).constant) {
-                dis_locals.push_back(&(*it));
-            }
-        }
-
-        // Show number of variables
-        graphics->colour(128, 128, 128);
-        graphics->print_text(disassembly_font, "Globals : ", -1, -1);
-        graphics->colour(255, 255, 255);
-        graphics->print_text(disassembly_font, std::to_string(dis_globals.size()), -1, -1);
-        graphics->colour(128, 128, 128);
-        graphics->print_text(disassembly_font, ", Locals: ", -1, -1);
-        graphics->colour(255, 255, 255);
-        graphics->print_text(disassembly_font, std::to_string(dis_locals.size()), -1, -1);
-        graphics->print_text(disassembly_font, "\r\r", -1, -1);
-
-        // How many to skip
-        int skip = (selected / debugger_lines) * debugger_lines;
-
-        int index = 0;
-        bool on_local = true;
-        int max = static_cast<int>(dis_globals.size() + dis_locals.size());
-        int shown = 0;
-        while (shown < debugger_lines && index < max) {
-            Boxed* v = nullptr;
-            if (on_local) {
-                if (index >= dis_locals.size()) {
-                    on_local = false;
-                    index = 0;
-                } else {
-                    v = dis_locals[index];
+            // Count number of ACTUAL local and variables (not just constants)
+            std::vector<Boxed*> dis_globals;
+            for (auto it = variables.begin(); it != variables.end(); ++it) {
+                if (!(*it).constant) {
+                    dis_globals.push_back(&(*it));
                 }
             }
-            if (!on_local) {
-                if (index < dis_globals.size()) {
-                    v = dis_globals[index];
+            std::vector<Boxed*> dis_locals;
+            for (auto it = locals->begin(); it != locals->end(); ++it) {
+                if (!(*it).constant) {
+                    dis_locals.push_back(&(*it));
                 }
             }
 
-            if (v != nullptr && skip <= 0) {
-                if (index == selected) {
-                    graphics->colour(255, 255, 0);
-                    graphics->print_text(disassembly_font, "-> ", -1, -1);
-                } else {
-                    graphics->print_text(disassembly_font, "   ", -1, -1);
+            // Show number of variables
+            graphics->colour(128, 128, 128);
+            graphics->print_text(disassembly_font, "Globals : ", -1, -1);
+            graphics->colour(255, 255, 255);
+            graphics->print_text(disassembly_font, std::to_string(dis_globals.size()), -1, -1);
+            graphics->colour(128, 128, 128);
+            graphics->print_text(disassembly_font, ", Locals: ", -1, -1);
+            graphics->colour(255, 255, 255);
+            graphics->print_text(disassembly_font, std::to_string(dis_locals.size()), -1, -1);
+            graphics->print_text(disassembly_font, "\r\r", -1, -1);
+
+            // How many to skip
+            int skip = (selected / debugger_lines) * debugger_lines;
+
+            int index = 0;
+            bool on_local = true;
+            max = static_cast<int>(dis_globals.size() + dis_locals.size());
+            int shown = 0;
+            while (shown < debugger_lines && index < max) {
+                Boxed* v = nullptr;
+                if (on_local) {
+                    if (index >= dis_locals.size()) {
+                        on_local = false;
+                        index = 0;
+                    } else {
+                        v = dis_locals[index];
+                    }
+                }
+                if (!on_local) {
+                    if (index < dis_globals.size()) {
+                        v = dis_globals[index];
+                    }
                 }
 
-                // G or L
-                graphics->colour(255, 0, 0);
-                graphics->print_text(disassembly_font, on_local ? "L " : "G ", -1, -1);
+                if (v != nullptr && skip <= 0) {
+                    if (index == selected) {
+                        graphics->colour(255, 255, 0);
+                        graphics->print_text(disassembly_font, "-> ", -1, -1);
+                    } else {
+                        graphics->print_text(disassembly_font, "   ", -1, -1);
+                    }
 
-                // Type
-                graphics->colour(0, 255, 0);
-                switch (v->type) {
-                case Type::INTEGER:
-                    graphics->print_text(disassembly_font, "INTEGER       ", -1, -1);
-                    break;
-                case Type::REAL:
-                    graphics->print_text(disassembly_font, "FLOAT         ", -1, -1);
-                    break;
-                case Type::STRING:
-                    graphics->print_text(disassembly_font, "STRING        ", -1, -1);
-                    break;
-                case Type::INTEGER_ARRAY:
-                    graphics->print_text(disassembly_font, "INTEGER ARRAY ", -1, -1);
-                    break;
-                case Type::REAL_ARRAY:
-                    graphics->print_text(disassembly_font, "FLOAT ARRAY   ", -1, -1);
-                    break;
-                case Type::STRING_ARRAY:
-                    graphics->print_text(disassembly_font, "STRING ARRAY  ", -1, -1);
-                    break;
-                case Type::TYPE:
-                    graphics->print_text(disassembly_font, "TYPE          ", -1, -1);
-                    break;
-                case Type::TYPE_ARRAY:
-                    graphics->print_text(disassembly_font, "TYPE ARRAY    ", -1, -1);
-                    break;
+                    // G or L
+                    graphics->colour(255, 0, 0);
+                    graphics->print_text(disassembly_font, on_local ? "L " : "G ", -1, -1);
+
+                    // Type
+                    graphics->colour(0, 255, 0);
+                    switch (v->type) {
+                    case Type::INTEGER:
+                        graphics->print_text(disassembly_font, "INTEGER       ", -1, -1);
+                        break;
+                    case Type::REAL:
+                        graphics->print_text(disassembly_font, "FLOAT         ", -1, -1);
+                        break;
+                    case Type::STRING:
+                        graphics->print_text(disassembly_font, "STRING        ", -1, -1);
+                        break;
+                    case Type::INTEGER_ARRAY:
+                        graphics->print_text(disassembly_font, "INTEGER ARRAY ", -1, -1);
+                        break;
+                    case Type::REAL_ARRAY:
+                        graphics->print_text(disassembly_font, "FLOAT ARRAY   ", -1, -1);
+                        break;
+                    case Type::STRING_ARRAY:
+                        graphics->print_text(disassembly_font, "STRING ARRAY  ", -1, -1);
+                        break;
+                    case Type::TYPE:
+                        graphics->print_text(disassembly_font, "TYPE          ", -1, -1);
+                        break;
+                    case Type::TYPE_ARRAY:
+                        graphics->print_text(disassembly_font, "TYPE ARRAY    ", -1, -1);
+                        break;
+                    }
+
+                    // Name
+                    graphics->colour(0, 0, 255);
+                    graphics->print_text(disassembly_font, v->name, -1, -1);
+                    int a = 25 - static_cast<int>(v->name.length());
+                    for (int i = 0; i < a; i++) {
+                        graphics->print_text(disassembly_font, " ", -1, -1);
+                    }
+
+                    // Value
+                    graphics->colour(255, 255, 255);
+                    switch (v->type) {
+                    case Type::INTEGER:
+                        graphics->print_text(disassembly_font, std::to_string(v->value_int), -1, -1);
+                        break;
+                    case Type::REAL:
+                        graphics->print_text(disassembly_font, std::to_string(v->value_float), -1, -1);
+                        break;
+                    case Type::STRING:
+                        graphics->print_text(disassembly_font, v->value_string, -1, -1);
+                        break;
+                    case Type::INTEGER_ARRAY:
+                        graphics->print_text(disassembly_font, std::to_string(v->value_int_array.size()) + " entries", -1, -1);
+                        break;
+                    case Type::REAL_ARRAY:
+                        graphics->print_text(disassembly_font, std::to_string(v->value_float_array.size()) + " entries", -1, -1);
+                        break;
+                    case Type::STRING_ARRAY:
+                        graphics->print_text(disassembly_font, std::to_string(v->value_string_array.size()) + " entries", -1, -1);
+                        break;
+                    case Type::TYPE:
+                        graphics->print_text(disassembly_font, "** TYPE VALUE **", -1, -1);
+                        break;
+                    case Type::TYPE_ARRAY:
+                        graphics->print_text(disassembly_font, "** TYPE ARRAY **", -1, -1);
+                        break;
+                    }
+
+                    graphics->print_text(disassembly_font, "\r", -1, -1);
+                    shown++;
                 }
-
-                // Name
-                graphics->colour(0, 0, 255);
-                graphics->print_text(disassembly_font, v->name, -1, -1);
-                int a = 25 - static_cast<int>(v->name.length());
-                for (int i = 0; i < a; i++) {
-                    graphics->print_text(disassembly_font, " ", -1, -1);
-                }
-
-                // Value
-                graphics->colour(255, 255, 255);
-                switch (v->type) {
-                case Type::INTEGER:
-                    graphics->print_text(disassembly_font, std::to_string(v->value_int), -1, -1);
-                    break;
-                case Type::REAL:
-                    graphics->print_text(disassembly_font, std::to_string(v->value_float), -1, -1);
-                    break;
-                case Type::STRING:
-                    graphics->print_text(disassembly_font, v->value_string, -1, -1);
-                    break;
-                case Type::INTEGER_ARRAY:
-                    graphics->print_text(disassembly_font, std::to_string(v->value_int_array.size()) + " entries", -1, -1);
-                    break;
-                case Type::REAL_ARRAY:
-                    graphics->print_text(disassembly_font, std::to_string(v->value_float_array.size()) + " entries", -1, -1);
-                    break;
-                case Type::STRING_ARRAY:
-                    graphics->print_text(disassembly_font, std::to_string(v->value_string_array.size()) + " entries", -1, -1);
-                    break;
-                case Type::TYPE:
-                    graphics->print_text(disassembly_font, "** TYPE VALUE **", -1, -1);
-                    break;
-                case Type::TYPE_ARRAY:
-                    graphics->print_text(disassembly_font, "** TYPE ARRAY **", -1, -1);
-                    break;
-                }
-
-                graphics->print_text(disassembly_font, "\r", -1, -1);
-                shown++;
+                index++;
+                skip--;
             }
-            index++;
-            skip--;
+            rerender = false;
+            graphics->flip(true);
         }
 
         graphics->poll();
@@ -221,18 +227,22 @@ void VM::debugger_variables()
             while (graphics->inkey(-58))
                 graphics->poll();
             selected--;
+            rerender = true;
         } else if (graphics->inkey(-42)) {
             while (graphics->inkey(-42))
                 graphics->poll();
             selected++;
+            rerender = true;
         } else if (graphics->inkey(-64)) {
             while (graphics->inkey(-64))
                 graphics->poll();
             selected -= debugger_lines;
+            rerender = true;
         } else if (graphics->inkey(-79)) {
             while (graphics->inkey(-79))
                 graphics->poll();
             selected += debugger_lines;
+            rerender = true;
         } else if (graphics->inkey(-114) || graphics->inkey(-31) || graphics->inkey(-120)) {
             return;
         }
@@ -323,17 +333,19 @@ void VM::debugger_disassembly()
                     graphics->colour(0, 100, 255);
                     graphics->print_text(disassembly_font, s.operand, -1, -1);
 
-                    // Pad out with near invisible dots
-                    if (s.description.length() > 0) {
-                        graphics->colour(40, 40, 40);
-                        a = 40 - static_cast<int>(s.operand.length());
-                        for (int i = 0; i < a; i++) {
-                            graphics->print_text(disassembly_font, ".", -1, -1);
+                    if (graphics->get_actual_width() > 1024) {
+                        // Pad out with near invisible dots
+                        if (s.description.length() > 0) {
+                            graphics->colour(40, 40, 40);
+                            a = 40 - static_cast<int>(s.operand.length());
+                            for (int i = 0; i < a; i++) {
+                                graphics->print_text(disassembly_font, ".", -1, -1);
+                            }
                         }
-                    }
 
-                    graphics->colour(128, 128, 128);
-                    graphics->print_text(prop_font, s.description, -1, -1);
+                        graphics->colour(128, 128, 128);
+                        graphics->print_text(prop_font, s.description, -1, -1);
+                    }
                     graphics->print_text(prop_font, "\r", -1, -1);
                 }
             }

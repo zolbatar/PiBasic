@@ -1,8 +1,9 @@
 #pragma once
 #include "../vm.h"
 
-const int fixed_font = 1;
-const int manual_font = 10;
+const int fixed_font = 0;
+const int manual_font = 9;
+const int manual_column_width = 225;
 
 enum class SyntaxElement
 {
