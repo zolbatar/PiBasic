@@ -40,7 +40,7 @@ extern std::map<std::string, int> files_index;
 int main(int argc, char *argv[])
 {
     using namespace std::chrono;
-    std::cout << "DARIC 21.01.19, https://dariclang.com\n";
+    std::cout << "DARIC 21.01.20, https://dariclang.com\n";
 #ifdef RISCOS
     if (argc < 2)
     {
