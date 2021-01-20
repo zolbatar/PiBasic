@@ -147,8 +147,10 @@ void VM::debugger_manual()
         {
             debugger_options(8, 2);
 
+            graphics->colour(255, 255, 255);
+            graphics->print_text(fixed_font, "Use Up/Down/PgUp/PgDown & Enter  ", 20, graphics->get_actual_height() - 30);
             graphics->colour(255, 0, 0);
-            graphics->print_text(fixed_font, "* ", 20, graphics->get_actual_height() - 30);
+            graphics->print_text(fixed_font, "* ", -1, -1);
             graphics->colour(255, 255, 0);
             graphics->print_text(manual_font, "No help available yet", -1, -1);
 
@@ -185,14 +187,14 @@ void VM::debugger_manual()
 
             // What section?
             selected_section = 0;
-            for (int i = 0; i < max_sections; i++)
+            for (int i = 0; i < max_sections - 1; i++)
             {
                 if (selected >= sections_indexes[i])
                 {
                     selected_section = i;
                 }
             }
-            updated=false;
+            updated = false;
         }
 
         graphics->poll();
@@ -240,7 +242,7 @@ void VM::debugger_manual()
         {
             // RETURN
             debugger_manual_keyword(selected_keyword);
-            updated=true;
+            updated = true;
         }
         else if (graphics->inkey(-114) || graphics->inkey(-115) || graphics->inkey(-31))
         {
@@ -266,111 +268,111 @@ void VM::debugger_manual_keyword(std::string keyword)
         }
     }
 
+    debugger_options(8, 2);
+    graphics->print_text(manual_font, "\r\r", -1, -1);
+    graphics->set_margin(20);
+
+    // Keyword
+    graphics->colour(255, 255, 255);
+    graphics->print_text(fixed_font + 2, kw->keywordLong + " ", -1, -1);
+
+    // Category
+    graphics->colour(255, 80, 0);
+    switch (kw->category)
+    {
+    case KeywordCategory::KEYBOARD_AND_MOUSE:
+        graphics->print_text(manual_font + 2, "(Keyboard & Mouse)\r\r", -1, -1);
+        break;
+    case KeywordCategory::MATHS_AND_NUMBERS:
+        graphics->print_text(manual_font + 2, "(Maths & Numbers)\r\r", -1, -1);
+        break;
+    case KeywordCategory::GRAPHICS_2D:
+        graphics->print_text(manual_font + 2, "(2D Graphics)\r\r", -1, -1);
+        break;
+    case KeywordCategory::GRAPHICS_3D:
+        graphics->print_text(manual_font + 2, "(3D Graphics)\r\r", -1, -1);
+        break;
+    case KeywordCategory::OPERATORS:
+        graphics->print_text(manual_font + 2, "(Operators)\r\r", -1, -1);
+        break;
+    case KeywordCategory::FILE_IO:
+        graphics->print_text(manual_font + 2, "(File I/O)\r\r", -1, -1);
+        break;
+    case KeywordCategory::CONDITIONAL_LOOPING:
+        graphics->print_text(manual_font + 2, "(Conditional & Looping)\r\r", -1, -1);
+        break;
+    case KeywordCategory::FN_AND_PROC:
+        graphics->print_text(manual_font + 2, "(Functions and Procedures)\r\r", -1, -1);
+        break;
+    case KeywordCategory::VARIABLES_TYPES:
+        graphics->print_text(manual_font + 2, "(Variables, Structured Types and Data)\r\r", -1, -1);
+        break;
+    case KeywordCategory::STRING:
+        graphics->print_text(manual_font + 2, "(Strings & Text Output)\r\r", -1, -1);
+        break;
+    case KeywordCategory::DEBUGGING:
+        graphics->print_text(manual_font + 2, "(Debugging & Execution)\r\r", -1, -1);
+        break;
+    case KeywordCategory::BOOLEAN:
+        graphics->print_text(manual_font + 2, "(Boolean Logic)\r\r", -1, -1);
+        break;
+    }
+
+    // Description
+    if (kw->description.length() > 0)
+    {
+        graphics->colour(128, 128, 128);
+        graphics->print_text(manual_font, "Description:\r\r", -1, -1);
+        graphics->colour(255, 255, 255);
+        graphics->print_text(manual_font, kw->description, -1, -1);
+        graphics->print_text(manual_font, "\r\r", -1, -1);
+    }
+
+    // Syntax
+    graphics->colour(128, 128, 128);
+    graphics->print_text(manual_font, "Syntax:\r\r", -1, -1);
+    graphics->colour(255, 255, 255);
+    graphics->print_text(fixed_font, kw->keyword, -1, -1);
+    for (auto its = kw->syntax.begin(); its != kw->syntax.end(); ++its)
+    {
+        (*its)->render(graphics);
+    }
+    graphics->print_text(manual_font, "\r\r", -1, -1);
+
+    // Arguments
+    if (kw->arguments.length() > 0)
+    {
+        graphics->colour(128, 128, 128);
+        graphics->print_text(manual_font, "Arguments:\r\r", -1, -1);
+        graphics->colour(255, 255, 255);
+        graphics->print_text(manual_font, kw->arguments, -1, -1);
+        graphics->print_text(manual_font, "\r\r", -1, -1);
+    }
+
+    // Result
+    if (kw->result.length() > 0)
+    {
+        graphics->colour(128, 128, 128);
+        graphics->print_text(manual_font, "Result:\r\r", -1, -1);
+        graphics->colour(255, 255, 255);
+        graphics->print_text(manual_font, kw->result, -1, -1);
+        graphics->print_text(manual_font, "\r\r", -1, -1);
+    }
+
+    // Example
+    if (kw->examples.length() > 0)
+    {
+        graphics->colour(128, 128, 128);
+        graphics->print_text(manual_font, "Examples:\r\r", -1, -1);
+        graphics->colour(255, 255, 255);
+        graphics->print_text(fixed_font, kw->examples, -1, -1);
+    }
+
+    graphics->colour(255, 255, 0);
+    graphics->print_text(10, "\r\r(Hit Space to return)", -1, -1);
+
     while (true)
     {
-        debugger_options(8, 2);
-        graphics->print_text(manual_font, "\r\r", -1, -1);
-        graphics->set_margin(20);
-
-        // Keyword
-        graphics->colour(255, 255, 255);
-        graphics->print_text(fixed_font + 2, kw->keywordLong + " ", -1, -1);
-
-        // Category
-        graphics->colour(255, 80, 0);
-        switch (kw->category)
-        {
-        case KeywordCategory::KEYBOARD_AND_MOUSE:
-            graphics->print_text(manual_font + 2, "(Keyboard & Mouse)\r\r", -1, -1);
-            break;
-        case KeywordCategory::MATHS_AND_NUMBERS:
-            graphics->print_text(manual_font + 2, "(Maths & Numbers)\r\r", -1, -1);
-            break;
-        case KeywordCategory::GRAPHICS_2D:
-            graphics->print_text(manual_font + 2, "(2D Graphics)\r\r", -1, -1);
-            break;
-        case KeywordCategory::GRAPHICS_3D:
-            graphics->print_text(manual_font + 2, "(3D Graphics)\r\r", -1, -1);
-            break;
-        case KeywordCategory::OPERATORS:
-            graphics->print_text(manual_font + 2, "(Operators)\r\r", -1, -1);
-            break;
-        case KeywordCategory::FILE_IO:
-            graphics->print_text(manual_font + 2, "(File I/O)\r\r", -1, -1);
-            break;
-        case KeywordCategory::CONDITIONAL_LOOPING:
-            graphics->print_text(manual_font + 2, "(Conditional & Looping)\r\r", -1, -1);
-            break;
-        case KeywordCategory::FN_AND_PROC:
-            graphics->print_text(manual_font + 2, "(Functions and Procedures)\r\r", -1, -1);
-            break;
-        case KeywordCategory::VARIABLES_TYPES:
-            graphics->print_text(manual_font + 2, "(Variables, Structured Types and Data)\r\r", -1, -1);
-            break;
-        case KeywordCategory::STRING:
-            graphics->print_text(manual_font + 2, "(Strings & Text Output)\r\r", -1, -1);
-            break;
-        case KeywordCategory::DEBUGGING:
-            graphics->print_text(manual_font + 2, "(Debugging & Execution)\r\r", -1, -1);
-            break;
-        case KeywordCategory::BOOLEAN:
-            graphics->print_text(manual_font + 2, "(Boolean Logic)\r\r", -1, -1);
-            break;
-        }
-
-        // Description
-        if (kw->description.length() > 0)
-        {
-            graphics->colour(128, 128, 128);
-            graphics->print_text(manual_font, "Description:\r\r", -1, -1);
-            graphics->colour(255, 255, 255);
-            graphics->print_text(manual_font, kw->description, -1, -1);
-            graphics->print_text(manual_font, "\r\r", -1, -1);
-        }
-
-        // Syntax
-        graphics->colour(128, 128, 128);
-        graphics->print_text(manual_font, "Syntax:\r\r", -1, -1);
-        graphics->colour(255, 255, 255);
-        graphics->print_text(fixed_font, kw->keyword, -1, -1);
-        for (auto its = kw->syntax.begin(); its != kw->syntax.end(); ++its)
-        {
-            (*its)->render(graphics);
-        }
-        graphics->print_text(manual_font, "\r\r", -1, -1);
-
-        // Arguments
-        if (kw->arguments.length() > 0)
-        {
-            graphics->colour(128, 128, 128);
-            graphics->print_text(manual_font, "Arguments:\r\r", -1, -1);
-            graphics->colour(255, 255, 255);
-            graphics->print_text(manual_font, kw->arguments, -1, -1);
-            graphics->print_text(manual_font, "\r\r", -1, -1);
-        }
-
-        // Result
-        if (kw->result.length() > 0)
-        {
-            graphics->colour(128, 128, 128);
-            graphics->print_text(manual_font, "Result:\r\r", -1, -1);
-            graphics->colour(255, 255, 255);
-            graphics->print_text(manual_font, kw->result, -1, -1);
-            graphics->print_text(manual_font, "\r\r", -1, -1);
-        }
-
-        // Example
-        if (kw->examples.length() > 0)
-        {
-            graphics->colour(128, 128, 128);
-            graphics->print_text(manual_font, "Examples:\r\r", -1, -1);
-            graphics->colour(255, 255, 255);
-            graphics->print_text(fixed_font, kw->examples, -1, -1);
-        }
-
-        graphics->colour(255, 255, 0);
-        graphics->print_text(10, "\r\r(Hit Space to return)", -1, -1);
-
         graphics->poll();
         graphics->set_margin(0);
         if (graphics->inkey(-17))

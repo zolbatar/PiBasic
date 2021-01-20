@@ -303,7 +303,7 @@ void VM::debugger_disassembly()
                 p = static_cast<int>(ff.size()) - 1;
             }
             graphics->print_text(disassembly_font, ff[p], -1, -1);
-            graphics->print_text(disassembly_font, "\r\r", -1, -1);
+            graphics->print_text(disassembly_font, "\r", -1, -1);
 
             // Bytecode output
             graphics->colour(180, 180, 180);

@@ -158,10 +158,7 @@ public:
     BYTE *get_bank_address_byte();
 #endif
 
-#ifdef RISCOS
-#else
-    UINT32 *bank_cache;
-#endif
+    UINT32 *bank_cache = nullptr;
 
     // Triangle
     void triangle(int x1, int y1, int x2, int y2, int x3, int y3);

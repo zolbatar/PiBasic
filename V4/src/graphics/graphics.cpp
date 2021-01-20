@@ -76,7 +76,6 @@ void Graphics::shutdown()
     {
         return;
     }
-
     graphics_shadow_state_off();
     graphics_set_display_bank(1);
     graphics_set_vdu_bank(1);
@@ -180,16 +179,19 @@ void Graphics::open(int width, int height, int mode)
         _kernel_swi_regs regs;
 
         // Set mode
-        graphics_shadow_state_on();
+        if (initial)
+        {
+            graphics_shadow_state_on();
+        }
 
         // Enable shadow mode
         std::ostringstream mode_string_c;
-
         mode_string_c << "X" << width << " Y" << height << " C16M";
         regs.r[0] = 15;
         const char *s = mode_string_c.str().c_str();
         regs.r[1] = (int)s;
         _kernel_swi(OS_ScreenMode, &regs, &regs);
+        hide_cursors();
 
         // Get current screen mode
         vars[0] = 150; // &96 = total screen size
@@ -255,9 +257,10 @@ void Graphics::open(int width, int height, int mode)
             printf("Bank 1: 0x%X\n", bank_address[1]);
         if (max_banks >= 3)
             printf("Bank 2: 0x%X\n", bank_address[2]);
+        if (bank_cache != nullptr)
+            delete bank_cache;
+        bank_cache = new UINT32[size];
     }
-    current_colour = Colour(0, 0, 0);
-    hide_cursors();
 #else
     if (reinit || initial)
     {
@@ -288,19 +291,24 @@ void Graphics::open(int width, int height, int mode)
             line_address[i] = offset;
             offset += screen->w;
         }
+        if (bank_cache != nullptr)
+            delete bank_cache;
         bank_cache = new UINT32[screen->pitch * screen_height];
     }
 #endif
+    current_colour = Colour(255, 255, 255);
     opened = true;
     last_render = std::chrono::high_resolution_clock::now();
     cls();
-    //flip(true);
+    flip(true);
 }
 
 void Graphics::cache()
 {
 // Store all of the pixels
 #ifdef RISCOS
+    UINT32 *addr = get_bank_address();
+    memcpy(bank_cache, addr, size);
 #else
     SDL_LockSurface(screen);
     auto pixels = (UINT32 *)screen->pixels;
@@ -312,6 +320,8 @@ void Graphics::cache()
 void Graphics::restore()
 {
 #ifdef RISCOS
+    UINT32 *addr = get_bank_address();
+    memcpy(addr, bank_cache, size);
 #else
     SDL_LockSurface(screen);
     auto pixels = (UINT32 *)screen->pixels;

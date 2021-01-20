@@ -3,7 +3,7 @@
 
 const int fixed_font = 0;
 const int manual_font = 9;
-const int manual_column_width = 225;
+const int manual_column_width = 250;
 
 enum class SyntaxElement
 {
