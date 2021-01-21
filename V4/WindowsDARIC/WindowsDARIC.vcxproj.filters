@@ -207,6 +207,9 @@
     <ClCompile Include="..\src\interpreter\interpreter.cpp">
       <Filter>Source Files\Interpreter</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\interpreter\string.cpp">
+      <Filter>Source Files\Interpreter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Flex Include="..\Grammar\DARIC.l">
@@ -1045,6 +1048,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\interpreter\interpreter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\interpreter\string.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

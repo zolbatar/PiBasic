@@ -6,6 +6,7 @@
 #include <windows.h>
 #endif
 #include "../engine/engine.h"
+#include "../interpreter/string.h"
 #include "clock.h"
 #include "vm.h"
 #include <array>
@@ -14,10 +15,6 @@
 #ifdef RISCOS
 #include "kernel.h"
 #include "swis.h"
-#endif
-#ifdef __WINDOWS__
-#include <codecvt>
-#include <conio.h>
 #endif
 #include <fstream>
 #include <functional>
@@ -2086,24 +2083,6 @@ bool VM::opcode_CLOSE()
         *logfile << "Close file channel# is " << r << std::endl;
     return false;
 }
-
-#ifdef __WINDOWS__
-std::wstring s2ws(const std::string& str)
-{
-    using convert_typeX = std::codecvt_utf8<wchar_t>;
-    std::wstring_convert<convert_typeX, wchar_t> converterX;
-
-    return converterX.from_bytes(str);
-}
-
-std::string ws2s(const std::wstring& wstr)
-{
-    using convert_typeX = std::codecvt_utf8<wchar_t>;
-    std::wstring_convert<convert_typeX, wchar_t> converterX;
-
-    return converterX.to_bytes(wstr);
-}
-#endif
 
 bool VM::opcode_LISTFILES()
 {

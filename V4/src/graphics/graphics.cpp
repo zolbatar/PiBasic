@@ -141,7 +141,7 @@ void Graphics::open(int width, int height, int mode)
     if (!reinit) {
         std::string fp = std::string(cwd) + "/IBMPlexMono-Regular.ttf";
         int index = load_font(fp.c_str());
-        create_font_by_size(index, 17.5);
+        create_font_by_size(index, 17);
         create_font_by_size(index, 20);
         create_font_by_size(index, 25);
         create_font_by_size(index, 30);
@@ -152,7 +152,7 @@ void Graphics::open(int width, int height, int mode)
         create_font_by_size(index, 100);
         fp = std::string(cwd) + "/IBMPlexSans-Regular.ttf";
         index = load_font(fp.c_str());
-        create_font_by_size(index, 17.5);
+        create_font_by_size(index, 17);
         create_font_by_size(index, 20);
         create_font_by_size(index, 25);
         create_font_by_size(index, 30);

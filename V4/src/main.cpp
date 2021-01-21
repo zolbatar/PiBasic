@@ -3,7 +3,7 @@
 #include "interpreter/interpreter.h"
 #include "parser/ast.h"
 #include <chrono>
-#ifdef __WINDOWS__
+#ifdef WINDOWS
 #include <conio.h>
 #include <direct.h>
 #endif
@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
         filename = path.substr(path.find_last_of("\\/") + 1, path.length());
 #endif
 
-#ifdef __WINDOWS__
+#ifdef WINDOWS
         // Set current directory
         _chdir(just_path.c_str());
         char* buffer;
@@ -140,7 +140,7 @@ VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstrea
     std::string filename_with_ext(filename);
 
     // Convert to lower
-#ifdef __WINDOWS__
+#ifdef WINDOWS
     std::transform(filename_with_ext.begin(), filename_with_ext.end(), filename_with_ext.begin(),
         [](unsigned char c) { return std::tolower(c); });
 

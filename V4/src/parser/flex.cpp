@@ -3359,7 +3359,7 @@ YY_RULE_SETUP
                         while ((pos = s.find("\"")) != std::string::npos) {
                             s.replace(pos, 1, "");
                         }
-#ifdef __WINDOWS__
+#ifdef WINDOWS
                         s += ".daric";
 #endif
 
