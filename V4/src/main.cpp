@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "compiler/compile.h"
+#include "interpreter/interpreter.h"
 #include "parser/ast.h"
 #include <chrono>
 #ifdef __WINDOWS__
@@ -20,102 +21,110 @@
 #include <vector>
 
 // From BISON grammar file
-void parse(const char *filename);
-VM *parse_and_compile(const char *filename, Graphics &graphics, std::stringstream *logfile);
-void run_vm(VM *vm, Graphics &graphics, std::stringstream *logfile);
+void parse(const char* filename);
+VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstream* logfile);
+void run_vm(VM* vm, Graphics& graphics, std::stringstream* logfile);
 void reset_parser();
 
 // Working directory
 char cwd[1024];
 
 // For running debugger
-VM *current_vm;
+VM* current_vm;
 
 extern std::unordered_set<std::string> included_files;
 extern std::stack<std::string> file_stack;
 extern std::stack<int> yylineno_stack;
-extern std::map<int, std::list<AST *>> ast_lines;
+extern std::map<int, std::list<AST*>> ast_lines;
 extern std::map<std::string, int> files_index;
 
-int main(int argc, char *argv[])
+std::string version = "DARIC 21.01.20, https://dariclang.com";
+
+int main(int argc, char* argv[])
 {
     using namespace std::chrono;
-    std::cout << "DARIC 21.01.20, https://dariclang.com\n";
-#ifdef RISCOS
-    if (argc < 2)
-    {
-        std::cout << "Need source and directory path." << std::endl;
-        exit(0);
-    }
-#else
-    if (argc < 1)
-    {
-        std::cout << "Interactive mode is not supported yet." << std::endl;
-        exit(0);
-    }
-#endif
-
-    // We need to set the current working directory
-    std::string filename(argv[1]);
-    std::cout << "Filename: " << filename << std::endl;
+    std::cout << version << std::endl;
 
     // Get program directory
     std::string path(argv[0]);
     auto cwd_ = path.substr(0, path.find_last_of("\\/"));
-    strcpy((char *)&cwd, cwd_.c_str());
+    strcpy((char*)&cwd, cwd_.c_str());
     std::cout << "Program Directory: " << cwd << std::endl;
 
-    // Directory for source files
-    std::string just_path;
-#ifdef RISCOS
-    filename = argv[1];
-    just_path = argv[2];
-#else
-    path = argv[1];
-    just_path = path.substr(0, path.find_last_of("\\/"));
-    filename = path.substr(path.find_last_of("\\/") + 1, path.length());
-#endif
+    // Interactive or not?
+    if (argc == 2) {
 
-    // RISC OS/SDL graphics
-    Graphics graphics;
-    graphics.init();
+        // We need to set the current working directory
+        std::string filename(argv[1]);
+        std::cout << "Filename: " << filename << std::endl;
+
+        // RISC OS/SDL graphics
+        Graphics graphics;
+        graphics.init();
+
+        // Directory for source files
+        std::string just_path;
+#ifdef RISCOS
+        filename = argv[1];
+        just_path = argv[2];
+#else
+        path = argv[1];
+        just_path = path.substr(0, path.find_last_of("\\/"));
+        filename = path.substr(path.find_last_of("\\/") + 1, path.length());
+#endif
 
 #ifdef __WINDOWS__
-    // Set current directory
-    _chdir(just_path.c_str());
-    char *buffer;
-    buffer = _getcwd(NULL, 0);
+        // Set current directory
+        _chdir(just_path.c_str());
+        char* buffer;
+        buffer = _getcwd(NULL, 0);
 #endif
+
 #ifdef RISCOS
-    // Set current directory
-    _kernel_swi_regs regs;
-    regs.r[0] = (int)just_path.c_str();
-    _kernel_swi(DDEUtils_Prefix, &regs, &regs);
+        // Set current directory
+        _kernel_swi_regs regs;
+        regs.r[0] = (int)just_path.c_str();
+        _kernel_swi(DDEUtils_Prefix, &regs, &regs);
 #endif
-    std::cout << "Source directory: " << just_path << std::endl;
+        std::cout << "Source directory: " << just_path << std::endl;
 
-    // Create logfile for TRACE stuff
-    std::stringstream logfile;
-    logfile << "Debug Output\n";
-    logfile << "------------\n";
-    logfile << "[File :     Line :       PC : Op]  Description\n\n";
+        // Create logfile for TRACE stuff
+        std::stringstream logfile;
+        logfile << "Debug Output\n";
+        logfile << "------------\n";
+        logfile << "[File :     Line :       PC : Op]  Description\n\n";
 
-    // Parse
-    auto vm = parse_and_compile(filename.c_str(), graphics, &logfile);
+        // Parse
+        auto vm = parse_and_compile(filename.c_str(), graphics, &logfile);
 
-    // Fire up graphics now
-    graphics.open(graphics.get_screen_width(), graphics.get_screen_height(), 0);
+        // Fire up graphics now
+        graphics.open(graphics.get_screen_width(), graphics.get_screen_height(), 0);
 
-    current_vm = vm;
-    run_vm(vm, graphics, &logfile);
+        current_vm = vm;
+        run_vm(vm, graphics, &logfile);
 
-    // Shutdown
-    graphics.shutdown();
+        // Shutdown
+        graphics.shutdown();
+
+    } else {
+        // RISC OS/SDL graphics
+        Graphics graphics;
+        graphics.init();
+
+        // Fire up graphics now
+        graphics.open(graphics.get_screen_width(), graphics.get_screen_height(), 0);
+
+        Interpreter interpreter(&graphics);
+        interpreter.run();
+
+        // Shutdown
+        graphics.shutdown();
+    }
 
     return 0;
 }
 
-bool endsWith(const std::string &mainStr, const std::string &toMatch)
+bool endsWith(const std::string& mainStr, const std::string& toMatch)
 {
     if (mainStr.size() >= toMatch.size() && mainStr.compare(mainStr.size() - toMatch.size(), toMatch.size(), toMatch) == 0)
         return true;
@@ -123,7 +132,7 @@ bool endsWith(const std::string &mainStr, const std::string &toMatch)
         return false;
 }
 
-VM *parse_and_compile(const char *filename, Graphics &graphics, std::stringstream *logfile)
+VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstream* logfile)
 {
     using namespace std::chrono;
     *logfile << "Filename: " << filename << std::endl;
@@ -133,11 +142,10 @@ VM *parse_and_compile(const char *filename, Graphics &graphics, std::stringstrea
     // Convert to lower
 #ifdef __WINDOWS__
     std::transform(filename_with_ext.begin(), filename_with_ext.end(), filename_with_ext.begin(),
-                   [](unsigned char c) { return std::tolower(c); });
+        [](unsigned char c) { return std::tolower(c); });
 
     // Make a longer filename with .daric added (if needed)
-    if (!endsWith(filename_with_ext, ".daric"))
-    {
+    if (!endsWith(filename_with_ext, ".daric")) {
         filename_with_ext += ".daric";
     }
 #endif
@@ -156,17 +164,15 @@ VM *parse_and_compile(const char *filename, Graphics &graphics, std::stringstrea
     return vm;
 }
 
-void run_vm(VM *vm, Graphics &graphics, std::stringstream *logfile)
+void run_vm(VM* vm, Graphics& graphics, std::stringstream* logfile)
 {
     using namespace std::chrono;
     high_resolution_clock::time_point t1 = high_resolution_clock::now();
     bool done = true;
-    do
-    {
+    do {
         std::string chain = vm->run();
         done = true;
-        if (chain.length() > 0)
-        {
+        if (chain.length() > 0) {
             auto chained_variables = vm->get_chained_variables();
             delete vm;
             vm = parse_and_compile(chain.c_str(), graphics, logfile);

@@ -28,16 +28,15 @@ void Graphics::graphics_set_vdu_bank(int bank)
 
 void Graphics::graphics_set_display_bank(int bank) { _kernel_osbyte(113, bank, 0); }
 
-UINT32 *Graphics::get_bank_address() { return (UINT32 *)(bank_address[bank - 1]); }
+UINT32* Graphics::get_bank_address() { return (UINT32*)(bank_address[bank - 1]); }
 
-BYTE *Graphics::get_bank_address_byte() { return (BYTE *)(bank_address[bank - 1]); }
+BYTE* Graphics::get_bank_address_byte() { return (BYTE*)(bank_address[bank - 1]); }
 #endif
 
 void Graphics::init()
 {
     // Clear key buffer
-    for (int i = 0; i < 256; i++)
-    {
+    for (int i = 0; i < 256; i++) {
         key_pressed[i] = false;
     }
 #ifdef RISCOS
@@ -48,8 +47,8 @@ void Graphics::init()
     int vals[4];
     vars[0] = 130; // &82 = screen width
     vars[1] = 131; // &81 = screen height
-    vars[2] = 4;   // &4 = Eigen X
-    vars[3] = 5;   // &5  = Eigen Y
+    vars[2] = 4; // &4 = Eigen X
+    vars[3] = 5; // &5  = Eigen Y
     vars[4] = -1;
     regs.r[0] = (int)vars;
     regs.r[1] = (int)vals;
@@ -61,8 +60,7 @@ void Graphics::init()
     printf("Desktop resolution: %d x %d, Eigen %d x %d\n", desktop_screen_width, desktop_screen_height, eigen_x, eigen_y);
 
 #else
-    if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
-    {
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         std::cout << "SDL initialization failed. SDL Error: " << SDL_GetError() << std::endl;
     }
 #endif
@@ -72,8 +70,7 @@ void Graphics::init()
 void Graphics::shutdown()
 {
 #ifdef RISCOS
-    if (!opened)
-    {
+    if (!opened) {
         return;
     }
     graphics_shadow_state_off();
@@ -95,8 +92,7 @@ UINT32 Graphics::get_screen_height() { return desktop_screen_height; }
 UINT32 Graphics::get_screen_width()
 {
     SDL_DisplayMode dm;
-    if (SDL_GetDesktopDisplayMode(0, &dm) != 0)
-    {
+    if (SDL_GetDesktopDisplayMode(0, &dm) != 0) {
         SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
         return 1;
     }
@@ -106,8 +102,7 @@ UINT32 Graphics::get_screen_width()
 UINT32 Graphics::get_screen_height()
 {
     SDL_DisplayMode dm;
-    if (SDL_GetDesktopDisplayMode(0, &dm) != 0)
-    {
+    if (SDL_GetDesktopDisplayMode(0, &dm) != 0) {
         SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
         return 1;
     }
@@ -117,16 +112,14 @@ UINT32 Graphics::get_screen_height()
 
 void Graphics::open(int width, int height, int mode)
 {
-    /*    width /= 2;
-    height /= 2;*/
+    width /= 2;
+    height /= 2;
     showfps = false;
     bool reinit = false;
     bool initial = !is_open();
-    if (is_open())
-    {
+    if (is_open()) {
         // Is this different?
-        if (width != screen_width || height != screen_height || mode != this->mode)
-        {
+        if (width != screen_width || height != screen_height || mode != this->mode) {
             shutdown();
             reinit = true;
         }
@@ -145,8 +138,7 @@ void Graphics::open(int width, int height, int mode)
     world.y_origin = screen_height / 2;
 
     // Load standard fonts
-    if (!reinit)
-    {
+    if (!reinit) {
         std::string fp = std::string(cwd) + "/IBMPlexMono-Regular.ttf";
         int index = load_font(fp.c_str());
         create_font_by_size(index, 17.5);
@@ -172,15 +164,13 @@ void Graphics::open(int width, int height, int mode)
     }
 
 #ifdef RISCOS
-    if (reinit || initial)
-    {
+    if (reinit || initial) {
         int vars[8];
         int vals[8];
         _kernel_swi_regs regs;
 
         // Set mode
-        if (initial)
-        {
+        if (initial) {
             graphics_shadow_state_on();
         }
 
@@ -188,14 +178,14 @@ void Graphics::open(int width, int height, int mode)
         std::ostringstream mode_string_c;
         mode_string_c << "X" << width << " Y" << height << " C16M";
         regs.r[0] = 15;
-        const char *s = mode_string_c.str().c_str();
+        const char* s = mode_string_c.str().c_str();
         regs.r[1] = (int)s;
         _kernel_swi(OS_ScreenMode, &regs, &regs);
         hide_cursors();
 
         // Get current screen mode
         vars[0] = 150; // &96 = total screen size
-        vars[1] = 6;   // &96 = line length in bytes
+        vars[1] = 6; // &96 = line length in bytes
         vars[2] = -1;
         regs.r[0] = (int)vars;
         regs.r[1] = (int)vals;
@@ -203,8 +193,7 @@ void Graphics::open(int width, int height, int mode)
         max_banks = vals[0] / screen_width / screen_height / 4;
         if (max_banks > 3)
             max_banks = 3;
-        if (max_banks < 2)
-        {
+        if (max_banks < 2) {
             std::cout << "DARIC requires 2 banks of screen memory. Try running at a lower resolution.\n";
             exit(1);
         }
@@ -214,8 +203,7 @@ void Graphics::open(int width, int height, int mode)
         // Fast lookup of line addresses
         line_address.resize(screen_height);
         UINT32 offset = 0;
-        for (int i = 0; i < screen_height; i++)
-        {
+        for (int i = 0; i < screen_height; i++) {
             line_address[i] = offset;
             offset += vals[1] / 4;
         }
@@ -225,8 +213,7 @@ void Graphics::open(int width, int height, int mode)
         vars[1] = -1;
         regs.r[0] = (int)vars;
         regs.r[1] = (int)vals;
-        if (max_banks >= 3)
-        {
+        if (max_banks >= 3) {
             graphics_set_display_bank(3);
             graphics_set_vdu_bank(3);
             _kernel_swi(OS_ReadVduVariables, &regs, &regs);
@@ -234,8 +221,7 @@ void Graphics::open(int width, int height, int mode)
         }
 
         // Bank 2
-        if (max_banks >= 2)
-        {
+        if (max_banks >= 2) {
             graphics_set_display_bank(2);
             graphics_set_vdu_bank(2);
             _kernel_swi(OS_ReadVduVariables, &regs, &regs);
@@ -243,8 +229,7 @@ void Graphics::open(int width, int height, int mode)
         }
 
         // Bank 1
-        if (max_banks > 1)
-        {
+        if (max_banks > 1) {
             graphics_set_display_bank(1);
             graphics_set_vdu_bank(1);
         }
@@ -262,15 +247,13 @@ void Graphics::open(int width, int height, int mode)
         bank_cache = new UINT32[size];
     }
 #else
-    if (reinit || initial)
-    {
+    if (reinit || initial) {
         int params = SDL_WINDOW_ALLOW_HIGHDPI;
-        params |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+        //params |= SDL_WINDOW_FULLSCREEN_DESKTOP;
         //params |= SDL_WINDOW_FULLSCREEN;
 
         window = SDL_CreateWindow("DARIC", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, params);
-        if (!window)
-        {
+        if (!window) {
             SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
             exit(1);
         }
@@ -278,16 +261,15 @@ void Graphics::open(int width, int height, int mode)
         SDL_StopTextInput();
 
         // Format
-        SDL_PixelFormat *pixelFormat = screen->format;
+        SDL_PixelFormat* pixelFormat = screen->format;
         Uint32 pixelFormatEnum = pixelFormat->format;
-        const char *surfacePixelFormatName = SDL_GetPixelFormatName(pixelFormatEnum);
+        const char* surfacePixelFormatName = SDL_GetPixelFormatName(pixelFormatEnum);
         std::cout << "Pixel format: " << surfacePixelFormatName << std::endl;
 
         // Fast lookup of line addresses
         line_address.resize(screen_height);
         UINT32 offset = 0;
-        for (int i = 0; i < screen_height; i++)
-        {
+        for (int i = 0; i < screen_height; i++) {
             line_address[i] = offset;
             offset += screen->w;
         }
@@ -307,11 +289,11 @@ void Graphics::cache()
 {
 // Store all of the pixels
 #ifdef RISCOS
-    UINT32 *addr = get_bank_address();
+    UINT32* addr = get_bank_address();
     memcpy(bank_cache, addr, size);
 #else
     SDL_LockSurface(screen);
-    auto pixels = (UINT32 *)screen->pixels;
+    auto pixels = (UINT32*)screen->pixels;
     memcpy(bank_cache, pixels, screen->pitch * screen_height);
     SDL_UnlockSurface(screen);
 #endif
@@ -320,11 +302,11 @@ void Graphics::cache()
 void Graphics::restore()
 {
 #ifdef RISCOS
-    UINT32 *addr = get_bank_address();
+    UINT32* addr = get_bank_address();
     memcpy(addr, bank_cache, size);
 #else
     SDL_LockSurface(screen);
-    auto pixels = (UINT32 *)screen->pixels;
+    auto pixels = (UINT32*)screen->pixels;
     memcpy(pixels, bank_cache, screen->pitch * screen_height);
     SDL_UnlockSurface(screen);
 #endif
@@ -345,7 +327,7 @@ void Graphics::show_cursors()
 #endif
 }
 
-void Graphics::alpha(Colour bg, Colour fg, Colour &out, double a)
+void Graphics::alpha(Colour bg, Colour fg, Colour& out, double a)
 {
     out.r = static_cast<BYTE>(static_cast<double>(bg.r) + static_cast<double>(fg.r - bg.r) * a);
     out.g = static_cast<BYTE>(static_cast<double>(bg.g) + static_cast<double>(fg.g - bg.g) * a);
@@ -390,12 +372,12 @@ void Graphics::plot(int x, int y)
     if (x < minX || x > maxX || y < minY || y > maxY)
         return;
 #ifdef RISCOS
-    UINT32 *addr = get_bank_address();
+    UINT32* addr = get_bank_address();
     int offset = line_address[y] + x;
     addr[offset] = current_colour.get_as_hex();
 #else
     SDL_LockSurface(screen);
-    auto pixels = (UINT32 *)screen->pixels;
+    auto pixels = (UINT32*)screen->pixels;
     int offset = line_address[y] + x;
     pixels[offset] = current_colour.get_as_hex();
     SDL_UnlockSurface(screen);
@@ -407,7 +389,7 @@ VM_INT Graphics::point(int x, int y)
     if (x < minX || x > maxX || y < minY || y > maxY)
         return 0;
 #ifdef RISCOS
-    UINT32 *addr = get_bank_address();
+    UINT32* addr = get_bank_address();
     int offset = line_address[y] + x;
 
     // Convert to RGB
@@ -418,7 +400,7 @@ VM_INT Graphics::point(int x, int y)
     return (r << 16) + (g << 8) + b;
 #else
     SDL_LockSurface(screen);
-    auto pixels = (UINT32 *)screen->pixels;
+    auto pixels = (UINT32*)screen->pixels;
     int offset = line_address[y] + x;
     VM_INT v = pixels[offset];
     SDL_UnlockSurface(screen);
@@ -431,7 +413,7 @@ void Graphics::cls()
 #ifdef RISCOS
     auto bg = current_bg_colour.get_as_hex();
     auto addr = get_bank_address();
-    memset((void *)addr, bg, size);
+    memset((void*)addr, bg, size);
 #else
     SDL_FillRect(screen, 0, current_bg_colour.get_as_hex());
 #endif
@@ -444,29 +426,24 @@ void Graphics::cls()
 void Graphics::flip(bool user_specified)
 {
     // Only allow user banked CLS
-    if (!user_specified && banked)
-    {
+    if (!user_specified && banked) {
         return;
     }
 
-    if (!banked && !user_specified)
-    {
+    if (!banked && !user_specified) {
         // We only want to do update at a certain frame rate to avoid unnecessary constant flipping
         auto t = std::chrono::high_resolution_clock::now();
         auto time_span = std::chrono::duration_cast<std::chrono::milliseconds>(t - last_render);
-        if (time_span.count() < 50)
-        {
+        if (time_span.count() < 50) {
             return;
         }
     }
     last_render = std::chrono::high_resolution_clock::now();
 
     // Are we doing FPS timings?
-    if (showfps)
-    {
+    if (showfps) {
         fps_count++;
-        if (fps_count == 10)
-        {
+        if (fps_count == 10) {
             fps_count = 0;
             auto t = get_clock();
             VM_INT total_time = t - fps_clock;
@@ -485,8 +462,7 @@ void Graphics::flip(bool user_specified)
         graphics.current_colour = saved_colour;
     }
 #ifdef RISCOS
-    if (banked)
-    {
+    if (banked) {
         auto addr = get_bank_address();
         _kernel_osbyte(19, 0, 0); // Await sync
         graphics_set_display_bank(bank);
@@ -515,16 +491,14 @@ void Graphics::draw_horz_line(int x1, int x2, int y)
         x2 = maxX;
 
     // Draw
-    for (int x = x1; x <= x2; x++)
-    {
+    for (int x = x1; x <= x2; x++) {
         plot(x, y);
     }
 }
 
 void Graphics::rectangle(int x1, int y1, int x2, int y2)
 {
-    for (int y = y1; y <= y2; y++)
-    {
+    for (int y = y1; y <= y2; y++) {
         draw_horz_line(x1, x2, y);
     }
 }

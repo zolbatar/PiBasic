@@ -218,8 +218,8 @@ void Graphics::cursor_back(int index_ff)
     auto font_row_height = (*font_heights.find(index_ff)).second;
     last_cursor_x -= f->sc_width;
     if (last_cursor_x < 0) {
-        auto max_chars = screen_width / f->sc_width;
-        last_cursor_x = (max_chars - 1) * f->sc_width;
+        auto max_chars = (screen_width - (margin * 2)) / f->sc_width;
+        last_cursor_x = (max_chars - 1) * f->sc_width + margin;
         last_cursor_y -= font_row_height;
     }
 }
@@ -230,13 +230,13 @@ void Graphics::delete_character(int index_ff)
     last_cursor_x -= f->sc_width;
     auto font_row_height = (*font_heights.find(index_ff)).second;
     if (last_cursor_x < 0) {
-        auto max_chars = screen_width / f->sc_width;
+        auto max_chars = (screen_width - (margin * 2)) / f->sc_width;
         last_cursor_x = (max_chars - 1) * f->sc_width;
         last_cursor_y -= font_row_height;
     }
     auto saved_colour = current_colour;
     colour(current_bg_colour.r, current_bg_colour.g, current_bg_colour.b);
-    rectangle(last_cursor_x, last_cursor_y, last_cursor_x + f->sc_width, last_cursor_y + font_row_height);
+    rectangle(last_cursor_x + margin, last_cursor_y, last_cursor_x + f->sc_width + margin, last_cursor_y + font_row_height);
     colour(saved_colour.r, saved_colour.g, saved_colour.b);
     if (!banked)
         flip(false);

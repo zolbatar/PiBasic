@@ -37,6 +37,19 @@ void Graphics::poll()
             {
                 key_pressed[key_code] = true;
             }
+            if (SDL_IsTextInputActive()) {
+                if (event.key.keysym.sym < 32) {
+                    switch (event.key.keysym.sym) {
+                    case 8:
+                    case 13:
+                        Event e;
+                        e.type = EventType::Text;
+                        e.ascii = event.key.keysym.sym;
+                        key_events.push(std::move(e));
+                        break;
+                    }
+                }
+            }
             break;
         }
         case SDL_KEYUP:

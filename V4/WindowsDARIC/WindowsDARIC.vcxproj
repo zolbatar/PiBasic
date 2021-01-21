@@ -238,6 +238,7 @@
     <ClCompile Include="..\src\graphics\graphics_input.cpp" />
     <ClCompile Include="..\src\graphics\graphics_text.cpp" />
     <ClCompile Include="..\src\graphics\graphics_triangle.cpp" />
+    <ClCompile Include="..\src\interpreter\interpreter.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\parser\ast.cpp" />
     <ClCompile Include="..\src\parser\bison.cpp" />
@@ -539,6 +540,7 @@
     <ClInclude Include="..\src\engine\engine.h" />
     <ClInclude Include="..\src\graphics\graphics.h" />
     <ClInclude Include="..\src\graphics\stb_truetype.h" />
+    <ClInclude Include="..\src\interpreter\interpreter.h" />
     <ClInclude Include="..\src\parser\ast.h" />
     <ClInclude Include="..\src\types.h" />
     <ClInclude Include="..\src\vm\clock.h" />

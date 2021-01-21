@@ -198,7 +198,6 @@ private:
     SDL_Window *window = NULL;
     SDL_Surface *screen;
 #else
-    bool opened = false;
     int size;
     int desktop_screen_width = 0;
     int desktop_screen_height = 0;
@@ -210,6 +209,7 @@ private:
     UINT32 bank_address[3];
     int bank = 1;
 #endif
+    bool opened = false;
     bool banked = false;
     int mode;
     int screen_width, screen_height;
