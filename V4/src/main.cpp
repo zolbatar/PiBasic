@@ -22,7 +22,7 @@
 
 // From BISON grammar file
 void parse(const char* filename);
-VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstream* logfile);
+VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstream* logfile, bool temporary);
 void run_vm(VM* vm, Graphics& graphics, std::stringstream* logfile);
 void reset_parser();
 
@@ -38,7 +38,7 @@ extern std::stack<int> yylineno_stack;
 extern std::map<int, std::list<AST*>> ast_lines;
 extern std::map<std::string, int> files_index;
 
-std::string version = "DARIC 21.01.20, https://dariclang.com";
+std::string version = "DARIC 21.01.22, https://dariclang.com";
 
 int main(int argc, char* argv[])
 {
@@ -50,6 +50,12 @@ int main(int argc, char* argv[])
     auto cwd_ = path.substr(0, path.find_last_of("\\/"));
     strcpy((char*)&cwd, cwd_.c_str());
     std::cout << "Program Directory: " << cwd << std::endl;
+
+    // Create logfile for TRACE stuff
+    std::stringstream logfile;
+    logfile << "Debug Output\n";
+    logfile << "------------\n";
+    logfile << "[File :     Line :       PC : Op]  Description\n\n";
 
     // Interactive or not?
     if (argc == 2) {
@@ -88,14 +94,8 @@ int main(int argc, char* argv[])
 #endif
         std::cout << "Source directory: " << just_path << std::endl;
 
-        // Create logfile for TRACE stuff
-        std::stringstream logfile;
-        logfile << "Debug Output\n";
-        logfile << "------------\n";
-        logfile << "[File :     Line :       PC : Op]  Description\n\n";
-
         // Parse
-        auto vm = parse_and_compile(filename.c_str(), graphics, &logfile);
+        auto vm = parse_and_compile(filename.c_str(), graphics, &logfile, false);
 
         // Fire up graphics now
         graphics.open(graphics.get_screen_width(), graphics.get_screen_height(), 0);
@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
         // Fire up graphics now
         graphics.open(graphics.get_screen_width(), graphics.get_screen_height(), 0);
 
-        Interpreter interpreter(&graphics);
+        Interpreter interpreter(graphics, &logfile);
         interpreter.run();
 
         // Shutdown
@@ -132,7 +132,7 @@ bool endsWith(const std::string& mainStr, const std::string& toMatch)
         return false;
 }
 
-VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstream* logfile)
+VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstream* logfile, bool temporary)
 {
     using namespace std::chrono;
     *logfile << "Filename: " << filename << std::endl;
@@ -145,8 +145,10 @@ VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstrea
         [](unsigned char c) { return std::tolower(c); });
 
     // Make a longer filename with .daric added (if needed)
-    if (!endsWith(filename_with_ext, ".daric")) {
-        filename_with_ext += ".daric";
+    if (!temporary) {
+        if (!endsWith(filename_with_ext, ".daric")) {
+            filename_with_ext += ".daric";
+        }
     }
 #endif
 
@@ -175,7 +177,7 @@ void run_vm(VM* vm, Graphics& graphics, std::stringstream* logfile)
         if (chain.length() > 0) {
             auto chained_variables = vm->get_chained_variables();
             delete vm;
-            vm = parse_and_compile(chain.c_str(), graphics, logfile);
+            vm = parse_and_compile(chain.c_str(), graphics, logfile, false);
             current_vm = vm;
             vm->inject_variables(chained_variables);
             done = false;

@@ -1,19 +1,23 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "interpreter.h"
+#include "../vm/vm.h"
 #include "string.h"
 #include <iostream>
+#include <stdio.h>
 #ifdef WINDOWS
 #include <windows.h>
 #endif
 
+extern VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstream* logfile, bool temporary);
 extern std::string version;
 const int buffer_size = 1024;
 
 void Interpreter::run()
 {
-    graphics->set_margin(20);
+    graphics.set_margin(20);
 
-    graphics->colour(255, 255, 255);
-    graphics->print_console(version + "\r\r");
+    graphics.colour(255, 255, 255);
+    graphics.print_console(version + "\r\r");
 
     std::string temp_filename;
 #ifdef WINDOWS
@@ -32,11 +36,11 @@ void Interpreter::run()
 #endif
 
     while (true) {
-        graphics->poll();
+        graphics.poll();
 
         // Take each line in time and process it
-        graphics->print_console("> ");
-        auto s = graphics->input();
+        graphics.print_console("> ");
+        auto s = graphics.input();
 
         // Trim spaces
         trim(s);
@@ -53,7 +57,7 @@ void Interpreter::run()
                 if (std::isdigit(s[0])) {
                     add_line(s);
                 } else {
-                    execute_line(s);
+                    execute_line(s, temp_filename);
                 }
             }
         }
@@ -74,7 +78,14 @@ void Interpreter::add_line(std::string s)
 {
 }
 
-void Interpreter::execute_line(std::string s)
+void Interpreter::execute_line(std::string s, std::string& temp_filename)
 {
-    int a = 1;
+    FILE* fp = fopen(temp_filename.c_str(), "w");
+    fwrite(s.c_str(), s.length(), 1, fp);
+    fclose(fp);
+
+    // Now parse and compile
+    auto vm = parse_and_compile(temp_filename.c_str(), graphics, logfile, true);
+    vm->run();
+    delete vm;
 }

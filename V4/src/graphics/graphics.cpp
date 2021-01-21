@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+const int DEBUGWINDOW = 0;
 extern World world;
 extern char cwd[];
 
@@ -112,8 +113,10 @@ UINT32 Graphics::get_screen_height()
 
 void Graphics::open(int width, int height, int mode)
 {
-    width /= 2;
-    height /= 2;
+    if (DEBUGWINDOW) {
+        width /= 2;
+        height /= 2;
+    }
     showfps = false;
     bool reinit = false;
     bool initial = !is_open();
@@ -249,7 +252,9 @@ void Graphics::open(int width, int height, int mode)
 #else
     if (reinit || initial) {
         int params = SDL_WINDOW_ALLOW_HIGHDPI;
-        //params |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+        if (!DEBUGWINDOW) {
+            params |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+        }
         //params |= SDL_WINDOW_FULLSCREEN;
 
         window = SDL_CreateWindow("DARIC", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, params);
