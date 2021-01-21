@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-const int DEBUGWINDOW = 0;
+const int DEBUGWINDOW = 1;
 extern World world;
 extern char cwd[];
 

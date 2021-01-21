@@ -596,7 +596,7 @@ define_function
 
 %%
 
-void parse(const char *filename) {
+int parse(const char *filename) {
     yyfileno = 0;
     yyin = fopen(filename, "r");
 
@@ -613,5 +613,4 @@ void parse(const char *filename) {
 
 void yyerror(const char *e) {
     std::cout << "Parsing error: " << e << " at line " << yylineno << " of file '" << file << "'" << std::endl;
-    exit(1);
 }

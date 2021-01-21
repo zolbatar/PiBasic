@@ -21,7 +21,7 @@
 #include <vector>
 
 // From BISON grammar file
-void parse(const char* filename);
+int parse(const char* filename);
 VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstream* logfile, bool temporary);
 void run_vm(VM* vm, Graphics& graphics, std::stringstream* logfile);
 void reset_parser();
@@ -154,7 +154,11 @@ VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstrea
 
     // Parse
     high_resolution_clock::time_point t1 = high_resolution_clock::now();
-    parse(filename_with_ext.c_str());
+    auto pr = parse(filename_with_ext.c_str());
+    if (pr == 0) {
+        std::cout << "Errors encountered.\n";
+        exit(1)
+    }
 
     // Compile
     auto vm = compile(&graphics, logfile);
