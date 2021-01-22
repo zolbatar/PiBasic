@@ -299,7 +299,11 @@ void Graphics::cache()
 #else
     SDL_LockSurface(screen);
     auto pixels = (UINT32*)screen->pixels;
-    memcpy(bank_cache, pixels, screen->pitch * screen_height);
+    if (DEBUGWINDOW) {
+        memcpy(bank_cache, pixels, get_actual_width() * get_actual_height() * 4);
+    } else {
+        memcpy(bank_cache, pixels, screen->pitch * screen_height);
+    }
     SDL_UnlockSurface(screen);
 #endif
 }
@@ -312,7 +316,11 @@ void Graphics::restore()
 #else
     SDL_LockSurface(screen);
     auto pixels = (UINT32*)screen->pixels;
-    memcpy(pixels, bank_cache, screen->pitch * screen_height);
+    if (DEBUGWINDOW) {
+        memcpy(pixels, bank_cache, get_actual_width() * get_actual_height() * 4);
+    } else {
+        memcpy(pixels, bank_cache, screen->pitch * screen_height);
+    }
     SDL_UnlockSurface(screen);
 #endif
 }

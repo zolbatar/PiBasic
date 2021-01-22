@@ -22,8 +22,8 @@
 
 // From BISON grammar file
 int parse(const char* filename);
-VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstream* logfile, bool temporary);
-void run_vm(VM* vm, Graphics& graphics, std::stringstream* logfile);
+VM* parse_and_compile(const char* filename, Graphics* graphics, std::stringstream* logfile, bool temporary, bool interactive);
+void run_vm(VM* vm, Graphics* graphics, std::stringstream* logfile, bool interactive);
 void reset_parser();
 
 // Working directory
@@ -32,18 +32,19 @@ char cwd[1024];
 // For running debugger
 VM* current_vm;
 
+extern std::list<std::string> error_list;
 extern std::unordered_set<std::string> included_files;
 extern std::stack<std::string> file_stack;
 extern std::stack<int> yylineno_stack;
 extern std::map<int, std::list<AST*>> ast_lines;
 extern std::map<std::string, int> files_index;
 
-std::string version = "DARIC 21.01.22, https://dariclang.com";
+std::string version = "21.01.22";
 
 int main(int argc, char* argv[])
 {
     using namespace std::chrono;
-    std::cout << version << std::endl;
+    std::cout << "DARIC " << version << ", https://dariclang.com" << std::endl;
 
     // Get program directory
     std::string path(argv[0]);
@@ -57,16 +58,15 @@ int main(int argc, char* argv[])
     logfile << "------------\n";
     logfile << "[File :     Line :       PC : Op]  Description\n\n";
 
+    // RISC OS/SDL graphics
+    Graphics graphics;
+    graphics.init();
+
     // Interactive or not?
     if (argc == 2) {
-
         // We need to set the current working directory
         std::string filename(argv[1]);
         std::cout << "Filename: " << filename << std::endl;
-
-        // RISC OS/SDL graphics
-        Graphics graphics;
-        graphics.init();
 
         // Directory for source files
         std::string just_path;
@@ -95,26 +95,22 @@ int main(int argc, char* argv[])
         std::cout << "Source directory: " << just_path << std::endl;
 
         // Parse
-        auto vm = parse_and_compile(filename.c_str(), graphics, &logfile, false);
+        auto vm = parse_and_compile(filename.c_str(), &graphics, &logfile, false, false);
 
         // Fire up graphics now
         graphics.open(graphics.get_screen_width(), graphics.get_screen_height(), 0);
 
         current_vm = vm;
-        run_vm(vm, graphics, &logfile);
+        run_vm(vm, &graphics, &logfile, false);
 
         // Shutdown
         graphics.shutdown();
 
     } else {
-        // RISC OS/SDL graphics
-        Graphics graphics;
-        graphics.init();
-
         // Fire up graphics now
         graphics.open(graphics.get_screen_width(), graphics.get_screen_height(), 0);
 
-        Interpreter interpreter(graphics, &logfile);
+        Interpreter interpreter(&graphics, &logfile);
         interpreter.run();
 
         // Shutdown
@@ -132,7 +128,7 @@ bool endsWith(const std::string& mainStr, const std::string& toMatch)
         return false;
 }
 
-VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstream* logfile, bool temporary)
+VM* parse_and_compile(const char* filename, Graphics* graphics, std::stringstream* logfile, bool temporary, bool interactive)
 {
     using namespace std::chrono;
     *logfile << "Filename: " << filename << std::endl;
@@ -156,12 +152,22 @@ VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstrea
     high_resolution_clock::time_point t1 = high_resolution_clock::now();
     auto pr = parse(filename_with_ext.c_str());
     if (pr == 0) {
-        std::cout << "Errors encountered.\n";
-        exit(1)
+        for (auto it = error_list.begin(); it != error_list.end(); ++it) {
+            if (interactive) {
+                graphics->print_console((*it));
+                graphics->print_console("\r");
+            } else {
+                std::cout << (*it) << std::endl;
+            }
+        }
+        if (!interactive) {
+            std::cout << "Errors encountered, exiting.\n";
+            exit(1);
+        }
     }
 
     // Compile
-    auto vm = compile(&graphics, logfile);
+    auto vm = compile(graphics, logfile);
     current_vm = vm;
     high_resolution_clock::time_point t2 = high_resolution_clock::now();
     duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
@@ -170,7 +176,7 @@ VM* parse_and_compile(const char* filename, Graphics& graphics, std::stringstrea
     return vm;
 }
 
-void run_vm(VM* vm, Graphics& graphics, std::stringstream* logfile)
+void run_vm(VM* vm, Graphics* graphics, std::stringstream* logfile, bool interactive)
 {
     using namespace std::chrono;
     high_resolution_clock::time_point t1 = high_resolution_clock::now();
@@ -181,7 +187,7 @@ void run_vm(VM* vm, Graphics& graphics, std::stringstream* logfile)
         if (chain.length() > 0) {
             auto chained_variables = vm->get_chained_variables();
             delete vm;
-            vm = parse_and_compile(chain.c_str(), graphics, logfile, false);
+            vm = parse_and_compile(chain.c_str(), graphics, logfile, false, interactive);
             current_vm = vm;
             vm->inject_variables(chained_variables);
             done = false;
@@ -195,6 +201,7 @@ void run_vm(VM* vm, Graphics& graphics, std::stringstream* logfile)
 void reset_parser()
 {
     // Clear all previous stuff
+    error_list.clear();
     ast_lines.clear();
     files_index.clear();
     included_files.clear();

@@ -29,7 +29,7 @@ DEFPROCLoadPolygons()
 	PRINT "Loading territory polygons..."
 	LOCAL poly$()=LISTFILES("GIS")
 	PRINT DIM(poly$(),1); " files"
-	PRINT "Sizing..."
+	PRINT "Sizing";
 	points%=0
 	FOR LOCAL p$ IN poly$()
 		PRINT ".";
@@ -37,7 +37,7 @@ DEFPROCLoadPolygons()
 	NEXT
 	PRINT
 	DIM p!(points%, MapPoint)
-	PRINT "Loading..."
+	PRINT "Loading";
 	points%=0
 	FOR LOCAL p$ IN poly$()
 		PRINT ".";

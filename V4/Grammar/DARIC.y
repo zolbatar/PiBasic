@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <stdio.h>
+#include <sstream>
 #include "ast.h"
 
 AST *final = nullptr;
@@ -11,6 +12,7 @@ extern int yylex();
 extern FILE *yyin;
 extern int yyfileno;
 extern int yylineno;
+std::list<std::string> error_list;
 extern std::string file;
 extern std::map<std::string, int> files_index;
 std::map<int, std::list<AST *>> ast_lines;
@@ -609,8 +611,11 @@ int parse(const char *filename) {
     yyparse();
     fclose(yyin);
     yylex_destroy();
+    return 1;
 }
 
 void yyerror(const char *e) {
-    std::cout << "Parsing error: " << e << " at line " << yylineno << " of file '" << file << "'" << std::endl;
+    std::stringstream stream;
+    stream << "Parsing error: " << e << " at line " << yylineno << " of file '" << file << "'";
+    error_list.push_back(stream.str());
 }
