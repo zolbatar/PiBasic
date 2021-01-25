@@ -1,5 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "vm.h"
+#include "debugger.h"
 #include <iomanip>
 #include <iostream>
 #include <sstream>
@@ -14,34 +14,16 @@ std::string ToString(T val)
     return stream.str();
 }
 
-Boxed* VM::get_variable_bc(Bytecode bc, UINT32 i)
-{
-    if (bc.data & LocalVariableFlag) {
-
-        // Find the function we are in
-        for (auto it = functions.begin(); it != functions.end(); ++it) {
-            if (i >= (*it).pc_start && i <= (*it).pc_end) {
-                auto fl = function_locals[(*it).id];
-                int index = bc.data ^ LocalVariableFlag;
-                auto v = fl[index];
-                return &v;
-            }
-        }
-    } else {
-        return &variables[bc.data];
-    }
-}
-
 const char no_name[] = "No variable name";
 const char local[] = "Local variable";
 
-std::string VM::get_name_for_operand(Bytecode bc, UINT32 i)
+std::string Debugger::get_name_for_operand(Bytecode *bc, UINT32 i)
 {
-    if (bc.data & LocalVariableFlag) {
+    if (bc->is_local_variable()) {
 
         // Find function id
         int func_id = -1;
-        for (auto g = functions.begin(); g != functions.end(); ++g) {
+        for (auto g = g_vm->functions.begin(); g != g_vm->functions.end(); ++g) {
             if (g->pc_start <= i && g->pc_end > i) {
                 func_id = g->id;
             }
@@ -51,8 +33,8 @@ std::string VM::get_name_for_operand(Bytecode bc, UINT32 i)
             exit(1);
         }
 
-        int id = bc.data ^ LocalVariableFlag;
-        auto a = (*get_function_locals(func_id))[id];
+        int id = bc->data ^ LocalVariableFlag;
+        auto a = (*g_vm->get_function_locals(func_id))[id];
         return "Local variable: " + a.name + " (" + ToString(id) + ")";
     } else {
         Boxed* variable = get_variable_bc(bc, i);
@@ -64,34 +46,32 @@ std::string VM::get_name_for_operand(Bytecode bc, UINT32 i)
     }
 }
 
-void VM::name_for_operand(Disassembly& ret, Bytecode bcc, UINT32 i)
+void Debugger::name_for_operand(Disassembly& ret, Bytecode *bcc, UINT32 i)
 {
     std::stringstream ss;
     ss << "[" << get_name_for_operand(bcc, i) << "]";
     ret.operand = ss.str();
 }
 
-void VM::address_for_jump(Disassembly& ret, Bytecode bcc)
+void Debugger::address_for_jump(Disassembly& ret, Bytecode *bcc)
 {
     std::stringstream ss;
-    ss << "0x" << std::hex << std::uppercase << bcc.data << std::dec << std::nouppercase;
+    ss << "0x" << std::hex << std::uppercase << bcc->data << std::dec << std::nouppercase;
     ret.operand = ss.str();
 }
 
-Disassembly VM::disassemble_instruction(Bytecode bc, UINT32 i)
+Disassembly Debugger::disassemble_instruction(Bytecode *bc, UINT32 i)
 {
     Disassembly ret;
 
     // Line header
     std::stringstream ssh;
     ssh << std::uppercase << std::hex << std::setfill('0') << std::setw(8) << i - 1 << " : " << std::nouppercase << std::dec;
-    /*    ss << "[" << std::setw(4) << bc.file_number << " : " << std::setw(6) << bc.line_number << " : " << std::uppercase << std::hex << std::setw(8)
-       << i - 1 << " : " << std::setw(2) << (int)bc.opcode << "]  " << std::nouppercase << std::dec;*/
     ret.header = ssh.str();
 
     // Actual opcode and operands
     std::stringstream ss;
-    switch (bc.opcode) {
+    switch (bc->opcode) {
     case Bytecodes::NOP:
         ret.opcode = "NOP";
         ret.description = "No operation";
@@ -121,7 +101,7 @@ Disassembly VM::disassemble_instruction(Bytecode bc, UINT32 i)
     case Bytecodes::CONST_I:
         ret.opcode = "CONST_I";
         ret.description = "Push constant integer onto stack";
-        ss << bc.data;
+        ss << bc->data;
         ret.operand = ss.str();
         break;
     case Bytecodes::CONST_I_VAR:
@@ -992,17 +972,17 @@ Disassembly VM::disassemble_instruction(Bytecode bc, UINT32 i)
         break;
 
     default:
-        std::cout << "Unknown bytecode: " << (int)bc.data << std::endl;
+        std::cout << "Unknown bytecode: " << (int)bc->data << std::endl;
         exit(1);
     }
     return ret;
 }
 
-std::vector<Disassembly> VM::disassemble_entire_file()
+std::vector<Disassembly> Debugger::disassemble_entire_file()
 {
-    std::vector<Disassembly> ret(this->size);
-    for (UINT32 i = 0; i < this->size; i++) {
-        Bytecode bc = code[i];
+    std::vector<Disassembly> ret(g_vm->get_size());
+    for (UINT32 i = 0; i < g_vm->get_size(); i++) {
+        auto bc = g_vm->get_bytecode_one(i);
         auto s = disassemble_instruction(bc, i);
         ret[i] = s;
     }

@@ -1,5 +1,10 @@
+#ifdef WINDOWS
+#include <conio.h>
+#include <direct.h>
+#endif
 #include <string>
 
+bool endsWith(const std::string& mainStr, const std::string& toMatch);
 std::wstring s2ws(const std::string& str);
 std::string ws2s(const std::wstring& wstr);
 void toupper(std::string& s);

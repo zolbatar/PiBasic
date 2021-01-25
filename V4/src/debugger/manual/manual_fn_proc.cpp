@@ -1,69 +1,69 @@
 #define _GLIBCXX_USE_C99 1
-#include "../vm.h"
+#include "../debugger.h"
 #include "manual.h"
 
 extern std::vector<ManualKeyword> keywords;
 
-void create_manual_debugging()
+void create_manual_fn_proc()
 {
     keywords.push_back(ManualKeyword(
-        "BREAKPOINT",
-        "BREAKPOINT",
-        KeywordCategory::DEBUGGING,
+        "DEFFN ENDFN",
+        "DEFFN ENDFN",
+        KeywordCategory::FN_AND_PROC,
         "",
         {},
         "",
         "",
         ""));
     keywords.push_back(ManualKeyword(
-        "CHAIN",
-        "CHAIN",
-        KeywordCategory::DEBUGGING,
+        "DEFPROC ENDPROC",
+        "DEFPROC ENDPROC",
+        KeywordCategory::FN_AND_PROC,
         "",
         {},
         "",
         "",
         ""));
     keywords.push_back(ManualKeyword(
-        "END",
-        "END",
-        KeywordCategory::DEBUGGING,
+        "FN (CALL)",
+        "FN (CALL)",
+        KeywordCategory::FN_AND_PROC,
         "",
         {},
         "",
         "",
         ""));
     keywords.push_back(ManualKeyword(
-        "EXPECT",
-        "EXPECT",
-        KeywordCategory::DEBUGGING,
+        "GOTO",
+        "GOTO",
+        KeywordCategory::FN_AND_PROC,
         "",
         {},
         "",
         "",
         ""));
     keywords.push_back(ManualKeyword(
-        "INSTALL",
-        "INSTALL",
-        KeywordCategory::DEBUGGING,
+        "GOSUB",
+        "GOSUB",
+        KeywordCategory::FN_AND_PROC,
         "",
         {},
         "",
         "",
         ""));
     keywords.push_back(ManualKeyword(
-        "TRACEON",
-        "TRACEON",
-        KeywordCategory::DEBUGGING,
+        "PROC (CALL)",
+        "PROC (CALL)",
+        KeywordCategory::FN_AND_PROC,
         "",
         {},
         "",
         "",
         ""));
     keywords.push_back(ManualKeyword(
-        "TRACEOFF",
-        "TRACEOFF",
-        KeywordCategory::DEBUGGING,
+        "RETURN",
+        "RETURN",
+        KeywordCategory::FN_AND_PROC,
         "",
         {},
         "",

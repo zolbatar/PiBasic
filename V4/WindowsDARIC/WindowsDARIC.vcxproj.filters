@@ -40,11 +40,32 @@
     <Filter Include="Resource Files\Examples\GIS">
       <UniqueIdentifier>{f601110a-0ea1-4258-8137-885c035e8caa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\VM\Manual">
-      <UniqueIdentifier>{b98fc3fa-96c9-4b8e-be9e-c4abd33a30bc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Interpreter">
       <UniqueIdentifier>{61e69095-1832-44de-9e87-d49e2bab2ac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Debugger">
+      <UniqueIdentifier>{74536418-d59a-4288-9df6-1ac9184708d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Debugger\Manual">
+      <UniqueIdentifier>{0b39002b-e34c-4ed0-a6dd-30f1f71da65d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM">
+      <UniqueIdentifier>{d829e135-eb1a-4c75-bb0a-7d255e96956a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Debugger">
+      <UniqueIdentifier>{ef383ecb-c867-4253-a1f1-fd297ea4642e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Compiler">
+      <UniqueIdentifier>{2518e468-7c93-423c-92f1-1fc5ae0c8d33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engines">
+      <UniqueIdentifier>{9bcd4868-9d9e-4c2c-90d2-d433910c2106}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Parser">
+      <UniqueIdentifier>{3ce3a90e-38ff-41ad-8420-0bb27bd6803b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Interpreter">
+      <UniqueIdentifier>{85a25aa9-cc9d-4b3f-9e4b-2e4f0bc63f24}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -159,56 +180,59 @@
     <ClCompile Include="..\src\compiler\compile_graphics3d.cpp">
       <Filter>Source Files\Compiler</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\vm\debugger.cpp">
-      <Filter>Source Files\VM</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\vm\disassembly.cpp">
-      <Filter>Source Files\VM</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\vm\manual.cpp">
-      <Filter>Source Files\VM</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\vm\manual\manual_2d.cpp">
-      <Filter>Source Files\VM\Manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\vm\manual\manual_keyboardmouse.cpp">
-      <Filter>Source Files\VM\Manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\vm\manual\manual_maths.cpp">
-      <Filter>Source Files\VM\Manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\vm\manual\manual_3d.cpp">
-      <Filter>Source Files\VM\Manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\vm\manual\manual_io.cpp">
-      <Filter>Source Files\VM\Manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\vm\manual\manual_looping.cpp">
-      <Filter>Source Files\VM\Manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\vm\manual\manual_fn_proc.cpp">
-      <Filter>Source Files\VM\Manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\vm\manual\manual_variables_types.cpp">
-      <Filter>Source Files\VM\Manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\vm\manual\manual_string.cpp">
-      <Filter>Source Files\VM\Manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\vm\manual\manual_debugging.cpp">
-      <Filter>Source Files\VM\Manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\vm\manual\manual_boolean.cpp">
-      <Filter>Source Files\VM\Manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\vm\manual\manual_operators.cpp">
-      <Filter>Source Files\VM\Manual</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\interpreter\interpreter.cpp">
       <Filter>Source Files\Interpreter</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\interpreter\string.cpp">
-      <Filter>Source Files\Interpreter</Filter>
+    <ClCompile Include="..\src\parse_compile_run.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\string.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\debugger.cpp">
+      <Filter>Source Files\Debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\disassembly.cpp">
+      <Filter>Source Files\Debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual.cpp">
+      <Filter>Source Files\Debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_2d.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_3d.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_boolean.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_debugging.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_fn_proc.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_io.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_keyboardmouse.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_looping.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_maths.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_operators.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_string.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_variables_types.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1018,40 +1042,61 @@
     <None Include="..\Examples\SetupGraphicsBanked.daric">
       <Filter>Resource Files\Examples</Filter>
     </None>
+    <None Include="..\Examples\Sierpinski.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\parser\ast.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\types.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\engine\engine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\graphics\graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\stb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\vm\clock.h">
+    <ClInclude Include="..\src\parse_compile_run.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\string.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vm\bytecode.h">
+      <Filter>Header Files\VM</Filter>
     </ClInclude>
     <ClInclude Include="..\src\vm\vm.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vm\stack.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\debugger\manual\manual.h">
+      <Filter>Header Files\Debugger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\debugger\debugger.h">
+      <Filter>Header Files\Debugger</Filter>
     </ClInclude>
     <ClInclude Include="..\src\compiler\compile.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Compiler</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\vm\manual\manual.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\src\graphics\graphics.h">
+      <Filter>Header Files\Engines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\engine\engine.h">
+      <Filter>Header Files\Engines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vm\clock.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\parser\ast.h">
+      <Filter>Header Files\Parser</Filter>
     </ClInclude>
     <ClInclude Include="..\src\interpreter\interpreter.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Interpreter</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\interpreter\string.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\src\vm\boxed.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vm\variables.h">
+      <Filter>Header Files\VM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1063,10 +1108,13 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Font Include="..\IBMPlexMono-Regular.ttf">
+    <Font Include="..\PTMono-Regular.ttf">
       <Filter>Resource Files</Filter>
     </Font>
-    <Font Include="..\IBMPlexSans-Regular.ttf">
+    <Font Include="..\PTSans-Regular.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
+    <Font Include="..\PTSerif-Regular.ttf">
       <Filter>Resource Files</Filter>
     </Font>
   </ItemGroup>

@@ -8,12 +8,15 @@
 #define _GLIBCXX_USE_C99 1
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <unordered_set>
 #include <stack>
 #include <map>
 #include "bison.hpp"
 std::string file;
 int yyfileno = 0;
+extern std::list<std::string> error_list;
+extern int status;
 std::unordered_set<std::string> included_files;
 std::map<std::string, int> files_index;
 std::stack<std::string> file_stack;
@@ -233,6 +236,15 @@ star                \*\*{alpha}+
 (?i:"Prop50")       return PROP50;
 (?i:"Prop75")       return PROP75;
 (?i:"Prop100")      return PROP100;
+(?i:"Serif15")      return SERIF15;
+(?i:"Serif20")      return SERIF20;
+(?i:"Serif25")      return SERIF25;
+(?i:"Serif30")      return SERIF30;
+(?i:"Serif35")      return SERIF35;
+(?i:"Serif40")      return SERIF40;
+(?i:"Serif50")      return SERIF50;
+(?i:"Serif75")      return SERIF75;
+(?i:"Serif100")     return SERIF100;
 (?i:"Triangle")		return TRIANGLE;
 (?i:"ScreenWidth")	return SCREENWIDTH;
 (?i:"ScreenHeight")	return SCREENHEIGHT;
@@ -277,22 +289,26 @@ star                \*\*{alpha}+
                         if (included_files.count(s) > 0) {
 	                        printf("Already included '%s'\n", s.c_str()); 
                         } else {
-                            yyfileno++;
-                            files_index.insert(std::pair<std::string, int>(s, yyfileno));
-                            strcpy(yytext, s.c_str());
-                            included_files.insert(std::move(s));
-                            yyin = fopen(yytext, "r");
-                            if (!yyin) {
-                                fprintf(stderr, "Include file '%s' not found", yytext);
-                                exit(1);
+                            // Test exists
+                            FILE *f = fopen(s.c_str(), "r");
+                            if (!f) {
+                                std::stringstream stream;   
+                                stream << "Include file '" << s << "' not found";
+                                error_list.push_back(stream.str());
+                                status = 0;
+                            } else {
+                                yyin = fopen(s.c_str(), "r");
+                                yyfileno++;
+                                files_index.insert(std::pair<std::string, int>(s, yyfileno));
+                                strcpy(yytext, s.c_str());
+                                included_files.insert(std::move(s));
+                                file_stack.push(std::move(file));
+                                file = yytext;
+                                yylineno_stack.push(yylineno);
+                                yylineno = 0;
+                                yypush_buffer_state(yy_create_buffer(yyin, YY_BUF_SIZE));
+                                BEGIN(INITIAL);
                             }
-	                        //std::cout << "Including '" << yytext << "' at line " << yylineno << " as file index " << yyfileno << std::endl;
-                            file_stack.push(std::move(file));
-                            file = yytext;
-                            yylineno_stack.push(yylineno);
-                            yylineno = 0;
-                            yypush_buffer_state(yy_create_buffer(yyin, YY_BUF_SIZE));
-                            BEGIN(INITIAL);
                         }
                     }
 <<EOF>>             {

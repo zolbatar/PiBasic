@@ -1,9 +1,10 @@
 #include "../vm/clock.h"
-#include "../vm/vm.h"
+#include "../debugger/debugger.h"
 #include "graphics.h"
 #include <iostream>
 
-extern VM* current_vm;
+extern std::unique_ptr<VM> g_vm;
+extern bool interactive;
 
 void Graphics::poll()
 {
@@ -241,7 +242,9 @@ int Graphics::key_riscos_translate(SDL_Keysym key)
     switch (key.scancode) {
         // Top row
     case SDL_SCANCODE_ESCAPE:
-        exit(0);
+        if (!interactive) {
+            exit(0);
+        }
         return 112;
     case SDL_SCANCODE_F1:
         return 113;
@@ -267,7 +270,7 @@ int Graphics::key_riscos_translate(SDL_Keysym key)
         int saved_margin = margin;
         int saved_x = last_cursor_x;
         int saved_y = last_cursor_y;
-        current_vm->run_debugger();
+        Debugger();
         last_cursor_x = saved_x;
         last_cursor_y = saved_y;
         margin = saved_margin;

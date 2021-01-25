@@ -247,36 +247,45 @@ extern int yydebug;
      PROP50 = 456,
      PROP75 = 457,
      PROP100 = 458,
-     SCREENWIDTH = 459,
-     SCREENHEIGHT = 460,
-     SHOWFPS = 461,
-     LASTPOS = 462,
-     INKEY = 463,
-     INKEYS = 464,
-     INPUT_ = 465,
-     PRINT = 466,
-     SPC = 467,
-     SINKEY = 468,
-     SINKEYS = 469,
-     INPUT_NOQUESTIONMARK = 470,
-     GET = 471,
-     GETS = 472,
-     GET_S = 473,
-     GETS_S = 474,
-     MOUSE = 475,
-     CREATEVERTEX = 476,
-     CREATETRIANGLE = 477,
-     CREATESHAPE = 478,
-     CREATEOBJECT = 479,
-     TRANSLATE = 480,
-     ROTATE = 481,
-     SCALE = 482,
-     RENDERFRAME = 483,
-     DELETEOBJECT = 484,
-     SOLID = 485,
-     WIREFRAME = 486,
-     FILLEDWIREFRAME = 487,
-     NEG = 488
+     SERIF15 = 459,
+     SERIF20 = 460,
+     SERIF25 = 461,
+     SERIF30 = 462,
+     SERIF35 = 463,
+     SERIF40 = 464,
+     SERIF50 = 465,
+     SERIF75 = 466,
+     SERIF100 = 467,
+     SCREENWIDTH = 468,
+     SCREENHEIGHT = 469,
+     SHOWFPS = 470,
+     LASTPOS = 471,
+     INKEY = 472,
+     INKEYS = 473,
+     INPUT_ = 474,
+     PRINT = 475,
+     SPC = 476,
+     SINKEY = 477,
+     SINKEYS = 478,
+     INPUT_NOQUESTIONMARK = 479,
+     GET = 480,
+     GETS = 481,
+     GET_S = 482,
+     GETS_S = 483,
+     MOUSE = 484,
+     CREATEVERTEX = 485,
+     CREATETRIANGLE = 486,
+     CREATESHAPE = 487,
+     CREATEOBJECT = 488,
+     TRANSLATE = 489,
+     ROTATE = 490,
+     SCALE = 491,
+     RENDERFRAME = 492,
+     DELETEOBJECT = 493,
+     SOLID = 494,
+     WIREFRAME = 495,
+     FILLEDWIREFRAME = 496,
+     NEG = 497
    };
 #endif
 
@@ -285,7 +294,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 25 "DARIC.y"
+#line 26 "DARIC.y"
 
     int v_int;
     double v_real;
@@ -294,7 +303,7 @@ typedef union YYSTYPE
 
 
 /* Line 2058 of yacc.c  */
-#line 298 "C:\\Users\\d_dud\\source\\repos\\PiBasic\\V4\\src\\parser\\bison.hpp"
+#line 307 "C:\\Users\\d_dud\\source\\repos\\PiBasic\\V4\\src\\parser\\bison.hpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

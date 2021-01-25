@@ -114,8 +114,8 @@ UINT32 Graphics::get_screen_height()
 void Graphics::open(int width, int height, int mode)
 {
     if (DEBUGWINDOW) {
-        width /= 2;
-        height /= 2;
+        width *= 0.8;
+        height *= 0.8;
     }
     showfps = false;
     bool reinit = false;
@@ -142,9 +142,10 @@ void Graphics::open(int width, int height, int mode)
 
     // Load standard fonts
     if (!reinit) {
-        std::string fp = std::string(cwd) + "/IBMPlexMono-Regular.ttf";
+        //std::string fp = std::string(cwd) + "/IBMPlexMono-Regular.ttf";
+        std::string fp = std::string(cwd) + "/PTMono-Regular.ttf";
         int index = load_font(fp.c_str());
-        create_font_by_size(index, 17);
+        create_font_by_size(index, 15);
         create_font_by_size(index, 20);
         create_font_by_size(index, 25);
         create_font_by_size(index, 30);
@@ -153,9 +154,10 @@ void Graphics::open(int width, int height, int mode)
         create_font_by_size(index, 50);
         create_font_by_size(index, 75);
         create_font_by_size(index, 100);
-        fp = std::string(cwd) + "/IBMPlexSans-Regular.ttf";
+        //fp = std::string(cwd) + "/IBMPlexSans-Regular.ttf";
+        fp = std::string(cwd) + "/PTSans-Regular.ttf";
         index = load_font(fp.c_str());
-        create_font_by_size(index, 17);
+        create_font_by_size(index, 15);
         create_font_by_size(index, 20);
         create_font_by_size(index, 25);
         create_font_by_size(index, 30);
@@ -164,6 +166,17 @@ void Graphics::open(int width, int height, int mode)
         create_font_by_size(index, 50);
         create_font_by_size(index, 75);
         create_font_by_size(index, 100);
+        /*        fp = std::string(cwd) + "/PTSerif-Regular.ttf";
+        index = load_font(fp.c_str());
+        create_font_by_size(index, 15);
+        create_font_by_size(index, 20);
+        create_font_by_size(index, 25);
+        create_font_by_size(index, 30);
+        create_font_by_size(index, 35);
+        create_font_by_size(index, 40);
+        create_font_by_size(index, 50);
+        create_font_by_size(index, 75);
+        create_font_by_size(index, 100);*/
     }
 
 #ifdef RISCOS

@@ -10,7 +10,7 @@ UINT32 Compiler::create_print_flag() { return print_right_justify + (print_hex <
 void Compiler::insert_bytecode_based_on_type(std::map<Type, Bytecodes> m, Type type)
 {
     auto t = m.find(type);
-    vm->insert_bytecode(line_number, file_number, write, (*t).second);
+    g_vm->insert_bytecode(line_number, file_number, write, (*t).second);
 }
 
 void Compiler::insert_instruction_based_on_type(std::map<Type, Bytecodes> m, Type type, UINT32 value)
@@ -19,13 +19,13 @@ void Compiler::insert_instruction_based_on_type(std::map<Type, Bytecodes> m, Typ
     if (t == m.end()) {
         error("FATAL: Unknown type for instruction");
     }
-    vm->insert_instruction(line_number, file_number, write, (*t).second, value);
+    g_vm->insert_instruction(line_number, file_number, write, (*t).second, value);
 }
 
 void Compiler::insert_bytecode_based_on_peektype(std::map<Type, Bytecodes> m)
 {
     auto t = m.find(peek_type());
-    vm->insert_bytecode(line_number, file_number, write, (*t).second);
+    g_vm->insert_bytecode(line_number, file_number, write, (*t).second);
 }
 
 void Compiler::ensure_stack_is_integer()
@@ -34,7 +34,7 @@ void Compiler::ensure_stack_is_integer()
     case Type::INTEGER:
         break;
     case Type::REAL:
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
         stack_pop();
         stack_push(Type::INTEGER);
         break;
@@ -70,7 +70,7 @@ void Compiler::ensure_stack_is_float()
     case Type::REAL:
         break;
     case Type::INTEGER:
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
         stack_pop();
         stack_push(Type::REAL);
         break;
@@ -244,13 +244,13 @@ void Compiler::comparison(Bytecodes i, Bytecodes f, Bytecodes s)
 {
     switch (peek_type()) {
     case Type::INTEGER:
-        vm->insert_bytecode(line_number, file_number, write, i);
+        g_vm->insert_bytecode(line_number, file_number, write, i);
         break;
     case Type::REAL:
-        vm->insert_bytecode(line_number, file_number, write, f);
+        g_vm->insert_bytecode(line_number, file_number, write, f);
         break;
     case Type::STRING:
-        vm->insert_bytecode(line_number, file_number, write, s);
+        g_vm->insert_bytecode(line_number, file_number, write, s);
         break;
     default:
         error("Unknown type for operator");
@@ -264,7 +264,7 @@ void Compiler::boolean(Bytecodes i)
 {
     switch (peek_type()) {
     case Type::INTEGER:
-        vm->insert_bytecode(line_number, file_number, write, i);
+        g_vm->insert_bytecode(line_number, file_number, write, i);
         break;
     default:
         error("Booleans must be int");

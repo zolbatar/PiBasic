@@ -139,7 +139,7 @@ public:
     void object_rotate(UINT32 index, VM_FLOAT x, VM_FLOAT y, VM_FLOAT z);
     void object_scale(UINT32 index, VM_FLOAT scale);
     void object_delete(UINT32 index);
-    void render(Graphics& graphics);
+    void render();
 
     std::vector<Shape> shapes;
     std::map<UINT32, Object> objects;

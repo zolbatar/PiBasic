@@ -5,6 +5,14 @@
 #include <algorithm>
 #include <string>
 
+bool endsWith(const std::string& mainStr, const std::string& toMatch)
+{
+    if (mainStr.size() >= toMatch.size() && mainStr.compare(mainStr.size() - toMatch.size(), toMatch.size(), toMatch) == 0)
+        return true;
+    else
+        return false;
+}
+
 #ifdef WINDOWS
 std::wstring s2ws(const std::string& str)
 {

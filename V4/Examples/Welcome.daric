@@ -12,9 +12,10 @@ PROCLabel("F", "3D Terrain Generator", ms%+(5*ys%))
 PROCLabel("G", "'DARIC Landscape'", ms%+(6*ys%))
 PROCLabel("H", "Travelling Salesman Benchmark", ms%+(7*ys%))
 PROCLabel("I", "World in Lines", ms%+(8*ys%))
-PROCLabel("J", "Test Rig (Needs write permission to file system)", ms%+(10*ys%))
-PROCLabel("Z", "Quit", ms%+(13*ys%))
-PROCLabel("F10", "Debugger & Manual (Core DARIC feature)", ms%+(15*ys%))
+PROCLabel("J", "Sierpinski Triangles", ms%+(9*ys%))
+PROCLabel("Y", "Test Rig (Needs write permission to file system)", ms%+(11*ys%))
+PROCLabel("Z", "Quit", ms%+(14*ys%))
+PROCLabel("F10", "Debugger & Manual (Core DARIC feature)", ms%+(16*ys%))
 REPEAT
 	A$=GET$
 	CASE A$ OF
@@ -27,7 +28,8 @@ REPEAT
 		WHEN "G","g" CHAIN "DARIC"
 		WHEN "H","h" CHAIN "Greedy"
 		WHEN "I","i" CHAIN "WorldInLines"
-		WHEN "J","j" CHAIN "Tester"
+		WHEN "J","j" CHAIN "Sierpinski"
+		WHEN "Y","y" CHAIN "Tester"
 		WHEN "Z","z" END
 	ENDCASE
 	REPEAT UNTIL INKEY(0)=-1

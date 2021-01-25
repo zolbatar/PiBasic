@@ -1,5 +1,5 @@
 #define _GLIBCXX_USE_C99 1
-#include "../vm.h"
+#include "../debugger.h"
 #include "manual.h"
 
 extern std::vector<ManualKeyword> keywords;

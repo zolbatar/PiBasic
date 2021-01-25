@@ -1,0 +1,17 @@
+DEFPROCStart(l,x,y,s)
+	PROCTriangle(l,x,y,s)
+ENDPROC
+
+DEFPROCTriangle(l,x,y,s)
+	IF l > 0 
+		LINE x,y,x+s,y
+		LINE x,y,x,y+s
+		LINE x+s,y,x,y+s
+		s2=s/2
+		PROCTriangle(l-1,x,y,s2)
+		PROCTriangle(l-1,x+s2,y,s2)
+		PROCTriangle(l-1,x,y+s2,s2)
+	ENDIF
+ENDPROC
+
+PROCStart(6,0,0,196)

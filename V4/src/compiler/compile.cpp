@@ -11,41 +11,56 @@
 #include <sstream>
 #include <stdlib.h>
 extern std::map<std::string, int> files_index;
+extern std::list<std::string> error_list;
+extern std::string temp_filename;
 
-VM* compile(Graphics* graphics, std::stringstream* logfile)
+void compile(std::vector<Boxed>* variables)
 {
-    VM* vm = new VM(graphics, logfile);
-
     // Hold compile state
-    Compiler compiler(vm);
+    Compiler compiler;
     compiler.state = CompilerState::NOSTATE;
+
+    // Put variables into compiler
+    if (variables != nullptr) {
+        compiler.global_var_index = static_cast<int>(variables->size());
+        for (auto it = (*variables).begin(); it != (*variables).end(); ++it) {
+            auto v = (*it);
+            compiler.globals.insert(std::make_pair(v.name, std::move(v)));
+        }
+    }
 
     // Look ahead and parse functions and types
     compiler.compile_lookahead();
     assert(compiler.stack_size() == 0);
 
     // Recurse the tree and compile as we go
-    for (int pass = 1; pass <= 2; pass++) {
-        compiler.write = pass == 2;
+    try {
+        for (int pass = 1; pass <= 2; pass++) {
+            compiler.write = pass == 2;
 
-        // Loop through all lines and AST elements in order
-        for (auto line_it = ast_lines.begin(); line_it != ast_lines.end(); ++line_it) {
-            for (auto ast_it = (*line_it).second.begin(); ast_it != (*line_it).second.end(); ++ast_it) {
-                compiler.compile_node(*ast_it, false);
+            // Loop through all lines and AST elements in order
+            for (auto line_it = ast_lines.begin(); line_it != ast_lines.end(); ++line_it) {
+                for (auto ast_it = (*line_it).second.begin(); ast_it != (*line_it).second.end(); ++ast_it) {
+                    compiler.compile_node(*ast_it, false);
+                }
+            }
+            assert(compiler.stack_size() == 0);
+
+            compiler.local_var_index = 0;
+            g_vm->insert_bytecode(0, 0, compiler.write, Bytecodes::HALT);
+            if (pass == 1) {
+                *g_logfile << "-> Bytecode is " << g_vm->get_pc() << " instructions." << std::endl;
+                g_vm->build_bytecode();
             }
         }
-        assert(compiler.stack_size() == 0);
-
-        compiler.local_var_index = 0;
-        vm->insert_bytecode(0, 0, compiler.write, Bytecodes::HALT);
-        if (pass == 1) {
-            *logfile << "-> Bytecode is " << vm->get_pc() << " instructions." << std::endl;
-            vm->build_bytecode();
-        }
+    } catch (const std::exception& e) {
+        error_list.push_back(std::move(e.what()));
+        g_vm->compile_successful = false;
+        return;
     }
 
     // Now we MOVE the variables into the VM class
-    auto vars = vm->get_variables();
+    auto vars = g_vm->get_variables()->get_variables();
     vars->resize(compiler.global_var_index);
     for (auto g = compiler.globals.begin(); g != compiler.globals.end(); ++g) {
         auto glob = (*g).second;
@@ -57,7 +72,7 @@ VM* compile(Graphics* graphics, std::stringstream* logfile)
     }
 
     // Size to number of functions
-    vm->resize_function_locals(static_cast<int>(compiler.functions.size()));
+    g_vm->resize_function_locals(static_cast<int>(compiler.functions.size()));
 
     // Setup each function locals now
     for (auto g = compiler.functions.begin(); g != compiler.functions.end(); ++g) {
@@ -67,9 +82,9 @@ VM* compile(Graphics* graphics, std::stringstream* logfile)
         b.id = func.id;
         b.pc_start = func.pc_start;
         b.pc_end = func.pc_end;
-        vm->functions.push_back(std::move(b));
+        g_vm->functions.push_back(std::move(b));
 
-        auto locals = vm->get_function_locals(func.id);
+        auto locals = g_vm->get_function_locals(func.id);
         for (auto l = func.local_names.begin(); l != func.local_names.end(); ++l) {
             Boxed b;
             b.name = (*l).name;
@@ -77,8 +92,6 @@ VM* compile(Graphics* graphics, std::stringstream* logfile)
             locals->push_back(std::move(b));
         }
     }
-
-    return vm;
 }
 
 void Compiler::setup_3d_types()
@@ -120,7 +133,7 @@ void Compiler::compile_node(struct AST* ast, bool expression)
         break;
     case ASTType::LINE_NUMBER:
         if (!write) {
-            line_no_to_bytecode.insert(std::pair<UINT32, UINT32>(ast->integer, vm->get_pc()));
+            line_no_to_bytecode.insert(std::pair<UINT32, UINT32>(ast->integer, g_vm->get_pc()));
         }
         assert(stack_size() == 0);
         break;
@@ -178,8 +191,14 @@ void Compiler::error(std::string message)
     // Get filename
     for (auto it = files_index.rbegin(); it != files_index.rend(); ++it) {
         if ((*it).second == file_number) {
-            std::cout << message << " at line " << line_number << " in file '" << (*it).first << "'" << std::endl;
-            exit(1);
+            std::stringstream stream;
+            auto f = (*it).first;
+            if (f.compare(temp_filename) == 0) {
+                stream << message << std::endl;
+            } else {
+                stream << message << " at line " << line_number << " in file '" << f << "'" << std::endl;
+            }
+            throw std::exception(stream.str().c_str());
         }
     }
 }

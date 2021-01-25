@@ -5,64 +5,64 @@ void Compiler::compile_node_token_string(struct AST* ast)
     switch (ast->token) {
     case ASC:
         get_ensure_is_string_pop(ast->items[0]);
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes:: ASC);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes:: ASC);
         stack_push(Type::INTEGER);
         break;
     case CHRS:
         get_ensure_is_integer_pop(ast->items[0]);
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes:: CHRS);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes:: CHRS);
         stack_push(Type::STRING);
         break;
     case INSTR:
         get_ensure_is_string_pop(ast->items[0]);
         get_ensure_is_string_pop(ast->items[1]);
         get_ensure_is_integer_pop(ast->items[2]);
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes:: INSTR);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes:: INSTR);
         stack_push(Type::INTEGER);
         break;
     case LEFTS:
         get_ensure_is_string_pop(ast->items[0]);
         get_ensure_is_integer_pop(ast->items[1]);
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes:: LEFTS);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes:: LEFTS);
         stack_push(Type::STRING);
         break;
     case MIDS:
         get_ensure_is_string_pop(ast->items[0]);
         get_ensure_is_integer_pop(ast->items[1]);
         get_ensure_is_integer_pop(ast->items[2]);
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes:: MIDS);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes:: MIDS);
         stack_push(Type::STRING);
         break;
     case RIGHTS:
         get_ensure_is_string_pop(ast->items[0]);
         get_ensure_is_integer_pop(ast->items[1]);
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes::RIGHTS);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::RIGHTS);
         stack_push(Type::STRING);
         break;
     case LEN:
         get_ensure_is_string_pop(ast->items[0]);
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes::LEN);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::LEN);
         stack_push(Type::INTEGER);
         break;
     case VAL:
         get_ensure_is_string_pop(ast->items[0]);
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes::VAL);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::VAL);
         stack_push(Type::REAL);
         break;
     case STRS:
         get_ensure_is_float_pop(ast->items[0]);
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes:: STRS);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes:: STRS);
         stack_push(Type::STRING);
         break;
     case STRSHEX:
         get_ensure_is_float_pop(ast->items[0]);
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes::STRS_H);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::STRS_H);
         stack_push(Type::STRING);
         break;
     case STRINGS:
         get_ensure_is_integer_pop(ast->items[0]);
         get_ensure_is_string_pop(ast->items[1]);
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes:: STRINGS);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes:: STRINGS);
         stack_push(Type::STRING);
         break;
    default:

@@ -14,7 +14,7 @@ void Compiler::compile_node_token_data(struct AST* ast)
         state = CompilerState::NOSTATE;
         break;
     case RESTORE:
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes::RESTORE);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::RESTORE);
         break;
     default:
         error("DATA: Unknown token");

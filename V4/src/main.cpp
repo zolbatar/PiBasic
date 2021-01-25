@@ -1,8 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "compiler/compile.h"
-#include "interpreter/interpreter.h"
-#include "parser/ast.h"
 #include <chrono>
+#include <memory>
 #ifdef WINDOWS
 #include <conio.h>
 #include <direct.h>
@@ -11,35 +9,30 @@
 #include "kernel.h"
 #include "swis.h"
 #endif
+#include "interpreter/interpreter.h"
+#include "vm/vm.h"
 #include <iostream>
 #include <list>
 #include <map>
+#include <memory>
 #include <sstream>
 #include <stdlib.h>
 #include <string.h>
-#include <unordered_set>
 #include <vector>
 
-// From BISON grammar file
-int parse(const char* filename);
-VM* parse_and_compile(const char* filename, Graphics* graphics, std::stringstream* logfile, bool temporary, bool interactive);
-void run_vm(VM* vm, Graphics* graphics, std::stringstream* logfile, bool interactive);
+void parse_and_compile(const char* filename, bool temporary, std::vector<Boxed>* variables);
+void run_vm();
 void reset_parser();
 
 // Working directory
 char cwd[1024];
 
-// For running debugger
-VM* current_vm;
-
-extern std::list<std::string> error_list;
-extern std::unordered_set<std::string> included_files;
-extern std::stack<std::string> file_stack;
-extern std::stack<int> yylineno_stack;
-extern std::map<int, std::list<AST*>> ast_lines;
-extern std::map<std::string, int> files_index;
-
+// Nasty old globals - I love em
 std::string version = "21.01.22";
+std::unique_ptr<VM> g_vm;
+std::unique_ptr<Graphics> g_graphics;
+std::unique_ptr<std::stringstream> g_logfile;
+bool interactive;
 
 int main(int argc, char* argv[])
 {
@@ -53,14 +46,14 @@ int main(int argc, char* argv[])
     std::cout << "Program Directory: " << cwd << std::endl;
 
     // Create logfile for TRACE stuff
-    std::stringstream logfile;
-    logfile << "Debug Output\n";
-    logfile << "------------\n";
-    logfile << "[File :     Line :       PC : Op]  Description\n\n";
+    g_logfile = std::make_unique<std::stringstream>();
+    *g_logfile << "Debug Output\n";
+    *g_logfile << "------------\n";
+    *g_logfile << "[File :     Line :       PC : Op]  Description\n\n";
 
     // RISC OS/SDL graphics
-    Graphics graphics;
-    graphics.init();
+    g_graphics = std::make_unique<Graphics>();
+    g_graphics->init();
 
     // Interactive or not?
     if (argc == 2) {
@@ -95,118 +88,24 @@ int main(int argc, char* argv[])
         std::cout << "Source directory: " << just_path << std::endl;
 
         // Parse
-        auto vm = parse_and_compile(filename.c_str(), &graphics, &logfile, false, false);
+        g_vm = std::make_unique<VM>();
+        parse_and_compile(filename.c_str(), false, nullptr);
 
         // Fire up graphics now
-        graphics.open(graphics.get_screen_width(), graphics.get_screen_height(), 0);
+        g_graphics->open(g_graphics->get_screen_width(), g_graphics->get_screen_height(), 0);
 
-        current_vm = vm;
-        run_vm(vm, &graphics, &logfile, false);
-
-        // Shutdown
-        graphics.shutdown();
+        run_vm();
 
     } else {
         // Fire up graphics now
-        graphics.open(graphics.get_screen_width(), graphics.get_screen_height(), 0);
+        g_graphics->open(g_graphics->get_screen_width(), g_graphics->get_screen_height(), 0);
 
-        Interpreter interpreter(&graphics, &logfile);
+        Interpreter interpreter;
         interpreter.run();
-
-        // Shutdown
-        graphics.shutdown();
     }
+
+    // Shutdown
+    g_graphics->shutdown();
 
     return 0;
-}
-
-bool endsWith(const std::string& mainStr, const std::string& toMatch)
-{
-    if (mainStr.size() >= toMatch.size() && mainStr.compare(mainStr.size() - toMatch.size(), toMatch.size(), toMatch) == 0)
-        return true;
-    else
-        return false;
-}
-
-VM* parse_and_compile(const char* filename, Graphics* graphics, std::stringstream* logfile, bool temporary, bool interactive)
-{
-    using namespace std::chrono;
-    *logfile << "Filename: " << filename << std::endl;
-    reset_parser();
-    std::string filename_with_ext(filename);
-
-    // Convert to lower
-#ifdef WINDOWS
-    std::transform(filename_with_ext.begin(), filename_with_ext.end(), filename_with_ext.begin(),
-        [](unsigned char c) { return std::tolower(c); });
-
-    // Make a longer filename with .daric added (if needed)
-    if (!temporary) {
-        if (!endsWith(filename_with_ext, ".daric")) {
-            filename_with_ext += ".daric";
-        }
-    }
-#endif
-
-    // Parse
-    high_resolution_clock::time_point t1 = high_resolution_clock::now();
-    auto pr = parse(filename_with_ext.c_str());
-    if (pr == 0) {
-        for (auto it = error_list.begin(); it != error_list.end(); ++it) {
-            if (interactive) {
-                graphics->print_console((*it));
-                graphics->print_console("\r");
-            } else {
-                std::cout << (*it) << std::endl;
-            }
-        }
-        if (!interactive) {
-            std::cout << "Errors encountered, exiting.\n";
-            exit(1);
-        }
-    }
-
-    // Compile
-    auto vm = compile(graphics, logfile);
-    current_vm = vm;
-    high_resolution_clock::time_point t2 = high_resolution_clock::now();
-    duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
-    *logfile << "-> Parsing & compilation took " << time_span.count() << " seconds." << std::endl;
-
-    return vm;
-}
-
-void run_vm(VM* vm, Graphics* graphics, std::stringstream* logfile, bool interactive)
-{
-    using namespace std::chrono;
-    high_resolution_clock::time_point t1 = high_resolution_clock::now();
-    bool done = true;
-    do {
-        std::string chain = vm->run();
-        done = true;
-        if (chain.length() > 0) {
-            auto chained_variables = vm->get_chained_variables();
-            delete vm;
-            vm = parse_and_compile(chain.c_str(), graphics, logfile, false, interactive);
-            current_vm = vm;
-            vm->inject_variables(chained_variables);
-            done = false;
-        }
-    } while (!done);
-    high_resolution_clock::time_point t2 = high_resolution_clock::now();
-    duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
-    *logfile << "-> Runtime was " << time_span.count() << " seconds." << std::endl;
-}
-
-void reset_parser()
-{
-    // Clear all previous stuff
-    error_list.clear();
-    ast_lines.clear();
-    files_index.clear();
-    included_files.clear();
-    while (!file_stack.empty())
-        file_stack.pop();
-    while (!yylineno_stack.empty())
-        yylineno_stack.pop();
 }

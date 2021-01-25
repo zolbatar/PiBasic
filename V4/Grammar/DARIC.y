@@ -18,6 +18,7 @@ extern std::map<std::string, int> files_index;
 std::map<int, std::list<AST *>> ast_lines;
 void yyerror(const char *e);
 int yylex_destroy(void);
+int status;
 %}
 
 %locations
@@ -57,6 +58,7 @@ int yylex_destroy(void);
 %token TEXT TEXTRIGHT TEXTCENTRE LOADTYPEFACE CREATEFONT
 %token MONO15 MONO20 MONO25 MONO30 MONO35 MONO40 MONO50 MONO75 MONO100
 %token PROP15 PROP20 PROP25 PROP30 PROP35 PROP40 PROP50 PROP75 PROP100
+%token SERIF15 SERIF20 SERIF25 SERIF30 SERIF35 SERIF40 SERIF50 SERIF75 SERIF100
 %token SCREENWIDTH SCREENHEIGHT 
 %token SHOWFPS LASTPOS
 
@@ -351,6 +353,15 @@ expression_numeric
     | PROP50 { $$ = integer(15); }
     | PROP75 { $$ = integer(16); }
     | PROP100 { $$ = integer(17); }
+    | SERIF15 { $$ = integer(18); }
+    | SERIF20 { $$ = integer(19); }
+    | SERIF25 { $$ = integer(20); }
+    | SERIF30 { $$ = integer(21); }
+    | SERIF35 { $$ = integer(22); }
+    | SERIF40 { $$ = integer(23); }
+    | SERIF50 { $$ = integer(24); }
+    | SERIF75 { $$ = integer(25); }
+    | SERIF100 { $$ = integer(26); }
     | EOFH expression_numeric { $$ = token1(EOFH, $2); }
     | BGET expression_numeric { $$ = token1(BGET, $2); }
     | OPENIN '(' expression_string ')' { $$ = token1(OPENIN, $3); }
@@ -600,22 +611,26 @@ define_function
 
 int parse(const char *filename) {
     yyfileno = 0;
+    status = 1;
     yyin = fopen(filename, "r");
 
     if (!yyin) {
-        std::cout << "Error opening source file '" << filename << "'" << std::endl;
-        exit(0);
+        std::stringstream stream;   
+        stream << "Error opening source file '" << filename << "'" << std::endl;
+        error_list.push_back(stream.str());
+        return 0;
     }
     file = filename;
     files_index.insert(std::pair<std::string, int>(file, yyfileno));
     yyparse();
     fclose(yyin);
     yylex_destroy();
-    return 1;
+    return status;
 }
 
 void yyerror(const char *e) {
     std::stringstream stream;
     stream << "Parsing error: " << e << " at line " << yylineno << " of file '" << file << "'";
     error_list.push_back(stream.str());
+    status = 0;
 }

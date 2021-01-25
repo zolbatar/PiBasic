@@ -1,5 +1,6 @@
 #pragma once
 #include "../graphics/graphics.h"
+#include "../vm/vm.h"
 #include <list>
 #include <map>
 #include <set>
@@ -7,20 +8,17 @@
 
 class Interpreter {
 public:
-    Interpreter(Graphics* graphics, std::stringstream* logfile)
-        : graphics(graphics)
-        , logfile(logfile) {};
     void run();
 
 private:
-    Graphics* graphics;
-    std::stringstream* logfile;
+    std::vector<Boxed> variables;
     std::map<UINT32, std::string> lines;
-    std::set<std::string> tokens = { "DIM" };
 
     void welcome_prompt();
-    void tokenise(std::string& str);
     void add_line(std::string s);
-    void execute_line(std::string s, std::string& temp_filename);
+    void execute_line(std::string s);
     void run_welcome();
+    void run_all_lines();
+    void load(std::string s);
+    void save(std::string s);
 };

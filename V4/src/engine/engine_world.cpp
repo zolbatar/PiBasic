@@ -4,7 +4,7 @@
 #include <iomanip>
 World world;
 
-//#define render_svg
+extern std::unique_ptr<Graphics> g_graphics;
 
 UINT32 World::create_shape(Boxed& vertices, Boxed& triangles)
 {
@@ -78,10 +78,10 @@ UINT32 World::create_object(UINT32 index, VM_FLOAT x, VM_FLOAT y, VM_FLOAT z, VM
     return object_index - 1;
 }
 
-void World::render(Graphics& graphics)
+void World::render()
 {
     // Save colour
-    auto saved_colour = graphics.current_colour;
+    auto saved_colour = g_graphics->current_colour;
 
     for (auto object = objects.begin(); object != objects.end(); ++object) {
         (*object).second.render();
@@ -90,38 +90,31 @@ void World::render(Graphics& graphics)
     // Sort triangles in depth order
     std::sort(render_list.begin(), render_list.end(), [](const RenderTriangle& a, const RenderTriangle& b) { return a.z < b.z; });
 
-    // This is for creating an SVG file
-#ifdef render_svg
-    std::ofstream outfile("render.svg", std::ios::out | std::ios::trunc);
-    outfile << "<svg width=\"" << graphics.get_screen_width() << "\" height = \"" << graphics.get_screen_height() << "\" xmlns=\"http://www.w3.org/2000/svg\">"
-            << std::endl;
-#endif
-
     // Render!
     for (auto triangle = render_list.begin(); triangle != render_list.end(); ++triangle) {
         switch (triangle->render_type) {
         case RenderType::Baycentric:
-            graphics.gouraud_triangle_with_colour(triangle->sx1, triangle->sy1, triangle->sx3, triangle->sy3, triangle->sx2, triangle->sy2, triangle->colour1.r,
+            g_graphics->gouraud_triangle_with_colour(triangle->sx1, triangle->sy1, triangle->sx3, triangle->sy3, triangle->sx2, triangle->sy2, triangle->colour1.r,
                 triangle->colour1.g, triangle->colour1.b, triangle->colour3.r, triangle->colour3.g, triangle->colour3.b,
                 triangle->colour2.r, triangle->colour2.g, triangle->colour2.b);
             break;
         case RenderType::Wireframe:
-            graphics.colour(triangle->colour1.r, triangle->colour1.g, triangle->colour1.b);
-            graphics.line(triangle->sx1, triangle->sy1, triangle->sx2, triangle->sy2);
-            graphics.line(triangle->sx2, triangle->sy2, triangle->sx3, triangle->sy3);
-            graphics.line(triangle->sx3, triangle->sy3, triangle->sx1, triangle->sy1);
+            g_graphics->colour(triangle->colour1.r, triangle->colour1.g, triangle->colour1.b);
+            g_graphics->line(triangle->sx1, triangle->sy1, triangle->sx2, triangle->sy2);
+            g_graphics->line(triangle->sx2, triangle->sy2, triangle->sx3, triangle->sy3);
+            g_graphics->line(triangle->sx3, triangle->sy3, triangle->sx1, triangle->sy1);
             break;
         case RenderType::Solid:
-            graphics.colour(triangle->colour1.r, triangle->colour1.g, triangle->colour1.b);
-            graphics.triangle(triangle->sx1, triangle->sy1, triangle->sx2, triangle->sy2, triangle->sx3, triangle->sy3);
+            g_graphics->colour(triangle->colour1.r, triangle->colour1.g, triangle->colour1.b);
+            g_graphics->triangle(triangle->sx1, triangle->sy1, triangle->sx2, triangle->sy2, triangle->sx3, triangle->sy3);
             break;
         case RenderType::FILLEDWIREFRAME:
-            graphics.colour(triangle->colour1.r, triangle->colour1.g, triangle->colour1.b);
-            graphics.triangle(triangle->sx1, triangle->sy1, triangle->sx2, triangle->sy2, triangle->sx3, triangle->sy3);
-            graphics.set_colour(saved_colour);
-            graphics.line(triangle->sx1, triangle->sy1, triangle->sx2, triangle->sy2);
-            graphics.line(triangle->sx2, triangle->sy2, triangle->sx3, triangle->sy3);
-            graphics.line(triangle->sx3, triangle->sy3, triangle->sx1, triangle->sy1);
+            g_graphics->colour(triangle->colour1.r, triangle->colour1.g, triangle->colour1.b);
+            g_graphics->triangle(triangle->sx1, triangle->sy1, triangle->sx2, triangle->sy2, triangle->sx3, triangle->sy3);
+            g_graphics->set_colour(saved_colour);
+            g_graphics->line(triangle->sx1, triangle->sy1, triangle->sx2, triangle->sy2);
+            g_graphics->line(triangle->sx2, triangle->sy2, triangle->sx3, triangle->sy3);
+            g_graphics->line(triangle->sx3, triangle->sy3, triangle->sx1, triangle->sy1);
 #ifdef render_svg
             outfile << std::dec << "<polygon points=\"" << triangle->sx1 << "," << triangle->sy1 << "," << triangle->sx2 << "," << triangle->sy2 << ","
                     << triangle->sx3 << "," << triangle->sy3 << "\" style=\"fill:#" << std::hex << std::setfill('0') << std::setw(2) << (int)triangle->colour1.r
@@ -142,7 +135,7 @@ void World::render(Graphics& graphics)
     render_list.clear();
 
     // Restore colour
-    graphics.current_colour = saved_colour;
+    g_graphics->current_colour = saved_colour;
 }
 
 void World::object_translate(UINT32 index, VM_FLOAT x, VM_FLOAT y, VM_FLOAT z)

@@ -18,20 +18,18 @@
 typedef int OutCode;
 
 const int INSIDE = 0; // 0000
-const int LEFT = 1;   // 0001
-const int RIGHT = 2;  // 0010
+const int LEFT = 1; // 0001
+const int RIGHT = 2; // 0010
 const int BOTTOM = 4; // 0100
-const int TOP = 8;    // 1000
+const int TOP = 8; // 1000
 
-enum class EventType
-{
+enum class EventType {
     Text
 };
 
 const int console_font = 1;
 
-class Colour
-{
+class Colour {
 public:
     Colour()
     {
@@ -39,10 +37,14 @@ public:
         g = 0;
         b = 0;
     };
-    Colour(const Colour &c)
-        : r(c.r), g(c.g), b(c.b){};
+    Colour(const Colour& c)
+        : r(c.r)
+        , g(c.g)
+        , b(c.b) {};
     Colour(BYTE r, BYTE g, BYTE b)
-        : r(r), g(g), b(b){};
+        : r(r)
+        , g(g)
+        , b(b) {};
     BYTE r;
     BYTE g;
     BYTE b;
@@ -56,27 +58,24 @@ public:
     }
 };
 
-struct Event
-{
+struct Event {
     EventType type;
     int key_code;
     char ascii;
 };
 
-struct Font
-{
+struct Font {
     int width;
     int height;
     float scale;
     int baseline;
-    unsigned char *bitmap;
+    unsigned char* bitmap;
     int ix0, iy0, ix1, iy1;
     int advance, lsb;
     int sc_width;
 };
 
-class Graphics
-{
+class Graphics {
 public:
     Graphics()
     {
@@ -94,7 +93,13 @@ public:
     {
         return opened;
     }
+    ~Graphics()
+    {
+        delete bank_cache;
+        delete_fonts();
+    }
     void init();
+    void delete_fonts();
     void shutdown();
     void open(int width, int height, int mode);
     void colour(BYTE r, BYTE g, BYTE b);
@@ -113,7 +118,7 @@ public:
     void rectangle(int x1, int y1, int x2, int y2);
     void clipoff();
     void clip(int x1, int y1, int x2, int y2);
-    void alpha(Colour bg, Colour fg, Colour &out, double a);
+    void alpha(Colour bg, Colour fg, Colour& out, double a);
     void show_fps() { showfps = true; }
     void cache();
     void restore();
@@ -126,7 +131,7 @@ public:
     VM_STRING inkeys(VM_INT timeout_or_keycode);
     VM_INT get();
     VM_STRING gets();
-    void mouse(VM_INT &x, VM_INT &y, VM_INT &state);
+    void mouse(VM_INT& x, VM_INT& y, VM_INT& state);
     UINT32 get_screen_width();
     UINT32 get_screen_height();
     UINT32 get_actual_width() { return screen_width; }
@@ -136,13 +141,13 @@ public:
 
     // Text stuff
     void init_text();
-    VM_INT load_font(const char *filename);
+    VM_INT load_font(const char* filename);
     VM_INT create_font_by_size(int index, int font_size);
-    Font *get_glyph(VM_INT index, VM_INT index_ff, BYTE ascii, VM_INT font_size);
+    Font* get_glyph(VM_INT index, VM_INT index_ff, BYTE ascii, VM_INT font_size);
     int get_cursor_y() { return last_cursor_y; }
     void cursor_back(int index_ff);
     void delete_character(int index_ff);
-    void print_character(int index_ff, char c, int *cursor_x, int *cursor_y);
+    void print_character(int index_ff, char c, int* cursor_x, int* cursor_y);
     void print_console(VM_STRING text);
     void print_text(int index_ff, VM_STRING text, int cursor_x, int cursor_y);
     void print_text_centre(int index_ff, VM_STRING text, int cursor_x, int cursor_y);
@@ -154,19 +159,19 @@ public:
     void graphics_shadow_state_off();
     void graphics_set_vdu_bank(int bank);
     void graphics_set_display_bank(int bank);
-    UINT32 *get_bank_address();
-    BYTE *get_bank_address_byte();
+    UINT32* get_bank_address();
+    BYTE* get_bank_address_byte();
 #endif
 
-    UINT32 *bank_cache = nullptr;
+    UINT32* bank_cache = nullptr;
 
     // Triangle
     void triangle(int x1, int y1, int x2, int y2, int x3, int y3);
     void flat_triangle(int x1, int y1, int x2, int y2, int x3, int y3);
     void gouraud_triangle(const int x1, const int y1, const int x2, const int y2, const int x3, const int y3, const UINT32 colour1, const UINT32 colour2,
-                          const UINT32 colour3, const bool flat);
+        const UINT32 colour3, const bool flat);
     void gouraud_triangle_with_colour(const int x1, const int y1, const int x2, const int y2, const int x3, const int y3, const BYTE r1, const BYTE g1,
-                                      const BYTE b1, const BYTE r2, const BYTE g2, const BYTE b2, const BYTE r3, const BYTE g3, const BYTE b3);
+        const BYTE b1, const BYTE r2, const BYTE g2, const BYTE b2, const BYTE r3, const BYTE g3, const BYTE b3);
 
     // Clipped line drawing
     void line(int x1, int y1, int x2, int y2);
@@ -195,8 +200,8 @@ private:
     // Fast line lookup
     std::vector<UINT32> line_address;
 #ifndef RISCOS
-    SDL_Window *window = NULL;
-    SDL_Surface *screen;
+    SDL_Window* window = NULL;
+    SDL_Surface* screen;
 #else
     int size;
     int desktop_screen_width = 0;

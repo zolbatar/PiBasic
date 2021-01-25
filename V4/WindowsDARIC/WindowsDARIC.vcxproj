@@ -226,6 +226,21 @@
     <ClCompile Include="..\src\compiler\compile_util.cpp" />
     <ClCompile Include="..\src\compiler\compile_variable.cpp" />
     <ClCompile Include="..\src\compiler\compile_variable1d.cpp" />
+    <ClCompile Include="..\src\debugger\debugger.cpp" />
+    <ClCompile Include="..\src\debugger\disassembly.cpp" />
+    <ClCompile Include="..\src\debugger\manual.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_2d.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_3d.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_boolean.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_debugging.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_fn_proc.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_io.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_keyboardmouse.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_looping.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_maths.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_operators.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_string.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_variables_types.cpp" />
     <ClCompile Include="..\src\engine\engine_matrix.cpp" />
     <ClCompile Include="..\src\engine\engine_normals.cpp" />
     <ClCompile Include="..\src\engine\engine_object.cpp" />
@@ -239,28 +254,14 @@
     <ClCompile Include="..\src\graphics\graphics_text.cpp" />
     <ClCompile Include="..\src\graphics\graphics_triangle.cpp" />
     <ClCompile Include="..\src\interpreter\interpreter.cpp" />
-    <ClCompile Include="..\src\interpreter\string.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\parser\ast.cpp" />
     <ClCompile Include="..\src\parser\bison.cpp" />
     <ClCompile Include="..\src\parser\flex.cpp" />
-    <ClCompile Include="..\src\vm\debugger.cpp" />
-    <ClCompile Include="..\src\vm\manual.cpp" />
-    <ClCompile Include="..\src\vm\manual\manual_2d.cpp" />
-    <ClCompile Include="..\src\vm\manual\manual_3d.cpp" />
-    <ClCompile Include="..\src\vm\manual\manual_boolean.cpp" />
-    <ClCompile Include="..\src\vm\manual\manual_debugging.cpp" />
-    <ClCompile Include="..\src\vm\manual\manual_fn_proc.cpp" />
-    <ClCompile Include="..\src\vm\manual\manual_io.cpp" />
-    <ClCompile Include="..\src\vm\manual\manual_keyboardmouse.cpp" />
-    <ClCompile Include="..\src\vm\manual\manual_looping.cpp" />
-    <ClCompile Include="..\src\vm\manual\manual_maths.cpp" />
-    <ClCompile Include="..\src\vm\manual\manual_operators.cpp" />
-    <ClCompile Include="..\src\vm\manual\manual_string.cpp" />
-    <ClCompile Include="..\src\vm\manual\manual_variables_types.cpp" />
+    <ClCompile Include="..\src\parse_compile_run.cpp" />
+    <ClCompile Include="..\src\string.cpp" />
     <ClCompile Include="..\src\vm\stack.cpp" />
     <ClCompile Include="..\src\vm\vm.cpp" />
-    <ClCompile Include="..\src\vm\disassembly.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Flex Include="..\Grammar\DARIC.l" />
@@ -526,6 +527,7 @@
     <None Include="..\Examples\Perlin.daric" />
     <None Include="..\Examples\SetupGraphics.daric" />
     <None Include="..\Examples\SetupGraphicsBanked.daric" />
+    <None Include="..\Examples\Sierpinski.daric" />
     <None Include="..\Examples\Start.daric" />
     <None Include="..\Examples\Terrain.daric" />
     <None Include="..\Examples\TerrainDemo.daric" />
@@ -538,15 +540,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\compiler\compile.h" />
+    <ClInclude Include="..\src\debugger\debugger.h" />
+    <ClInclude Include="..\src\debugger\manual\manual.h" />
     <ClInclude Include="..\src\engine\engine.h" />
     <ClInclude Include="..\src\graphics\graphics.h" />
     <ClInclude Include="..\src\graphics\stb_truetype.h" />
     <ClInclude Include="..\src\interpreter\interpreter.h" />
-    <ClInclude Include="..\src\interpreter\string.h" />
     <ClInclude Include="..\src\parser\ast.h" />
+    <ClInclude Include="..\src\parse_compile_run.h" />
+    <ClInclude Include="..\src\string.h" />
     <ClInclude Include="..\src\types.h" />
+    <ClInclude Include="..\src\vm\boxed.h" />
+    <ClInclude Include="..\src\vm\bytecode.h" />
     <ClInclude Include="..\src\vm\clock.h" />
-    <ClInclude Include="..\src\vm\manual\manual.h" />
+    <ClInclude Include="..\src\vm\stack.h" />
+    <ClInclude Include="..\src\vm\variables.h" />
     <ClInclude Include="..\src\vm\vm.h" />
   </ItemGroup>
   <ItemGroup>
@@ -554,12 +562,9 @@
     <Text Include="..\Supported.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Font Include="..\IBMPlexMono-Regular.ttf">
-      <DeploymentContent>false</DeploymentContent>
-    </Font>
-    <Font Include="..\IBMPlexSans-Regular.ttf">
-      <DeploymentContent>false</DeploymentContent>
-    </Font>
+    <Font Include="..\PTMono-Regular.ttf" />
+    <Font Include="..\PTSans-Regular.ttf" />
+    <Font Include="..\PTSerif-Regular.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

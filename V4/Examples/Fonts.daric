@@ -28,15 +28,15 @@ FOR I%=0 To C%
 	TEXTCENTRE   coolfont10%, w% / 2, 25 * I%, A$(I%)
 	TEXTRIGHT    PROP20, w%-1-10, 25 * I%, A$(I%)
 NEXT
-TEXT MONO15, 10, (25 * C%) + 25, "Mono 15":TEXT PROP15, 400, (25 * C%) + 25, "Prop 15"
-TEXT MONO20, 10, (25 * C%) + 50, "Mono 20":TEXT PROP20, 400, (25 * C%) + 50, "Prop 20"
-TEXT MONO25, 10, (25 * C%) + 75, "Mono 25":TEXT PROP25, 400, (25 * C%) + 75, "Prop 25"
-TEXT MONO30, 10, (25 * C%) + 100, "Mono 30":TEXT PROP30, 400, (25 * C%) + 100, "Prop 30"
-TEXT MONO35, 10, (25 * C%) + 125, "Mono 35":TEXT PROP35, 400, (25 * C%) + 125, "Prop 35"
-TEXT MONO40, 10, (25 * C%) + 150, "Mono 40":TEXT PROP40, 400, (25 * C%) + 150, "Prop 40"
-TEXT MONO50, 10, (25 * C%) + 175, "Mono 50":TEXT PROP50, 400, (25 * C%) + 175, "Prop 50"
-TEXT MONO75, 10, (25 * C%) + 200, "Mono 75":TEXT PROP75, 400, (25 * C%) + 200, "Prop 75"
-TEXT MONO100, 10, (25 * C%) + 225, "Mono 100":TEXT PROP100, 400, (25 * C%) + 225, "Prop 100"
+TEXT MONO15, 10, (25 * C%) + 25, "Mono 15":TEXTCENTRE PROP15, w% / 2, (25 * C%) + 25, "Prop 15":TEXTRIGHT SERIF15, w%-1-10, (25 * C%) + 25, "Serif 15"
+TEXT MONO20, 10, (25 * C%) + 50, "Mono 20":TEXTCENTRE PROP20, w% / 2, (25 * C%) + 50, "Prop 20":TEXTRIGHT SERIF20, w%-1-10, (25 * C%) + 50, "Serif 20"
+TEXT MONO25, 10, (25 * C%) + 75, "Mono 25":TEXTCENTRE PROP25, w% / 2, (25 * C%) + 75, "Prop 25":TEXTRIGHT SERIF25, w%-1-10, (25 * C%) + 75, "Serif 25"
+TEXT MONO30, 10, (25 * C%) + 100, "Mono 30":TEXTCENTRE PROP30, w% / 2, (25 * C%) + 100, "Prop 30":TEXTRIGHT SERIF30, w%-1-10, (25 * C%) + 100, "Serif 30"
+TEXT MONO35, 10, (25 * C%) + 125, "Mono 35":TEXTCENTRE PROP35, w% / 2, (25 * C%) + 125, "Prop 35":TEXTRIGHT SERIF35, w%-1-10, (25 * C%) + 125, "Serif 35"
+TEXT MONO40, 10, (25 * C%) + 150, "Mono 40":TEXTCENTRE PROP40, w% / 2, (25 * C%) + 150, "Prop 40":TEXTRIGHT SERIF40, w%-1-10, (25 * C%) + 150, "Serif 40"
+TEXT MONO50, 10, (25 * C%) + 175, "Mono 50":TEXTCENTRE PROP50, w% / 2, (25 * C%) + 175, "Prop 50":TEXTRIGHT SERIF50, w%-1-10, (25 * C%) + 175, "Serif 50"
+TEXT MONO75, 10, (25 * C%) + 200, "Mono 75":TEXTCENTRE PROP75, w% / 2, (25 * C%) + 200, "Prop 75":TEXTRIGHT SERIF75, w%-1-10, (25 * C%) + 200, "Serif 75"
+TEXT MONO100, 10, (25 * C%) + 225, "Mono 100":TEXTCENTRE PROP100, w% / 2, (25 * C%) + 225, "Prop 100":TEXTRIGHT SERIF100, w%-1-10, (25 * C%) + 225, "Serif 100"
 FLIP	
 INKEY(1000)
 CHAIN "Welcome"

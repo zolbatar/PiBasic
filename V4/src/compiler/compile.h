@@ -9,6 +9,9 @@
 #include <string>
 #include <vector>
 
+extern std::unique_ptr<VM> g_vm;
+extern std::unique_ptr<std::stringstream> g_logfile;
+
 enum class CompilerState {
     NOSTATE,
     DATA,
@@ -58,9 +61,8 @@ extern std::map<int, std::list<AST*>> ast_lines;
 
 class Compiler {
 public:
-    Compiler(VM* vm)
+    Compiler()
     {
-        this->vm = vm;
         setup_3d_types();
     }
     bool write = false;
@@ -79,7 +81,6 @@ public:
     int stack_size() { return static_cast<int>(type_list.size()); }
 
 private:
-    VM* vm;
     int line_number = 0;
     int file_number = 0;
     int level = 0;
@@ -211,4 +212,4 @@ private:
     void compile_node_function_call(struct AST* ast, bool expression);
 };
 
-VM* compile(Graphics* graphics, std::stringstream* logfile);
+void compile(std::vector<Boxed>* variables);

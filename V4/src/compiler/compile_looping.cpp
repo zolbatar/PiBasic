@@ -33,19 +33,19 @@ void Compiler::compile_node_token_looping(struct AST* ast)
         break;
     case GOTO:
         if (!write) {
-            vm->insert_instruction(line_number, file_number, write, Bytecodes::GOTO, 0);
+            g_vm->insert_instruction(line_number, file_number, write, Bytecodes::GOTO, 0);
         } else {
             auto pc = (*line_no_to_bytecode.find(ast->items[0]->integer)).second;
-            vm->insert_instruction(line_number, file_number, write, Bytecodes::GOTO, pc);
+            g_vm->insert_instruction(line_number, file_number, write, Bytecodes::GOTO, pc);
         }
         assert(stack_size() == 0);
         break;
     case GOSUB:
         if (!write) {
-            vm->insert_instruction(line_number, file_number, write, Bytecodes::GOSUB, 0);
+            g_vm->insert_instruction(line_number, file_number, write, Bytecodes::GOSUB, 0);
         } else {
             auto pc = (*line_no_to_bytecode.find(ast->items[0]->integer)).second;
-            vm->insert_instruction(line_number, file_number, write, Bytecodes::GOSUB, pc);
+            g_vm->insert_instruction(line_number, file_number, write, Bytecodes::GOSUB, pc);
         }
         assert(stack_size() == 0);
         break;
@@ -56,7 +56,7 @@ void Compiler::compile_node_token_looping(struct AST* ast)
 
 void Compiler::compile_node_if(struct AST* ast)
 {
-    UINT32 start_pc = vm->get_pc();
+    UINT32 start_pc = g_vm->get_pc();
     IfStatement s;
     s.end_pc = 0;
     s.false_pc = 0;
@@ -71,21 +71,21 @@ void Compiler::compile_node_if(struct AST* ast)
     stack_pop();
 
     // We don't know the amount to jump ahead yet
-    vm->insert_instruction(line_number, file_number, write, Bytecodes::JNE, s.false_pc);
+    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::JNE, s.false_pc);
 
     // This is the truth section
     compile_node(ast->items[1], false);
-    vm->insert_instruction(line_number, file_number, write, Bytecodes::JUMP, s.end_pc);
+    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::JUMP, s.end_pc);
 
     // and false section (the else bit)
     if (!write) {
-        s.false_pc = vm->get_pc();
+        s.false_pc = g_vm->get_pc();
     }
     if (ast->items.size() == 3) {
         compile_node(ast->items[2], false);
     }
     if (!write) {
-        s.end_pc = vm->get_pc();
+        s.end_pc = g_vm->get_pc();
     }
 
     // If this is phase 1, save these PC's to use in phase 2
@@ -116,7 +116,7 @@ void Compiler::compile_node_forin(struct AST* ast)
     var_type = Type::NOTYPE;
     auto var_id = find_or_create_variable(scope, true);
     auto saved_type = var_type;
-    vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I_VAR, var_id);
+    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I_VAR, var_id);
 
     // Create loop
     var_name = i_variable->string;
@@ -124,18 +124,18 @@ void Compiler::compile_node_forin(struct AST* ast)
     var_id = find_or_create_variable(scope, false);
 
     // PC
-    vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, vm->get_pc() + 2);
+    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, g_vm->get_pc() + 2);
 
     // Actual FOR loop token
     switch (saved_type) {
     case Type::INTEGER_ARRAY:
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::FORIN_I, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::FORIN_I, var_id);
         break;
     case Type::REAL_ARRAY:
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::FORIN_F, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::FORIN_F, var_id);
         break;
     case Type::STRING_ARRAY:
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::FORIN_S, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::FORIN_S, var_id);
         break;
     }
 
@@ -145,13 +145,13 @@ void Compiler::compile_node_forin(struct AST* ast)
     // And next
     switch (saved_type) {
     case Type::INTEGER_ARRAY:
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::NEXTIN_I, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::NEXTIN_I, var_id);
         break;
     case Type::REAL_ARRAY:
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::NEXTIN_F, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::NEXTIN_F, var_id);
         break;
     case Type::STRING_ARRAY:
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::NEXTIN_S, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::NEXTIN_S, var_id);
         break;
     }
 }
@@ -186,85 +186,85 @@ void Compiler::compile_node_for(struct AST* ast)
         // Store loop from
         switch (peek_type()) {
         case Type::REAL:
-            vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
+            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
             break;
         default:
             break;
         }
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_I, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_I, var_id);
         stack_pop();
 
         // This is the TO value
         compile_node(i_to, true);
         switch (peek_type()) {
         case Type::REAL:
-            vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
+            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
             break;
         default:
             break;
         }
 
         // iterations value
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_I, var_id);
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes::SUBTRACT_I);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_I, var_id);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::SUBTRACT_I);
         stack_pop();
 
         // Step
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 1);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 1);
 
         // PC
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, vm->get_pc() + 2);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, g_vm->get_pc() + 2);
 
         // Actual FOR loop token
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::FOR_I, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::FOR_I, var_id);
 
         // Process loop content
         compile_node(body, false);
 
         // And next
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::NEXT_I, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::NEXT_I, var_id);
     } else {
 
         // Store loop from
         switch (peek_type()) {
         case Type::INTEGER:
-            vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
+            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
             break;
         default:
             break;
         }
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_F, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_F, var_id);
         stack_pop();
 
         // This is the TO value
         compile_node(i_to, true);
         switch (peek_type()) {
         case Type::INTEGER:
-            vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
+            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
             break;
         default:
             break;
         }
 
         // iterations value
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_F, var_id);
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes::SUBTRACT_F);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_F, var_id);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::SUBTRACT_F);
         stack_pop();
 
         // Step
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_F, constant_float_create(1.0));
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_F, constant_float_create(1.0));
 
         // PC
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, vm->get_pc() + 2);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, g_vm->get_pc() + 2);
 
         // Actual FOR loop token
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::FOR_F, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::FOR_F, var_id);
 
         // Process loop content
         compile_node(body, false);
 
         // And next
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::NEXT_F, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::NEXT_F, var_id);
     }
 }
 
@@ -299,34 +299,34 @@ void Compiler::compile_node_for_step(struct AST* ast)
         // Store loop from
         switch (peek_type()) {
         case Type::REAL:
-            vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
+            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
             break;
         default:
             break;
         }
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_I, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_I, var_id);
         stack_pop();
 
         // This is the TO value
         compile_node(i_to, true);
         switch (peek_type()) {
         case Type::REAL:
-            vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
+            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
             break;
         default:
             break;
         }
 
         // iterations value
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_I, var_id);
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes::SUBTRACT_I);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_I, var_id);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::SUBTRACT_I);
         stack_pop();
 
         // Step
         compile_node(i_step, true);
         switch (peek_type()) {
         case Type::REAL:
-            vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
+            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
             break;
         default:
             break;
@@ -334,49 +334,49 @@ void Compiler::compile_node_for_step(struct AST* ast)
         stack_pop();
 
         // PC
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, vm->get_pc() + 2);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, g_vm->get_pc() + 2);
 
         // Actual FOR loop token
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::FOR_I, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::FOR_I, var_id);
 
         // Process loop content
         compile_node(body, false);
 
         // And next
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::NEXT_I, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::NEXT_I, var_id);
     } else {
 
         // Store loop from
         switch (peek_type()) {
         case Type::INTEGER:
-            vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
+            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
             break;
         default:
             break;
         }
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_F, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_F, var_id);
         stack_pop();
 
         // This is the TO value
         compile_node(i_to, true);
         switch (peek_type()) {
         case Type::INTEGER:
-            vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
+            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
             break;
         default:
             break;
         }
 
         // iterations value
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_F, var_id);
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes::SUBTRACT_F);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_F, var_id);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::SUBTRACT_F);
         stack_pop();
 
         // Step
         compile_node(i_step, true);
         switch (peek_type()) {
         case Type::INTEGER:
-            vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
+            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
             break;
         default:
             break;
@@ -384,22 +384,22 @@ void Compiler::compile_node_for_step(struct AST* ast)
         stack_pop();
 
         // PC
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, vm->get_pc() + 2);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, g_vm->get_pc() + 2);
 
         // Actual FOR loop token
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::FOR_F, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::FOR_F, var_id);
 
         // Process loop content
         compile_node(body, false);
 
         // And next
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::NEXT_F, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::NEXT_F, var_id);
     }
 }
 
 void Compiler::compile_node_repeat(struct AST* ast)
 {
-    vm->insert_bytecode(line_number, file_number, write, Bytecodes::REPEAT);
+    g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::REPEAT);
 
     // Body
     compile_node(ast->items[0], false);
@@ -407,7 +407,7 @@ void Compiler::compile_node_repeat(struct AST* ast)
     // Comparison
     //why is this an assignment?
     compile_node(ast->items[1], true);
-    vm->insert_bytecode(line_number, file_number, write, Bytecodes::JNEREP);
+    g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::JNEREP);
     stack_pop();
 }
 
@@ -416,7 +416,7 @@ void Compiler::compile_node_while(struct AST* ast)
     auto test = ast->items[0];
     auto body = ast->items[1];
 
-    UINT32 start_pc = vm->get_pc();
+    UINT32 start_pc = g_vm->get_pc();
     IfStatement s;
     s.end_pc = 0;
     if (write) {
@@ -428,15 +428,15 @@ void Compiler::compile_node_while(struct AST* ast)
     compile_node(test, true);
 
     // We don't know the amount to jump ahead yet
-    vm->insert_instruction(line_number, file_number, write, Bytecodes::JNE, s.end_pc);
+    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::JNE, s.end_pc);
     stack_pop();
 
     // This is the truth section
     compile_node(body, false);
-    vm->insert_instruction(line_number, file_number, write, Bytecodes::JUMP, start_pc);
+    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::JUMP, start_pc);
 
     if (!write) {
-        s.end_pc = vm->get_pc();
+        s.end_pc = g_vm->get_pc();
     }
 
     // If this is phase 1, save these PC's to use in phase 2
@@ -451,7 +451,7 @@ void Compiler::compile_node_case(struct AST* ast)
     auto when_list = ast->items[1];
 
     // This is the condition
-    vm->insert_bytecode(line_number, file_number, write, Bytecodes::CASE_C);
+    g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::CASE_C);
     while (when_list != NULL) {
         if (when_list->type == ASTType::LINK) {
             if (when_list->l->token == WHEN) {
@@ -487,7 +487,7 @@ void Compiler::compile_node_when(struct AST* var, struct AST* when)
 void Compiler::compile_node_otherwise(struct AST* action)
 {
     // Treat as an IF, so keep PC
-    UINT32 start_pc = vm->get_pc();
+    UINT32 start_pc = g_vm->get_pc();
     IfStatement s;
     s.end_pc = 0;
     if (write) {
@@ -496,14 +496,14 @@ void Compiler::compile_node_otherwise(struct AST* action)
     }
 
     // We don't know the amount to jump ahead yet
-    vm->insert_instruction(line_number, file_number, write, Bytecodes::CJUMPT, s.end_pc);
+    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CJUMPT, s.end_pc);
 
     // This is the code to execute on CASE match
     compile_node(action, true);
 
     // Set the end PC on write
     if (!write) {
-        s.end_pc = vm->get_pc();
+        s.end_pc = g_vm->get_pc();
     }
 
     // If this is phase 1, save these PC's to use in phase 2
@@ -518,7 +518,7 @@ void Compiler::compile_node_when_single(struct AST* var, struct AST* expression,
     assert(action != NULL);
 
     // Treat as an IF, so keep PC
-    UINT32 start_pc = vm->get_pc();
+    UINT32 start_pc = g_vm->get_pc();
     IfStatement s;
     s.end_pc = 0;
     if (write) {
@@ -537,15 +537,15 @@ void Compiler::compile_node_when_single(struct AST* var, struct AST* expression,
     stack_pop();
 
     // We don't know the amount to jump ahead yet
-    vm->insert_instruction(line_number, file_number, write, Bytecodes::JNE, s.end_pc);
-    vm->insert_bytecode(line_number, file_number, write, Bytecodes::CASE_S);
+    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::JNE, s.end_pc);
+    g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::CASE_S);
 
     // This is the code to execute on CASE match
     compile_node(action, false);
 
     // Set the end PC on write
     if (!write) {
-        s.end_pc = vm->get_pc();
+        s.end_pc = g_vm->get_pc();
     }
 
     // If this is phase 1, save these PC's to use in phase 2

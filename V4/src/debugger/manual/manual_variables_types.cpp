@@ -1,86 +1,78 @@
 #define _GLIBCXX_USE_C99 1
-#include "../vm.h"
+#include "../debugger.h"
 #include "manual.h"
 
 extern std::vector<ManualKeyword> keywords;
 
-void create_manual_operators() {
+void create_manual_variables_types()
+{
     keywords.push_back(ManualKeyword(
-        "+ +=",
-        "+ +=",
-        KeywordCategory::OPERATORS,
+        "DATA",
+        "DATA",
+        KeywordCategory::VARIABLES_TYPES,
         "",
         {},
         "",
         "",
         ""));
     keywords.push_back(ManualKeyword(
-        "- -=",
-        "- -=",
-        KeywordCategory::OPERATORS,
+        "DIM",
+        "DIM",
+        KeywordCategory::VARIABLES_TYPES,
         "",
         {},
         "",
         "",
         ""));
     keywords.push_back(ManualKeyword(
-        "* *=",
-        "* *=",
-        KeywordCategory::OPERATORS,
+        "LET/GLOBAL",
+        "LET/GLOBAL",
+        KeywordCategory::VARIABLES_TYPES,
         "",
         {},
         "",
         "",
         ""));
     keywords.push_back(ManualKeyword(
-        "/ /=",
-        "/ /=",
-        KeywordCategory::OPERATORS,
+        "LOCAL",
+        "LOCAL",
+        KeywordCategory::VARIABLES_TYPES,
         "",
         {},
         "",
         "",
         ""));
     keywords.push_back(ManualKeyword(
-        "// //=",
-        "// //= (FLOOR DIVIDE)",
-        KeywordCategory::OPERATORS,
+        "READ",
+        "READ",
+        KeywordCategory::VARIABLES_TYPES,
         "",
         {},
         "",
         "",
         ""));
     keywords.push_back(ManualKeyword(
-        "<< <<=",
-        "<< <<=",
-        KeywordCategory::OPERATORS,
+        "RESTORE",
+        "RESTORE",
+        KeywordCategory::VARIABLES_TYPES,
         "",
         {},
         "",
         "",
         ""));
     keywords.push_back(ManualKeyword(
-        ">> >>=",
-        ">> >>=",
-        KeywordCategory::OPERATORS,
+        "SWAP",
+        "SWAP",
+        KeywordCategory::VARIABLES_TYPES,
         "",
         {},
         "",
         "",
         ""));
     keywords.push_back(ManualKeyword(
-        "DIV",
-        "DIV",
-        KeywordCategory::OPERATORS,
-        "",
-        {},
-        "",
-        "",
-        ""));
-    keywords.push_back(ManualKeyword(
-        "MOD",
-        "MOD",
-        KeywordCategory::OPERATORS,
+        "TYPE FIELD ENDTYPE",
+        "TYPE FIELD ENDTYPE",
+        KeywordCategory::VARIABLES_TYPES,
         "",
         {},
         "",

@@ -41,7 +41,7 @@ void Compiler::compile_node_variable2d_dim(struct AST* ast, int var_id)
     stack_pop();
     compile_node(ast->items[1], true);
     stack_pop();
-    vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 2); // 2 dimension
+    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 2); // 2 dimension
     insert_instruction_based_on_type(
         {
             { Type::INTEGER_ARRAY, Bytecodes::DIM_I },
@@ -62,18 +62,18 @@ void Compiler::compile_node_variable2d_expression(struct AST* ast)
     stack_pop();
     switch (saved_type) {
     case Type::INTEGER_ARRAY:
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 2); // 2 dimensions
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_I_ARRAY, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 2); // 2 dimensions
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_I_ARRAY, var_id);
         stack_push(Type::INTEGER);
         break;
     case Type::REAL_ARRAY:
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 2); // 2 dimensions
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_F_ARRAY, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 2); // 2 dimensions
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_F_ARRAY, var_id);
         stack_push(Type::REAL);
         break;
     case Type::STRING_ARRAY:
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 2); // 2 dimensions
-        vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_S_ARRAY, var_id);
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 2); // 2 dimensions
+        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_S_ARRAY, var_id);
         stack_push(Type::STRING);
         break;
     default:

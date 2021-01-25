@@ -11,9 +11,28 @@
 
 const int MAXIMUM_FONTS = 64;
 int font_index = 0;
-stbtt_fontinfo** fonts;
+stbtt_fontinfo** fonts = nullptr;
 
-void Graphics::init_text() { fonts = new stbtt_fontinfo*[MAXIMUM_FONTS]; }
+void Graphics::init_text()
+{
+    fonts = new stbtt_fontinfo*[MAXIMUM_FONTS];
+    for (int i = 0; i < MAXIMUM_FONTS; i++) {
+        fonts[i] = nullptr;
+    }
+}
+
+void Graphics::delete_fonts()
+{
+    if (fonts != nullptr) {
+        for (int i = 0; i < MAXIMUM_FONTS; i++) {
+            if (fonts[i] != nullptr) {
+                free(fonts[i]);
+            }
+        }
+        delete fonts;
+        fonts = nullptr;
+    }
+}
 
 VM_INT Graphics::load_font(const char* filename)
 {
@@ -176,6 +195,28 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
         case '\\':
             c = '\\';
             break;
+        default: {
+            Font* f = get_glyph(0, index_ff, '\\', 0);
+            if (f->bitmap != NULL) {
+                auto saved_colour = current_colour;
+                for (int j = 0; j < f->height; ++j) {
+                    for (int i = 0; i < f->width; ++i) {
+                        auto idx = j * f->width + i;
+                        auto v = f->bitmap[idx];
+                        if (v > 0) {
+                            Colour c;
+                            double a = static_cast<double>(v) / 255.0;
+                            alpha(current_bg_colour, saved_colour, c, a);
+                            //colour(saved_colour.r * v / 256, saved_colour.g * v / 256, saved_colour.b * v / 256);
+                            set_colour(c);
+                            plot(*cursor_x + i + f->ix0 + margin, *cursor_y + j + f->iy0 + f->baseline);
+                        }
+                    }
+                }
+                set_colour(saved_colour);
+            }
+            *cursor_x += f->sc_width;
+        }
         }
         last_char_was_slash = false;
     }
@@ -201,7 +242,7 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
     *cursor_x += f->sc_width;
 
     // End of line?
-    if (*cursor_x + f->sc_width + (margin * 2) >= screen_width) {
+    while (*cursor_x + f->sc_width + (margin * 2) >= screen_width) {
         *cursor_y += font_row_height;
         *cursor_x = 0;
     }

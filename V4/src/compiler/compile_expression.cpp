@@ -18,12 +18,12 @@ void Compiler::compile_node_expression(struct AST* ast)
         case DIVIDE:
             // Is this a divide? If so, we always promote to a float
             if (type2 == Type::REAL && type1 == Type::INTEGER) {
-                vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F2);
+                g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F2);
             } else if (type2 == Type::INTEGER && type1 == Type::REAL) {
-                vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
+                g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
             } else if (type2 == Type::INTEGER && type1 == Type::INTEGER) {
-                vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
-                vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F2);
+                g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
+                g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F2);
             }
             stack_push(Type::REAL);
             stack_push(Type::REAL);
@@ -31,11 +31,11 @@ void Compiler::compile_node_expression(struct AST* ast)
         default:
             // Do we need to promote (or demote)?
             if (type2 == Type::REAL && type1 == Type::INTEGER) {
-                vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F2);
+                g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F2);
                 stack_push(Type::REAL);
                 stack_push(Type::REAL);
             } else if (type2 == Type::INTEGER && type1 == Type::REAL) {
-                vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
+                g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
                 stack_push(Type::REAL);
                 stack_push(Type::REAL);
             } else {
@@ -63,7 +63,7 @@ void Compiler::compile_node_expression(struct AST* ast)
         stack_pop();
         break;
     case DIVIDE:
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes::DIVIDE_F);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::DIVIDE_F);
         stack_pop();
         break;
     case MULTIPLY:
@@ -85,11 +85,11 @@ void Compiler::compile_node_expression(struct AST* ast)
     case MOD:
         switch (peek_type()) {
         case Type::INTEGER:
-            vm->insert_bytecode(line_number, file_number, write, Bytecodes::MOD_I);
+            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::MOD_I);
             stack_pop();
             break;
         case Type::REAL:
-            vm->insert_bytecode(line_number, file_number, write, Bytecodes::MOD_F);
+            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::MOD_F);
             stack_pop();
             stack_pop();
             stack_push(Type::INTEGER);
@@ -101,11 +101,11 @@ void Compiler::compile_node_expression(struct AST* ast)
     case DIV:
         switch (peek_type()) {
         case Type::INTEGER:
-            vm->insert_bytecode(line_number, file_number, write, Bytecodes::DIV_I);
+            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::DIV_I);
             stack_pop();
             break;
         case Type::REAL:
-            vm->insert_bytecode(line_number, file_number, write, Bytecodes::DIV_F);
+            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::DIV_F);
             stack_pop();
             stack_pop();
             stack_push(Type::INTEGER);
@@ -116,12 +116,12 @@ void Compiler::compile_node_expression(struct AST* ast)
         break;
     case SHL:
         ensure_stack_is_integer();
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes::SHL);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::SHL);
         stack_pop();
         break;
     case SHR:
         ensure_stack_is_integer();
-        vm->insert_bytecode(line_number, file_number, write, Bytecodes::SHR);
+        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::SHR);
         stack_pop();
         break;
 
