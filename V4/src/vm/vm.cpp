@@ -69,13 +69,12 @@ bool VM::opcode_CONST_I()
 
 bool VM::opcode_LOAD_F()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    stack.push_float(variable->value_float);
+    stack.push_float(variables.get_variable(bc).value_float);
     if (runtime_debug) {
-        if (!variable->constant) {
-            *g_logfile << "Push variable '" << variable->name << "', float " << variable->value_float << " onto the stack" << std::endl;
+        if (!variables.get_variable(bc).constant) {
+            *g_logfile << "Push variable '" << variables.get_variable(bc).name << "', float " << variables.get_variable(bc).value_float << " onto the stack" << std::endl;
         } else {
-            *g_logfile << "Push constant float " << variable->value_float << " onto the stack" << std::endl;
+            *g_logfile << "Push constant float " << variables.get_variable(bc).value_float << " onto the stack" << std::endl;
         }
     }
     return false;
@@ -83,13 +82,12 @@ bool VM::opcode_LOAD_F()
 
 bool VM::opcode_LOAD_I()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    stack.push_int(variable->value_int);
+    stack.push_int(variables.get_variable(bc).value_int);
     if (runtime_debug) {
-        if (!variable->constant) {
-            *g_logfile << "Push variable '" << variable->name << "', int " << variable->value_int << " onto the stack" << std::endl;
+        if (!variables.get_variable(bc).constant) {
+            *g_logfile << "Push variable '" << variables.get_variable(bc).name << "', int " << variables.get_variable(bc).value_int << " onto the stack" << std::endl;
         } else {
-            *g_logfile << "Push constant int " << variable->value_int << " onto the stack" << std::endl;
+            *g_logfile << "Push constant int " << variables.get_variable(bc).value_int << " onto the stack" << std::endl;
         }
     }
     return false;
@@ -97,13 +95,12 @@ bool VM::opcode_LOAD_I()
 
 bool VM::opcode_LOAD_S()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    stack.push_string(variable->value_string);
+    stack.push_string(variables.get_variable(bc).value_string);
     if (runtime_debug) {
-        if (!variable->constant) {
-            *g_logfile << "Push variable '" << variable->name << "', string '" << variable->value_string << "' onto the stack" << std::endl;
+        if (!variables.get_variable(bc).constant) {
+            *g_logfile << "Push variable '" << variables.get_variable(bc).name << "', string '" << variables.get_variable(bc).value_string << "' onto the stack" << std::endl;
         } else {
-            *g_logfile << "Push constant string '" << variable->value_string << "' onto the stack" << std::endl;
+            *g_logfile << "Push constant string '" << variables.get_variable(bc).value_string << "' onto the stack" << std::endl;
         }
     }
     return false;
@@ -291,113 +288,101 @@ bool VM::opcode_F_TO_I2()
 bool VM::opcode_SWAP_I()
 {
     VM_INT v = stack.pop_int(bc);
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* variable2 = variables.get_variable_by_int(v);
-    VM_INT t = variable->value_int;
-    variable->value_int = variable2->value_int;
-    variable2->value_int = t;
+    VM_INT t = variables.get_variable(bc).value_int;
+    variables.get_variable(bc).value_int = variable2.value_int;
+    variables.get_variable_by_int(v).value_int = t;
     if (runtime_debug)
-        *g_logfile << "Swap " << variable->name << " and " << variable2->name << std::endl;
+        *g_logfile << "Swap " << variables.get_variable(bc).name << " and " << variable2.name << std::endl;
     return false;
 }
 
 bool VM::opcode_SWAP_F()
 {
     VM_INT v = stack.pop_int(bc);
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* variable2 = variables.get_variable_by_int(v);
-    VM_FLOAT t = variable->value_float;
-    variable->value_float = variable2->value_float;
-    variable2->value_float = t;
+    VM_FLOAT t = variables.get_variable(bc).value_float;
+    variables.get_variable(bc).value_float = variable2.value_float;
+    variables.get_variable_by_int(v).value_float = t;
     if (runtime_debug)
-        *g_logfile << "Swap " << variable->name << " and " << variable2->name << std::endl;
+        *g_logfile << "Swap " << variables.get_variable(bc).name << " and " << variable2.name << std::endl;
     return false;
 }
 
 bool VM::opcode_SWAP_S()
 {
     VM_INT v = stack.pop_int(bc);
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* variable2 = variables.get_variable_by_int(v);
-    VM_STRING t = variable->value_string;
-    variable->value_string = variable2->value_string;
-    variable2->value_string = t;
+    VM_STRING t = variables.get_variable(bc).value_string;
+    variables.get_variable(bc).value_string = variable2.value_string;
+    variables.get_variable_by_int(v).value_string = t;
     if (runtime_debug)
-        *g_logfile << "Swap " << variable->name << " and " << variable2->name << std::endl;
+        *g_logfile << "Swap " << variables.get_variable(bc).name << " and " << variable2.name << std::endl;
     return false;
 }
 
 bool VM::opcode_STORE_I()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT v = stack.pop_int(bc);
-    variable->value_int = v;
+    variables.get_variable(bc).value_int = v;
     if (runtime_debug)
-        *g_logfile << "Store integer " << v << " in " << variable->name << std::endl;
+        *g_logfile << "Store integer " << v << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
 bool VM::opcode_STORE_F()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_FLOAT v = stack.pop_float(bc);
-    variable->value_float = v;
+    variables.get_variable(bc).value_float = v;
     if (runtime_debug)
-        *g_logfile << "Store float " << v << " in " << variable->name << std::endl;
+        *g_logfile << "Store float " << v << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
 bool VM::opcode_STORE_S()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_STRING v = stack.pop_string(bc);
-    variable->value_string = v;
+    variables.get_variable(bc).value_string = v;
     if (runtime_debug)
-        *g_logfile << "Store string '" << v << "' in " << variable->name << std::endl;
+        *g_logfile << "Store string '" << v << "' in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
 bool VM::opcode_INPUT_F()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT qmark = stack.pop_int(bc);
     if (qmark) {
         g_graphics->print_text(console_font, "?", -1, -1);
     }
     auto s = g_graphics->input();
     double v = std::stod(s);
-    variable->value_float = v;
+    variables.get_variable(bc).value_float = v;
     if (runtime_debug)
-        *g_logfile << "Inputted and stored float " << variable->value_float << " in " << variable->name << std::endl;
+        *g_logfile << "Inputted and stored float " << variables.get_variable(bc).value_float << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
 bool VM::opcode_INPUT_I()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT qmark = stack.pop_int(bc);
     if (qmark) {
         g_graphics->print_text(console_font, "?", -1, -1);
     }
     auto s = g_graphics->input();
     int v = std::stoi(s);
-    variable->value_int = v;
+    variables.get_variable(bc).value_int = v;
     if (runtime_debug)
-        *g_logfile << "Inputted and stored integer " << variable->value_int << " in " << variable->name << std::endl;
+        *g_logfile << "Inputted and stored integer " << variables.get_variable(bc).value_int << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
 bool VM::opcode_INPUT_S()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT qmark = stack.pop_int(bc);
     if (qmark) {
         g_graphics->print_text(console_font, "?", -1, -1);
     }
     auto v = g_graphics->input();
-    variable->value_string = v;
+    variables.get_variable(bc).value_string = v;
     if (runtime_debug)
-        *g_logfile << "Inputted and stored string " << variable->value_string << " in " << variable->name << std::endl;
+        *g_logfile << "Inputted and stored string " << variables.get_variable(bc).value_string << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
@@ -493,162 +478,156 @@ bool VM::opcode_PRINT_SPC()
 
 bool VM::opcode_LOAD_F_ARRAY()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT dimensions = stack.pop_int(bc);
     if (dimensions == 1) {
         VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variable->value_float_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_float_array.size()))
             error("Invalid array or array index");
-        VM_FLOAT v = variable->value_float_array[index];
+        VM_FLOAT v = variables.get_variable(bc).value_float_array[index];
         stack.push_float(v);
         if (runtime_debug)
-            *g_logfile << "Push variable " << variable->name << ", float " << v << " (index " << index << ") onto the stack\n";
+            *g_logfile << "Push variable " << variables.get_variable(bc).name << ", float " << v << " (index " << index << ") onto the stack\n";
     } else {
         VM_INT index2 = stack.pop_int(bc);
         VM_INT index1 = stack.pop_int(bc);
-        VM_INT size = variable->fields[0].value_int;
+        VM_INT size = variables.get_variable(bc).fields[0].value_int;
         int index = index2 * size + index1;
-        if (index < 0 || index >= static_cast<int>(variable->value_float_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_float_array.size()))
             error("Invalid array or array index");
-        VM_FLOAT v = variable->value_float_array[index];
+        VM_FLOAT v = variables.get_variable(bc).value_float_array[index];
         stack.push_float(v);
         if (runtime_debug)
-            *g_logfile << "Push variable " << variable->name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+            *g_logfile << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
     }
     return false;
 }
 
 bool VM::opcode_LOAD_I_ARRAY()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT dimensions = stack.pop_int(bc);
     if (dimensions == 1) {
         VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variable->value_int_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
             error("Invalid array or array index");
-        VM_INT v = variable->value_int_array[index];
+        VM_INT v = variables.get_variable(bc).value_int_array[index];
         stack.push_int(v);
         if (runtime_debug)
-            *g_logfile << "Push variable " << variable->name << ", int " << v << " (index " << index << ") onto the stack\n";
+            *g_logfile << "Push variable " << variables.get_variable(bc).name << ", int " << v << " (index " << index << ") onto the stack\n";
     } else {
         VM_INT index2 = stack.pop_int(bc);
         VM_INT index1 = stack.pop_int(bc);
-        VM_INT size = variable->fields[0].value_int;
+        VM_INT size = variables.get_variable(bc).fields[0].value_int;
         int index = index2 * size + index1;
-        if (index < 0 || index >= static_cast<int>(variable->value_int_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
             error("Invalid array or array index");
-        VM_INT v = variable->value_int_array[index];
+        VM_INT v = variables.get_variable(bc).value_int_array[index];
         stack.push_int(v);
         if (runtime_debug)
-            *g_logfile << "Push variable " << variable->name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+            *g_logfile << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
     }
     return false;
 }
 
 bool VM::opcode_LOAD_S_ARRAY()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT dimensions = stack.pop_int(bc);
     if (dimensions == 1) {
         VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variable->value_string_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
             error("Invalid array or array index");
-        VM_STRING v = variable->value_string_array[index];
+        VM_STRING v = variables.get_variable(bc).value_string_array[index];
         stack.push_string(v);
         if (runtime_debug)
-            *g_logfile << "Push variable " << variable->name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+            *g_logfile << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
     } else {
         VM_INT index2 = stack.pop_int(bc);
         VM_INT index1 = stack.pop_int(bc);
-        VM_INT size = variable->fields[0].value_int;
+        VM_INT size = variables.get_variable(bc).fields[0].value_int;
         int index = index2 * size + index1;
-        if (index < 0 || index >= static_cast<int>(variable->value_string_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
             error("Invalid array or array index");
-        VM_STRING v = variable->value_string_array[index];
+        VM_STRING v = variables.get_variable(bc).value_string_array[index];
         stack.push_string(v);
         if (runtime_debug)
-            *g_logfile << "Push variable " << variable->name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+            *g_logfile << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
     }
     return false;
 }
 
 bool VM::opcode_STORE_F_ARRAY()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT dimensions = stack.pop_int(bc);
     if (dimensions == 1) {
         VM_FLOAT v = stack.pop_float(bc);
         VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variable->value_float_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_float_array.size()))
             error("Invalid array or array index");
-        variable->value_float_array[index] = v;
+        variables.get_variable(bc).value_float_array[index] = v;
         if (runtime_debug)
-            *g_logfile << "Store float array variable " << variable->name << " index " << index << " value " << v << std::endl;
+            *g_logfile << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     } else {
         VM_FLOAT v = stack.pop_float(bc);
         VM_INT index2 = stack.pop_int(bc);
         VM_INT index1 = stack.pop_int(bc);
-        VM_INT size = variable->fields[0].value_int;
+        VM_INT size = variables.get_variable(bc).fields[0].value_int;
         int index = index2 * size + index1;
-        if (index < 0 || index >= static_cast<int>(variable->value_float_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_float_array.size()))
             error("Invalid array or array index");
-        variable->value_float_array[index] = v;
+        variables.get_variable(bc).value_float_array[index] = v;
         if (runtime_debug)
-            *g_logfile << "Store float array variable " << variable->name << " index " << index << " value " << v << std::endl;
+            *g_logfile << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     }
     return false;
 }
 
 bool VM::opcode_STORE_I_ARRAY()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT dimensions = stack.pop_int(bc);
     if (dimensions == 1) {
         VM_INT v = stack.pop_int(bc);
         VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variable->value_int_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
             error("Invalid array or array index");
-        variable->value_int_array[index] = v;
+        variables.get_variable(bc).value_int_array[index] = v;
         if (runtime_debug)
-            *g_logfile << "Store int array variable " << variable->name << " index " << index << " value " << v << std::endl;
+            *g_logfile << "Store int array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     } else {
         VM_INT v = stack.pop_int(bc);
         VM_INT index2 = stack.pop_int(bc);
         VM_INT index1 = stack.pop_int(bc);
-        VM_INT size = variable->fields[0].value_int;
+        VM_INT size = variables.get_variable(bc).fields[0].value_int;
         int index = index2 * size + index1;
-        if (index < 0 || index >= static_cast<int>(variable->value_string_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
             error("Invalid array or array index");
-        variable->value_int_array[index] = v;
+        variables.get_variable(bc).value_int_array[index] = v;
         if (runtime_debug)
-            *g_logfile << "Store float array variable " << variable->name << " index " << index << " value " << v << std::endl;
+            *g_logfile << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     }
     return false;
 }
 
 bool VM::opcode_STORE_S_ARRAY()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT dimensions = stack.pop_int(bc);
     if (dimensions == 1) {
         VM_STRING v = stack.pop_string(bc);
         VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variable->value_string_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
             error("Invalid array or array index");
-        variable->value_string_array[index] = v;
+        variables.get_variable(bc).value_string_array[index] = v;
         if (runtime_debug)
-            *g_logfile << "Store string array variable " << variable->name << " index " << index << " value " << v << std::endl;
+            *g_logfile << "Store string array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     } else {
         VM_STRING v = stack.pop_string(bc);
         VM_INT index2 = stack.pop_int(bc);
         VM_INT index1 = stack.pop_int(bc);
-        VM_INT size = variable->fields[0].value_int;
+        VM_INT size = variables.get_variable(bc).fields[0].value_int;
         int index = index2 * size + index1;
-        if (index < 0 || index >= static_cast<int>(variable->value_string_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
             error("Invalid array or array index");
-        variable->value_string_array[index] = v;
+        variables.get_variable(bc).value_string_array[index] = v;
         if (runtime_debug)
-            *g_logfile << "Store float array variable " << variable->name << " index " << index << " value " << v << std::endl;
+            *g_logfile << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     }
     return false;
 }
@@ -656,33 +635,31 @@ bool VM::opcode_STORE_S_ARRAY()
 bool VM::opcode_LOAD_I_FIELD()
 {
     VM_INT index = stack.pop_int(bc);
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* field = &variable->fields.at(index);
+    ???
+    Boxed* field = &variables.get_variable(bc).fields.at(index);
     stack.push_int(field->value_int);
     if (runtime_debug)
-        *g_logfile << "Load field variable " << variable->name << " index " << index << " value " << field->value_int << std::endl;
+        *g_logfile << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_int << std::endl;
     return false;
 }
 
 bool VM::opcode_LOAD_F_FIELD()
 {
     VM_INT index = stack.pop_int(bc);
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* field = &variable->fields.at(index);
+    Boxed* field = &variables.get_variable(bc).fields.at(index);
     stack.push_float(field->value_float);
     if (runtime_debug)
-        *g_logfile << "Load field variable " << variable->name << " index " << index << " value " << field->value_float << std::endl;
+        *g_logfile << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_float << std::endl;
     return false;
 }
 
 bool VM::opcode_LOAD_S_FIELD()
 {
     VM_INT index = stack.pop_int(bc);
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* field = &variable->fields.at(index);
+    Boxed* field = &variables.get_variable(bc).fields.at(index);
     stack.push_string(field->value_string);
     if (runtime_debug)
-        *g_logfile << "Load field variable " << variable->name << " index " << index << " value " << field->value_string << std::endl;
+        *g_logfile << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_string << std::endl;
     return false;
 }
 
@@ -690,11 +667,10 @@ bool VM::opcode_STORE_I_FIELD()
 {
     VM_INT index = stack.pop_int(bc);
     VM_INT v = stack.pop_int(bc);
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* field = &variable->fields.at(index);
+    Boxed* field = &variables.get_variable(bc).fields.at(index);
     field->value_int = v;
     if (runtime_debug)
-        *g_logfile << "Store field variable " << variable->name << " index " << index << " value " << v << std::endl;
+        *g_logfile << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     return false;
 }
 
@@ -702,11 +678,10 @@ bool VM::opcode_STORE_F_FIELD()
 {
     VM_INT index = stack.pop_int(bc);
     VM_FLOAT v = stack.pop_float(bc);
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* field = &variable->fields.at(index);
+    Boxed* field = &variables.get_variable(bc).fields.at(index);
     field->value_float = v;
     if (runtime_debug)
-        *g_logfile << "Store field variable " << variable->name << " index " << index << " value " << v << std::endl;
+        *g_logfile << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     return false;
 }
 
@@ -714,11 +689,10 @@ bool VM::opcode_STORE_S_FIELD()
 {
     VM_INT index = stack.pop_int(bc);
     VM_STRING v = stack.pop_string(bc);
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* field = &variable->fields.at(index);
+    Boxed* field = &variables.get_variable(bc).fields.at(index);
     field->value_string.assign(v);
     if (runtime_debug)
-        *g_logfile << "Store field variable " << variable->name << " index " << index << " value '" << v << "'" << std::endl;
+        *g_logfile << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value '" << v << "'" << std::endl;
     return false;
 }
 
@@ -727,11 +701,10 @@ bool VM::opcode_LOAD_I_FIELD_ARRAY()
     VM_INT fields = stack.pop_int(bc);
     VM_INT index = stack.pop_int(bc);
     VM_INT array_index = stack.pop_int(bc);
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* field = &variable->fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
+    Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
     stack.push_float(field->value_int);
     if (runtime_debug)
-        *g_logfile << "Load field variable " << variable->name << " index " << index << " value " << field->value_int << std::endl;
+        *g_logfile << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_int << std::endl;
     return false;
 }
 
@@ -740,11 +713,10 @@ bool VM::opcode_LOAD_F_FIELD_ARRAY()
     VM_INT fields = stack.pop_int(bc);
     VM_INT index = stack.pop_int(bc);
     VM_INT array_index = stack.pop_int(bc);
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* field = &variable->fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
+    Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
     stack.push_float(field->value_float);
     if (runtime_debug)
-        *g_logfile << "Load field variable " << variable->name << " index " << index << " value " << field->value_float << std::endl;
+        *g_logfile << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_float << std::endl;
     return false;
 }
 
@@ -753,11 +725,10 @@ bool VM::opcode_LOAD_S_FIELD_ARRAY()
     VM_INT fields = stack.pop_int(bc);
     VM_INT index = stack.pop_int(bc);
     VM_INT array_index = stack.pop_int(bc);
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* field = &variable->fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
+    Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
     stack.push_string(field->value_string);
     if (runtime_debug)
-        *g_logfile << "Load field variable " << variable->name << " index " << index << " value '" << field->value_string << "'" << std::endl;
+        *g_logfile << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value '" << field->value_string << "'" << std::endl;
     return false;
 }
 
@@ -767,11 +738,10 @@ bool VM::opcode_STORE_I_FIELD_ARRAY()
     VM_INT index = stack.pop_int(bc);
     VM_INT v = stack.pop_int(bc);
     VM_INT array_index = stack.pop_int(bc);
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* field = &variable->fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
+    Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
     field->value_int = v;
     if (runtime_debug)
-        *g_logfile << "Store field variable " << variable->name << " index " << index << " value " << v << std::endl;
+        *g_logfile << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     return false;
 }
 
@@ -781,11 +751,10 @@ bool VM::opcode_STORE_F_FIELD_ARRAY()
     VM_INT index = stack.pop_int(bc);
     VM_FLOAT v = stack.pop_float(bc);
     VM_INT array_index = stack.pop_int(bc);
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* field = &variable->fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
+    Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
     field->value_float = v;
     if (runtime_debug)
-        *g_logfile << "Store field variable " << variable->name << " index " << index << " value " << v << std::endl;
+        *g_logfile << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     return false;
 }
 
@@ -795,67 +764,63 @@ bool VM::opcode_STORE_S_FIELD_ARRAY()
     VM_INT index = stack.pop_int(bc);
     VM_STRING v = stack.pop_string(bc);
     VM_INT array_index = stack.pop_int(bc);
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* field = &variable->fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
+    Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
     field->value_string.assign(v);
     if (runtime_debug)
-        *g_logfile << "Store field variable " << variable->name << " index " << index << " value '" << v << "'" << std::endl;
+        *g_logfile << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value '" << v << "'" << std::endl;
     return false;
 }
 
 bool VM::opcode_NEW_TYPE()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT num_fields = static_cast<size_t>(stack.pop_int(bc));
     if (num_fields == 0)
         error("DIM TYPE array of 0 size not allowed");
 
-    variable->fields.resize(num_fields);
+    variables.get_variable(bc).fields.resize(num_fields);
     if (runtime_debug)
-        *g_logfile << "Initialised type '" << variable->name << "' with " << num_fields << " fields" << std::endl;
+        *g_logfile << "Initialised type '" << variables.get_variable(bc).name << "' with " << num_fields << " fields" << std::endl;
     return false;
 }
 
 bool VM::opcode_ARRAYSIZE()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT dimension = stack.pop_int(bc);
     VM_INT size = 0;
-    switch (variable->type) {
+    switch (variables.get_variable(bc).type) {
     case Type::INTEGER_ARRAY:
-        size = static_cast<VM_INT>(variable->value_int_array.size());
+        size = static_cast<VM_INT>(variables.get_variable(bc).value_int_array.size());
         break;
     case Type::REAL_ARRAY:
-        size = static_cast<VM_INT>(variable->value_float_array.size());
+        size = static_cast<VM_INT>(variables.get_variable(bc).value_float_array.size());
         break;
     case Type::STRING_ARRAY:
-        size = static_cast<VM_INT>(variable->value_string_array.size());
+        size = static_cast<VM_INT>(variables.get_variable(bc).value_string_array.size());
         break;
     case Type::TYPE_ARRAY:
         error("Size of TYPE arrays not supported");
     }
     stack.push_int(size);
     if (runtime_debug)
-        *g_logfile << "Size of array requested for variable'" << variable->name << "' result=" << size << std::endl;
+        *g_logfile << "Size of array requested for variable'" << variables.get_variable(bc).name << "' result=" << size << std::endl;
 
     return false;
 }
 
 bool VM::opcode_DIM_F()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT dimensions = stack.pop_int(bc);
-    variable->type = Type::REAL_ARRAY;
-    variable->value_int = dimensions;
+    variables.get_variable(bc).type = Type::REAL_ARRAY;
+    variables.get_variable(bc).value_int = dimensions;
     if (dimensions == 1) {
         auto size = static_cast<size_t>(stack.pop_int(bc)) + 1;
         if (size == 1)
             error("DIM array of 0 size not allowed");
-        variable->value_float_array.resize(size);
+        variables.get_variable(bc).value_float_array.resize(size);
         if (runtime_debug)
-            *g_logfile << "Dimension float variable " << variable->name << " with size " << size << std::endl;
+            *g_logfile << "Dimension float variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
     } else {
-        variable->fields.clear();
+        variables.get_variable(bc).fields.clear();
         auto size2 = static_cast<size_t>(stack.pop_int(bc)) + 1;
         if (size2 == 1)
             error("DIM array of 0 size not allowed");
@@ -864,29 +829,28 @@ bool VM::opcode_DIM_F()
             error("DIM array of 0 size not allowed");
         Boxed b;
         b.value_int = static_cast<VM_INT>(size1);
-        variable->fields.push_back(std::move(b));
-        variable->value_float_array.resize(size1 * size2);
+        variables.get_variable(bc).fields.push_back(std::move(b));
+        variables.get_variable(bc).value_float_array.resize(size1 * size2);
         if (runtime_debug)
-            *g_logfile << "Dimension float variable " << variable->name << " with size " << size1 << "x" << size2 << std::endl;
+            *g_logfile << "Dimension float variable " << variables.get_variable(bc).name << " with size " << size1 << "x" << size2 << std::endl;
     }
     return false;
 }
 
 bool VM::opcode_DIM_I()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT dimensions = stack.pop_int(bc);
-    variable->type = Type::INTEGER_ARRAY;
-    variable->value_int = dimensions;
+    variables.get_variable(bc).type = Type::INTEGER_ARRAY;
+    variables.get_variable(bc).value_int = dimensions;
     if (dimensions == 1) {
         auto size = static_cast<size_t>(stack.pop_int(bc)) + 1;
         if (size == 1)
             error("DIM array of 0 size not allowed");
-        variable->value_int_array.resize(size);
+        variables.get_variable(bc).value_int_array.resize(size);
         if (runtime_debug)
-            *g_logfile << "Dimension int variable " << variable->name << " with size " << size << std::endl;
+            *g_logfile << "Dimension int variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
     } else {
-        variable->fields.clear();
+        variables.get_variable(bc).fields.clear();
         auto size2 = static_cast<size_t>(stack.pop_int(bc)) + 1;
         if (size2 == 1)
             error("DIM array of 0 size not allowed");
@@ -895,29 +859,28 @@ bool VM::opcode_DIM_I()
             error("DIM array of 0 size not allowed");
         Boxed b;
         b.value_int = static_cast<VM_INT>(size1);
-        variable->fields.push_back(std::move(b));
-        variable->value_int_array.resize(size1 * size2);
+        variables.get_variable(bc).fields.push_back(std::move(b));
+        variables.get_variable(bc).value_int_array.resize(size1 * size2);
         if (runtime_debug)
-            *g_logfile << "Dimension int variable " << variable->name << " with size " << size1 << "x" << size2 << std::endl;
+            *g_logfile << "Dimension int variable " << variables.get_variable(bc).name << " with size " << size1 << "x" << size2 << std::endl;
     }
     return false;
 }
 
 bool VM::opcode_DIM_S()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT dimensions = stack.pop_int(bc);
-    variable->type = Type::STRING_ARRAY;
-    variable->value_int = dimensions;
+    variables.get_variable(bc).type = Type::STRING_ARRAY;
+    variables.get_variable(bc).value_int = dimensions;
     if (dimensions == 1) {
         auto size = static_cast<size_t>(stack.pop_int(bc)) + 1;
         if (size == 1)
             error("DIM array of 0 size not allowed");
-        variable->value_string_array.resize(size);
+        variables.get_variable(bc).value_string_array.resize(size);
         if (runtime_debug)
-            *g_logfile << "Dimension string variable " << variable->name << " with size " << size << std::endl;
+            *g_logfile << "Dimension string variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
     } else {
-        variable->fields.clear();
+        variables.get_variable(bc).fields.clear();
         auto size2 = static_cast<size_t>(stack.pop_int(bc)) + 1;
         if (size2 == 1)
             error("DIM array of 0 size not allowed");
@@ -926,10 +889,10 @@ bool VM::opcode_DIM_S()
             error("DIM array of 0 size not allowed");
         Boxed b;
         b.value_int = static_cast<VM_INT>(size1);
-        variable->fields.push_back(std::move(b));
-        variable->value_string_array.resize(size1 * size2);
+        variables.get_variable(bc).fields.push_back(std::move(b));
+        variables.get_variable(bc).value_string_array.resize(size1 * size2);
         if (runtime_debug)
-            *g_logfile << "Dimension string variable " << variable->name << " with size " << size1 << "x" << size2 << std::endl;
+            *g_logfile << "Dimension string variable " << variables.get_variable(bc).name << " with size " << size1 << "x" << size2 << std::endl;
     }
     return false;
 }
@@ -978,200 +941,187 @@ bool VM::opcode_ROT_I()
 
 bool VM::opcode_FOR_I()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    variable->value_int_array.resize(3);
+    variables.get_variable(bc).value_int_array.resize(3);
     VM_INT pc = stack.pop_int(bc);
     VM_INT step = stack.pop_int(bc);
     VM_INT iterations = stack.pop_int(bc);
-    variable->value_int_array[0] = iterations / step;
-    variable->value_int_array[1] = step;
-    variable->value_int_array[2] = pc;
+    variables.get_variable(bc).value_int_array[0] = iterations / step;
+    variables.get_variable(bc).value_int_array[1] = step;
+    variables.get_variable(bc).value_int_array[2] = pc;
     if (runtime_debug)
-        *g_logfile << "Initialising FOR loop for variable '" << variable->name << "', " << variable->value_int_array[0] << " iterations" << std::endl;
+        *g_logfile << "Initialising FOR loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
     return false;
 }
 
 bool VM::opcode_FOR_F()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    variable->value_int_array.resize(2);
-    variable->value_float_array.resize(1);
+    variables.get_variable(bc).value_int_array.resize(2);
+    variables.get_variable(bc).value_float_array.resize(1);
     VM_INT pc = stack.pop_int(bc);
     VM_FLOAT step = stack.pop_float(bc);
     VM_FLOAT iterations = stack.pop_float(bc);
-    variable->value_int_array[0] = static_cast<int>(iterations / step);
-    variable->value_float_array[0] = step;
-    variable->value_int_array[1] = pc;
+    variables.get_variable(bc).value_int_array[0] = static_cast<int>(iterations / step);
+    variables.get_variable(bc).value_float_array[0] = step;
+    variables.get_variable(bc).value_int_array[1] = pc;
     if (runtime_debug)
-        *g_logfile << "Initialising FOR loop for variable '" << variable->name << "', " << variable->value_int_array[0] << " iterations" << std::endl;
+        *g_logfile << "Initialising FOR loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
     return false;
 }
 
 bool VM::opcode_NEXT_I()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    VM_INT step = variable->value_int_array[1];
-    variable->value_int += step;
-    variable->value_int_array[0]--; // iterations - 1
-    if (variable->value_int_array[0] >= 0) {
-        pc = variable->value_int_array[2];
+    VM_INT step = variables.get_variable(bc).value_int_array[1];
+    variables.get_variable(bc).value_int += step;
+    variables.get_variable(bc).value_int_array[0]--; // iterations - 1
+    if (variables.get_variable(bc).value_int_array[0] >= 0) {
+        helper_bytecodes().pc = variables.get_variable(bc).value_int_array[2];
     }
     if (runtime_debug)
-        *g_logfile << "NEXT integer variable " << variable->name << ", step " << step << ", iterations left " << (variable->value_int_array[0] + 1)
-                   << ", loop PC is 0x" << std::hex << variable->value_int_array[2] << std::dec << std::endl;
+        *g_logfile << "NEXT integer variable " << variables.get_variable(bc).name << ", step " << step << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
+                   << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[2] << std::dec << std::endl;
     return false;
 }
 
 bool VM::opcode_NEXT_F()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    VM_FLOAT step = variable->value_float_array[0];
-    variable->value_float += step;
-    variable->value_int_array[0]--; // iterations - 1
-    if (variable->value_int_array[0] >= 0) {
-        pc = variable->value_int_array[1];
+    VM_FLOAT step = variables.get_variable(bc).value_float_array[0];
+    variables.get_variable(bc).value_float += step;
+    variables.get_variable(bc).value_int_array[0]--; // iterations - 1
+    if (variables.get_variable(bc).value_int_array[0] >= 0) {
+        helper_bytecodes().pc = variables.get_variable(bc).value_int_array[1];
     }
     if (runtime_debug)
-        *g_logfile << "NEXT float variable " << variable->name << ", step " << step << ", iterations left " << (variable->value_int_array[0] + 1)
-                   << ", loop PC is 0x" << std::hex << variable->value_int_array[1] << std::dec << std::endl;
+        *g_logfile << "NEXT float variable " << variables.get_variable(bc).name << ", step " << step << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
+                   << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[1] << std::dec << std::endl;
     return false;
 }
 
 bool VM::opcode_FORIN_I()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    variable->value_int_array.resize(4);
+    variables.get_variable(bc).value_int_array.resize(4);
     VM_INT pc = stack.pop_int(bc);
     VM_INT var_array_index = stack.pop_int(bc);
-    Boxed* variable_array = variables.get_variable_by_int(var_array_index);
-    VM_INT iterations = static_cast<VM_INT>(variable_array->value_int_array.size());
-    variable->value_int_array[0] = iterations;
-    variable->value_int_array[1] = pc;
-    variable->value_int_array[2] = var_array_index;
-    variable->value_int_array[3] = 0;
-    variable->value_int = variable_array->value_int_array[0];
+    auto variable_array = variables.get_variable_by_int(var_array_index);
+    VM_INT iterations = static_cast<VM_INT>(variable_array.value_int_array.size());
+    variables.get_variable(bc).value_int_array[0] = iterations;
+    variables.get_variable(bc).value_int_array[1] = pc;
+    variables.get_variable(bc).value_int_array[2] = var_array_index;
+    variables.get_variable(bc).value_int_array[3] = 0;
+    variables.get_variable(bc).value_int = variable_array.value_int_array[0];
     if (runtime_debug)
-        *g_logfile << "Initialising FOR IN loop for variable '" << variable->name << "', " << variable->value_int_array[0] << " iterations" << std::endl;
+        *g_logfile << "Initialising FOR IN loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
     return false;
 }
 
 bool VM::opcode_FORIN_F()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    variable->value_int_array.resize(4);
+    variables.get_variable(bc).value_int_array.resize(4);
     VM_INT pc = stack.pop_int(bc);
     VM_INT var_array_index = stack.pop_int(bc);
-    Boxed* variable_array = variables.get_variable_by_int(var_array_index);
-    VM_INT iterations = static_cast<VM_INT>(variable_array->value_float_array.size());
-    variable->value_int_array[0] = iterations;
-    variable->value_int_array[1] = pc;
-    variable->value_int_array[2] = var_array_index;
-    variable->value_int_array[3] = 0;
-    variable->value_float = variable_array->value_float_array[0];
+    auto variable_array = variables.get_variable_by_int(var_array_index);
+    VM_INT iterations = static_cast<VM_INT>(variable_array.value_float_array.size());
+    variables.get_variable(bc).value_int_array[0] = iterations;
+    variables.get_variable(bc).value_int_array[1] = pc;
+    variables.get_variable(bc).value_int_array[2] = var_array_index;
+    variables.get_variable(bc).value_int_array[3] = 0;
+    variables.get_variable(bc).value_float = variable_array.value_float_array[0];
     if (runtime_debug)
-        *g_logfile << "Initialising FOR IN loop for variable '" << variable->name << "', " << variable->value_int_array[0] << " iterations" << std::endl;
+        *g_logfile << "Initialising FOR IN loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
     return false;
 }
 
 bool VM::opcode_FORIN_S()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    variable->value_int_array.resize(4);
+    variables.get_variable(bc).value_int_array.resize(4);
     VM_INT pc = stack.pop_int(bc);
     VM_INT var_array_index = stack.pop_int(bc);
-    Boxed* variable_array = variables.get_variable_by_int(var_array_index);
-    VM_INT iterations = static_cast<VM_INT>(variable_array->value_string_array.size());
-    variable->value_int_array[0] = iterations;
-    variable->value_int_array[1] = pc;
-    variable->value_int_array[2] = var_array_index;
-    variable->value_int_array[3] = 0;
-    variable->value_string = variable_array->value_string_array[0];
+    auto variable_array = variables.get_variable_by_int(var_array_index);
+    VM_INT iterations = static_cast<VM_INT>(variable_array.value_string_array.size());
+    variables.get_variable(bc).value_int_array[0] = iterations;
+    variables.get_variable(bc).value_int_array[1] = pc;
+    variables.get_variable(bc).value_int_array[2] = var_array_index;
+    variables.get_variable(bc).value_int_array[3] = 0;
+    variables.get_variable(bc).value_string = variable_array.value_string_array[0];
     if (runtime_debug)
-        *g_logfile << "Initialising FOR IN loop for variable '" << variable->name << "', " << variable->value_int_array[0] << " iterations" << std::endl;
+        *g_logfile << "Initialising FOR IN loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
     return false;
 }
 
 bool VM::opcode_NEXTIN_I()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* variable_array = variables.get_variable_by_int(variable->value_int_array[2]);
-    if (variable->value_int_array[0] == 0) {
+    auto variable_array = variables.get_variable_by_int(variables.get_variable(bc).value_int_array[2]);
+    if (variables.get_variable(bc).value_int_array[0] == 0) {
         if (runtime_debug)
-            *g_logfile << "NEXT IN integer variable " << variable->name << ", complete" << std::endl;
+            *g_logfile << "NEXT IN integer variable " << variables.get_variable(bc).name << ", complete" << std::endl;
     } else {
-        variable->value_int_array[0]--;
-        variable->value_int = variable_array->value_int_array[variable->value_int_array[3]++];
-        pc = variable->value_int_array[1];
+        variables.get_variable(bc).value_int_array[0]--;
+        variables.get_variable(bc).value_int = variable_array.value_int_array[variables.get_variable(bc).value_int_array[3]++];
+        helper_bytecodes().pc = variables.get_variable(bc).value_int_array[1];
         if (runtime_debug)
-            *g_logfile << "NEXT IN integer variable " << variable->name << ", iterations left " << (variable->value_int_array[0] + 1)
-                       << ", loop PC is 0x" << std::hex << variable->value_int_array[1] << std::dec << std::endl;
+            *g_logfile << "NEXT IN integer variable " << variables.get_variable(bc).name << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
+                       << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[1] << std::dec << std::endl;
     }
     return false;
 }
 
 bool VM::opcode_NEXTIN_F()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* variable_array = variables.get_variable_by_int(variable->value_int_array[2]);
-    if (variable->value_int_array[0] == 0) {
+    auto variable_array = variables.get_variable_by_int(variables.get_variable(bc).value_int_array[2]);
+    if (variables.get_variable(bc).value_int_array[0] == 0) {
         if (runtime_debug)
-            *g_logfile << "NEXT IN float variable " << variable->name << ", complete" << std::endl;
+            *g_logfile << "NEXT IN float variable " << variables.get_variable(bc).name << ", complete" << std::endl;
     } else {
-        variable->value_int_array[0]--;
-        variable->value_float = variable_array->value_float_array[variable->value_int_array[3]++];
-        pc = variable->value_int_array[1];
+        variables.get_variable(bc).value_int_array[0]--;
+        variables.get_variable(bc).value_float = variable_array.value_float_array[variables.get_variable(bc).value_int_array[3]++];
+        helper_bytecodes().pc = variables.get_variable(bc).value_int_array[1];
         if (runtime_debug)
-            *g_logfile << "NEXT IN float variable " << variable->name << ", iterations left " << (variable->value_int_array[0] + 1)
-                       << ", loop PC is 0x" << std::hex << variable->value_int_array[1] << std::dec << std::endl;
+            *g_logfile << "NEXT IN float variable " << variables.get_variable(bc).name << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
+                       << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[1] << std::dec << std::endl;
     }
     return false;
 }
 
 bool VM::opcode_NEXTIN_S()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* variable_array = variables.get_variable_by_int(variable->value_int_array[2]);
-    if (variable->value_int_array[0] == 0) {
+    auto variable_array = variables.get_variable_by_int(variables.get_variable(bc).value_int_array[2]);
+    if (variables.get_variable(bc).value_int_array[0] == 0) {
         if (runtime_debug)
-            *g_logfile << "NEXT IN string variable " << variable->name << ", complete" << std::endl;
+            *g_logfile << "NEXT IN string variable " << variables.get_variable(bc).name << ", complete" << std::endl;
     } else {
-        variable->value_int_array[0]--;
-        variable->value_string = variable_array->value_string_array[variable->value_int_array[3]++];
-        pc = variable->value_int_array[1];
+        variables.get_variable(bc).value_int_array[0]--;
+        variables.get_variable(bc).value_string = variable_array.value_string_array[variables.get_variable(bc).value_int_array[3]++];
+        helper_bytecodes().pc = variables.get_variable(bc).value_int_array[1];
         if (runtime_debug)
-            *g_logfile << "NEXT IN string variable " << variable->name << ", iterations left " << (variable->value_int_array[0] + 1)
-                       << ", loop PC is 0x" << std::hex << variable->value_int_array[1] << std::dec << std::endl;
+            *g_logfile << "NEXT IN string variable " << variables.get_variable(bc).name << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
+                       << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[1] << std::dec << std::endl;
     }
     return false;
 }
 
 bool VM::opcode_READ_I()
 {
-    Boxed* variable = variables.get_variable(&bc);
     Boxed b = *data_iterator++;
-    variable->value_int = b.value_int;
+    variables.get_variable(bc).value_int = b.value_int;
     if (runtime_debug)
-        *g_logfile << "Read integer " << b.value_int << " in " << variable->name << std::endl;
+        *g_logfile << "Read integer " << b.value_int << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
 bool VM::opcode_READ_F()
 {
-    Boxed* variable = variables.get_variable(&bc);
     Boxed b = *data_iterator++;
-    variable->value_float = b.value_float;
+    variables.get_variable(bc).value_float = b.value_float;
     if (runtime_debug)
-        *g_logfile << "Read float " << b.value_float << " in " << variable->name << std::endl;
+        *g_logfile << "Read float " << b.value_float << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
 bool VM::opcode_READ_S()
 {
-    Boxed* variable = variables.get_variable(&bc);
     Boxed b = *data_iterator++;
-    variable->value_string.assign(b.value_string);
+    variables.get_variable(bc).value_string.assign(b.value_string);
     if (runtime_debug)
-        *g_logfile << "Read string " << b.value_string << " in " << variable->name << std::endl;
+        *g_logfile << "Read string " << b.value_string << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
@@ -1186,16 +1136,15 @@ bool VM::opcode_RESTORE()
 
 bool VM::opcode_READ_I_ARRAY()
 {
-    Boxed* variable = variables.get_variable(&bc);
     Boxed b = *data_iterator++;
     VM_INT dimensions = stack.pop_int(bc);
     if (dimensions == 1) {
         VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variable->value_int_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
             error("Invalid array or array index");
-        variable->value_int_array[index] = b.value_int;
+        variables.get_variable(bc).value_int_array[index] = b.value_int;
         if (runtime_debug)
-            *g_logfile << "Read int vector variable " << variable->name << " index " << index << " value " << b.value_int << std::endl;
+            *g_logfile << "Read int vector variable " << variables.get_variable(bc).name << " index " << index << " value " << b.value_int << std::endl;
     } else {
         error("No read 2d arrays");
     }
@@ -1204,16 +1153,15 @@ bool VM::opcode_READ_I_ARRAY()
 
 bool VM::opcode_READ_S_ARRAY()
 {
-    Boxed* variable = variables.get_variable(&bc);
     Boxed b = *data_iterator++;
     VM_INT dimensions = stack.pop_int(bc);
     if (dimensions == 1) {
         VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variable->value_string_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
             error("Invalid array or array index");
-        variable->value_string_array[index].assign(b.value_string);
+        variables.get_variable(bc).value_string_array[index].assign(b.value_string);
         if (runtime_debug)
-            *g_logfile << "Read string vector variable " << variable->name << " index " << index << " value " << b.value_int << std::endl;
+            *g_logfile << "Read string vector variable " << variables.get_variable(bc).name << " index " << index << " value " << b.value_int << std::endl;
     } else {
         error("No read 2d arrays");
     }
@@ -1222,16 +1170,15 @@ bool VM::opcode_READ_S_ARRAY()
 
 bool VM::opcode_READ_F_ARRAY()
 {
-    Boxed* variable = variables.get_variable(&bc);
     Boxed b = *data_iterator++;
     VM_INT dimensions = stack.pop_int(bc);
     if (dimensions == 1) {
         VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variable->value_float_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_float_array.size()))
             error("Invalid array or array index");
-        variable->value_float_array[index] = b.value_float;
+        variables.get_variable(bc).value_float_array[index] = b.value_float;
         if (runtime_debug)
-            *g_logfile << "Read float vector variable " << variable->name << " index " << index << " value " << b.value_int << std::endl;
+            *g_logfile << "Read float vector variable " << variables.get_variable(bc).name << " index " << index << " value " << b.value_int << std::endl;
         return false;
     } else {
         error("No read 2d arrays");
@@ -1481,7 +1428,7 @@ bool VM::opcode_BOOL_NOT()
 
 bool VM::opcode_REPEAT()
 {
-    repeats.push(pc);
+    repeats.push(helper_bytecodes().pc);
     if (runtime_debug)
         *g_logfile << "Start of repeat" << std::endl;
     return false;
@@ -1498,7 +1445,7 @@ bool VM::opcode_JNEREP()
         UINT32 new_pc = repeats.top();
         if (runtime_debug)
             *g_logfile << "Until, false condition, so jumping to " << new_pc << std::endl;
-        pc = new_pc;
+        helper_bytecodes().pc = new_pc;
     }
     return false;
 }
@@ -1508,7 +1455,7 @@ bool VM::opcode_JUMP()
     UINT32 new_pc = bc.data;
     if (runtime_debug)
         *g_logfile << "Jumping to " << new_pc << std::endl;
-    pc = new_pc;
+    helper_bytecodes().pc = new_pc;
     return false;
 }
 
@@ -1518,11 +1465,11 @@ bool VM::opcode_CALL()
     UINT32 new_pc = bc.data;
     if (runtime_debug)
         *g_logfile << "Calling " << new_pc << std::endl;
-    locals_stack.push(*variables.get_locals());
+    locals_stack.push(variables.get_locals());
     auto c = get_function_locals_count(l);
     variables.set_locals(std::vector<Boxed>(c));
-    call_stack.push(pc);
-    pc = new_pc;
+    call_stack.push(helper_bytecodes().pc);
+    helper_bytecodes().pc = new_pc;
     return false;
 }
 
@@ -1551,7 +1498,7 @@ bool VM::opcode_CJUMPT()
     } else {
         if (runtime_debug)
             *g_logfile << "Case, no otherwise, so jumping to " << new_pc << std::endl;
-        pc = new_pc;
+        helper_bytecodes().pc = new_pc;
     }
     return false;
 }
@@ -1569,7 +1516,7 @@ bool VM::opcode_RETURN()
     call_stack.pop();
     if (runtime_debug)
         *g_logfile << "Returning to " << new_pc << std::endl;
-    pc = new_pc;
+    helper_bytecodes().pc = new_pc;
     return false;
 }
 
@@ -1578,74 +1525,71 @@ bool VM::opcode_GOTO()
     UINT32 new_pc = bc.data;
     if (runtime_debug)
         *g_logfile << "Jumping to " << new_pc << std::endl;
-    pc = new_pc;
+    helper_bytecodes().pc = new_pc;
     return false;
 }
 
 bool VM::opcode_GOSUB()
 {
-    call_stack.push(pc | GosubCallFlag);
+    call_stack.push(helper_bytecodes().pc | GosubCallFlag);
     UINT32 new_pc = bc.data;
     if (runtime_debug)
         *g_logfile << "Calling subroutine at " << new_pc << std::endl;
-    pc = new_pc;
+    helper_bytecodes().pc = new_pc;
     return false;
 }
 
 bool VM::opcode_UNPACK_F()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* b = stack.pop_boxed();
-    switch (b->type) {
+    auto b = stack.pop_boxed();
+    switch (b.type) {
     case Type::REAL:
-        variable->value_float = b->value_float;
+        variables.get_variable(bc).value_float = b.value_float;
         break;
     case Type::INTEGER:
-        variable->value_float = static_cast<VM_FLOAT>(b->value_int);
+        variables.get_variable(bc).value_float = static_cast<VM_FLOAT>(b.value_int);
         break;
     default:
         error("Unsupported unpack casting");
     }
-    b->type = Type::NOTYPE;
+    b.type = Type::NOTYPE;
     if (runtime_debug)
-        *g_logfile << "Unpacked float value of " << variable->value_float << " in variable " << variable->name << std::endl;
+        *g_logfile << "Unpacked float value of " << variables.get_variable(bc).value_float << " in variable " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
 bool VM::opcode_UNPACK_I()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* b = stack.pop_boxed();
-    switch (b->type) {
+    auto b = stack.pop_boxed();
+    switch (b.type) {
     case Type::INTEGER:
-        variable->value_int = b->value_int;
+        variables.get_variable(bc).value_int = b.value_int;
         break;
     case Type::REAL:
-        variable->value_int = static_cast<VM_INT>(b->value_float);
+        variables.get_variable(bc).value_int = static_cast<VM_INT>(b.value_float);
         break;
     default:
         error("Unsupported unpack casting");
     }
-    b->type = Type::NOTYPE;
+    b.type = Type::NOTYPE;
     if (runtime_debug)
-        *g_logfile << "Unpacked int value of " << variable->value_int << " in variable " << variable->name << std::endl;
+        *g_logfile << "Unpacked int value of " << variables.get_variable(bc).value_int << " in variable " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
 bool VM::opcode_UNPACK_S()
 {
-    Boxed* variable = variables.get_variable(&bc);
-    Boxed* b = stack.pop_boxed();
-    switch (b->type) {
+    auto b = stack.pop_boxed();
+    switch (b.type) {
     case Type::STRING:
-        variable->value_string.assign(b->value_string);
+        variables.get_variable(bc).value_string.assign(b.value_string);
         break;
     default:
         error("Unsupported unpack casting");
     }
-    b->type = Type::NOTYPE;
+    b.type = Type::NOTYPE;
     if (runtime_debug)
-        *g_logfile << "Unpacked string value of '" << variable->value_int << " in variable " << variable->name << "'" << std::endl;
+        *g_logfile << "Unpacked string value of '" << variables.get_variable(bc).value_int << " in variable " << variables.get_variable(bc).name << "'" << std::endl;
     return false;
 }
 
@@ -1659,7 +1603,7 @@ bool VM::opcode_JNE()
     } else {
         if (runtime_debug)
             *g_logfile << "False condition, so jumping to " << new_pc << std::endl;
-        pc = new_pc;
+        helper_bytecodes().pc = new_pc;
     }
     return false;
 }
@@ -1675,7 +1619,7 @@ bool VM::opcode_JE()
         UINT32 new_pc = repeats.top();
         if (runtime_debug)
             *g_logfile << "True condition, so jumping to " << new_pc << std::endl;
-        pc = new_pc;
+        helper_bytecodes().pc = new_pc;
     }
     return false;
 }
@@ -2092,7 +2036,6 @@ bool VM::opcode_CLOSE()
 
 bool VM::opcode_LISTFILES()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_STRING v = stack.pop_string(bc);
     std::vector<std::string> files;
 #ifdef RISCOS
@@ -2130,14 +2073,14 @@ bool VM::opcode_LISTFILES()
 
     // Dim destination array
     auto size = files.size() + 1;
-    variable->value_string_array.resize(size);
+    variables.get_variable(bc).value_string_array.resize(size);
     if (runtime_debug)
-        *g_logfile << "Dimension string variable " << variable->name << " with size " << size << std::endl;
-    variable->value_string_array.clear();
+        *g_logfile << "Dimension string variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
+    variables.get_variable(bc).value_string_array.clear();
 
     // And copy values over
     for (auto it = files.begin(); it != files.end(); ++it) {
-        variable->value_string_array.push_back(*it);
+        variables.get_variable(bc).value_string_array.push_back(*it);
     }
 
     return false;
@@ -2486,7 +2429,6 @@ bool VM::opcode_TEXTCENTRE()
 
 bool VM::opcode_CREATEVERTEX()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT colour = stack.pop_int(bc);
     VM_FLOAT z = stack.pop_float(bc);
     VM_FLOAT y = stack.pop_float(bc);
@@ -2496,22 +2438,22 @@ bool VM::opcode_CREATEVERTEX()
     auto base = static_cast<size_t>(array_index) * 4;
 
     // X
-    Boxed* field = &variable->fields[static_cast<size_t>(base)];
+    Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(base)];
     field->type = Type::REAL;
     field->value_float = x;
 
     // Y
-    field = &variable->fields[static_cast<size_t>(base + 1)];
+    field = &variables.get_variable(bc).fields[static_cast<size_t>(base + 1)];
     field->type = Type::REAL;
     field->value_float = y;
 
     // Z
-    field = &variable->fields[static_cast<size_t>(base + 2)];
+    field = &variables.get_variable(bc).fields[static_cast<size_t>(base + 2)];
     field->type = Type::REAL;
     field->value_float = z;
 
     // colour
-    field = &variable->fields[static_cast<size_t>(base + 3)];
+    field = &variables.get_variable(bc).fields[static_cast<size_t>(base + 3)];
     field->type = Type::INTEGER;
     field->value_int = colour;
 
@@ -2520,7 +2462,6 @@ bool VM::opcode_CREATEVERTEX()
 
 bool VM::opcode_CREATETRIANGLE()
 {
-    Boxed* variable = variables.get_variable(&bc);
     VM_INT colour = stack.pop_int(bc);
     VM_INT v3 = stack.pop_int(bc);
     VM_INT v2 = stack.pop_int(bc);
@@ -2530,22 +2471,22 @@ bool VM::opcode_CREATETRIANGLE()
     auto base = static_cast<size_t>(array_index) * 4;
 
     // Vertex 1
-    Boxed* field = &variable->fields[static_cast<size_t>(base)];
+    Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(base)];
     field->type = Type::INTEGER;
     field->value_int = v1;
 
     // Vertex 2
-    field = &variable->fields[static_cast<size_t>(base + 1)];
+    field = &variables.get_variable(bc).fields[static_cast<size_t>(base + 1)];
     field->type = Type::INTEGER;
     field->value_int = v2;
 
     // Vertex 3
-    field = &variable->fields[static_cast<size_t>(base + 2)];
+    field = &variables.get_variable(bc).fields[static_cast<size_t>(base + 2)];
     field->type = Type::INTEGER;
     field->value_int = v3;
 
     // colour
-    field = &variable->fields[static_cast<size_t>(base + 3)];
+    field = &variables.get_variable(bc).fields[static_cast<size_t>(base + 3)];
     field->type = Type::INTEGER;
     field->value_int = colour;
 
@@ -2554,10 +2495,10 @@ bool VM::opcode_CREATETRIANGLE()
 
 bool VM::opcode_CREATESHAPE()
 {
-    Boxed* variable2 = variables.get_variable(&bc);
+    auto variable2 = variables.get_variable(bc);
     VM_INT var2 = stack.pop_int(bc);
-    Boxed* variable1 = variables.get_variable_by_int(var2);
-    VM_INT id = world.create_shape(*variable1, *variable2);
+    auto variable1 = variables.get_variable_by_int(var2);
+    VM_INT id = world.create_shape(variable1, variable2);
     stack.push_int(id);
     return false;
 }
@@ -2761,17 +2702,17 @@ bool VM::opcode_MOUSE()
 {
     VM_INT v2 = stack.pop_int(bc);
     VM_INT v3 = stack.pop_int(bc);
-    Boxed* variable_x = variables.get_variable(&bc);
-    Boxed* variable_y = variables.get_variable_by_int(v2);
-    Boxed* variable_state = variables.get_variable_by_int(v3);
-    g_graphics->mouse(variable_x->value_int, variable_y->value_int, variable_state->value_int);
+    auto variable_x = variables.get_variable(bc);
+    auto variable_y = variables.get_variable_by_int(v2);
+    auto variable_state = variables.get_variable_by_int(v3);
+    g_graphics->mouse(variable_x.value_int, variable_y.value_int, variable_state.value_int);
     return false;
 }
 
 std::string VM::run()
 {
     *g_logfile << "-> Running" << std::endl;
-    pc = 0;
+    helper_bytecodes().pc = 0;
     data_iterator = data.begin();
     bool quit = false;
     int poll_count = 0;
@@ -2785,10 +2726,10 @@ std::string VM::run()
             g_graphics->poll();
             poll_count = 0;
         }
-        bc = code[pc++];
+        bc = helper_bytecodes().get_current_bytecode();
         if (runtime_debug) {
             *g_logfile << std::uppercase << "[" << std::setw(4) << bc.file_number << " : " << std::setw(8) << bc.line_number << " : " << std::hex << std::setw(8)
-                       << pc - 1 << " : " << std::setw(2) << (int)bc.opcode << "]  " << std::nouppercase << std::dec;
+                       << helper_bytecodes().pc - 1 << " : " << std::setw(2) << (int)bc.opcode << "]  " << std::nouppercase << std::dec;
         }
         switch (bc.opcode) {
         case Bytecodes::NOP:
@@ -3445,8 +3386,7 @@ void VM::inject_variables(std::vector<Boxed> chained_variables)
 
         // Now find this
         bool match = false;
-        auto a = variables.get_variables();
-        for (auto itv = a->begin(); itv != a->end(); ++itv) {
+        for (auto itv = variables.get_variables().begin(); itv != variables.get_variables().end(); ++itv) {
 
             // Match?
             if ((*it).name.compare((*itv).name) == 0) {
@@ -3462,30 +3402,4 @@ void VM::inject_variables(std::vector<Boxed> chained_variables)
             error("Unable to match EXPECT variable");
         }
     }
-}
-
-void VM::insert_instruction(UINT32 line_number, short file_number, bool write, Bytecodes bytecode, UINT32 operand)
-{
-    if (write) {
-        Bytecode b;
-        b.opcode = bytecode;
-        b.data = operand;
-        b.line_number = line_number;
-        b.file_number = file_number;
-        code.push_back(std::move(b));
-    }
-    pc++;
-}
-
-void VM::insert_bytecode(UINT32 line_number, short file_number, bool write, Bytecodes bytecode)
-{
-    if (write) {
-        Bytecode b;
-        b.opcode = bytecode;
-        b.data = 0;
-        b.line_number = line_number;
-        b.file_number = file_number;
-        code.push_back(std::move(b));
-    }
-    pc++;
 }

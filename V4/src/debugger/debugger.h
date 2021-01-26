@@ -45,29 +45,26 @@ private:
     void debugger_disassembly();
     void debugger_variables();
     int debugger_manual_keyword_section(KeywordCategory category, int* index, int selected, std::string* selected_keyword);
-    Disassembly disassemble_instruction(Bytecode* bc, UINT32 i);
-    void name_for_operand(Disassembly& ret, Bytecode* bcc, UINT32 i);
-    void address_for_jump(Disassembly& ret, Bytecode* bcc);
-    std::string get_name_for_operand(Bytecode *bc, UINT32 i);
+    Disassembly disassemble_instruction(Bytecode& bc, UINT32 i);
+    void name_for_operand(Disassembly& ret, Bytecode& bcc, UINT32 i);
+    void address_for_jump(Disassembly& ret, Bytecode& bcc);
+    std::string get_name_for_operand(Bytecode& bc, UINT32 i);
     std::vector<Disassembly> disassemble_entire_file();
     void debugger_options(int selected, int open_mode);
 
-    Boxed* get_variable_bc(Bytecode *bc, UINT32 pc)
+    Boxed& get_variable_bc(Bytecode& bc, UINT32 pc)
     {
-        if (bc->is_local_variable()) {
+        if (bc.is_local_variable()) {
             // Find the function we are in
             for (auto it = g_vm->functions.begin(); it != g_vm->functions.end(); ++it) {
                 if (pc >= (*it).pc_start && pc <= (*it).pc_end) {
                     auto fl = g_vm->get_function_local((*it).id);
-                    int index = bc->data ^ LocalVariableFlag;
-                    auto v = fl[index];
-                    return &v;
+                    int index = bc.data ^ LocalVariableFlag;
+                    return fl[index];
                 }
             }
         } else {
-            auto a1 = g_vm->get_variables();
-            auto a2 = a1->get_variable(bc);
-            return a2;
+            return g_vm->helper_variables().get_variable(bc);
         }
     }
 };

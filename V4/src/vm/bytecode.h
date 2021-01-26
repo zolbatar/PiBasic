@@ -1,8 +1,11 @@
 #pragma once
 #include "../types.h"
 #include "boxed.h"
+#include <map>
+#include <sstream>
 
 const int LocalVariableFlag = 1 << 31;
+extern std::map<std::string, int> files_index;
 
 enum class Bytecodes {
     NOP,
@@ -257,17 +260,72 @@ enum class Bytecodes {
 
 class Bytecode {
 public:
-    bool is_local_variable()
-    {
-        return data & LocalVariableFlag;
-    }
-    size_t get_global() { return static_cast<size_t>(data); }
-    size_t get_local() { return static_cast<size_t>(data ^ LocalVariableFlag); }
-    UINT32 get_line_number() { return line_number; }
-    UINT32 get_file_number() { return file_number; }
-
     Bytecodes opcode;
     UINT32 data;
     UINT32 line_number;
     short file_number;
+
+    bool is_local_variable() { return data & LocalVariableFlag; }
+    UINT32 global_index() { return data; }
+    UINT32 local_index() { return data ^ LocalVariableFlag; }
+
+    std::string filename()
+    {
+        std::vector<std::string> file_names;
+        for (auto it = files_index.begin(); it != files_index.end(); ++it) {
+            file_names.push_back((*it).first);
+        }
+        return file_names[file_number];
+    }
+
+    std::string location_string()
+    {
+        std::stringstream s;
+        s << " at line " << line_number << ", file '" << filename() + "'";
+        return s.str();
+    }
+};
+
+class BytecodeContainer {
+public:
+    UINT32 pc = 0; // Program counter
+    UINT32 size = 0; // Size of bytecode
+
+    Bytecode& get_bytecode(size_t i) { return code[i]; }
+    Bytecode& get_current_bytecode() { return code[pc++]; }
+
+    void build_bytecode()
+    {
+        size = pc;
+        pc = 0;
+    }
+
+    void insert_instruction(UINT32 line_number, short file_number, bool write, Bytecodes bytecode, UINT32 operand)
+    {
+        if (write) {
+            Bytecode b;
+            b.opcode = bytecode;
+            b.data = operand;
+            b.line_number = line_number;
+            b.file_number = file_number;
+            code.push_back(std::move(b));
+        }
+        pc++;
+    }
+
+    void insert_bytecode(UINT32 line_number, short file_number, bool write, Bytecodes bytecode)
+    {
+        if (write) {
+            Bytecode b;
+            b.opcode = bytecode;
+            b.data = 0;
+            b.line_number = line_number;
+            b.file_number = file_number;
+            code.push_back(std::move(b));
+        }
+        pc++;
+    }
+
+private:
+    std::vector<Bytecode> code; // Instructions, which are opcode and optional data
 };

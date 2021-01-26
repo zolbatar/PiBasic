@@ -15,7 +15,7 @@ public:
     void push_int(const VM_INT v);
     void push_string(const VM_STRING& v);
     void drop();
-    Boxed* pop_boxed();
+    Boxed& pop_boxed();
     VM_FLOAT pop_float(Bytecode& bc);
     VM_INT pop_int(Bytecode& bc);
     VM_STRING pop_string(Bytecode& bc);

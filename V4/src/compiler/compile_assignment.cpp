@@ -70,11 +70,11 @@ void Compiler::assignment(Type type, int var_id, int field_id, Type field_type, 
             error("No value to assign");
         switch (peek_type()) {
         case Type::REAL:
-            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
-            g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_I, var_id);
+            g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
+            g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_I, var_id);
             break;
         case Type::INTEGER:
-            g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_I, var_id);
+            g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_I, var_id);
             break;
         default:
             error("Failed conversion for assignment");
@@ -86,11 +86,11 @@ void Compiler::assignment(Type type, int var_id, int field_id, Type field_type, 
             error("No value to assign");
         switch (peek_type()) {
         case Type::INTEGER:
-            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
-            g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_F, var_id);
+            g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
+            g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_F, var_id);
             break;
         case Type::REAL:
-            g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_F, var_id);
+            g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_F, var_id);
             break;
         default:
             error("Failed conversion for assignment");
@@ -102,7 +102,7 @@ void Compiler::assignment(Type type, int var_id, int field_id, Type field_type, 
             error("No value to assign");
         switch (peek_type()) {
         case Type::STRING:
-            g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_S, var_id);
+            g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_S, var_id);
             break;
         default:
             error("Failed conversion for assignment");
@@ -110,18 +110,18 @@ void Compiler::assignment(Type type, int var_id, int field_id, Type field_type, 
         stack_pop();
         break;
     case Type::INTEGER_ARRAY:
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, dimensions); // 1 dimension
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_I_ARRAY, var_id);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, dimensions); // 1 dimension
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_I_ARRAY, var_id);
         stack_pop();
         break;
     case Type::REAL_ARRAY:
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, dimensions); // 1 dimension
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_F_ARRAY, var_id);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, dimensions); // 1 dimension
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_F_ARRAY, var_id);
         stack_pop();
         break;
     case Type::STRING_ARRAY:
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, dimensions); // 1 dimension
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_S_ARRAY, var_id);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, dimensions); // 1 dimension
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_S_ARRAY, var_id);
         stack_pop();
         break;
     case Type::TYPE: {
@@ -129,20 +129,20 @@ void Compiler::assignment(Type type, int var_id, int field_id, Type field_type, 
             // Pop on the stack the number of fields, we don't want at runtime to know some of the gritty details
             auto g = custom_types.find(custom_type_name);
             auto f = (*g).second;
-            g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, static_cast<int>(f.members.size()));
-            g_vm->insert_instruction(line_number, file_number, write, Bytecodes::NEW_TYPE, var_id);
+            g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, static_cast<int>(f.members.size()));
+            g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::NEW_TYPE, var_id);
         } else {
-            g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, field_id);
+            g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, field_id);
             switch (field_type) {
             case Type::INTEGER:
                 assert(stack_size() == 1);
                 switch (peek_type()) {
                 case Type::REAL:
-                    g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
-                    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_I_FIELD, var_id);
+                    g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
+                    g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_I_FIELD, var_id);
                     break;
                 case Type::INTEGER:
-                    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_I_FIELD, var_id);
+                    g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_I_FIELD, var_id);
                     break;
                 default:
                     error("Failed conversion for assignment");
@@ -153,11 +153,11 @@ void Compiler::assignment(Type type, int var_id, int field_id, Type field_type, 
                 assert(stack_size() == 1);
                 switch (peek_type()) {
                 case Type::INTEGER:
-                    g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
-                    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_F_FIELD, var_id);
+                    g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
+                    g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_F_FIELD, var_id);
                     break;
                 case Type::REAL:
-                    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_F_FIELD, var_id);
+                    g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_F_FIELD, var_id);
                     break;
                 default:
                     error("Failed conversion for assignment");
@@ -169,7 +169,7 @@ void Compiler::assignment(Type type, int var_id, int field_id, Type field_type, 
                 assert(stack_size() == 1);
                 switch (peek_type()) {
                 case Type::STRING:
-                    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_S_FIELD, var_id);
+                    g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_S_FIELD, var_id);
                     break;
                 default:
                     error("Failed conversion for assignment");
@@ -184,18 +184,18 @@ void Compiler::assignment(Type type, int var_id, int field_id, Type field_type, 
         break;
     }
     case Type::TYPE_ARRAY: {
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, field_id);
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, field_count);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, field_id);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, field_count);
         switch (field_type) {
         case Type::INTEGER:
             assert(stack_size() == 1);
             switch (peek_type()) {
             case Type::REAL:
-                g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
-                g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_I_FIELD_ARRAY, var_id);
+                g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
+                g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_I_FIELD_ARRAY, var_id);
                 break;
             case Type::INTEGER:
-                g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_I_FIELD_ARRAY, var_id);
+                g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_I_FIELD_ARRAY, var_id);
                 break;
             default:
                 error("Failed conversion for assignment");
@@ -206,11 +206,11 @@ void Compiler::assignment(Type type, int var_id, int field_id, Type field_type, 
             assert(stack_size() == 1);
             switch (peek_type()) {
             case Type::INTEGER:
-                g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
-                g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_F_FIELD_ARRAY, var_id);
+                g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
+                g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_F_FIELD_ARRAY, var_id);
                 break;
             case Type::REAL:
-                g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_F_FIELD_ARRAY, var_id);
+                g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_F_FIELD_ARRAY, var_id);
                 break;
             default:
                 error("Failed conversion for assignment");
@@ -222,7 +222,7 @@ void Compiler::assignment(Type type, int var_id, int field_id, Type field_type, 
             assert(stack_size() == 1);
             switch (peek_type()) {
             case Type::STRING:
-                g_vm->insert_instruction(line_number, file_number, write, Bytecodes::STORE_S_FIELD_ARRAY, var_id);
+                g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::STORE_S_FIELD_ARRAY, var_id);
                 break;
             default:
                 error("Failed conversion for assignment");

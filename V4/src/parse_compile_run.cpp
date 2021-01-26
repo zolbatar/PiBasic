@@ -18,9 +18,7 @@ extern std::stack<int> yylineno_stack;
 extern std::map<int, std::list<AST*>> ast_lines;
 extern std::map<std::string, int> files_index;
 
-// For running debugger
-std::shared_ptr<VM> current_vm;
-
+// Global stuff
 extern std::unique_ptr<VM> g_vm;
 extern std::unique_ptr<Graphics> g_graphics;
 extern std::unique_ptr<std::stringstream> g_logfile;
@@ -95,7 +93,7 @@ void run_vm()
         std::string chain = g_vm->run();
         done = true;
         if (chain.length() > 0) {
-            auto chained_variables = g_vm->get_variables()->get_chained_variables();
+            auto chained_variables = g_vm->helper_variables().get_chained_variables();
             parse_and_compile(chain.c_str(), false, nullptr);
             g_vm->inject_variables(chained_variables);
             done = false;

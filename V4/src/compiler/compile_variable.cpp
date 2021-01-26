@@ -51,15 +51,15 @@ void Compiler::compile_node_variable_expression(struct AST* ast)
     auto var_id = find_or_create_variable(VariableScope::NOSCOPE, true);
     switch (var_type) {
     case Type::INTEGER:
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_I, var_id);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::LOAD_I, var_id);
         stack_push(var_type);
         break;
     case Type::REAL:
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_F, var_id);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::LOAD_F, var_id);
         stack_push(var_type);
         break;
     case Type::STRING:
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_S, var_id);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::LOAD_S, var_id);
         stack_push(var_type);
         break;
     case Type::TYPE: {
@@ -76,7 +76,7 @@ void Compiler::compile_node_variable_expression(struct AST* ast)
 
         // Find the type
         CustomTypeFind c = find_custom_type(ast->items[0]->string);
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, c.field_id);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, c.field_id);
         insert_instruction_based_on_type(
             {
                 { Type::INTEGER, Bytecodes::LOAD_I_FIELD },

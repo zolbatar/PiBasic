@@ -21,7 +21,7 @@ void Compiler::compile_print_element(struct AST* ast)
             break;
         case TICK:
             print_semicolon_active = false;
-            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::PRINT_NL);
+            g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::PRINT_NL);
             break;
         case SPC:
             print_semicolon_active = false;
@@ -30,7 +30,7 @@ void Compiler::compile_print_element(struct AST* ast)
             state = CompilerState::PRINT;
             ensure_stack_is_integer();
             stack_pop();
-            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::PRINT_SPC);
+            g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::PRINT_SPC);
             break;
         default:
             print_semicolon_active = false;
@@ -69,7 +69,7 @@ void Compiler::compile_node_token_printinput(struct AST* ast)
             // No prompt
             struct AST* ast_loop = ast->items[0];
             do {
-                g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, true);
+                g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, true);
                 if (ast_loop->type == ASTType::LINK) {
                     compile_input_variable(ast_loop->l);
                 } else {
@@ -80,16 +80,16 @@ void Compiler::compile_node_token_printinput(struct AST* ast)
         } else if (ast->items.size() == 2) {
             // Prompt
             auto s = ast->items[0]->string;
-            g_vm->insert_instruction(line_number, file_number, write, Bytecodes::LOAD_S, constant_string_create(s));
-            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::PRINT_S);
+            g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::LOAD_S, constant_string_create(s));
+            g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::PRINT_S);
 
             struct AST* ast_loop = ast->items[1];
             do {
                 if (ast_loop->type == ASTType::LINK) {
-                    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, show_q_mark);
+                    g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, show_q_mark);
                     compile_input_variable(ast_loop->l);
                 } else {
-                    g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, show_q_mark);
+                    g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, show_q_mark);
                     compile_input_variable(ast_loop);
                 }
                 ast_loop = ast_loop->r;
@@ -98,39 +98,39 @@ void Compiler::compile_node_token_printinput(struct AST* ast)
         break;
     case INKEY:
         get_ensure_is_integer_pop(ast->items[0]);
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::INKEY);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::INKEY);
         stack_push(Type::INTEGER);
         break;
     case SINKEY:
         get_ensure_is_integer_pop(ast->items[0]);
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::INKEY);
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::DROP);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::INKEY);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::DROP);
         break;
     case INKEYS:
         get_ensure_is_integer_pop(ast->items[0]);
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::INKEYS);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::INKEYS);
         stack_push(Type::STRING);
         break;
     case SINKEYS:
         get_ensure_is_integer_pop(ast->items[0]);
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::INKEYS);
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::DROP);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::INKEYS);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::DROP);
         break;
     case GET:
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::GET);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::GET);
         stack_push(Type::INTEGER);
         break;
     case GETS:
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::GETS);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::GETS);
         stack_push(Type::STRING);
         break;
     case GET_S:
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::GET);
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::DROP);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::GET);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::DROP);
         break;
     case GETS_S:
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::GETS);
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::DROP);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::GETS);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::DROP);
         break;
 
     case MOUSE: {
@@ -140,9 +140,9 @@ void Compiler::compile_node_token_printinput(struct AST* ast)
         auto var_id2 = find_or_create_variable(VariableScope::NOSCOPE, false);
         var_name = ast->items[2]->string;
         auto var_id3 = find_or_create_variable(VariableScope::NOSCOPE, false);
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I_VAR, var_id3);
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I_VAR, var_id2);
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::MOUSE, var_id1);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I_VAR, var_id3);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I_VAR, var_id2);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::MOUSE, var_id1);
         break;
     }
 
@@ -165,7 +165,7 @@ void Compiler::compile_node_token_printinput(struct AST* ast)
         }
         state = CompilerState::NOSTATE;
         if (!print_semicolon_active) {
-            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::PRINT_NL);
+            g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::PRINT_NL);
         }
         break;
     }

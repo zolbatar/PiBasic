@@ -28,48 +28,33 @@ typedef struct
 
 class VM {
 public:
-    VM()
-    {
-        runtime_debug = false;
-    }
     std::string run();
     bool compile_successful = true;
-    UINT32 get_pc() { return pc; }
-    UINT32 get_size() { return size; }
     void inject_variables(std::vector<Boxed> variables);
     void add_data(Boxed boxed) { data.push_back(std::move(boxed)); }
-    void build_bytecode()
-    {
-        size = pc;
-        pc = 0;
-    }
-    void insert_instruction(UINT32 line_number, short file_number, bool write, Bytecodes bytecode, UINT32 operand);
-    void insert_bytecode(UINT32 line_number, short file_number, bool write, Bytecodes bytecode);
-    std::vector<Bytecode>* get_bytecode() { return &code; }
-    Bytecode* get_bytecode_one(size_t i) { return &code[i]; }
     void resize_function_locals(int c) { function_locals.resize(c); };
     std::vector<Boxed>* get_function_locals(int idx) { return &function_locals[idx]; }
     UINT32 get_function_locals_count(int idx) { return static_cast<UINT32>(function_locals[idx].size()); }
     std::vector<VMFunction> functions;
     std::vector<Boxed> get_function_local(size_t id) { return function_locals[id]; }
-    Variables* get_variables() { return &variables; }
+
+    // Return the "helper" classes
+    Variables& helper_variables() { return variables; }
+    BytecodeContainer& helper_bytecodes() { return bc_container; }
 
 private:
     Variables variables;
     Stack stack;
     Bytecode bc;
-    bool runtime_debug;
+    BytecodeContainer bc_container;
+    bool runtime_debug = false;
 
     // Error handling
     void error(std::string err)
     {
-        std::cout << err << " at line " << bc.get_line_number() << ", file index " << bc.get_file_number() << std::endl;
+        std::cout << err << bc.location_string() << std::endl;
         exit(1);
     }
-
-    std::vector<Bytecode> code; // Instruction, which is opcode and optional data
-    UINT32 pc = 0; // Program counter
-    UINT32 size = 0; // Size of bytecode
 
     std::stack<std::vector<Boxed>> locals_stack; // Locals stack
     std::stack<UINT32> repeats; // Repeat addresses

@@ -17,9 +17,9 @@ std::string ToString(T val)
 const char no_name[] = "No variable name";
 const char local[] = "Local variable";
 
-std::string Debugger::get_name_for_operand(Bytecode *bc, UINT32 i)
+std::string Debugger::get_name_for_operand(Bytecode& bc, UINT32 i)
 {
-    if (bc->is_local_variable()) {
+    if (bc.is_local_variable()) {
 
         // Find function id
         int func_id = -1;
@@ -33,34 +33,34 @@ std::string Debugger::get_name_for_operand(Bytecode *bc, UINT32 i)
             exit(1);
         }
 
-        int id = bc->data ^ LocalVariableFlag;
+        int id = bc.data ^ LocalVariableFlag;
         auto a = (*g_vm->get_function_locals(func_id))[id];
         return "Local variable: " + a.name + " (" + ToString(id) + ")";
     } else {
-        Boxed* variable = get_variable_bc(bc, i);
-        if (variable->name.length() > 0) {
-            return variable->name.c_str();
+        auto variable = get_variable_bc(bc, i);
+        if (variable.name.length() > 0) {
+            return variable.name.c_str();
         } else {
             return "No variable name";
         }
     }
 }
 
-void Debugger::name_for_operand(Disassembly& ret, Bytecode *bcc, UINT32 i)
+void Debugger::name_for_operand(Disassembly& ret, Bytecode& bcc, UINT32 i)
 {
     std::stringstream ss;
     ss << "[" << get_name_for_operand(bcc, i) << "]";
     ret.operand = ss.str();
 }
 
-void Debugger::address_for_jump(Disassembly& ret, Bytecode *bcc)
+void Debugger::address_for_jump(Disassembly& ret, Bytecode& bcc)
 {
     std::stringstream ss;
-    ss << "0x" << std::hex << std::uppercase << bcc->data << std::dec << std::nouppercase;
+    ss << "0x" << std::hex << std::uppercase << bcc.data << std::dec << std::nouppercase;
     ret.operand = ss.str();
 }
 
-Disassembly Debugger::disassemble_instruction(Bytecode *bc, UINT32 i)
+Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
 {
     Disassembly ret;
 
@@ -71,7 +71,7 @@ Disassembly Debugger::disassemble_instruction(Bytecode *bc, UINT32 i)
 
     // Actual opcode and operands
     std::stringstream ss;
-    switch (bc->opcode) {
+    switch (bc.opcode) {
     case Bytecodes::NOP:
         ret.opcode = "NOP";
         ret.description = "No operation";
@@ -101,7 +101,7 @@ Disassembly Debugger::disassemble_instruction(Bytecode *bc, UINT32 i)
     case Bytecodes::CONST_I:
         ret.opcode = "CONST_I";
         ret.description = "Push constant integer onto stack";
-        ss << bc->data;
+        ss << bc.data;
         ret.operand = ss.str();
         break;
     case Bytecodes::CONST_I_VAR:
@@ -111,9 +111,9 @@ Disassembly Debugger::disassemble_instruction(Bytecode *bc, UINT32 i)
         break;
     case Bytecodes::LOAD_I:
         ret.opcode = "LOAD_I";
-        if (get_variable_bc(bc, i)->constant) {
+        if (get_variable_bc(bc, i).constant) {
             ret.description = "Push constant integer onto stack";
-            ss << get_variable_bc(bc, i)->value_int;
+            ss << get_variable_bc(bc, i).value_int;
             ret.operand = ss.str();
         } else {
             ret.description = "Push variable integer onto stack";
@@ -122,9 +122,9 @@ Disassembly Debugger::disassemble_instruction(Bytecode *bc, UINT32 i)
         break;
     case Bytecodes::LOAD_F:
         ret.opcode = "LOAD_F";
-        if (get_variable_bc(bc, i)->constant) {
+        if (get_variable_bc(bc, i).constant) {
             ret.description = "Push constant float onto stack";
-            ss << get_variable_bc(bc, i)->value_float;
+            ss << get_variable_bc(bc, i).value_float;
             ret.operand = ss.str();
         } else {
             ret.description = "Push variable float onto stack";
@@ -133,9 +133,9 @@ Disassembly Debugger::disassemble_instruction(Bytecode *bc, UINT32 i)
         break;
     case Bytecodes::LOAD_S:
         ret.opcode = "LOAD_S";
-        if (get_variable_bc(bc, i)->constant) {
+        if (get_variable_bc(bc, i).constant) {
             ret.description = "Push constant string onto stack";
-            ss << "'" << get_variable_bc(bc, i)->value_string << "'";
+            ss << "'" << get_variable_bc(bc, i).value_string << "'";
             ret.operand = ss.str();
         } else {
             ret.description = "Push variable string onto stack";
@@ -972,7 +972,7 @@ Disassembly Debugger::disassemble_instruction(Bytecode *bc, UINT32 i)
         break;
 
     default:
-        std::cout << "Unknown bytecode: " << (int)bc->data << std::endl;
+        std::cout << "Unknown bytecode: " << (int)bc.data << std::endl;
         exit(1);
     }
     return ret;
@@ -980,9 +980,9 @@ Disassembly Debugger::disassemble_instruction(Bytecode *bc, UINT32 i)
 
 std::vector<Disassembly> Debugger::disassemble_entire_file()
 {
-    std::vector<Disassembly> ret(g_vm->get_size());
-    for (UINT32 i = 0; i < g_vm->get_size(); i++) {
-        auto bc = g_vm->get_bytecode_one(i);
+    std::vector<Disassembly> ret(g_vm->helper_bytecodes().size);
+    for (UINT32 i = 0; i < g_vm->helper_bytecodes().size; i++) {
+        auto bc = g_vm->helper_bytecodes().get_bytecode(i);
         auto s = disassemble_instruction(bc, i);
         ret[i] = s;
     }

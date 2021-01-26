@@ -47,10 +47,10 @@ void compile(std::vector<Boxed>* variables)
             assert(compiler.stack_size() == 0);
 
             compiler.local_var_index = 0;
-            g_vm->insert_bytecode(0, 0, compiler.write, Bytecodes::HALT);
+            g_vm->helper_bytecodes().insert_bytecode(0, 0, compiler.write, Bytecodes::HALT);
             if (pass == 1) {
-                *g_logfile << "-> Bytecode is " << g_vm->get_pc() << " instructions." << std::endl;
-                g_vm->build_bytecode();
+                *g_logfile << "-> Bytecode is " << g_vm->helper_bytecodes().pc << " instructions." << std::endl;
+                g_vm->helper_bytecodes().build_bytecode();
             }
         }
     } catch (const std::exception& e) {
@@ -60,15 +60,14 @@ void compile(std::vector<Boxed>* variables)
     }
 
     // Now we MOVE the variables into the VM class
-    auto vars = g_vm->get_variables()->get_variables();
-    vars->resize(compiler.global_var_index);
+    g_vm->helper_variables().set_variables_size(compiler.global_var_index);
     for (auto g = compiler.globals.begin(); g != compiler.globals.end(); ++g) {
         auto glob = (*g).second;
-        vars->at(glob.index) = std::move(glob);
+        g_vm->helper_variables().add_variable((*g).second, glob.index);
     }
     for (auto g = compiler.constants.begin(); g != compiler.constants.end(); ++g) {
         auto glob = (*g);
-        vars->at(glob.index) = std::move(glob);
+        g_vm->helper_variables().add_variable(glob, glob.index);
     }
 
     // Size to number of functions
@@ -133,7 +132,7 @@ void Compiler::compile_node(struct AST* ast, bool expression)
         break;
     case ASTType::LINE_NUMBER:
         if (!write) {
-            line_no_to_bytecode.insert(std::pair<UINT32, UINT32>(ast->integer, g_vm->get_pc()));
+            line_no_to_bytecode.insert(std::pair<UINT32, UINT32>(ast->integer, g_vm->helper_bytecodes().pc));
         }
         assert(stack_size() == 0);
         break;

@@ -86,15 +86,13 @@ void Debugger::debugger_variables()
 
             // Count number of ACTUAL local and variables (not just constants)
             std::vector<Boxed*> dis_globals;
-            auto a1 = g_vm->get_variables();
-            auto a2 = *a1->get_variables();
-            for (auto it = a2.begin(); it != a2.end(); ++it) {
+            for (auto it = g_vm->helper_variables().get_variables().begin(); it != g_vm->helper_variables().get_variables().end(); ++it) {
                 if (!(*it).constant) {
                     dis_globals.push_back(&(*it));
                 }
             }
             std::vector<Boxed*> dis_locals;
-            for (auto it = g_vm->get_variables()->get_locals()->begin(); it != g_vm->get_variables()->get_locals()->end(); ++it) {
+            for (auto it = g_vm->helper_variables().get_locals().begin(); it != g_vm->helper_variables().get_locals().end(); ++it) {
                 if (!(*it).constant) {
                     dis_locals.push_back(&(*it));
                 }
@@ -259,10 +257,8 @@ void Debugger::debugger_disassembly()
 {
     // Load all source files
     std::vector<std::vector<std::string>> line_cache;
-    std::vector<std::string> file_names;
     char line[1024];
     for (auto it = files_index.begin(); it != files_index.end(); ++it) {
-        file_names.push_back((*it).first);
         std::vector<std::string> ll;
         FILE* fp = fopen((*it).first.c_str(), "r");
         while (true) {
@@ -279,7 +275,7 @@ void Debugger::debugger_disassembly()
     // Get disassembly
     auto dis = disassemble_entire_file();
 
-    int pos = g_vm->get_pc() - 1;
+    int pos = g_vm->helper_bytecodes().pc - 1;
     bool rerender = true;
     while (true) {
         if (rerender) {
@@ -288,20 +284,20 @@ void Debugger::debugger_disassembly()
 
             if (pos >= 0) {
                 // Show current file and PC
-                Bytecode* cur_bc = g_vm->get_bytecode_one(pos);
+                auto cur_bc = g_vm->helper_bytecodes().get_bytecode(pos);
                 g_graphics->colour(128, 128, 128);
                 g_graphics->print_text(disassembly_font, "File: ", -1, -1);
                 g_graphics->colour(255, 255, 255);
-                g_graphics->print_text(disassembly_font, file_names[cur_bc->get_file_number()], -1, -1);
+                g_graphics->print_text(disassembly_font, cur_bc.filename(), -1, -1);
                 g_graphics->print_text(disassembly_font, "\r", -1, -1);
                 g_graphics->colour(128, 128, 128);
                 g_graphics->print_text(disassembly_font, "Line: ", -1, -1);
                 g_graphics->colour(255, 255, 255);
-                g_graphics->print_text(disassembly_font, std::to_string(cur_bc->get_line_number()), -1, -1);
+                g_graphics->print_text(disassembly_font, std::to_string(cur_bc.line_number), -1, -1);
                 g_graphics->print_text(disassembly_font, " ", -1, -1);
                 g_graphics->colour(255, 255, 255);
-                auto ff = line_cache[cur_bc->get_file_number()];
-                auto p = cur_bc->get_line_number() - 1;
+                auto ff = line_cache[cur_bc.file_number];
+                auto p = cur_bc.line_number - 1;
                 if (p >= ff.size()) {
                     p = static_cast<int>(ff.size()) - 1;
                 }
@@ -311,9 +307,9 @@ void Debugger::debugger_disassembly()
                 // Bytecode output
                 g_graphics->colour(180, 180, 180);
                 for (UINT32 i = 0; i < debugger_lines; i++) {
-                    if (pos + i < g_vm->get_size()) {
-                        Bytecode *bc = g_vm->get_bytecode_one(pos + i);
-                        if (pos + i == g_vm->get_pc() - 1) {
+                    if (pos + i < g_vm->helper_bytecodes().size) {
+                        auto bc = g_vm->helper_bytecodes().get_bytecode(pos + i);
+                        if (pos + i == g_vm->helper_bytecodes().pc - 1) {
                             g_graphics->colour(255, 255, 0);
                             g_graphics->print_text(disassembly_font, "-> ", -1, -1);
                         } else {
@@ -385,8 +381,8 @@ void Debugger::debugger_disassembly()
         if (pos < 1) {
             pos = 1;
         }
-        if (pos > g_vm->get_size()) {
-            pos = g_vm->get_size() - 1;
+        if (pos > g_vm->helper_bytecodes().size) {
+            pos = g_vm->helper_bytecodes().size - 1;
         }
     }
 }

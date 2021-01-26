@@ -27,7 +27,7 @@ void Compiler::compile_node_token_functions(struct AST* ast, bool expression)
         break;
     case RETURN: {
         compile_node_function_checkreturn();
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::RETURN);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::RETURN);
         break;
     }
     case RETURN_WITH_VALUE: {
@@ -56,7 +56,7 @@ void Compiler::compile_node_token_functions(struct AST* ast, bool expression)
             }
         }
         compile_node_function_checkreturn();
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::RETURN);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::RETURN);
         stack_pop();
         break;
     }
@@ -87,19 +87,19 @@ void Compiler::compile_node_function_call(struct AST* ast, bool expression)
     }
 
     if (!write) {
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 0);
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CALL, 0);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 0);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CALL, 0);
     } else {
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, (*g).second.id);
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CALL, (*g).second.pc_start);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, (*g).second.id);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CALL, (*g).second.pc_start);
     }
 
     // Do we have a return type?
     int return_count = 0;
     if (!expression && f.type != Type::NOTYPE) {
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::DROP);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::DROP);
     } else {
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::NOP);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::NOP);
 
         // Push the return type
         if (f.type != Type::NOTYPE) {
@@ -165,7 +165,7 @@ void Compiler::compile_node_function(struct AST* ast)
 {
     assert(stack_size() == 0);
     inside_function = true;
-    UINT32 saved_pc = g_vm->get_pc() + 1;
+    UINT32 saved_pc = g_vm->helper_bytecodes().pc + 1;
     function_name = ast->items[0]->string;
     local_var_index = 0;
     locals.clear();
@@ -184,9 +184,9 @@ void Compiler::compile_node_function(struct AST* ast)
 
     // Jump around function
     if (!write) {
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::JUMP, 0);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::JUMP, 0);
     } else {
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::JUMP, (*g).second.pc_end);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::JUMP, (*g).second.pc_end);
     }
 
     // Push the unpack stuff
@@ -232,11 +232,11 @@ void Compiler::compile_node_function(struct AST* ast)
         }
     }
 
-    g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::RETURN);
+    g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::RETURN);
     if (!write) {
         auto f2 = &(*g).second;
         f2->pc_start = saved_pc;
-        f2->pc_end = g_vm->get_pc();
+        f2->pc_end = g_vm->helper_bytecodes().pc;
         f2->local_names.resize(locals.size());
         int i = 0;
         for (auto it = locals.begin(); it != locals.end(); ++it) {

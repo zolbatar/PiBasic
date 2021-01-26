@@ -9,7 +9,7 @@ void Compiler::compile_node_token(struct AST* ast, bool expression)
         get_ensure_is_integer_pop(ast->items[1]);
         var_name = ast->items[0]->string;
         auto var_id = find_or_create_variable(VariableScope::NOSCOPE, false);
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::ARRAYSIZE, var_id);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::ARRAYSIZE, var_id);
         stack_push(Type::INTEGER);
         break;
     }
@@ -207,8 +207,8 @@ void Compiler::compile_node_token(struct AST* ast, bool expression)
         auto var_id1 = find_or_create_variable(VariableScope::NOSCOPE, false);
         var_name = ast->items[1]->string;
         auto var_id2 = find_or_create_variable(VariableScope::NOSCOPE, false);
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I_VAR, var_id2);
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::SWAP_I, var_id1);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I_VAR, var_id2);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::SWAP_I, var_id1);
         break;
     }
     case SWAP_F: {
@@ -216,8 +216,8 @@ void Compiler::compile_node_token(struct AST* ast, bool expression)
         auto var_id1 = find_or_create_variable(VariableScope::NOSCOPE, false);
         var_name = ast->items[1]->string;
         auto var_id2 = find_or_create_variable(VariableScope::NOSCOPE, false);
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I_VAR, var_id2);
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::SWAP_F, var_id1);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I_VAR, var_id2);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::SWAP_F, var_id1);
         break;
     }
     case SWAP_S: {
@@ -225,8 +225,8 @@ void Compiler::compile_node_token(struct AST* ast, bool expression)
         auto var_id1 = find_or_create_variable(VariableScope::NOSCOPE, false);
         var_name = ast->items[1]->string;
         auto var_id2 = find_or_create_variable(VariableScope::NOSCOPE, false);
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I_VAR, var_id2);
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::SWAP_S, var_id1);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I_VAR, var_id2);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::SWAP_S, var_id1);
         break;
     }
 
@@ -239,40 +239,40 @@ void Compiler::compile_node_token(struct AST* ast, bool expression)
     case OSCLI:
         compile_node(ast->items[0], true);
         stack_pop();
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::PRINT_S);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::PRINT_S);
         break;
     case TRACEON:
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::TRACEON);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::TRACEON);
         break;
     case TRACEOFF:
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::TRACEOFF);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::TRACEOFF);
         break;
     case BREAKPOINT:
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::BREAKPOINT);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::BREAKPOINT);
         break;
     case END:
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::HALT);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::HALT);
         break;
     case TIME:
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::TIME);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::TIME);
         stack_push(Type::INTEGER);
         break;
     case TIMES:
-        g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::TIMES);
+        g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::TIMES);
         stack_push(Type::STRING);
         break;
     case BOOLFALSE:
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 0);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 0);
         stack_push(Type::INTEGER);
         break;
     case BOOLTRUE:
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 1);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 1);
         stack_push(Type::INTEGER);
         break;
     case INT_:
         compile_node(ast->items[0], true);
         if (peek_type() == Type::REAL) {
-            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
+            g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::F_TO_I);
             stack_pop();
             stack_push(Type::INTEGER);
         }
@@ -280,7 +280,7 @@ void Compiler::compile_node_token(struct AST* ast, bool expression)
     case FLOAT_:
         compile_node(ast->items[0], true);
         if (peek_type() == Type::INTEGER) {
-            g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
+            g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::I_TO_F);
             stack_pop();
             stack_push(Type::REAL);
         }
@@ -294,7 +294,7 @@ void Compiler::compile_node_token(struct AST* ast, bool expression)
 void Compiler::compile_node_token_chain(struct AST* ast)
 {
     if (ast->items.size() == 1) {
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 0);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, 0);
     } else {
         struct AST* ast_loop = ast->items[1];
         int count = 0;
@@ -306,15 +306,15 @@ void Compiler::compile_node_token_chain(struct AST* ast)
                 var_name = ast_loop->string;
             }
             var_id = find_or_create_variable(VariableScope::NOSCOPE, true);
-            g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I_VAR, var_id);
+            g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I_VAR, var_id);
             ast_loop = ast_loop->r;
             count++;
         } while (ast_loop != NULL);
-        g_vm->insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, count);
+        g_vm->helper_bytecodes().insert_instruction(line_number, file_number, write, Bytecodes::CONST_I, count);
     }
     compile_node(ast->items[0], true);
     stack_pop();
-    g_vm->insert_bytecode(line_number, file_number, write, Bytecodes::CHAIN);
+    g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::CHAIN);
 }
 
 void Compiler::compile_node_token_expect(struct AST* ast)

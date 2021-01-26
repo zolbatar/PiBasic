@@ -47,11 +47,11 @@ void Stack::push_string(const VM_STRING& v)
         check();
 }
 
-Boxed* Stack::pop_boxed()
+Boxed& Stack::pop_boxed()
 {
     if (CheckedStacks)
         check();
-    return &stack[--stack_pointer];
+    return stack[--stack_pointer];
 }
 
 VM_FLOAT Stack::pop_float(Bytecode& bc)
@@ -60,7 +60,7 @@ VM_FLOAT Stack::pop_float(Bytecode& bc)
         check();
     Boxed* b = &stack[--stack_pointer];
     if (b->type != Type::REAL) {
-        std::cout << "Expected float on stack at line " << bc.get_line_number() << ", file index " << bc.get_file_number() << ". This is normally an internal DARIC error" << std::endl;
+        std::cout << "Expected float on stack" << bc.location_string() << ". This is normally an internal DARIC error" << std::endl;
         exit(1);
     }
     return b->value_float;
@@ -72,7 +72,7 @@ VM_INT Stack::pop_int(Bytecode& bc)
         check();
     Boxed* b = &stack[--stack_pointer];
     if (b->type != Type::INTEGER) {
-        std::cout << "Expected integer on stack at line " << bc.get_line_number() << ", file index " << bc.get_file_number() << ". This is normally an internal DARIC error" << std::endl;
+        std::cout << "Expected integer on stack" << bc.location_string() << ". This is normally an internal DARIC error" << std::endl;
         exit(1);
     }
     return b->value_int;
@@ -92,7 +92,7 @@ VM_STRING Stack::pop_string(Bytecode& bc)
         check();
     Boxed* b = &stack[--stack_pointer];
     if (b->type != Type::STRING) {
-        std::cout << "Expected string on stack at line " << bc.get_line_number() << ", file index " << bc.get_file_number() << ". This is normally an internal DARIC error" << std::endl;
+        std::cout << "Expected string on stack" << bc.location_string() << ". This is normally an internal DARIC error" << std::endl;
         exit(1);
     }
     return b->value_string;

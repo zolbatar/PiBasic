@@ -197,7 +197,7 @@ void Interpreter::execute_line(std::string s)
     if (g_vm->compile_successful) {
         run_vm();
         variables.clear();
-        auto v = *g_vm->get_variables()->get_variables();
+        auto v = g_vm->helper_variables().get_variables();
         for (auto it = v.begin(); it != v.end(); ++it) {
             variables.push_back(std::move(*it));
         }
@@ -229,7 +229,7 @@ void Interpreter::run_all_lines()
                 done = false;
                 exit(1);
                 variables.clear();
-                auto v = *g_vm->get_variables()->get_variables();
+                auto v = g_vm->helper_variables().get_variables();
                 for (auto it = v.begin(); it != v.end(); ++it) {
                     variables.push_back(std::move(*it));
                 }
