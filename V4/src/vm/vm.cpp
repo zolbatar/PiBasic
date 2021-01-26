@@ -289,10 +289,10 @@ bool VM::opcode_SWAP_I()
 {
     VM_INT v = stack.pop_int(bc);
     VM_INT t = variables.get_variable(bc).value_int;
-    variables.get_variable(bc).value_int = variable2.value_int;
+    variables.get_variable(bc).value_int = variables.get_variable_by_int(v).value_int;
     variables.get_variable_by_int(v).value_int = t;
     if (runtime_debug)
-        *g_logfile << "Swap " << variables.get_variable(bc).name << " and " << variable2.name << std::endl;
+        *g_logfile << "Swap " << variables.get_variable(bc).name << " and " << variables.get_variable_by_int(v).name << std::endl;
     return false;
 }
 
@@ -300,10 +300,10 @@ bool VM::opcode_SWAP_F()
 {
     VM_INT v = stack.pop_int(bc);
     VM_FLOAT t = variables.get_variable(bc).value_float;
-    variables.get_variable(bc).value_float = variable2.value_float;
+    variables.get_variable(bc).value_float = variables.get_variable_by_int(v).value_float;
     variables.get_variable_by_int(v).value_float = t;
     if (runtime_debug)
-        *g_logfile << "Swap " << variables.get_variable(bc).name << " and " << variable2.name << std::endl;
+        *g_logfile << "Swap " << variables.get_variable(bc).name << " and " << variables.get_variable_by_int(v).name << std::endl;
     return false;
 }
 
@@ -311,10 +311,10 @@ bool VM::opcode_SWAP_S()
 {
     VM_INT v = stack.pop_int(bc);
     VM_STRING t = variables.get_variable(bc).value_string;
-    variables.get_variable(bc).value_string = variable2.value_string;
+    variables.get_variable(bc).value_string = variables.get_variable_by_int(v).value_string;
     variables.get_variable_by_int(v).value_string = t;
     if (runtime_debug)
-        *g_logfile << "Swap " << variables.get_variable(bc).name << " and " << variable2.name << std::endl;
+        *g_logfile << "Swap " << variables.get_variable(bc).name << " and " << variables.get_variable_by_int(v).name << std::endl;
     return false;
 }
 
@@ -635,7 +635,6 @@ bool VM::opcode_STORE_S_ARRAY()
 bool VM::opcode_LOAD_I_FIELD()
 {
     VM_INT index = stack.pop_int(bc);
-    ???
     Boxed* field = &variables.get_variable(bc).fields.at(index);
     stack.push_int(field->value_int);
     if (runtime_debug)
