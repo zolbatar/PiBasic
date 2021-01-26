@@ -15,7 +15,7 @@ private:
     std::map<UINT32, std::string> lines;
 
     void welcome_prompt();
-    void add_line(std::string s);
+    UINT32 add_line(std::string s, UINT32 auto_line);
     void execute_line(std::string s);
     void run_welcome();
     void run_all_lines();

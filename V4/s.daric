@@ -1,0 +1,4 @@
+10 DEFPROCPars(x,y,z)
+20 PRINT x,y,z
+30 ENDPROC
+40 PROCPars(1,2,3)

@@ -34,7 +34,7 @@ std::string Debugger::get_name_for_operand(Bytecode& bc, UINT32 i)
         }
 
         int id = bc.data ^ LocalVariableFlag;
-        auto a = (*g_vm->get_function_locals(func_id))[id];
+        auto a = g_vm->get_function_locals(func_id)[id];
         return "Local variable: " + a.name + " (" + ToString(id) + ")";
     } else {
         auto variable = get_variable_bc(bc, i);

@@ -60,6 +60,7 @@ void parse_and_compile(const char* filename, bool temporary, std::vector<Boxed>*
             std::cout << "Errors encountered, exiting.\n";
             exit(1);
         }
+        return;
     }
 
     // Compile

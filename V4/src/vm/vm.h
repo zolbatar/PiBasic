@@ -29,11 +29,11 @@ typedef struct
 class VM {
 public:
     std::string run();
-    bool compile_successful = true;
+    bool compile_successful = false;
     void inject_variables(std::vector<Boxed> variables);
     void add_data(Boxed boxed) { data.push_back(std::move(boxed)); }
     void resize_function_locals(int c) { function_locals.resize(c); };
-    std::vector<Boxed>* get_function_locals(int idx) { return &function_locals[idx]; }
+    std::vector<Boxed>& get_function_locals(int idx) { return function_locals[idx]; }
     UINT32 get_function_locals_count(int idx) { return static_cast<UINT32>(function_locals[idx].size()); }
     std::vector<VMFunction> functions;
     std::vector<Boxed> get_function_local(size_t id) { return function_locals[id]; }
@@ -56,7 +56,6 @@ private:
         exit(1);
     }
 
-    std::stack<std::vector<Boxed>> locals_stack; // Locals stack
     std::stack<UINT32> repeats; // Repeat addresses
     std::stack<UINT32> call_stack; // Call stack
 

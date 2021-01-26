@@ -45,9 +45,9 @@ def_procedure		(?i:"DefProc"){variable}
 def_integer_fn      (?i:"DefFn"){integer_variable}
 def_real_fn         (?i:"DefFn"){variable}
 def_string_fn       (?i:"DefFn"){string_variable}
-string_function		(?i:"Fn"){string_variable}
-integer_function	(?i:"Fn"){integer_variable}
-real_function		(?i:"Fn"){variable}
+FN_STRING		(?i:"Fn"){string_variable}
+FN_INTEGER	(?i:"Fn"){integer_variable}
+FN_REAL		(?i:"Fn"){variable}
 procedure			(?i:"Proc"){variable}
 install_string      (?i:"Install"){ws}{string}
 star                \*\*{alpha}+
@@ -94,20 +94,13 @@ star                \*\*{alpha}+
 (?i:"Dim")			return DIM;
 (?i:"Else")			return ELSE;
 (?i:"End")			return END;
-(?i:"EndCase")		return END_CASE;
-(?i:"EndIf")		return END_IF;
-(?i:"EndFunction")	return END_FN;
-(?i:"EndFn")	    return END_FN;
-(?i:"EndProc")		return END_PROC;
-(?i:"EndType")		return END_TYPE;
-(?i:"EndWhile")		return END_WHILE;
-(?i:"End Case")		return END_CASE;
-(?i:"End If")		return END_IF;
-(?i:"End Fn")	    return END_FN;
-(?i:"End Function")	return END_FN;
-(?i:"End Proc")		return END_PROC;
-(?i:"End Type")		return END_TYPE;
-(?i:"End While")	return END_WHILE;
+(?i:"EndCase")		return ENDCASE;
+(?i:"EndIf")		return ENDIF;
+(?i:"EndFunction")	return ENDFN;
+(?i:"EndFn")	    return ENDFN;
+(?i:"EndProc")		return ENDPROC;
+(?i:"EndType")		return ENDTYPE;
+(?i:"EndWhile")		return ENDWHILE;
 (?i:"Eof#")			return EOFH;
 (?i:"Expect")		return EXPECT;
 (?i:"Field")		return FIELD;
@@ -332,13 +325,13 @@ star                \*\*{alpha}+
 {binaryinteger}     { auto v = std::string(yytext); v.erase(0, 1); yylval.v_int = std::stoi(v, nullptr, 2); return LITERAL_INT; }
 {float}             { yylval.v_real = std::stod(yytext); return LITERAL_REAL; }
 {string}            { yylval.v_string = strdup(yytext); return LITERAL_STRING; }
-{def_procedure}		{ strcpy(yytext, yytext + 3); yylval.v_string = strdup(yytext); return DEFINE_PROCEDURE; }
-{def_integer_fn}	{ strcpy(yytext, yytext + 3); yylval.v_string = strdup(yytext); return DEFINE_INTEGER_FUNCTION; }
-{def_string_fn}		{ strcpy(yytext, yytext + 3); yylval.v_string = strdup(yytext); return DEFINE_STRING_FUNCTION; }
-{def_real_fn}		{ strcpy(yytext, yytext + 3); yylval.v_string = strdup(yytext); return DEFINE_REAL_FUNCTION; }
-{string_function}	{ yylval.v_string = strdup(yytext); return STRING_FUNCTION; }
-{integer_function}  { yylval.v_string = strdup(yytext); return INTEGER_FUNCTION; }
-{real_function}	    { yylval.v_string = strdup(yytext); return REAL_FUNCTION; }
+{def_procedure}		{ strcpy(yytext, yytext + 3); yylval.v_string = strdup(yytext); return DEFPROC; }
+{def_integer_fn}	{ strcpy(yytext, yytext + 3); yylval.v_string = strdup(yytext); return DEFFN_INTEGER; }
+{def_string_fn}		{ strcpy(yytext, yytext + 3); yylval.v_string = strdup(yytext); return DEFFN_STRING; }
+{def_real_fn}		{ strcpy(yytext, yytext + 3); yylval.v_string = strdup(yytext); return DEFFN_REAL; }
+{FN_STRING}	        { yylval.v_string = strdup(yytext); return FN_STRING; }
+{FN_INTEGER}        { yylval.v_string = strdup(yytext); return FN_INTEGER; }
+{FN_REAL}	        { yylval.v_string = strdup(yytext); return FN_REAL; }
 {procedure}			{ yylval.v_string = strdup(yytext); return PROCEDURE; }
 {integer_variable}  { yylval.v_string = strdup(yytext); return INTEGER_VARIABLE; }
 {string_variable}   { yylval.v_string = strdup(yytext); return STRING_VARIABLE; }

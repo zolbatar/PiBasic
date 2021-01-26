@@ -19,9 +19,12 @@ std::map<int, std::list<AST *>> ast_lines;
 void yyerror(const char *e);
 int yylex_destroy(void);
 int status;
+extern bool interactive;
 %}
 
 %locations
+%require "3.6"
+%define parse.error detailed 
 
 %union {
     int v_int;
@@ -33,18 +36,18 @@ int status;
 %token <v_int> LINE_NUMBER LITERAL_INT
 %token <v_real> LITERAL_REAL
 %token <v_string> LITERAL_STRING INTEGER_VARIABLE VARIABLE STRING_VARIABLE TYPE_VARIABLE
-%token <v_string> DEFINE_PROCEDURE DEFINE_INTEGER_FUNCTION DEFINE_STRING_FUNCTION DEFINE_REAL_FUNCTION 
-%token <v_string> PROCEDURE INTEGER_FUNCTION REAL_FUNCTION STRING_FUNCTION
+%token <v_string> DEFPROC DEFFN_INTEGER DEFFN_STRING DEFFN_REAL 
+%token <v_string> PROCEDURE FN_INTEGER FN_REAL FN_STRING
 %token NL SS SEMICOLON COMMA
 %token INTEGERDIVIDE
 %token E LE GE NE SHL SHR LT GT PLUS MINUS MULTIPLY DIVIDE TILDE TICK
 %token SHL_E SHR_E PLUS_E MINUS_E MULTIPLY_E DIVIDE_E INTEGERDIVIDE_E
 %token SWAP SWAP_I SWAP_F SWAP_S
-%token END_FN END_PROC RETURN RETURN_WITH_VALUE DEFPROC DEFFN CALLPROC CALLFN RETURN_PARAMETER
+%token ENDFN ENDPROC RETURN RETURN_WITH_VALUE  DEFFN CALLPROC CALLFN RETURN_PARAMETER
 %token BGET BPUT CLOSE EOFH OPENIN OPENUP OPENOUT PTR PTRA GETSH LISTFILES
-%token CASE ELSE END_CASE END_IF END_WHILE FOR GOSUB GOTO IF NEXT OF OTHERWISE REPEAT STEP THEN TO UNTIL WHEN WHILE IN_ FORIN
+%token CASE ELSE ENDCASE ENDIF ENDWHILE FOR GOSUB GOTO IF NEXT OF OTHERWISE REPEAT STEP THEN TO UNTIL WHEN WHILE IN_ FORIN
 %token DATA READ RESTORE
-%token ARRAYSIZE DIM LOCALDIM END_TYPE FIELD GLOBAL LOCAL TYPE_
+%token ARRAYSIZE DIM LOCALDIM ENDTYPE FIELD GLOBAL LOCAL TYPE_
 %token END TRACEON TRACEOFF BREAKPOINT
 %token RND RND0 RND1 RNDREAL RNDRANGE FLOAT_ INT_ ACS DIV MOD SQR LN LOG EXP ATN TAN COS SIN ASN ABS DEG RAD SGN VAL PI BOOLFALSE BOOLTRUE
 %token ASC CHRS INSTR LEFTS MIDS RIGHTS LEN STRS STRSHEX STRINGS
@@ -101,8 +104,9 @@ lines
 
 line
     : statements NL { $$ = $1; }
+    | SS NL { $$ = NULL; }
     | NL { $$ = NULL; }
-    | LINE_NUMBER statements NL { $$ = link(linenumber($1), $2); } 
+    ;
 
 embed_lines
     : line { $$ = $1; } 
@@ -111,7 +115,9 @@ embed_lines
 
 statements
     : statement { $$ = $1; } 
-    | statement SS statements { $$ = link($1, $3); } 
+    | LINE_NUMBER statements { $$ = link(linenumber($1), $2)); yylineno = $1; } 
+    | statement SS statements { $$ = link($1, $3); }
+    ;
 
 statement
     : assignment
@@ -123,9 +129,9 @@ statement
     | END { $$ = token(END); }
     | PROCEDURE { $$ = token1(CALLPROC, string($1)); }
     | PROCEDURE '(' expression_list ')' { $$ = token2(CALLPROC, string($1), $3); }
-    | INTEGER_FUNCTION '(' expression_list ')' { $$ = token2(CALLFN, string($1), $3); } 
-    | REAL_FUNCTION '(' expression_list ')' { $$ = token2(CALLFN, string($1), $3); } 
-    | STRING_FUNCTION '(' expression_list ')' { $$ = token2(CALLFN, string($1), $3); } 
+    | FN_INTEGER '(' expression_list ')' { $$ = token2(CALLFN, string($1), $3); } 
+    | FN_REAL '(' expression_list ')' { $$ = token2(CALLFN, string($1), $3); } 
+    | FN_STRING '(' expression_list ')' { $$ = token2(CALLFN, string($1), $3); } 
     | DATA expression_list { $$ = token1(DATA, $2); }
     | READ variable_list { $$ = token1(READ, $2); }
     | RESTORE { $$ = token(RESTORE); }
@@ -162,17 +168,17 @@ statement
 
     | IF expression statements { $$ = token2(IF, $2, $3); }
     | IF expression statement ELSE statement { $$ = token3(IF, $2, $3, $5); }
-    | IF expression NL embed_lines END_IF { $$ = token2(IF, $2, $4); }
-    | IF expression NL embed_lines ELSE NL embed_lines END_IF { $$ = token3(IF, $2, $4, $7); }
+    | IF expression NL embed_lines ENDIF { $$ = token2(IF, $2, $4); }
+    | IF expression NL embed_lines ELSE NL embed_lines ENDIF { $$ = token3(IF, $2, $4, $7); }
     /* with optional THEN */
     | IF expression THEN statements { $$ = token2(IF, $2, $4); }
     | IF expression THEN statements ELSE statements { $$ = token3(IF, $2, $4, $6); }
-    | IF expression THEN NL embed_lines END_IF { $$ = token2(IF, $2, $5); }
-    | IF expression THEN NL embed_lines ELSE NL embed_lines END_IF { $$ = token3(IF, $2, $5, $8); }
+    | IF expression THEN NL embed_lines ENDIF { $$ = token2(IF, $2, $5); }
+    | IF expression THEN NL embed_lines ELSE NL embed_lines ENDIF { $$ = token3(IF, $2, $5, $8); }
 
-    | REPEAT NL embed_lines UNTIL expression { $$ = token2(REPEAT, $3, $5); };
-    | REPEAT UNTIL expression { $$ = token2(REPEAT, NULL, $3); };
-    | WHILE expression NL embed_lines END_WHILE { $$ = token2(WHILE, $2, $4); }
+    | REPEAT NL embed_lines UNTIL expression { $$ = token2(REPEAT, $3, $5); }
+    | REPEAT UNTIL expression { $$ = token2(REPEAT, NULL, $3); }
+    | WHILE expression NL embed_lines ENDWHILE { $$ = token2(WHILE, $2, $4); }
 
     | SWAP INTEGER_VARIABLE ',' INTEGER_VARIABLE { $$ = token2(SWAP_I, string($2), string($4)); }
     | SWAP VARIABLE ',' VARIABLE { $$ = token2(SWAP_F, string($2), string($4)); }
@@ -210,8 +216,8 @@ statement
     | FOR LOCAL INTEGER_VARIABLE    E expression_numeric TO expression_numeric STEP expression_numeric statements       NEXT { $$ = token6typed(FOR, string($3), $5, $7, $9, $10, token(LOCAL), Type::INTEGER); }
     | FOR LOCAL VARIABLE            E expression_numeric TO expression_numeric STEP expression_numeric statements       NEXT { $$ = token6typed(FOR, string($3), $5, $7, $9, $10, token(LOCAL), Type::REAL); }
 
-    | CASE expression OF NL when_list END_CASE { $$ = token2(CASE, $2, $5);  }
-    | CASE expression OF NL when_list OTHERWISE statement NL END_CASE { $$ = token3(CASE, $2, $5, $7);  }
+    | CASE expression OF NL when_list ENDCASE { $$ = token2(CASE, $2, $5);  }
+    | CASE expression OF NL when_list OTHERWISE statement NL ENDCASE { $$ = token3(CASE, $2, $5, $7);  }
 
     | PRINT { $$ = token(PRINT); }
     | PRINT expression_print_list { $$ = token1(PRINT, $2); }
@@ -292,8 +298,8 @@ expression_numeric
     | expression_numeric OR expression_numeric { $$ = token2(OR, $1, $3); }
     | expression_numeric EOR expression_numeric { $$ = token2(EOR, $1, $3); }
 
-    | INTEGER_FUNCTION '(' expression_list ')' { $$ = token2(CALLFN, string($1), $3); } 
-    | REAL_FUNCTION '(' expression_list ')' { $$ = token2(CALLFN, string($1), $3); } 
+    | FN_INTEGER '(' expression_list ')' { $$ = token2(CALLFN, string($1), $3); } 
+    | FN_REAL '(' expression_list ')' { $$ = token2(CALLFN, string($1), $3); } 
 
     | DIM '(' VARIABLE '(' ')' ',' number ')' { $$ = token2(ARRAYSIZE, variable($3, Type::REAL), $7); }
     | DIM '(' INTEGER_VARIABLE '(' ')' ',' number ')' { $$ = token2(ARRAYSIZE, variable($3, Type::INTEGER), $7); }
@@ -467,7 +473,7 @@ type_variable
     ;
 
 type
-    : TYPE_ VARIABLE NL field_list END_TYPE { $$ = token2(TYPE_, string($2), $4); }
+    : TYPE_ VARIABLE NL field_list ENDTYPE { $$ = token2(TYPE_, string($2), $4); }
     ;
 
 field
@@ -496,7 +502,7 @@ expression_string
 
     | GETSH expression_numeric { $$ = token1(GETSH, $2); }
 
-    | STRING_FUNCTION '(' expression_list ')' { $$ = token2(CALLFN, string($1), $3); } 
+    | FN_STRING '(' expression_list ')' { $$ = token2(CALLFN, string($1), $3); } 
 
     | GETS { $$ = token(GETS); } 
     | INKEYS '(' expression_numeric ')' { $$ = token1(INKEYS, $3); } 
@@ -601,10 +607,10 @@ when_list
     | when when_list { $$ = link($1, $2); };
 
 define_function
-    : DEFINE_PROCEDURE '(' proc_parameter_list ')' NL embed_lines END_PROC { $$ = token3typed(DEFPROC, string($1), $3, $6, Type::NOTYPE); }
-    | DEFINE_INTEGER_FUNCTION '(' fn_parameter_list ')' NL embed_lines END_FN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::INTEGER); }
-    | DEFINE_REAL_FUNCTION '(' fn_parameter_list ')' NL embed_lines END_FN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::REAL); }
-    | DEFINE_STRING_FUNCTION '(' fn_parameter_list ')' NL embed_lines END_FN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::STRING); }
+    : DEFPROC '(' proc_parameter_list ')' NL embed_lines ENDPROC { $$ = token3typed(DEFPROC, string($1), $3, $6, Type::NOTYPE); }
+    | DEFFN_INTEGER '(' fn_parameter_list ')' NL embed_lines ENDFN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::INTEGER); }
+    | DEFFN_REAL '(' fn_parameter_list ')' NL embed_lines ENDFN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::REAL); }
+    | DEFFN_STRING '(' fn_parameter_list ')' NL embed_lines ENDFN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::STRING); }
     ;
 
 %%
@@ -630,7 +636,11 @@ int parse(const char *filename) {
 
 void yyerror(const char *e) {
     std::stringstream stream;
-    stream << "Parsing error: " << e << " at line " << yylineno << " of file '" << file << "'";
+    if (yyfileno == 0 && interactive) {
+        stream << "Parsing error: " << e << " at line " << yylineno;    
+    } else {
+        stream << "Parsing error: " << e << " at line " << yylineno << " of file '" << file << "'";
+    }
     error_list.push_back(stream.str());
     status = 0;
 }

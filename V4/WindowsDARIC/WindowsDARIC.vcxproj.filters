@@ -117,9 +117,6 @@
     <ClCompile Include="..\src\graphics\graphics_triangle.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\vm\stack.cpp">
-      <Filter>Source Files\VM</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\vm\vm.cpp">
       <Filter>Source Files\VM</Filter>
     </ClCompile>
@@ -1044,6 +1041,9 @@
     </None>
     <None Include="..\Examples\Sierpinski.daric">
       <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\s.daric">
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

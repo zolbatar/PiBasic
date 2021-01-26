@@ -112,7 +112,7 @@ void Interpreter::run()
             } else {
                 // Is it a line number to add?
                 if (std::isdigit(s[0])) {
-                    add_line(s);
+                    add_line(s, 0);
                 } else {
                     execute_line(s);
                 }
@@ -135,10 +135,11 @@ void Interpreter::load(std::string s)
         g_graphics->print_console("Error loading file\r");
         return;
     }
+    UINT32 line_number = 10;
     while (!feof(fp)) {
         if (fgets(line, 1024, fp) != NULL) {
             std::string line_string(line);
-            add_line(line_string);
+            line_number = add_line(line_string, line_number);
         }
     }
 }
@@ -158,17 +159,17 @@ void Interpreter::save(std::string s)
     for (auto it = lines.begin(); it != lines.end(); it++) {
         std::stringstream stream;
         replaceAll((*it).second, "\n", "");
-        stream << std::setw(2) << (*it).first << " " << (*it).second << std::endl;
+        stream << (*it).first << " " << (*it).second << std::endl;
         fwrite(stream.str().c_str(), stream.str().length(), 1, fp);
     }
     fclose(fp);
 }
 
-void Interpreter::add_line(std::string s)
+UINT32 Interpreter::add_line(std::string s, UINT32 auto_line)
 {
     // Scan for end of line number
     size_t i;
-    for (i = 1; i < s.length(); i++) {
+    for (i = 0; i < s.length(); i++) {
         if (!std::isdigit(s[i]))
             break;
     }
@@ -176,13 +177,18 @@ void Interpreter::add_line(std::string s)
     replaceAll(s, "\n", "");
 
     // Extract line number
-    auto line_as_s = s.substr(0, i);
-    UINT32 line = std::stoi(line_as_s);
-    auto rest_of_line = s.substr(i + 1, s.length() - i);
+    UINT32 line = auto_line;
+    auto rest_of_line = s;
+    if (i > 0) {
+        auto line_as_s = s.substr(0, i);
+        line = std::stoi(line_as_s);
+        rest_of_line = s.substr(i + 1, s.length() - i);
+    }
     if (lines.count(line) != 0) {
         lines.erase(line);
     }
     lines.insert(std::make_pair(line, rest_of_line));
+    return line + 10;
 }
 
 void Interpreter::execute_line(std::string s)
@@ -209,7 +215,7 @@ void Interpreter::run_all_lines()
     FILE* fp = fopen(temp_filename.c_str(), "w");
     for (auto it = lines.begin(); it != lines.end(); it++) {
         std::stringstream stream;
-        stream << std::setw(2) << (*it).first << " " << (*it).second << std::endl;
+        stream << (*it).first << " " << (*it).second << std::endl;
         auto s = stream.str();
         fwrite(s.c_str(), s.length(), 1, fp);
     }

@@ -265,9 +265,9 @@ public:
     UINT32 line_number;
     short file_number;
 
-    bool is_local_variable() { return data & LocalVariableFlag; }
-    UINT32 global_index() { return data; }
-    UINT32 local_index() { return data ^ LocalVariableFlag; }
+    inline bool is_local_variable() { return data & LocalVariableFlag; }
+    inline UINT32 global_index() { return data; }
+    inline UINT32 local_index() { return data ^ LocalVariableFlag; }
 
     std::string filename()
     {

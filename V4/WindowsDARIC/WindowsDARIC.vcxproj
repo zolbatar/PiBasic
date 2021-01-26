@@ -171,6 +171,13 @@
     </Bison>
     <Bison>
       <DefinesFile>C:\Users\d_dud\source\repos\PiBasic\V4\src\parser\bison.hpp</DefinesFile>
+      <Verbose>false</Verbose>
+      <GraphFile>
+      </GraphFile>
+      <ReportFile>
+      </ReportFile>
+      <Warnings>
+      </Warnings>
     </Bison>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -260,7 +267,6 @@
     <ClCompile Include="..\src\parser\flex.cpp" />
     <ClCompile Include="..\src\parse_compile_run.cpp" />
     <ClCompile Include="..\src\string.cpp" />
-    <ClCompile Include="..\src\vm\stack.cpp" />
     <ClCompile Include="..\src\vm\vm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -536,6 +542,7 @@
     <None Include="..\Examples\WorldInLines.daric" />
     <None Include="..\Makefile.linux" />
     <None Include="..\Makefile.riscos" />
+    <None Include="..\s.daric" />
     <None Include="..\Scratch.daric" />
   </ItemGroup>
   <ItemGroup>

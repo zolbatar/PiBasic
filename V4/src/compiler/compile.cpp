@@ -83,12 +83,11 @@ void compile(std::vector<Boxed>* variables)
         b.pc_end = func.pc_end;
         g_vm->functions.push_back(std::move(b));
 
-        auto locals = g_vm->get_function_locals(func.id);
         for (auto l = func.local_names.begin(); l != func.local_names.end(); ++l) {
             Boxed b;
             b.name = (*l).name;
             b.type = (*l).type;
-            locals->push_back(std::move(b));
+            g_vm->get_function_locals(func.id).push_back(std::move(b));
         }
     }
 }

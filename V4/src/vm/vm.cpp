@@ -1464,9 +1464,7 @@ bool VM::opcode_CALL()
     UINT32 new_pc = bc.data;
     if (runtime_debug)
         *g_logfile << "Calling " << new_pc << std::endl;
-    locals_stack.push(variables.get_locals());
-    auto c = get_function_locals_count(l);
-    variables.set_locals(std::vector<Boxed>(c));
+    variables.create_locals_on_call(get_function_locals_count(l));
     call_stack.push(helper_bytecodes().pc);
     helper_bytecodes().pc = new_pc;
     return false;
@@ -1508,9 +1506,7 @@ bool VM::opcode_RETURN()
     if (new_pc & GosubCallFlag) {
         new_pc = new_pc ^ GosubCallFlag;
     } else {
-        auto l = locals_stack.top();
-        variables.set_locals(std::vector<Boxed>(l));
-        locals_stack.pop();
+        variables.revert_locals_on_return();
     }
     call_stack.pop();
     if (runtime_debug)
@@ -1551,7 +1547,6 @@ bool VM::opcode_UNPACK_F()
     default:
         error("Unsupported unpack casting");
     }
-    b.type = Type::NOTYPE;
     if (runtime_debug)
         *g_logfile << "Unpacked float value of " << variables.get_variable(bc).value_float << " in variable " << variables.get_variable(bc).name << std::endl;
     return false;
@@ -1570,7 +1565,6 @@ bool VM::opcode_UNPACK_I()
     default:
         error("Unsupported unpack casting");
     }
-    b.type = Type::NOTYPE;
     if (runtime_debug)
         *g_logfile << "Unpacked int value of " << variables.get_variable(bc).value_int << " in variable " << variables.get_variable(bc).name << std::endl;
     return false;
@@ -1586,7 +1580,6 @@ bool VM::opcode_UNPACK_S()
     default:
         error("Unsupported unpack casting");
     }
-    b.type = Type::NOTYPE;
     if (runtime_debug)
         *g_logfile << "Unpacked string value of '" << variables.get_variable(bc).value_int << " in variable " << variables.get_variable(bc).name << "'" << std::endl;
     return false;
