@@ -104,8 +104,11 @@ lines
 
 line
     : statements NL { $$ = $1; }
+    | LINE_NUMBER statements NL { $$ = link(linenumber($1), $2); yylineno = $1; } 
     | SS NL { $$ = NULL; }
+    | LINE_NUMBER SS NL { $$ = linenumber($1); yylineno = $1; }
     | NL { $$ = NULL; }
+    | LINE_NUMBER NL { $$ = NULL; }
     ;
 
 embed_lines
@@ -115,7 +118,6 @@ embed_lines
 
 statements
     : statement { $$ = $1; } 
-    | LINE_NUMBER statements { $$ = link(linenumber($1), $2)); yylineno = $1; } 
     | statement SS statements { $$ = link($1, $3); }
     ;
 

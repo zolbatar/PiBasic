@@ -29,7 +29,6 @@ extern std::unique_ptr<std::stringstream> g_logfile;
 
 void Interpreter::welcome_prompt()
 {
-    g_graphics->set_margin(10);
     g_graphics->colour(255, 0, 0);
     g_graphics->print_console("D");
     g_graphics->colour(255, 255, 0);
@@ -100,8 +99,19 @@ void Interpreter::run()
             } else if (upper.compare("LIST") == 0) {
                 for (auto it = lines.begin(); it != lines.end(); it++) {
                     std::stringstream stream;
-                    stream << std::setw(4) << (*it).first << " " << (*it).second << "\r";
+                    g_graphics->colour(255, 255, 0);
+                    stream << std::setw(5) << (*it).first << " ";
                     g_graphics->print_console(stream.str());
+                    stream.str("");
+                    g_graphics->colour(255, 255, 255);
+                    stream << (*it).second << "\r";
+                    g_graphics->print_console(stream.str());
+                    g_graphics->poll();
+                    if (g_graphics->inkey(-4)) {
+                        while (g_graphics->inkey(-4)) {
+                            g_graphics->poll();
+                        }
+                    }
                 }
             } else if (upper.compare("WELCOME") == 0) {
                 run_welcome();
@@ -222,7 +232,6 @@ void Interpreter::run_all_lines()
     fclose(fp);
 
     // Now parse and compile
-    g_graphics->set_margin(0);
     g_vm = std::make_unique<VM>();
     parse_and_compile(temp_filename.c_str(), true, &variables);
     bool done = false;
@@ -265,9 +274,9 @@ void Interpreter::run_welcome()
     _kernel_swi(DDEUtils_Prefix, &regs, &regs);
 #endif
 
-    g_graphics->set_margin(0);
     g_vm = std::make_unique<VM>();
     parse_and_compile("Welcome", false, nullptr);
     run_vm();
+    g_graphics->cls();
     welcome_prompt();
 }

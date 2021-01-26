@@ -178,47 +178,10 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
     }
 
     switch (c) {
-    case '\\':
-        last_char_was_slash = true;
-        return;
     case '\r':
         *cursor_y += font_row_height;
         *cursor_x = 0;
         return;
-    }
-    if (last_char_was_slash) {
-        switch (c) {
-        case 'r':
-            *cursor_y += font_row_height;
-            *cursor_x = 0;
-            return;
-        case '\\':
-            c = '\\';
-            break;
-        default: {
-            Font* f = get_glyph(0, index_ff, '\\', 0);
-            if (f->bitmap != NULL) {
-                auto saved_colour = current_colour;
-                for (int j = 0; j < f->height; ++j) {
-                    for (int i = 0; i < f->width; ++i) {
-                        auto idx = j * f->width + i;
-                        auto v = f->bitmap[idx];
-                        if (v > 0) {
-                            Colour c;
-                            double a = static_cast<double>(v) / 255.0;
-                            alpha(current_bg_colour, saved_colour, c, a);
-                            //colour(saved_colour.r * v / 256, saved_colour.g * v / 256, saved_colour.b * v / 256);
-                            set_colour(c);
-                            plot(*cursor_x + i + f->ix0 + margin, *cursor_y + j + f->iy0 + f->baseline);
-                        }
-                    }
-                }
-                set_colour(saved_colour);
-            }
-            *cursor_x += f->sc_width;
-        }
-        }
-        last_char_was_slash = false;
     }
     Font* f = get_glyph(0, index_ff, c, 0);
     if (f->bitmap != NULL) {
@@ -290,7 +253,6 @@ void Graphics::set_margin(int margin)
 
 void Graphics::print_text(int index_ff, VM_STRING text, int cursor_x, int cursor_y)
 {
-    last_char_was_slash = false;
     if (cursor_x == -1)
         cursor_x = last_cursor_x;
     if (cursor_y == -1)
@@ -307,7 +269,6 @@ void Graphics::print_text(int index_ff, VM_STRING text, int cursor_x, int cursor
 
 void Graphics::print_text_centre(int index_ff, VM_STRING text, int cursor_x, int cursor_y)
 {
-    last_char_was_slash = false;
     if (cursor_x == -1)
         cursor_x = last_cursor_x;
     if (cursor_y == -1)
@@ -322,7 +283,6 @@ void Graphics::print_text_centre(int index_ff, VM_STRING text, int cursor_x, int
 }
 void Graphics::print_text_right(int index_ff, VM_STRING text, int cursor_x, int cursor_y)
 {
-    last_char_was_slash = false;
     if (cursor_x == -1)
         cursor_x = last_cursor_x;
     if (cursor_y == -1)

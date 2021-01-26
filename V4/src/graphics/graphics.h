@@ -194,7 +194,6 @@ private:
     int margin = 0;
     std::string fps_text = "0 FPS";
     VM_INT fps_clock = get_clock();
-    bool last_char_was_slash = false;
     std::array<bool, 256> key_pressed;
 
     // Fast line lookup
