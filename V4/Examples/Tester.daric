@@ -72,7 +72,7 @@
 1540 Data 100, "Fred", 10.5
 1550 PRINT "Data (Int)         = ";:IF d1% = 100 THEN PROCPass() ELSE PROCFail()
 1560 PRINT "Data (Float)       = ";:IF d3 = 10.5 THEN PROCPass() ELSE PROCFail()
-1570 PRINT "Data (String)      = ";:IF d2$ = "Fred" THEN PROCPass() ELSE PROCFail()
+1570 PRINT "Data (String)      = ";:	IF d2$ = "Fred" THEN PROCPass() ELSE PROCFail()
 1580 FOR I% = 0 TO 4:READ dat%(I%):NEXT
 1610 DATA 1, 2, 3, 4, 5
 1620 PRINT "Data (Array)       = ";:IF dat%(0) + dat%(1) + dat%(2) + dat%(3) + dat%(4) = 15 THEN PROCPass() ELSE PROCFail()
@@ -101,6 +101,8 @@
 2040 PRINT "Proc (RETURN)      = ";:AA%=1:BB%=2:PROCTestRet(AA%, BB%):IF AA% = 100 And BB%=200 THEN PROCPass() ELSE PROCFail()
 2050 PRINT	
 2060 :
+2070 GOSUB 7000:REM GOSUB & GOTO
+2080 :
 2100 PRINT "::Locals & Globals::"
 2110 G%=5
 2120 PROCLocalVars()
@@ -155,10 +157,10 @@
 2640 PRINT "Case (Otherwise)   = ";
 2650 I%=4
 2660 Case I% Of
-2670 	When 0, 1, 2 PROCFail()
-2680 	When 3 PROCFail()
-2690 	Otherwise PROCPass()
-2700 EndCase
+2670 	WHEN 0, 1, 2 PROCFail()
+2680 	WHEN 3 PROCFail()
+2690 	OTHERWISE PROCPass()
+2700 ENDCASE
 2710 PRINT
 2729 :
 3000 PRINT "::Maths::"
@@ -225,7 +227,7 @@
 3830 PRINT "String$            = ";:IF String$(4, "A") = "AAAA" THEN PROCPass() ELSE PROCFail()
 3840 PRINT
 3850 :
-3900 PRINT "::TOkens::"
+3900 PRINT "::Tokens::"
 3910 PRINT "Swap               = ";:SWAPA%=1:SWAPB%=2:SWAP SWAPA%,SWAPB%:IF SWAPA%=2 AND SWAPB%=1 THEN PROCPass() ELSE PROCFail()
 3920 PRINT
 3930 :
@@ -322,4 +324,4 @@
 7060 GOSUB%=0
 7070 GOSUB 6000
 7080 IF GOSUB%=1 THEN PROCPass() ELSE PROCFail()
-7090 PRINT
+7090 RETURN

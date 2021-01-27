@@ -71,7 +71,7 @@ extern int yydebug;
     FN_REAL = 272,                 /* FN_REAL  */
     FN_STRING = 273,               /* FN_STRING  */
     NL = 274,                      /* NL  */
-    SS = 275,                      /* SS  */
+    COLON = 275,                   /* COLON  */
     SEMICOLON = 276,               /* SEMICOLON  */
     COMMA = 277,                   /* COMMA  */
     INTEGERDIVIDE = 278,           /* INTEGERDIVIDE  */
@@ -301,7 +301,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 29 "DARIC.y"
+#line 31 "DARIC.y"
 
     int v_int;
     double v_real;

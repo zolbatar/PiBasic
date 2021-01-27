@@ -45,18 +45,19 @@ def_procedure		(?i:"DefProc"){variable}
 def_integer_fn      (?i:"DefFn"){integer_variable}
 def_real_fn         (?i:"DefFn"){variable}
 def_string_fn       (?i:"DefFn"){string_variable}
-FN_STRING		(?i:"Fn"){string_variable}
-FN_INTEGER	(?i:"Fn"){integer_variable}
-FN_REAL		(?i:"Fn"){variable}
+FN_STRING		    (?i:"Fn"){string_variable}
+FN_INTEGER	        (?i:"Fn"){integer_variable}
+FN_REAL		        (?i:"Fn"){variable}
 procedure			(?i:"Proc"){variable}
 install_string      (?i:"Install"){ws}{string}
 star                \*\*{alpha}+
 %%
 
-(?i:"Rem"){comment}	/* skip comments */
+(?i:"Rem"){comment}	                    /* skip comments */
+{line_number}{ws}(?i:"Rem"){comment}	/* skip comments */
 {ws}                /* skip blanks and tabs */
 {nl}                return NL;
-{ss}                return SS;
+{ss}                return COLON;
 "//"                return INTEGERDIVIDE;
 "~"					return TILDE;
 "'"					return TICK;

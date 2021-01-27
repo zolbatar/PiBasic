@@ -3,6 +3,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <stack>
 #include <stdio.h>
 #include <sstream>
 #include "ast.h"
@@ -12,6 +13,7 @@ extern int yylex();
 extern FILE *yyin;
 extern int yyfileno;
 extern int yylineno;
+extern std::stack<std::string> file_stack;
 std::list<std::string> error_list;
 extern std::string file;
 extern std::map<std::string, int> files_index;
@@ -38,7 +40,7 @@ extern bool interactive;
 %token <v_string> LITERAL_STRING INTEGER_VARIABLE VARIABLE STRING_VARIABLE TYPE_VARIABLE
 %token <v_string> DEFPROC DEFFN_INTEGER DEFFN_STRING DEFFN_REAL 
 %token <v_string> PROCEDURE FN_INTEGER FN_REAL FN_STRING
-%token NL SS SEMICOLON COMMA
+%token NL COLON SEMICOLON COMMA
 %token INTEGERDIVIDE
 %token E LE GE NE SHL SHR LT GT PLUS MINUS MULTIPLY DIVIDE TILDE TICK
 %token SHL_E SHR_E PLUS_E MINUS_E MULTIPLY_E DIVIDE_E INTEGERDIVIDE_E
@@ -105,10 +107,9 @@ lines
 line
     : statements NL { $$ = $1; }
     | LINE_NUMBER statements NL { $$ = link(linenumber($1), $2); yylineno = $1; } 
-    | SS NL { $$ = NULL; }
-    | LINE_NUMBER SS NL { $$ = linenumber($1); yylineno = $1; }
+    | COLON NL { $$ = NULL; }
+    | LINE_NUMBER COLON NL { $$ = linenumber($1); yylineno = $1; }
     | NL { $$ = NULL; }
-    | LINE_NUMBER NL { $$ = NULL; }
     ;
 
 embed_lines
@@ -118,7 +119,7 @@ embed_lines
 
 statements
     : statement { $$ = $1; } 
-    | statement SS statements { $$ = link($1, $3); }
+    | statement COLON statements { $$ = link($1, $3); }
     ;
 
 statement
@@ -610,6 +611,7 @@ when_list
 
 define_function
     : DEFPROC '(' proc_parameter_list ')' NL embed_lines ENDPROC { $$ = token3typed(DEFPROC, string($1), $3, $6, Type::NOTYPE); }
+    | DEFPROC '(' proc_parameter_list ')' NL embed_lines LINE_NUMBER ENDPROC { $$ = token3typed(DEFPROC, string($1), $3, $6, Type::NOTYPE); }
     | DEFFN_INTEGER '(' fn_parameter_list ')' NL embed_lines ENDFN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::INTEGER); }
     | DEFFN_REAL '(' fn_parameter_list ')' NL embed_lines ENDFN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::REAL); }
     | DEFFN_STRING '(' fn_parameter_list ')' NL embed_lines ENDFN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::STRING); }
@@ -638,7 +640,7 @@ int parse(const char *filename) {
 
 void yyerror(const char *e) {
     std::stringstream stream;
-    if (yyfileno == 0 && interactive) {
+    if (file_stack.size() == 0 && interactive) {
         stream << "Parsing error: " << e << " at line " << yylineno;    
     } else {
         stream << "Parsing error: " << e << " at line " << yylineno << " of file '" << file << "'";

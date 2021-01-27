@@ -99,7 +99,7 @@ void Interpreter::run()
             } else if (upper.compare("LIST") == 0) {
                 for (auto it = lines.begin(); it != lines.end(); it++) {
                     std::stringstream stream;
-                    g_graphics->colour(255, 255, 0);
+                    g_graphics->colour(180, 180, 0);
                     stream << std::setw(5) << (*it).first << " ";
                     g_graphics->print_console(stream.str());
                     stream.str("");
