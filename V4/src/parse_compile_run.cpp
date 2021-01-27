@@ -10,12 +10,12 @@
 #include <unordered_set>
 
 // From BISON or FLEX
+extern struct AST* final;
 int parse(const char* filename);
 extern std::list<std::string> error_list;
 extern std::unordered_set<std::string> included_files;
 extern std::stack<std::string> file_stack;
 extern std::stack<int> yylineno_stack;
-extern std::map<int, std::list<AST*>> ast_lines;
 extern std::map<std::string, int> files_index;
 
 // Global stuff
@@ -107,9 +107,15 @@ void run_vm()
 
 void reset_parser()
 {
+    // Clear AST
+    auto it = final;
+    while (it != nullptr) {
+        delete it->l;
+        it = it->r;
+    }
+
     // Clear all previous stuff
     error_list.clear();
-    ast_lines.clear();
     files_index.clear();
     included_files.clear();
     while (!file_stack.empty())

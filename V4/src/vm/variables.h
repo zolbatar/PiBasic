@@ -25,7 +25,7 @@ public:
     std::vector<Boxed>& get_variables() { return variables; }
     void set_variables_size(int size) { variables.resize(size); }
     void add_variable(Boxed b, int index) { variables.at(index) = std::move(b); }
-    std::vector<Boxed> get_locals() { return locals; }
+    std::vector<Boxed>& get_locals() { return locals; }
 
     inline Boxed& get_variable(Bytecode& bc)
     {

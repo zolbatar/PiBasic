@@ -282,7 +282,7 @@ void Debugger::debugger_disassembly()
             debugger_options(0, 1);
             g_graphics->print_text(disassembly_font, "\r\r", -1, -1);
 
-            if (pos >= 0) {
+            if (pos >= 0 && pos < g_vm->helper_bytecodes().size) {
                 // Show current file and PC
                 auto cur_bc = g_vm->helper_bytecodes().get_bytecode(pos);
                 g_graphics->colour(128, 128, 128);

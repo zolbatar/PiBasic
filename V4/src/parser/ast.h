@@ -18,6 +18,7 @@ enum class Type {
 
 enum class ASTType {
     LINK,
+    STATEMENT_LINK,
     TOKEN,
     LINE_NUMBER,
     INTEGER,
@@ -50,6 +51,7 @@ struct AST {
 
 struct AST* new_ast();
 struct AST* assignment(AST* var, AST* exp);
+struct AST* statement_link(AST* list, AST* item);
 struct AST* link(AST* list, AST* item);
 struct AST* linenumber(int line_number);
 struct AST* token(yytokentype token);

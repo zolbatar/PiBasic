@@ -66,7 +66,7 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
 
     // Line header
     std::stringstream ssh;
-    ssh << std::uppercase << std::hex << std::setfill('0') << std::setw(8) << i - 1 << " : " << std::nouppercase << std::dec;
+    ssh << std::uppercase << std::hex << std::setfill('0') << std::setw(8) << i << " : " << std::nouppercase << std::dec;
     ret.header = ssh.str();
 
     // Actual opcode and operands

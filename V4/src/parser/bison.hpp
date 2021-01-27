@@ -302,7 +302,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 35 "DARIC.y"
+#line 33 "DARIC.y"
 
     int v_int;
     double v_real;

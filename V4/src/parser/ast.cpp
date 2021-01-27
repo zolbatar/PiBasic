@@ -10,6 +10,8 @@ struct AST* new_ast()
     auto a = new AST();
     a->file_number = yyfileno;
     a->line_number = yylineno;
+    a->l = nullptr;
+    a->r = nullptr;
     if (a == NULL) {
         std::cout << "Error allocating memory for AST\n";
         exit(1);
@@ -23,6 +25,15 @@ struct AST* assignment(AST* var, AST* exp)
     a->type = ASTType::ASSIGNMENT;
     a->l = var;
     a->r = exp;
+    return a;
+}
+
+struct AST* statement_link(AST* list, AST* item)
+{
+    auto a = new_ast();
+    a->type = ASTType::STATEMENT_LINK;
+    a->l = list;
+    a->r = item;
     return a;
 }
 

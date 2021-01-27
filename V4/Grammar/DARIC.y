@@ -10,7 +10,7 @@
 
 #define YYDEBUG 1
 
-AST *final = nullptr;
+struct AST* final;
 extern int yylex();
 extern FILE *yyin;
 extern int yyfileno;
@@ -19,8 +19,6 @@ extern std::stack<std::string> file_stack;
 std::list<std::string> error_list;
 extern std::string file;
 extern std::map<std::string, int> files_index;
-std::list<AST *> ast_statements;
-std::map<int, std::list<AST *>> ast_lines;
 void yyerror(const char *e);
 int yylex_destroy(void);
 int status;
@@ -85,7 +83,7 @@ extern bool interactive;
 %left NOT
 %left NEG  /* negation--unary minus */
 
-%type <ast> statement_list statement 
+%type <ast> top_level_statement_list statement_list statement 
 %type <ast> number expression_numeric
 %type <ast> string expression_string
 %type <ast> expression expression_list
@@ -96,12 +94,22 @@ extern bool interactive;
 %type <ast> when_list when
 %type <ast> type field field_list 
 
-%start statement_list
+%start daric
 
 %%
 
+daric
+    : top_level_statement_list { final = $1; }
+
+top_level_statement_list
+    : statement { $$ = $1; }
+    | top_level_statement_list SEPARATOR statement { $$ = statement_link($1, $3);  }
+    | LINE_NUMBER top_level_statement_list SEPARATOR { $$ = statement_link(linenumber($1), $2); yylineno = $1; } 
+    | top_level_statement_list LINE_NUMBER top_level_statement_list SEPARATOR { $$ = statement_link($1, statement_link(linenumber($2), $3)); yylineno = $2;  } 
+    ;
+
 statement_list
-    : statement
+    : statement { $$ = $1; }
     | statement_list SEPARATOR statement { $$ = link($1, $3);  }
     | LINE_NUMBER statement_list SEPARATOR { $$ = link(linenumber($1), $2); yylineno = $1; } 
     | statement_list LINE_NUMBER statement_list SEPARATOR { $$ = link($1, link(linenumber($2), $3)); yylineno = $2;  } 
@@ -596,15 +604,15 @@ when_list
 
 define_function
     : DEFPROC '(' proc_parameter_list ')' SEPARATOR statement_list SEPARATOR ENDPROC { $$ = token3typed(DEFPROC, string($1), $3, $6, Type::NOTYPE); }
-    | DEFFN_INTEGER '(' fn_parameter_list ')' NL statement_list ENDFN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::INTEGER); }
-    | DEFFN_REAL '(' fn_parameter_list ')' NL statement_list ENDFN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::REAL); }
-    | DEFFN_STRING '(' fn_parameter_list ')' NL statement_list ENDFN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::STRING); }
+    | DEFFN_INTEGER '(' fn_parameter_list ')' SEPARATOR statement_list SEPARATOR ENDFN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::INTEGER); }
+    | DEFFN_REAL '(' fn_parameter_list ')' SEPARATOR statement_list SEPARATOR ENDFN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::REAL); }
+    | DEFFN_STRING '(' fn_parameter_list ')' SEPARATOR statement_list SEPARATOR ENDFN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::STRING); }
     ;
 
 %%
 
 int parse(const char *filename) {
-    yydebug = 1;
+    //yydebug = 1;
     yyfileno = 0;
     status = 1;
     yyin = fopen(filename, "r");
@@ -620,7 +628,6 @@ int parse(const char *filename) {
     yyparse();
     fclose(yyin);
     yylex_destroy();
-    auto a = $$;
     return status;
 }
 

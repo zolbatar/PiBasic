@@ -57,8 +57,6 @@ struct CustomTypeFind {
     Type field_type = Type::NOTYPE;
 };
 
-extern std::map<int, std::list<AST*>> ast_lines;
-
 class Compiler {
 public:
     Compiler()
@@ -77,6 +75,7 @@ public:
 
     void compile_node(struct AST* ast, bool expression);
     void compile_lookahead();
+    void compile_lookahead_recurse(struct AST* node);
     void compile_node_lookahead(struct AST* ast, bool expression);
     int stack_size() { return static_cast<int>(type_list.size()); }
 
@@ -142,9 +141,9 @@ private:
     void insert_instruction_based_on_type(std::map<Type, Bytecodes> m, Type type, UINT32 value);
     void insert_bytecode_based_on_peektype(std::map<Type, Bytecodes>);
     void ensure_stack_is_integer();
-    void get_ensure_is_integer_pop(AST*);
-    void get_ensure_is_float_pop(AST*);
-    void get_ensure_is_string_pop(AST*);
+    void get_ensure_is_integer_pop(AST* ast);
+    void get_ensure_is_float_pop(AST* ast);
+    void get_ensure_is_string_pop(AST* ast);
     void ensure_stack_is_string();
     void ensure_stack_is_float();
     void comparison(Bytecodes i, Bytecodes f, Bytecodes s);

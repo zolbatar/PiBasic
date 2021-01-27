@@ -1,13 +1,26 @@
 #include "compile.h"
 #include <cassert>
 
+extern struct AST* final;
+
+void Compiler::compile_lookahead_recurse(struct AST* node)
+{
+    if (node->type == ASTType::STATEMENT_LINK) {
+        if (node->l != nullptr) {
+            compile_lookahead_recurse(node->l);
+        }
+        if (node->r != nullptr) {
+            compile_lookahead_recurse(node->r);
+        }
+    } else {
+        compile_node_lookahead(node, false);
+    }
+}
+
+
 void Compiler::compile_lookahead()
 {
-    for (auto line_it = ast_lines.begin(); line_it != ast_lines.end(); ++line_it) {
-        for (auto ast_it = (*line_it).second.begin(); ast_it != (*line_it).second.end(); ++ast_it) {
-            compile_node_lookahead(*ast_it, false);
-        }
-    }
+    compile_lookahead_recurse(final);
 }
 
 void Compiler::compile_node_lookahead(struct AST* ast, bool expression)

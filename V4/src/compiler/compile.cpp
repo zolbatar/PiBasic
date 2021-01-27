@@ -10,9 +10,25 @@
 #include <memory>
 #include <sstream>
 #include <stdlib.h>
+
 extern std::map<std::string, int> files_index;
 extern std::list<std::string> error_list;
 extern std::string temp_filename;
+extern struct AST* final;
+
+void compile_recurse(Compiler& compiler, struct AST* node)
+{
+    if (node->type == ASTType::STATEMENT_LINK) {
+        if (node->l != nullptr) {
+            compile_recurse(compiler, node->l);
+        }
+        if (node->r != nullptr) {
+            compile_recurse(compiler, node->r);
+        }
+    } else {
+        compiler.compile_node(node, false);
+    }
+}
 
 void compile(std::vector<Boxed>* variables)
 {
@@ -39,11 +55,8 @@ void compile(std::vector<Boxed>* variables)
             compiler.write = pass == 2;
 
             // Loop through all lines and AST elements in order
-            for (auto line_it = ast_lines.begin(); line_it != ast_lines.end(); ++line_it) {
-                for (auto ast_it = (*line_it).second.begin(); ast_it != (*line_it).second.end(); ++ast_it) {
-                    compiler.compile_node(*ast_it, false);
-                }
-            }
+            auto it = final;
+            compile_recurse(compiler, final);
             assert(compiler.stack_size() == 0);
 
             compiler.local_var_index = 0;
