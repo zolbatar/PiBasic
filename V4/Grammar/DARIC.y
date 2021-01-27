@@ -8,6 +8,8 @@
 #include <sstream>
 #include "ast.h"
 
+#define YYDEBUG 1
+
 AST *final = nullptr;
 extern int yylex();
 extern FILE *yyin;
@@ -17,6 +19,7 @@ extern std::stack<std::string> file_stack;
 std::list<std::string> error_list;
 extern std::string file;
 extern std::map<std::string, int> files_index;
+std::list<AST *> ast_statements;
 std::map<int, std::list<AST *>> ast_lines;
 void yyerror(const char *e);
 int yylex_destroy(void);
@@ -27,6 +30,7 @@ extern bool interactive;
 %locations
 %require "3.6"
 %define parse.error detailed 
+%define parse.trace
 
 %union {
     int v_int;
@@ -40,7 +44,7 @@ extern bool interactive;
 %token <v_string> LITERAL_STRING INTEGER_VARIABLE VARIABLE STRING_VARIABLE TYPE_VARIABLE
 %token <v_string> DEFPROC DEFFN_INTEGER DEFFN_STRING DEFFN_REAL 
 %token <v_string> PROCEDURE FN_INTEGER FN_REAL FN_STRING
-%token NL COLON SEMICOLON COMMA
+%token NL COLON SEMICOLON COMMA SEPARATOR
 %token INTEGERDIVIDE
 %token E LE GE NE SHL SHR LT GT PLUS MINUS MULTIPLY DIVIDE TILDE TICK
 %token SHL_E SHR_E PLUS_E MINUS_E MULTIPLY_E DIVIDE_E INTEGERDIVIDE_E
@@ -81,7 +85,7 @@ extern bool interactive;
 %left NOT
 %left NEG  /* negation--unary minus */
 
-%type <ast> daric lines line statements statement embed_lines
+%type <ast> daric lines line statement_list statement embed_lines 
 %type <ast> number expression_numeric
 %type <ast> string expression_string
 %type <ast> expression expression_list
@@ -92,12 +96,9 @@ extern bool interactive;
 %type <ast> when_list when
 %type <ast> type field field_list 
 
-%start daric
+%start statement_list
 
 %%
-daric
-    : lines { $$ = $1; }
-    ;
 
 lines
     : line { ast_lines[yyfileno].push_front($1); $$ = $1; } 
@@ -105,21 +106,23 @@ lines
     ;
 
 line
-    : statements NL { $$ = $1; }
-    | LINE_NUMBER statements NL { $$ = link(linenumber($1), $2); yylineno = $1; } 
+    : statement_list
+    | LINE_NUMBER statement_list NL { $$ = link(linenumber($1), $2); yylineno = $1; } 
     | COLON NL { $$ = NULL; }
     | LINE_NUMBER COLON NL { $$ = linenumber($1); yylineno = $1; }
     | NL { $$ = NULL; }
     ;
 
 embed_lines
-    : line { $$ = $1; } 
+    : line 
     | line embed_lines { $$ = link($1, $2); } 
     ;
 
-statements
-    : statement { $$ = $1; } 
-    | statement COLON statements { $$ = link($1, $3); }
+statement_list
+    : statement { $$ = $1; ast_statements.push_front($1); };
+    | statement_list SEPARATOR statement { $$ = link($1, $3); }
+    | LINE_NUMBER statement_list SEPARATOR { $$ = link(linenumber($1), $2); yylineno = $1; ast_statements.push_front(linenumber($1)); } 
+    | statement_list LINE_NUMBER statement_list SEPARATOR { $$ = link($1, link(linenumber($2), $3)); yylineno = $2; ast_statements.push_front(linenumber($2)); } 
     ;
 
 statement
@@ -169,13 +172,13 @@ statement
     | GET { $$ = token(GET_S); } 
     | GETS { $$ = token(GETS_S); } 
 
-    | IF expression statements { $$ = token2(IF, $2, $3); }
+    | IF expression statement_list { $$ = token2(IF, $2, $3); }
     | IF expression statement ELSE statement { $$ = token3(IF, $2, $3, $5); }
     | IF expression NL embed_lines ENDIF { $$ = token2(IF, $2, $4); }
     | IF expression NL embed_lines ELSE NL embed_lines ENDIF { $$ = token3(IF, $2, $4, $7); }
     /* with optional THEN */
-    | IF expression THEN statements { $$ = token2(IF, $2, $4); }
-    | IF expression THEN statements ELSE statements { $$ = token3(IF, $2, $4, $6); }
+    | IF expression THEN statement_list { $$ = token2(IF, $2, $4); }
+    | IF expression THEN statement_list ELSE statement_list { $$ = token3(IF, $2, $4, $6); }
     | IF expression THEN NL embed_lines ENDIF { $$ = token2(IF, $2, $5); }
     | IF expression THEN NL embed_lines ELSE NL embed_lines ENDIF { $$ = token3(IF, $2, $5, $8); }
 
@@ -191,33 +194,33 @@ statement
     | FOR VARIABLE                  IN_ VARIABLE '(' ')'         NL embed_lines  NEXT { $$ = token4typed(FORIN, string($2), string($4), $8, token(GLOBAL), Type::REAL); }
     | FOR INTEGER_VARIABLE          IN_ INTEGER_VARIABLE '(' ')' NL embed_lines  NEXT { $$ = token4typed(FORIN, string($2), string($4), $8, token(GLOBAL), Type::INTEGER); }
     | FOR STRING_VARIABLE           IN_ STRING_VARIABLE '(' ')'  NL embed_lines  NEXT { $$ = token4typed(FORIN, string($2), string($4), $8, token(GLOBAL), Type::STRING); }
-    | FOR VARIABLE                  IN_ VARIABLE '(' ')'         statements      NEXT { $$ = token4typed(FORIN, string($2), string($4), $7, token(GLOBAL), Type::REAL); }
-    | FOR INTEGER_VARIABLE          IN_ INTEGER_VARIABLE '(' ')' statements      NEXT { $$ = token4typed(FORIN, string($2), string($4), $7, token(GLOBAL), Type::INTEGER); }
-    | FOR STRING_VARIABLE           IN_ STRING_VARIABLE '(' ')'  statements      NEXT { $$ = token4typed(FORIN, string($2), string($4), $7, token(GLOBAL), Type::STRING); }
+    | FOR VARIABLE                  IN_ VARIABLE '(' ')'         statement_list      NEXT { $$ = token4typed(FORIN, string($2), string($4), $7, token(GLOBAL), Type::REAL); }
+    | FOR INTEGER_VARIABLE          IN_ INTEGER_VARIABLE '(' ')' statement_list      NEXT { $$ = token4typed(FORIN, string($2), string($4), $7, token(GLOBAL), Type::INTEGER); }
+    | FOR STRING_VARIABLE           IN_ STRING_VARIABLE '(' ')'  statement_list      NEXT { $$ = token4typed(FORIN, string($2), string($4), $7, token(GLOBAL), Type::STRING); }
     | FOR LOCAL VARIABLE            IN_ VARIABLE '(' ')'         NL embed_lines  NEXT { $$ = token4typed(FORIN, string($3), string($5), $9, token(LOCAL), Type::REAL); }
     | FOR LOCAL INTEGER_VARIABLE    IN_ INTEGER_VARIABLE '(' ')' NL embed_lines  NEXT { $$ = token4typed(FORIN, string($3), string($5), $9, token(LOCAL), Type::INTEGER); }
     | FOR LOCAL STRING_VARIABLE     IN_ STRING_VARIABLE '(' ')'  NL embed_lines  NEXT { $$ = token4typed(FORIN, string($3), string($5), $9, token(LOCAL), Type::STRING); }
-    | FOR LOCAL VARIABLE            IN_ VARIABLE '(' ')'         statements      NEXT { $$ = token4typed(FORIN, string($3), string($5), $8, token(LOCAL), Type::REAL); }
-    | FOR LOCAL INTEGER_VARIABLE    IN_ INTEGER_VARIABLE '(' ')' statements      NEXT { $$ = token4typed(FORIN, string($3), string($5), $8, token(LOCAL), Type::INTEGER); }
-    | FOR LOCAL STRING_VARIABLE     IN_ STRING_VARIABLE '(' ')'  statements      NEXT { $$ = token4typed(FORIN, string($3), string($5), $8, token(LOCAL), Type::STRING); }
+    | FOR LOCAL VARIABLE            IN_ VARIABLE '(' ')'         statement_list      NEXT { $$ = token4typed(FORIN, string($3), string($5), $8, token(LOCAL), Type::REAL); }
+    | FOR LOCAL INTEGER_VARIABLE    IN_ INTEGER_VARIABLE '(' ')' statement_list      NEXT { $$ = token4typed(FORIN, string($3), string($5), $8, token(LOCAL), Type::INTEGER); }
+    | FOR LOCAL STRING_VARIABLE     IN_ STRING_VARIABLE '(' ')'  statement_list      NEXT { $$ = token4typed(FORIN, string($3), string($5), $8, token(LOCAL), Type::STRING); }
 
     /* Variants: single & multiple lines, STEP/no STEP and INT/FLOAT, and also LOCAL and GLOBAL */
     | FOR INTEGER_VARIABLE          E expression_numeric TO expression_numeric NL embed_lines                           NEXT { $$ = token5typed(FOR, string($2), $4, $6, $8, token(GLOBAL), Type::INTEGER); }
     | FOR VARIABLE                  E expression_numeric TO expression_numeric NL embed_lines                           NEXT { $$ = token5typed(FOR, string($2), $4, $6, $8, token(GLOBAL), Type::REAL); }
-    | FOR INTEGER_VARIABLE          E expression_numeric TO expression_numeric statements                               NEXT { $$ = token5typed(FOR, string($2), $4, $6, $7, token(GLOBAL), Type::INTEGER); }
-    | FOR VARIABLE                  E expression_numeric TO expression_numeric statements                               NEXT { $$ = token5typed(FOR, string($2), $4, $6, $7, token(GLOBAL), Type::REAL); }
+    | FOR INTEGER_VARIABLE          E expression_numeric TO expression_numeric statement_list                               NEXT { $$ = token5typed(FOR, string($2), $4, $6, $7, token(GLOBAL), Type::INTEGER); }
+    | FOR VARIABLE                  E expression_numeric TO expression_numeric statement_list                               NEXT { $$ = token5typed(FOR, string($2), $4, $6, $7, token(GLOBAL), Type::REAL); }
     | FOR INTEGER_VARIABLE          E expression_numeric TO expression_numeric STEP expression_numeric NL embed_lines   NEXT { $$ = token6typed(FOR, string($2), $4, $6, $8, $10, token(GLOBAL), Type::INTEGER); }
     | FOR VARIABLE                  E expression_numeric TO expression_numeric STEP expression_numeric NL embed_lines   NEXT { $$ = token6typed(FOR, string($2), $4, $6, $8, $10, token(GLOBAL), Type::REAL); }
-    | FOR INTEGER_VARIABLE          E expression_numeric TO expression_numeric STEP expression_numeric statements       NEXT { $$ = token6typed(FOR, string($2), $4, $6, $8, $9, token(GLOBAL), Type::INTEGER); }
-    | FOR VARIABLE                  E expression_numeric TO expression_numeric STEP expression_numeric statements       NEXT { $$ = token6typed(FOR, string($2), $4, $6, $8, $9, token(GLOBAL), Type::REAL); }
+    | FOR INTEGER_VARIABLE          E expression_numeric TO expression_numeric STEP expression_numeric statement_list       NEXT { $$ = token6typed(FOR, string($2), $4, $6, $8, $9, token(GLOBAL), Type::INTEGER); }
+    | FOR VARIABLE                  E expression_numeric TO expression_numeric STEP expression_numeric statement_list       NEXT { $$ = token6typed(FOR, string($2), $4, $6, $8, $9, token(GLOBAL), Type::REAL); }
     | FOR LOCAL INTEGER_VARIABLE    E expression_numeric TO expression_numeric NL embed_lines                           NEXT { $$ = token5typed(FOR, string($3), $5, $7, $9, token(LOCAL), Type::INTEGER); }
     | FOR LOCAL VARIABLE            E expression_numeric TO expression_numeric NL embed_lines                           NEXT { $$ = token5typed(FOR, string($3), $5, $7, $9, token(LOCAL), Type::REAL); }
-    | FOR LOCAL INTEGER_VARIABLE    E expression_numeric TO expression_numeric statements                               NEXT { $$ = token5typed(FOR, string($3), $5, $7, $8, token(LOCAL), Type::INTEGER); }
-    | FOR LOCAL VARIABLE            E expression_numeric TO expression_numeric statements                               NEXT { $$ = token5typed(FOR, string($3), $5, $7, $8, token(LOCAL), Type::REAL); }
+    | FOR LOCAL INTEGER_VARIABLE    E expression_numeric TO expression_numeric statement_list                               NEXT { $$ = token5typed(FOR, string($3), $5, $7, $8, token(LOCAL), Type::INTEGER); }
+    | FOR LOCAL VARIABLE            E expression_numeric TO expression_numeric statement_list                               NEXT { $$ = token5typed(FOR, string($3), $5, $7, $8, token(LOCAL), Type::REAL); }
     | FOR LOCAL INTEGER_VARIABLE    E expression_numeric TO expression_numeric STEP expression_numeric NL embed_lines   NEXT { $$ = token6typed(FOR, string($3), $5, $7, $9, $11, token(LOCAL), Type::INTEGER); }
     | FOR LOCAL VARIABLE            E expression_numeric TO expression_numeric STEP expression_numeric NL embed_lines   NEXT { $$ = token6typed(FOR, string($3), $5, $7, $9, $11, token(LOCAL), Type::REAL); }
-    | FOR LOCAL INTEGER_VARIABLE    E expression_numeric TO expression_numeric STEP expression_numeric statements       NEXT { $$ = token6typed(FOR, string($3), $5, $7, $9, $10, token(LOCAL), Type::INTEGER); }
-    | FOR LOCAL VARIABLE            E expression_numeric TO expression_numeric STEP expression_numeric statements       NEXT { $$ = token6typed(FOR, string($3), $5, $7, $9, $10, token(LOCAL), Type::REAL); }
+    | FOR LOCAL INTEGER_VARIABLE    E expression_numeric TO expression_numeric STEP expression_numeric statement_list       NEXT { $$ = token6typed(FOR, string($3), $5, $7, $9, $10, token(LOCAL), Type::INTEGER); }
+    | FOR LOCAL VARIABLE            E expression_numeric TO expression_numeric STEP expression_numeric statement_list       NEXT { $$ = token6typed(FOR, string($3), $5, $7, $9, $10, token(LOCAL), Type::REAL); }
 
     | CASE expression OF NL when_list ENDCASE { $$ = token2(CASE, $2, $5);  }
     | CASE expression OF NL when_list OTHERWISE statement NL ENDCASE { $$ = token3(CASE, $2, $5, $7);  }
@@ -602,7 +605,7 @@ fn_parameter_list
     ;
 
 when
-    : WHEN expression_list statements NL { $$ = token2(WHEN, $2, $3); }
+    : WHEN expression_list statement_list NL { $$ = token2(WHEN, $2, $3); }
     ;
 
 when_list
@@ -610,8 +613,7 @@ when_list
     | when when_list { $$ = link($1, $2); };
 
 define_function
-    : DEFPROC '(' proc_parameter_list ')' NL embed_lines ENDPROC { $$ = token3typed(DEFPROC, string($1), $3, $6, Type::NOTYPE); }
-    | DEFPROC '(' proc_parameter_list ')' NL embed_lines LINE_NUMBER ENDPROC { $$ = token3typed(DEFPROC, string($1), $3, $6, Type::NOTYPE); }
+    : DEFPROC '(' proc_parameter_list ')' SEPARATOR statement_list SEPARATOR ENDPROC { $$ = token3typed(DEFPROC, string($1), $3, $6, Type::NOTYPE); }
     | DEFFN_INTEGER '(' fn_parameter_list ')' NL embed_lines ENDFN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::INTEGER); }
     | DEFFN_REAL '(' fn_parameter_list ')' NL embed_lines ENDFN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::REAL); }
     | DEFFN_STRING '(' fn_parameter_list ')' NL embed_lines ENDFN { $$ = token3typed(DEFFN, string($1), $3, $6, Type::STRING); }
@@ -620,6 +622,7 @@ define_function
 %%
 
 int parse(const char *filename) {
+    yydebug = 1;
     yyfileno = 0;
     status = 1;
     yyin = fopen(filename, "r");
@@ -635,6 +638,7 @@ int parse(const char *filename) {
     yyparse();
     fclose(yyin);
     yylex_destroy();
+    auto a = ast_statements;
     return status;
 }
 

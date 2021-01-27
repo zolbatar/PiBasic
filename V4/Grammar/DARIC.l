@@ -25,8 +25,7 @@ std::stack<int> yylineno_stack;
 
 comment             .*[\n]+
 ws                  [ \t]+
-nl                  [\n]+
-ss                  [:]+
+sep                 [\n|:]*
 alpha               [A-Za-z]
 alphanumeric        [A-Za-z0-9_]
 dig                 [0-9]
@@ -56,8 +55,7 @@ star                \*\*{alpha}+
 (?i:"Rem"){comment}	                    /* skip comments */
 {line_number}{ws}(?i:"Rem"){comment}	/* skip comments */
 {ws}                /* skip blanks and tabs */
-{nl}                return NL;
-{ss}                return COLON;
+{sep}               return SEPARATOR;
 "//"                return INTEGERDIVIDE;
 "~"					return TILDE;
 "'"					return TICK;
@@ -307,8 +305,8 @@ star                \*\*{alpha}+
                     }
 <<EOF>>             {
                         static int once = 0; 
-                        if (once = !once)
-                            return NL;
+/*                        if (once = !once)
+                            return NL;*/
                         yypop_buffer_state();
                         if (file_stack.size() > 0) {
                             file = file_stack.top();
