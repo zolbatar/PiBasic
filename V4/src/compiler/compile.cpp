@@ -103,6 +103,7 @@ void compile(std::vector<Boxed>* variables)
             g_vm->get_function_locals(func.id).push_back(std::move(b));
         }
     }
+    g_vm->compile_successful = true;
 }
 
 void Compiler::setup_3d_types()

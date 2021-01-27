@@ -25,7 +25,8 @@ std::stack<int> yylineno_stack;
 
 comment             .*[\n]+
 ws                  [ \t]+
-sep                 [\n|:]*
+nl                  [\n]*
+colon               [:]*
 alpha               [A-Za-z]
 alphanumeric        [A-Za-z0-9_]
 dig                 [0-9]
@@ -55,7 +56,8 @@ star                \*\*{alpha}+
 (?i:"Rem"){comment}	                    /* skip comments */
 {line_number}{ws}(?i:"Rem"){comment}	/* skip comments */
 {ws}                /* skip blanks and tabs */
-{sep}               return SEPARATOR;
+{nl}                return NL;
+{colon}             return COLON;
 "//"                return INTEGERDIVIDE;
 "~"					return TILDE;
 "'"					return TICK;

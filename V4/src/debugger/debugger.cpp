@@ -378,8 +378,8 @@ void Debugger::debugger_disassembly()
         } else if (g_graphics->inkey(-115) || g_graphics->inkey(-31) || g_graphics->inkey(-120)) {
             return;
         }
-        if (pos < 1) {
-            pos = 1;
+        if (pos < 0) {
+            pos = 0;
         }
         if (pos > g_vm->helper_bytecodes().size) {
             pos = g_vm->helper_bytecodes().size - 1;

@@ -45,7 +45,11 @@ void Interpreter::welcome_prompt()
     g_graphics->colour(255, 255, 0);
     g_graphics->print_console("WELCOME");
     g_graphics->colour(255, 255, 255);
-    g_graphics->print_console(" for demos & examples\r");
+    g_graphics->print_console(" for demos & examples, ");
+    g_graphics->colour(255, 255, 0);
+    g_graphics->print_console("TEST");
+    g_graphics->colour(255, 255, 255);
+    g_graphics->print_console(" to run the test suite\r");
     g_graphics->print_console("Commands: ");
     g_graphics->colour(255, 255, 0);
     g_graphics->print_console("LOAD NEW RUN SAVE QUIT\r\r");
@@ -114,7 +118,9 @@ void Interpreter::run()
                     }
                 }
             } else if (upper.compare("WELCOME") == 0) {
-                run_welcome();
+                run_file("Welcome");
+            } else if (upper.compare("TEST") == 0) {
+                run_file("Tester");
             } else if (upper.substr(0, 5).compare("LOAD ") == 0) {
                 load(s);
             } else if (upper.substr(0, 5).compare("SAVE ") == 0) {
@@ -253,12 +259,11 @@ void Interpreter::run_all_lines()
     }
 }
 
-void Interpreter::run_welcome()
+void Interpreter::run_file(std::string filename)
 {
     // Directory for source files
     std::string path(cwd);
     path += "/Examples";
-    std::string filename("Welcome");
 
 #ifdef WINDOWS
     // Set current directory
@@ -275,7 +280,7 @@ void Interpreter::run_welcome()
 #endif
 
     g_vm = std::make_unique<VM>();
-    parse_and_compile("Welcome", false, nullptr);
+    parse_and_compile(filename.c_str(), false, nullptr);
     run_vm();
     g_graphics->cls();
     welcome_prompt();

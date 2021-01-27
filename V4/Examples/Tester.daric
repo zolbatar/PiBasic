@@ -1,10 +1,8 @@
-10 INSTALL "SetupGraphics"
-20 :
 30 T% = Time
 40 PRINT "DARIC Test Rig"
 50 PRINT "--------------"
 60 PRINT
-70 
+70 :
 100 PRINT "::Arrays::"
 110 DIM A%(6)
 120 A%(0) = 10
@@ -72,7 +70,7 @@
 1540 Data 100, "Fred", 10.5
 1550 PRINT "Data (Int)         = ";:IF d1% = 100 THEN PROCPass() ELSE PROCFail()
 1560 PRINT "Data (Float)       = ";:IF d3 = 10.5 THEN PROCPass() ELSE PROCFail()
-1570 PRINT "Data (String)      = ";:	IF d2$ = "Fred" THEN PROCPass() ELSE PROCFail()
+1570 PRINT "Data (String)      = ";:IF d2$ = "Fred" THEN PROCPass() ELSE PROCFail()
 1580 FOR I% = 0 TO 4:READ dat%(I%):NEXT
 1610 DATA 1, 2, 3, 4, 5
 1620 PRINT "Data (Array)       = ";:IF dat%(0) + dat%(1) + dat%(2) + dat%(3) + dat%(4) = 15 THEN PROCPass() ELSE PROCFail()
@@ -149,16 +147,16 @@
 2570 PRINT "FOR + Step (Float) = ";:IF I% = 5 THEN PROCPass() ELSE PROCFail()
 2580 PRINT "Case               = ";
 2590 I%=1
-2600 CASE I% Of
-2610 	WHEN 0, 1, 2 PROCPass()
-2620 	WHEN 3 PROCFail()
+2600 CASE I% OF
+2610 	WHEN 0, 1, 2: PROCPass()
+2620 	WHEN 3: PROCFail()
 2620 	OTHERWISE PRINT "Neither"
 2630 ENDCASE
 2640 PRINT "Case (Otherwise)   = ";
 2650 I%=4
-2660 Case I% Of
-2670 	WHEN 0, 1, 2 PROCFail()
-2680 	WHEN 3 PROCFail()
+2660 Case I% OF
+2670 	WHEN 0, 1, 2: PROCFail()
+2680 	WHEN 3: PROCFail()
 2690 	OTHERWISE PROCPass()
 2700 ENDCASE
 2710 PRINT
