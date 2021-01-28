@@ -103,6 +103,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64</AdditionalLibraryDirectories>
     </Link>
     <Flex>
       <Cpp>
@@ -132,6 +133,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <Profile>true</Profile>
+      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64</AdditionalLibraryDirectories>
     </Link>
     <Flex>
       <Cpp>
@@ -276,6 +278,7 @@
     <Bison Include="..\Grammar\DARIC.y" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\a.daric" />
     <None Include="..\DARICInstaller\DARIC.vdproj" />
     <None Include="..\Examples\Cubes.daric" />
     <None Include="..\Examples\DARIC.daric" />

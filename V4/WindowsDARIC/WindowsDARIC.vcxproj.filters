@@ -1045,6 +1045,9 @@
     <None Include="..\s.daric">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\a.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\types.h">

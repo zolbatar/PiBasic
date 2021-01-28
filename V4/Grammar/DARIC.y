@@ -83,7 +83,7 @@ extern bool interactive;
 %left NOT
 %left NEG  /* negation--unary minus */
 
-%type <ast> top_level_statement_list statement_list statement sep 
+%type <ast> top_level_statement_list statement_list statement sep statement_list_no_nl
 %type <ast> number expression_numeric
 %type <ast> string expression_string
 %type <ast> expression expression_list
@@ -122,6 +122,13 @@ statement_list
     | statement_list sep statement { $$ = link($1, $3);  }
     | LINE_NUMBER statement_list sep { $$ = link(linenumber($1), $2); yylineno = $1; } 
     | statement_list LINE_NUMBER statement_list sep { $$ = link($1, link(linenumber($2), $3)); yylineno = $2;  } 
+    ;
+
+statement_list_no_nl
+    : statement { $$ = $1; }
+    | statement_list_no_nl COLON statement { $$ = link($1, $3);  }
+    | LINE_NUMBER statement_list_no_nl COLON { $$ = link(linenumber($1), $2); yylineno = $1; } 
+    | statement_list_no_nl LINE_NUMBER statement_list_no_nl COLON { $$ = link($1, link(linenumber($2), $3)); yylineno = $2;  } 
     ;
 
 statement
@@ -171,15 +178,13 @@ statement
     | GET { $$ = token(GET_S); } 
     | GETS { $$ = token(GETS_S); } 
 
-    | IF expression statement_list NL { $$ = token2(IF, $2, $3); }
-    | IF expression statement_list ELSE statement_list NL { $$ = token3(IF, $2, $3, $5); }
-    | IF expression THEN statement_list NL { $$ = token2(IF, $2, $4); }
-    | IF expression THEN statement_list ELSE statement_list NL { $$ = token3(IF, $2, $4, $6); }
+    | IF expression statement_list_no_nl NL { $$ = token2(IF, $2, $3); }
+    | IF expression statement_list ELSE statement_list_no_nl NL { $$ = token3(IF, $2, $3, $5); }
+    | IF expression THEN statement_list_no_nl NL { $$ = token2(IF, $2, $4); }
+    | IF expression THEN statement_list ELSE statement_list_no_nl NL { $$ = token3(IF, $2, $4, $6); }
 
-    | IF expression NL statement_list NL ENDIF { $$ = token2(IF, $2, $4); }
-    | IF expression NL statement_list NL ELSE NL statement_list NL ENDIF { $$ = token3(IF, $2, $4, $8); }
-    | IF expression THEN statement_list NL ENDIF { $$ = token2(IF, $2, $4); }
-    | IF expression THEN statement_list NL ELSE NL statement_list NL ENDIF { $$ = token3(IF, $2, $4, $8); }
+    | IF expression THEN statement_list_no_nl NL ENDIF { $$ = token2(IF, $2, $4); }
+    | IF expression THEN statement_list_no_nl NL ELSE NL statement_list_no_nl NL ENDIF { $$ = token3(IF, $2, $4, $8); }
 
     | REPEAT statement_list UNTIL expression { $$ = token2(REPEAT, $2, $4); }
     | REPEAT UNTIL expression { $$ = token2(REPEAT, NULL, $3); }

@@ -82,7 +82,7 @@
 1680 PRINT
 1690 :
 1800 PRINT "::File I/O::"
-1810 PRINT "Write THEN Read    = ";;
+1810 PRINT "Write THEN Read    = ";
 1820 C%=OPENOUT("Test")
 1830 BPUT# C%, ASC("A")
 1840 CLOSE# C%
@@ -114,7 +114,7 @@
 2240 	PROCPass()
 2250 ELSE
 2260 	PROCFail()
-2270 EndIF
+2270 ENDIF
 2280 I% = 0
 2290 Repeat
 2300 	I% = I% + 1

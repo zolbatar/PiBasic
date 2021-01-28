@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Libraries">
+      <UniqueIdentifier>{c87b63ce-febf-4890-a298-6849ca33cca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{0e9f8548-9db2-469f-9e2e-b38ba8618608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Libraries">
+      <UniqueIdentifier>{5df7226f-3eb2-46de-b0b2-fc0191d1ef5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics">
+      <UniqueIdentifier>{20259b86-f04f-4b76-b5bb-4178269e59d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\3D Engine">
+      <UniqueIdentifier>{14bbc967-430b-4227-884f-c091ab765ae5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\3D Engine">
+      <UniqueIdentifier>{1d442bf6-d046-466a-b3cd-d1ce92661f7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VM">
+      <UniqueIdentifier>{cbc106f5-4198-41cc-a871-07fdf1b1cecf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Interactive">
+      <UniqueIdentifier>{fef52b68-6829-47ae-baf0-26a04ebb8be4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Interactive">
+      <UniqueIdentifier>{99332b4c-8e68-4251-899a-f24a324e126e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VM">
+      <UniqueIdentifier>{c60114c5-2964-41e1-85b8-5c642828cacb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\libs\string.cpp">
+      <Filter>Source Files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\graphics.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\graphics_barycentric.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\graphics_circle.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\graphics_clippedline.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\graphics_input.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\graphics_text.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\graphics_triangle.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\engine_matrix.cpp">
+      <Filter>Source Files\3D Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\engine_normals.cpp">
+      <Filter>Source Files\3D Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\engine_object.cpp">
+      <Filter>Source Files\3D Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\engine_shape.cpp">
+      <Filter>Source Files\3D Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine\engine_world.cpp">
+      <Filter>Source Files\3D Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\libs\clock.cpp">
+      <Filter>Source Files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\interactive\interactive.cpp">
+      <Filter>Source Files\Interactive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vm\vm.cpp">
+      <Filter>Source Files\VM</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\environment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\libs\string.h">
+      <Filter>Header Files\Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\stb_truetype.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\graphics.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\libs\clock.h">
+      <Filter>Header Files\Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\engine\engine.h">
+      <Filter>Header Files\3D Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vm\boxed.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vm\bytecode.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vm\type.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\interactive\interactive.h">
+      <Filter>Header Files\Interactive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vm\stack.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vm\variables.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vm\vm.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

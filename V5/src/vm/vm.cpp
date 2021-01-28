@@ -5,10 +5,10 @@
 #else
 #include <windows.h>
 #endif
-#include "../debugger/debugger.h"
 #include "../engine/engine.h"
-#include "../string.h"
-#include "clock.h"
+#include "../environment.h"
+#include "../libs/clock.h"
+#include "../libs/string.h"
 #include "vm.h"
 #include <array>
 #include <chrono>
@@ -29,24 +29,14 @@
 #include <time.h>
 #include <vector>
 
-extern World world;
-extern std::unique_ptr<std::stringstream> g_logfile;
-extern std::unique_ptr<Graphics> g_graphics;
-extern bool interactive;
-
-std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
-VM_INT get_clock()
-{
-    auto t2 = std::chrono::high_resolution_clock::now();
-    auto time_span = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
-    double d = time_span.count() / 10.0;
-    return static_cast<VM_INT>(d);
-}
+extern Environment g_env;
+World world(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height());
+std::unique_ptr<VM> vm;
 
 bool VM::opcode_HALT()
 {
     if (runtime_debug)
-        *g_logfile << "End of program" << std::endl;
+        g_env.log << "End of program" << std::endl;
     return true;
 }
 
@@ -54,7 +44,7 @@ bool VM::opcode_DROP()
 {
     stack.drop();
     if (runtime_debug)
-        *g_logfile << "Dropping top item off stack" << std::endl;
+        g_env.log << "Dropping top item off stack" << std::endl;
     return false;
 }
 
@@ -62,7 +52,7 @@ bool VM::opcode_CONST_I()
 {
     stack.push_int(bc.data);
     if (runtime_debug) {
-        *g_logfile << "Push constant int " << bc.data << " onto the stack" << std::endl;
+        g_env.log << "Push constant int " << bc.data << " onto the stack" << std::endl;
     }
     return false;
 }
@@ -72,9 +62,9 @@ bool VM::opcode_LOAD_F()
     stack.push_float(variables.get_variable(bc).value_float);
     if (runtime_debug) {
         if (!variables.get_variable(bc).constant) {
-            *g_logfile << "Push variable '" << variables.get_variable(bc).name << "', float " << variables.get_variable(bc).value_float << " onto the stack" << std::endl;
+            g_env.log << "Push variable '" << variables.get_variable(bc).name << "', float " << variables.get_variable(bc).value_float << " onto the stack" << std::endl;
         } else {
-            *g_logfile << "Push constant float " << variables.get_variable(bc).value_float << " onto the stack" << std::endl;
+            g_env.log << "Push constant float " << variables.get_variable(bc).value_float << " onto the stack" << std::endl;
         }
     }
     return false;
@@ -85,9 +75,9 @@ bool VM::opcode_LOAD_I()
     stack.push_int(variables.get_variable(bc).value_int);
     if (runtime_debug) {
         if (!variables.get_variable(bc).constant) {
-            *g_logfile << "Push variable '" << variables.get_variable(bc).name << "', int " << variables.get_variable(bc).value_int << " onto the stack" << std::endl;
+            g_env.log << "Push variable '" << variables.get_variable(bc).name << "', int " << variables.get_variable(bc).value_int << " onto the stack" << std::endl;
         } else {
-            *g_logfile << "Push constant int " << variables.get_variable(bc).value_int << " onto the stack" << std::endl;
+            g_env.log << "Push constant int " << variables.get_variable(bc).value_int << " onto the stack" << std::endl;
         }
     }
     return false;
@@ -98,9 +88,9 @@ bool VM::opcode_LOAD_S()
     stack.push_string(variables.get_variable(bc).value_string);
     if (runtime_debug) {
         if (!variables.get_variable(bc).constant) {
-            *g_logfile << "Push variable '" << variables.get_variable(bc).name << "', string '" << variables.get_variable(bc).value_string << "' onto the stack" << std::endl;
+            g_env.log << "Push variable '" << variables.get_variable(bc).name << "', string '" << variables.get_variable(bc).value_string << "' onto the stack" << std::endl;
         } else {
-            *g_logfile << "Push constant string '" << variables.get_variable(bc).value_string << "' onto the stack" << std::endl;
+            g_env.log << "Push constant string '" << variables.get_variable(bc).value_string << "' onto the stack" << std::endl;
         }
     }
     return false;
@@ -113,7 +103,7 @@ bool VM::opcode_ADD_F()
     VM_FLOAT v3 = v1 + v2;
     stack.push_float(v3);
     if (runtime_debug)
-        *g_logfile << "Add float " << v1 << " + " << v2 << " = " << v3 << std::endl;
+        g_env.log << "Add float " << v1 << " + " << v2 << " = " << v3 << std::endl;
     return false;
 }
 
@@ -124,7 +114,7 @@ bool VM::opcode_ADD_I()
     VM_INT v3 = v1 + v2;
     stack.push_int(v3);
     if (runtime_debug)
-        *g_logfile << "Add int " << v1 << " + " << v2 << " = " << v3 << std::endl;
+        g_env.log << "Add int " << v1 << " + " << v2 << " = " << v3 << std::endl;
     return false;
 }
 
@@ -135,7 +125,7 @@ bool VM::opcode_SHL()
     VM_INT v3 = v1 << v2;
     stack.push_int(v3);
     if (runtime_debug)
-        *g_logfile << "<< int " << v1 << " + " << v2 << " = " << v3 << std::endl;
+        g_env.log << "<< int " << v1 << " + " << v2 << " = " << v3 << std::endl;
     return false;
 }
 
@@ -146,7 +136,7 @@ bool VM::opcode_SHR()
     VM_INT v3 = v1 >> v2;
     stack.push_int(v3);
     if (runtime_debug)
-        *g_logfile << ">> int " << v1 << " + " << v2 << " = " << v3 << std::endl;
+        g_env.log << ">> int " << v1 << " + " << v2 << " = " << v3 << std::endl;
     return false;
 }
 
@@ -157,7 +147,7 @@ bool VM::opcode_SUBTRACT_F()
     VM_FLOAT v3 = v1 - v2;
     stack.push_float(v3);
     if (runtime_debug)
-        *g_logfile << "Subtract float " << v1 << " - " << v2 << " = " << v3 << std::endl;
+        g_env.log << "Subtract float " << v1 << " - " << v2 << " = " << v3 << std::endl;
     return false;
 }
 
@@ -168,7 +158,7 @@ bool VM::opcode_SUBTRACT_I()
     VM_INT v3 = v1 - v2;
     stack.push_int(v3);
     if (runtime_debug)
-        *g_logfile << "Subtract int " << v1 << " - " << v2 << " = " << v3 << std::endl;
+        g_env.log << "Subtract int " << v1 << " - " << v2 << " = " << v3 << std::endl;
     return false;
 }
 
@@ -181,7 +171,7 @@ bool VM::opcode_ADD_S()
         v3.append(v2);
         stack.push_string(v3);
         if (runtime_debug)
-            *g_logfile << "Add string '" << v1 << "' + '" << v2 << "' = '" << v3 << "'" << std::endl;
+            g_env.log << "Add string '" << v1 << "' + '" << v2 << "' = '" << v3 << "'" << std::endl;
     } else {
         v1.append(v2);
         stack.push_string(v1);
@@ -196,7 +186,7 @@ bool VM::opcode_MULTIPLY_F()
     VM_FLOAT v3 = v1 * v2;
     stack.push_float(v3);
     if (runtime_debug)
-        *g_logfile << "Multiply float " << v1 << " * " << v2 << " = " << v3 << std::endl;
+        g_env.log << "Multiply float " << v1 << " * " << v2 << " = " << v3 << std::endl;
     return false;
 }
 
@@ -207,7 +197,7 @@ bool VM::opcode_MULTIPLY_I()
     VM_INT v3 = v1 * v2;
     stack.push_int(v3);
     if (runtime_debug)
-        *g_logfile << "Multiply int " << v1 << " * " << v2 << " = " << v3 << std::endl;
+        g_env.log << "Multiply int " << v1 << " * " << v2 << " = " << v3 << std::endl;
     return false;
 }
 
@@ -222,7 +212,7 @@ bool VM::opcode_DIVIDE_F()
     VM_FLOAT v3 = v1 / v2;
     stack.push_float(v3);
     if (runtime_debug)
-        *g_logfile << "Divide float " << v1 << " / " << v2 << " = " << v3 << std::endl;
+        g_env.log << "Divide float " << v1 << " / " << v2 << " = " << v3 << std::endl;
     return false;
 }
 
@@ -237,7 +227,7 @@ bool VM::opcode_DIVIDE_I()
     VM_INT v3 = v1 / v2;
     stack.push_int(v3);
     if (runtime_debug)
-        *g_logfile << "Divide int " << v1 << " / " << v2 << " = " << v3 << std::endl;
+        g_env.log << "Divide int " << v1 << " / " << v2 << " = " << v3 << std::endl;
     return false;
 }
 
@@ -247,7 +237,7 @@ bool VM::opcode_I_TO_F()
     VM_FLOAT v2 = v1;
     stack.push_float(v2);
     if (runtime_debug)
-        *g_logfile << "Convert " << v1 << " (int) -> " << v2 << " (float)\n";
+        g_env.log << "Convert " << v1 << " (int) -> " << v2 << " (float)\n";
     return false;
 }
 
@@ -259,7 +249,7 @@ bool VM::opcode_I_TO_F2()
     stack.push_float(v2);
     stack.push_float(v0);
     if (runtime_debug)
-        *g_logfile << "Convert " << v1 << " (int) -> " << v2 << " (float)\n";
+        g_env.log << "Convert " << v1 << " (int) -> " << v2 << " (float)\n";
     return false;
 }
 
@@ -269,7 +259,7 @@ bool VM::opcode_F_TO_I()
     VM_INT v2 = static_cast<VM_INT>(floor(v1));
     stack.push_int(v2);
     if (runtime_debug)
-        *g_logfile << "Convert " << v1 << " (float) -> " << v2 << " (int)\n";
+        g_env.log << "Convert " << v1 << " (float) -> " << v2 << " (int)\n";
     return false;
 }
 
@@ -281,7 +271,7 @@ bool VM::opcode_F_TO_I2()
     stack.push_int(v2);
     stack.push_int(v0);
     if (runtime_debug)
-        *g_logfile << "Convert " << v1 << " (float) -> " << v2 << " (int)\n";
+        g_env.log << "Convert " << v1 << " (float) -> " << v2 << " (int)\n";
     return false;
 }
 
@@ -292,7 +282,7 @@ bool VM::opcode_SWAP_I()
     variables.get_variable(bc).value_int = variables.get_variable_by_int(v).value_int;
     variables.get_variable_by_int(v).value_int = t;
     if (runtime_debug)
-        *g_logfile << "Swap " << variables.get_variable(bc).name << " and " << variables.get_variable_by_int(v).name << std::endl;
+        g_env.log << "Swap " << variables.get_variable(bc).name << " and " << variables.get_variable_by_int(v).name << std::endl;
     return false;
 }
 
@@ -303,7 +293,7 @@ bool VM::opcode_SWAP_F()
     variables.get_variable(bc).value_float = variables.get_variable_by_int(v).value_float;
     variables.get_variable_by_int(v).value_float = t;
     if (runtime_debug)
-        *g_logfile << "Swap " << variables.get_variable(bc).name << " and " << variables.get_variable_by_int(v).name << std::endl;
+        g_env.log << "Swap " << variables.get_variable(bc).name << " and " << variables.get_variable_by_int(v).name << std::endl;
     return false;
 }
 
@@ -314,7 +304,7 @@ bool VM::opcode_SWAP_S()
     variables.get_variable(bc).value_string = variables.get_variable_by_int(v).value_string;
     variables.get_variable_by_int(v).value_string = t;
     if (runtime_debug)
-        *g_logfile << "Swap " << variables.get_variable(bc).name << " and " << variables.get_variable_by_int(v).name << std::endl;
+        g_env.log << "Swap " << variables.get_variable(bc).name << " and " << variables.get_variable_by_int(v).name << std::endl;
     return false;
 }
 
@@ -323,7 +313,7 @@ bool VM::opcode_STORE_I()
     VM_INT v = stack.pop_int(bc);
     variables.get_variable(bc).value_int = v;
     if (runtime_debug)
-        *g_logfile << "Store integer " << v << " in " << variables.get_variable(bc).name << std::endl;
+        g_env.log << "Store integer " << v << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
@@ -332,7 +322,7 @@ bool VM::opcode_STORE_F()
     VM_FLOAT v = stack.pop_float(bc);
     variables.get_variable(bc).value_float = v;
     if (runtime_debug)
-        *g_logfile << "Store float " << v << " in " << variables.get_variable(bc).name << std::endl;
+        g_env.log << "Store float " << v << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
@@ -341,7 +331,7 @@ bool VM::opcode_STORE_S()
     VM_STRING v = stack.pop_string(bc);
     variables.get_variable(bc).value_string = v;
     if (runtime_debug)
-        *g_logfile << "Store string '" << v << "' in " << variables.get_variable(bc).name << std::endl;
+        g_env.log << "Store string '" << v << "' in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
@@ -349,13 +339,13 @@ bool VM::opcode_INPUT_F()
 {
     VM_INT qmark = stack.pop_int(bc);
     if (qmark) {
-        g_graphics->print_text(console_font, "?", -1, -1);
+        g_env.graphics.print_text(console_font, "?", -1, -1);
     }
-    auto s = g_graphics->input();
+    auto s = g_env.graphics.input();
     double v = std::stod(s);
     variables.get_variable(bc).value_float = v;
     if (runtime_debug)
-        *g_logfile << "Inputted and stored float " << variables.get_variable(bc).value_float << " in " << variables.get_variable(bc).name << std::endl;
+        g_env.log << "Inputted and stored float " << variables.get_variable(bc).value_float << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
@@ -363,13 +353,13 @@ bool VM::opcode_INPUT_I()
 {
     VM_INT qmark = stack.pop_int(bc);
     if (qmark) {
-        g_graphics->print_text(console_font, "?", -1, -1);
+        g_env.graphics.print_text(console_font, "?", -1, -1);
     }
-    auto s = g_graphics->input();
+    auto s = g_env.graphics.input();
     int v = std::stoi(s);
     variables.get_variable(bc).value_int = v;
     if (runtime_debug)
-        *g_logfile << "Inputted and stored integer " << variables.get_variable(bc).value_int << " in " << variables.get_variable(bc).name << std::endl;
+        g_env.log << "Inputted and stored integer " << variables.get_variable(bc).value_int << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
@@ -377,12 +367,12 @@ bool VM::opcode_INPUT_S()
 {
     VM_INT qmark = stack.pop_int(bc);
     if (qmark) {
-        g_graphics->print_text(console_font, "?", -1, -1);
+        g_env.graphics.print_text(console_font, "?", -1, -1);
     }
-    auto v = g_graphics->input();
+    auto v = g_env.graphics.input();
     variables.get_variable(bc).value_string = v;
     if (runtime_debug)
-        *g_logfile << "Inputted and stored string " << variables.get_variable(bc).value_string << " in " << variables.get_variable(bc).name << std::endl;
+        g_env.log << "Inputted and stored string " << variables.get_variable(bc).value_string << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
@@ -407,9 +397,9 @@ bool VM::opcode_PRINT_F()
         stream << std::setprecision(tab_spacing) << v1;
     }
     VM_STRING v(stream.str());
-    g_graphics->print_console(v);
+    g_env.graphics.print_console(v);
     if (runtime_debug)
-        *g_logfile << std::endl;
+        g_env.log << std::endl;
     return false;
 }
 
@@ -434,9 +424,9 @@ bool VM::opcode_PRINT_I()
         stream << v1;
     }
     VM_STRING v(stream.str());
-    g_graphics->print_console(v);
+    g_env.graphics.print_console(v);
     if (runtime_debug)
-        *g_logfile << std::endl;
+        g_env.log << std::endl;
     return false;
 }
 
@@ -444,21 +434,21 @@ bool VM::opcode_PRINT_S()
 {
     VM_STRING v = stack.pop_string(bc);
     if (runtime_debug)
-        *g_logfile << "Print string: '";
-    g_graphics->print_console(v);
+        g_env.log << "Print string: '";
+    g_env.graphics.print_console(v);
     if (runtime_debug)
-        *g_logfile << "'" << std::endl;
+        g_env.log << "'" << std::endl;
     return false;
 }
 
 bool VM::opcode_PRINT_NL()
 {
     if (runtime_debug)
-        *g_logfile << "Print newline: ";
-    if (!g_graphics->is_open()) {
-        *g_logfile << std::endl;
+        g_env.log << "Print newline: ";
+    if (!g_env.graphics.is_open()) {
+        g_env.log << std::endl;
     } else {
-        g_graphics->print_console("\r");
+        g_env.graphics.print_console("\r");
     }
     return false;
 }
@@ -470,9 +460,9 @@ bool VM::opcode_PRINT_SPC()
     for (int i = 0; i < v1; i++) {
         v2 += " ";
     }
-    g_graphics->print_text(0, v2, -1, -1);
+    g_env.graphics.print_text(0, v2, -1, -1);
     if (runtime_debug)
-        *g_logfile << "Print " << v1 << " spaces";
+        g_env.log << "Print " << v1 << " spaces";
     return false;
 }
 
@@ -486,7 +476,7 @@ bool VM::opcode_LOAD_F_ARRAY()
         VM_FLOAT v = variables.get_variable(bc).value_float_array[index];
         stack.push_float(v);
         if (runtime_debug)
-            *g_logfile << "Push variable " << variables.get_variable(bc).name << ", float " << v << " (index " << index << ") onto the stack\n";
+            g_env.log << "Push variable " << variables.get_variable(bc).name << ", float " << v << " (index " << index << ") onto the stack\n";
     } else {
         VM_INT index2 = stack.pop_int(bc);
         VM_INT index1 = stack.pop_int(bc);
@@ -497,7 +487,7 @@ bool VM::opcode_LOAD_F_ARRAY()
         VM_FLOAT v = variables.get_variable(bc).value_float_array[index];
         stack.push_float(v);
         if (runtime_debug)
-            *g_logfile << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+            g_env.log << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
     }
     return false;
 }
@@ -512,7 +502,7 @@ bool VM::opcode_LOAD_I_ARRAY()
         VM_INT v = variables.get_variable(bc).value_int_array[index];
         stack.push_int(v);
         if (runtime_debug)
-            *g_logfile << "Push variable " << variables.get_variable(bc).name << ", int " << v << " (index " << index << ") onto the stack\n";
+            g_env.log << "Push variable " << variables.get_variable(bc).name << ", int " << v << " (index " << index << ") onto the stack\n";
     } else {
         VM_INT index2 = stack.pop_int(bc);
         VM_INT index1 = stack.pop_int(bc);
@@ -523,7 +513,7 @@ bool VM::opcode_LOAD_I_ARRAY()
         VM_INT v = variables.get_variable(bc).value_int_array[index];
         stack.push_int(v);
         if (runtime_debug)
-            *g_logfile << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+            g_env.log << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
     }
     return false;
 }
@@ -538,7 +528,7 @@ bool VM::opcode_LOAD_S_ARRAY()
         VM_STRING v = variables.get_variable(bc).value_string_array[index];
         stack.push_string(v);
         if (runtime_debug)
-            *g_logfile << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+            g_env.log << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
     } else {
         VM_INT index2 = stack.pop_int(bc);
         VM_INT index1 = stack.pop_int(bc);
@@ -549,7 +539,7 @@ bool VM::opcode_LOAD_S_ARRAY()
         VM_STRING v = variables.get_variable(bc).value_string_array[index];
         stack.push_string(v);
         if (runtime_debug)
-            *g_logfile << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+            g_env.log << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
     }
     return false;
 }
@@ -564,7 +554,7 @@ bool VM::opcode_STORE_F_ARRAY()
             error("Invalid array or array index");
         variables.get_variable(bc).value_float_array[index] = v;
         if (runtime_debug)
-            *g_logfile << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+            g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     } else {
         VM_FLOAT v = stack.pop_float(bc);
         VM_INT index2 = stack.pop_int(bc);
@@ -575,7 +565,7 @@ bool VM::opcode_STORE_F_ARRAY()
             error("Invalid array or array index");
         variables.get_variable(bc).value_float_array[index] = v;
         if (runtime_debug)
-            *g_logfile << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+            g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     }
     return false;
 }
@@ -590,7 +580,7 @@ bool VM::opcode_STORE_I_ARRAY()
             error("Invalid array or array index");
         variables.get_variable(bc).value_int_array[index] = v;
         if (runtime_debug)
-            *g_logfile << "Store int array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+            g_env.log << "Store int array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     } else {
         VM_INT v = stack.pop_int(bc);
         VM_INT index2 = stack.pop_int(bc);
@@ -601,7 +591,7 @@ bool VM::opcode_STORE_I_ARRAY()
             error("Invalid array or array index");
         variables.get_variable(bc).value_int_array[index] = v;
         if (runtime_debug)
-            *g_logfile << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+            g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     }
     return false;
 }
@@ -616,7 +606,7 @@ bool VM::opcode_STORE_S_ARRAY()
             error("Invalid array or array index");
         variables.get_variable(bc).value_string_array[index] = v;
         if (runtime_debug)
-            *g_logfile << "Store string array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+            g_env.log << "Store string array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     } else {
         VM_STRING v = stack.pop_string(bc);
         VM_INT index2 = stack.pop_int(bc);
@@ -627,7 +617,7 @@ bool VM::opcode_STORE_S_ARRAY()
             error("Invalid array or array index");
         variables.get_variable(bc).value_string_array[index] = v;
         if (runtime_debug)
-            *g_logfile << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+            g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     }
     return false;
 }
@@ -638,7 +628,7 @@ bool VM::opcode_LOAD_I_FIELD()
     Boxed* field = &variables.get_variable(bc).fields.at(index);
     stack.push_int(field->value_int);
     if (runtime_debug)
-        *g_logfile << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_int << std::endl;
+        g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_int << std::endl;
     return false;
 }
 
@@ -648,7 +638,7 @@ bool VM::opcode_LOAD_F_FIELD()
     Boxed* field = &variables.get_variable(bc).fields.at(index);
     stack.push_float(field->value_float);
     if (runtime_debug)
-        *g_logfile << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_float << std::endl;
+        g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_float << std::endl;
     return false;
 }
 
@@ -658,7 +648,7 @@ bool VM::opcode_LOAD_S_FIELD()
     Boxed* field = &variables.get_variable(bc).fields.at(index);
     stack.push_string(field->value_string);
     if (runtime_debug)
-        *g_logfile << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_string << std::endl;
+        g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_string << std::endl;
     return false;
 }
 
@@ -669,7 +659,7 @@ bool VM::opcode_STORE_I_FIELD()
     Boxed* field = &variables.get_variable(bc).fields.at(index);
     field->value_int = v;
     if (runtime_debug)
-        *g_logfile << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+        g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     return false;
 }
 
@@ -680,7 +670,7 @@ bool VM::opcode_STORE_F_FIELD()
     Boxed* field = &variables.get_variable(bc).fields.at(index);
     field->value_float = v;
     if (runtime_debug)
-        *g_logfile << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+        g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     return false;
 }
 
@@ -691,7 +681,7 @@ bool VM::opcode_STORE_S_FIELD()
     Boxed* field = &variables.get_variable(bc).fields.at(index);
     field->value_string.assign(v);
     if (runtime_debug)
-        *g_logfile << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value '" << v << "'" << std::endl;
+        g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value '" << v << "'" << std::endl;
     return false;
 }
 
@@ -703,7 +693,7 @@ bool VM::opcode_LOAD_I_FIELD_ARRAY()
     Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
     stack.push_float(field->value_int);
     if (runtime_debug)
-        *g_logfile << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_int << std::endl;
+        g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_int << std::endl;
     return false;
 }
 
@@ -715,7 +705,7 @@ bool VM::opcode_LOAD_F_FIELD_ARRAY()
     Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
     stack.push_float(field->value_float);
     if (runtime_debug)
-        *g_logfile << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_float << std::endl;
+        g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_float << std::endl;
     return false;
 }
 
@@ -727,7 +717,7 @@ bool VM::opcode_LOAD_S_FIELD_ARRAY()
     Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
     stack.push_string(field->value_string);
     if (runtime_debug)
-        *g_logfile << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value '" << field->value_string << "'" << std::endl;
+        g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value '" << field->value_string << "'" << std::endl;
     return false;
 }
 
@@ -740,7 +730,7 @@ bool VM::opcode_STORE_I_FIELD_ARRAY()
     Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
     field->value_int = v;
     if (runtime_debug)
-        *g_logfile << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+        g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     return false;
 }
 
@@ -753,7 +743,7 @@ bool VM::opcode_STORE_F_FIELD_ARRAY()
     Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
     field->value_float = v;
     if (runtime_debug)
-        *g_logfile << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+        g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
     return false;
 }
 
@@ -766,7 +756,7 @@ bool VM::opcode_STORE_S_FIELD_ARRAY()
     Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
     field->value_string.assign(v);
     if (runtime_debug)
-        *g_logfile << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value '" << v << "'" << std::endl;
+        g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value '" << v << "'" << std::endl;
     return false;
 }
 
@@ -778,7 +768,7 @@ bool VM::opcode_NEW_TYPE()
 
     variables.get_variable(bc).fields.resize(num_fields);
     if (runtime_debug)
-        *g_logfile << "Initialised type '" << variables.get_variable(bc).name << "' with " << num_fields << " fields" << std::endl;
+        g_env.log << "Initialised type '" << variables.get_variable(bc).name << "' with " << num_fields << " fields" << std::endl;
     return false;
 }
 
@@ -801,7 +791,7 @@ bool VM::opcode_ARRAYSIZE()
     }
     stack.push_int(size);
     if (runtime_debug)
-        *g_logfile << "Size of array requested for variable'" << variables.get_variable(bc).name << "' result=" << size << std::endl;
+        g_env.log << "Size of array requested for variable'" << variables.get_variable(bc).name << "' result=" << size << std::endl;
 
     return false;
 }
@@ -817,7 +807,7 @@ bool VM::opcode_DIM_F()
             error("DIM array of 0 size not allowed");
         variables.get_variable(bc).value_float_array.resize(size);
         if (runtime_debug)
-            *g_logfile << "Dimension float variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
+            g_env.log << "Dimension float variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
     } else {
         variables.get_variable(bc).fields.clear();
         auto size2 = static_cast<size_t>(stack.pop_int(bc)) + 1;
@@ -831,7 +821,7 @@ bool VM::opcode_DIM_F()
         variables.get_variable(bc).fields.push_back(std::move(b));
         variables.get_variable(bc).value_float_array.resize(size1 * size2);
         if (runtime_debug)
-            *g_logfile << "Dimension float variable " << variables.get_variable(bc).name << " with size " << size1 << "x" << size2 << std::endl;
+            g_env.log << "Dimension float variable " << variables.get_variable(bc).name << " with size " << size1 << "x" << size2 << std::endl;
     }
     return false;
 }
@@ -847,7 +837,7 @@ bool VM::opcode_DIM_I()
             error("DIM array of 0 size not allowed");
         variables.get_variable(bc).value_int_array.resize(size);
         if (runtime_debug)
-            *g_logfile << "Dimension int variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
+            g_env.log << "Dimension int variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
     } else {
         variables.get_variable(bc).fields.clear();
         auto size2 = static_cast<size_t>(stack.pop_int(bc)) + 1;
@@ -861,7 +851,7 @@ bool VM::opcode_DIM_I()
         variables.get_variable(bc).fields.push_back(std::move(b));
         variables.get_variable(bc).value_int_array.resize(size1 * size2);
         if (runtime_debug)
-            *g_logfile << "Dimension int variable " << variables.get_variable(bc).name << " with size " << size1 << "x" << size2 << std::endl;
+            g_env.log << "Dimension int variable " << variables.get_variable(bc).name << " with size " << size1 << "x" << size2 << std::endl;
     }
     return false;
 }
@@ -877,7 +867,7 @@ bool VM::opcode_DIM_S()
             error("DIM array of 0 size not allowed");
         variables.get_variable(bc).value_string_array.resize(size);
         if (runtime_debug)
-            *g_logfile << "Dimension string variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
+            g_env.log << "Dimension string variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
     } else {
         variables.get_variable(bc).fields.clear();
         auto size2 = static_cast<size_t>(stack.pop_int(bc)) + 1;
@@ -891,7 +881,7 @@ bool VM::opcode_DIM_S()
         variables.get_variable(bc).fields.push_back(std::move(b));
         variables.get_variable(bc).value_string_array.resize(size1 * size2);
         if (runtime_debug)
-            *g_logfile << "Dimension string variable " << variables.get_variable(bc).name << " with size " << size1 << "x" << size2 << std::endl;
+            g_env.log << "Dimension string variable " << variables.get_variable(bc).name << " with size " << size1 << "x" << size2 << std::endl;
     }
     return false;
 }
@@ -902,7 +892,7 @@ bool VM::opcode_DUP_F()
     stack.push_float(v);
     stack.push_float(v);
     if (runtime_debug)
-        *g_logfile << "Duplicate float " << v << std::endl;
+        g_env.log << "Duplicate float " << v << std::endl;
     return false;
 }
 
@@ -912,7 +902,7 @@ bool VM::opcode_DUP_I()
     stack.push_int(v);
     stack.push_int(v);
     if (runtime_debug)
-        *g_logfile << "Duplicate int " << v << std::endl;
+        g_env.log << "Duplicate int " << v << std::endl;
     return false;
 }
 
@@ -923,7 +913,7 @@ bool VM::opcode_ROT_F()
     stack.push_float(v1);
     stack.push_float(v2);
     if (runtime_debug)
-        *g_logfile << "Rotate float " << v1 << "/" << v2 << std::endl;
+        g_env.log << "Rotate float " << v1 << "/" << v2 << std::endl;
     return false;
 }
 
@@ -934,7 +924,7 @@ bool VM::opcode_ROT_I()
     stack.push_int(v1);
     stack.push_int(v2);
     if (runtime_debug)
-        *g_logfile << "Rotate int " << v1 << "/" << v2 << std::endl;
+        g_env.log << "Rotate int " << v1 << "/" << v2 << std::endl;
     return false;
 }
 
@@ -948,7 +938,7 @@ bool VM::opcode_FOR_I()
     variables.get_variable(bc).value_int_array[1] = step;
     variables.get_variable(bc).value_int_array[2] = pc;
     if (runtime_debug)
-        *g_logfile << "Initialising FOR loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
+        g_env.log << "Initialising FOR loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
     return false;
 }
 
@@ -963,7 +953,7 @@ bool VM::opcode_FOR_F()
     variables.get_variable(bc).value_float_array[0] = step;
     variables.get_variable(bc).value_int_array[1] = pc;
     if (runtime_debug)
-        *g_logfile << "Initialising FOR loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
+        g_env.log << "Initialising FOR loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
     return false;
 }
 
@@ -976,7 +966,7 @@ bool VM::opcode_NEXT_I()
         helper_bytecodes().pc = variables.get_variable(bc).value_int_array[2];
     }
     if (runtime_debug)
-        *g_logfile << "NEXT integer variable " << variables.get_variable(bc).name << ", step " << step << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
+        g_env.log << "NEXT integer variable " << variables.get_variable(bc).name << ", step " << step << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
                    << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[2] << std::dec << std::endl;
     return false;
 }
@@ -990,7 +980,7 @@ bool VM::opcode_NEXT_F()
         helper_bytecodes().pc = variables.get_variable(bc).value_int_array[1];
     }
     if (runtime_debug)
-        *g_logfile << "NEXT float variable " << variables.get_variable(bc).name << ", step " << step << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
+        g_env.log << "NEXT float variable " << variables.get_variable(bc).name << ", step " << step << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
                    << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[1] << std::dec << std::endl;
     return false;
 }
@@ -1008,7 +998,7 @@ bool VM::opcode_FORIN_I()
     variables.get_variable(bc).value_int_array[3] = 0;
     variables.get_variable(bc).value_int = variable_array.value_int_array[0];
     if (runtime_debug)
-        *g_logfile << "Initialising FOR IN loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
+        g_env.log << "Initialising FOR IN loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
     return false;
 }
 
@@ -1025,7 +1015,7 @@ bool VM::opcode_FORIN_F()
     variables.get_variable(bc).value_int_array[3] = 0;
     variables.get_variable(bc).value_float = variable_array.value_float_array[0];
     if (runtime_debug)
-        *g_logfile << "Initialising FOR IN loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
+        g_env.log << "Initialising FOR IN loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
     return false;
 }
 
@@ -1042,7 +1032,7 @@ bool VM::opcode_FORIN_S()
     variables.get_variable(bc).value_int_array[3] = 0;
     variables.get_variable(bc).value_string = variable_array.value_string_array[0];
     if (runtime_debug)
-        *g_logfile << "Initialising FOR IN loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
+        g_env.log << "Initialising FOR IN loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
     return false;
 }
 
@@ -1051,13 +1041,13 @@ bool VM::opcode_NEXTIN_I()
     auto variable_array = variables.get_variable_by_int(variables.get_variable(bc).value_int_array[2]);
     if (variables.get_variable(bc).value_int_array[0] == 0) {
         if (runtime_debug)
-            *g_logfile << "NEXT IN integer variable " << variables.get_variable(bc).name << ", complete" << std::endl;
+            g_env.log << "NEXT IN integer variable " << variables.get_variable(bc).name << ", complete" << std::endl;
     } else {
         variables.get_variable(bc).value_int_array[0]--;
         variables.get_variable(bc).value_int = variable_array.value_int_array[variables.get_variable(bc).value_int_array[3]++];
         helper_bytecodes().pc = variables.get_variable(bc).value_int_array[1];
         if (runtime_debug)
-            *g_logfile << "NEXT IN integer variable " << variables.get_variable(bc).name << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
+            g_env.log << "NEXT IN integer variable " << variables.get_variable(bc).name << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
                        << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[1] << std::dec << std::endl;
     }
     return false;
@@ -1068,13 +1058,13 @@ bool VM::opcode_NEXTIN_F()
     auto variable_array = variables.get_variable_by_int(variables.get_variable(bc).value_int_array[2]);
     if (variables.get_variable(bc).value_int_array[0] == 0) {
         if (runtime_debug)
-            *g_logfile << "NEXT IN float variable " << variables.get_variable(bc).name << ", complete" << std::endl;
+            g_env.log << "NEXT IN float variable " << variables.get_variable(bc).name << ", complete" << std::endl;
     } else {
         variables.get_variable(bc).value_int_array[0]--;
         variables.get_variable(bc).value_float = variable_array.value_float_array[variables.get_variable(bc).value_int_array[3]++];
         helper_bytecodes().pc = variables.get_variable(bc).value_int_array[1];
         if (runtime_debug)
-            *g_logfile << "NEXT IN float variable " << variables.get_variable(bc).name << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
+            g_env.log << "NEXT IN float variable " << variables.get_variable(bc).name << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
                        << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[1] << std::dec << std::endl;
     }
     return false;
@@ -1085,13 +1075,13 @@ bool VM::opcode_NEXTIN_S()
     auto variable_array = variables.get_variable_by_int(variables.get_variable(bc).value_int_array[2]);
     if (variables.get_variable(bc).value_int_array[0] == 0) {
         if (runtime_debug)
-            *g_logfile << "NEXT IN string variable " << variables.get_variable(bc).name << ", complete" << std::endl;
+            g_env.log << "NEXT IN string variable " << variables.get_variable(bc).name << ", complete" << std::endl;
     } else {
         variables.get_variable(bc).value_int_array[0]--;
         variables.get_variable(bc).value_string = variable_array.value_string_array[variables.get_variable(bc).value_int_array[3]++];
         helper_bytecodes().pc = variables.get_variable(bc).value_int_array[1];
         if (runtime_debug)
-            *g_logfile << "NEXT IN string variable " << variables.get_variable(bc).name << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
+            g_env.log << "NEXT IN string variable " << variables.get_variable(bc).name << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
                        << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[1] << std::dec << std::endl;
     }
     return false;
@@ -1102,7 +1092,7 @@ bool VM::opcode_READ_I()
     Boxed b = *data_iterator++;
     variables.get_variable(bc).value_int = b.value_int;
     if (runtime_debug)
-        *g_logfile << "Read integer " << b.value_int << " in " << variables.get_variable(bc).name << std::endl;
+        g_env.log << "Read integer " << b.value_int << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
@@ -1111,7 +1101,7 @@ bool VM::opcode_READ_F()
     Boxed b = *data_iterator++;
     variables.get_variable(bc).value_float = b.value_float;
     if (runtime_debug)
-        *g_logfile << "Read float " << b.value_float << " in " << variables.get_variable(bc).name << std::endl;
+        g_env.log << "Read float " << b.value_float << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
@@ -1120,7 +1110,7 @@ bool VM::opcode_READ_S()
     Boxed b = *data_iterator++;
     variables.get_variable(bc).value_string.assign(b.value_string);
     if (runtime_debug)
-        *g_logfile << "Read string " << b.value_string << " in " << variables.get_variable(bc).name << std::endl;
+        g_env.log << "Read string " << b.value_string << " in " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
@@ -1128,7 +1118,7 @@ bool VM::opcode_RESTORE()
 {
     data_iterator = data.begin();
     if (runtime_debug) {
-        *g_logfile << "Restoring DATA" << std::endl;
+        g_env.log << "Restoring DATA" << std::endl;
     }
     return false;
 }
@@ -1143,7 +1133,7 @@ bool VM::opcode_READ_I_ARRAY()
             error("Invalid array or array index");
         variables.get_variable(bc).value_int_array[index] = b.value_int;
         if (runtime_debug)
-            *g_logfile << "Read int vector variable " << variables.get_variable(bc).name << " index " << index << " value " << b.value_int << std::endl;
+            g_env.log << "Read int vector variable " << variables.get_variable(bc).name << " index " << index << " value " << b.value_int << std::endl;
     } else {
         error("No read 2d arrays");
     }
@@ -1160,7 +1150,7 @@ bool VM::opcode_READ_S_ARRAY()
             error("Invalid array or array index");
         variables.get_variable(bc).value_string_array[index].assign(b.value_string);
         if (runtime_debug)
-            *g_logfile << "Read string vector variable " << variables.get_variable(bc).name << " index " << index << " value " << b.value_int << std::endl;
+            g_env.log << "Read string vector variable " << variables.get_variable(bc).name << " index " << index << " value " << b.value_int << std::endl;
     } else {
         error("No read 2d arrays");
     }
@@ -1177,7 +1167,7 @@ bool VM::opcode_READ_F_ARRAY()
             error("Invalid array or array index");
         variables.get_variable(bc).value_float_array[index] = b.value_float;
         if (runtime_debug)
-            *g_logfile << "Read float vector variable " << variables.get_variable(bc).name << " index " << index << " value " << b.value_int << std::endl;
+            g_env.log << "Read float vector variable " << variables.get_variable(bc).name << " index " << index << " value " << b.value_int << std::endl;
         return false;
     } else {
         error("No read 2d arrays");
@@ -1192,7 +1182,7 @@ bool VM::opcode_CMP_E_F()
     VM_INT c3 = c1 == c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "Float = compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "Float = compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1203,7 +1193,7 @@ bool VM::opcode_CMP_E_I()
     VM_INT c3 = c1 == c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "Int = compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "Int = compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1214,7 +1204,7 @@ bool VM::opcode_CMP_E_S()
     VM_INT c3 = c1 == c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "String = compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "String = compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1225,7 +1215,7 @@ bool VM::opcode_CMP_NE_F()
     VM_INT c3 = c1 != c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "Float <> compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "Float <> compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1236,7 +1226,7 @@ bool VM::opcode_CMP_NE_I()
     VM_INT c3 = c1 != c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "Int <> compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "Int <> compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1247,7 +1237,7 @@ bool VM::opcode_CMP_NE_S()
     VM_INT c3 = c1 != c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "String <> compare of '" << c1 << "' and '" << c2 << "' is " << c3 << std::endl;
+        g_env.log << "String <> compare of '" << c1 << "' and '" << c2 << "' is " << c3 << std::endl;
     return false;
 }
 
@@ -1258,7 +1248,7 @@ bool VM::opcode_CMP_GE_F()
     VM_INT c3 = c1 >= c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "Float >= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "Float >= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1269,7 +1259,7 @@ bool VM::opcode_CMP_GE_I()
     VM_INT c3 = c1 >= c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "Int >= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "Int >= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1280,7 +1270,7 @@ bool VM::opcode_CMP_GE_S()
     VM_INT c3 = c1 >= c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "String >= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "String >= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1291,7 +1281,7 @@ bool VM::opcode_CMP_LE_F()
     VM_INT c3 = c1 <= c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "Float <= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "Float <= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1302,7 +1292,7 @@ bool VM::opcode_CMP_LE_I()
     VM_INT c3 = c1 <= c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "Int <= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "Int <= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1313,7 +1303,7 @@ bool VM::opcode_CMP_LE_S()
     VM_INT c3 = c1 <= c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "String <= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "String <= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1324,7 +1314,7 @@ bool VM::opcode_CMP_G_F()
     VM_INT c3 = c1 > c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "Float > compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "Float > compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1335,7 +1325,7 @@ bool VM::opcode_CMP_G_I()
     VM_INT c3 = c1 > c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "Int > compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "Int > compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1346,7 +1336,7 @@ bool VM::opcode_CMP_G_S()
     VM_INT c3 = c1 > c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "String > compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "String > compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1357,7 +1347,7 @@ bool VM::opcode_CMP_L_F()
     VM_INT c3 = c1 < c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "Float < compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "Float < compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1368,7 +1358,7 @@ bool VM::opcode_CMP_L_I()
     VM_INT c3 = c1 < c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "Int < compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "Int < compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1379,7 +1369,7 @@ bool VM::opcode_CMP_L_S()
     VM_INT c3 = c1 < c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "String < compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "String < compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1390,7 +1380,7 @@ bool VM::opcode_BOOL_OR()
     VM_INT c3 = c1 | c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "Boolean OR of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "Boolean OR of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1401,7 +1391,7 @@ bool VM::opcode_BOOL_AND()
     VM_INT c3 = c1 & c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "Boolean AND of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "Boolean AND of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1412,7 +1402,7 @@ bool VM::opcode_BOOL_EOR()
     VM_INT c3 = c1 ^ c2;
     stack.push_int(c3);
     if (runtime_debug)
-        *g_logfile << "Boolean EOR of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        g_env.log << "Boolean EOR of " << c1 << " and " << c2 << " is " << c3 << std::endl;
     return false;
 }
 
@@ -1422,7 +1412,7 @@ bool VM::opcode_BOOL_NOT()
     VM_INT v2 = !v;
     stack.push_int(v2);
     if (runtime_debug)
-        *g_logfile << "Boolean NOT of " << v << " is " << v2 << std::endl;
+        g_env.log << "Boolean NOT of " << v << " is " << v2 << std::endl;
     return false;
 }
 
@@ -1430,7 +1420,7 @@ bool VM::opcode_REPEAT()
 {
     repeats.push(helper_bytecodes().pc);
     if (runtime_debug)
-        *g_logfile << "Start of repeat" << std::endl;
+        g_env.log << "Start of repeat" << std::endl;
     return false;
 }
 
@@ -1439,12 +1429,12 @@ bool VM::opcode_JNEREP()
     VM_INT c = stack.pop_int(bc);
     if (c) {
         if (runtime_debug)
-            *g_logfile << "Until, true condition, so no jump" << std::endl;
+            g_env.log << "Until, true condition, so no jump" << std::endl;
         repeats.pop();
     } else {
         UINT32 new_pc = repeats.top();
         if (runtime_debug)
-            *g_logfile << "Until, false condition, so jumping to " << new_pc << std::endl;
+            g_env.log << "Until, false condition, so jumping to " << new_pc << std::endl;
         helper_bytecodes().pc = new_pc;
     }
     return false;
@@ -1454,7 +1444,7 @@ bool VM::opcode_JUMP()
 {
     UINT32 new_pc = bc.data;
     if (runtime_debug)
-        *g_logfile << "Jumping to " << new_pc << std::endl;
+        g_env.log << "Jumping to " << new_pc << std::endl;
     helper_bytecodes().pc = new_pc;
     return false;
 }
@@ -1464,7 +1454,7 @@ bool VM::opcode_CALL()
     VM_INT l = stack.pop_int(bc);
     UINT32 new_pc = bc.data;
     if (runtime_debug)
-        *g_logfile << "Calling " << new_pc << std::endl;
+        g_env.log << "Calling " << new_pc << std::endl;
     variables.create_locals_on_call(get_function_locals_count(l));
     call_stack.push(helper_bytecodes().pc);
     helper_bytecodes().pc = new_pc;
@@ -1475,7 +1465,7 @@ bool VM::opcode_CASE_C()
 {
     case_flag = false;
     if (runtime_debug)
-        *g_logfile << "Clearing case flag" << std::endl;
+        g_env.log << "Clearing case flag" << std::endl;
     return false;
 }
 
@@ -1483,7 +1473,7 @@ bool VM::opcode_CASE_S()
 {
     case_flag = true;
     if (runtime_debug)
-        *g_logfile << "Setting case flag" << std::endl;
+        g_env.log << "Setting case flag" << std::endl;
     return false;
 }
 
@@ -1492,10 +1482,10 @@ bool VM::opcode_CJUMPT()
     UINT32 new_pc = bc.data;
     if (!case_flag) {
         if (runtime_debug)
-            *g_logfile << "Case, otherwise, so no jump" << std::endl;
+            g_env.log << "Case, otherwise, so no jump" << std::endl;
     } else {
         if (runtime_debug)
-            *g_logfile << "Case, no otherwise, so jumping to " << new_pc << std::endl;
+            g_env.log << "Case, no otherwise, so jumping to " << new_pc << std::endl;
         helper_bytecodes().pc = new_pc;
     }
     return false;
@@ -1511,7 +1501,7 @@ bool VM::opcode_RETURN()
     }
     call_stack.pop();
     if (runtime_debug)
-        *g_logfile << "Returning to " << new_pc << std::endl;
+        g_env.log << "Returning to " << new_pc << std::endl;
     helper_bytecodes().pc = new_pc;
     return false;
 }
@@ -1520,7 +1510,7 @@ bool VM::opcode_GOTO()
 {
     UINT32 new_pc = bc.data;
     if (runtime_debug)
-        *g_logfile << "Jumping to " << new_pc << std::endl;
+        g_env.log << "Jumping to " << new_pc << std::endl;
     helper_bytecodes().pc = new_pc;
     return false;
 }
@@ -1530,7 +1520,7 @@ bool VM::opcode_GOSUB()
     call_stack.push(helper_bytecodes().pc | GosubCallFlag);
     UINT32 new_pc = bc.data;
     if (runtime_debug)
-        *g_logfile << "Calling subroutine at " << new_pc << std::endl;
+        g_env.log << "Calling subroutine at " << new_pc << std::endl;
     helper_bytecodes().pc = new_pc;
     return false;
 }
@@ -1549,7 +1539,7 @@ bool VM::opcode_UNPACK_F()
         error("Unsupported unpack casting");
     }
     if (runtime_debug)
-        *g_logfile << "Unpacked float value of " << variables.get_variable(bc).value_float << " in variable " << variables.get_variable(bc).name << std::endl;
+        g_env.log << "Unpacked float value of " << variables.get_variable(bc).value_float << " in variable " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
@@ -1567,7 +1557,7 @@ bool VM::opcode_UNPACK_I()
         error("Unsupported unpack casting");
     }
     if (runtime_debug)
-        *g_logfile << "Unpacked int value of " << variables.get_variable(bc).value_int << " in variable " << variables.get_variable(bc).name << std::endl;
+        g_env.log << "Unpacked int value of " << variables.get_variable(bc).value_int << " in variable " << variables.get_variable(bc).name << std::endl;
     return false;
 }
 
@@ -1582,7 +1572,7 @@ bool VM::opcode_UNPACK_S()
         error("Unsupported unpack casting");
     }
     if (runtime_debug)
-        *g_logfile << "Unpacked string value of '" << variables.get_variable(bc).value_int << " in variable " << variables.get_variable(bc).name << "'" << std::endl;
+        g_env.log << "Unpacked string value of '" << variables.get_variable(bc).value_int << " in variable " << variables.get_variable(bc).name << "'" << std::endl;
     return false;
 }
 
@@ -1592,10 +1582,10 @@ bool VM::opcode_JNE()
     UINT32 new_pc = bc.data;
     if (c) {
         if (runtime_debug)
-            *g_logfile << "True condition, so no jump" << std::endl;
+            g_env.log << "True condition, so no jump" << std::endl;
     } else {
         if (runtime_debug)
-            *g_logfile << "False condition, so jumping to " << new_pc << std::endl;
+            g_env.log << "False condition, so jumping to " << new_pc << std::endl;
         helper_bytecodes().pc = new_pc;
     }
     return false;
@@ -1606,12 +1596,12 @@ bool VM::opcode_JE()
     VM_INT c = stack.pop_int(bc);
     if (!c) {
         if (runtime_debug)
-            *g_logfile << "False condition, so no jump" << std::endl;
+            g_env.log << "False condition, so no jump" << std::endl;
         repeats.pop();
     } else {
         UINT32 new_pc = repeats.top();
         if (runtime_debug)
-            *g_logfile << "True condition, so jumping to " << new_pc << std::endl;
+            g_env.log << "True condition, so jumping to " << new_pc << std::endl;
         helper_bytecodes().pc = new_pc;
     }
     return false;
@@ -1624,7 +1614,7 @@ bool VM::opcode_DIV_F()
     VM_FLOAT v3 = (float)((int)v1 / (int)v2);
     stack.push_int(static_cast<VM_INT>(v3));
     if (runtime_debug)
-        *g_logfile << "Quotient divide float " << v1 << " / " << v2 << " = " << v3 << std::endl;
+        g_env.log << "Quotient divide float " << v1 << " / " << v2 << " = " << v3 << std::endl;
     return false;
 }
 
@@ -1635,7 +1625,7 @@ bool VM::opcode_DIV_I()
     VM_INT v3 = v1 / v2;
     stack.push_int(static_cast<VM_INT>(v3));
     if (runtime_debug)
-        *g_logfile << "Quotient divide int " << v1 << " / " << v2 << " = " << v3 << std::endl;
+        g_env.log << "Quotient divide int " << v1 << " / " << v2 << " = " << v3 << std::endl;
     return false;
 }
 
@@ -1646,7 +1636,7 @@ bool VM::opcode_MOD_F()
     VM_INT v3 = static_cast<VM_INT>(v1) % static_cast<VM_INT>(v2);
     stack.push_int(v3);
     if (runtime_debug)
-        *g_logfile << "Modulo float " << v1 << " / " << v2 << " = " << v3 << std::endl;
+        g_env.log << "Modulo float " << v1 << " / " << v2 << " = " << v3 << std::endl;
     return false;
 }
 
@@ -1657,7 +1647,7 @@ bool VM::opcode_MOD_I()
     VM_INT v3 = v1 % v2;
     stack.push_int(v3);
     if (runtime_debug)
-        *g_logfile << "Modulo int " << v1 << " / " << v2 << " = " << v3 << std::endl;
+        g_env.log << "Modulo int " << v1 << " / " << v2 << " = " << v3 << std::endl;
     return false;
 }
 
@@ -1667,7 +1657,7 @@ bool VM::opcode_SQR()
     VM_FLOAT v2 = std::sqrt(v1);
     stack.push_float(v2);
     if (runtime_debug)
-        *g_logfile << "SQR " << v1 << " =" << v2 << std::endl;
+        g_env.log << "SQR " << v1 << " =" << v2 << std::endl;
     return false;
 }
 
@@ -1677,7 +1667,7 @@ bool VM::opcode_LN()
     VM_FLOAT v2 = std::log(v1);
     stack.push_float(v2);
     if (runtime_debug)
-        *g_logfile << "LN " << v1 << " =" << v2 << std::endl;
+        g_env.log << "LN " << v1 << " =" << v2 << std::endl;
     return false;
 }
 
@@ -1687,7 +1677,7 @@ bool VM::opcode_LOG()
     VM_FLOAT v2 = std::log10(v1);
     stack.push_float(v2);
     if (runtime_debug)
-        *g_logfile << "LOG " << v1 << " =" << v2 << std::endl;
+        g_env.log << "LOG " << v1 << " =" << v2 << std::endl;
     return false;
 }
 
@@ -1697,7 +1687,7 @@ bool VM::opcode_EXP()
     VM_FLOAT v2 = std::exp(v1);
     stack.push_float(v2);
     if (runtime_debug)
-        *g_logfile << "EXP " << v1 << " =" << v2 << std::endl;
+        g_env.log << "EXP " << v1 << " =" << v2 << std::endl;
     return false;
 }
 
@@ -1707,7 +1697,7 @@ bool VM::opcode_ATN()
     VM_FLOAT v2 = std::atan(v1);
     stack.push_float(v2);
     if (runtime_debug)
-        *g_logfile << "TAN" << v1 << " =" << v2 << std::endl;
+        g_env.log << "TAN" << v1 << " =" << v2 << std::endl;
     return false;
 }
 
@@ -1717,7 +1707,7 @@ bool VM::opcode_TAN()
     VM_FLOAT v2 = std::tan(v1);
     stack.push_float(v2);
     if (runtime_debug)
-        *g_logfile << "TAN" << v1 << " =" << v2 << std::endl;
+        g_env.log << "TAN" << v1 << " =" << v2 << std::endl;
     return false;
 }
 
@@ -1727,7 +1717,7 @@ bool VM::opcode_COS()
     VM_FLOAT v2 = std::cos(v1);
     stack.push_float(v2);
     if (runtime_debug)
-        *g_logfile << "COS " << v1 << " =" << v2 << std::endl;
+        g_env.log << "COS " << v1 << " =" << v2 << std::endl;
     return false;
 }
 
@@ -1737,7 +1727,7 @@ bool VM::opcode_SIN()
     VM_FLOAT v2 = std::sin(v1);
     stack.push_float(v2);
     if (runtime_debug)
-        *g_logfile << "SIN " << v1 << " =" << v2 << std::endl;
+        g_env.log << "SIN " << v1 << " =" << v2 << std::endl;
     return false;
 }
 
@@ -1747,7 +1737,7 @@ bool VM::opcode_ACS()
     VM_FLOAT v2 = std::acos(v1);
     stack.push_float(v2);
     if (runtime_debug)
-        *g_logfile << "ACS " << v1 << " =" << v2 << std::endl;
+        g_env.log << "ACS " << v1 << " =" << v2 << std::endl;
     return false;
 }
 
@@ -1757,7 +1747,7 @@ bool VM::opcode_ASN()
     VM_FLOAT v2 = std::asin(v1);
     stack.push_float(v2);
     if (runtime_debug)
-        *g_logfile << "ASN " << v1 << " =" << v2 << std::endl;
+        g_env.log << "ASN " << v1 << " =" << v2 << std::endl;
     return false;
 }
 
@@ -1767,7 +1757,7 @@ bool VM::opcode_DEG()
     VM_FLOAT v2 = (v1 * 180.0) / M_PI;
     stack.push_float(v2);
     if (runtime_debug)
-        *g_logfile << "DEG " << v1 << " =" << v2 << std::endl;
+        g_env.log << "DEG " << v1 << " =" << v2 << std::endl;
     return false;
 }
 
@@ -1777,7 +1767,7 @@ bool VM::opcode_RAD()
     VM_FLOAT v2 = (v1 * M_PI) / 180.0;
     stack.push_float(v2);
     if (runtime_debug)
-        *g_logfile << "RAD " << v1 << " =" << v2 << std::endl;
+        g_env.log << "RAD " << v1 << " =" << v2 << std::endl;
     return false;
 }
 
@@ -1792,7 +1782,7 @@ bool VM::opcode_SGN()
     }
     stack.push_int(r);
     if (runtime_debug)
-        *g_logfile << "SGN of " << v1 << " =" << r << std::endl;
+        g_env.log << "SGN of " << v1 << " =" << r << std::endl;
     return false;
 }
 
@@ -1802,7 +1792,7 @@ bool VM::opcode_ABS_I()
     VM_INT v2 = abs(v1);
     stack.push_int(v2);
     if (runtime_debug)
-        *g_logfile << "ABS (Int) " << v1 << " = " << v2 << std::endl;
+        g_env.log << "ABS (Int) " << v1 << " = " << v2 << std::endl;
     return false;
 }
 
@@ -1812,7 +1802,7 @@ bool VM::opcode_ABS_F()
     VM_FLOAT v2 = fabs(v1);
     stack.push_float(v2);
     if (runtime_debug)
-        *g_logfile << "ABS (Float) " << v1 << " = " << v2 << std::endl;
+        g_env.log << "ABS (Float) " << v1 << " = " << v2 << std::endl;
     return false;
 }
 
@@ -1820,7 +1810,7 @@ bool VM::opcode_PI()
 {
     stack.push_float(M_PI);
     if (runtime_debug)
-        *g_logfile << "PI" << std::endl;
+        g_env.log << "PI" << std::endl;
     return false;
 }
 
@@ -1829,7 +1819,7 @@ bool VM::opcode_TIME()
     VM_INT v = get_clock();
     stack.push_int(v);
     if (runtime_debug)
-        *g_logfile << "Time returned " << v << std::endl;
+        g_env.log << "Time returned " << v << std::endl;
     return false;
 }
 
@@ -1844,7 +1834,7 @@ bool VM::opcode_TIMES()
     std::string v = buffer;
     stack.push_string(v);
     if (runtime_debug)
-        *g_logfile << "Time$ returned of '" << v << "'" << std::endl;
+        g_env.log << "Time$ returned of '" << v << "'" << std::endl;
     return false;
 }
 
@@ -1853,7 +1843,7 @@ bool VM::opcode_RND()
     int r = rand();
     stack.push_int(r);
     if (runtime_debug)
-        *g_logfile << "Random number: " << r << std::endl;
+        g_env.log << "Random number: " << r << std::endl;
     return false;
 }
 
@@ -1862,12 +1852,12 @@ bool VM::opcode_RNDREAL()
     VM_INT range = stack.pop_int(bc);
     if (range == 0) { // return last RND(1)
         if (runtime_debug)
-            *g_logfile << "Random number (repeated) " << last_random << std::endl;
+            g_env.log << "Random number (repeated) " << last_random << std::endl;
         stack.push_float(last_random);
     } else if (range == 1) { // random number between 0 and 1
         last_random = (double)rand() / (double)RAND_MAX;
         if (runtime_debug)
-            *g_logfile << "Random number " << last_random << std::endl;
+            g_env.log << "Random number " << last_random << std::endl;
         stack.push_float(last_random);
     } else {
         error("Unsupported parameter for RND()");
@@ -1882,7 +1872,7 @@ bool VM::opcode_RNDRANGE()
     r++;
     stack.push_int(r);
     if (runtime_debug)
-        *g_logfile << "Random number (range of " << range << "): " << r << std::endl;
+        g_env.log << "Random number (range of " << range << "): " << r << std::endl;
     return false;
 }
 
@@ -1891,14 +1881,14 @@ bool VM::opcode_OPENIN()
     VM_STRING filename = stack.pop_string(bc);
     FILE* file = fopen(filename.c_str(), "rb");
     if (!file) {
-        g_graphics->print_console("File '" + filename + "' not opened.\n  ");
+        g_env.graphics.print_console("File '" + filename + "' not opened.\n  ");
         stack.push_int(0);
     } else {
         VM_INT r = channel_index++;
         channels.insert(std::pair<VM_INT, FILE*>(r, file));
         stack.push_int(r);
         if (runtime_debug)
-            *g_logfile << "Open file for input '" << filename << "', channel# is " << r << std::endl;
+            g_env.log << "Open file for input '" << filename << "', channel# is " << r << std::endl;
     }
     return false;
 }
@@ -1908,14 +1898,14 @@ bool VM::opcode_OPENOUT()
     VM_STRING filename = stack.pop_string(bc);
     FILE* file = fopen(filename.c_str(), "wb");
     if (!file) {
-        g_graphics->print_console("File '" + filename + "' not created.\n");
+        g_env.graphics.print_console("File '" + filename + "' not created.\n");
         stack.push_int(0);
     } else {
         VM_INT r = channel_index++;
         channels.insert(std::pair<VM_INT, FILE*>(r, file));
         stack.push_int(r);
         if (runtime_debug)
-            *g_logfile << "Open file out '" << filename << "', channel# is " << r << std::endl;
+            g_env.log << "Open file out '" << filename << "', channel# is " << r << std::endl;
     }
     return false;
 }
@@ -1925,14 +1915,14 @@ bool VM::opcode_OPENUP()
     VM_STRING filename = stack.pop_string(bc);
     FILE* file = fopen(filename.c_str(), "ab");
     if (!file) {
-        g_graphics->print_console("File '" + filename + "' not opened for appending.\n");
+        g_env.graphics.print_console("File '" + filename + "' not opened for appending.\n");
         stack.push_int(0);
     } else {
         VM_INT r = channel_index++;
         channels.insert(std::pair<VM_INT, FILE*>(r, file));
         stack.push_int(r);
         if (runtime_debug)
-            *g_logfile << "Open file for update '" << filename << "', channel# is " << r << std::endl;
+            g_env.log << "Open file for update '" << filename << "', channel# is " << r << std::endl;
     }
     return false;
 }
@@ -1944,7 +1934,7 @@ bool VM::opcode_BGET()
     char b = fgetc((*g).second);
     stack.push_int(static_cast<VM_INT>(b));
     if (runtime_debug)
-        *g_logfile << "Read byte " << b << " from channel# " << channel << std::endl;
+        g_env.log << "Read byte " << b << " from channel# " << channel << std::endl;
     return false;
 }
 
@@ -1955,7 +1945,7 @@ bool VM::opcode_EOFH()
     VM_INT eof = feof((*g).second);
     stack.push_int(eof);
     if (runtime_debug)
-        *g_logfile << "Eof check " << eof << " on channel# " << channel << std::endl;
+        g_env.log << "Eof check " << eof << " on channel# " << channel << std::endl;
     return false;
 }
 
@@ -1966,7 +1956,7 @@ bool VM::opcode_BPUT()
     auto g = channels.find(channel);
     fputc(byte, (*g).second);
     if (runtime_debug)
-        *g_logfile << "Write byte " << byte << " to channel# " << channel << std::endl;
+        g_env.log << "Write byte " << byte << " to channel# " << channel << std::endl;
     return false;
 }
 
@@ -1977,7 +1967,7 @@ bool VM::opcode_PTR()
     auto pos = ftell((*g).second);
     stack.push_int(pos);
     if (runtime_debug)
-        *g_logfile << "Fetch position " << pos << " of channel# " << channel << std::endl;
+        g_env.log << "Fetch position " << pos << " of channel# " << channel << std::endl;
     return false;
 }
 
@@ -1988,7 +1978,7 @@ bool VM::opcode_PTRA()
     auto g = channels.find(channel);
     fseek((*g).second, position, SEEK_SET);
     if (runtime_debug)
-        *g_logfile << "Set position " << position << " of channel# " << channel << std::endl;
+        g_env.log << "Set position " << position << " of channel# " << channel << std::endl;
     return false;
 }
 
@@ -2009,7 +1999,7 @@ bool VM::opcode_GETSH()
     }
     stack.push_string(out);
     if (runtime_debug)
-        *g_logfile << "Get$# '" << out << "' of channel# " << channel << std::endl;
+        g_env.log << "Get$# '" << out << "' of channel# " << channel << std::endl;
     return false;
 }
 
@@ -2017,13 +2007,13 @@ bool VM::opcode_CLOSE()
 {
     VM_INT r = stack.pop_int(bc);
     if (channels.count(r) == 0) {
-        g_graphics->print_console("Unknown channel #" + std::to_string(r) + "\n");
+        g_env.graphics.print_console("Unknown channel #" + std::to_string(r) + "\n");
     }
     auto g = channels.find(r);
     fclose((*g).second);
     channels.erase(r);
     if (runtime_debug)
-        *g_logfile << "Close file channel# is " << r << std::endl;
+        g_env.log << "Close file channel# is " << r << std::endl;
     return false;
 }
 
@@ -2068,7 +2058,7 @@ bool VM::opcode_LISTFILES()
     auto size = files.size() + 1;
     variables.get_variable(bc).value_string_array.resize(size);
     if (runtime_debug)
-        *g_logfile << "Dimension string variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
+        g_env.log << "Dimension string variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
     variables.get_variable(bc).value_string_array.clear();
 
     // And copy values over
@@ -2088,7 +2078,7 @@ bool VM::opcode_ASC()
     }
     stack.push_int(c);
     if (runtime_debug)
-        *g_logfile << "ASC of string '" << v << "' is " << c << std::endl;
+        g_env.log << "ASC of string '" << v << "' is " << c << std::endl;
     return false;
 }
 
@@ -2098,12 +2088,12 @@ bool VM::opcode_VAL()
     VM_FLOAT c;
     try {
         c = std::stod(v);
-    } catch (const std::invalid_argument& ia) {
+    } catch (const std::invalid_argument&) {
         error("Invalid argument '" + v + "' to VAL");
     }
     stack.push_float(c);
     if (runtime_debug)
-        *g_logfile << "VAL of string '" << v << "' is " << c << std::endl;
+        g_env.log << "VAL of string '" << v << "' is " << c << std::endl;
     return false;
 }
 
@@ -2115,7 +2105,7 @@ bool VM::opcode_STRS()
     VM_STRING v2(stream.str());
     stack.push_string(v2);
     if (runtime_debug)
-        *g_logfile << "STR$ of " << v << " is string '" << v2 << "'" << std::endl;
+        g_env.log << "STR$ of " << v << " is string '" << v2 << "'" << std::endl;
     return false;
 }
 
@@ -2127,7 +2117,7 @@ bool VM::opcode_STRS_H()
     VM_STRING v2(stream.str());
     stack.push_string(v2);
     if (runtime_debug)
-        *g_logfile << "STR$ of " << v << " is string '" << v << "'" << std::endl;
+        g_env.log << "STR$ of " << v << " is string '" << v << "'" << std::endl;
     return false;
 }
 
@@ -2141,7 +2131,7 @@ bool VM::opcode_STRINGS()
     }
     stack.push_string(v3);
     if (runtime_debug)
-        *g_logfile << "STRING$ of '" << v1 << "' x " << v2 << " is string '" << v3 << "'" << std::endl;
+        g_env.log << "STRING$ of '" << v1 << "' x " << v2 << " is string '" << v3 << "'" << std::endl;
     return false;
 }
 
@@ -2153,7 +2143,7 @@ bool VM::opcode_INSTR()
     VM_INT v = static_cast<VM_INT>(string.find(substring, start)) + 1;
     stack.push_int(v);
     if (runtime_debug)
-        *g_logfile << "INSTR of string '" << substring << "' in string '" << string << "' with start of " << start << " is " << v << std::endl;
+        g_env.log << "INSTR of string '" << substring << "' in string '" << string << "' with start of " << start << " is " << v << std::endl;
     return false;
 }
 
@@ -2164,7 +2154,7 @@ bool VM::opcode_LEFTS()
     VM_STRING v = string.substr(0, v1);
     stack.push_string(v);
     if (runtime_debug)
-        *g_logfile << "LEFT$ of string '" << string << "' with length of " << v1 << " is " << v << std::endl;
+        g_env.log << "LEFT$ of string '" << string << "' with length of " << v1 << " is " << v << std::endl;
     return false;
 }
 
@@ -2176,7 +2166,7 @@ bool VM::opcode_MIDS()
     VM_STRING v = string.substr(v1, v2);
     stack.push_string(v);
     if (runtime_debug)
-        *g_logfile << "MID$ of string '" << string << "' with start of " << v1 << " and length of " << v2 << " is " << v << std::endl;
+        g_env.log << "MID$ of string '" << string << "' with start of " << v1 << " and length of " << v2 << " is " << v << std::endl;
     return false;
 }
 
@@ -2188,7 +2178,7 @@ bool VM::opcode_RIGHTS()
     VM_STRING v = string.substr(p, v1);
     stack.push_string(v);
     if (runtime_debug)
-        *g_logfile << "RIGHT$ of string '" << string << "' with length of " << v1 << " is " << v << std::endl;
+        g_env.log << "RIGHT$ of string '" << string << "' with length of " << v1 << " is " << v << std::endl;
     return false;
 }
 
@@ -2198,7 +2188,7 @@ bool VM::opcode_LEN()
     size_t l = static_cast<size_t>(string.length());
     stack.push_int(static_cast<VM_INT>(l));
     if (runtime_debug)
-        *g_logfile << "LEN of string '" << string << "' is " << l << std::endl;
+        g_env.log << "LEN of string '" << string << "' is " << l << std::endl;
     return false;
 }
 
@@ -2209,15 +2199,15 @@ bool VM::opcode_CHRS()
     c[0] = v;
     stack.push_string(c);
     if (runtime_debug)
-        *g_logfile << "CHR$ of " << v << " is string '" << v << "'" << std::endl;
+        g_env.log << "CHR$ of " << v << " is string '" << v << "'" << std::endl;
     return false;
 }
 
 bool VM::opcode_CLS()
 {
-    g_graphics->cls();
+    g_env.graphics.cls();
     if (runtime_debug)
-        *g_logfile << "Clear text screen" << std::endl;
+        g_env.log << "Clear text screen" << std::endl;
     return false;
 }
 
@@ -2226,18 +2216,18 @@ bool VM::opcode_COLOURRGB()
     VM_INT b = stack.pop_int(bc);
     VM_INT g = stack.pop_int(bc);
     VM_INT r = stack.pop_int(bc);
-    g_graphics->colour(r, g, b);
+    g_env.graphics.colour(r, g, b);
     if (runtime_debug)
-        *g_logfile << "Set RGB graphics colour to " << r << "," << g << "," << b << std::endl;
+        g_env.log << "Set RGB graphics colour to " << r << "," << g << "," << b << std::endl;
     return false;
 }
 
 bool VM::opcode_COLOURHEX()
 {
     VM_INT c = stack.pop_int(bc);
-    g_graphics->colour_hex(c);
+    g_env.graphics.colour_hex(c);
     if (runtime_debug)
-        *g_logfile << "Set HEX graphics colour to " << std::hex << c << std::dec << std::endl;
+        g_env.log << "Set HEX graphics colour to " << std::hex << c << std::dec << std::endl;
     return false;
 }
 
@@ -2246,18 +2236,18 @@ bool VM::opcode_COLOURBGRGB()
     VM_INT b = stack.pop_int(bc);
     VM_INT g = stack.pop_int(bc);
     VM_INT r = stack.pop_int(bc);
-    g_graphics->colour(r, g, b);
+    g_env.graphics.colour(r, g, b);
     if (runtime_debug)
-        *g_logfile << "Set RGB graphics background colour to " << r << "," << g << "," << b << std::endl;
+        g_env.log << "Set RGB graphics background colour to " << r << "," << g << "," << b << std::endl;
     return false;
 }
 
 bool VM::opcode_COLOURBGHEX()
 {
     VM_INT c = stack.pop_int(bc);
-    g_graphics->colour_hex(c);
+    g_env.graphics.colour_hex(c);
     if (runtime_debug)
-        *g_logfile << "Set HEX graphics background colour to " << std::hex << c << std::dec << std::endl;
+        g_env.log << "Set HEX graphics background colour to " << std::hex << c << std::dec << std::endl;
     return false;
 }
 
@@ -2269,15 +2259,15 @@ bool VM::opcode_COLOUREXPRESSION()
     VM_INT c = (r << 16) | (g << 8) | b;
     stack.push_int(c);
     if (runtime_debug)
-        *g_logfile << "Convert RGB colour " << r << "," << g << "," << b << " to " << std::hex << c << std::dec << std::endl;
+        g_env.log << "Convert RGB colour " << r << "," << g << "," << b << " to " << std::hex << c << std::dec << std::endl;
     return false;
 }
 
 bool VM::opcode_FLIP()
 {
-    g_graphics->flip(true);
+    g_env.graphics.flip(true);
     if (runtime_debug)
-        *g_logfile << "Flip screen" << std::endl;
+        g_env.log << "Flip screen" << std::endl;
     return false;
 }
 
@@ -2287,12 +2277,12 @@ bool VM::opcode_GRAPHICS()
     VM_INT y = stack.pop_int(bc);
     VM_INT x = stack.pop_int(bc);
     if (x == -1)
-        x = g_graphics->get_screen_width();
+        x = g_env.graphics.get_screen_width();
     if (y == -1)
-        y = g_graphics->get_screen_height();
-    g_graphics->open(x, y, mode);
+        y = g_env.graphics.get_screen_height();
+    g_env.graphics.open(x, y, mode, g_env.cwd);
     if (runtime_debug)
-        *g_logfile << "Change screen mode to " << x << " x " << y << std::endl;
+        g_env.log << "Change screen mode to " << x << " x " << y << std::endl;
     return false;
 }
 
@@ -2300,9 +2290,9 @@ bool VM::opcode_PLOT()
 {
     VM_INT y = stack.pop_int(bc);
     VM_INT x = stack.pop_int(bc);
-    g_graphics->plot(x, y);
+    g_env.graphics.plot(x, y);
     if (runtime_debug)
-        *g_logfile << "Plot pixel at " << x << " x " << y << std::endl;
+        g_env.log << "Plot pixel at " << x << " x " << y << std::endl;
     return false;
 }
 
@@ -2310,10 +2300,10 @@ bool VM::opcode_POINT()
 {
     VM_INT y = stack.pop_int(bc);
     VM_INT x = stack.pop_int(bc);
-    VM_INT v = g_graphics->point(x, y);
+    VM_INT v = g_env.graphics.point(x, y);
     stack.push_int(v);
     if (runtime_debug)
-        *g_logfile << "Point pixel " << x << " x " << y << " is " << v << std::endl;
+        g_env.log << "Point pixel " << x << " x " << y << " is " << v << std::endl;
     return false;
 }
 
@@ -2323,53 +2313,53 @@ bool VM::opcode_CLIP()
     VM_INT x2 = stack.pop_int(bc);
     VM_INT y1 = stack.pop_int(bc);
     VM_INT x1 = stack.pop_int(bc);
-    g_graphics->clip(x1, y1, x2, y2);
+    g_env.graphics.clip(x1, y1, x2, y2);
     if (runtime_debug)
-        *g_logfile << "Set clip region as " << x1 << "," << y1 << " to " << x2 << "," << y2 << std::endl;
+        g_env.log << "Set clip region as " << x1 << "," << y1 << " to " << x2 << "," << y2 << std::endl;
     return false;
 }
 
 bool VM::opcode_CLIPOFF()
 {
-    g_graphics->clipoff();
+    g_env.graphics.clipoff();
     if (runtime_debug)
-        *g_logfile << "Disabling clip" << std::endl;
+        g_env.log << "Disabling clip" << std::endl;
     return false;
 }
 
 bool VM::opcode_SHOWFPS()
 {
-    g_graphics->show_fps();
+    g_env.graphics.show_fps();
     if (runtime_debug)
-        *g_logfile << "Show FPS" << std::endl;
+        g_env.log << "Show FPS" << std::endl;
     return false;
 }
 
 bool VM::opcode_SCREENWIDTH()
 {
-    VM_INT v = g_graphics->get_screen_width();
+    VM_INT v = g_env.graphics.get_screen_width();
     stack.push_int(v);
     if (runtime_debug)
-        *g_logfile << "Screen width is " << v << std::endl;
+        g_env.log << "Screen width is " << v << std::endl;
     return false;
 }
 
 bool VM::opcode_SCREENHEIGHT()
 {
-    VM_INT v = g_graphics->get_screen_height();
+    VM_INT v = g_env.graphics.get_screen_height();
     stack.push_int(v);
     if (runtime_debug)
-        *g_logfile << "Screen height is " << v << std::endl;
+        g_env.log << "Screen height is " << v << std::endl;
     return false;
 }
 
 bool VM::opcode_LOADTYPEFACE()
 {
     VM_STRING v = stack.pop_string(bc);
-    VM_INT id = g_graphics->load_font(v.c_str());
+    VM_INT id = g_env.graphics.load_font(v.c_str());
     stack.push_int(id);
     if (runtime_debug)
-        *g_logfile << "Loaded typeface '" << v << "', returned ID is " << id << std::endl;
+        g_env.log << "Loaded typeface '" << v << "', returned ID is " << id << std::endl;
     return false;
 }
 
@@ -2377,10 +2367,10 @@ bool VM::opcode_CREATEFONT()
 {
     VM_INT size = stack.pop_int(bc);
     VM_INT index = stack.pop_int(bc);
-    VM_INT id = g_graphics->create_font_by_size(index, size);
+    VM_INT id = g_env.graphics.create_font_by_size(index, size);
     stack.push_int(id);
     if (runtime_debug)
-        *g_logfile << "Create font " << index << "/" << index << ", returned ID is " << id << std::endl;
+        g_env.log << "Create font " << index << "/" << index << ", returned ID is " << id << std::endl;
     return false;
 }
 
@@ -2390,9 +2380,9 @@ bool VM::opcode_TEXT()
     VM_INT y = stack.pop_int(bc);
     VM_INT x = stack.pop_int(bc);
     VM_INT index = stack.pop_int(bc);
-    g_graphics->print_text(index, text, x, y);
+    g_env.graphics.print_text(index, text, x, y);
     if (runtime_debug)
-        *g_logfile << "Showing text '" << text << "', font ID " << index << " at " << x << "," << y << std::endl;
+        g_env.log << "Showing text '" << text << "', font ID " << index << " at " << x << "," << y << std::endl;
     return false;
 }
 
@@ -2402,9 +2392,9 @@ bool VM::opcode_TEXTRIGHT()
     VM_INT y = stack.pop_int(bc);
     VM_INT x = stack.pop_int(bc);
     VM_INT index = stack.pop_int(bc);
-    g_graphics->print_text_right(index, text, x, y);
+    g_env.graphics.print_text_right(index, text, x, y);
     if (runtime_debug)
-        *g_logfile << "Showing text '" << text << "', font ID " << index << " at " << x << "," << y << std::endl;
+        g_env.log << "Showing text '" << text << "', font ID " << index << " at " << x << "," << y << std::endl;
     return false;
 }
 
@@ -2414,9 +2404,9 @@ bool VM::opcode_TEXTCENTRE()
     VM_INT y = stack.pop_int(bc);
     VM_INT x = stack.pop_int(bc);
     VM_INT index = stack.pop_int(bc);
-    g_graphics->print_text_centre(index, text, x, y);
+    g_env.graphics.print_text_centre(index, text, x, y);
     if (runtime_debug)
-        *g_logfile << "Showing text '" << text << "', font ID " << index << " at " << x << "," << y << std::endl;
+        g_env.log << "Showing text '" << text << "', font ID " << index << " at " << x << "," << y << std::endl;
     return false;
 }
 
@@ -2559,9 +2549,9 @@ bool VM::opcode_LINE()
     VM_INT x2 = stack.pop_int(bc);
     VM_INT y1 = stack.pop_int(bc);
     VM_INT x1 = stack.pop_int(bc);
-    g_graphics->line(x1, y1, x2, y2);
+    g_env.graphics.line(x1, y1, x2, y2);
     if (runtime_debug)
-        *g_logfile << "Line from " << x1 << "," << y1 << " to " << x2 << "," << y2 << std::endl;
+        g_env.log << "Line from " << x1 << "," << y1 << " to " << x2 << "," << y2 << std::endl;
     return false;
 }
 
@@ -2570,9 +2560,9 @@ bool VM::opcode_CIRCLE()
     VM_INT r = stack.pop_int(bc);
     VM_INT y = stack.pop_int(bc);
     VM_INT x = stack.pop_int(bc);
-    g_graphics->circle(x, y, r, false);
+    g_env.graphics.circle(x, y, r, false);
     if (runtime_debug)
-        *g_logfile << "Circle at " << x << "," << y << ", r " << r << std::endl;
+        g_env.log << "Circle at " << x << "," << y << ", r " << r << std::endl;
     return false;
 }
 
@@ -2581,9 +2571,9 @@ bool VM::opcode_CIRCLEFILL()
     VM_INT r = stack.pop_int(bc);
     VM_INT y = stack.pop_int(bc);
     VM_INT x = stack.pop_int(bc);
-    g_graphics->circle(x, y, r, true);
+    g_env.graphics.circle(x, y, r, true);
     if (runtime_debug)
-        *g_logfile << "Filled circle at " << x << "," << y << ", r " << r << std::endl;
+        g_env.log << "Filled circle at " << x << "," << y << ", r " << r << std::endl;
     return false;
 }
 
@@ -2593,12 +2583,12 @@ bool VM::opcode_RECTANGLE()
     VM_INT x2 = stack.pop_int(bc);
     VM_INT y1 = stack.pop_int(bc);
     VM_INT x1 = stack.pop_int(bc);
-    g_graphics->line(x1, y1, x2, y1);
-    g_graphics->line(x1, y2, x2, y2);
-    g_graphics->line(x1, y1, x1, y2);
-    g_graphics->line(x2, y1, x2, y2);
+    g_env.graphics.line(x1, y1, x2, y1);
+    g_env.graphics.line(x1, y2, x2, y2);
+    g_env.graphics.line(x1, y1, x1, y2);
+    g_env.graphics.line(x2, y1, x2, y2);
     if (runtime_debug)
-        *g_logfile << "Rectangle from " << x1 << "," << y1 << " to " << x2 << "," << y2 << std::endl;
+        g_env.log << "Rectangle from " << x1 << "," << y1 << " to " << x2 << "," << y2 << std::endl;
     return false;
 }
 
@@ -2608,9 +2598,9 @@ bool VM::opcode_RECTANGLEFILL()
     VM_INT x2 = stack.pop_int(bc);
     VM_INT y1 = stack.pop_int(bc);
     VM_INT x1 = stack.pop_int(bc);
-    g_graphics->rectangle(x1, y1, x2, y2);
+    g_env.graphics.rectangle(x1, y1, x2, y2);
     if (runtime_debug)
-        *g_logfile << "Filled rectangle from " << x1 << "," << y1 << " to " << x2 << "," << y2 << std::endl;
+        g_env.log << "Filled rectangle from " << x1 << "," << y1 << " to " << x2 << "," << y2 << std::endl;
     return false;
 }
 
@@ -2622,11 +2612,11 @@ bool VM::opcode_TRIANGLE()
     VM_INT x2 = stack.pop_int(bc);
     VM_INT y1 = stack.pop_int(bc);
     VM_INT x1 = stack.pop_int(bc);
-    g_graphics->line(x1, y1, x2, y2);
-    g_graphics->line(x2, y2, x3, y3);
-    g_graphics->line(x3, y3, x1, y1);
+    g_env.graphics.line(x1, y1, x2, y2);
+    g_env.graphics.line(x2, y2, x3, y3);
+    g_env.graphics.line(x3, y3, x1, y1);
     if (runtime_debug)
-        *g_logfile << "Triangle from " << x1 << "," << y1 << " to " << x2 << "," << y2 << " to " << x3 << "," << y3 << std::endl;
+        g_env.log << "Triangle from " << x1 << "," << y1 << " to " << x2 << "," << y2 << " to " << x3 << "," << y3 << std::endl;
     return false;
 }
 
@@ -2638,9 +2628,9 @@ bool VM::opcode_TRIANGLEFILL()
     VM_INT x2 = stack.pop_int(bc);
     VM_INT y1 = stack.pop_int(bc);
     VM_INT x1 = stack.pop_int(bc);
-    g_graphics->triangle(x1, y1, x2, y2, x3, y3);
+    g_env.graphics.triangle(x1, y1, x2, y2, x3, y3);
     if (runtime_debug)
-        *g_logfile << "Filled triangle from " << x1 << "," << y1 << " to " << x2 << "," << y2 << " to " << x3 << "," << y3 << std::endl;
+        g_env.log << "Filled triangle from " << x1 << "," << y1 << " to " << x2 << "," << y2 << " to " << x3 << "," << y3 << std::endl;
     return false;
 }
 
@@ -2655,16 +2645,16 @@ bool VM::opcode_TRIANGLESHADED()
     VM_INT c1 = stack.pop_int(bc);
     VM_INT y1 = stack.pop_int(bc);
     VM_INT x1 = stack.pop_int(bc);
-    g_graphics->gouraud_triangle(x1, y1, x2, y2, x3, y3, c1, c2, c3, false);
+    g_env.graphics.gouraud_triangle(x1, y1, x2, y2, x3, y3, c1, c2, c3, false);
     if (runtime_debug)
-        *g_logfile << "Shaded triangle from " << x1 << "," << y1 << " to " << x2 << "," << y2 << " to " << x3 << "," << y3 << std::endl;
+        g_env.log << "Shaded triangle from " << x1 << "," << y1 << " to " << x2 << "," << y2 << " to " << x3 << "," << y3 << std::endl;
     return false;
 }
 
 bool VM::opcode_INKEY()
 {
     VM_INT timeout = stack.pop_int(bc);
-    VM_INT v = g_graphics->inkey(timeout);
+    VM_INT v = g_env.graphics.inkey(timeout);
     stack.push_int(v);
     return false;
 }
@@ -2672,21 +2662,21 @@ bool VM::opcode_INKEY()
 bool VM::opcode_INKEYS()
 {
     VM_INT timeout = stack.pop_int(bc);
-    VM_STRING v = g_graphics->inkeys(timeout);
+    VM_STRING v = g_env.graphics.inkeys(timeout);
     stack.push_string(v);
     return false;
 }
 
 bool VM::opcode_GET()
 {
-    VM_INT v = g_graphics->get();
+    VM_INT v = g_env.graphics.get();
     stack.push_int(v);
     return false;
 }
 
 bool VM::opcode_GETS()
 {
-    VM_STRING v = g_graphics->gets();
+    VM_STRING v = g_env.graphics.gets();
     stack.push_string(v);
     return false;
 }
@@ -2698,13 +2688,13 @@ bool VM::opcode_MOUSE()
     auto variable_x = variables.get_variable(bc);
     auto variable_y = variables.get_variable_by_int(v2);
     auto variable_state = variables.get_variable_by_int(v3);
-    g_graphics->mouse(variable_x.value_int, variable_y.value_int, variable_state.value_int);
+    g_env.graphics.mouse(variable_x.value_int, variable_y.value_int, variable_state.value_int);
     return false;
 }
 
 std::string VM::run()
 {
-    *g_logfile << "-> Running" << std::endl;
+    g_env.log << "-> Running" << std::endl;
     helper_bytecodes().pc = 0;
     data_iterator = data.begin();
     bool quit = false;
@@ -2712,22 +2702,22 @@ std::string VM::run()
     while (!quit) {
         poll_count++;
         if (poll_count == 100) {
-            if (interactive && g_graphics->inkey(-113)) {
-                g_graphics->print_console("Escape\r");
+            if (g_env.interactive && g_env.graphics.inkey(-113)) {
+                g_env.graphics.print_console("Escape\r");
                 return "";
             }
-            g_graphics->poll();
+            g_env.graphics.poll();
             poll_count = 0;
         }
         bc = helper_bytecodes().get_current_bytecode();
         if (runtime_debug) {
-            *g_logfile << std::uppercase << "[" << std::setw(4) << bc.file_number << " : " << std::setw(8) << bc.line_number << " : " << std::hex << std::setw(8)
+            g_env.log << std::uppercase << "[" << std::setw(4) << bc.file_number << " : " << std::setw(8) << bc.line_number << " : " << std::hex << std::setw(8)
                        << helper_bytecodes().pc - 1 << " : " << std::setw(2) << (int)bc.opcode << "]  " << std::nouppercase << std::dec;
         }
         switch (bc.opcode) {
         case Bytecodes::NOP:
             if (runtime_debug)
-                *g_logfile << "NOP" << std::endl;
+                g_env.log << "NOP" << std::endl;
             break;
         case Bytecodes::HALT:
             quit = opcode_HALT();
@@ -2736,11 +2726,11 @@ std::string VM::run()
             runtime_debug = true;
             break;
         case Bytecodes::TRACEOFF:
-            *g_logfile << std::endl;
+            g_env.log << std::endl;
             runtime_debug = false;
             break;
         case Bytecodes::BREAKPOINT:
-            Debugger();
+            //TODO Debugger();
             break;
         case Bytecodes::DROP:
             quit = opcode_DROP();
@@ -3395,4 +3385,9 @@ void VM::inject_variables(std::vector<Boxed> chained_variables)
             error("Unable to match EXPECT variable");
         }
     }
+}
+
+void create_empty_vm()
+{
+    vm = std::make_unique<VM>();
 }
