@@ -1,0 +1,142 @@
+gCentreX = 0.0, gCentreY = 0.0, gScale = 3.0, pointSkip=1, gRound=100.0
+INSTALL "SetupGraphics"
+INSTALL "Menus"
+
+CLS
+PROCTitle("'World in Lines' - Choose point skipping")
+PROCLabel("1", "Render all points (most detailed)", ms%+(0*ys%))
+PROCLabel("2", "Render every 4th point", ms%+(1*ys%))
+PROCLabel("3", "Render every 10th point", ms%+(2*ys%))
+PROCLabel("4", "Render every 25th point (fastest)", ms%+(3*ys%))
+PROCLabel("Q", "Back to Welcome", ms%+(5*ys%))
+A$=GET$
+CASE A$ OF
+	WHEN "1" pointSkip=1
+	WHEN "2" pointSkip=4
+	WHEN "3" pointSkip=10
+	WHEN "4" pointSkip=25
+ENDCASE
+PROCLoadPolygons()
+CHAIN "Welcome"
+
+TYPE MapPoint
+	FIELD x
+	FIELD y
+ENDTYPE
+
+DEFPROCLoadPolygons()
+	CLS
+	PRINT "Loading territory polygons..."
+	LOCAL poly$()=LISTFILES("GIS")
+	PRINT DIM(poly$(),1); " files"
+	PRINT "Sizing";
+	points%=0
+	FOR LOCAL p$ IN poly$()
+		PRINT ".";
+		PROCLoadPolygon(p$, points%, 0)
+	NEXT
+	PRINT
+	DIM p!(points%, MapPoint)
+	PRINT "Loading";
+	points%=0
+	FOR LOCAL p$ IN poly$()
+		PRINT ".";
+		PROCLoadPolygon(p$, points%, 1)
+	NEXT
+	PRINT
+	PRINT "Rendering..."
+	x%=0,y%=0,buttons%=0
+	last_x%=0,last_y%=0
+	dragging%=0
+	render%=1
+	REPEAT
+		IF render%=1 THEN PROCRender():render%=0
+		MOUSE x%,y%,buttons%
+		IF buttons% AND 4
+			IF NOT dragging%
+				MOUSE last_x%,last_y%,buttons%
+				dragging%=1
+			ELSE
+				dx%=x%-last_x%:dy%=y%-last_y%
+				gCentreX+=dx%:gCentreY+=dy%
+				last_x%=x%:last_y%=y%
+				render%=1
+			END IF
+		ELSE
+			dragging%=0
+		ENDIF
+		IF INKEY(-98) = 1 gScale+=1.0:render%=1
+		IF INKEY(-67) = 1 gScale-=1.0:render%=1
+		IF INKEY(-56) = 1 PROCAnimate()
+		IF gScale < 1.0 gScale=1.0:render%=1
+	UNTIL INKEY(-17) = 1
+ENDPROC
+
+DEFPROCAnimate()
+	gRound = 0.01
+	FOR LOCAL I%=1 TO 30
+		gRound*=1.25
+		PROCRender()
+	NEXT
+	gRound=100.0
+ENDPROC
+
+DEFPROCRender()
+	CLS
+	C%=&FF0000
+	COLOUR C%
+	lx%=0
+	ly%=0
+	FOR LOCAL I%=0 TO points%-1
+		x=p!(I%)x
+		y=p!(I%)y
+		IF x <> 0.0 AND y <> 0.0 THEN
+			x=INT(x * gRound) / gRound
+			y=INT(y * gRound) / gRound
+			x%=x * gScale + gCentreX + (w% / 2) + 0.5
+			y%=(h% / 2) - y * gScale + gCentreY + 0.5
+			IF lx% <> 0 AND ly% <> 0 LINE lx%,ly%,x%,y%
+			lx%=x%
+			ly%=y%
+		ELSE
+			C%+=40
+			COLOUR C%
+			lx%=0
+			ly%=0
+		ENDIF
+	NEXT
+	COLOUR YELLOW
+	TEXTCENTRE PROP25, w% / 2, 0, "Press left mouse button to drag\r"
+	TEXTCENTRE PROP25, w% / 2, LASTPOS, "z - Zoom In, x - Zoom Out, p - Animate, q - Quit\r"
+	TEXTCENTRE PROP25, w% / 2, LASTPOS, STR$(points%) + "/401667 points"
+ENDPROC
+
+DEFPROCLoadPolygon(filename$, RETURN points%, phase%)
+	LOCAL f%=OPENIN("GIS/" + filename$)
+	skip=0
+	WHILE NOT EOF#f%
+		s$=GET$#f%
+		IF LEN(s$) > 0 THEN
+			IF s$ = "---" THEN
+				IF phase%=1 THEN p!(points%)x = 0.0: p!(points%)y = 0.0
+				points%+=1
+				skip=0
+			ELSE
+				skip+=1
+				IF skip = pointSkip
+					IF phase%=1 THEN
+						LOCAL p1%=INSTR(s$, ",")
+						LOCAL p2%=LEN(s$)
+						LOCAL s1$=MID$(s$,1,p1%-1)
+						LOCAL s2$=MID$(s$,p1%+1,p2%-p1%)
+						p!(points%)y = VAL(s1$)
+						p!(points%)x = VAL(s2$)
+					ENDIF
+					points%+=1
+					skip=0
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDWHILE
+	CLOSE#f%
+ENDPROC

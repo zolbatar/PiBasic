@@ -43,6 +43,15 @@
     <Filter Include="Source Files\VM">
       <UniqueIdentifier>{c60114c5-2964-41e1-85b8-5c642828cacb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Parser">
+      <UniqueIdentifier>{dc8a17e8-7051-4ad6-ad47-594daa08efa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Parser">
+      <UniqueIdentifier>{49cbcd7c-41a9-494b-85ac-684c046365ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Parser">
+      <UniqueIdentifier>{37a3cfca-dbb4-49a7-bdc4-1b7f25960e3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -96,6 +105,27 @@
     <ClCompile Include="..\src\vm\vm.cpp">
       <Filter>Source Files\VM</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\parser\DARICBaseListener.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\parser\DARICLexer.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\parser\DARICListener.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\parser\DARICParser.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\parser\parser.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\parser\DARICBaseVisitor.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\parser\DARICVisitor.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">
@@ -140,5 +170,46 @@
     <ClInclude Include="..\src\vm\vm.h">
       <Filter>Header Files\VM</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\parser\DARICBaseListener.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\parser\DARICLexer.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\parser\DARICListener.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\parser\DARICParser.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\parser\parser.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\parser\DARICBaseVisitor.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\parser\DARICVisitor.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Grammar\DARIC.g4">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\src\parser\DARIC.interp">
+      <Filter>Resource Files\Parser</Filter>
+    </None>
+    <None Include="..\src\parser\DARICLexer.interp">
+      <Filter>Resource Files\Parser</Filter>
+    </None>
+    <None Include="..\src\parser\DARIC.tokens">
+      <Filter>Resource Files\Parser</Filter>
+    </None>
+    <None Include="..\src\parser\DARICLexer.tokens">
+      <Filter>Resource Files\Parser</Filter>
+    </None>
+    <None Include="..\build-grammar.bat">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

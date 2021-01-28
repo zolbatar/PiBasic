@@ -87,6 +87,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
+    <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -130,15 +131,18 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\d_dud\Development\SDL2-2.0.14\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\d_dud\Development\SDL2-2.0.14\include;C:\Users\d_dud\Development\antlr4-cpp-runtime-4.7.2-vs2015\antlr4-runtime</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64;C:\Users\d_dud\Development\antlr4-cpp-runtime-4.7.2-vs2015\lib\vs-2015\x64\Release DLL</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;antlr4-runtime.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>C:\Users\d_dud\source\repos\PiBasic\V5\build-grammar.bat</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -148,7 +152,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\d_dud\Development\SDL2-2.0.14\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\d_dud\Development\SDL2-2.0.14\include;C:\Users\d_dud\Development\antlr4-cpp-runtime-4.7.2-vs2015\antlr4-runtime</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
@@ -157,9 +161,12 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64;C:\Users\d_dud\Development\antlr4-cpp-runtime-4.7.2-vs2015\lib\vs-2015\x64\Release DLL</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;antlr4-runtime.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>C:\Users\d_dud\source\repos\PiBasic\V5\build-grammar.bat</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\engine\engine_matrix.cpp" />
@@ -178,6 +185,13 @@
     <ClCompile Include="..\src\libs\clock.cpp" />
     <ClCompile Include="..\src\libs\string.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\parser\DARICBaseListener.cpp" />
+    <ClCompile Include="..\src\parser\DARICBaseVisitor.cpp" />
+    <ClCompile Include="..\src\parser\DARICLexer.cpp" />
+    <ClCompile Include="..\src\parser\DARICListener.cpp" />
+    <ClCompile Include="..\src\parser\DARICParser.cpp" />
+    <ClCompile Include="..\src\parser\DARICVisitor.cpp" />
+    <ClCompile Include="..\src\parser\parser.cpp" />
     <ClCompile Include="..\src\vm\vm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +202,13 @@
     <ClInclude Include="..\src\interactive\interactive.h" />
     <ClInclude Include="..\src\libs\clock.h" />
     <ClInclude Include="..\src\libs\string.h" />
+    <ClInclude Include="..\src\parser\DARICBaseListener.h" />
+    <ClInclude Include="..\src\parser\DARICBaseVisitor.h" />
+    <ClInclude Include="..\src\parser\DARICLexer.h" />
+    <ClInclude Include="..\src\parser\DARICListener.h" />
+    <ClInclude Include="..\src\parser\DARICParser.h" />
+    <ClInclude Include="..\src\parser\DARICVisitor.h" />
+    <ClInclude Include="..\src\parser\parser.h" />
     <ClInclude Include="..\src\types.h" />
     <ClInclude Include="..\src\vm\boxed.h" />
     <ClInclude Include="..\src\vm\bytecode.h" />
@@ -195,6 +216,14 @@
     <ClInclude Include="..\src\vm\type.h" />
     <ClInclude Include="..\src\vm\variables.h" />
     <ClInclude Include="..\src\vm\vm.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\build-grammar.bat" />
+    <None Include="..\Grammar\DARIC.g4" />
+    <None Include="..\src\parser\DARIC.interp" />
+    <None Include="..\src\parser\DARIC.tokens" />
+    <None Include="..\src\parser\DARICLexer.interp" />
+    <None Include="..\src\parser\DARICLexer.tokens" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

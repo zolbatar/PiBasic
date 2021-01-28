@@ -1,0 +1,36 @@
+INSTALL "SetupGraphics"
+INSTALL "Menus"
+
+CLS
+PROCTitle("Welcome to DARIC!")
+PROCLabel("A", "2D Graphics", ms%+(0*ys%))
+PROCLabel("B", "B&W Mandelbrot", ms%+(1*ys%))
+PROCLabel("C", "Text and Fonts", ms%+(2*ys%))
+PROCLabel("D", "3D Cubes", ms%+(3*ys%))
+PROCLabel("E", "3D (Wavefront OBJ) Model Loader", ms%+(4*ys%))
+PROCLabel("F", "3D Terrain Generator", ms%+(5*ys%))
+PROCLabel("G", "'DARIC Landscape'", ms%+(6*ys%))
+PROCLabel("H", "Travelling Salesman Benchmark", ms%+(7*ys%))
+PROCLabel("I", "World in Lines", ms%+(8*ys%))
+PROCLabel("J", "Sierpinski Triangles", ms%+(9*ys%))
+PROCLabel("Y", "Test Rig (Needs write permission to file system)", ms%+(11*ys%))
+PROCLabel("Z", "Quit", ms%+(14*ys%))
+PROCLabel("F10", "Debugger & Manual (Core DARIC feature)", ms%+(16*ys%))
+REPEAT
+	A$=GET$
+	CASE A$ OF
+		WHEN "A","a" CHAIN "Graphics"
+		WHEN "B","b" CHAIN "Mandelbrot"
+		WHEN "C","c" CHAIN "Fonts"
+		WHEN "D","d" CHAIN "Cubes"
+		WHEN "E","e" CHAIN "Load3D"
+		WHEN "F","f" CHAIN "TerrainDemo"
+		WHEN "G","g" CHAIN "DARIC"
+		WHEN "H","h" CHAIN "Greedy"
+		WHEN "I","i" CHAIN "WorldInLines"
+		WHEN "J","j" CHAIN "Sierpinski"
+		WHEN "Y","y" CHAIN "Tester"
+		WHEN "Z","z" END
+	ENDCASE
+	REPEAT UNTIL INKEY(0)=-1
+UNTIL FALSE

@@ -1,0 +1,42 @@
+INSTALL "SetupGraphics"
+
+DEFFNRandomString$()
+    LOCAL A$=""
+    FOR LOCAL I%=0 To RND(20)+5
+        A$=A$+CHR$(32+RND(95))
+    NEXT
+    RETURN A$
+ENDFN
+
+DEFFNRandomColour%()
+    RETURN (RND(180)+64) << 16 + (RND(180)+64) << 8 + RND(180)+64
+ENDFN
+
+C%=5
+DIM A$(C%),CL%(C%)
+FOR I%=0 To C%
+    A$(I%)=FNRandomString$()
+    CL%(I%)=FNRandomColour%()
+NEXT
+coolfont%   = LOADTYPEFACE "FXMatrix105MonoPicaRegular.otf"
+coolfont10% = CREATEFONT coolfont%, 25
+CLS
+FLIP
+FOR I%=0 To C%
+	COLOUR CL%(I%)
+	TEXT         MONO20, 10, 25 * I%, A$(I%)
+	TEXTCENTRE   coolfont10%, w% / 2, 25 * I%, A$(I%)
+	TEXTRIGHT    PROP20, w%-1-10, 25 * I%, A$(I%)
+NEXT
+TEXT MONO15, 10, (25 * C%) + 25, "Mono 15":TEXTCENTRE PROP15, w% / 2, (25 * C%) + 25, "Prop 15":TEXTRIGHT SERIF15, w%-1-10, (25 * C%) + 25, "Serif 15"
+TEXT MONO20, 10, (25 * C%) + 50, "Mono 20":TEXTCENTRE PROP20, w% / 2, (25 * C%) + 50, "Prop 20":TEXTRIGHT SERIF20, w%-1-10, (25 * C%) + 50, "Serif 20"
+TEXT MONO25, 10, (25 * C%) + 75, "Mono 25":TEXTCENTRE PROP25, w% / 2, (25 * C%) + 75, "Prop 25":TEXTRIGHT SERIF25, w%-1-10, (25 * C%) + 75, "Serif 25"
+TEXT MONO30, 10, (25 * C%) + 100, "Mono 30":TEXTCENTRE PROP30, w% / 2, (25 * C%) + 100, "Prop 30":TEXTRIGHT SERIF30, w%-1-10, (25 * C%) + 100, "Serif 30"
+TEXT MONO35, 10, (25 * C%) + 125, "Mono 35":TEXTCENTRE PROP35, w% / 2, (25 * C%) + 125, "Prop 35":TEXTRIGHT SERIF35, w%-1-10, (25 * C%) + 125, "Serif 35"
+TEXT MONO40, 10, (25 * C%) + 150, "Mono 40":TEXTCENTRE PROP40, w% / 2, (25 * C%) + 150, "Prop 40":TEXTRIGHT SERIF40, w%-1-10, (25 * C%) + 150, "Serif 40"
+TEXT MONO50, 10, (25 * C%) + 175, "Mono 50":TEXTCENTRE PROP50, w% / 2, (25 * C%) + 175, "Prop 50":TEXTRIGHT SERIF50, w%-1-10, (25 * C%) + 175, "Serif 50"
+TEXT MONO75, 10, (25 * C%) + 200, "Mono 75":TEXTCENTRE PROP75, w% / 2, (25 * C%) + 200, "Prop 75":TEXTRIGHT SERIF75, w%-1-10, (25 * C%) + 200, "Serif 75"
+TEXT MONO100, 10, (25 * C%) + 225, "Mono 100":TEXTCENTRE PROP100, w% / 2, (25 * C%) + 225, "Prop 100":TEXTRIGHT SERIF100, w%-1-10, (25 * C%) + 225, "Serif 100"
+FLIP	
+INKEY(1000)
+CHAIN "Welcome"

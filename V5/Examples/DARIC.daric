@@ -1,0 +1,90 @@
+INSTALL "SetupGraphics"
+INSTALL "Terrain"
+
+DEFPROCSky()
+    level=1.0
+    sky%=&002040
+    FOR LOCAL y%=0 TO (h% / 2) STEP 4
+        COLOUR 0,&6 * level,&30 * level
+        LINE 0, y%, w%-1, y%
+        LINE 0, y%+1, w%-1, y%+1
+        LINE 0, y%+2, w%-1, y%+2
+        LINE 0, y%+3, w%-1, y%+3
+        level=level+0.01
+    NEXT
+ENDPROC
+
+DEFPROCSun()
+    radius = h% / 2
+    FOR LOCAL angle=180 TO 270 STEP 0.1
+        x=radius * COS(RAD(angle))
+        y=radius * SIN(RAD(angle))
+        shade=-y
+        shade=shade / (h% * 0.7)
+        IF shade < 0 shade=0
+        IF shade > 1.0 shade=1.0
+        COLOUR &80*shade,&80*shade,&00
+        LINE (w% / 2) - x, y + (h% * 0.7), (w% / 2) + x, y + (h% * 0.7)
+    NEXT
+ENDPROC
+
+DEFPROCLines()
+    FOR LOCAL y%=0 TO h%-1 STEP 3
+        FOR LOCAL x%=0 TO w%-1
+            c%=POINT(x%,y%)
+            LOCAL r%=(c% AND &FF0000) >> 16
+            LOCAL g%=(c% AND &00FF00) >> 8
+            LOCAL b%=c% AND &0000FF
+            r%+=&20:g%+=&20:b%+=&20
+            IF r%>&FF r%=&FF
+            IF g%>&FF g%=&FF
+            IF b%>&FF b%=&FF
+            COLOUR r%,g%,b%
+            PLOT x%,y%
+        NEXT
+    NEXT
+ENDPROC
+
+DEFPROCLinesBlackenLogo()
+    COLOUR BLACK
+    FOR LOCAL y%=h%/2-100 TO h%/2+70
+        FOR LOCAL x%=0 TO w%-1
+            c%=POINT(x%,y%)
+            LOCAL r%=(c% AND &FF0000) >> 16
+            LOCAL g%=(c% AND &00FF00) >> 8
+            LOCAL b%=c% AND &0000FF
+            ratio=ABS(w%/2-x%)
+            COLOUR r%/3,g%/3,b%/3
+            PLOT x%,y%
+        NEXT
+    NEXT
+ENDPROC
+
+PROCInitPerlin()
+coolfont%    = LOADTYPEFACE "edunline.ttf"
+coolfont200% = CREATEFONT coolfont%, 150
+terrainsize%=70
+PROCCreateTerrain(terrainsize%, terrainsize%, 1.0, 8.0, 1.0, &000060, &000030, &000030, 10.0, 10.0, 0)
+terrain1%=OBJECT terrain%, 0, 30, -250, 270, 0, 0, 500, FILLEDWIREFRAME
+COLOURBG BLACK
+CLS
+PROCSky()
+PROCSun()
+PROCLines()
+COLOUR &004080
+ROTATE terrain1%, 355, 0, 0
+RENDER
+PROCLinesBlackenLogo()
+COLOUR WHITE:TEXTCENTRE coolfont200%, w%/2-250, h%/2-100, "D"
+COLOUR WHITE:TEXTCENTRE coolfont200%, w%/2-125, h%/2-100, "A"
+COLOUR WHITE:TEXTCENTRE coolfont200%, w%/2, h%/2-100, "R"
+COLOUR WHITE:TEXTCENTRE coolfont200%, w%/2+125, h%/2-100, "I"    
+COLOUR WHITE:TEXTCENTRE coolfont200%, w%/2+250, h%/2-100, "C"
+REMCOLOUR WHITE:TEXTCENTRE coolfont200%, w%/2, h%/2-100, "D.A.R.I.C"
+COLOUR RED:RECTANGLE FILL w%/2-300,h%/2+40,w%/2-110,h%/2+50
+COLOUR GREEN:RECTANGLE FILL w%/2-100,h%/2+40,w%/2+100,h%/2+50
+COLOUR BLUE:RECTANGLE FILL w%/2+110,h%/2+40,w%/2+300,h%/2+50
+FLIP
+DELETEOBJECT terrain1%
+INKEY(1000)
+CHAIN "Welcome"
