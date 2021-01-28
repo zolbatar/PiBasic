@@ -1,3 +1,6 @@
+*.o
+*.iobj
+*.ipdb
 V4/DARIC.exe
 V4/DARIC.ilk
 V4/DARIC.pdb
@@ -6,12 +9,15 @@ V4/WindowsDARIC/Debug/
 V4/WindowsDARIC/Release/
 V4/src/parser/bison.cpp
 V4/src/parser/flex.cpp
-
-*.o
-*.iobj
-*.ipdb
 V4/src/parser/bison.cpp
 V4/DARICInstaller/setup.exe
 V4/DARICInstaller/DARIC.msi
 V4/buildriscos/
 V4/buildriscosvfp/
+
+V5/DARIC.exe
+V5/DARIC.ilk
+V5/DARIC.pdb
+V5/DARIC/.vs/
+V5/DARIC/Debug/
+V5/DARIC/Release/
