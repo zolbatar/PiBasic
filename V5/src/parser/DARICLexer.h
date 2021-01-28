@@ -12,8 +12,11 @@
 class  DARICLexer : public antlr4::Lexer {
 public:
   enum {
-    T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, INTEGER = 7, 
-    STRING = 8
+    AND = 1, LET = 2, MIDS = 3, OR = 4, PI = 5, PRINT = 6, REM = 7, EQ = 8, 
+    NE = 9, GT = 10, GE = 11, LT = 12, LE = 13, PLUS = 14, MINUS = 15, MULTIPLY = 16, 
+    DIVIDE = 17, COLON = 18, COMMA = 19, DOLLAR = 20, LPAREN = 21, PERCENT = 22, 
+    RPAREN = 23, SEMICOLON = 24, UNDERSCORE = 25, COMMENT = 26, STRINGLITERAL = 27, 
+    LETTERS = 28, NUMBER = 29, FLOAT = 30, WS = 31
   };
 
   explicit DARICLexer(antlr4::CharStream *input);

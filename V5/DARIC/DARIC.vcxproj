@@ -185,10 +185,8 @@
     <ClCompile Include="..\src\libs\clock.cpp" />
     <ClCompile Include="..\src\libs\string.cpp" />
     <ClCompile Include="..\src\main.cpp" />
-    <ClCompile Include="..\src\parser\DARICBaseListener.cpp" />
     <ClCompile Include="..\src\parser\DARICBaseVisitor.cpp" />
     <ClCompile Include="..\src\parser\DARICLexer.cpp" />
-    <ClCompile Include="..\src\parser\DARICListener.cpp" />
     <ClCompile Include="..\src\parser\DARICParser.cpp" />
     <ClCompile Include="..\src\parser\DARICVisitor.cpp" />
     <ClCompile Include="..\src\parser\parser.cpp" />
@@ -202,10 +200,8 @@
     <ClInclude Include="..\src\interactive\interactive.h" />
     <ClInclude Include="..\src\libs\clock.h" />
     <ClInclude Include="..\src\libs\string.h" />
-    <ClInclude Include="..\src\parser\DARICBaseListener.h" />
     <ClInclude Include="..\src\parser\DARICBaseVisitor.h" />
     <ClInclude Include="..\src\parser\DARICLexer.h" />
-    <ClInclude Include="..\src\parser\DARICListener.h" />
     <ClInclude Include="..\src\parser\DARICParser.h" />
     <ClInclude Include="..\src\parser\DARICVisitor.h" />
     <ClInclude Include="..\src\parser\parser.h" />
@@ -218,6 +214,7 @@
     <ClInclude Include="..\src\vm\vm.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\a.daric" />
     <None Include="..\build-grammar.bat" />
     <None Include="..\Grammar\DARIC.g4" />
     <None Include="..\src\parser\DARIC.interp" />
