@@ -52,6 +52,12 @@
     <Filter Include="Resource Files\Parser">
       <UniqueIdentifier>{37a3cfca-dbb4-49a7-bdc4-1b7f25960e3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Compiler">
+      <UniqueIdentifier>{7869e697-aaa8-4958-a20c-88ce638f25a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler">
+      <UniqueIdentifier>{8ee61817-dfe9-4ce1-99d3-afa095f4ae7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -120,6 +126,21 @@
     <ClCompile Include="..\src\parser\DARICVisitor.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_assignment.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_printinput.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\visitor.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_literal.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">
@@ -178,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="..\src\parser\DARICVisitor.h">
       <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\compiler\compiler.h">
+      <Filter>Header Files\Compiler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

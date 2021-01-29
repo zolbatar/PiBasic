@@ -1,6 +1,5 @@
 #pragma once
 #include "graphics/graphics.h"
-//#include "vm/vm.h"
 #include <memory>
 #include <sstream>
 #include <string>
@@ -10,9 +9,7 @@ public:
     std::string version = "21.01.28";
     std::string cwd; // Program directory
     std::stringstream log; // Runtime log
-    std::stringstream errors; // Runtime log
     Graphics graphics;
-    bool fatal_error = false;
     bool debugger_requested = false;
     bool interactive;
 

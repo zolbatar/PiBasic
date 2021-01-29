@@ -35,35 +35,35 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNum_var(DARICParser::Num_varContext *ctx) override {
+  virtual antlrcpp::Any visitNumVar(DARICParser::NumVarContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitStr_var(DARICParser::Str_varContext *ctx) override {
+  virtual antlrcpp::Any visitStrVar(DARICParser::StrVarContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitVarname(DARICParser::VarnameContext *ctx) override {
+  virtual antlrcpp::Any visitVarName(DARICParser::VarNameContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitVardecl(DARICParser::VardeclContext *ctx) override {
+  virtual antlrcpp::Any visitVarDecl(DARICParser::VarDeclContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitVariableassignment(DARICParser::VariableassignmentContext *ctx) override {
+  virtual antlrcpp::Any visitVarAssign(DARICParser::VarAssignContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitVarlist(DARICParser::VarlistContext *ctx) override {
+  virtual antlrcpp::Any visitVarList(DARICParser::VarListContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitExprlist(DARICParser::ExprlistContext *ctx) override {
+  virtual antlrcpp::Any visitExprList(DARICParser::ExprListContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitPrintlist(DARICParser::PrintlistContext *ctx) override {
+  virtual antlrcpp::Any visitPrintList(DARICParser::PrintListContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -75,19 +75,31 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitStr_func(DARICParser::Str_funcContext *ctx) override {
+  virtual antlrcpp::Any visitNumberInteger(DARICParser::NumberIntegerContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitStr_expr(DARICParser::Str_exprContext *ctx) override {
+  virtual antlrcpp::Any visitNumberFloat(DARICParser::NumberFloatContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNum_func(DARICParser::Num_funcContext *ctx) override {
+  virtual antlrcpp::Any visitStrFunc(DARICParser::StrFuncContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNum_expr(DARICParser::Num_exprContext *ctx) override {
+  virtual antlrcpp::Any visitString(DARICParser::StringContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStrExpr(DARICParser::StrExprContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumFunc(DARICParser::NumFuncContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumExpr(DARICParser::NumExprContext *ctx) override {
     return visitChildren(ctx);
   }
 

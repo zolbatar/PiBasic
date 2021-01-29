@@ -2,6 +2,7 @@
 #include "interactive.h"
 #include "../environment.h"
 #include "../libs/string.h"
+#include "../parser/parser.h"
 #include "../vm/vm.h"
 #include <iomanip>
 #include <iostream>
@@ -208,8 +209,15 @@ void Interactive::execute_line(std::string s)
     fwrite(s.c_str(), s.length(), 1, fp);
     fclose(fp);
 
+    try {
+        MyParser parser(temp_filename);
+        parser.parse_and_compile();
+    } catch (const std::runtime_error& ex) {
+        g_env.graphics.print_console(ex.what());
+    }
+
     // Now parse and compile
-/*    g_vm = std::make_unique<VM>();
+    /*    g_vm = std::make_unique<VM>();
     parse_and_compile(temp_filename.c_str(), true, &variables);
     if (g_vm->compile_successful) {
         run_vm();
@@ -233,7 +241,7 @@ void Interactive::run_all_lines()
     fclose(fp);
 
     // Now parse and compile
-/*    g_vm = std::make_unique<VM>();
+    /*    g_vm = std::make_unique<VM>();
     parse_and_compile(temp_filename.c_str(), true, &variables);
     bool done = false;
     if (g_vm->compile_successful) {
@@ -274,7 +282,7 @@ void Interactive::run_file(std::string filename)
     _kernel_swi(DDEUtils_Prefix, &regs, &regs);
 #endif
 
-/*    g_vm = std::make_unique<VM>();
+    /*    g_vm = std::make_unique<VM>();
     parse_and_compile(filename.c_str(), false, nullptr);
     run_vm();
     g_env.graphics.cls();

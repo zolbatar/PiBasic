@@ -1,4 +1,5 @@
 #include "environment.h"
+#include "interactive/interactive.h"
 #include <chrono>
 #include <iostream>
 
@@ -29,6 +30,11 @@ int main(int argc, char* argv[])
     if (argc == 2) {
         // A file has been clicked typically
     } else {
+        // Fire up graphics now
+        g_env.graphics.open(g_env.graphics.get_screen_width(), g_env.graphics.get_screen_height(), 0, g_env.cwd);
+
+        Interactive interactive;
+        interactive.run();
     }
 
     // Shutdown

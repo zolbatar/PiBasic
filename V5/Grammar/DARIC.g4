@@ -14,85 +14,98 @@ linenumber
     ;
 
 stmt
-    : LET? variableassignment
-    | PRINT printlist?
+    : LET? varAssign
+    | PRINT printList?
     ;
 
 // Variables
 var
-    : num_var
-    | str_var
+    : numVar
+    | strVar
     ;
 
-num_var
-    : varname
-    | varname PERCENT
+numVar
+    : varName
+    | varName PERCENT
     ;
 
-str_var
-    : varname DOLLAR
+strVar
+    : varName DOLLAR
     ;
 
-varname
+varName
     : LETTERS (LETTERS | NUMBER | UNDERSCORE)*
     ;
 
-vardecl
-    : var (LPAREN exprlist RPAREN)*
+varDecl
+    : var (LPAREN exprList RPAREN)*
     ;
    
-variableassignment
-    : vardecl EQ exprlist
+varAssign
+    : varDecl EQ expr (COMMA varDecl EQ expr)*
     ;
    
 // Lists
-varlist
-    : vardecl (COMMA vardecl)*
+varList
+    : varDecl (COMMA varDecl)*
     ;
 
-exprlist
+exprList
     : expr (COMMA expr)*
     ;
 
-printlist
+printList
     : expr ((COMMA | SEMICOLON) expr?)*
     ;
 
 // Expressions and such
 expr
-    : num_expr
-    | num_var
-    | str_expr
+    : numExpr
+    | numVar
+    | strExpr
     ;
-
+    
 number
-    :  (PLUS | MINUS)? (NUMBER | FLOAT)
+    : numberInteger
+    | numberFloat
     ;
 
-str_func
-    : MIDS LPAREN str_expr COMMA num_expr COMMA num_expr RPAREN
+numberInteger
+    :  (PLUS | MINUS)? NUMBER
     ;
 
-str_expr
+numberFloat
+    :  (PLUS | MINUS)? FLOAT
+    ;
+
+strFunc
+    : MIDS LPAREN strExpr COMMA numExpr COMMA numExpr RPAREN
+    ;
+
+string
     : STRINGLITERAL
-    | str_var
-    | str_func
     ;
 
-num_func
+strExpr
+    : string
+    | strVar
+    | strFunc
+    ;
+
+numFunc
     : PI
     ;
 
-num_expr
+numExpr
     : number
-    | num_func
-    | LPAREN num_expr RPAREN
-    | num_expr relop num_expr
-    | str_expr relop str_expr
-    | num_expr PLUS num_expr
-    | num_expr MINUS num_expr
-    | num_expr MULTIPLY num_expr
-    | num_expr DIVIDE num_expr
+    | numFunc
+    | LPAREN numExpr RPAREN
+    | numExpr relop numExpr
+    | strExpr relop strExpr
+    | numExpr PLUS numExpr
+    | numExpr MINUS numExpr
+    | numExpr MULTIPLY numExpr
+    | numExpr DIVIDE numExpr
     ;
 
 relop
@@ -107,13 +120,13 @@ relop
     ;
    
 // Lexer stuff
-AND             : 'AND' | 'And' ;
-LET             : 'LET' | 'Let' ;
-MIDS            : 'MID$' | 'Mid$' ;
-OR              : 'OR' | 'Or' ;
-PI              : 'PI' | 'Pi' ;
-PRINT           : 'PRINT' | 'Print' ;
-REM             : 'REM' | 'Rem' ;
+AND             : 'AND' | 'And' | 'and' ;
+LET             : 'LET' | 'Let' | 'let' ;
+MIDS            : 'MID$' | 'Mid$' | 'mid$' ;
+OR              : 'OR' | 'Or' | 'or' ;
+PI              : 'PI' | 'Pi' | 'pi' ;
+PRINT           : 'PRINT' | 'Print' | 'print' ;
+REM             : 'REM' | 'Rem' | 'rem' ;
 
 EQ              : '=' ;
 NE              : '<>' ;

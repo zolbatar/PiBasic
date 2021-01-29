@@ -76,13 +76,13 @@ DARICParser::ProgContext* DARICParser::prog() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(41); 
+    setState(47); 
     _errHandler->sync(this);
     _la = _input->LA(1);
     do {
-      setState(40);
+      setState(46);
       line();
-      setState(43); 
+      setState(49); 
       _errHandler->sync(this);
       _la = _input->LA(1);
     } while ((((_la & ~ 0x3fULL) == 0) &&
@@ -92,7 +92,7 @@ DARICParser::ProgContext* DARICParser::prog() {
       | (1ULL << DARICParser::COMMENT)
       | (1ULL << DARICParser::LETTERS)
       | (1ULL << DARICParser::NUMBER))) != 0));
-    setState(45);
+    setState(51);
     match(DARICParser::EOF);
    
   }
@@ -165,7 +165,7 @@ DARICParser::LineContext* DARICParser::line() {
     exitRule();
   });
   try {
-    setState(74);
+    setState(80);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
       case DARICParser::LET:
@@ -174,26 +174,26 @@ DARICParser::LineContext* DARICParser::line() {
       case DARICParser::COMMENT:
       case DARICParser::LETTERS: {
         enterOuterAlt(_localctx, 1);
-        setState(58);
+        setState(64);
         _errHandler->sync(this);
         switch (_input->LA(1)) {
           case DARICParser::LET:
           case DARICParser::PRINT:
           case DARICParser::LETTERS: {
-            setState(47);
+            setState(53);
             stmt();
-            setState(54);
+            setState(60);
             _errHandler->sync(this);
             _la = _input->LA(1);
             while (_la == DARICParser::COLON) {
-              setState(48);
+              setState(54);
               match(DARICParser::COLON);
-              setState(50);
+              setState(56);
               _errHandler->sync(this);
 
               switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 1, _ctx)) {
               case 1: {
-                setState(49);
+                setState(55);
                 stmt();
                 break;
               }
@@ -201,7 +201,7 @@ DARICParser::LineContext* DARICParser::line() {
               default:
                 break;
               }
-              setState(56);
+              setState(62);
               _errHandler->sync(this);
               _la = _input->LA(1);
             }
@@ -210,7 +210,7 @@ DARICParser::LineContext* DARICParser::line() {
 
           case DARICParser::REM:
           case DARICParser::COMMENT: {
-            setState(57);
+            setState(63);
             _la = _input->LA(1);
             if (!(_la == DARICParser::REM
 
@@ -232,28 +232,28 @@ DARICParser::LineContext* DARICParser::line() {
 
       case DARICParser::NUMBER: {
         enterOuterAlt(_localctx, 2);
-        setState(60);
+        setState(66);
         linenumber();
-        setState(72);
+        setState(78);
         _errHandler->sync(this);
         switch (_input->LA(1)) {
           case DARICParser::LET:
           case DARICParser::PRINT:
           case DARICParser::LETTERS: {
-            setState(61);
+            setState(67);
             stmt();
-            setState(68);
+            setState(74);
             _errHandler->sync(this);
             _la = _input->LA(1);
             while (_la == DARICParser::COLON) {
-              setState(62);
+              setState(68);
               match(DARICParser::COLON);
-              setState(64);
+              setState(70);
               _errHandler->sync(this);
 
               switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 4, _ctx)) {
               case 1: {
-                setState(63);
+                setState(69);
                 stmt();
                 break;
               }
@@ -261,7 +261,7 @@ DARICParser::LineContext* DARICParser::line() {
               default:
                 break;
               }
-              setState(70);
+              setState(76);
               _errHandler->sync(this);
               _la = _input->LA(1);
             }
@@ -270,7 +270,7 @@ DARICParser::LineContext* DARICParser::line() {
 
           case DARICParser::REM:
           case DARICParser::COMMENT: {
-            setState(71);
+            setState(77);
             _la = _input->LA(1);
             if (!(_la == DARICParser::REM
 
@@ -340,7 +340,7 @@ DARICParser::LinenumberContext* DARICParser::linenumber() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(76);
+    setState(82);
     match(DARICParser::NUMBER);
    
   }
@@ -359,8 +359,8 @@ DARICParser::StmtContext::StmtContext(ParserRuleContext *parent, size_t invoking
   : ParserRuleContext(parent, invokingState) {
 }
 
-DARICParser::VariableassignmentContext* DARICParser::StmtContext::variableassignment() {
-  return getRuleContext<DARICParser::VariableassignmentContext>(0);
+DARICParser::VarAssignContext* DARICParser::StmtContext::varAssign() {
+  return getRuleContext<DARICParser::VarAssignContext>(0);
 }
 
 tree::TerminalNode* DARICParser::StmtContext::LET() {
@@ -371,8 +371,8 @@ tree::TerminalNode* DARICParser::StmtContext::PRINT() {
   return getToken(DARICParser::PRINT, 0);
 }
 
-DARICParser::PrintlistContext* DARICParser::StmtContext::printlist() {
-  return getRuleContext<DARICParser::PrintlistContext>(0);
+DARICParser::PrintListContext* DARICParser::StmtContext::printList() {
+  return getRuleContext<DARICParser::PrintListContext>(0);
 }
 
 
@@ -401,36 +401,36 @@ DARICParser::StmtContext* DARICParser::stmt() {
     exitRule();
   });
   try {
-    setState(86);
+    setState(92);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
       case DARICParser::LET:
       case DARICParser::LETTERS: {
         enterOuterAlt(_localctx, 1);
-        setState(79);
+        setState(85);
         _errHandler->sync(this);
 
         _la = _input->LA(1);
         if (_la == DARICParser::LET) {
-          setState(78);
+          setState(84);
           match(DARICParser::LET);
         }
-        setState(81);
-        variableassignment();
+        setState(87);
+        varAssign();
         break;
       }
 
       case DARICParser::PRINT: {
         enterOuterAlt(_localctx, 2);
-        setState(82);
+        setState(88);
         match(DARICParser::PRINT);
-        setState(84);
+        setState(90);
         _errHandler->sync(this);
 
         switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 9, _ctx)) {
         case 1: {
-          setState(83);
-          printlist();
+          setState(89);
+          printList();
           break;
         }
 
@@ -460,12 +460,12 @@ DARICParser::VarContext::VarContext(ParserRuleContext *parent, size_t invokingSt
   : ParserRuleContext(parent, invokingState) {
 }
 
-DARICParser::Num_varContext* DARICParser::VarContext::num_var() {
-  return getRuleContext<DARICParser::Num_varContext>(0);
+DARICParser::NumVarContext* DARICParser::VarContext::numVar() {
+  return getRuleContext<DARICParser::NumVarContext>(0);
 }
 
-DARICParser::Str_varContext* DARICParser::VarContext::str_var() {
-  return getRuleContext<DARICParser::Str_varContext>(0);
+DARICParser::StrVarContext* DARICParser::VarContext::strVar() {
+  return getRuleContext<DARICParser::StrVarContext>(0);
 }
 
 
@@ -493,20 +493,20 @@ DARICParser::VarContext* DARICParser::var() {
     exitRule();
   });
   try {
-    setState(90);
+    setState(96);
     _errHandler->sync(this);
     switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 11, _ctx)) {
     case 1: {
       enterOuterAlt(_localctx, 1);
-      setState(88);
-      num_var();
+      setState(94);
+      numVar();
       break;
     }
 
     case 2: {
       enterOuterAlt(_localctx, 2);
-      setState(89);
-      str_var();
+      setState(95);
+      strVar();
       break;
     }
 
@@ -524,36 +524,36 @@ DARICParser::VarContext* DARICParser::var() {
   return _localctx;
 }
 
-//----------------- Num_varContext ------------------------------------------------------------------
+//----------------- NumVarContext ------------------------------------------------------------------
 
-DARICParser::Num_varContext::Num_varContext(ParserRuleContext *parent, size_t invokingState)
+DARICParser::NumVarContext::NumVarContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-DARICParser::VarnameContext* DARICParser::Num_varContext::varname() {
-  return getRuleContext<DARICParser::VarnameContext>(0);
+DARICParser::VarNameContext* DARICParser::NumVarContext::varName() {
+  return getRuleContext<DARICParser::VarNameContext>(0);
 }
 
-tree::TerminalNode* DARICParser::Num_varContext::PERCENT() {
+tree::TerminalNode* DARICParser::NumVarContext::PERCENT() {
   return getToken(DARICParser::PERCENT, 0);
 }
 
 
-size_t DARICParser::Num_varContext::getRuleIndex() const {
-  return DARICParser::RuleNum_var;
+size_t DARICParser::NumVarContext::getRuleIndex() const {
+  return DARICParser::RuleNumVar;
 }
 
 
-antlrcpp::Any DARICParser::Num_varContext::accept(tree::ParseTreeVisitor *visitor) {
+antlrcpp::Any DARICParser::NumVarContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
-    return parserVisitor->visitNum_var(this);
+    return parserVisitor->visitNumVar(this);
   else
     return visitor->visitChildren(this);
 }
 
-DARICParser::Num_varContext* DARICParser::num_var() {
-  Num_varContext *_localctx = _tracker.createInstance<Num_varContext>(_ctx, getState());
-  enterRule(_localctx, 10, DARICParser::RuleNum_var);
+DARICParser::NumVarContext* DARICParser::numVar() {
+  NumVarContext *_localctx = _tracker.createInstance<NumVarContext>(_ctx, getState());
+  enterRule(_localctx, 10, DARICParser::RuleNumVar);
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -563,21 +563,21 @@ DARICParser::Num_varContext* DARICParser::num_var() {
     exitRule();
   });
   try {
-    setState(96);
+    setState(102);
     _errHandler->sync(this);
     switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 12, _ctx)) {
     case 1: {
       enterOuterAlt(_localctx, 1);
-      setState(92);
-      varname();
+      setState(98);
+      varName();
       break;
     }
 
     case 2: {
       enterOuterAlt(_localctx, 2);
-      setState(93);
-      varname();
-      setState(94);
+      setState(99);
+      varName();
+      setState(100);
       match(DARICParser::PERCENT);
       break;
     }
@@ -596,36 +596,36 @@ DARICParser::Num_varContext* DARICParser::num_var() {
   return _localctx;
 }
 
-//----------------- Str_varContext ------------------------------------------------------------------
+//----------------- StrVarContext ------------------------------------------------------------------
 
-DARICParser::Str_varContext::Str_varContext(ParserRuleContext *parent, size_t invokingState)
+DARICParser::StrVarContext::StrVarContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-DARICParser::VarnameContext* DARICParser::Str_varContext::varname() {
-  return getRuleContext<DARICParser::VarnameContext>(0);
+DARICParser::VarNameContext* DARICParser::StrVarContext::varName() {
+  return getRuleContext<DARICParser::VarNameContext>(0);
 }
 
-tree::TerminalNode* DARICParser::Str_varContext::DOLLAR() {
+tree::TerminalNode* DARICParser::StrVarContext::DOLLAR() {
   return getToken(DARICParser::DOLLAR, 0);
 }
 
 
-size_t DARICParser::Str_varContext::getRuleIndex() const {
-  return DARICParser::RuleStr_var;
+size_t DARICParser::StrVarContext::getRuleIndex() const {
+  return DARICParser::RuleStrVar;
 }
 
 
-antlrcpp::Any DARICParser::Str_varContext::accept(tree::ParseTreeVisitor *visitor) {
+antlrcpp::Any DARICParser::StrVarContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
-    return parserVisitor->visitStr_var(this);
+    return parserVisitor->visitStrVar(this);
   else
     return visitor->visitChildren(this);
 }
 
-DARICParser::Str_varContext* DARICParser::str_var() {
-  Str_varContext *_localctx = _tracker.createInstance<Str_varContext>(_ctx, getState());
-  enterRule(_localctx, 12, DARICParser::RuleStr_var);
+DARICParser::StrVarContext* DARICParser::strVar() {
+  StrVarContext *_localctx = _tracker.createInstance<StrVarContext>(_ctx, getState());
+  enterRule(_localctx, 12, DARICParser::RuleStrVar);
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -636,9 +636,9 @@ DARICParser::Str_varContext* DARICParser::str_var() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(98);
-    varname();
-    setState(99);
+    setState(104);
+    varName();
+    setState(105);
     match(DARICParser::DOLLAR);
    
   }
@@ -651,52 +651,52 @@ DARICParser::Str_varContext* DARICParser::str_var() {
   return _localctx;
 }
 
-//----------------- VarnameContext ------------------------------------------------------------------
+//----------------- VarNameContext ------------------------------------------------------------------
 
-DARICParser::VarnameContext::VarnameContext(ParserRuleContext *parent, size_t invokingState)
+DARICParser::VarNameContext::VarNameContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-std::vector<tree::TerminalNode *> DARICParser::VarnameContext::LETTERS() {
+std::vector<tree::TerminalNode *> DARICParser::VarNameContext::LETTERS() {
   return getTokens(DARICParser::LETTERS);
 }
 
-tree::TerminalNode* DARICParser::VarnameContext::LETTERS(size_t i) {
+tree::TerminalNode* DARICParser::VarNameContext::LETTERS(size_t i) {
   return getToken(DARICParser::LETTERS, i);
 }
 
-std::vector<tree::TerminalNode *> DARICParser::VarnameContext::NUMBER() {
+std::vector<tree::TerminalNode *> DARICParser::VarNameContext::NUMBER() {
   return getTokens(DARICParser::NUMBER);
 }
 
-tree::TerminalNode* DARICParser::VarnameContext::NUMBER(size_t i) {
+tree::TerminalNode* DARICParser::VarNameContext::NUMBER(size_t i) {
   return getToken(DARICParser::NUMBER, i);
 }
 
-std::vector<tree::TerminalNode *> DARICParser::VarnameContext::UNDERSCORE() {
+std::vector<tree::TerminalNode *> DARICParser::VarNameContext::UNDERSCORE() {
   return getTokens(DARICParser::UNDERSCORE);
 }
 
-tree::TerminalNode* DARICParser::VarnameContext::UNDERSCORE(size_t i) {
+tree::TerminalNode* DARICParser::VarNameContext::UNDERSCORE(size_t i) {
   return getToken(DARICParser::UNDERSCORE, i);
 }
 
 
-size_t DARICParser::VarnameContext::getRuleIndex() const {
-  return DARICParser::RuleVarname;
+size_t DARICParser::VarNameContext::getRuleIndex() const {
+  return DARICParser::RuleVarName;
 }
 
 
-antlrcpp::Any DARICParser::VarnameContext::accept(tree::ParseTreeVisitor *visitor) {
+antlrcpp::Any DARICParser::VarNameContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
-    return parserVisitor->visitVarname(this);
+    return parserVisitor->visitVarName(this);
   else
     return visitor->visitChildren(this);
 }
 
-DARICParser::VarnameContext* DARICParser::varname() {
-  VarnameContext *_localctx = _tracker.createInstance<VarnameContext>(_ctx, getState());
-  enterRule(_localctx, 14, DARICParser::RuleVarname);
+DARICParser::VarNameContext* DARICParser::varName() {
+  VarNameContext *_localctx = _tracker.createInstance<VarNameContext>(_ctx, getState());
+  enterRule(_localctx, 14, DARICParser::RuleVarName);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -709,14 +709,14 @@ DARICParser::VarnameContext* DARICParser::varname() {
   try {
     size_t alt;
     enterOuterAlt(_localctx, 1);
-    setState(101);
+    setState(107);
     match(DARICParser::LETTERS);
-    setState(105);
+    setState(111);
     _errHandler->sync(this);
     alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 13, _ctx);
     while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
       if (alt == 1) {
-        setState(102);
+        setState(108);
         _la = _input->LA(1);
         if (!((((_la & ~ 0x3fULL) == 0) &&
           ((1ULL << _la) & ((1ULL << DARICParser::UNDERSCORE)
@@ -729,7 +729,7 @@ DARICParser::VarnameContext* DARICParser::varname() {
           consume();
         } 
       }
-      setState(107);
+      setState(113);
       _errHandler->sync(this);
       alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 13, _ctx);
     }
@@ -744,56 +744,56 @@ DARICParser::VarnameContext* DARICParser::varname() {
   return _localctx;
 }
 
-//----------------- VardeclContext ------------------------------------------------------------------
+//----------------- VarDeclContext ------------------------------------------------------------------
 
-DARICParser::VardeclContext::VardeclContext(ParserRuleContext *parent, size_t invokingState)
+DARICParser::VarDeclContext::VarDeclContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-DARICParser::VarContext* DARICParser::VardeclContext::var() {
+DARICParser::VarContext* DARICParser::VarDeclContext::var() {
   return getRuleContext<DARICParser::VarContext>(0);
 }
 
-std::vector<tree::TerminalNode *> DARICParser::VardeclContext::LPAREN() {
+std::vector<tree::TerminalNode *> DARICParser::VarDeclContext::LPAREN() {
   return getTokens(DARICParser::LPAREN);
 }
 
-tree::TerminalNode* DARICParser::VardeclContext::LPAREN(size_t i) {
+tree::TerminalNode* DARICParser::VarDeclContext::LPAREN(size_t i) {
   return getToken(DARICParser::LPAREN, i);
 }
 
-std::vector<DARICParser::ExprlistContext *> DARICParser::VardeclContext::exprlist() {
-  return getRuleContexts<DARICParser::ExprlistContext>();
+std::vector<DARICParser::ExprListContext *> DARICParser::VarDeclContext::exprList() {
+  return getRuleContexts<DARICParser::ExprListContext>();
 }
 
-DARICParser::ExprlistContext* DARICParser::VardeclContext::exprlist(size_t i) {
-  return getRuleContext<DARICParser::ExprlistContext>(i);
+DARICParser::ExprListContext* DARICParser::VarDeclContext::exprList(size_t i) {
+  return getRuleContext<DARICParser::ExprListContext>(i);
 }
 
-std::vector<tree::TerminalNode *> DARICParser::VardeclContext::RPAREN() {
+std::vector<tree::TerminalNode *> DARICParser::VarDeclContext::RPAREN() {
   return getTokens(DARICParser::RPAREN);
 }
 
-tree::TerminalNode* DARICParser::VardeclContext::RPAREN(size_t i) {
+tree::TerminalNode* DARICParser::VarDeclContext::RPAREN(size_t i) {
   return getToken(DARICParser::RPAREN, i);
 }
 
 
-size_t DARICParser::VardeclContext::getRuleIndex() const {
-  return DARICParser::RuleVardecl;
+size_t DARICParser::VarDeclContext::getRuleIndex() const {
+  return DARICParser::RuleVarDecl;
 }
 
 
-antlrcpp::Any DARICParser::VardeclContext::accept(tree::ParseTreeVisitor *visitor) {
+antlrcpp::Any DARICParser::VarDeclContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
-    return parserVisitor->visitVardecl(this);
+    return parserVisitor->visitVarDecl(this);
   else
     return visitor->visitChildren(this);
 }
 
-DARICParser::VardeclContext* DARICParser::vardecl() {
-  VardeclContext *_localctx = _tracker.createInstance<VardeclContext>(_ctx, getState());
-  enterRule(_localctx, 16, DARICParser::RuleVardecl);
+DARICParser::VarDeclContext* DARICParser::varDecl() {
+  VarDeclContext *_localctx = _tracker.createInstance<VarDeclContext>(_ctx, getState());
+  enterRule(_localctx, 16, DARICParser::RuleVarDecl);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -805,154 +805,19 @@ DARICParser::VardeclContext* DARICParser::vardecl() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(108);
+    setState(114);
     var();
-    setState(115);
+    setState(121);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while (_la == DARICParser::LPAREN) {
-      setState(109);
+      setState(115);
       match(DARICParser::LPAREN);
-      setState(110);
-      exprlist();
-      setState(111);
-      match(DARICParser::RPAREN);
+      setState(116);
+      exprList();
       setState(117);
-      _errHandler->sync(this);
-      _la = _input->LA(1);
-    }
-   
-  }
-  catch (RecognitionException &e) {
-    _errHandler->reportError(this, e);
-    _localctx->exception = std::current_exception();
-    _errHandler->recover(this, _localctx->exception);
-  }
-
-  return _localctx;
-}
-
-//----------------- VariableassignmentContext ------------------------------------------------------------------
-
-DARICParser::VariableassignmentContext::VariableassignmentContext(ParserRuleContext *parent, size_t invokingState)
-  : ParserRuleContext(parent, invokingState) {
-}
-
-DARICParser::VardeclContext* DARICParser::VariableassignmentContext::vardecl() {
-  return getRuleContext<DARICParser::VardeclContext>(0);
-}
-
-tree::TerminalNode* DARICParser::VariableassignmentContext::EQ() {
-  return getToken(DARICParser::EQ, 0);
-}
-
-DARICParser::ExprlistContext* DARICParser::VariableassignmentContext::exprlist() {
-  return getRuleContext<DARICParser::ExprlistContext>(0);
-}
-
-
-size_t DARICParser::VariableassignmentContext::getRuleIndex() const {
-  return DARICParser::RuleVariableassignment;
-}
-
-
-antlrcpp::Any DARICParser::VariableassignmentContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
-    return parserVisitor->visitVariableassignment(this);
-  else
-    return visitor->visitChildren(this);
-}
-
-DARICParser::VariableassignmentContext* DARICParser::variableassignment() {
-  VariableassignmentContext *_localctx = _tracker.createInstance<VariableassignmentContext>(_ctx, getState());
-  enterRule(_localctx, 18, DARICParser::RuleVariableassignment);
-
-#if __cplusplus > 201703L
-  auto onExit = finally([=, this] {
-#else
-  auto onExit = finally([=] {
-#endif
-    exitRule();
-  });
-  try {
-    enterOuterAlt(_localctx, 1);
-    setState(118);
-    vardecl();
-    setState(119);
-    match(DARICParser::EQ);
-    setState(120);
-    exprlist();
-   
-  }
-  catch (RecognitionException &e) {
-    _errHandler->reportError(this, e);
-    _localctx->exception = std::current_exception();
-    _errHandler->recover(this, _localctx->exception);
-  }
-
-  return _localctx;
-}
-
-//----------------- VarlistContext ------------------------------------------------------------------
-
-DARICParser::VarlistContext::VarlistContext(ParserRuleContext *parent, size_t invokingState)
-  : ParserRuleContext(parent, invokingState) {
-}
-
-std::vector<DARICParser::VardeclContext *> DARICParser::VarlistContext::vardecl() {
-  return getRuleContexts<DARICParser::VardeclContext>();
-}
-
-DARICParser::VardeclContext* DARICParser::VarlistContext::vardecl(size_t i) {
-  return getRuleContext<DARICParser::VardeclContext>(i);
-}
-
-std::vector<tree::TerminalNode *> DARICParser::VarlistContext::COMMA() {
-  return getTokens(DARICParser::COMMA);
-}
-
-tree::TerminalNode* DARICParser::VarlistContext::COMMA(size_t i) {
-  return getToken(DARICParser::COMMA, i);
-}
-
-
-size_t DARICParser::VarlistContext::getRuleIndex() const {
-  return DARICParser::RuleVarlist;
-}
-
-
-antlrcpp::Any DARICParser::VarlistContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
-    return parserVisitor->visitVarlist(this);
-  else
-    return visitor->visitChildren(this);
-}
-
-DARICParser::VarlistContext* DARICParser::varlist() {
-  VarlistContext *_localctx = _tracker.createInstance<VarlistContext>(_ctx, getState());
-  enterRule(_localctx, 20, DARICParser::RuleVarlist);
-  size_t _la = 0;
-
-#if __cplusplus > 201703L
-  auto onExit = finally([=, this] {
-#else
-  auto onExit = finally([=] {
-#endif
-    exitRule();
-  });
-  try {
-    enterOuterAlt(_localctx, 1);
-    setState(122);
-    vardecl();
-    setState(127);
-    _errHandler->sync(this);
-    _la = _input->LA(1);
-    while (_la == DARICParser::COMMA) {
+      match(DARICParser::RPAREN);
       setState(123);
-      match(DARICParser::COMMA);
-      setState(124);
-      vardecl();
-      setState(129);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
@@ -967,44 +832,60 @@ DARICParser::VarlistContext* DARICParser::varlist() {
   return _localctx;
 }
 
-//----------------- ExprlistContext ------------------------------------------------------------------
+//----------------- VarAssignContext ------------------------------------------------------------------
 
-DARICParser::ExprlistContext::ExprlistContext(ParserRuleContext *parent, size_t invokingState)
+DARICParser::VarAssignContext::VarAssignContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-std::vector<DARICParser::ExprContext *> DARICParser::ExprlistContext::expr() {
+std::vector<DARICParser::VarDeclContext *> DARICParser::VarAssignContext::varDecl() {
+  return getRuleContexts<DARICParser::VarDeclContext>();
+}
+
+DARICParser::VarDeclContext* DARICParser::VarAssignContext::varDecl(size_t i) {
+  return getRuleContext<DARICParser::VarDeclContext>(i);
+}
+
+std::vector<tree::TerminalNode *> DARICParser::VarAssignContext::EQ() {
+  return getTokens(DARICParser::EQ);
+}
+
+tree::TerminalNode* DARICParser::VarAssignContext::EQ(size_t i) {
+  return getToken(DARICParser::EQ, i);
+}
+
+std::vector<DARICParser::ExprContext *> DARICParser::VarAssignContext::expr() {
   return getRuleContexts<DARICParser::ExprContext>();
 }
 
-DARICParser::ExprContext* DARICParser::ExprlistContext::expr(size_t i) {
+DARICParser::ExprContext* DARICParser::VarAssignContext::expr(size_t i) {
   return getRuleContext<DARICParser::ExprContext>(i);
 }
 
-std::vector<tree::TerminalNode *> DARICParser::ExprlistContext::COMMA() {
+std::vector<tree::TerminalNode *> DARICParser::VarAssignContext::COMMA() {
   return getTokens(DARICParser::COMMA);
 }
 
-tree::TerminalNode* DARICParser::ExprlistContext::COMMA(size_t i) {
+tree::TerminalNode* DARICParser::VarAssignContext::COMMA(size_t i) {
   return getToken(DARICParser::COMMA, i);
 }
 
 
-size_t DARICParser::ExprlistContext::getRuleIndex() const {
-  return DARICParser::RuleExprlist;
+size_t DARICParser::VarAssignContext::getRuleIndex() const {
+  return DARICParser::RuleVarAssign;
 }
 
 
-antlrcpp::Any DARICParser::ExprlistContext::accept(tree::ParseTreeVisitor *visitor) {
+antlrcpp::Any DARICParser::VarAssignContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
-    return parserVisitor->visitExprlist(this);
+    return parserVisitor->visitVarAssign(this);
   else
     return visitor->visitChildren(this);
 }
 
-DARICParser::ExprlistContext* DARICParser::exprlist() {
-  ExprlistContext *_localctx = _tracker.createInstance<ExprlistContext>(_ctx, getState());
-  enterRule(_localctx, 22, DARICParser::RuleExprlist);
+DARICParser::VarAssignContext* DARICParser::varAssign() {
+  VarAssignContext *_localctx = _tracker.createInstance<VarAssignContext>(_ctx, getState());
+  enterRule(_localctx, 18, DARICParser::RuleVarAssign);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -1016,17 +897,25 @@ DARICParser::ExprlistContext* DARICParser::exprlist() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(130);
+    setState(124);
+    varDecl();
+    setState(125);
+    match(DARICParser::EQ);
+    setState(126);
     expr();
-    setState(135);
+    setState(134);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while (_la == DARICParser::COMMA) {
-      setState(131);
+      setState(127);
       match(DARICParser::COMMA);
-      setState(132);
+      setState(128);
+      varDecl();
+      setState(129);
+      match(DARICParser::EQ);
+      setState(130);
       expr();
-      setState(137);
+      setState(136);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
@@ -1041,52 +930,200 @@ DARICParser::ExprlistContext* DARICParser::exprlist() {
   return _localctx;
 }
 
-//----------------- PrintlistContext ------------------------------------------------------------------
+//----------------- VarListContext ------------------------------------------------------------------
 
-DARICParser::PrintlistContext::PrintlistContext(ParserRuleContext *parent, size_t invokingState)
+DARICParser::VarListContext::VarListContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-std::vector<DARICParser::ExprContext *> DARICParser::PrintlistContext::expr() {
-  return getRuleContexts<DARICParser::ExprContext>();
+std::vector<DARICParser::VarDeclContext *> DARICParser::VarListContext::varDecl() {
+  return getRuleContexts<DARICParser::VarDeclContext>();
 }
 
-DARICParser::ExprContext* DARICParser::PrintlistContext::expr(size_t i) {
-  return getRuleContext<DARICParser::ExprContext>(i);
+DARICParser::VarDeclContext* DARICParser::VarListContext::varDecl(size_t i) {
+  return getRuleContext<DARICParser::VarDeclContext>(i);
 }
 
-std::vector<tree::TerminalNode *> DARICParser::PrintlistContext::COMMA() {
+std::vector<tree::TerminalNode *> DARICParser::VarListContext::COMMA() {
   return getTokens(DARICParser::COMMA);
 }
 
-tree::TerminalNode* DARICParser::PrintlistContext::COMMA(size_t i) {
+tree::TerminalNode* DARICParser::VarListContext::COMMA(size_t i) {
   return getToken(DARICParser::COMMA, i);
 }
 
-std::vector<tree::TerminalNode *> DARICParser::PrintlistContext::SEMICOLON() {
+
+size_t DARICParser::VarListContext::getRuleIndex() const {
+  return DARICParser::RuleVarList;
+}
+
+
+antlrcpp::Any DARICParser::VarListContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
+    return parserVisitor->visitVarList(this);
+  else
+    return visitor->visitChildren(this);
+}
+
+DARICParser::VarListContext* DARICParser::varList() {
+  VarListContext *_localctx = _tracker.createInstance<VarListContext>(_ctx, getState());
+  enterRule(_localctx, 20, DARICParser::RuleVarList);
+  size_t _la = 0;
+
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
+  auto onExit = finally([=] {
+#endif
+    exitRule();
+  });
+  try {
+    enterOuterAlt(_localctx, 1);
+    setState(137);
+    varDecl();
+    setState(142);
+    _errHandler->sync(this);
+    _la = _input->LA(1);
+    while (_la == DARICParser::COMMA) {
+      setState(138);
+      match(DARICParser::COMMA);
+      setState(139);
+      varDecl();
+      setState(144);
+      _errHandler->sync(this);
+      _la = _input->LA(1);
+    }
+   
+  }
+  catch (RecognitionException &e) {
+    _errHandler->reportError(this, e);
+    _localctx->exception = std::current_exception();
+    _errHandler->recover(this, _localctx->exception);
+  }
+
+  return _localctx;
+}
+
+//----------------- ExprListContext ------------------------------------------------------------------
+
+DARICParser::ExprListContext::ExprListContext(ParserRuleContext *parent, size_t invokingState)
+  : ParserRuleContext(parent, invokingState) {
+}
+
+std::vector<DARICParser::ExprContext *> DARICParser::ExprListContext::expr() {
+  return getRuleContexts<DARICParser::ExprContext>();
+}
+
+DARICParser::ExprContext* DARICParser::ExprListContext::expr(size_t i) {
+  return getRuleContext<DARICParser::ExprContext>(i);
+}
+
+std::vector<tree::TerminalNode *> DARICParser::ExprListContext::COMMA() {
+  return getTokens(DARICParser::COMMA);
+}
+
+tree::TerminalNode* DARICParser::ExprListContext::COMMA(size_t i) {
+  return getToken(DARICParser::COMMA, i);
+}
+
+
+size_t DARICParser::ExprListContext::getRuleIndex() const {
+  return DARICParser::RuleExprList;
+}
+
+
+antlrcpp::Any DARICParser::ExprListContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
+    return parserVisitor->visitExprList(this);
+  else
+    return visitor->visitChildren(this);
+}
+
+DARICParser::ExprListContext* DARICParser::exprList() {
+  ExprListContext *_localctx = _tracker.createInstance<ExprListContext>(_ctx, getState());
+  enterRule(_localctx, 22, DARICParser::RuleExprList);
+  size_t _la = 0;
+
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
+  auto onExit = finally([=] {
+#endif
+    exitRule();
+  });
+  try {
+    enterOuterAlt(_localctx, 1);
+    setState(145);
+    expr();
+    setState(150);
+    _errHandler->sync(this);
+    _la = _input->LA(1);
+    while (_la == DARICParser::COMMA) {
+      setState(146);
+      match(DARICParser::COMMA);
+      setState(147);
+      expr();
+      setState(152);
+      _errHandler->sync(this);
+      _la = _input->LA(1);
+    }
+   
+  }
+  catch (RecognitionException &e) {
+    _errHandler->reportError(this, e);
+    _localctx->exception = std::current_exception();
+    _errHandler->recover(this, _localctx->exception);
+  }
+
+  return _localctx;
+}
+
+//----------------- PrintListContext ------------------------------------------------------------------
+
+DARICParser::PrintListContext::PrintListContext(ParserRuleContext *parent, size_t invokingState)
+  : ParserRuleContext(parent, invokingState) {
+}
+
+std::vector<DARICParser::ExprContext *> DARICParser::PrintListContext::expr() {
+  return getRuleContexts<DARICParser::ExprContext>();
+}
+
+DARICParser::ExprContext* DARICParser::PrintListContext::expr(size_t i) {
+  return getRuleContext<DARICParser::ExprContext>(i);
+}
+
+std::vector<tree::TerminalNode *> DARICParser::PrintListContext::COMMA() {
+  return getTokens(DARICParser::COMMA);
+}
+
+tree::TerminalNode* DARICParser::PrintListContext::COMMA(size_t i) {
+  return getToken(DARICParser::COMMA, i);
+}
+
+std::vector<tree::TerminalNode *> DARICParser::PrintListContext::SEMICOLON() {
   return getTokens(DARICParser::SEMICOLON);
 }
 
-tree::TerminalNode* DARICParser::PrintlistContext::SEMICOLON(size_t i) {
+tree::TerminalNode* DARICParser::PrintListContext::SEMICOLON(size_t i) {
   return getToken(DARICParser::SEMICOLON, i);
 }
 
 
-size_t DARICParser::PrintlistContext::getRuleIndex() const {
-  return DARICParser::RulePrintlist;
+size_t DARICParser::PrintListContext::getRuleIndex() const {
+  return DARICParser::RulePrintList;
 }
 
 
-antlrcpp::Any DARICParser::PrintlistContext::accept(tree::ParseTreeVisitor *visitor) {
+antlrcpp::Any DARICParser::PrintListContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
-    return parserVisitor->visitPrintlist(this);
+    return parserVisitor->visitPrintList(this);
   else
     return visitor->visitChildren(this);
 }
 
-DARICParser::PrintlistContext* DARICParser::printlist() {
-  PrintlistContext *_localctx = _tracker.createInstance<PrintlistContext>(_ctx, getState());
-  enterRule(_localctx, 24, DARICParser::RulePrintlist);
+DARICParser::PrintListContext* DARICParser::printList() {
+  PrintListContext *_localctx = _tracker.createInstance<PrintListContext>(_ctx, getState());
+  enterRule(_localctx, 24, DARICParser::RulePrintList);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -1098,15 +1135,15 @@ DARICParser::PrintlistContext* DARICParser::printlist() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(138);
+    setState(153);
     expr();
-    setState(145);
+    setState(160);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while (_la == DARICParser::COMMA
 
     || _la == DARICParser::SEMICOLON) {
-      setState(139);
+      setState(154);
       _la = _input->LA(1);
       if (!(_la == DARICParser::COMMA
 
@@ -1117,12 +1154,12 @@ DARICParser::PrintlistContext* DARICParser::printlist() {
         _errHandler->reportMatch(this);
         consume();
       }
-      setState(141);
+      setState(156);
       _errHandler->sync(this);
 
-      switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 17, _ctx)) {
+      switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 18, _ctx)) {
       case 1: {
-        setState(140);
+        setState(155);
         expr();
         break;
       }
@@ -1130,7 +1167,7 @@ DARICParser::PrintlistContext* DARICParser::printlist() {
       default:
         break;
       }
-      setState(147);
+      setState(162);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
@@ -1151,16 +1188,16 @@ DARICParser::ExprContext::ExprContext(ParserRuleContext *parent, size_t invoking
   : ParserRuleContext(parent, invokingState) {
 }
 
-DARICParser::Num_exprContext* DARICParser::ExprContext::num_expr() {
-  return getRuleContext<DARICParser::Num_exprContext>(0);
+DARICParser::NumExprContext* DARICParser::ExprContext::numExpr() {
+  return getRuleContext<DARICParser::NumExprContext>(0);
 }
 
-DARICParser::Num_varContext* DARICParser::ExprContext::num_var() {
-  return getRuleContext<DARICParser::Num_varContext>(0);
+DARICParser::NumVarContext* DARICParser::ExprContext::numVar() {
+  return getRuleContext<DARICParser::NumVarContext>(0);
 }
 
-DARICParser::Str_exprContext* DARICParser::ExprContext::str_expr() {
-  return getRuleContext<DARICParser::Str_exprContext>(0);
+DARICParser::StrExprContext* DARICParser::ExprContext::strExpr() {
+  return getRuleContext<DARICParser::StrExprContext>(0);
 }
 
 
@@ -1188,27 +1225,27 @@ DARICParser::ExprContext* DARICParser::expr() {
     exitRule();
   });
   try {
-    setState(151);
+    setState(166);
     _errHandler->sync(this);
-    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 19, _ctx)) {
+    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 20, _ctx)) {
     case 1: {
       enterOuterAlt(_localctx, 1);
-      setState(148);
-      num_expr(0);
+      setState(163);
+      numExpr(0);
       break;
     }
 
     case 2: {
       enterOuterAlt(_localctx, 2);
-      setState(149);
-      num_var();
+      setState(164);
+      numVar();
       break;
     }
 
     case 3: {
       enterOuterAlt(_localctx, 3);
-      setState(150);
-      str_expr();
+      setState(165);
+      strExpr();
       break;
     }
 
@@ -1232,20 +1269,12 @@ DARICParser::NumberContext::NumberContext(ParserRuleContext *parent, size_t invo
   : ParserRuleContext(parent, invokingState) {
 }
 
-tree::TerminalNode* DARICParser::NumberContext::NUMBER() {
-  return getToken(DARICParser::NUMBER, 0);
+DARICParser::NumberIntegerContext* DARICParser::NumberContext::numberInteger() {
+  return getRuleContext<DARICParser::NumberIntegerContext>(0);
 }
 
-tree::TerminalNode* DARICParser::NumberContext::FLOAT() {
-  return getToken(DARICParser::FLOAT, 0);
-}
-
-tree::TerminalNode* DARICParser::NumberContext::PLUS() {
-  return getToken(DARICParser::PLUS, 0);
-}
-
-tree::TerminalNode* DARICParser::NumberContext::MINUS() {
-  return getToken(DARICParser::MINUS, 0);
+DARICParser::NumberFloatContext* DARICParser::NumberContext::numberFloat() {
+  return getRuleContext<DARICParser::NumberFloatContext>(0);
 }
 
 
@@ -1264,7 +1293,6 @@ antlrcpp::Any DARICParser::NumberContext::accept(tree::ParseTreeVisitor *visitor
 DARICParser::NumberContext* DARICParser::number() {
   NumberContext *_localctx = _tracker.createInstance<NumberContext>(_ctx, getState());
   enterRule(_localctx, 28, DARICParser::RuleNumber);
-  size_t _la = 0;
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -1274,36 +1302,25 @@ DARICParser::NumberContext* DARICParser::number() {
     exitRule();
   });
   try {
-    enterOuterAlt(_localctx, 1);
-    setState(154);
+    setState(170);
     _errHandler->sync(this);
-
-    _la = _input->LA(1);
-    if (_la == DARICParser::PLUS
-
-    || _la == DARICParser::MINUS) {
-      setState(153);
-      _la = _input->LA(1);
-      if (!(_la == DARICParser::PLUS
-
-      || _la == DARICParser::MINUS)) {
-      _errHandler->recoverInline(this);
-      }
-      else {
-        _errHandler->reportMatch(this);
-        consume();
-      }
+    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 21, _ctx)) {
+    case 1: {
+      enterOuterAlt(_localctx, 1);
+      setState(168);
+      numberInteger();
+      break;
     }
-    setState(156);
-    _la = _input->LA(1);
-    if (!(_la == DARICParser::NUMBER
 
-    || _la == DARICParser::FLOAT)) {
-    _errHandler->recoverInline(this);
+    case 2: {
+      enterOuterAlt(_localctx, 2);
+      setState(169);
+      numberFloat();
+      break;
     }
-    else {
-      _errHandler->reportMatch(this);
-      consume();
+
+    default:
+      break;
     }
    
   }
@@ -1316,60 +1333,41 @@ DARICParser::NumberContext* DARICParser::number() {
   return _localctx;
 }
 
-//----------------- Str_funcContext ------------------------------------------------------------------
+//----------------- NumberIntegerContext ------------------------------------------------------------------
 
-DARICParser::Str_funcContext::Str_funcContext(ParserRuleContext *parent, size_t invokingState)
+DARICParser::NumberIntegerContext::NumberIntegerContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-tree::TerminalNode* DARICParser::Str_funcContext::MIDS() {
-  return getToken(DARICParser::MIDS, 0);
+tree::TerminalNode* DARICParser::NumberIntegerContext::NUMBER() {
+  return getToken(DARICParser::NUMBER, 0);
 }
 
-tree::TerminalNode* DARICParser::Str_funcContext::LPAREN() {
-  return getToken(DARICParser::LPAREN, 0);
+tree::TerminalNode* DARICParser::NumberIntegerContext::PLUS() {
+  return getToken(DARICParser::PLUS, 0);
 }
 
-DARICParser::Str_exprContext* DARICParser::Str_funcContext::str_expr() {
-  return getRuleContext<DARICParser::Str_exprContext>(0);
-}
-
-std::vector<tree::TerminalNode *> DARICParser::Str_funcContext::COMMA() {
-  return getTokens(DARICParser::COMMA);
-}
-
-tree::TerminalNode* DARICParser::Str_funcContext::COMMA(size_t i) {
-  return getToken(DARICParser::COMMA, i);
-}
-
-std::vector<DARICParser::Num_exprContext *> DARICParser::Str_funcContext::num_expr() {
-  return getRuleContexts<DARICParser::Num_exprContext>();
-}
-
-DARICParser::Num_exprContext* DARICParser::Str_funcContext::num_expr(size_t i) {
-  return getRuleContext<DARICParser::Num_exprContext>(i);
-}
-
-tree::TerminalNode* DARICParser::Str_funcContext::RPAREN() {
-  return getToken(DARICParser::RPAREN, 0);
+tree::TerminalNode* DARICParser::NumberIntegerContext::MINUS() {
+  return getToken(DARICParser::MINUS, 0);
 }
 
 
-size_t DARICParser::Str_funcContext::getRuleIndex() const {
-  return DARICParser::RuleStr_func;
+size_t DARICParser::NumberIntegerContext::getRuleIndex() const {
+  return DARICParser::RuleNumberInteger;
 }
 
 
-antlrcpp::Any DARICParser::Str_funcContext::accept(tree::ParseTreeVisitor *visitor) {
+antlrcpp::Any DARICParser::NumberIntegerContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
-    return parserVisitor->visitStr_func(this);
+    return parserVisitor->visitNumberInteger(this);
   else
     return visitor->visitChildren(this);
 }
 
-DARICParser::Str_funcContext* DARICParser::str_func() {
-  Str_funcContext *_localctx = _tracker.createInstance<Str_funcContext>(_ctx, getState());
-  enterRule(_localctx, 30, DARICParser::RuleStr_func);
+DARICParser::NumberIntegerContext* DARICParser::numberInteger() {
+  NumberIntegerContext *_localctx = _tracker.createInstance<NumberIntegerContext>(_ctx, getState());
+  enterRule(_localctx, 30, DARICParser::RuleNumberInteger);
+  size_t _la = 0;
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -1380,21 +1378,194 @@ DARICParser::Str_funcContext* DARICParser::str_func() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(158);
+    setState(173);
+    _errHandler->sync(this);
+
+    _la = _input->LA(1);
+    if (_la == DARICParser::PLUS
+
+    || _la == DARICParser::MINUS) {
+      setState(172);
+      _la = _input->LA(1);
+      if (!(_la == DARICParser::PLUS
+
+      || _la == DARICParser::MINUS)) {
+      _errHandler->recoverInline(this);
+      }
+      else {
+        _errHandler->reportMatch(this);
+        consume();
+      }
+    }
+    setState(175);
+    match(DARICParser::NUMBER);
+   
+  }
+  catch (RecognitionException &e) {
+    _errHandler->reportError(this, e);
+    _localctx->exception = std::current_exception();
+    _errHandler->recover(this, _localctx->exception);
+  }
+
+  return _localctx;
+}
+
+//----------------- NumberFloatContext ------------------------------------------------------------------
+
+DARICParser::NumberFloatContext::NumberFloatContext(ParserRuleContext *parent, size_t invokingState)
+  : ParserRuleContext(parent, invokingState) {
+}
+
+tree::TerminalNode* DARICParser::NumberFloatContext::FLOAT() {
+  return getToken(DARICParser::FLOAT, 0);
+}
+
+tree::TerminalNode* DARICParser::NumberFloatContext::PLUS() {
+  return getToken(DARICParser::PLUS, 0);
+}
+
+tree::TerminalNode* DARICParser::NumberFloatContext::MINUS() {
+  return getToken(DARICParser::MINUS, 0);
+}
+
+
+size_t DARICParser::NumberFloatContext::getRuleIndex() const {
+  return DARICParser::RuleNumberFloat;
+}
+
+
+antlrcpp::Any DARICParser::NumberFloatContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
+    return parserVisitor->visitNumberFloat(this);
+  else
+    return visitor->visitChildren(this);
+}
+
+DARICParser::NumberFloatContext* DARICParser::numberFloat() {
+  NumberFloatContext *_localctx = _tracker.createInstance<NumberFloatContext>(_ctx, getState());
+  enterRule(_localctx, 32, DARICParser::RuleNumberFloat);
+  size_t _la = 0;
+
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
+  auto onExit = finally([=] {
+#endif
+    exitRule();
+  });
+  try {
+    enterOuterAlt(_localctx, 1);
+    setState(178);
+    _errHandler->sync(this);
+
+    _la = _input->LA(1);
+    if (_la == DARICParser::PLUS
+
+    || _la == DARICParser::MINUS) {
+      setState(177);
+      _la = _input->LA(1);
+      if (!(_la == DARICParser::PLUS
+
+      || _la == DARICParser::MINUS)) {
+      _errHandler->recoverInline(this);
+      }
+      else {
+        _errHandler->reportMatch(this);
+        consume();
+      }
+    }
+    setState(180);
+    match(DARICParser::FLOAT);
+   
+  }
+  catch (RecognitionException &e) {
+    _errHandler->reportError(this, e);
+    _localctx->exception = std::current_exception();
+    _errHandler->recover(this, _localctx->exception);
+  }
+
+  return _localctx;
+}
+
+//----------------- StrFuncContext ------------------------------------------------------------------
+
+DARICParser::StrFuncContext::StrFuncContext(ParserRuleContext *parent, size_t invokingState)
+  : ParserRuleContext(parent, invokingState) {
+}
+
+tree::TerminalNode* DARICParser::StrFuncContext::MIDS() {
+  return getToken(DARICParser::MIDS, 0);
+}
+
+tree::TerminalNode* DARICParser::StrFuncContext::LPAREN() {
+  return getToken(DARICParser::LPAREN, 0);
+}
+
+DARICParser::StrExprContext* DARICParser::StrFuncContext::strExpr() {
+  return getRuleContext<DARICParser::StrExprContext>(0);
+}
+
+std::vector<tree::TerminalNode *> DARICParser::StrFuncContext::COMMA() {
+  return getTokens(DARICParser::COMMA);
+}
+
+tree::TerminalNode* DARICParser::StrFuncContext::COMMA(size_t i) {
+  return getToken(DARICParser::COMMA, i);
+}
+
+std::vector<DARICParser::NumExprContext *> DARICParser::StrFuncContext::numExpr() {
+  return getRuleContexts<DARICParser::NumExprContext>();
+}
+
+DARICParser::NumExprContext* DARICParser::StrFuncContext::numExpr(size_t i) {
+  return getRuleContext<DARICParser::NumExprContext>(i);
+}
+
+tree::TerminalNode* DARICParser::StrFuncContext::RPAREN() {
+  return getToken(DARICParser::RPAREN, 0);
+}
+
+
+size_t DARICParser::StrFuncContext::getRuleIndex() const {
+  return DARICParser::RuleStrFunc;
+}
+
+
+antlrcpp::Any DARICParser::StrFuncContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
+    return parserVisitor->visitStrFunc(this);
+  else
+    return visitor->visitChildren(this);
+}
+
+DARICParser::StrFuncContext* DARICParser::strFunc() {
+  StrFuncContext *_localctx = _tracker.createInstance<StrFuncContext>(_ctx, getState());
+  enterRule(_localctx, 34, DARICParser::RuleStrFunc);
+
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
+  auto onExit = finally([=] {
+#endif
+    exitRule();
+  });
+  try {
+    enterOuterAlt(_localctx, 1);
+    setState(182);
     match(DARICParser::MIDS);
-    setState(159);
+    setState(183);
     match(DARICParser::LPAREN);
-    setState(160);
-    str_expr();
-    setState(161);
+    setState(184);
+    strExpr();
+    setState(185);
     match(DARICParser::COMMA);
-    setState(162);
-    num_expr(0);
-    setState(163);
+    setState(186);
+    numExpr(0);
+    setState(187);
     match(DARICParser::COMMA);
-    setState(164);
-    num_expr(0);
-    setState(165);
+    setState(188);
+    numExpr(0);
+    setState(189);
     match(DARICParser::RPAREN);
    
   }
@@ -1407,40 +1578,32 @@ DARICParser::Str_funcContext* DARICParser::str_func() {
   return _localctx;
 }
 
-//----------------- Str_exprContext ------------------------------------------------------------------
+//----------------- StringContext ------------------------------------------------------------------
 
-DARICParser::Str_exprContext::Str_exprContext(ParserRuleContext *parent, size_t invokingState)
+DARICParser::StringContext::StringContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-tree::TerminalNode* DARICParser::Str_exprContext::STRINGLITERAL() {
+tree::TerminalNode* DARICParser::StringContext::STRINGLITERAL() {
   return getToken(DARICParser::STRINGLITERAL, 0);
 }
 
-DARICParser::Str_varContext* DARICParser::Str_exprContext::str_var() {
-  return getRuleContext<DARICParser::Str_varContext>(0);
-}
 
-DARICParser::Str_funcContext* DARICParser::Str_exprContext::str_func() {
-  return getRuleContext<DARICParser::Str_funcContext>(0);
+size_t DARICParser::StringContext::getRuleIndex() const {
+  return DARICParser::RuleString;
 }
 
 
-size_t DARICParser::Str_exprContext::getRuleIndex() const {
-  return DARICParser::RuleStr_expr;
-}
-
-
-antlrcpp::Any DARICParser::Str_exprContext::accept(tree::ParseTreeVisitor *visitor) {
+antlrcpp::Any DARICParser::StringContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
-    return parserVisitor->visitStr_expr(this);
+    return parserVisitor->visitString(this);
   else
     return visitor->visitChildren(this);
 }
 
-DARICParser::Str_exprContext* DARICParser::str_expr() {
-  Str_exprContext *_localctx = _tracker.createInstance<Str_exprContext>(_ctx, getState());
-  enterRule(_localctx, 32, DARICParser::RuleStr_expr);
+DARICParser::StringContext* DARICParser::string() {
+  StringContext *_localctx = _tracker.createInstance<StringContext>(_ctx, getState());
+  enterRule(_localctx, 36, DARICParser::RuleString);
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -1450,27 +1613,84 @@ DARICParser::Str_exprContext* DARICParser::str_expr() {
     exitRule();
   });
   try {
-    setState(170);
+    enterOuterAlt(_localctx, 1);
+    setState(191);
+    match(DARICParser::STRINGLITERAL);
+   
+  }
+  catch (RecognitionException &e) {
+    _errHandler->reportError(this, e);
+    _localctx->exception = std::current_exception();
+    _errHandler->recover(this, _localctx->exception);
+  }
+
+  return _localctx;
+}
+
+//----------------- StrExprContext ------------------------------------------------------------------
+
+DARICParser::StrExprContext::StrExprContext(ParserRuleContext *parent, size_t invokingState)
+  : ParserRuleContext(parent, invokingState) {
+}
+
+DARICParser::StringContext* DARICParser::StrExprContext::string() {
+  return getRuleContext<DARICParser::StringContext>(0);
+}
+
+DARICParser::StrVarContext* DARICParser::StrExprContext::strVar() {
+  return getRuleContext<DARICParser::StrVarContext>(0);
+}
+
+DARICParser::StrFuncContext* DARICParser::StrExprContext::strFunc() {
+  return getRuleContext<DARICParser::StrFuncContext>(0);
+}
+
+
+size_t DARICParser::StrExprContext::getRuleIndex() const {
+  return DARICParser::RuleStrExpr;
+}
+
+
+antlrcpp::Any DARICParser::StrExprContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
+    return parserVisitor->visitStrExpr(this);
+  else
+    return visitor->visitChildren(this);
+}
+
+DARICParser::StrExprContext* DARICParser::strExpr() {
+  StrExprContext *_localctx = _tracker.createInstance<StrExprContext>(_ctx, getState());
+  enterRule(_localctx, 38, DARICParser::RuleStrExpr);
+
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
+  auto onExit = finally([=] {
+#endif
+    exitRule();
+  });
+  try {
+    setState(196);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
       case DARICParser::STRINGLITERAL: {
         enterOuterAlt(_localctx, 1);
-        setState(167);
-        match(DARICParser::STRINGLITERAL);
+        setState(193);
+        string();
         break;
       }
 
       case DARICParser::LETTERS: {
         enterOuterAlt(_localctx, 2);
-        setState(168);
-        str_var();
+        setState(194);
+        strVar();
         break;
       }
 
       case DARICParser::MIDS: {
         enterOuterAlt(_localctx, 3);
-        setState(169);
-        str_func();
+        setState(195);
+        strFunc();
         break;
       }
 
@@ -1488,32 +1708,32 @@ DARICParser::Str_exprContext* DARICParser::str_expr() {
   return _localctx;
 }
 
-//----------------- Num_funcContext ------------------------------------------------------------------
+//----------------- NumFuncContext ------------------------------------------------------------------
 
-DARICParser::Num_funcContext::Num_funcContext(ParserRuleContext *parent, size_t invokingState)
+DARICParser::NumFuncContext::NumFuncContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-tree::TerminalNode* DARICParser::Num_funcContext::PI() {
+tree::TerminalNode* DARICParser::NumFuncContext::PI() {
   return getToken(DARICParser::PI, 0);
 }
 
 
-size_t DARICParser::Num_funcContext::getRuleIndex() const {
-  return DARICParser::RuleNum_func;
+size_t DARICParser::NumFuncContext::getRuleIndex() const {
+  return DARICParser::RuleNumFunc;
 }
 
 
-antlrcpp::Any DARICParser::Num_funcContext::accept(tree::ParseTreeVisitor *visitor) {
+antlrcpp::Any DARICParser::NumFuncContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
-    return parserVisitor->visitNum_func(this);
+    return parserVisitor->visitNumFunc(this);
   else
     return visitor->visitChildren(this);
 }
 
-DARICParser::Num_funcContext* DARICParser::num_func() {
-  Num_funcContext *_localctx = _tracker.createInstance<Num_funcContext>(_ctx, getState());
-  enterRule(_localctx, 34, DARICParser::RuleNum_func);
+DARICParser::NumFuncContext* DARICParser::numFunc() {
+  NumFuncContext *_localctx = _tracker.createInstance<NumFuncContext>(_ctx, getState());
+  enterRule(_localctx, 40, DARICParser::RuleNumFunc);
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -1524,7 +1744,7 @@ DARICParser::Num_funcContext* DARICParser::num_func() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(172);
+    setState(198);
     match(DARICParser::PI);
    
   }
@@ -1537,90 +1757,90 @@ DARICParser::Num_funcContext* DARICParser::num_func() {
   return _localctx;
 }
 
-//----------------- Num_exprContext ------------------------------------------------------------------
+//----------------- NumExprContext ------------------------------------------------------------------
 
-DARICParser::Num_exprContext::Num_exprContext(ParserRuleContext *parent, size_t invokingState)
+DARICParser::NumExprContext::NumExprContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-DARICParser::NumberContext* DARICParser::Num_exprContext::number() {
+DARICParser::NumberContext* DARICParser::NumExprContext::number() {
   return getRuleContext<DARICParser::NumberContext>(0);
 }
 
-DARICParser::Num_funcContext* DARICParser::Num_exprContext::num_func() {
-  return getRuleContext<DARICParser::Num_funcContext>(0);
+DARICParser::NumFuncContext* DARICParser::NumExprContext::numFunc() {
+  return getRuleContext<DARICParser::NumFuncContext>(0);
 }
 
-tree::TerminalNode* DARICParser::Num_exprContext::LPAREN() {
+tree::TerminalNode* DARICParser::NumExprContext::LPAREN() {
   return getToken(DARICParser::LPAREN, 0);
 }
 
-std::vector<DARICParser::Num_exprContext *> DARICParser::Num_exprContext::num_expr() {
-  return getRuleContexts<DARICParser::Num_exprContext>();
+std::vector<DARICParser::NumExprContext *> DARICParser::NumExprContext::numExpr() {
+  return getRuleContexts<DARICParser::NumExprContext>();
 }
 
-DARICParser::Num_exprContext* DARICParser::Num_exprContext::num_expr(size_t i) {
-  return getRuleContext<DARICParser::Num_exprContext>(i);
+DARICParser::NumExprContext* DARICParser::NumExprContext::numExpr(size_t i) {
+  return getRuleContext<DARICParser::NumExprContext>(i);
 }
 
-tree::TerminalNode* DARICParser::Num_exprContext::RPAREN() {
+tree::TerminalNode* DARICParser::NumExprContext::RPAREN() {
   return getToken(DARICParser::RPAREN, 0);
 }
 
-std::vector<DARICParser::Str_exprContext *> DARICParser::Num_exprContext::str_expr() {
-  return getRuleContexts<DARICParser::Str_exprContext>();
+std::vector<DARICParser::StrExprContext *> DARICParser::NumExprContext::strExpr() {
+  return getRuleContexts<DARICParser::StrExprContext>();
 }
 
-DARICParser::Str_exprContext* DARICParser::Num_exprContext::str_expr(size_t i) {
-  return getRuleContext<DARICParser::Str_exprContext>(i);
+DARICParser::StrExprContext* DARICParser::NumExprContext::strExpr(size_t i) {
+  return getRuleContext<DARICParser::StrExprContext>(i);
 }
 
-DARICParser::RelopContext* DARICParser::Num_exprContext::relop() {
+DARICParser::RelopContext* DARICParser::NumExprContext::relop() {
   return getRuleContext<DARICParser::RelopContext>(0);
 }
 
-tree::TerminalNode* DARICParser::Num_exprContext::PLUS() {
+tree::TerminalNode* DARICParser::NumExprContext::PLUS() {
   return getToken(DARICParser::PLUS, 0);
 }
 
-tree::TerminalNode* DARICParser::Num_exprContext::MINUS() {
+tree::TerminalNode* DARICParser::NumExprContext::MINUS() {
   return getToken(DARICParser::MINUS, 0);
 }
 
-tree::TerminalNode* DARICParser::Num_exprContext::MULTIPLY() {
+tree::TerminalNode* DARICParser::NumExprContext::MULTIPLY() {
   return getToken(DARICParser::MULTIPLY, 0);
 }
 
-tree::TerminalNode* DARICParser::Num_exprContext::DIVIDE() {
+tree::TerminalNode* DARICParser::NumExprContext::DIVIDE() {
   return getToken(DARICParser::DIVIDE, 0);
 }
 
 
-size_t DARICParser::Num_exprContext::getRuleIndex() const {
-  return DARICParser::RuleNum_expr;
+size_t DARICParser::NumExprContext::getRuleIndex() const {
+  return DARICParser::RuleNumExpr;
 }
 
 
-antlrcpp::Any DARICParser::Num_exprContext::accept(tree::ParseTreeVisitor *visitor) {
+antlrcpp::Any DARICParser::NumExprContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<DARICVisitor*>(visitor))
-    return parserVisitor->visitNum_expr(this);
+    return parserVisitor->visitNumExpr(this);
   else
     return visitor->visitChildren(this);
 }
 
 
-DARICParser::Num_exprContext* DARICParser::num_expr() {
-   return num_expr(0);
+DARICParser::NumExprContext* DARICParser::numExpr() {
+   return numExpr(0);
 }
 
-DARICParser::Num_exprContext* DARICParser::num_expr(int precedence) {
+DARICParser::NumExprContext* DARICParser::numExpr(int precedence) {
   ParserRuleContext *parentContext = _ctx;
   size_t parentState = getState();
-  DARICParser::Num_exprContext *_localctx = _tracker.createInstance<Num_exprContext>(_ctx, parentState);
-  DARICParser::Num_exprContext *previousContext = _localctx;
+  DARICParser::NumExprContext *_localctx = _tracker.createInstance<NumExprContext>(_ctx, parentState);
+  DARICParser::NumExprContext *previousContext = _localctx;
   (void)previousContext; // Silence compiler, in case the context is not used by generated code.
-  size_t startState = 36;
-  enterRecursionRule(_localctx, 36, DARICParser::RuleNum_expr, precedence);
+  size_t startState = 42;
+  enterRecursionRule(_localctx, 42, DARICParser::RuleNumExpr, precedence);
 
     
 
@@ -1634,30 +1854,30 @@ DARICParser::Num_exprContext* DARICParser::num_expr(int precedence) {
   try {
     size_t alt;
     enterOuterAlt(_localctx, 1);
-    setState(185);
+    setState(211);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
       case DARICParser::PLUS:
       case DARICParser::MINUS:
       case DARICParser::NUMBER:
       case DARICParser::FLOAT: {
-        setState(175);
+        setState(201);
         number();
         break;
       }
 
       case DARICParser::PI: {
-        setState(176);
-        num_func();
+        setState(202);
+        numFunc();
         break;
       }
 
       case DARICParser::LPAREN: {
-        setState(177);
+        setState(203);
         match(DARICParser::LPAREN);
-        setState(178);
-        num_expr(0);
-        setState(179);
+        setState(204);
+        numExpr(0);
+        setState(205);
         match(DARICParser::RPAREN);
         break;
       }
@@ -1665,12 +1885,12 @@ DARICParser::Num_exprContext* DARICParser::num_expr(int precedence) {
       case DARICParser::MIDS:
       case DARICParser::STRINGLITERAL:
       case DARICParser::LETTERS: {
-        setState(181);
-        str_expr();
-        setState(182);
+        setState(207);
+        strExpr();
+        setState(208);
         relop();
-        setState(183);
-        str_expr();
+        setState(209);
+        strExpr();
         break;
       }
 
@@ -1678,79 +1898,79 @@ DARICParser::Num_exprContext* DARICParser::num_expr(int precedence) {
       throw NoViableAltException(this);
     }
     _ctx->stop = _input->LT(-1);
-    setState(205);
+    setState(231);
     _errHandler->sync(this);
-    alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 24, _ctx);
+    alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 27, _ctx);
     while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
       if (alt == 1) {
         if (!_parseListeners.empty())
           triggerExitRuleEvent();
         previousContext = _localctx;
-        setState(203);
+        setState(229);
         _errHandler->sync(this);
-        switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 23, _ctx)) {
+        switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 26, _ctx)) {
         case 1: {
-          _localctx = _tracker.createInstance<Num_exprContext>(parentContext, parentState);
-          pushNewRecursionContext(_localctx, startState, RuleNum_expr);
-          setState(187);
+          _localctx = _tracker.createInstance<NumExprContext>(parentContext, parentState);
+          pushNewRecursionContext(_localctx, startState, RuleNumExpr);
+          setState(213);
 
           if (!(precpred(_ctx, 6))) throw FailedPredicateException(this, "precpred(_ctx, 6)");
-          setState(188);
+          setState(214);
           relop();
-          setState(189);
-          num_expr(7);
+          setState(215);
+          numExpr(7);
           break;
         }
 
         case 2: {
-          _localctx = _tracker.createInstance<Num_exprContext>(parentContext, parentState);
-          pushNewRecursionContext(_localctx, startState, RuleNum_expr);
-          setState(191);
+          _localctx = _tracker.createInstance<NumExprContext>(parentContext, parentState);
+          pushNewRecursionContext(_localctx, startState, RuleNumExpr);
+          setState(217);
 
           if (!(precpred(_ctx, 4))) throw FailedPredicateException(this, "precpred(_ctx, 4)");
-          setState(192);
+          setState(218);
           match(DARICParser::PLUS);
-          setState(193);
-          num_expr(5);
+          setState(219);
+          numExpr(5);
           break;
         }
 
         case 3: {
-          _localctx = _tracker.createInstance<Num_exprContext>(parentContext, parentState);
-          pushNewRecursionContext(_localctx, startState, RuleNum_expr);
-          setState(194);
+          _localctx = _tracker.createInstance<NumExprContext>(parentContext, parentState);
+          pushNewRecursionContext(_localctx, startState, RuleNumExpr);
+          setState(220);
 
           if (!(precpred(_ctx, 3))) throw FailedPredicateException(this, "precpred(_ctx, 3)");
-          setState(195);
+          setState(221);
           match(DARICParser::MINUS);
-          setState(196);
-          num_expr(4);
+          setState(222);
+          numExpr(4);
           break;
         }
 
         case 4: {
-          _localctx = _tracker.createInstance<Num_exprContext>(parentContext, parentState);
-          pushNewRecursionContext(_localctx, startState, RuleNum_expr);
-          setState(197);
+          _localctx = _tracker.createInstance<NumExprContext>(parentContext, parentState);
+          pushNewRecursionContext(_localctx, startState, RuleNumExpr);
+          setState(223);
 
           if (!(precpred(_ctx, 2))) throw FailedPredicateException(this, "precpred(_ctx, 2)");
-          setState(198);
+          setState(224);
           match(DARICParser::MULTIPLY);
-          setState(199);
-          num_expr(3);
+          setState(225);
+          numExpr(3);
           break;
         }
 
         case 5: {
-          _localctx = _tracker.createInstance<Num_exprContext>(parentContext, parentState);
-          pushNewRecursionContext(_localctx, startState, RuleNum_expr);
-          setState(200);
+          _localctx = _tracker.createInstance<NumExprContext>(parentContext, parentState);
+          pushNewRecursionContext(_localctx, startState, RuleNumExpr);
+          setState(226);
 
           if (!(precpred(_ctx, 1))) throw FailedPredicateException(this, "precpred(_ctx, 1)");
-          setState(201);
+          setState(227);
           match(DARICParser::DIVIDE);
-          setState(202);
-          num_expr(2);
+          setState(228);
+          numExpr(2);
           break;
         }
 
@@ -1758,9 +1978,9 @@ DARICParser::Num_exprContext* DARICParser::num_expr(int precedence) {
           break;
         } 
       }
-      setState(207);
+      setState(233);
       _errHandler->sync(this);
-      alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 24, _ctx);
+      alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 27, _ctx);
     }
   }
   catch (RecognitionException &e) {
@@ -1824,7 +2044,7 @@ antlrcpp::Any DARICParser::RelopContext::accept(tree::ParseTreeVisitor *visitor)
 
 DARICParser::RelopContext* DARICParser::relop() {
   RelopContext *_localctx = _tracker.createInstance<RelopContext>(_ctx, getState());
-  enterRule(_localctx, 38, DARICParser::RuleRelop);
+  enterRule(_localctx, 44, DARICParser::RuleRelop);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -1836,7 +2056,7 @@ DARICParser::RelopContext* DARICParser::relop() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(208);
+    setState(234);
     _la = _input->LA(1);
     if (!((((_la & ~ 0x3fULL) == 0) &&
       ((1ULL << _la) & ((1ULL << DARICParser::AND)
@@ -1866,7 +2086,7 @@ DARICParser::RelopContext* DARICParser::relop() {
 
 bool DARICParser::sempred(RuleContext *context, size_t ruleIndex, size_t predicateIndex) {
   switch (ruleIndex) {
-    case 18: return num_exprSempred(dynamic_cast<Num_exprContext *>(context), predicateIndex);
+    case 21: return numExprSempred(dynamic_cast<NumExprContext *>(context), predicateIndex);
 
   default:
     break;
@@ -1874,7 +2094,7 @@ bool DARICParser::sempred(RuleContext *context, size_t ruleIndex, size_t predica
   return true;
 }
 
-bool DARICParser::num_exprSempred(Num_exprContext *_localctx, size_t predicateIndex) {
+bool DARICParser::numExprSempred(NumExprContext *_localctx, size_t predicateIndex) {
   switch (predicateIndex) {
     case 0: return precpred(_ctx, 6);
     case 1: return precpred(_ctx, 4);
@@ -1897,9 +2117,10 @@ atn::ATN DARICParser::_atn;
 std::vector<uint16_t> DARICParser::_serializedATN;
 
 std::vector<std::string> DARICParser::_ruleNames = {
-  "prog", "line", "linenumber", "stmt", "var", "num_var", "str_var", "varname", 
-  "vardecl", "variableassignment", "varlist", "exprlist", "printlist", "expr", 
-  "number", "str_func", "str_expr", "num_func", "num_expr", "relop"
+  "prog", "line", "linenumber", "stmt", "var", "numVar", "strVar", "varName", 
+  "varDecl", "varAssign", "varList", "exprList", "printList", "expr", "number", 
+  "numberInteger", "numberFloat", "strFunc", "string", "strExpr", "numFunc", 
+  "numExpr", "relop"
 };
 
 std::vector<std::string> DARICParser::_literalNames = {
@@ -1935,150 +2156,166 @@ DARICParser::Initializer::Initializer() {
 
   _serializedATN = {
     0x3, 0x608b, 0xa72a, 0x8133, 0xb9ed, 0x417c, 0x3be7, 0x7786, 0x5964, 
-    0x3, 0x21, 0xd5, 0x4, 0x2, 0x9, 0x2, 0x4, 0x3, 0x9, 0x3, 0x4, 0x4, 0x9, 
+    0x3, 0x21, 0xef, 0x4, 0x2, 0x9, 0x2, 0x4, 0x3, 0x9, 0x3, 0x4, 0x4, 0x9, 
     0x4, 0x4, 0x5, 0x9, 0x5, 0x4, 0x6, 0x9, 0x6, 0x4, 0x7, 0x9, 0x7, 0x4, 
     0x8, 0x9, 0x8, 0x4, 0x9, 0x9, 0x9, 0x4, 0xa, 0x9, 0xa, 0x4, 0xb, 0x9, 
     0xb, 0x4, 0xc, 0x9, 0xc, 0x4, 0xd, 0x9, 0xd, 0x4, 0xe, 0x9, 0xe, 0x4, 
     0xf, 0x9, 0xf, 0x4, 0x10, 0x9, 0x10, 0x4, 0x11, 0x9, 0x11, 0x4, 0x12, 
     0x9, 0x12, 0x4, 0x13, 0x9, 0x13, 0x4, 0x14, 0x9, 0x14, 0x4, 0x15, 0x9, 
-    0x15, 0x3, 0x2, 0x6, 0x2, 0x2c, 0xa, 0x2, 0xd, 0x2, 0xe, 0x2, 0x2d, 
-    0x3, 0x2, 0x3, 0x2, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x5, 0x3, 0x35, 0xa, 
-    0x3, 0x7, 0x3, 0x37, 0xa, 0x3, 0xc, 0x3, 0xe, 0x3, 0x3a, 0xb, 0x3, 0x3, 
-    0x3, 0x5, 0x3, 0x3d, 0xa, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 
-    0x5, 0x3, 0x43, 0xa, 0x3, 0x7, 0x3, 0x45, 0xa, 0x3, 0xc, 0x3, 0xe, 0x3, 
-    0x48, 0xb, 0x3, 0x3, 0x3, 0x5, 0x3, 0x4b, 0xa, 0x3, 0x5, 0x3, 0x4d, 
-    0xa, 0x3, 0x3, 0x4, 0x3, 0x4, 0x3, 0x5, 0x5, 0x5, 0x52, 0xa, 0x5, 0x3, 
-    0x5, 0x3, 0x5, 0x3, 0x5, 0x5, 0x5, 0x57, 0xa, 0x5, 0x5, 0x5, 0x59, 0xa, 
-    0x5, 0x3, 0x6, 0x3, 0x6, 0x5, 0x6, 0x5d, 0xa, 0x6, 0x3, 0x7, 0x3, 0x7, 
-    0x3, 0x7, 0x3, 0x7, 0x5, 0x7, 0x63, 0xa, 0x7, 0x3, 0x8, 0x3, 0x8, 0x3, 
-    0x8, 0x3, 0x9, 0x3, 0x9, 0x7, 0x9, 0x6a, 0xa, 0x9, 0xc, 0x9, 0xe, 0x9, 
-    0x6d, 0xb, 0x9, 0x3, 0xa, 0x3, 0xa, 0x3, 0xa, 0x3, 0xa, 0x3, 0xa, 0x7, 
-    0xa, 0x74, 0xa, 0xa, 0xc, 0xa, 0xe, 0xa, 0x77, 0xb, 0xa, 0x3, 0xb, 0x3, 
-    0xb, 0x3, 0xb, 0x3, 0xb, 0x3, 0xc, 0x3, 0xc, 0x3, 0xc, 0x7, 0xc, 0x80, 
-    0xa, 0xc, 0xc, 0xc, 0xe, 0xc, 0x83, 0xb, 0xc, 0x3, 0xd, 0x3, 0xd, 0x3, 
-    0xd, 0x7, 0xd, 0x88, 0xa, 0xd, 0xc, 0xd, 0xe, 0xd, 0x8b, 0xb, 0xd, 0x3, 
-    0xe, 0x3, 0xe, 0x3, 0xe, 0x5, 0xe, 0x90, 0xa, 0xe, 0x7, 0xe, 0x92, 0xa, 
-    0xe, 0xc, 0xe, 0xe, 0xe, 0x95, 0xb, 0xe, 0x3, 0xf, 0x3, 0xf, 0x3, 0xf, 
-    0x5, 0xf, 0x9a, 0xa, 0xf, 0x3, 0x10, 0x5, 0x10, 0x9d, 0xa, 0x10, 0x3, 
-    0x10, 0x3, 0x10, 0x3, 0x11, 0x3, 0x11, 0x3, 0x11, 0x3, 0x11, 0x3, 0x11, 
-    0x3, 0x11, 0x3, 0x11, 0x3, 0x11, 0x3, 0x11, 0x3, 0x12, 0x3, 0x12, 0x3, 
-    0x12, 0x5, 0x12, 0xad, 0xa, 0x12, 0x3, 0x13, 0x3, 0x13, 0x3, 0x14, 0x3, 
-    0x14, 0x3, 0x14, 0x3, 0x14, 0x3, 0x14, 0x3, 0x14, 0x3, 0x14, 0x3, 0x14, 
-    0x3, 0x14, 0x3, 0x14, 0x3, 0x14, 0x5, 0x14, 0xbc, 0xa, 0x14, 0x3, 0x14, 
-    0x3, 0x14, 0x3, 0x14, 0x3, 0x14, 0x3, 0x14, 0x3, 0x14, 0x3, 0x14, 0x3, 
-    0x14, 0x3, 0x14, 0x3, 0x14, 0x3, 0x14, 0x3, 0x14, 0x3, 0x14, 0x3, 0x14, 
-    0x3, 0x14, 0x3, 0x14, 0x7, 0x14, 0xce, 0xa, 0x14, 0xc, 0x14, 0xe, 0x14, 
-    0xd1, 0xb, 0x14, 0x3, 0x15, 0x3, 0x15, 0x3, 0x15, 0x2, 0x3, 0x26, 0x16, 
-    0x2, 0x4, 0x6, 0x8, 0xa, 0xc, 0xe, 0x10, 0x12, 0x14, 0x16, 0x18, 0x1a, 
-    0x1c, 0x1e, 0x20, 0x22, 0x24, 0x26, 0x28, 0x2, 0x8, 0x4, 0x2, 0x9, 0x9, 
-    0x1c, 0x1c, 0x4, 0x2, 0x1b, 0x1b, 0x1e, 0x1f, 0x4, 0x2, 0x15, 0x15, 
-    0x1a, 0x1a, 0x3, 0x2, 0x10, 0x11, 0x3, 0x2, 0x1f, 0x20, 0x5, 0x2, 0x3, 
-    0x3, 0x6, 0x6, 0xa, 0xf, 0x2, 0xe0, 0x2, 0x2b, 0x3, 0x2, 0x2, 0x2, 0x4, 
-    0x4c, 0x3, 0x2, 0x2, 0x2, 0x6, 0x4e, 0x3, 0x2, 0x2, 0x2, 0x8, 0x58, 
-    0x3, 0x2, 0x2, 0x2, 0xa, 0x5c, 0x3, 0x2, 0x2, 0x2, 0xc, 0x62, 0x3, 0x2, 
-    0x2, 0x2, 0xe, 0x64, 0x3, 0x2, 0x2, 0x2, 0x10, 0x67, 0x3, 0x2, 0x2, 
-    0x2, 0x12, 0x6e, 0x3, 0x2, 0x2, 0x2, 0x14, 0x78, 0x3, 0x2, 0x2, 0x2, 
-    0x16, 0x7c, 0x3, 0x2, 0x2, 0x2, 0x18, 0x84, 0x3, 0x2, 0x2, 0x2, 0x1a, 
-    0x8c, 0x3, 0x2, 0x2, 0x2, 0x1c, 0x99, 0x3, 0x2, 0x2, 0x2, 0x1e, 0x9c, 
-    0x3, 0x2, 0x2, 0x2, 0x20, 0xa0, 0x3, 0x2, 0x2, 0x2, 0x22, 0xac, 0x3, 
-    0x2, 0x2, 0x2, 0x24, 0xae, 0x3, 0x2, 0x2, 0x2, 0x26, 0xbb, 0x3, 0x2, 
-    0x2, 0x2, 0x28, 0xd2, 0x3, 0x2, 0x2, 0x2, 0x2a, 0x2c, 0x5, 0x4, 0x3, 
-    0x2, 0x2b, 0x2a, 0x3, 0x2, 0x2, 0x2, 0x2c, 0x2d, 0x3, 0x2, 0x2, 0x2, 
-    0x2d, 0x2b, 0x3, 0x2, 0x2, 0x2, 0x2d, 0x2e, 0x3, 0x2, 0x2, 0x2, 0x2e, 
-    0x2f, 0x3, 0x2, 0x2, 0x2, 0x2f, 0x30, 0x7, 0x2, 0x2, 0x3, 0x30, 0x3, 
-    0x3, 0x2, 0x2, 0x2, 0x31, 0x38, 0x5, 0x8, 0x5, 0x2, 0x32, 0x34, 0x7, 
-    0x14, 0x2, 0x2, 0x33, 0x35, 0x5, 0x8, 0x5, 0x2, 0x34, 0x33, 0x3, 0x2, 
-    0x2, 0x2, 0x34, 0x35, 0x3, 0x2, 0x2, 0x2, 0x35, 0x37, 0x3, 0x2, 0x2, 
-    0x2, 0x36, 0x32, 0x3, 0x2, 0x2, 0x2, 0x37, 0x3a, 0x3, 0x2, 0x2, 0x2, 
-    0x38, 0x36, 0x3, 0x2, 0x2, 0x2, 0x38, 0x39, 0x3, 0x2, 0x2, 0x2, 0x39, 
-    0x3d, 0x3, 0x2, 0x2, 0x2, 0x3a, 0x38, 0x3, 0x2, 0x2, 0x2, 0x3b, 0x3d, 
-    0x9, 0x2, 0x2, 0x2, 0x3c, 0x31, 0x3, 0x2, 0x2, 0x2, 0x3c, 0x3b, 0x3, 
-    0x2, 0x2, 0x2, 0x3d, 0x4d, 0x3, 0x2, 0x2, 0x2, 0x3e, 0x4a, 0x5, 0x6, 
-    0x4, 0x2, 0x3f, 0x46, 0x5, 0x8, 0x5, 0x2, 0x40, 0x42, 0x7, 0x14, 0x2, 
-    0x2, 0x41, 0x43, 0x5, 0x8, 0x5, 0x2, 0x42, 0x41, 0x3, 0x2, 0x2, 0x2, 
-    0x42, 0x43, 0x3, 0x2, 0x2, 0x2, 0x43, 0x45, 0x3, 0x2, 0x2, 0x2, 0x44, 
-    0x40, 0x3, 0x2, 0x2, 0x2, 0x45, 0x48, 0x3, 0x2, 0x2, 0x2, 0x46, 0x44, 
-    0x3, 0x2, 0x2, 0x2, 0x46, 0x47, 0x3, 0x2, 0x2, 0x2, 0x47, 0x4b, 0x3, 
-    0x2, 0x2, 0x2, 0x48, 0x46, 0x3, 0x2, 0x2, 0x2, 0x49, 0x4b, 0x9, 0x2, 
-    0x2, 0x2, 0x4a, 0x3f, 0x3, 0x2, 0x2, 0x2, 0x4a, 0x49, 0x3, 0x2, 0x2, 
-    0x2, 0x4b, 0x4d, 0x3, 0x2, 0x2, 0x2, 0x4c, 0x3c, 0x3, 0x2, 0x2, 0x2, 
-    0x4c, 0x3e, 0x3, 0x2, 0x2, 0x2, 0x4d, 0x5, 0x3, 0x2, 0x2, 0x2, 0x4e, 
-    0x4f, 0x7, 0x1f, 0x2, 0x2, 0x4f, 0x7, 0x3, 0x2, 0x2, 0x2, 0x50, 0x52, 
-    0x7, 0x4, 0x2, 0x2, 0x51, 0x50, 0x3, 0x2, 0x2, 0x2, 0x51, 0x52, 0x3, 
-    0x2, 0x2, 0x2, 0x52, 0x53, 0x3, 0x2, 0x2, 0x2, 0x53, 0x59, 0x5, 0x14, 
-    0xb, 0x2, 0x54, 0x56, 0x7, 0x8, 0x2, 0x2, 0x55, 0x57, 0x5, 0x1a, 0xe, 
-    0x2, 0x56, 0x55, 0x3, 0x2, 0x2, 0x2, 0x56, 0x57, 0x3, 0x2, 0x2, 0x2, 
-    0x57, 0x59, 0x3, 0x2, 0x2, 0x2, 0x58, 0x51, 0x3, 0x2, 0x2, 0x2, 0x58, 
-    0x54, 0x3, 0x2, 0x2, 0x2, 0x59, 0x9, 0x3, 0x2, 0x2, 0x2, 0x5a, 0x5d, 
-    0x5, 0xc, 0x7, 0x2, 0x5b, 0x5d, 0x5, 0xe, 0x8, 0x2, 0x5c, 0x5a, 0x3, 
-    0x2, 0x2, 0x2, 0x5c, 0x5b, 0x3, 0x2, 0x2, 0x2, 0x5d, 0xb, 0x3, 0x2, 
-    0x2, 0x2, 0x5e, 0x63, 0x5, 0x10, 0x9, 0x2, 0x5f, 0x60, 0x5, 0x10, 0x9, 
-    0x2, 0x60, 0x61, 0x7, 0x18, 0x2, 0x2, 0x61, 0x63, 0x3, 0x2, 0x2, 0x2, 
-    0x62, 0x5e, 0x3, 0x2, 0x2, 0x2, 0x62, 0x5f, 0x3, 0x2, 0x2, 0x2, 0x63, 
-    0xd, 0x3, 0x2, 0x2, 0x2, 0x64, 0x65, 0x5, 0x10, 0x9, 0x2, 0x65, 0x66, 
-    0x7, 0x16, 0x2, 0x2, 0x66, 0xf, 0x3, 0x2, 0x2, 0x2, 0x67, 0x6b, 0x7, 
-    0x1e, 0x2, 0x2, 0x68, 0x6a, 0x9, 0x3, 0x2, 0x2, 0x69, 0x68, 0x3, 0x2, 
-    0x2, 0x2, 0x6a, 0x6d, 0x3, 0x2, 0x2, 0x2, 0x6b, 0x69, 0x3, 0x2, 0x2, 
-    0x2, 0x6b, 0x6c, 0x3, 0x2, 0x2, 0x2, 0x6c, 0x11, 0x3, 0x2, 0x2, 0x2, 
-    0x6d, 0x6b, 0x3, 0x2, 0x2, 0x2, 0x6e, 0x75, 0x5, 0xa, 0x6, 0x2, 0x6f, 
-    0x70, 0x7, 0x17, 0x2, 0x2, 0x70, 0x71, 0x5, 0x18, 0xd, 0x2, 0x71, 0x72, 
-    0x7, 0x19, 0x2, 0x2, 0x72, 0x74, 0x3, 0x2, 0x2, 0x2, 0x73, 0x6f, 0x3, 
-    0x2, 0x2, 0x2, 0x74, 0x77, 0x3, 0x2, 0x2, 0x2, 0x75, 0x73, 0x3, 0x2, 
-    0x2, 0x2, 0x75, 0x76, 0x3, 0x2, 0x2, 0x2, 0x76, 0x13, 0x3, 0x2, 0x2, 
-    0x2, 0x77, 0x75, 0x3, 0x2, 0x2, 0x2, 0x78, 0x79, 0x5, 0x12, 0xa, 0x2, 
-    0x79, 0x7a, 0x7, 0xa, 0x2, 0x2, 0x7a, 0x7b, 0x5, 0x18, 0xd, 0x2, 0x7b, 
-    0x15, 0x3, 0x2, 0x2, 0x2, 0x7c, 0x81, 0x5, 0x12, 0xa, 0x2, 0x7d, 0x7e, 
-    0x7, 0x15, 0x2, 0x2, 0x7e, 0x80, 0x5, 0x12, 0xa, 0x2, 0x7f, 0x7d, 0x3, 
-    0x2, 0x2, 0x2, 0x80, 0x83, 0x3, 0x2, 0x2, 0x2, 0x81, 0x7f, 0x3, 0x2, 
-    0x2, 0x2, 0x81, 0x82, 0x3, 0x2, 0x2, 0x2, 0x82, 0x17, 0x3, 0x2, 0x2, 
-    0x2, 0x83, 0x81, 0x3, 0x2, 0x2, 0x2, 0x84, 0x89, 0x5, 0x1c, 0xf, 0x2, 
-    0x85, 0x86, 0x7, 0x15, 0x2, 0x2, 0x86, 0x88, 0x5, 0x1c, 0xf, 0x2, 0x87, 
-    0x85, 0x3, 0x2, 0x2, 0x2, 0x88, 0x8b, 0x3, 0x2, 0x2, 0x2, 0x89, 0x87, 
-    0x3, 0x2, 0x2, 0x2, 0x89, 0x8a, 0x3, 0x2, 0x2, 0x2, 0x8a, 0x19, 0x3, 
-    0x2, 0x2, 0x2, 0x8b, 0x89, 0x3, 0x2, 0x2, 0x2, 0x8c, 0x93, 0x5, 0x1c, 
-    0xf, 0x2, 0x8d, 0x8f, 0x9, 0x4, 0x2, 0x2, 0x8e, 0x90, 0x5, 0x1c, 0xf, 
-    0x2, 0x8f, 0x8e, 0x3, 0x2, 0x2, 0x2, 0x8f, 0x90, 0x3, 0x2, 0x2, 0x2, 
-    0x90, 0x92, 0x3, 0x2, 0x2, 0x2, 0x91, 0x8d, 0x3, 0x2, 0x2, 0x2, 0x92, 
-    0x95, 0x3, 0x2, 0x2, 0x2, 0x93, 0x91, 0x3, 0x2, 0x2, 0x2, 0x93, 0x94, 
-    0x3, 0x2, 0x2, 0x2, 0x94, 0x1b, 0x3, 0x2, 0x2, 0x2, 0x95, 0x93, 0x3, 
-    0x2, 0x2, 0x2, 0x96, 0x9a, 0x5, 0x26, 0x14, 0x2, 0x97, 0x9a, 0x5, 0xc, 
-    0x7, 0x2, 0x98, 0x9a, 0x5, 0x22, 0x12, 0x2, 0x99, 0x96, 0x3, 0x2, 0x2, 
-    0x2, 0x99, 0x97, 0x3, 0x2, 0x2, 0x2, 0x99, 0x98, 0x3, 0x2, 0x2, 0x2, 
-    0x9a, 0x1d, 0x3, 0x2, 0x2, 0x2, 0x9b, 0x9d, 0x9, 0x5, 0x2, 0x2, 0x9c, 
-    0x9b, 0x3, 0x2, 0x2, 0x2, 0x9c, 0x9d, 0x3, 0x2, 0x2, 0x2, 0x9d, 0x9e, 
-    0x3, 0x2, 0x2, 0x2, 0x9e, 0x9f, 0x9, 0x6, 0x2, 0x2, 0x9f, 0x1f, 0x3, 
-    0x2, 0x2, 0x2, 0xa0, 0xa1, 0x7, 0x5, 0x2, 0x2, 0xa1, 0xa2, 0x7, 0x17, 
-    0x2, 0x2, 0xa2, 0xa3, 0x5, 0x22, 0x12, 0x2, 0xa3, 0xa4, 0x7, 0x15, 0x2, 
-    0x2, 0xa4, 0xa5, 0x5, 0x26, 0x14, 0x2, 0xa5, 0xa6, 0x7, 0x15, 0x2, 0x2, 
-    0xa6, 0xa7, 0x5, 0x26, 0x14, 0x2, 0xa7, 0xa8, 0x7, 0x19, 0x2, 0x2, 0xa8, 
-    0x21, 0x3, 0x2, 0x2, 0x2, 0xa9, 0xad, 0x7, 0x1d, 0x2, 0x2, 0xaa, 0xad, 
-    0x5, 0xe, 0x8, 0x2, 0xab, 0xad, 0x5, 0x20, 0x11, 0x2, 0xac, 0xa9, 0x3, 
-    0x2, 0x2, 0x2, 0xac, 0xaa, 0x3, 0x2, 0x2, 0x2, 0xac, 0xab, 0x3, 0x2, 
-    0x2, 0x2, 0xad, 0x23, 0x3, 0x2, 0x2, 0x2, 0xae, 0xaf, 0x7, 0x7, 0x2, 
-    0x2, 0xaf, 0x25, 0x3, 0x2, 0x2, 0x2, 0xb0, 0xb1, 0x8, 0x14, 0x1, 0x2, 
-    0xb1, 0xbc, 0x5, 0x1e, 0x10, 0x2, 0xb2, 0xbc, 0x5, 0x24, 0x13, 0x2, 
-    0xb3, 0xb4, 0x7, 0x17, 0x2, 0x2, 0xb4, 0xb5, 0x5, 0x26, 0x14, 0x2, 0xb5, 
-    0xb6, 0x7, 0x19, 0x2, 0x2, 0xb6, 0xbc, 0x3, 0x2, 0x2, 0x2, 0xb7, 0xb8, 
-    0x5, 0x22, 0x12, 0x2, 0xb8, 0xb9, 0x5, 0x28, 0x15, 0x2, 0xb9, 0xba, 
-    0x5, 0x22, 0x12, 0x2, 0xba, 0xbc, 0x3, 0x2, 0x2, 0x2, 0xbb, 0xb0, 0x3, 
-    0x2, 0x2, 0x2, 0xbb, 0xb2, 0x3, 0x2, 0x2, 0x2, 0xbb, 0xb3, 0x3, 0x2, 
-    0x2, 0x2, 0xbb, 0xb7, 0x3, 0x2, 0x2, 0x2, 0xbc, 0xcf, 0x3, 0x2, 0x2, 
-    0x2, 0xbd, 0xbe, 0xc, 0x8, 0x2, 0x2, 0xbe, 0xbf, 0x5, 0x28, 0x15, 0x2, 
-    0xbf, 0xc0, 0x5, 0x26, 0x14, 0x9, 0xc0, 0xce, 0x3, 0x2, 0x2, 0x2, 0xc1, 
-    0xc2, 0xc, 0x6, 0x2, 0x2, 0xc2, 0xc3, 0x7, 0x10, 0x2, 0x2, 0xc3, 0xce, 
-    0x5, 0x26, 0x14, 0x7, 0xc4, 0xc5, 0xc, 0x5, 0x2, 0x2, 0xc5, 0xc6, 0x7, 
-    0x11, 0x2, 0x2, 0xc6, 0xce, 0x5, 0x26, 0x14, 0x6, 0xc7, 0xc8, 0xc, 0x4, 
-    0x2, 0x2, 0xc8, 0xc9, 0x7, 0x12, 0x2, 0x2, 0xc9, 0xce, 0x5, 0x26, 0x14, 
-    0x5, 0xca, 0xcb, 0xc, 0x3, 0x2, 0x2, 0xcb, 0xcc, 0x7, 0x13, 0x2, 0x2, 
-    0xcc, 0xce, 0x5, 0x26, 0x14, 0x4, 0xcd, 0xbd, 0x3, 0x2, 0x2, 0x2, 0xcd, 
-    0xc1, 0x3, 0x2, 0x2, 0x2, 0xcd, 0xc4, 0x3, 0x2, 0x2, 0x2, 0xcd, 0xc7, 
-    0x3, 0x2, 0x2, 0x2, 0xcd, 0xca, 0x3, 0x2, 0x2, 0x2, 0xce, 0xd1, 0x3, 
-    0x2, 0x2, 0x2, 0xcf, 0xcd, 0x3, 0x2, 0x2, 0x2, 0xcf, 0xd0, 0x3, 0x2, 
-    0x2, 0x2, 0xd0, 0x27, 0x3, 0x2, 0x2, 0x2, 0xd1, 0xcf, 0x3, 0x2, 0x2, 
-    0x2, 0xd2, 0xd3, 0x9, 0x7, 0x2, 0x2, 0xd3, 0x29, 0x3, 0x2, 0x2, 0x2, 
-    0x1b, 0x2d, 0x34, 0x38, 0x3c, 0x42, 0x46, 0x4a, 0x4c, 0x51, 0x56, 0x58, 
-    0x5c, 0x62, 0x6b, 0x75, 0x81, 0x89, 0x8f, 0x93, 0x99, 0x9c, 0xac, 0xbb, 
-    0xcd, 0xcf, 
+    0x15, 0x4, 0x16, 0x9, 0x16, 0x4, 0x17, 0x9, 0x17, 0x4, 0x18, 0x9, 0x18, 
+    0x3, 0x2, 0x6, 0x2, 0x32, 0xa, 0x2, 0xd, 0x2, 0xe, 0x2, 0x33, 0x3, 0x2, 
+    0x3, 0x2, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x5, 0x3, 0x3b, 0xa, 0x3, 0x7, 
+    0x3, 0x3d, 0xa, 0x3, 0xc, 0x3, 0xe, 0x3, 0x40, 0xb, 0x3, 0x3, 0x3, 0x5, 
+    0x3, 0x43, 0xa, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x5, 0x3, 
+    0x49, 0xa, 0x3, 0x7, 0x3, 0x4b, 0xa, 0x3, 0xc, 0x3, 0xe, 0x3, 0x4e, 
+    0xb, 0x3, 0x3, 0x3, 0x5, 0x3, 0x51, 0xa, 0x3, 0x5, 0x3, 0x53, 0xa, 0x3, 
+    0x3, 0x4, 0x3, 0x4, 0x3, 0x5, 0x5, 0x5, 0x58, 0xa, 0x5, 0x3, 0x5, 0x3, 
+    0x5, 0x3, 0x5, 0x5, 0x5, 0x5d, 0xa, 0x5, 0x5, 0x5, 0x5f, 0xa, 0x5, 0x3, 
+    0x6, 0x3, 0x6, 0x5, 0x6, 0x63, 0xa, 0x6, 0x3, 0x7, 0x3, 0x7, 0x3, 0x7, 
+    0x3, 0x7, 0x5, 0x7, 0x69, 0xa, 0x7, 0x3, 0x8, 0x3, 0x8, 0x3, 0x8, 0x3, 
+    0x9, 0x3, 0x9, 0x7, 0x9, 0x70, 0xa, 0x9, 0xc, 0x9, 0xe, 0x9, 0x73, 0xb, 
+    0x9, 0x3, 0xa, 0x3, 0xa, 0x3, 0xa, 0x3, 0xa, 0x3, 0xa, 0x7, 0xa, 0x7a, 
+    0xa, 0xa, 0xc, 0xa, 0xe, 0xa, 0x7d, 0xb, 0xa, 0x3, 0xb, 0x3, 0xb, 0x3, 
+    0xb, 0x3, 0xb, 0x3, 0xb, 0x3, 0xb, 0x3, 0xb, 0x3, 0xb, 0x7, 0xb, 0x87, 
+    0xa, 0xb, 0xc, 0xb, 0xe, 0xb, 0x8a, 0xb, 0xb, 0x3, 0xc, 0x3, 0xc, 0x3, 
+    0xc, 0x7, 0xc, 0x8f, 0xa, 0xc, 0xc, 0xc, 0xe, 0xc, 0x92, 0xb, 0xc, 0x3, 
+    0xd, 0x3, 0xd, 0x3, 0xd, 0x7, 0xd, 0x97, 0xa, 0xd, 0xc, 0xd, 0xe, 0xd, 
+    0x9a, 0xb, 0xd, 0x3, 0xe, 0x3, 0xe, 0x3, 0xe, 0x5, 0xe, 0x9f, 0xa, 0xe, 
+    0x7, 0xe, 0xa1, 0xa, 0xe, 0xc, 0xe, 0xe, 0xe, 0xa4, 0xb, 0xe, 0x3, 0xf, 
+    0x3, 0xf, 0x3, 0xf, 0x5, 0xf, 0xa9, 0xa, 0xf, 0x3, 0x10, 0x3, 0x10, 
+    0x5, 0x10, 0xad, 0xa, 0x10, 0x3, 0x11, 0x5, 0x11, 0xb0, 0xa, 0x11, 0x3, 
+    0x11, 0x3, 0x11, 0x3, 0x12, 0x5, 0x12, 0xb5, 0xa, 0x12, 0x3, 0x12, 0x3, 
+    0x12, 0x3, 0x13, 0x3, 0x13, 0x3, 0x13, 0x3, 0x13, 0x3, 0x13, 0x3, 0x13, 
+    0x3, 0x13, 0x3, 0x13, 0x3, 0x13, 0x3, 0x14, 0x3, 0x14, 0x3, 0x15, 0x3, 
+    0x15, 0x3, 0x15, 0x5, 0x15, 0xc7, 0xa, 0x15, 0x3, 0x16, 0x3, 0x16, 0x3, 
+    0x17, 0x3, 0x17, 0x3, 0x17, 0x3, 0x17, 0x3, 0x17, 0x3, 0x17, 0x3, 0x17, 
+    0x3, 0x17, 0x3, 0x17, 0x3, 0x17, 0x3, 0x17, 0x5, 0x17, 0xd6, 0xa, 0x17, 
+    0x3, 0x17, 0x3, 0x17, 0x3, 0x17, 0x3, 0x17, 0x3, 0x17, 0x3, 0x17, 0x3, 
+    0x17, 0x3, 0x17, 0x3, 0x17, 0x3, 0x17, 0x3, 0x17, 0x3, 0x17, 0x3, 0x17, 
+    0x3, 0x17, 0x3, 0x17, 0x3, 0x17, 0x7, 0x17, 0xe8, 0xa, 0x17, 0xc, 0x17, 
+    0xe, 0x17, 0xeb, 0xb, 0x17, 0x3, 0x18, 0x3, 0x18, 0x3, 0x18, 0x2, 0x3, 
+    0x2c, 0x19, 0x2, 0x4, 0x6, 0x8, 0xa, 0xc, 0xe, 0x10, 0x12, 0x14, 0x16, 
+    0x18, 0x1a, 0x1c, 0x1e, 0x20, 0x22, 0x24, 0x26, 0x28, 0x2a, 0x2c, 0x2e, 
+    0x2, 0x7, 0x4, 0x2, 0x9, 0x9, 0x1c, 0x1c, 0x4, 0x2, 0x1b, 0x1b, 0x1e, 
+    0x1f, 0x4, 0x2, 0x15, 0x15, 0x1a, 0x1a, 0x3, 0x2, 0x10, 0x11, 0x5, 0x2, 
+    0x3, 0x3, 0x6, 0x6, 0xa, 0xf, 0x2, 0xfa, 0x2, 0x31, 0x3, 0x2, 0x2, 0x2, 
+    0x4, 0x52, 0x3, 0x2, 0x2, 0x2, 0x6, 0x54, 0x3, 0x2, 0x2, 0x2, 0x8, 0x5e, 
+    0x3, 0x2, 0x2, 0x2, 0xa, 0x62, 0x3, 0x2, 0x2, 0x2, 0xc, 0x68, 0x3, 0x2, 
+    0x2, 0x2, 0xe, 0x6a, 0x3, 0x2, 0x2, 0x2, 0x10, 0x6d, 0x3, 0x2, 0x2, 
+    0x2, 0x12, 0x74, 0x3, 0x2, 0x2, 0x2, 0x14, 0x7e, 0x3, 0x2, 0x2, 0x2, 
+    0x16, 0x8b, 0x3, 0x2, 0x2, 0x2, 0x18, 0x93, 0x3, 0x2, 0x2, 0x2, 0x1a, 
+    0x9b, 0x3, 0x2, 0x2, 0x2, 0x1c, 0xa8, 0x3, 0x2, 0x2, 0x2, 0x1e, 0xac, 
+    0x3, 0x2, 0x2, 0x2, 0x20, 0xaf, 0x3, 0x2, 0x2, 0x2, 0x22, 0xb4, 0x3, 
+    0x2, 0x2, 0x2, 0x24, 0xb8, 0x3, 0x2, 0x2, 0x2, 0x26, 0xc1, 0x3, 0x2, 
+    0x2, 0x2, 0x28, 0xc6, 0x3, 0x2, 0x2, 0x2, 0x2a, 0xc8, 0x3, 0x2, 0x2, 
+    0x2, 0x2c, 0xd5, 0x3, 0x2, 0x2, 0x2, 0x2e, 0xec, 0x3, 0x2, 0x2, 0x2, 
+    0x30, 0x32, 0x5, 0x4, 0x3, 0x2, 0x31, 0x30, 0x3, 0x2, 0x2, 0x2, 0x32, 
+    0x33, 0x3, 0x2, 0x2, 0x2, 0x33, 0x31, 0x3, 0x2, 0x2, 0x2, 0x33, 0x34, 
+    0x3, 0x2, 0x2, 0x2, 0x34, 0x35, 0x3, 0x2, 0x2, 0x2, 0x35, 0x36, 0x7, 
+    0x2, 0x2, 0x3, 0x36, 0x3, 0x3, 0x2, 0x2, 0x2, 0x37, 0x3e, 0x5, 0x8, 
+    0x5, 0x2, 0x38, 0x3a, 0x7, 0x14, 0x2, 0x2, 0x39, 0x3b, 0x5, 0x8, 0x5, 
+    0x2, 0x3a, 0x39, 0x3, 0x2, 0x2, 0x2, 0x3a, 0x3b, 0x3, 0x2, 0x2, 0x2, 
+    0x3b, 0x3d, 0x3, 0x2, 0x2, 0x2, 0x3c, 0x38, 0x3, 0x2, 0x2, 0x2, 0x3d, 
+    0x40, 0x3, 0x2, 0x2, 0x2, 0x3e, 0x3c, 0x3, 0x2, 0x2, 0x2, 0x3e, 0x3f, 
+    0x3, 0x2, 0x2, 0x2, 0x3f, 0x43, 0x3, 0x2, 0x2, 0x2, 0x40, 0x3e, 0x3, 
+    0x2, 0x2, 0x2, 0x41, 0x43, 0x9, 0x2, 0x2, 0x2, 0x42, 0x37, 0x3, 0x2, 
+    0x2, 0x2, 0x42, 0x41, 0x3, 0x2, 0x2, 0x2, 0x43, 0x53, 0x3, 0x2, 0x2, 
+    0x2, 0x44, 0x50, 0x5, 0x6, 0x4, 0x2, 0x45, 0x4c, 0x5, 0x8, 0x5, 0x2, 
+    0x46, 0x48, 0x7, 0x14, 0x2, 0x2, 0x47, 0x49, 0x5, 0x8, 0x5, 0x2, 0x48, 
+    0x47, 0x3, 0x2, 0x2, 0x2, 0x48, 0x49, 0x3, 0x2, 0x2, 0x2, 0x49, 0x4b, 
+    0x3, 0x2, 0x2, 0x2, 0x4a, 0x46, 0x3, 0x2, 0x2, 0x2, 0x4b, 0x4e, 0x3, 
+    0x2, 0x2, 0x2, 0x4c, 0x4a, 0x3, 0x2, 0x2, 0x2, 0x4c, 0x4d, 0x3, 0x2, 
+    0x2, 0x2, 0x4d, 0x51, 0x3, 0x2, 0x2, 0x2, 0x4e, 0x4c, 0x3, 0x2, 0x2, 
+    0x2, 0x4f, 0x51, 0x9, 0x2, 0x2, 0x2, 0x50, 0x45, 0x3, 0x2, 0x2, 0x2, 
+    0x50, 0x4f, 0x3, 0x2, 0x2, 0x2, 0x51, 0x53, 0x3, 0x2, 0x2, 0x2, 0x52, 
+    0x42, 0x3, 0x2, 0x2, 0x2, 0x52, 0x44, 0x3, 0x2, 0x2, 0x2, 0x53, 0x5, 
+    0x3, 0x2, 0x2, 0x2, 0x54, 0x55, 0x7, 0x1f, 0x2, 0x2, 0x55, 0x7, 0x3, 
+    0x2, 0x2, 0x2, 0x56, 0x58, 0x7, 0x4, 0x2, 0x2, 0x57, 0x56, 0x3, 0x2, 
+    0x2, 0x2, 0x57, 0x58, 0x3, 0x2, 0x2, 0x2, 0x58, 0x59, 0x3, 0x2, 0x2, 
+    0x2, 0x59, 0x5f, 0x5, 0x14, 0xb, 0x2, 0x5a, 0x5c, 0x7, 0x8, 0x2, 0x2, 
+    0x5b, 0x5d, 0x5, 0x1a, 0xe, 0x2, 0x5c, 0x5b, 0x3, 0x2, 0x2, 0x2, 0x5c, 
+    0x5d, 0x3, 0x2, 0x2, 0x2, 0x5d, 0x5f, 0x3, 0x2, 0x2, 0x2, 0x5e, 0x57, 
+    0x3, 0x2, 0x2, 0x2, 0x5e, 0x5a, 0x3, 0x2, 0x2, 0x2, 0x5f, 0x9, 0x3, 
+    0x2, 0x2, 0x2, 0x60, 0x63, 0x5, 0xc, 0x7, 0x2, 0x61, 0x63, 0x5, 0xe, 
+    0x8, 0x2, 0x62, 0x60, 0x3, 0x2, 0x2, 0x2, 0x62, 0x61, 0x3, 0x2, 0x2, 
+    0x2, 0x63, 0xb, 0x3, 0x2, 0x2, 0x2, 0x64, 0x69, 0x5, 0x10, 0x9, 0x2, 
+    0x65, 0x66, 0x5, 0x10, 0x9, 0x2, 0x66, 0x67, 0x7, 0x18, 0x2, 0x2, 0x67, 
+    0x69, 0x3, 0x2, 0x2, 0x2, 0x68, 0x64, 0x3, 0x2, 0x2, 0x2, 0x68, 0x65, 
+    0x3, 0x2, 0x2, 0x2, 0x69, 0xd, 0x3, 0x2, 0x2, 0x2, 0x6a, 0x6b, 0x5, 
+    0x10, 0x9, 0x2, 0x6b, 0x6c, 0x7, 0x16, 0x2, 0x2, 0x6c, 0xf, 0x3, 0x2, 
+    0x2, 0x2, 0x6d, 0x71, 0x7, 0x1e, 0x2, 0x2, 0x6e, 0x70, 0x9, 0x3, 0x2, 
+    0x2, 0x6f, 0x6e, 0x3, 0x2, 0x2, 0x2, 0x70, 0x73, 0x3, 0x2, 0x2, 0x2, 
+    0x71, 0x6f, 0x3, 0x2, 0x2, 0x2, 0x71, 0x72, 0x3, 0x2, 0x2, 0x2, 0x72, 
+    0x11, 0x3, 0x2, 0x2, 0x2, 0x73, 0x71, 0x3, 0x2, 0x2, 0x2, 0x74, 0x7b, 
+    0x5, 0xa, 0x6, 0x2, 0x75, 0x76, 0x7, 0x17, 0x2, 0x2, 0x76, 0x77, 0x5, 
+    0x18, 0xd, 0x2, 0x77, 0x78, 0x7, 0x19, 0x2, 0x2, 0x78, 0x7a, 0x3, 0x2, 
+    0x2, 0x2, 0x79, 0x75, 0x3, 0x2, 0x2, 0x2, 0x7a, 0x7d, 0x3, 0x2, 0x2, 
+    0x2, 0x7b, 0x79, 0x3, 0x2, 0x2, 0x2, 0x7b, 0x7c, 0x3, 0x2, 0x2, 0x2, 
+    0x7c, 0x13, 0x3, 0x2, 0x2, 0x2, 0x7d, 0x7b, 0x3, 0x2, 0x2, 0x2, 0x7e, 
+    0x7f, 0x5, 0x12, 0xa, 0x2, 0x7f, 0x80, 0x7, 0xa, 0x2, 0x2, 0x80, 0x88, 
+    0x5, 0x1c, 0xf, 0x2, 0x81, 0x82, 0x7, 0x15, 0x2, 0x2, 0x82, 0x83, 0x5, 
+    0x12, 0xa, 0x2, 0x83, 0x84, 0x7, 0xa, 0x2, 0x2, 0x84, 0x85, 0x5, 0x1c, 
+    0xf, 0x2, 0x85, 0x87, 0x3, 0x2, 0x2, 0x2, 0x86, 0x81, 0x3, 0x2, 0x2, 
+    0x2, 0x87, 0x8a, 0x3, 0x2, 0x2, 0x2, 0x88, 0x86, 0x3, 0x2, 0x2, 0x2, 
+    0x88, 0x89, 0x3, 0x2, 0x2, 0x2, 0x89, 0x15, 0x3, 0x2, 0x2, 0x2, 0x8a, 
+    0x88, 0x3, 0x2, 0x2, 0x2, 0x8b, 0x90, 0x5, 0x12, 0xa, 0x2, 0x8c, 0x8d, 
+    0x7, 0x15, 0x2, 0x2, 0x8d, 0x8f, 0x5, 0x12, 0xa, 0x2, 0x8e, 0x8c, 0x3, 
+    0x2, 0x2, 0x2, 0x8f, 0x92, 0x3, 0x2, 0x2, 0x2, 0x90, 0x8e, 0x3, 0x2, 
+    0x2, 0x2, 0x90, 0x91, 0x3, 0x2, 0x2, 0x2, 0x91, 0x17, 0x3, 0x2, 0x2, 
+    0x2, 0x92, 0x90, 0x3, 0x2, 0x2, 0x2, 0x93, 0x98, 0x5, 0x1c, 0xf, 0x2, 
+    0x94, 0x95, 0x7, 0x15, 0x2, 0x2, 0x95, 0x97, 0x5, 0x1c, 0xf, 0x2, 0x96, 
+    0x94, 0x3, 0x2, 0x2, 0x2, 0x97, 0x9a, 0x3, 0x2, 0x2, 0x2, 0x98, 0x96, 
+    0x3, 0x2, 0x2, 0x2, 0x98, 0x99, 0x3, 0x2, 0x2, 0x2, 0x99, 0x19, 0x3, 
+    0x2, 0x2, 0x2, 0x9a, 0x98, 0x3, 0x2, 0x2, 0x2, 0x9b, 0xa2, 0x5, 0x1c, 
+    0xf, 0x2, 0x9c, 0x9e, 0x9, 0x4, 0x2, 0x2, 0x9d, 0x9f, 0x5, 0x1c, 0xf, 
+    0x2, 0x9e, 0x9d, 0x3, 0x2, 0x2, 0x2, 0x9e, 0x9f, 0x3, 0x2, 0x2, 0x2, 
+    0x9f, 0xa1, 0x3, 0x2, 0x2, 0x2, 0xa0, 0x9c, 0x3, 0x2, 0x2, 0x2, 0xa1, 
+    0xa4, 0x3, 0x2, 0x2, 0x2, 0xa2, 0xa0, 0x3, 0x2, 0x2, 0x2, 0xa2, 0xa3, 
+    0x3, 0x2, 0x2, 0x2, 0xa3, 0x1b, 0x3, 0x2, 0x2, 0x2, 0xa4, 0xa2, 0x3, 
+    0x2, 0x2, 0x2, 0xa5, 0xa9, 0x5, 0x2c, 0x17, 0x2, 0xa6, 0xa9, 0x5, 0xc, 
+    0x7, 0x2, 0xa7, 0xa9, 0x5, 0x28, 0x15, 0x2, 0xa8, 0xa5, 0x3, 0x2, 0x2, 
+    0x2, 0xa8, 0xa6, 0x3, 0x2, 0x2, 0x2, 0xa8, 0xa7, 0x3, 0x2, 0x2, 0x2, 
+    0xa9, 0x1d, 0x3, 0x2, 0x2, 0x2, 0xaa, 0xad, 0x5, 0x20, 0x11, 0x2, 0xab, 
+    0xad, 0x5, 0x22, 0x12, 0x2, 0xac, 0xaa, 0x3, 0x2, 0x2, 0x2, 0xac, 0xab, 
+    0x3, 0x2, 0x2, 0x2, 0xad, 0x1f, 0x3, 0x2, 0x2, 0x2, 0xae, 0xb0, 0x9, 
+    0x5, 0x2, 0x2, 0xaf, 0xae, 0x3, 0x2, 0x2, 0x2, 0xaf, 0xb0, 0x3, 0x2, 
+    0x2, 0x2, 0xb0, 0xb1, 0x3, 0x2, 0x2, 0x2, 0xb1, 0xb2, 0x7, 0x1f, 0x2, 
+    0x2, 0xb2, 0x21, 0x3, 0x2, 0x2, 0x2, 0xb3, 0xb5, 0x9, 0x5, 0x2, 0x2, 
+    0xb4, 0xb3, 0x3, 0x2, 0x2, 0x2, 0xb4, 0xb5, 0x3, 0x2, 0x2, 0x2, 0xb5, 
+    0xb6, 0x3, 0x2, 0x2, 0x2, 0xb6, 0xb7, 0x7, 0x20, 0x2, 0x2, 0xb7, 0x23, 
+    0x3, 0x2, 0x2, 0x2, 0xb8, 0xb9, 0x7, 0x5, 0x2, 0x2, 0xb9, 0xba, 0x7, 
+    0x17, 0x2, 0x2, 0xba, 0xbb, 0x5, 0x28, 0x15, 0x2, 0xbb, 0xbc, 0x7, 0x15, 
+    0x2, 0x2, 0xbc, 0xbd, 0x5, 0x2c, 0x17, 0x2, 0xbd, 0xbe, 0x7, 0x15, 0x2, 
+    0x2, 0xbe, 0xbf, 0x5, 0x2c, 0x17, 0x2, 0xbf, 0xc0, 0x7, 0x19, 0x2, 0x2, 
+    0xc0, 0x25, 0x3, 0x2, 0x2, 0x2, 0xc1, 0xc2, 0x7, 0x1d, 0x2, 0x2, 0xc2, 
+    0x27, 0x3, 0x2, 0x2, 0x2, 0xc3, 0xc7, 0x5, 0x26, 0x14, 0x2, 0xc4, 0xc7, 
+    0x5, 0xe, 0x8, 0x2, 0xc5, 0xc7, 0x5, 0x24, 0x13, 0x2, 0xc6, 0xc3, 0x3, 
+    0x2, 0x2, 0x2, 0xc6, 0xc4, 0x3, 0x2, 0x2, 0x2, 0xc6, 0xc5, 0x3, 0x2, 
+    0x2, 0x2, 0xc7, 0x29, 0x3, 0x2, 0x2, 0x2, 0xc8, 0xc9, 0x7, 0x7, 0x2, 
+    0x2, 0xc9, 0x2b, 0x3, 0x2, 0x2, 0x2, 0xca, 0xcb, 0x8, 0x17, 0x1, 0x2, 
+    0xcb, 0xd6, 0x5, 0x1e, 0x10, 0x2, 0xcc, 0xd6, 0x5, 0x2a, 0x16, 0x2, 
+    0xcd, 0xce, 0x7, 0x17, 0x2, 0x2, 0xce, 0xcf, 0x5, 0x2c, 0x17, 0x2, 0xcf, 
+    0xd0, 0x7, 0x19, 0x2, 0x2, 0xd0, 0xd6, 0x3, 0x2, 0x2, 0x2, 0xd1, 0xd2, 
+    0x5, 0x28, 0x15, 0x2, 0xd2, 0xd3, 0x5, 0x2e, 0x18, 0x2, 0xd3, 0xd4, 
+    0x5, 0x28, 0x15, 0x2, 0xd4, 0xd6, 0x3, 0x2, 0x2, 0x2, 0xd5, 0xca, 0x3, 
+    0x2, 0x2, 0x2, 0xd5, 0xcc, 0x3, 0x2, 0x2, 0x2, 0xd5, 0xcd, 0x3, 0x2, 
+    0x2, 0x2, 0xd5, 0xd1, 0x3, 0x2, 0x2, 0x2, 0xd6, 0xe9, 0x3, 0x2, 0x2, 
+    0x2, 0xd7, 0xd8, 0xc, 0x8, 0x2, 0x2, 0xd8, 0xd9, 0x5, 0x2e, 0x18, 0x2, 
+    0xd9, 0xda, 0x5, 0x2c, 0x17, 0x9, 0xda, 0xe8, 0x3, 0x2, 0x2, 0x2, 0xdb, 
+    0xdc, 0xc, 0x6, 0x2, 0x2, 0xdc, 0xdd, 0x7, 0x10, 0x2, 0x2, 0xdd, 0xe8, 
+    0x5, 0x2c, 0x17, 0x7, 0xde, 0xdf, 0xc, 0x5, 0x2, 0x2, 0xdf, 0xe0, 0x7, 
+    0x11, 0x2, 0x2, 0xe0, 0xe8, 0x5, 0x2c, 0x17, 0x6, 0xe1, 0xe2, 0xc, 0x4, 
+    0x2, 0x2, 0xe2, 0xe3, 0x7, 0x12, 0x2, 0x2, 0xe3, 0xe8, 0x5, 0x2c, 0x17, 
+    0x5, 0xe4, 0xe5, 0xc, 0x3, 0x2, 0x2, 0xe5, 0xe6, 0x7, 0x13, 0x2, 0x2, 
+    0xe6, 0xe8, 0x5, 0x2c, 0x17, 0x4, 0xe7, 0xd7, 0x3, 0x2, 0x2, 0x2, 0xe7, 
+    0xdb, 0x3, 0x2, 0x2, 0x2, 0xe7, 0xde, 0x3, 0x2, 0x2, 0x2, 0xe7, 0xe1, 
+    0x3, 0x2, 0x2, 0x2, 0xe7, 0xe4, 0x3, 0x2, 0x2, 0x2, 0xe8, 0xeb, 0x3, 
+    0x2, 0x2, 0x2, 0xe9, 0xe7, 0x3, 0x2, 0x2, 0x2, 0xe9, 0xea, 0x3, 0x2, 
+    0x2, 0x2, 0xea, 0x2d, 0x3, 0x2, 0x2, 0x2, 0xeb, 0xe9, 0x3, 0x2, 0x2, 
+    0x2, 0xec, 0xed, 0x9, 0x6, 0x2, 0x2, 0xed, 0x2f, 0x3, 0x2, 0x2, 0x2, 
+    0x1e, 0x33, 0x3a, 0x3e, 0x42, 0x48, 0x4c, 0x50, 0x52, 0x57, 0x5c, 0x5e, 
+    0x62, 0x68, 0x71, 0x7b, 0x88, 0x90, 0x98, 0x9e, 0xa2, 0xa8, 0xac, 0xaf, 
+    0xb4, 0xc6, 0xd5, 0xe7, 0xe9, 
   };
 
   atn::ATNDeserializer deserializer;

@@ -39,6 +39,7 @@ public:
     // Return the "helper" classes
     Variables& helper_variables() { return variables; }
     BytecodeContainer& helper_bytecodes() { return bc_container; }
+    Stack& helper_stack() { return stack; }
 
 private:
     Variables variables;
