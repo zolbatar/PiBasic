@@ -16,7 +16,8 @@ public:
     NE = 9, GT = 10, GE = 11, LT = 12, LE = 13, PLUS = 14, MINUS = 15, MULTIPLY = 16, 
     DIVIDE = 17, COLON = 18, COMMA = 19, DOLLAR = 20, LPAREN = 21, PERCENT = 22, 
     RPAREN = 23, SEMICOLON = 24, UNDERSCORE = 25, COMMENT = 26, STRINGLITERAL = 27, 
-    LETTERS = 28, NUMBER = 29, FLOAT = 30, WS = 31
+    LETTERS = 28, HEXNUMBER = 29, BINARYNUMBER = 30, NUMBER = 31, FLOAT = 32, 
+    WS = 33
   };
 
   explicit DARICLexer(antlr4::CharStream *input);

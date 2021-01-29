@@ -51,6 +51,10 @@ public:
 
     virtual antlrcpp::Any visitNumberInteger(DARICParser::NumberIntegerContext *context) = 0;
 
+    virtual antlrcpp::Any visitNumberHex(DARICParser::NumberHexContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumberBinary(DARICParser::NumberBinaryContext *context) = 0;
+
     virtual antlrcpp::Any visitNumberFloat(DARICParser::NumberFloatContext *context) = 0;
 
     virtual antlrcpp::Any visitStrFunc(DARICParser::StrFuncContext *context) = 0;

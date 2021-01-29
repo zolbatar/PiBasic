@@ -79,6 +79,14 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitNumberHex(DARICParser::NumberHexContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumberBinary(DARICParser::NumberBinaryContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitNumberFloat(DARICParser::NumberFloatContext *ctx) override {
     return visitChildren(ctx);
   }

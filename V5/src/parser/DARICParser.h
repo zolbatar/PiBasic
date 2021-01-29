@@ -16,16 +16,17 @@ public:
     NE = 9, GT = 10, GE = 11, LT = 12, LE = 13, PLUS = 14, MINUS = 15, MULTIPLY = 16, 
     DIVIDE = 17, COLON = 18, COMMA = 19, DOLLAR = 20, LPAREN = 21, PERCENT = 22, 
     RPAREN = 23, SEMICOLON = 24, UNDERSCORE = 25, COMMENT = 26, STRINGLITERAL = 27, 
-    LETTERS = 28, NUMBER = 29, FLOAT = 30, WS = 31
+    LETTERS = 28, HEXNUMBER = 29, BINARYNUMBER = 30, NUMBER = 31, FLOAT = 32, 
+    WS = 33
   };
 
   enum {
     RuleProg = 0, RuleLine = 1, RuleLinenumber = 2, RuleStmt = 3, RuleVar = 4, 
     RuleNumVar = 5, RuleStrVar = 6, RuleVarName = 7, RuleVarDecl = 8, RuleVarAssign = 9, 
     RuleVarList = 10, RuleExprList = 11, RulePrintList = 12, RuleExpr = 13, 
-    RuleNumber = 14, RuleNumberInteger = 15, RuleNumberFloat = 16, RuleStrFunc = 17, 
-    RuleString = 18, RuleStrExpr = 19, RuleNumFunc = 20, RuleNumExpr = 21, 
-    RuleRelop = 22
+    RuleNumber = 14, RuleNumberInteger = 15, RuleNumberHex = 16, RuleNumberBinary = 17, 
+    RuleNumberFloat = 18, RuleStrFunc = 19, RuleString = 20, RuleStrExpr = 21, 
+    RuleNumFunc = 22, RuleNumExpr = 23, RuleRelop = 24
   };
 
   explicit DARICParser(antlr4::TokenStream *input);
@@ -54,6 +55,8 @@ public:
   class ExprContext;
   class NumberContext;
   class NumberIntegerContext;
+  class NumberHexContext;
+  class NumberBinaryContext;
   class NumberFloatContext;
   class StrFuncContext;
   class StringContext;
@@ -317,6 +320,32 @@ public:
   };
 
   NumberIntegerContext* numberInteger();
+
+  class  NumberHexContext : public antlr4::ParserRuleContext {
+  public:
+    NumberHexContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *HEXNUMBER();
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  NumberHexContext* numberHex();
+
+  class  NumberBinaryContext : public antlr4::ParserRuleContext {
+  public:
+    NumberBinaryContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *BINARYNUMBER();
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  NumberBinaryContext* numberBinary();
 
   class  NumberFloatContext : public antlr4::ParserRuleContext {
   public:

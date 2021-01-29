@@ -81,6 +81,8 @@ protected:
     antlrcpp::Any visitNumber(DARICParser::NumberContext* context);
     antlrcpp::Any visitNumberInteger(DARICParser::NumberIntegerContext* context);
     antlrcpp::Any visitNumberFloat(DARICParser::NumberFloatContext* context);
+    antlrcpp::Any visitNumberHex(DARICParser::NumberHexContext* context);
+    antlrcpp::Any visitNumberBinary(DARICParser::NumberBinaryContext* context);
     antlrcpp::Any visitString(DARICParser::StringContext* context);
     antlrcpp::Any visitStrFunc(DARICParser::StrFuncContext* context);
     antlrcpp::Any visitStrExpr(DARICParser::StrExprContext* context);

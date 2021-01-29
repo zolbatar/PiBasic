@@ -74,6 +74,14 @@ numberInteger
     :  (PLUS | MINUS)? NUMBER
     ;
 
+numberHex
+    :  HEXNUMBER
+    ;
+
+numberBinary
+    :  BINARYNUMBER
+    ;
+
 numberFloat
     :  (PLUS | MINUS)? FLOAT
     ;
@@ -151,6 +159,8 @@ UNDERSCORE      : '_' ;
 COMMENT         : REM ~ [\r\n]* ;
 STRINGLITERAL   : '"' ~ ["\r\n]* '"' ;
 LETTERS         : ('a' .. 'z' | 'A' .. 'Z')+ ;
-NUMBER          : ('0' .. '9') + (('e' | 'E') NUMBER)* ;
-FLOAT           : ('0' .. '9')* '.' ('0' .. '9') + (('e' | 'E') ('0' .. '9') +)* ;
+HEXNUMBER       : '&' [0-9A-Fa-f]+ ;
+BINARYNUMBER    : '&' [0|1]+ ;
+NUMBER          : [0-9] + ([e|E] NUMBER)* ;
+FLOAT           : [0-9]* '.' [0-9]* ([e|E] [0-9]+ )* ;
 WS              : [ \r\n\t] + -> channel (HIDDEN) ;
