@@ -22,6 +22,7 @@
 const int buffer_size = 1024;
 std::string temp_filename;
 extern Environment g_env;
+extern VM* g_vm;
 
 void Interactive::welcome_prompt()
 {
@@ -215,6 +216,9 @@ void Interactive::execute_line(std::string s)
     } catch (const std::runtime_error& ex) {
         g_env.graphics.print_console(ex.what());
     }
+
+    // Run!
+    g_vm->run();
 
     // Now parse and compile
     /*    g_vm = std::make_unique<VM>();
