@@ -6,10 +6,10 @@ antlrcpp::Any Compiler::Compile_PRINT(DARICParser::StmtContext* context)
     state = CompilerState::PRINT;
     print_hex = false;
     print_justify = false;
-    auto r = visit(context->printList());
+    visit(context->printList());
     state = CompilerState::NOSTATE;
     if (!print_semicolon_active) {
         insert_bytecode(Bytecodes::PRINT_NL);
     }
-    return true;
+    return NULL;
 }

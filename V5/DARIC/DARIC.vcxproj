@@ -173,6 +173,7 @@
     <ClCompile Include="..\src\compiler\compiler_assignment.cpp" />
     <ClCompile Include="..\src\compiler\compiler_constant.cpp" />
     <ClCompile Include="..\src\compiler\compiler_literal.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_numeric_expression.cpp" />
     <ClCompile Include="..\src\compiler\compiler_printinput.cpp" />
     <ClCompile Include="..\src\compiler\compiler_stack.cpp" />
     <ClCompile Include="..\src\compiler\visitor.cpp" />

@@ -56,7 +56,10 @@ private:
     void ensure_stack_is_float();
     void ensure_stack_is_integer();
     std::stack<Type> type_list;
-    void stack_push(Type type) { type_list.push(type); }
+    void stack_push(Type type)
+    {
+        type_list.push(type);
+    }
     UINT32 stack_size() { return static_cast<UINT32>(type_list.size()); }
     void stack_pop()
     {
@@ -109,6 +112,7 @@ protected:
     antlrcpp::Any visitStrFunc(DARICParser::StrFuncContext* context);
     antlrcpp::Any visitStrExpr(DARICParser::StrExprContext* context);
     antlrcpp::Any visitNumFunc(DARICParser::NumFuncContext* context);
+    void visitNumExpr_get_two(DARICParser::NumExprContext* context);
     antlrcpp::Any visitNumExpr(DARICParser::NumExprContext* context);
     antlrcpp::Any visitRelop(DARICParser::RelopContext* context);
 };

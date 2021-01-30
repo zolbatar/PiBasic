@@ -68,28 +68,26 @@ antlrcpp::Any Compiler::visitExprList(DARICParser::ExprListContext* context)
 
 antlrcpp::Any Compiler::visitPrintList(DARICParser::PrintListContext* context)
 {
-    return visitChildren(context);
+    visitChildren(context);
+
+    // Work through the stack and print anything off
+    while (stack_size() >= 1) {
+        insert_instruction_based_on_type(
+            {
+                { Type::INTEGER, Bytecodes::PRINT_I },
+                { Type::REAL, Bytecodes::PRINT_F },
+                { Type::STRING, Bytecodes::PRINT_S },
+            },
+            peek_type(), create_print_flag());
+        stack_pop();
+    }
+
+    return NULL;
 }
 
 antlrcpp::Any Compiler::visitExpr(DARICParser::ExprContext* context)
 {
-    visitChildren(context);
-
-    // Work through the stack and print anything off
-    if (state == CompilerState::PRINT) {
-        while (stack_size() >= 1) {
-            insert_instruction_based_on_type(
-                {
-                    { Type::INTEGER, Bytecodes::PRINT_I },
-                    { Type::REAL, Bytecodes::PRINT_F },
-                    { Type::STRING, Bytecodes::PRINT_S },
-                },
-                peek_type(), create_print_flag());
-            stack_pop();
-        }
-    }
-
-    return NULL;
+    return visitChildren(context);
 }
 
 antlrcpp::Any Compiler::visitNumber(DARICParser::NumberContext* context)
@@ -108,11 +106,6 @@ antlrcpp::Any Compiler::visitStrExpr(DARICParser::StrExprContext* context)
 }
 
 antlrcpp::Any Compiler::visitNumFunc(DARICParser::NumFuncContext* context)
-{
-    return visitChildren(context);
-}
-
-antlrcpp::Any Compiler::visitNumExpr(DARICParser::NumExprContext* context)
 {
     return visitChildren(context);
 }

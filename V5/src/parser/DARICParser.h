@@ -12,12 +12,13 @@
 class  DARICParser : public antlr4::Parser {
 public:
   enum {
-    AND = 1, LET = 2, MIDS = 3, OR = 4, PI = 5, PRINT = 6, REM = 7, EQ = 8, 
-    NE = 9, GT = 10, GE = 11, LT = 12, LE = 13, PLUS = 14, MINUS = 15, MULTIPLY = 16, 
-    DIVIDE = 17, COLON = 18, COMMA = 19, DOLLAR = 20, LPAREN = 21, PERCENT = 22, 
-    RPAREN = 23, SEMICOLON = 24, UNDERSCORE = 25, COMMENT = 26, STRINGLITERAL = 27, 
-    LETTERS = 28, HEXNUMBER = 29, BINARYNUMBER = 30, NUMBER = 31, FLOAT = 32, 
-    WS = 33
+    LET = 1, MIDS = 2, PI = 3, PRINT = 4, REM = 5, EQ = 6, NE = 7, GT = 8, 
+    GE = 9, LT = 10, LE = 11, NOT = 12, AND = 13, OR = 14, EOR = 15, MOD = 16, 
+    DIV = 17, HAT = 18, PLUS = 19, MINUS = 20, MULTIPLY = 21, DIVIDE = 22, 
+    SHL = 23, SHR = 24, COLON = 25, COMMA = 26, DOLLAR = 27, LPAREN = 28, 
+    PERCENT = 29, RPAREN = 30, SEMICOLON = 31, UNDERSCORE = 32, COMMENT = 33, 
+    STRINGLITERAL = 34, LETTERS = 35, HEXNUMBER = 36, BINARYNUMBER = 37, 
+    NUMBER = 38, FLOAT = 39, WS = 40
   };
 
   enum {
@@ -429,17 +430,26 @@ public:
     virtual size_t getRuleIndex() const override;
     NumberContext *number();
     NumFuncContext *numFunc();
-    antlr4::tree::TerminalNode *LPAREN();
+    antlr4::tree::TerminalNode *NOT();
     std::vector<NumExprContext *> numExpr();
     NumExprContext* numExpr(size_t i);
+    antlr4::tree::TerminalNode *LPAREN();
     antlr4::tree::TerminalNode *RPAREN();
     std::vector<StrExprContext *> strExpr();
     StrExprContext* strExpr(size_t i);
     RelopContext *relop();
-    antlr4::tree::TerminalNode *PLUS();
-    antlr4::tree::TerminalNode *MINUS();
+    antlr4::tree::TerminalNode *HAT();
     antlr4::tree::TerminalNode *MULTIPLY();
     antlr4::tree::TerminalNode *DIVIDE();
+    antlr4::tree::TerminalNode *DIV();
+    antlr4::tree::TerminalNode *MOD();
+    antlr4::tree::TerminalNode *PLUS();
+    antlr4::tree::TerminalNode *MINUS();
+    antlr4::tree::TerminalNode *SHL();
+    antlr4::tree::TerminalNode *SHR();
+    antlr4::tree::TerminalNode *AND();
+    antlr4::tree::TerminalNode *OR();
+    antlr4::tree::TerminalNode *EOR();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;

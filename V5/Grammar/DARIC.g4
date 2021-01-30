@@ -107,13 +107,23 @@ numFunc
 numExpr
     : number
     | numFunc
+    | NOT numExpr
     | LPAREN numExpr RPAREN
-    | numExpr relop numExpr
-    | strExpr relop strExpr
-    | numExpr PLUS numExpr
-    | numExpr MINUS numExpr
+    | <assoc=right> numExpr HAT numExpr
     | numExpr MULTIPLY numExpr
     | numExpr DIVIDE numExpr
+    | numExpr DIV numExpr
+    | numExpr MOD numExpr
+    | numExpr PLUS numExpr
+    | numExpr MINUS numExpr
+    | numExpr relop numExpr
+    | strExpr relop strExpr
+    | numExpr SHL numExpr
+    | numExpr SHR numExpr
+    | numExpr AND numExpr
+    | numExpr NOT numExpr
+    | numExpr OR numExpr
+    | numExpr EOR numExpr
     ;
 
 relop
@@ -128,10 +138,8 @@ relop
     ;
    
 // Lexer stuff
-AND             : 'AND' | 'And' | 'and' ;
 LET             : 'LET' | 'Let' | 'let' ;
 MIDS            : 'MID$' | 'Mid$' | 'mid$' ;
-OR              : 'OR' | 'Or' | 'or' ;
 PI              : 'PI' | 'Pi' | 'pi' ;
 PRINT           : 'PRINT' | 'Print' | 'print' ;
 REM             : 'REM' | 'Rem' | 'rem' ;
@@ -143,10 +151,20 @@ GE              : '>=' ;
 LT              : '<' ;
 LE              : '<=' ;
 
+NOT             : 'NOT' | 'Not' | 'not' ;
+AND             : 'AND' | 'And' | 'and' ;
+OR              : 'OR' | 'Or' | 'or' ;
+EOR             : 'EOR' | 'Eor' | 'eor' ;
+
+MOD             : 'MOD' | 'Mod' | 'mod' ;
+DIV             : 'DIV' | 'Div' | 'div' | '//';
+HAT             : '^' ;
 PLUS            : '+' ;
 MINUS           : '-' ;
 MULTIPLY        : '*' ;
 DIVIDE          : '/' ;
+SHL             : '<<' ;
+SHR             : '>>' ;
 
 COLON           : ':' ;
 COMMA           : ',' ;

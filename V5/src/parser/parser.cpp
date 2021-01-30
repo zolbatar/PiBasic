@@ -42,7 +42,7 @@ void MyParser::parse_and_compile()
     parser.setBuildParseTree(true);
     DARICParser::ProgContext* tree = parser.prog();
 
-    std::cout << tree->toStringTree() << std::endl;
+    //std::cout << tree->toStringTree() << std::endl;
 
     // Add to files list
     g_vm->add_filename(filename);

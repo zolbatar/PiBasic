@@ -210,6 +210,7 @@ void Interactive::execute_line(std::string s)
     fwrite(s.c_str(), s.length(), 1, fp);
     fclose(fp);
 
+    create_empty_vm();
     try {
         MyParser parser(temp_filename);
         parser.parse_and_compile();

@@ -201,6 +201,9 @@
     <ClCompile Include="..\src\debugger\manual\manual_variables_types.cpp">
       <Filter>Source Files\Debugger\Manual</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_numeric_expression.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">
