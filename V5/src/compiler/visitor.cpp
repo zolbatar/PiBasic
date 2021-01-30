@@ -18,13 +18,12 @@ antlrcpp::Any Compiler::visitLinenumber(DARICParser::LinenumberContext* context)
 
 antlrcpp::Any Compiler::visitStmt(DARICParser::StmtContext* context)
 {
-    antlrcpp::Any result = visitChildren(context);
     if (context->LET() != NULL) {
         return Compile_LET(context);
     } else if (context->PRINT() != NULL) {
         return Compile_PRINT(context);
     }
-    return result;
+    return NULL;
 }
 
 antlrcpp::Any Compiler::visitVar(DARICParser::VarContext* context)
