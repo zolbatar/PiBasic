@@ -115,7 +115,7 @@ antlrcpp::Any Compiler::visitString(DARICParser::StringContext* context)
             break;
         }
     } else {
-        insert_instruction(Bytecodes::LOAD_F, constant_string_create(v));
+        insert_instruction(Bytecodes::LOAD_S, constant_string_create(v));
         stack_push(Type::STRING);
     }
     return NULL;

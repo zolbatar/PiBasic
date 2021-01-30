@@ -35,9 +35,11 @@ private:
 
     // Globals and locals
     int global_var_index = 0;
+    std::map<std::string, Boxed> globals;
 
     // Constants
     std::list<Boxed> constants;
+      
 
     // Position etc.
     int line_number = 0;
