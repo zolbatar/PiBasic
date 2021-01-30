@@ -149,8 +149,8 @@ public:
     Font* get_glyph(VM_INT index, VM_INT index_ff, BYTE ascii, VM_INT font_size);
     int get_cursor_x() { return last_cursor_x; }
     int get_cursor_y() { return last_cursor_y; }
-    int set_cursor_x(int x) { last_cursor_x = x; }
-    int set_cursor_y(int y) { last_cursor_y = y; }
+    void set_cursor_x(int x) { last_cursor_x = x; }
+    void set_cursor_y(int y) { last_cursor_y = y; }
     void cursor_back(int index_ff);
     void delete_character(int index_ff);
     void print_character(int index_ff, char c, int* cursor_x, int* cursor_y);

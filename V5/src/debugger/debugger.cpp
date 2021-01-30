@@ -30,6 +30,7 @@ Debugger::Debugger()
     g_env.graphics.cache();
     auto x = g_env.graphics.get_cursor_x();
     auto y = g_env.graphics.get_cursor_y();
+    auto saved_colour = g_env.graphics.current_colour;
 
     debugger_options(-1, 0);
     while (true) {
@@ -56,6 +57,8 @@ Debugger::Debugger()
 
             g_env.graphics.set_cursor_x(x);
             g_env.graphics.set_cursor_y(y);
+            g_env.graphics.current_colour = saved_colour;
+
             debugger_open = false;
             return;
         } else if (g_env.graphics.inkey(-117)) {
