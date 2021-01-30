@@ -74,7 +74,23 @@ antlrcpp::Any Compiler::visitPrintList(DARICParser::PrintListContext* context)
 
 antlrcpp::Any Compiler::visitExpr(DARICParser::ExprContext* context)
 {
-    return visitChildren(context);
+    visitChildren(context);
+
+    // Work through the stack and print anything off
+    if (state == CompilerState::PRINT) {
+        while (stack_size() >= 1) {
+            insert_instruction_based_on_type(
+                {
+                    { Type::INTEGER, Bytecodes::PRINT_I },
+                    { Type::REAL, Bytecodes::PRINT_F },
+                    { Type::STRING, Bytecodes::PRINT_S },
+                },
+                peek_type(), create_print_flag());
+            stack_pop();
+        }
+    }
+
+    return NULL;
 }
 
 antlrcpp::Any Compiler::visitNumber(DARICParser::NumberContext* context)

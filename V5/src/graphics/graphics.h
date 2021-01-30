@@ -24,6 +24,8 @@ const int RIGHT = 2; // 0010
 const int BOTTOM = 4; // 0100
 const int TOP = 8; // 1000
 
+extern bool debugger_open;
+
 enum class EventType {
     Text
 };
@@ -145,7 +147,10 @@ public:
     VM_INT load_font(const char* filename);
     VM_INT create_font_by_size(int index, int font_size);
     Font* get_glyph(VM_INT index, VM_INT index_ff, BYTE ascii, VM_INT font_size);
+    int get_cursor_x() { return last_cursor_x; }
     int get_cursor_y() { return last_cursor_y; }
+    int set_cursor_x(int x) { last_cursor_x = x; }
+    int set_cursor_y(int y) { last_cursor_y = y; }
     void cursor_back(int index_ff);
     void delete_character(int index_ff);
     void print_character(int index_ff, char c, int* cursor_x, int* cursor_y);
@@ -184,8 +189,7 @@ public:
     bool is_debugger_requested() { return debugger_requested; }
 
 private:
-    bool debugger_requested = true;
-    bool debugger_open = false;
+    bool debugger_requested = false;
     std::chrono::high_resolution_clock::time_point last_render;
     std::queue<Event> key_events;
     std::queue<Event> mouse_events;

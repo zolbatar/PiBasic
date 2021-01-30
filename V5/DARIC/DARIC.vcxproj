@@ -171,9 +171,26 @@
   <ItemGroup>
     <ClCompile Include="..\src\compiler\compiler.cpp" />
     <ClCompile Include="..\src\compiler\compiler_assignment.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_constant.cpp" />
     <ClCompile Include="..\src\compiler\compiler_literal.cpp" />
     <ClCompile Include="..\src\compiler\compiler_printinput.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_stack.cpp" />
     <ClCompile Include="..\src\compiler\visitor.cpp" />
+    <ClCompile Include="..\src\debugger\debugger.cpp" />
+    <ClCompile Include="..\src\debugger\disassembly.cpp" />
+    <ClCompile Include="..\src\debugger\manual.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_2d.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_3d.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_boolean.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_debugging.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_fn_proc.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_io.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_keyboardmouse.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_looping.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_maths.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_operators.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_string.cpp" />
+    <ClCompile Include="..\src\debugger\manual\manual_variables_types.cpp" />
     <ClCompile Include="..\src\engine\engine_matrix.cpp" />
     <ClCompile Include="..\src\engine\engine_normals.cpp" />
     <ClCompile Include="..\src\engine\engine_object.cpp" />
@@ -199,6 +216,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\compiler\compiler.h" />
+    <ClInclude Include="..\src\debugger\debugger.h" />
+    <ClInclude Include="..\src\debugger\manual\manual.h" />
     <ClInclude Include="..\src\engine\engine.h" />
     <ClInclude Include="..\src\environment.h" />
     <ClInclude Include="..\src\graphics\graphics.h" />

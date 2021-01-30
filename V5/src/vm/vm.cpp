@@ -31,7 +31,7 @@
 
 extern Environment g_env;
 World world(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height());
-VM* vm = nullptr;
+VM* g_vm = nullptr;
 
 bool VM::opcode_HALT()
 {
@@ -3389,7 +3389,7 @@ void VM::inject_variables(std::vector<Boxed> chained_variables)
 
 void create_empty_vm()
 {
-    if (vm != nullptr)
-        delete vm;
-    vm = new VM();
+    if (g_vm != nullptr)
+        delete g_vm;
+    g_vm = new VM();
 }

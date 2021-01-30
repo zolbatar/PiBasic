@@ -52,11 +52,20 @@
     <Filter Include="Resource Files\Parser">
       <UniqueIdentifier>{37a3cfca-dbb4-49a7-bdc4-1b7f25960e3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Compiler">
+      <UniqueIdentifier>{8ee61817-dfe9-4ce1-99d3-afa095f4ae7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Debugger">
+      <UniqueIdentifier>{6740425d-db38-4759-a8f8-b11d2fd50d2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Debugger">
+      <UniqueIdentifier>{c0f51997-b1a7-4908-839d-b795734f280d}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\Compiler">
       <UniqueIdentifier>{7869e697-aaa8-4958-a20c-88ce638f25a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Compiler">
-      <UniqueIdentifier>{8ee61817-dfe9-4ce1-99d3-afa095f4ae7f}</UniqueIdentifier>
+    <Filter Include="Source Files\Debugger\Manual">
+      <UniqueIdentifier>{24164db6-2d8b-40aa-9ab1-ce7d09678c17}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +150,57 @@
     <ClCompile Include="..\src\compiler\compiler_literal.cpp">
       <Filter>Source Files\Compiler</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_constant.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_stack.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\debugger.cpp">
+      <Filter>Source Files\Debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\disassembly.cpp">
+      <Filter>Source Files\Debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual.cpp">
+      <Filter>Source Files\Debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_2d.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_3d.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_boolean.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_debugging.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_fn_proc.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_io.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_keyboardmouse.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_looping.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_maths.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_operators.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_string.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\debugger\manual\manual_variables_types.cpp">
+      <Filter>Source Files\Debugger\Manual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">
@@ -202,6 +262,12 @@
     </ClInclude>
     <ClInclude Include="..\src\compiler\compiler.h">
       <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\debugger\debugger.h">
+      <Filter>Header Files\Debugger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\debugger\manual\manual.h">
+      <Filter>Header Files\Debugger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

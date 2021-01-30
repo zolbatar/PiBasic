@@ -9,7 +9,7 @@ antlrcpp::Any Compiler::Compile_PRINT(DARICParser::StmtContext* context)
     auto r = visit(context->printList());
     state = CompilerState::NOSTATE;
     if (!print_semicolon_active) {
-        //g_vm->helper_bytecodes().insert_bytecode(line_number, file_number, write, Bytecodes::PRINT_NL);
+        insert_bytecode(Bytecodes::PRINT_NL);
     }
     return true;
 }

@@ -41,12 +41,19 @@ public:
     BytecodeContainer& helper_bytecodes() { return bc_container; }
     Stack& helper_stack() { return stack; }
 
+    // Files
+    std::vector<std::string> get_filenames() { return files; }
+    void add_filename(std::string filename) { files.push_back(filename); }
+
 private:
     Variables variables;
     Stack stack;
     Bytecode bc;
     BytecodeContainer bc_container;
     bool runtime_debug = false;
+
+    // Files
+    std::vector<std::string> files;
 
     // Error handling
     void error(std::string err)

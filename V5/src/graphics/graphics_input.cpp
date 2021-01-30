@@ -1,5 +1,6 @@
 #include "../environment.h"
 #include "../libs/clock.h"
+#include "../debugger/debugger.h"
 #include "graphics.h"
 #include <iostream>
 
@@ -11,6 +12,10 @@ void Graphics::poll()
 #else
     flip(false);
     SDL_Event event;
+    if (debugger_requested) {
+        debugger_requested = false;
+        Debugger();
+    }
     while (SDL_PollEvent(&event)) {
         switch (event.type) {
         case SDL_QUIT:
@@ -263,7 +268,9 @@ int Graphics::key_riscos_translate(SDL_Keysym key)
     case SDL_SCANCODE_F9:
         return 119;
     case SDL_SCANCODE_F10: {
-        debugger_requested = true;
+        if (!debugger_open && !debugger_requested) {
+            debugger_requested = true;
+        }
         return 30;
     }
     case SDL_SCANCODE_F11:

@@ -31,6 +31,13 @@ private:
     Type var_type = Type::NOTYPE;
     std::string var_name;
     std::string function_name;
+    Boxed* var = NULL;
+
+    // Globals and locals
+    int global_var_index = 0;
+
+    // Constants
+    std::list<Boxed> constants;
 
     // Position etc.
     int line_number = 0;
@@ -40,10 +47,17 @@ private:
     bool print_semicolon_active = false;
     bool print_hex = false;
     bool print_justify = false;
+    UINT32 create_print_flag() { return print_justify + (print_hex << 1); }
 
     // Stack
+    void insert_bytecode_based_on_type(std::map<Type, Bytecodes> m, Type type);
+    void insert_instruction_based_on_type(std::map<Type, Bytecodes> m, Type type, UINT32 value);
+    void insert_bytecode_based_on_peektype(std::map<Type, Bytecodes> m);
+    void ensure_stack_is_float();
+    void ensure_stack_is_integer();
     std::stack<Type> type_list;
     void stack_push(Type type) { type_list.push(type); }
+    UINT32 stack_size() { return static_cast<UINT32>(type_list.size()); }
     void stack_pop()
     {
         var_type = type_list.top();
@@ -62,6 +76,14 @@ private:
     {
         vm->helper_bytecodes().insert_instruction(line_number, file_number, phase == CompilerPhase::COMPILE, bc, data);
     }
+
+    inline void insert_bytecode(Bytecodes bc)
+    {
+        vm->helper_bytecodes().insert_bytecode(line_number, file_number, phase == CompilerPhase::COMPILE, bc);
+    }
+
+    UINT32 constant_float_create(VM_FLOAT v);
+    UINT32 constant_string_create(std::string v);
 
 protected:
     antlrcpp::Any visitProg(DARICParser::ProgContext* context);

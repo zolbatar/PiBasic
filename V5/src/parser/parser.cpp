@@ -4,7 +4,7 @@
 #include <iostream>
 
 extern Environment g_env;
-extern VM* vm;
+extern VM* g_vm;
 
 using namespace antlr4;
 
@@ -42,5 +42,8 @@ void MyParser::parse_and_compile()
     parser.setBuildParseTree(true);
     DARICParser::ProgContext* tree = parser.prog();
 
-    Compiler compiler(vm, tree);
+    // Add to files list
+    g_vm->add_filename(filename);
+
+    Compiler compiler(g_vm, tree);
 }
