@@ -216,22 +216,18 @@ void Interactive::execute_line(std::string s)
         parser.parse_and_compile();
     } catch (const std::runtime_error& ex) {
         g_env.graphics.print_console(ex.what());
+        return;
     }
 
     // Run!
     g_vm->run();
 
-    // Now parse and compile
-    /*    g_vm = std::make_unique<VM>();
-    parse_and_compile(temp_filename.c_str(), true, &variables);
-    if (g_vm->compile_successful) {
-        run_vm();
-        variables.clear();
-        auto v = g_vm->helper_variables().get_variables();
-        for (auto it = v.begin(); it != v.end(); ++it) {
-            variables.push_back(std::move(*it));
-        }
-    }*/
+    // Save variables
+    variables.clear();
+    auto v = g_vm->helper_variables().get_variables();
+    for (auto it = v.begin(); it != v.end(); ++it) {
+        variables.push_back(std::move(*it));
+    }
 }
 
 void Interactive::run_all_lines()

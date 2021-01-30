@@ -88,6 +88,22 @@ antlrcpp::Any Compiler::visitNumExpr(DARICParser::NumExprContext* context)
         default:
             throw std::runtime_error("Unknown type for DIV");
         }
+    } else if (context->MOD() != NULL) {
+        visitNumExpr_get_two(context);
+        switch (peek_type()) {
+        case Type::INTEGER:
+            insert_bytecode(Bytecodes::MOD_I);
+            stack_pop();
+            break;
+        case Type::REAL:
+            insert_bytecode(Bytecodes::MOD_F);
+            stack_pop();
+            stack_pop();
+            stack_push(Type::INTEGER);
+            break;
+        default:
+            throw std::runtime_error("Unknown type for MOD");
+        }
     } else if (context->NOT() != NULL) {
     } else if (context->AND() != NULL) {
         visitNumExpr_get_two(context);
