@@ -12,16 +12,17 @@
 class  DARICLexer : public antlr4::Lexer {
 public:
   enum {
-    LET = 1, MIDS = 2, PRINT = 3, REM = 4, PI = 5, SQR = 6, LN = 7, LOG = 8, 
+    LET = 1, PRINT = 2, REM = 3, TIME = 4, PI = 5, SQR = 6, LN = 7, LOG = 8, 
     EXP = 9, ATN = 10, TAN = 11, COS = 12, SIN = 13, ABS = 14, ACS = 15, 
     ASN = 16, DEG = 17, RAD = 18, SGN = 19, ASC = 20, LEN = 21, INSTR = 22, 
-    VAL = 23, RND = 24, RND0 = 25, RND1 = 26, EQ = 27, NE = 28, GT = 29, 
-    GE = 30, LT = 31, LE = 32, NOT = 33, AND = 34, OR = 35, EOR = 36, MOD = 37, 
-    DIV = 38, HAT = 39, PLUS = 40, MINUS = 41, MULTIPLY = 42, DIVIDE = 43, 
-    SHL = 44, SHR = 45, COLON = 46, COMMA = 47, DOLLAR = 48, LPAREN = 49, 
-    PERCENT = 50, RPAREN = 51, SEMICOLON = 52, UNDERSCORE = 53, COMMENT = 54, 
-    STRINGLITERAL = 55, LETTERS = 56, HEXNUMBER = 57, BINARYNUMBER = 58, 
-    NUMBER = 59, FLOAT = 60, WS = 61
+    VAL = 23, TIMES = 24, STRS = 25, STRINGS = 26, CHRS = 27, LEFTS = 28, 
+    MIDS = 29, RIGHTS = 30, RND = 31, RND0 = 32, RND1 = 33, EQ = 34, NE = 35, 
+    GT = 36, GE = 37, LT = 38, LE = 39, NOT = 40, AND = 41, OR = 42, EOR = 43, 
+    MOD = 44, DIV = 45, HAT = 46, PLUS = 47, MINUS = 48, MULTIPLY = 49, 
+    DIVIDE = 50, SHL = 51, SHR = 52, COLON = 53, COMMA = 54, DOLLAR = 55, 
+    LPAREN = 56, PERCENT = 57, RPAREN = 58, SEMICOLON = 59, UNDERSCORE = 60, 
+    COMMENT = 61, STRINGLITERAL = 62, LETTERS = 63, HEXNUMBER = 64, BINARYNUMBER = 65, 
+    NUMBER = 66, FLOAT = 67, WS = 68
   };
 
   explicit DARICLexer(antlr4::CharStream *input);

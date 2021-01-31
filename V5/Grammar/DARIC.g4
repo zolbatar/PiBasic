@@ -89,7 +89,15 @@ numberFloat
     ;
 
 strFunc
-    : MIDS LPAREN strExpr COMMA numExpr COMMA numExpr RPAREN
+    : TIMES 
+    | CHRS LPAREN numExpr RPAREN
+    | CHRS numExpr 
+    | LEFTS LPAREN strExpr COMMA numExpr RPAREN
+    | MIDS LPAREN strExpr COMMA numExpr COMMA numExpr RPAREN
+    | MIDS LPAREN strExpr COMMA numExpr RPAREN
+    | RIGHTS LPAREN strExpr COMMA numExpr RPAREN
+    | STRS LPAREN numExpr RPAREN
+    | STRINGS LPAREN numExpr COMMA strExpr RPAREN
     ;
 
 string
@@ -105,6 +113,7 @@ strExpr
 
 numFunc
     : PI
+    | TIME
     | RND
     | RND0
     | RND1
@@ -168,10 +177,10 @@ relop
    
 // Lexer stuff
 LET             : 'LET' | 'Let' | 'let' ;
-MIDS            : 'MID$' | 'Mid$' | 'mid$' ;
 PRINT           : 'PRINT' | 'Print' | 'print' ;
 REM             : 'REM' | 'Rem' | 'rem' ;
 
+TIME            : 'TIME' | 'Time' | 'time' ;
 PI              : 'PI' | 'Pi' | 'pi' ;
 SQR             : 'SQR' | 'Sqr' | 'sqr' ;
 LN              : 'LN' | 'Ln' | 'ln' ;
@@ -192,6 +201,14 @@ ASC             : 'ASC' | 'Asc' | 'asc' ;
 LEN             : 'LEN' | 'Len' | 'len' ;
 INSTR           : 'INSTR' | 'Instr' | 'instr' ;
 VAL             : 'VAL' | 'Val' | 'val' ;
+
+TIMES           : 'TIME$' | 'Time$' | 'time$' ;
+STRS            : 'STR$' | 'Str$' | 'str$' ;
+STRINGS         : 'STRING$' | 'String$' | 'string$' ;
+CHRS            : 'CHR$' | 'Chr$' | 'chr$' ;
+LEFTS           : 'LEFT$' | 'Left$' | 'left$' ;
+MIDS            : 'MID$' | 'Mid$' | 'mid$' ;
+RIGHTS          : 'RIGHT$' | 'Right$' | 'right$' ;
 
 RND             : 'RND' | 'Rnd' | 'rnd' ;
 RND0            : 'RND(0)' | 'Rnd(0)' | 'rnd(0)' ;

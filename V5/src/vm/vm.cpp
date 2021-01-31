@@ -2166,6 +2166,9 @@ bool VM::opcode_MIDS()
     VM_INT v2 = stack.pop_int(bc);
     VM_INT v1 = stack.pop_int(bc) - 1;
     VM_STRING string = stack.pop_string(bc);
+    if (v2 == 0) {
+        v2 = string.length() - v1;
+    }
     VM_STRING v = string.substr(v1, v2);
     stack.push_string(bc, v);
     if (runtime_debug)

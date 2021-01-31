@@ -179,6 +179,7 @@
     <ClCompile Include="..\src\compiler\compiler_printinput.cpp" />
     <ClCompile Include="..\src\compiler\compiler_stack.cpp" />
     <ClCompile Include="..\src\compiler\compiler_string_expression.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_string_function.cpp" />
     <ClCompile Include="..\src\compiler\visitor.cpp" />
     <ClCompile Include="..\src\debugger\debugger.cpp" />
     <ClCompile Include="..\src\debugger\disassembly.cpp" />

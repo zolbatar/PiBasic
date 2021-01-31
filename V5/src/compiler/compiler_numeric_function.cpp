@@ -3,9 +3,11 @@
 antlrcpp::Any Compiler::visitNumFunc(DARICParser::NumFuncContext* context)
 {
     if (context->PI() != NULL) {
-        visit(context->numExpr());
         insert_bytecode(Bytecodes::PI);
         stack_push(Type::REAL);
+    } else if (context->TIME() != NULL) {
+        insert_bytecode(Bytecodes::TIME);
+        stack_push(Type::INTEGER);
     } else if (context->LN() != NULL) {
         visit(context->numExpr());
         ensure_stack_is_float();
