@@ -98,6 +98,7 @@ strExpr
     : string
     | strVar
     | strFunc
+    | strExpr PLUS strExpr
     ;
 
 numFunc

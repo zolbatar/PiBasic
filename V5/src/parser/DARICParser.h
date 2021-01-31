@@ -403,6 +403,9 @@ public:
     StringContext *string();
     StrVarContext *strVar();
     StrFuncContext *strFunc();
+    std::vector<StrExprContext *> strExpr();
+    StrExprContext* strExpr(size_t i);
+    antlr4::tree::TerminalNode *PLUS();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -410,7 +413,7 @@ public:
   };
 
   StrExprContext* strExpr();
-
+  StrExprContext* strExpr(int precedence);
   class  NumFuncContext : public antlr4::ParserRuleContext {
   public:
     NumFuncContext(antlr4::ParserRuleContext *parent, size_t invokingState);
@@ -480,6 +483,7 @@ public:
 
 
   virtual bool sempred(antlr4::RuleContext *_localctx, size_t ruleIndex, size_t predicateIndex) override;
+  bool strExprSempred(StrExprContext *_localctx, size_t predicateIndex);
   bool numExprSempred(NumExprContext *_localctx, size_t predicateIndex);
 
 private:

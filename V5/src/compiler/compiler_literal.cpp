@@ -101,6 +101,8 @@ antlrcpp::Any Compiler::visitNumberFloat(DARICParser::NumberFloatContext* contex
 antlrcpp::Any Compiler::visitString(DARICParser::StringContext* context)
 {
     auto v = context->getText();
+    v.erase(0, 1);
+    v.erase(v.length() - 1, 1);
     if (state == CompilerState::DATA) {
         switch (phase) {
         case CompilerPhase::LOOKAHEAD: {

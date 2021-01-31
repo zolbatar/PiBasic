@@ -51,7 +51,6 @@ antlrcpp::Any Compiler::visitNumExpr(DARICParser::NumExprContext* context)
         insert_bytecode_based_on_peektype({
             { Type::INTEGER, Bytecodes::ADD_I },
             { Type::REAL, Bytecodes::ADD_F },
-            { Type::STRING, Bytecodes::ADD_S },
         });
         stack_pop();
     } else if (context->MINUS() != NULL) {
