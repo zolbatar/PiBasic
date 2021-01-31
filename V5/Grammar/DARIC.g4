@@ -105,6 +105,10 @@ strExpr
 
 numFunc
     : PI
+    | RND
+    | RND0
+    | RND1
+    | RND LPAREN numExpr RPAREN
     | SQR LPAREN numExpr RPAREN
     | LN LPAREN numExpr RPAREN
     | LOG LPAREN numExpr RPAREN
@@ -119,6 +123,7 @@ numFunc
     | DEG LPAREN numExpr RPAREN
     | RAD LPAREN numExpr RPAREN
     | SQR LPAREN numExpr RPAREN
+    | SGN LPAREN numExpr RPAREN
     ;
 
 numExpr
@@ -175,6 +180,11 @@ ASN             : 'ASN' | 'Asn' | 'asn' ;
 DEG             : 'DEG' | 'Deg' | 'deg' ;
 RAD             : 'RAD' | 'Rad' | 'rad' ;
 SGN             : 'SGN' | 'Sgn' | 'sgn' ;
+
+
+RND             : 'RND' | 'Rnd' | 'rnd' ;
+RND0            : 'RND(0)' | 'Rnd(0)' | 'rnd(0)' ;
+RND1            : 'RND(1)' | 'Rnd(1)' | 'rnd(1)' ;
 
 EQ              : '=' ;
 NE              : '<>' ;

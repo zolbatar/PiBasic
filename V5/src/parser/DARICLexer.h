@@ -14,13 +14,13 @@ public:
   enum {
     LET = 1, MIDS = 2, PRINT = 3, REM = 4, PI = 5, SQR = 6, LN = 7, LOG = 8, 
     EXP = 9, ATN = 10, TAN = 11, COS = 12, SIN = 13, ABS = 14, ACS = 15, 
-    ASN = 16, DEG = 17, RAD = 18, SGN = 19, EQ = 20, NE = 21, GT = 22, GE = 23, 
-    LT = 24, LE = 25, NOT = 26, AND = 27, OR = 28, EOR = 29, MOD = 30, DIV = 31, 
-    HAT = 32, PLUS = 33, MINUS = 34, MULTIPLY = 35, DIVIDE = 36, SHL = 37, 
-    SHR = 38, COLON = 39, COMMA = 40, DOLLAR = 41, LPAREN = 42, PERCENT = 43, 
-    RPAREN = 44, SEMICOLON = 45, UNDERSCORE = 46, COMMENT = 47, STRINGLITERAL = 48, 
-    LETTERS = 49, HEXNUMBER = 50, BINARYNUMBER = 51, NUMBER = 52, FLOAT = 53, 
-    WS = 54
+    ASN = 16, DEG = 17, RAD = 18, SGN = 19, RND = 20, RND0 = 21, RND1 = 22, 
+    EQ = 23, NE = 24, GT = 25, GE = 26, LT = 27, LE = 28, NOT = 29, AND = 30, 
+    OR = 31, EOR = 32, MOD = 33, DIV = 34, HAT = 35, PLUS = 36, MINUS = 37, 
+    MULTIPLY = 38, DIVIDE = 39, SHL = 40, SHR = 41, COLON = 42, COMMA = 43, 
+    DOLLAR = 44, LPAREN = 45, PERCENT = 46, RPAREN = 47, SEMICOLON = 48, 
+    UNDERSCORE = 49, COMMENT = 50, STRINGLITERAL = 51, LETTERS = 52, HEXNUMBER = 53, 
+    BINARYNUMBER = 54, NUMBER = 55, FLOAT = 56, WS = 57
   };
 
   explicit DARICLexer(antlr4::CharStream *input);

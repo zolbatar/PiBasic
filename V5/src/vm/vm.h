@@ -84,9 +84,6 @@ private:
     // Case statements
     bool case_flag = false;
 
-    // Randoms
-    double last_random = 0.0;
-
     // The actual opcodes methods
     bool opcode_HALT();
     bool opcode_DROP();

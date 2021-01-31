@@ -66,6 +66,28 @@ antlrcpp::Any Compiler::visitNumFunc(DARICParser::NumFuncContext* context)
         visit(context->numExpr());
         ensure_stack_is_float();
         insert_bytecode(Bytecodes::SQR);
+    } else if (context->SGN() != NULL) {
+        visit(context->numExpr());
+        ensure_stack_is_float();
+        insert_bytecode(Bytecodes::SGN);
+        stack_push(Type::INTEGER);
+    } else if (context->RND() != NULL) {
+        visit(context->numExpr());
+        if (context->numExpr() == NULL) {
+            insert_bytecode(Bytecodes::RND);
+            stack_push(Type::INTEGER);
+        } else {
+            ensure_stack_is_integer();
+            insert_bytecode(Bytecodes::RNDRANGE);
+        }
+    } else if (context->RND0() != NULL) {
+        insert_instruction(Bytecodes::CONST_I, 0);
+        insert_bytecode(Bytecodes::RNDREAL);
+        stack_push(Type::REAL);
+    } else if (context->RND1() != NULL) {
+        insert_instruction(Bytecodes::CONST_I, 1);
+        insert_bytecode(Bytecodes::RNDREAL);
+        stack_push(Type::REAL);
     } else {
         return visitChildren(context);
     }

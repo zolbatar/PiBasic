@@ -33,6 +33,9 @@ extern Environment g_env;
 World world(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height());
 VM* g_vm = nullptr;
 
+// Randoms
+double last_random = 0.0;
+
 bool VM::opcode_HALT()
 {
     if (runtime_debug)
