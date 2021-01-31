@@ -56,6 +56,7 @@ private:
     void insert_bytecode_based_on_peektype(std::map<Type, Bytecodes> m);
     void ensure_stack_is_float();
     void ensure_stack_is_integer();
+    void ensure_stack_is_string();
     std::stack<Type> type_list;
     void stack_push(Type type)
     {

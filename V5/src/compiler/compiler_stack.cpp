@@ -50,3 +50,13 @@ void Compiler::ensure_stack_is_float()
         throw std::runtime_error("Unknown type conversion");
     }
 }
+
+void Compiler::ensure_stack_is_string()
+{
+    switch (peek_type()) {
+    case Type::STRING:
+        break;
+    default:
+        throw std::runtime_error("Unknown type conversion: String expected");
+    }
+}

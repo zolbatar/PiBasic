@@ -88,6 +88,40 @@ antlrcpp::Any Compiler::visitNumFunc(DARICParser::NumFuncContext* context)
         insert_instruction(Bytecodes::CONST_I, 1);
         insert_bytecode(Bytecodes::RNDREAL);
         stack_push(Type::REAL);
+        /* The next ones are string to number*/
+    } else if (context->ASC() != NULL) {
+        visit(context->strExpr(0)); 
+        ensure_stack_is_string();
+        stack_pop();
+        insert_bytecode(Bytecodes::ASC);
+        stack_push(Type::INTEGER);
+    } else if (context->LEN() != NULL) {
+        visit(context->strExpr(0));
+        ensure_stack_is_string();
+        stack_pop();
+        insert_bytecode(Bytecodes::LEN);
+        stack_push(Type::INTEGER);
+    } else if (context->VAL() != NULL) {
+        visit(context->strExpr(0));
+        ensure_stack_is_string();
+        stack_pop();
+        insert_bytecode(Bytecodes::VAL);
+        stack_push(Type::REAL);
+    } else if (context->INSTR() != NULL) {
+        visit(context->strExpr(0));
+        ensure_stack_is_string();
+        stack_pop();
+        visit(context->strExpr(1));
+        ensure_stack_is_string();
+        stack_pop();
+        if (context->numExpr() != NULL) {
+            visit(context->numExpr());
+            stack_pop();
+        } else {
+            insert_instruction(Bytecodes::CONST_I, 0);
+        }
+        insert_bytecode(Bytecodes::INSTR);
+        stack_push(Type::INTEGER);
     } else {
         return visitChildren(context);
     }

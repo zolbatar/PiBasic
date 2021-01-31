@@ -124,6 +124,13 @@ numFunc
     | RAD LPAREN numExpr RPAREN
     | SQR LPAREN numExpr RPAREN
     | SGN LPAREN numExpr RPAREN
+    
+    /* String to number */
+    | ASC LPAREN strExpr RPAREN
+    | LEN LPAREN strExpr RPAREN
+    | INSTR LPAREN strExpr COMMA strExpr RPAREN
+    | INSTR LPAREN strExpr COMMA strExpr COMMA numExpr RPAREN
+    | VAL LPAREN strExpr RPAREN
     ;
 
 numExpr
@@ -181,6 +188,10 @@ DEG             : 'DEG' | 'Deg' | 'deg' ;
 RAD             : 'RAD' | 'Rad' | 'rad' ;
 SGN             : 'SGN' | 'Sgn' | 'sgn' ;
 
+ASC             : 'ASC' | 'Asc' | 'asc' ;
+LEN             : 'LEN' | 'Len' | 'len' ;
+INSTR           : 'INSTR' | 'Instr' | 'instr' ;
+VAL             : 'VAL' | 'Val' | 'val' ;
 
 RND             : 'RND' | 'Rnd' | 'rnd' ;
 RND0            : 'RND(0)' | 'Rnd(0)' | 'rnd(0)' ;
