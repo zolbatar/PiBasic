@@ -12,13 +12,15 @@
 class  DARICParser : public antlr4::Parser {
 public:
   enum {
-    LET = 1, MIDS = 2, PI = 3, PRINT = 4, REM = 5, EQ = 6, NE = 7, GT = 8, 
-    GE = 9, LT = 10, LE = 11, NOT = 12, AND = 13, OR = 14, EOR = 15, MOD = 16, 
-    DIV = 17, HAT = 18, PLUS = 19, MINUS = 20, MULTIPLY = 21, DIVIDE = 22, 
-    SHL = 23, SHR = 24, COLON = 25, COMMA = 26, DOLLAR = 27, LPAREN = 28, 
-    PERCENT = 29, RPAREN = 30, SEMICOLON = 31, UNDERSCORE = 32, COMMENT = 33, 
-    STRINGLITERAL = 34, LETTERS = 35, HEXNUMBER = 36, BINARYNUMBER = 37, 
-    NUMBER = 38, FLOAT = 39, WS = 40
+    LET = 1, MIDS = 2, PRINT = 3, REM = 4, PI = 5, SQR = 6, LN = 7, LOG = 8, 
+    EXP = 9, ATN = 10, TAN = 11, COS = 12, SIN = 13, ABS = 14, ACS = 15, 
+    ASN = 16, DEG = 17, RAD = 18, SGN = 19, EQ = 20, NE = 21, GT = 22, GE = 23, 
+    LT = 24, LE = 25, NOT = 26, AND = 27, OR = 28, EOR = 29, MOD = 30, DIV = 31, 
+    HAT = 32, PLUS = 33, MINUS = 34, MULTIPLY = 35, DIVIDE = 36, SHL = 37, 
+    SHR = 38, COLON = 39, COMMA = 40, DOLLAR = 41, LPAREN = 42, PERCENT = 43, 
+    RPAREN = 44, SEMICOLON = 45, UNDERSCORE = 46, COMMENT = 47, STRINGLITERAL = 48, 
+    LETTERS = 49, HEXNUMBER = 50, BINARYNUMBER = 51, NUMBER = 52, FLOAT = 53, 
+    WS = 54
   };
 
   enum {
@@ -299,6 +301,8 @@ public:
     virtual size_t getRuleIndex() const override;
     NumberIntegerContext *numberInteger();
     NumberFloatContext *numberFloat();
+    NumberHexContext *numberHex();
+    NumberBinaryContext *numberBinary();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -419,6 +423,22 @@ public:
     NumFuncContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *PI();
+    antlr4::tree::TerminalNode *SQR();
+    antlr4::tree::TerminalNode *LPAREN();
+    NumExprContext *numExpr();
+    antlr4::tree::TerminalNode *RPAREN();
+    antlr4::tree::TerminalNode *LN();
+    antlr4::tree::TerminalNode *LOG();
+    antlr4::tree::TerminalNode *EXP();
+    antlr4::tree::TerminalNode *ATN();
+    antlr4::tree::TerminalNode *TAN();
+    antlr4::tree::TerminalNode *COS();
+    antlr4::tree::TerminalNode *SIN();
+    antlr4::tree::TerminalNode *ABS();
+    antlr4::tree::TerminalNode *ACS();
+    antlr4::tree::TerminalNode *ASN();
+    antlr4::tree::TerminalNode *DEG();
+    antlr4::tree::TerminalNode *RAD();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;

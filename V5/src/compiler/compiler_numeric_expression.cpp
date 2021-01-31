@@ -104,16 +104,28 @@ antlrcpp::Any Compiler::visitNumExpr(DARICParser::NumExprContext* context)
             throw std::runtime_error("Unknown type for MOD");
         }
     } else if (context->NOT() != NULL) {
-    } else if (context->AND() != NULL) {
+        visit(context->numExpr(0));
+        ensure_stack_is_integer();
+        insert_bytecode(Bytecodes::BOOL_NOT);
+    } else if (context->AND() != NULL) {    
         visitNumExpr_get_two(context);
+        boolean(Bytecodes::BOOL_AND);
     } else if (context->OR() != NULL) {
         visitNumExpr_get_two(context);
+        boolean(Bytecodes::BOOL_OR);
     } else if (context->EOR() != NULL) {
         visitNumExpr_get_two(context);
+        boolean(Bytecodes::BOOL_EOR);
     } else if (context->SHL() != NULL) {
         visitNumExpr_get_two(context);
+        ensure_stack_is_integer();
+        insert_bytecode(Bytecodes::SHL);
+        stack_pop();
     } else if (context->SHR() != NULL) {
         visitNumExpr_get_two(context);
+        ensure_stack_is_integer();
+        insert_bytecode(Bytecodes::SHR);
+        stack_pop();
     } else {
         visitChildren(context);
     }

@@ -39,7 +39,6 @@ private:
 
     // Constants
     std::list<Boxed> constants;
-      
 
     // Position etc.
     int line_number = 0;
@@ -77,6 +76,7 @@ private:
     }
     Type peek_type() { return type_list.top(); }
 
+    // Create bytecode
     inline void insert_instruction(Bytecodes bc, UINT32 data)
     {
         vm->helper_bytecodes().insert_instruction(line_number, file_number, phase == CompilerPhase::COMPILE, bc, data);
@@ -87,8 +87,12 @@ private:
         vm->helper_bytecodes().insert_bytecode(line_number, file_number, phase == CompilerPhase::COMPILE, bc);
     }
 
+    // Constants
     UINT32 constant_float_create(VM_FLOAT v);
     UINT32 constant_string_create(std::string v);
+
+    // Types of tokens
+    void boolean(Bytecodes i);
 
 protected:
     antlrcpp::Any visitProg(DARICParser::ProgContext* context);

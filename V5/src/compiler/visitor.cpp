@@ -81,11 +81,6 @@ antlrcpp::Any Compiler::visitStrFunc(DARICParser::StrFuncContext* context)
     return visitChildren(context);
 }
 
-antlrcpp::Any Compiler::visitNumFunc(DARICParser::NumFuncContext* context)
-{
-    return visitChildren(context);
-}
-
 antlrcpp::Any Compiler::visitRelop(DARICParser::RelopContext* context)
 {
     return visitChildren(context);

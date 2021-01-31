@@ -207,6 +207,12 @@
     <ClCompile Include="..\src\compiler\compiler_string_expression.cpp">
       <Filter>Source Files\Compiler</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_boolean.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_numeric_function.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">

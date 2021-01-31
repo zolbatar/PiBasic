@@ -171,9 +171,11 @@
   <ItemGroup>
     <ClCompile Include="..\src\compiler\compiler.cpp" />
     <ClCompile Include="..\src\compiler\compiler_assignment.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_boolean.cpp" />
     <ClCompile Include="..\src\compiler\compiler_constant.cpp" />
     <ClCompile Include="..\src\compiler\compiler_literal.cpp" />
     <ClCompile Include="..\src\compiler\compiler_numeric_expression.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_numeric_function.cpp" />
     <ClCompile Include="..\src\compiler\compiler_printinput.cpp" />
     <ClCompile Include="..\src\compiler\compiler_stack.cpp" />
     <ClCompile Include="..\src\compiler\compiler_string_expression.cpp" />

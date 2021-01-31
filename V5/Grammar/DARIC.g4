@@ -68,6 +68,8 @@ expr
 number
     : numberInteger
     | numberFloat
+    | numberHex
+    | numberBinary
     ;
 
 numberInteger
@@ -103,6 +105,20 @@ strExpr
 
 numFunc
     : PI
+    | SQR LPAREN numExpr RPAREN
+    | LN LPAREN numExpr RPAREN
+    | LOG LPAREN numExpr RPAREN
+    | EXP LPAREN numExpr RPAREN
+    | ATN LPAREN numExpr RPAREN
+    | TAN LPAREN numExpr RPAREN
+    | COS LPAREN numExpr RPAREN
+    | SIN LPAREN numExpr RPAREN
+    | ABS LPAREN numExpr RPAREN
+    | ACS LPAREN numExpr RPAREN
+    | ASN LPAREN numExpr RPAREN
+    | DEG LPAREN numExpr RPAREN
+    | RAD LPAREN numExpr RPAREN
+    | SQR LPAREN numExpr RPAREN
     ;
 
 numExpr
@@ -141,9 +157,24 @@ relop
 // Lexer stuff
 LET             : 'LET' | 'Let' | 'let' ;
 MIDS            : 'MID$' | 'Mid$' | 'mid$' ;
-PI              : 'PI' | 'Pi' | 'pi' ;
 PRINT           : 'PRINT' | 'Print' | 'print' ;
 REM             : 'REM' | 'Rem' | 'rem' ;
+
+PI              : 'PI' | 'Pi' | 'pi' ;
+SQR             : 'SQR' | 'Sqr' | 'sqr' ;
+LN              : 'LN' | 'Ln' | 'ln' ;
+LOG             : 'LOG' | 'Log' | 'log' ;
+EXP             : 'EXP' | 'Exp' | 'exp' ;
+ATN             : 'ATN' | 'Atn' | 'atn' ;
+TAN             : 'TAN' | 'Tan' | 'tan' ;
+COS             : 'COS' | 'Cos' | 'cos' ;
+SIN             : 'SIN' | 'Sin' | 'sin' ;
+ABS             : 'ABS' | 'Abs' | 'abs' ;
+ACS             : 'ACS' | 'Acs' | 'acs' ;
+ASN             : 'ASN' | 'Asn' | 'asn' ;
+DEG             : 'DEG' | 'Deg' | 'deg' ;
+RAD             : 'RAD' | 'Rad' | 'rad' ;
+SGN             : 'SGN' | 'Sgn' | 'sgn' ;
 
 EQ              : '=' ;
 NE              : '<>' ;
@@ -179,7 +210,7 @@ COMMENT         : REM ~ [\r\n]* ;
 STRINGLITERAL   : '"' ~ ["\r\n]* '"' ;
 LETTERS         : ('a' .. 'z' | 'A' .. 'Z')+ ;
 HEXNUMBER       : '&' [0-9A-Fa-f]+ ;
-BINARYNUMBER    : '&' [0|1]+ ;
-NUMBER          : [0-9] + ([e|E] NUMBER)* ;
+BINARYNUMBER    : '%' [0|1]+ ;
+NUMBER          : [0-9]+ ([e|E] NUMBER)* ;
 FLOAT           : [0-9]* '.' [0-9]* ([e|E] [0-9]+ )* ;
 WS              : [ \r\n\t] + -> channel (HIDDEN) ;
