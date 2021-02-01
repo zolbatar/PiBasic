@@ -97,6 +97,7 @@ strFunc
     | MIDS LPAREN strExpr COMMA numExpr RPAREN
     | RIGHTS LPAREN strExpr COMMA numExpr RPAREN
     | STRS LPAREN numExpr RPAREN
+    | STRS TILDE LPAREN numExpr RPAREN
     | STRINGS LPAREN numExpr COMMA strExpr RPAREN
     ;
 
@@ -112,59 +113,57 @@ strExpr
     ;
 
 numFunc
-    : PI
-    | TIME
-    | RND
-    | RND0
-    | RND1
-    | RND LPAREN numExpr RPAREN
-    | SQR LPAREN numExpr RPAREN
-    | LN LPAREN numExpr RPAREN
-    | LOG LPAREN numExpr RPAREN
-    | EXP LPAREN numExpr RPAREN
-    | ATN LPAREN numExpr RPAREN
-    | TAN LPAREN numExpr RPAREN
-    | COS LPAREN numExpr RPAREN
-    | SIN LPAREN numExpr RPAREN
-    | ABS LPAREN numExpr RPAREN
-    | ACS LPAREN numExpr RPAREN
-    | ASN LPAREN numExpr RPAREN
-    | DEG LPAREN numExpr RPAREN
-    | RAD LPAREN numExpr RPAREN
-    | SQR LPAREN numExpr RPAREN
-    | SGN LPAREN numExpr RPAREN
+    : PI                                    #numFuncPI
+    | TIME                                  #numFuncTIME
+    | RND                                   #numFuncRND
+    | RND0                                  #numFuncRND0
+    | RND1                                  #numFuncRND1
+    | RND LPAREN numExpr RPAREN             #numFuncRNDRANGE
+    | LN LPAREN numExpr RPAREN              #numFuncLN
+    | LOG LPAREN numExpr RPAREN             #numFuncLOG
+    | EXP LPAREN numExpr RPAREN             #numFuncEXP
+    | ATN LPAREN numExpr RPAREN             #numFuncATN
+    | TAN LPAREN numExpr RPAREN             #numFuncTAN
+    | COS LPAREN numExpr RPAREN             #numFuncCOS
+    | SIN LPAREN numExpr RPAREN             #numFuncSIN
+    | ABS LPAREN numExpr RPAREN             #numFuncABS
+    | ACS LPAREN numExpr RPAREN             #numFuncACS
+    | ASN LPAREN numExpr RPAREN             #numFuncASN
+    | DEG LPAREN numExpr RPAREN             #numFuncDEG
+    | RAD LPAREN numExpr RPAREN             #numFuncRAD
+    | SQR LPAREN numExpr RPAREN             #numFuncSQR
+    | SGN LPAREN numExpr RPAREN             #numFuncSGN
     
     /* String to number */
-    | ASC LPAREN strExpr RPAREN
-    | LEN LPAREN strExpr RPAREN
-    | INSTR LPAREN strExpr COMMA strExpr RPAREN
-    | INSTR LPAREN strExpr COMMA strExpr COMMA numExpr RPAREN
-    | VAL LPAREN strExpr RPAREN
+    | ASC LPAREN strExpr RPAREN                                     #numFuncASC
+    | LEN LPAREN strExpr RPAREN                                     #numFuncLEN
+    | INSTR LPAREN strExpr COMMA strExpr RPAREN                     #numFuncINSTR2
+    | INSTR LPAREN strExpr COMMA strExpr COMMA numExpr RPAREN       #numFuncINSTR3
+    | VAL LPAREN strExpr RPAREN                                     #numFuncVAL
     ;
 
 numExpr
-    : number
-    | numFunc
-    | NOT numExpr
-    | LPAREN numExpr RPAREN
-    | <assoc=right> numExpr HAT numExpr
-    | numExpr MULTIPLY numExpr
-    | numExpr DIVIDE numExpr
-    | numExpr DIV numExpr
-    | numExpr MOD numExpr
-    | numExpr PLUS numExpr
-    | numExpr MINUS numExpr
-    | numExpr relop numExpr
-    | strExpr relop strExpr
-    | numExpr SHL numExpr
-    | numExpr SHR numExpr
-    | numExpr AND numExpr
-    | numExpr NOT numExpr
-    | numExpr OR numExpr
-    | numExpr EOR numExpr
+    : number                                #numExprNumber
+    | numFunc                               #numExprFunc
+    | NOT numExpr                           #numExprNOT
+    | LPAREN numExpr RPAREN                 #numExprNested
+    | <assoc=right> numExpr HAT numExpr     #numExprHat
+    | numExpr MULTIPLY numExpr              #numExprMultiply
+    | numExpr DIVIDE numExpr                #numExprDivide
+    | numExpr DIV numExpr                   #numExprDIV
+    | numExpr MOD numExpr                   #numExprMOD
+    | numExpr PLUS numExpr                  #numExprPlus
+    | numExpr MINUS numExpr                 #numExprSubtract
+    | numExpr compare numExpr               #numExprNumRelop
+    | strExpr compare strExpr               #numExprStrRelop
+    | numExpr SHL numExpr                   #numExprSHL
+    | numExpr SHR numExpr                   #numExprSHR
+    | numExpr AND numExpr                   #numExprAND
+    | numExpr OR numExpr                    #numExprOR
+    | numExpr EOR numExpr                   #numExprEOR
     ;
 
-relop
+compare
     : EQ
     | NE
     | GT
@@ -236,6 +235,7 @@ DIVIDE          : '/' ;
 SHL             : '<<' ;
 SHR             : '>>' ;
 
+TILDE           : '~' ;
 COLON           : ':' ;
 COMMA           : ',' ;
 DOLLAR          : '$' ;

@@ -67,6 +67,9 @@
     <Filter Include="Source Files\Debugger\Manual">
       <UniqueIdentifier>{24164db6-2d8b-40aa-9ab1-ce7d09678c17}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Examples">
+      <UniqueIdentifier>{a3a64f7d-ce98-494a-849e-4c1446884d46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -216,6 +219,12 @@
     <ClCompile Include="..\src\compiler\compiler_string_function.cpp">
       <Filter>Source Files\Compiler</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_comparison.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_maths.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">
@@ -284,6 +293,9 @@
     <ClInclude Include="..\src\debugger\manual\manual.h">
       <Filter>Header Files\Debugger</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\vm\performance.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Grammar\DARIC.g4">
@@ -306,6 +318,69 @@
     </None>
     <None Include="..\a.daric">
       <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Examples\Cubes.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\DARIC.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Data">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Fonts.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Graphics.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Greedy.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Load3D.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Mandelbrot.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Menus.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Perlin.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\SetupGraphics.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\SetupGraphicsBanked.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Sierpinski.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Start.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Terrain.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\TerrainDemo.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Test">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Tester.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\Welcome.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\WorldInLines.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\TesterLineNumbers.daric">
+      <Filter>Resource Files\Examples</Filter>
     </None>
   </ItemGroup>
 </Project>

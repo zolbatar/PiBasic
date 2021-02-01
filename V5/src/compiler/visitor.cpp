@@ -75,8 +75,3 @@ antlrcpp::Any Compiler::visitNumber(DARICParser::NumberContext* context)
 {
     return visitChildren(context);
 }
-
-antlrcpp::Any Compiler::visitRelop(DARICParser::RelopContext* context)
-{
-    return visitChildren(context);
-}

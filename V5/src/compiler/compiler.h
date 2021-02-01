@@ -119,7 +119,61 @@ protected:
     antlrcpp::Any visitStrFunc(DARICParser::StrFuncContext* context);
     antlrcpp::Any visitStrExpr(DARICParser::StrExprContext* context);
     antlrcpp::Any visitNumFunc(DARICParser::NumFuncContext* context);
-    void visitNumExpr_get_two(DARICParser::NumExprContext* context);
-    antlrcpp::Any visitNumExpr(DARICParser::NumExprContext* context);
-    antlrcpp::Any visitRelop(DARICParser::RelopContext* context);
+
+    /* Numeric expressions */
+    antlrcpp::Any visitNumExprNumber(DARICParser::NumExprNumberContext* context);
+    antlrcpp::Any visitNumExprFunc(DARICParser::NumExprFuncContext* context);
+    antlrcpp::Any visitNumExprNested(DARICParser::NumExprNestedContext* context);
+
+    /* Numeric functions */
+    antlrcpp::Any visitNumFuncPI(DARICParser::NumFuncPIContext* context);
+    antlrcpp::Any visitNumFuncTIME(DARICParser::NumFuncTIMEContext* context);
+    antlrcpp::Any visitNumFuncRND(DARICParser::NumFuncRNDContext* context);
+    antlrcpp::Any visitNumFuncRND0(DARICParser::NumFuncRND0Context* context);
+    antlrcpp::Any visitNumFuncRND1(DARICParser::NumFuncRND1Context* context);
+    antlrcpp::Any visitNumFuncRNDRANGE(DARICParser::NumFuncRNDRANGEContext* context);
+    antlrcpp::Any visitNumFuncLN(DARICParser::NumFuncLNContext* context);
+    antlrcpp::Any visitNumFuncLOG(DARICParser::NumFuncLOGContext* context);
+    antlrcpp::Any visitNumFuncEXP(DARICParser::NumFuncEXPContext* context);
+    antlrcpp::Any visitNumFuncATN(DARICParser::NumFuncATNContext* context);
+    antlrcpp::Any visitNumFuncTAN(DARICParser::NumFuncTANContext* context);
+    antlrcpp::Any visitNumFuncCOS(DARICParser::NumFuncCOSContext* context);
+    antlrcpp::Any visitNumFuncSIN(DARICParser::NumFuncSINContext* context);
+    antlrcpp::Any visitNumFuncABS(DARICParser::NumFuncABSContext* context);
+    antlrcpp::Any visitNumFuncACS(DARICParser::NumFuncACSContext* context);
+    antlrcpp::Any visitNumFuncASN(DARICParser::NumFuncASNContext* context);
+    antlrcpp::Any visitNumFuncDEG(DARICParser::NumFuncDEGContext* context);
+    antlrcpp::Any visitNumFuncRAD(DARICParser::NumFuncRADContext* context);
+    antlrcpp::Any visitNumFuncSQR(DARICParser::NumFuncSQRContext* context);
+    antlrcpp::Any visitNumFuncSGN(DARICParser::NumFuncSGNContext* context);
+    
+    /* Numeric functions taking string */
+    antlrcpp::Any visitNumFuncASC(DARICParser::NumFuncASCContext* context);
+    antlrcpp::Any visitNumFuncLEN(DARICParser::NumFuncLENContext* context);
+    antlrcpp::Any visitNumFuncINSTR2(DARICParser::NumFuncINSTR2Context* context);
+    antlrcpp::Any visitNumFuncINSTR3(DARICParser::NumFuncINSTR3Context* context);
+    antlrcpp::Any visitNumFuncVAL(DARICParser::NumFuncVALContext* context);
+
+    /* Numeric maths */
+    void expression_type_conversion(DARICParser::NumExprContext* context, bool DIVIDE);
+    antlrcpp::Any visitNumExprHat(DARICParser::NumExprHatContext* context);
+    antlrcpp::Any visitNumExprMultiply(DARICParser::NumExprMultiplyContext* context);
+    antlrcpp::Any visitNumExprDivide(DARICParser::NumExprDivideContext* context);
+    antlrcpp::Any visitNumExprDIV(DARICParser::NumExprDIVContext* context);
+    antlrcpp::Any visitNumExprMOD(DARICParser::NumExprMODContext* context);
+    antlrcpp::Any visitNumExprPlus(DARICParser::NumExprPlusContext* context);
+    antlrcpp::Any visitNumExprSubtract(DARICParser::NumExprSubtractContext* context);
+    antlrcpp::Any visitNumExprSHL(DARICParser::NumExprSHLContext* context);
+    antlrcpp::Any visitNumExprSHR(DARICParser::NumExprSHRContext* context);
+
+    /* Numeric boolean */
+    antlrcpp::Any visitNumExprNOT(DARICParser::NumExprNOTContext* context);
+    antlrcpp::Any visitNumExprAND(DARICParser::NumExprANDContext* context);
+    antlrcpp::Any visitNumExprOR(DARICParser::NumExprORContext* context);
+    antlrcpp::Any visitNumExprEOR(DARICParser::NumExprEORContext* context);
+
+    /* Comparisons */
+    antlrcpp::Any visitCompare(DARICParser::CompareContext* context);
+    antlrcpp::Any visitNumExprStrRelop(DARICParser::NumExprStrRelopContext* context);
+    antlrcpp::Any visitNumExprNumRelop(DARICParser::NumExprNumRelopContext* context);
 };

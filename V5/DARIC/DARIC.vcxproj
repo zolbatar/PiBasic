@@ -172,8 +172,10 @@
     <ClCompile Include="..\src\compiler\compiler.cpp" />
     <ClCompile Include="..\src\compiler\compiler_assignment.cpp" />
     <ClCompile Include="..\src\compiler\compiler_boolean.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_comparison.cpp" />
     <ClCompile Include="..\src\compiler\compiler_constant.cpp" />
     <ClCompile Include="..\src\compiler\compiler_literal.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_maths.cpp" />
     <ClCompile Include="..\src\compiler\compiler_numeric_expression.cpp" />
     <ClCompile Include="..\src\compiler\compiler_numeric_function.cpp" />
     <ClCompile Include="..\src\compiler\compiler_printinput.cpp" />
@@ -238,6 +240,7 @@
     <ClInclude Include="..\src\types.h" />
     <ClInclude Include="..\src\vm\boxed.h" />
     <ClInclude Include="..\src\vm\bytecode.h" />
+    <ClInclude Include="..\src\vm\performance.h" />
     <ClInclude Include="..\src\vm\stack.h" />
     <ClInclude Include="..\src\vm\type.h" />
     <ClInclude Include="..\src\vm\variables.h" />
@@ -246,6 +249,27 @@
   <ItemGroup>
     <None Include="..\a.daric" />
     <None Include="..\build-grammar.bat" />
+    <None Include="..\Examples\Cubes.daric" />
+    <None Include="..\Examples\DARIC.daric" />
+    <None Include="..\Examples\Data" />
+    <None Include="..\Examples\Fonts.daric" />
+    <None Include="..\Examples\Graphics.daric" />
+    <None Include="..\Examples\Greedy.daric" />
+    <None Include="..\Examples\Load3D.daric" />
+    <None Include="..\Examples\Mandelbrot.daric" />
+    <None Include="..\Examples\Menus.daric" />
+    <None Include="..\Examples\Perlin.daric" />
+    <None Include="..\Examples\SetupGraphics.daric" />
+    <None Include="..\Examples\SetupGraphicsBanked.daric" />
+    <None Include="..\Examples\Sierpinski.daric" />
+    <None Include="..\Examples\Start.daric" />
+    <None Include="..\Examples\Terrain.daric" />
+    <None Include="..\Examples\TerrainDemo.daric" />
+    <None Include="..\Examples\Test" />
+    <None Include="..\Examples\Tester.daric" />
+    <None Include="..\Examples\TesterLineNumbers.daric" />
+    <None Include="..\Examples\Welcome.daric" />
+    <None Include="..\Examples\WorldInLines.daric" />
     <None Include="..\Grammar\DARIC.g4" />
     <None Include="..\src\parser\DARIC.interp" />
     <None Include="..\src\parser\DARIC.tokens" />

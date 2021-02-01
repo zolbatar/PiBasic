@@ -4,6 +4,7 @@
 #include "bytecode.h"
 #include <iostream>
 #include <sstream>
+#include "performance.h"
 
 extern Environment g_env;
 
@@ -36,7 +37,7 @@ public:
         Boxed* b = &stack[stack_pointer++];
         b->value_float = v;
         b->type = Type::REAL;
-        if (CheckedStacks)
+        if (!performance_build)
             check(bc);
     }
 
@@ -45,7 +46,7 @@ public:
         Boxed* b = &stack[stack_pointer++];
         b->value_int = v;
         b->type = Type::INTEGER;
-        if (CheckedStacks)
+        if (!performance_build)
             check(bc);
     }
 
@@ -54,20 +55,20 @@ public:
         Boxed* b = &stack[stack_pointer++];
         b->value_string = v;
         b->type = Type::STRING;
-        if (CheckedStacks)
+        if (!performance_build)
             check(bc);
     }
 
     inline Boxed& pop_boxed(Bytecode& bc)
     {
-        if (CheckedStacks)
+        if (!performance_build)
             check(bc);
         return stack[--stack_pointer];
     }
 
     inline VM_FLOAT pop_float(Bytecode& bc)
     {
-        if (CheckedStacks)
+        if (!performance_build)
             check(bc);
         Boxed* b = &stack[--stack_pointer];
         if (b->type != Type::REAL) {
@@ -80,7 +81,7 @@ public:
 
     inline VM_INT pop_int(Bytecode& bc)
     {
-        if (CheckedStacks)
+        if (!performance_build)
             check(bc);
         Boxed* b = &stack[--stack_pointer];
         if (b->type != Type::INTEGER) {
@@ -99,7 +100,7 @@ public:
 
     inline VM_STRING pop_string(Bytecode& bc)
     {
-        if (CheckedStacks)
+        if (!performance_build)
             check(bc);
         Boxed* b = &stack[--stack_pointer];
         if (b->type != Type::STRING) {
@@ -112,7 +113,6 @@ public:
 
 private:
     static const int StackSize = 4096;
-    static const bool CheckedStacks = false;
 
     size_t stack_pointer = 0; // Stack pointer
     std::vector<Boxed> stack; // Stack, stored as vectors for speed

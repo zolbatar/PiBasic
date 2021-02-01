@@ -18,8 +18,7 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
         std::exception_ptr e) override
     {
         std::stringstream s;
-        s << "Line(" << line << ":" << charPositionInLine << ") Error(" << msg << ")"
-          << "\r";
+        s << "Syntax error '" << msg << "' at " << line << ":" << charPositionInLine << "\r";
         throw std::runtime_error(s.str());
     }
 };

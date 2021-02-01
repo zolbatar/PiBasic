@@ -63,11 +63,93 @@ public:
 
     virtual antlrcpp::Any visitStrExpr(DARICParser::StrExprContext *context) = 0;
 
-    virtual antlrcpp::Any visitNumFunc(DARICParser::NumFuncContext *context) = 0;
+    virtual antlrcpp::Any visitNumFuncPI(DARICParser::NumFuncPIContext *context) = 0;
 
-    virtual antlrcpp::Any visitNumExpr(DARICParser::NumExprContext *context) = 0;
+    virtual antlrcpp::Any visitNumFuncTIME(DARICParser::NumFuncTIMEContext *context) = 0;
 
-    virtual antlrcpp::Any visitRelop(DARICParser::RelopContext *context) = 0;
+    virtual antlrcpp::Any visitNumFuncRND(DARICParser::NumFuncRNDContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncRND0(DARICParser::NumFuncRND0Context *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncRND1(DARICParser::NumFuncRND1Context *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncRNDRANGE(DARICParser::NumFuncRNDRANGEContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncLN(DARICParser::NumFuncLNContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncLOG(DARICParser::NumFuncLOGContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncEXP(DARICParser::NumFuncEXPContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncATN(DARICParser::NumFuncATNContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncTAN(DARICParser::NumFuncTANContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncCOS(DARICParser::NumFuncCOSContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncSIN(DARICParser::NumFuncSINContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncABS(DARICParser::NumFuncABSContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncACS(DARICParser::NumFuncACSContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncASN(DARICParser::NumFuncASNContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncDEG(DARICParser::NumFuncDEGContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncRAD(DARICParser::NumFuncRADContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncSQR(DARICParser::NumFuncSQRContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncSGN(DARICParser::NumFuncSGNContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncASC(DARICParser::NumFuncASCContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncLEN(DARICParser::NumFuncLENContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncINSTR2(DARICParser::NumFuncINSTR2Context *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncINSTR3(DARICParser::NumFuncINSTR3Context *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncVAL(DARICParser::NumFuncVALContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprNumber(DARICParser::NumExprNumberContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprFunc(DARICParser::NumExprFuncContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprSubtract(DARICParser::NumExprSubtractContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprEOR(DARICParser::NumExprEORContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprHat(DARICParser::NumExprHatContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprNumRelop(DARICParser::NumExprNumRelopContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprStrRelop(DARICParser::NumExprStrRelopContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprSHR(DARICParser::NumExprSHRContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprMultiply(DARICParser::NumExprMultiplyContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprMOD(DARICParser::NumExprMODContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprNOT(DARICParser::NumExprNOTContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprNested(DARICParser::NumExprNestedContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprSHL(DARICParser::NumExprSHLContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprAND(DARICParser::NumExprANDContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprPlus(DARICParser::NumExprPlusContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprOR(DARICParser::NumExprORContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprDivide(DARICParser::NumExprDivideContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprDIV(DARICParser::NumExprDIVContext *context) = 0;
+
+    virtual antlrcpp::Any visitCompare(DARICParser::CompareContext *context) = 0;
 
 
 };

@@ -110,6 +110,8 @@ enum class Bytecodes {
     MULTIPLY_I, // Multiply ints
     SUBTRACT_F, // Subtract floats
     SUBTRACT_I, // Subtract ints
+    POWER_F, // To the power float
+    POWER_I, // To the power int
 
     // Swapping
     SWAP_I, // Swap integer
