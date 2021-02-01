@@ -179,6 +179,26 @@ void VM::opcode_MULTIPLY_F()
         g_env.log << "Multiply float " << v1 << " * " << v2 << " = " << v3 << std::endl;
 }
 
+void VM::opcode_POWER_I()
+{
+    VM_FLOAT v2 = static_cast<VM_FLOAT>(stack.pop_int(bc));
+    VM_FLOAT v1 = static_cast<VM_FLOAT>(stack.pop_int(bc));
+    VM_INT v3 = static_cast<VM_INT>(std::pow(v1, v2));
+    stack.push_int(bc, v3);
+    if (!performance_build && runtime_debug)
+        g_env.log << "Power int " << v1 << " ^ " << v2 << " = " << v3 << std::endl;
+}
+
+void VM::opcode_POWER_F()
+{
+    VM_FLOAT v2 = stack.pop_float(bc);
+    VM_FLOAT v1 = stack.pop_float(bc);
+    VM_FLOAT v3 = std::pow(v1, v2);
+    stack.push_float(bc, v3);
+    if (!performance_build && runtime_debug)
+        g_env.log << "Power float " << v1 << " ^ " << v2 << " = " << v3 << std::endl;
+}
+
 void VM::opcode_MULTIPLY_I()
 {
     VM_INT v2 = stack.pop_int(bc);
@@ -388,7 +408,7 @@ void VM::opcode_PRINT_I()
     }
     if (print_hex) {
         if (!performance_build && runtime_debug)
-            g_env.log <<  "Print float as hex: ";
+            g_env.log << "Print float as hex: ";
         stream << std::hex << v1;
     } else {
         if (!performance_build && runtime_debug)
@@ -741,7 +761,6 @@ void VM::opcode_ARRAYSIZE()
     stack.push_int(bc, size);
     if (!performance_build && runtime_debug)
         g_env.log << "Size of array requested for variable'" << variables.get_variable(bc).name << "' result=" << size << std::endl;
-
 }
 
 void VM::opcode_DIM_F()
@@ -2518,7 +2537,7 @@ std::string VM::run()
             break;
         case Bytecodes::HALT:
             opcode_HALT();
-            quit=true;
+            quit = true;
             break;
         case Bytecodes::TRACEON:
             runtime_debug = true;

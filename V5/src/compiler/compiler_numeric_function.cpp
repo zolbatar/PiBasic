@@ -98,6 +98,7 @@ antlrcpp::Any Compiler::visitNumFuncSIN(DARICParser::NumFuncSINContext* context)
     visit(context->numExpr());
     ensure_stack_is_float();
     insert_bytecode(Bytecodes::SIN);
+    return NULL;
 }
 
 antlrcpp::Any Compiler::visitNumFuncABS(DARICParser::NumFuncABSContext* context)
