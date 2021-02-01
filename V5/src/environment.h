@@ -6,7 +6,7 @@
 
 class Environment {
 public:
-    std::string version = "21.01.28";
+    std::string version = "21.02.01";
     std::string cwd; // Program directory
     std::stringstream log; // Runtime log
     Graphics graphics;

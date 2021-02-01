@@ -22,7 +22,7 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
     }
 };
 
-void MyParser::parse_and_compile()
+void MyParser::parse_and_compile(std::vector<Boxed>& variables)
 {
     std::ifstream stream;
     stream.open(filename);
@@ -44,10 +44,8 @@ void MyParser::parse_and_compile()
     parser.setBuildParseTree(true);
     DARICParser::ProgContext* tree = parser.prog();
 
-    //std::cout << tree->toStringTree() << std::endl;
-
     // Add to files list
     g_vm->add_filename(filename);
 
-    Compiler compiler(g_vm, tree, filename);
+    Compiler compiler(g_vm, tree, filename, variables);
 }

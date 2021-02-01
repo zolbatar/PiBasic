@@ -98,6 +98,7 @@ void Interactive::run()
                 return;
             } else if (upper.compare("NEW") == 0) {
                 lines.clear();
+                variables.clear();
             } else if (upper.compare("LIST") == 0) {
                 for (auto it = lines.begin(); it != lines.end(); it++) {
                     std::stringstream stream;
@@ -214,7 +215,7 @@ void Interactive::execute_line(std::string s)
     create_empty_vm();
     try {
         MyParser parser(temp_filename);
-        parser.parse_and_compile();
+        parser.parse_and_compile(variables);
     } catch (const DARICException& ex) {
         ex.pretty_print();
         return;
@@ -292,9 +293,10 @@ void Interactive::run_file(std::string filename)
 #endif
 
     create_empty_vm();
+    variables.clear();
     try {
         MyParser parser(filename);
-        parser.parse_and_compile();
+        parser.parse_and_compile(variables);
     } catch (const DARICException& ex) {
         ex.pretty_print();
         return;

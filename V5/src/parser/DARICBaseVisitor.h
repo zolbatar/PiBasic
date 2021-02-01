@@ -27,6 +27,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -68,6 +72,10 @@ public:
   }
 
   virtual antlrcpp::Any visitVarDeclArrayed(DARICParser::VarDeclArrayedContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitVarDeclWithDimension(DARICParser::VarDeclWithDimensionContext *ctx) override {
     return visitChildren(ctx);
   }
 

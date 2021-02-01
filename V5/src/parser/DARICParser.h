@@ -12,27 +12,27 @@
 class  DARICParser : public antlr4::Parser {
 public:
   enum {
-    INPUT = 1, LET = 2, PRINT = 3, REM = 4, SPC = 5, TIME = 6, PI = 7, SQR = 8, 
-    LN = 9, LOG = 10, EXP = 11, ATN = 12, TAN = 13, COS = 14, SIN = 15, 
-    ABS = 16, ACS = 17, ASN = 18, DEG = 19, RAD = 20, SGN = 21, ASC = 22, 
-    LEN = 23, INSTR = 24, VAL = 25, TIMES = 26, STRS = 27, STRINGS = 28, 
-    CHRS = 29, LEFTS = 30, MIDS = 31, RIGHTS = 32, RND = 33, RND0 = 34, 
-    RND1 = 35, EQ = 36, NE = 37, GT = 38, GE = 39, LT = 40, LE = 41, NOT = 42, 
-    AND = 43, OR = 44, EOR = 45, MOD = 46, DIV = 47, HAT = 48, PLUS = 49, 
-    MINUS = 50, MULTIPLY = 51, DIVIDE = 52, SHL = 53, SHR = 54, TICK = 55, 
-    TILDE = 56, COLON = 57, COMMA = 58, DOLLAR = 59, LPAREN = 60, PERCENT = 61, 
-    RPAREN = 62, SEMICOLON = 63, UNDERSCORE = 64, COMMENT = 65, STRINGLITERAL = 66, 
-    LETTERS = 67, HEXNUMBER = 68, BINARYNUMBER = 69, NUMBER = 70, FLOAT = 71, 
-    WS = 72, GLOBAL = 73, LOCAL = 74
+    DIM = 1, INPUT = 2, GLOBAL = 3, LOCAL = 4, LET = 5, PRINT = 6, REM = 7, 
+    SPC = 8, TIME = 9, PI = 10, SQR = 11, LN = 12, LOG = 13, EXP = 14, ATN = 15, 
+    TAN = 16, COS = 17, SIN = 18, ABS = 19, ACS = 20, ASN = 21, DEG = 22, 
+    RAD = 23, SGN = 24, ASC = 25, LEN = 26, INSTR = 27, VAL = 28, TIMES = 29, 
+    STRS = 30, STRINGS = 31, CHRS = 32, LEFTS = 33, MIDS = 34, RIGHTS = 35, 
+    RND = 36, RND0 = 37, RND1 = 38, EQ = 39, NE = 40, GT = 41, GE = 42, 
+    LT = 43, LE = 44, NOT = 45, AND = 46, OR = 47, EOR = 48, MOD = 49, DIV = 50, 
+    HAT = 51, PLUS = 52, MINUS = 53, MULTIPLY = 54, DIVIDE = 55, SHL = 56, 
+    SHR = 57, TICK = 58, TILDE = 59, COLON = 60, COMMA = 61, DOLLAR = 62, 
+    LPAREN = 63, PERCENT = 64, RPAREN = 65, SEMICOLON = 66, UNDERSCORE = 67, 
+    COMMENT = 68, STRINGLITERAL = 69, VARIABLE = 70, LETTERS = 71, HEXNUMBER = 72, 
+    BINARYNUMBER = 73, NUMBER = 74, FLOAT = 75, WS = 76
   };
 
   enum {
     RuleProg = 0, RuleLine = 1, RuleLinenumber = 2, RuleStmt = 3, RuleVar = 4, 
-    RuleNumVar = 5, RuleStrVar = 6, RuleVarName = 7, RuleVarDecl = 8, RuleVarList = 9, 
-    RuleExprList = 10, RulePrintListItem = 11, RulePrintList = 12, RuleExpr = 13, 
-    RuleNumber = 14, RuleNumberInteger = 15, RuleNumberHex = 16, RuleNumberBinary = 17, 
-    RuleNumberFloat = 18, RuleStrFunc = 19, RuleString = 20, RuleStrExpr = 21, 
-    RuleNumFunc = 22, RuleNumExpr = 23, RuleCompare = 24
+    RuleNumVar = 5, RuleStrVar = 6, RuleVarName = 7, RuleVarDecl = 8, RuleVarDeclWithDimension = 9, 
+    RuleVarList = 10, RuleExprList = 11, RulePrintListItem = 12, RulePrintList = 13, 
+    RuleExpr = 14, RuleNumber = 15, RuleNumberInteger = 16, RuleNumberHex = 17, 
+    RuleNumberBinary = 18, RuleNumberFloat = 19, RuleStrFunc = 20, RuleString = 21, 
+    RuleStrExpr = 22, RuleNumFunc = 23, RuleNumExpr = 24, RuleCompare = 25
   };
 
   explicit DARICParser(antlr4::TokenStream *input);
@@ -54,6 +54,7 @@ public:
   class StrVarContext;
   class VarNameContext;
   class VarDeclContext;
+  class VarDeclWithDimensionContext;
   class VarListContext;
   class ExprListContext;
   class PrintListItemContext;
@@ -142,6 +143,19 @@ public:
     antlr4::tree::TerminalNode* EQ(size_t i);
     std::vector<ExprContext *> expr();
     ExprContext* expr(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtDIMContext : public StmtContext {
+  public:
+    StmtDIMContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *DIM();
+    std::vector<VarDeclWithDimensionContext *> varDeclWithDimension();
+    VarDeclWithDimensionContext* varDeclWithDimension(size_t i);
     std::vector<antlr4::tree::TerminalNode *> COMMA();
     antlr4::tree::TerminalNode* COMMA(size_t i);
 
@@ -267,12 +281,7 @@ public:
   public:
     VarNameContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    std::vector<antlr4::tree::TerminalNode *> LETTERS();
-    antlr4::tree::TerminalNode* LETTERS(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> NUMBER();
-    antlr4::tree::TerminalNode* NUMBER(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> UNDERSCORE();
-    antlr4::tree::TerminalNode* UNDERSCORE(size_t i);
+    antlr4::tree::TerminalNode *VARIABLE();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -321,6 +330,27 @@ public:
   };
 
   VarDeclContext* varDecl();
+
+  class  VarDeclWithDimensionContext : public antlr4::ParserRuleContext {
+  public:
+    VarDeclWithDimensionContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    VarContext *var();
+    std::vector<antlr4::tree::TerminalNode *> LPAREN();
+    antlr4::tree::TerminalNode* LPAREN(size_t i);
+    std::vector<NumExprContext *> numExpr();
+    NumExprContext* numExpr(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> RPAREN();
+    antlr4::tree::TerminalNode* RPAREN(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  VarDeclWithDimensionContext* varDeclWithDimension();
 
   class  VarListContext : public antlr4::ParserRuleContext {
   public:

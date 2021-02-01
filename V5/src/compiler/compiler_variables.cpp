@@ -84,18 +84,6 @@ antlrcpp::Any Compiler::visitVarDeclInd(DARICParser::VarDeclIndContext* context)
     return visitChildren(context);
 }
 
-antlrcpp::Any Compiler::visitVarDeclArrayed(DARICParser::VarDeclArrayedContext* context)
-{
-    set_pos(context->start);
-    auto saved_state = state;
-    state = CompilerState::NOSTATE;
-    for (auto i = 0; i < context->numExpr().size(); i++) {
-        visit(context->numExpr(i));
-    }
-    state = saved_state;
-    return NULL;
-}
-
 antlrcpp::Any Compiler::visitVarList(DARICParser::VarListContext* context)
 {
     set_pos(context->start);

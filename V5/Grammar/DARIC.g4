@@ -14,7 +14,8 @@ linenumber
     ;
 
 stmt
-    : INPUT (strExpr COMMA)? varList                                # stmtINPUT
+    : DIM varDeclWithDimension (COMMA varDeclWithDimension)*        # stmtDIM
+    | INPUT (strExpr COMMA)? varList                                # stmtINPUT
     | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*     # stmtLET
     | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                # stmtLOCAL
     | PRINT printList?                                              # stmtPRINT
@@ -36,14 +37,18 @@ strVar
     ;
 
 varName
-    : LETTERS (LETTERS | NUMBER | UNDERSCORE)*
+    : VARIABLE
     ;
 
 varDecl
     : var                                              #varDeclInd
-    | var (LPAREN numExpr (COMMA numExpr)* RPAREN)*    #varDeclArrayed
+    | var (LPAREN numExpr (COMMA numExpr)? RPAREN)*    #varDeclArrayed
     ;
    
+varDeclWithDimension
+    : var (LPAREN numExpr (COMMA numExpr)? RPAREN)*
+    ;
+
 // Lists
 varList
     : varDecl (COMMA varDecl)*
@@ -182,6 +187,7 @@ compare
     ;
    
 // Lexer stuff
+DIM             : 'DIM' | 'Dim' | 'dim' ;
 INPUT           : 'INPUT' | 'Input' | 'input' ;
 GLOBAL          : 'GLOBAL' | 'Global' | 'global' ;
 LOCAL           : 'LOCAL' | 'Local' | 'local' ;
@@ -258,7 +264,8 @@ SEMICOLON       : ';' ;
 UNDERSCORE      : '_' ;
 COMMENT         : REM ~ [\r\n]* ;
 STRINGLITERAL   : '"' ~ ["\r\n]* '"' ;
-LETTERS         : ('a' .. 'z' | 'A' .. 'Z')+ ;
+VARIABLE        : ([a-z]|[A-Z]|[_])+([a-z]|[A-Z]|[_]|[0-9])* ;
+LETTERS         : [a-z|A-Z]+ ;
 HEXNUMBER       : '&' [0-9A-Fa-f]+ ;
 BINARYNUMBER    : '%' [0|1]+ ;
 NUMBER          : [0-9]+ ([e|E] NUMBER)* ;

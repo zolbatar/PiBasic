@@ -9,17 +9,16 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
 
         // Get variable name and type
         visit(context->varDecl(i));
+        find_or_create_variable(VariableScope::GLOBAL);
+        auto var_type = last_var.type;
 
         // Now get value
         visit(context->expr(i));
 
         auto type = stack_pop();
 
-        // Now do the assign
-        find_or_create_variable(VariableScope::GLOBAL);
-
         // Now do stuff based on the type on the stack and the variable type
-        switch (last_var.type) {
+        switch (var_type) {
         case Type::INTEGER:
             switch (type) {
             case Type::REAL:
@@ -61,6 +60,21 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
                 error(s.str());
             }
             break;
+        case Type::INTEGER_ARRAY:
+            insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
+            insert_instruction(Bytecodes::STORE_I_ARRAY, last_var.id);
+            stack_pop();
+            break;
+        case Type::REAL_ARRAY:
+            insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
+            insert_instruction(Bytecodes::STORE_F_ARRAY, last_var.id);
+            stack_pop();
+            break;
+        case Type::STRING_ARRAY:
+            insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
+            insert_instruction(Bytecodes::STORE_S_ARRAY, last_var.id);
+            stack_pop();
+            break;
         }
     }
 
@@ -71,23 +85,5 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
 antlrcpp::Any Compiler::visitStmtLOCAL(DARICParser::StmtLOCALContext* context)
 {
     set_pos(context->start);
-    state = CompilerState::ASSIGNMENT_LOCAL;
-    for (auto i = 0; i < context->varDecl().size(); i++) {
-
-        // Get variable name and type
-        visit(context->varDecl(i));
-
-        // Now get value
-        visit(context->expr(i));
-
-        // Check types are the same
-        auto type = stack_pop();
-        if (last_var.type != type) {
-            std::stringstream s;
-            s << "Variable '" << last_var.name << "', assigned value is of the wrong type";
-            error(s.str());
-        }
-    }
-    state = CompilerState::NOSTATE;
-    return NULL;
+    return visitChildren(context);
 }

@@ -25,6 +25,8 @@ public:
 
     virtual antlrcpp::Any visitLinenumber(DARICParser::LinenumberContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext *context) = 0;
@@ -46,6 +48,8 @@ public:
     virtual antlrcpp::Any visitVarDeclInd(DARICParser::VarDeclIndContext *context) = 0;
 
     virtual antlrcpp::Any visitVarDeclArrayed(DARICParser::VarDeclArrayedContext *context) = 0;
+
+    virtual antlrcpp::Any visitVarDeclWithDimension(DARICParser::VarDeclWithDimensionContext *context) = 0;
 
     virtual antlrcpp::Any visitVarList(DARICParser::VarListContext *context) = 0;
 

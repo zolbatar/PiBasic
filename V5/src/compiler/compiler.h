@@ -9,7 +9,7 @@ enum class CompilerState {
     NOSTATE,
     DATA,
     ASSIGNMENT,
-    ASSIGNMENT_LOCAL
+    DIM,
 };
 
 enum class CompilerPhase {
@@ -33,13 +33,16 @@ public:
 
 class Compiler : public DARICVisitor {
 public:
-    Compiler(VM* vm, DARICParser::ProgContext* tree, std::string filename);
+    Compiler(VM* vm, DARICParser::ProgContext* tree, std::string filename, std::vector<Boxed>& variables);
 
 private:
     VM* vm;
     std::string filename;
     CompilerState state = CompilerState::NOSTATE;
     CompilerPhase phase = CompilerPhase::LOOKAHEAD;
+
+    // Compilation stuff
+    void inject_variables(std::vector<Boxed>& variables);
     void reset();
 
     // Position
@@ -94,6 +97,9 @@ private:
     }
     Type peek_type() { return type_list.top(); }
 
+    // Arrays
+    UINT32 last_array_num_dimensions = 0;
+
     // Create bytecode based on stack
     void insert_bytecode_based_on_type(std::map<Type, Bytecodes> m, Type type);
     void insert_instruction_based_on_type(std::map<Type, Bytecodes> m, Type type, UINT32 value);
@@ -132,6 +138,7 @@ protected:
 
     /* Statements */
     antlrcpp::Any visitStmt(DARICParser::StmtContext* context);
+    antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext* context);
     antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext* context);
     antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext* context);
     antlrcpp::Any visitStmtLOCAL(DARICParser::StmtLOCALContext* context);
@@ -156,6 +163,7 @@ protected:
     antlrcpp::Any visitStrVar(DARICParser::StrVarContext* context);
     antlrcpp::Any visitVarName(DARICParser::VarNameContext* context);
     antlrcpp::Any visitVarDecl(DARICParser::VarDeclContext* context);
+    antlrcpp::Any visitVarDeclWithDimension(DARICParser::VarDeclWithDimensionContext* context);
     antlrcpp::Any visitVarDeclInd(DARICParser::VarDeclIndContext* context);
     antlrcpp::Any visitVarDeclArrayed(DARICParser::VarDeclArrayedContext* context);
     antlrcpp::Any visitVarList(DARICParser::VarListContext* context);
