@@ -12,17 +12,18 @@
 class  DARICLexer : public antlr4::Lexer {
 public:
   enum {
-    LET = 1, PRINT = 2, REM = 3, TIME = 4, PI = 5, SQR = 6, LN = 7, LOG = 8, 
-    EXP = 9, ATN = 10, TAN = 11, COS = 12, SIN = 13, ABS = 14, ACS = 15, 
-    ASN = 16, DEG = 17, RAD = 18, SGN = 19, ASC = 20, LEN = 21, INSTR = 22, 
-    VAL = 23, TIMES = 24, STRS = 25, STRINGS = 26, CHRS = 27, LEFTS = 28, 
-    MIDS = 29, RIGHTS = 30, RND = 31, RND0 = 32, RND1 = 33, EQ = 34, NE = 35, 
-    GT = 36, GE = 37, LT = 38, LE = 39, NOT = 40, AND = 41, OR = 42, EOR = 43, 
-    MOD = 44, DIV = 45, HAT = 46, PLUS = 47, MINUS = 48, MULTIPLY = 49, 
-    DIVIDE = 50, SHL = 51, SHR = 52, TILDE = 53, COLON = 54, COMMA = 55, 
-    DOLLAR = 56, LPAREN = 57, PERCENT = 58, RPAREN = 59, SEMICOLON = 60, 
-    UNDERSCORE = 61, COMMENT = 62, STRINGLITERAL = 63, LETTERS = 64, HEXNUMBER = 65, 
-    BINARYNUMBER = 66, NUMBER = 67, FLOAT = 68, WS = 69
+    INPUT = 1, LET = 2, PRINT = 3, REM = 4, SPC = 5, TIME = 6, PI = 7, SQR = 8, 
+    LN = 9, LOG = 10, EXP = 11, ATN = 12, TAN = 13, COS = 14, SIN = 15, 
+    ABS = 16, ACS = 17, ASN = 18, DEG = 19, RAD = 20, SGN = 21, ASC = 22, 
+    LEN = 23, INSTR = 24, VAL = 25, TIMES = 26, STRS = 27, STRINGS = 28, 
+    CHRS = 29, LEFTS = 30, MIDS = 31, RIGHTS = 32, RND = 33, RND0 = 34, 
+    RND1 = 35, EQ = 36, NE = 37, GT = 38, GE = 39, LT = 40, LE = 41, NOT = 42, 
+    AND = 43, OR = 44, EOR = 45, MOD = 46, DIV = 47, HAT = 48, PLUS = 49, 
+    MINUS = 50, MULTIPLY = 51, DIVIDE = 52, SHL = 53, SHR = 54, TICK = 55, 
+    TILDE = 56, COLON = 57, COMMA = 58, DOLLAR = 59, LPAREN = 60, PERCENT = 61, 
+    RPAREN = 62, SEMICOLON = 63, UNDERSCORE = 64, COMMENT = 65, STRINGLITERAL = 66, 
+    LETTERS = 67, HEXNUMBER = 68, BINARYNUMBER = 69, NUMBER = 70, FLOAT = 71, 
+    WS = 72
   };
 
   explicit DARICLexer(antlr4::CharStream *input);

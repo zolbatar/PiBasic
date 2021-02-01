@@ -1,10 +1,11 @@
 #pragma once
+#include "../exception.h"
 #include "../types.h"
 #include "boxed.h"
 #include "bytecode.h"
+#include "performance.h"
 #include <iostream>
 #include <sstream>
-#include "performance.h"
 
 extern Environment g_env;
 
@@ -19,14 +20,10 @@ public:
     inline void check(Bytecode& bc)
     {
         if (stack_pointer == 0) {
-            std::stringstream s;
-            s << "Stack empty" << bc.location_string() << ". This is normally an internal DARIC error. ";
-            throw std::runtime_error(s.str());
+            throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Empty stack (This is normally an internal DARIC error)");
         }
         if (stack_pointer == StackSize - 1) {
-            std::stringstream s;
-            s << "Stack full" << bc.location_string() << ". This is either a recursion problem in your program or an internal DARIC error. ";
-            throw std::runtime_error(s.str());
+            throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Full stack (This may be a recursion issue, or an internal DARIC error)");
         }
     }
 
@@ -72,9 +69,7 @@ public:
             check(bc);
         Boxed* b = &stack[--stack_pointer];
         if (b->type != Type::REAL) {
-            std::stringstream s;
-            s << "Expected float on stack" << bc.location_string() << ". This is normally an internal DARIC error. ";
-            throw std::runtime_error(s.str());
+            throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Expected float on stack (This may be a recursion issue, or an internal DARIC error)");
         }
         return b->value_float;
     }
@@ -85,9 +80,7 @@ public:
             check(bc);
         Boxed* b = &stack[--stack_pointer];
         if (b->type != Type::INTEGER) {
-            std::stringstream s;
-            s << "Expected integer on stack" << bc.location_string() << ". This is normally an internal DARIC error. ";
-            throw std::runtime_error(s.str());
+            throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Expected integer on stack (This may be a recursion issue, or an internal DARIC error)");
         }
         return b->value_int;
     }
@@ -104,9 +97,7 @@ public:
             check(bc);
         Boxed* b = &stack[--stack_pointer];
         if (b->type != Type::STRING) {
-            std::stringstream s;
-            s << "Expected string on stack" << bc.location_string() << ". This is normally an internal DARIC error. ";
-            throw std::runtime_error(s.str());
+            throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Expected string on stack (This may be a recursion issue, or an internal DARIC error)");
         }
         return b->value_string;
     }

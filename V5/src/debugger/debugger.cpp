@@ -297,7 +297,7 @@ void Debugger::debugger_disassembly()
     // Get disassembly
     auto dis = disassemble_entire_file();
 
-    int pos = g_vm->helper_bytecodes().pc - 1;
+    UINT32 pos = g_vm->helper_bytecodes().pc - 1;
     bool rerender = true;
     while (true) {
         if (rerender) {

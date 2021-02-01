@@ -1,4 +1,5 @@
 #pragma once
+#include "../exception.h"
 #include "../graphics/graphics.h"
 #include "../types.h"
 #include "boxed.h"
@@ -59,10 +60,7 @@ private:
     // Error handling
     void error(std::string err)
     {
-        std::stringstream s;
-        s << err << bc.location_string() << std::endl;
-        throw std::runtime_error(s.str());
-        exit(1);
+        throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, err);
     }
 
     std::stack<UINT32> repeats; // Repeat addresses

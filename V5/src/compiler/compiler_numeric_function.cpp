@@ -2,6 +2,7 @@
 
 antlrcpp::Any Compiler::visitNumFuncPI(DARICParser::NumFuncPIContext* context)
 {
+    set_pos(context->start);
     insert_bytecode(Bytecodes::PI);
     stack_push(Type::REAL);
     return NULL;
@@ -9,6 +10,7 @@ antlrcpp::Any Compiler::visitNumFuncPI(DARICParser::NumFuncPIContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncTIME(DARICParser::NumFuncTIMEContext* context)
 {
+    set_pos(context->start);
     insert_bytecode(Bytecodes::TIME);
     stack_push(Type::INTEGER);
     return NULL;
@@ -16,6 +18,7 @@ antlrcpp::Any Compiler::visitNumFuncTIME(DARICParser::NumFuncTIMEContext* contex
 
 antlrcpp::Any Compiler::visitNumFuncRND(DARICParser::NumFuncRNDContext* context)
 {
+    set_pos(context->start);
     insert_bytecode(Bytecodes::RND);
     stack_push(Type::INTEGER);
     return NULL;
@@ -23,6 +26,7 @@ antlrcpp::Any Compiler::visitNumFuncRND(DARICParser::NumFuncRNDContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncRND0(DARICParser::NumFuncRND0Context* context)
 {
+    set_pos(context->start);
     insert_instruction(Bytecodes::CONST_I, 0);
     insert_bytecode(Bytecodes::RNDREAL);
     stack_push(Type::REAL);
@@ -31,6 +35,7 @@ antlrcpp::Any Compiler::visitNumFuncRND0(DARICParser::NumFuncRND0Context* contex
 
 antlrcpp::Any Compiler::visitNumFuncRND1(DARICParser::NumFuncRND1Context* context)
 {
+    set_pos(context->start);
     insert_instruction(Bytecodes::CONST_I, 1);
     insert_bytecode(Bytecodes::RNDREAL);
     stack_push(Type::REAL);
@@ -39,6 +44,7 @@ antlrcpp::Any Compiler::visitNumFuncRND1(DARICParser::NumFuncRND1Context* contex
 
 antlrcpp::Any Compiler::visitNumFuncRNDRANGE(DARICParser::NumFuncRNDRANGEContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_integer();
     insert_bytecode(Bytecodes::RNDRANGE);
@@ -47,6 +53,7 @@ antlrcpp::Any Compiler::visitNumFuncRNDRANGE(DARICParser::NumFuncRNDRANGEContext
 
 antlrcpp::Any Compiler::visitNumFuncLN(DARICParser::NumFuncLNContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_float();
     insert_bytecode(Bytecodes::LN);
@@ -55,6 +62,7 @@ antlrcpp::Any Compiler::visitNumFuncLN(DARICParser::NumFuncLNContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncLOG(DARICParser::NumFuncLOGContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_float();
     insert_bytecode(Bytecodes::LOG);
@@ -63,6 +71,7 @@ antlrcpp::Any Compiler::visitNumFuncLOG(DARICParser::NumFuncLOGContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncEXP(DARICParser::NumFuncEXPContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_float();
     insert_bytecode(Bytecodes::EXP);
@@ -71,6 +80,7 @@ antlrcpp::Any Compiler::visitNumFuncEXP(DARICParser::NumFuncEXPContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncATN(DARICParser::NumFuncATNContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_float();
     insert_bytecode(Bytecodes::ATN);
@@ -79,6 +89,7 @@ antlrcpp::Any Compiler::visitNumFuncATN(DARICParser::NumFuncATNContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncTAN(DARICParser::NumFuncTANContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_float();
     insert_bytecode(Bytecodes::TAN);
@@ -87,6 +98,7 @@ antlrcpp::Any Compiler::visitNumFuncTAN(DARICParser::NumFuncTANContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncCOS(DARICParser::NumFuncCOSContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_float();
     insert_bytecode(Bytecodes::COS);
@@ -95,6 +107,7 @@ antlrcpp::Any Compiler::visitNumFuncCOS(DARICParser::NumFuncCOSContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncSIN(DARICParser::NumFuncSINContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_float();
     insert_bytecode(Bytecodes::SIN);
@@ -103,6 +116,7 @@ antlrcpp::Any Compiler::visitNumFuncSIN(DARICParser::NumFuncSINContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncABS(DARICParser::NumFuncABSContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     switch (peek_type()) {
     case Type::INTEGER:
@@ -112,13 +126,14 @@ antlrcpp::Any Compiler::visitNumFuncABS(DARICParser::NumFuncABSContext* context)
         insert_bytecode(Bytecodes::ABS_F);
         break;
     default:
-        throw std::runtime_error("ABS must have a numeric value");
+        error("ABS must have a numeric value");
     }
     return NULL;
 }
 
 antlrcpp::Any Compiler::visitNumFuncACS(DARICParser::NumFuncACSContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_float();
     insert_bytecode(Bytecodes::ACS);
@@ -127,6 +142,7 @@ antlrcpp::Any Compiler::visitNumFuncACS(DARICParser::NumFuncACSContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncASN(DARICParser::NumFuncASNContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_float();
     insert_bytecode(Bytecodes::ASN);
@@ -135,6 +151,7 @@ antlrcpp::Any Compiler::visitNumFuncASN(DARICParser::NumFuncASNContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncDEG(DARICParser::NumFuncDEGContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_float();
     insert_bytecode(Bytecodes::DEG);
@@ -143,6 +160,7 @@ antlrcpp::Any Compiler::visitNumFuncDEG(DARICParser::NumFuncDEGContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncRAD(DARICParser::NumFuncRADContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_float();
     insert_bytecode(Bytecodes::RAD);
@@ -151,6 +169,7 @@ antlrcpp::Any Compiler::visitNumFuncRAD(DARICParser::NumFuncRADContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncSQR(DARICParser::NumFuncSQRContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_float();
     insert_bytecode(Bytecodes::SQR);
@@ -159,6 +178,7 @@ antlrcpp::Any Compiler::visitNumFuncSQR(DARICParser::NumFuncSQRContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncSGN(DARICParser::NumFuncSGNContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_float();
     stack_pop();
@@ -169,6 +189,7 @@ antlrcpp::Any Compiler::visitNumFuncSGN(DARICParser::NumFuncSGNContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncASC(DARICParser::NumFuncASCContext* context)
 {
+    set_pos(context->start);
     visit(context->strExpr());
     ensure_stack_is_string();
     stack_pop();
@@ -179,6 +200,7 @@ antlrcpp::Any Compiler::visitNumFuncASC(DARICParser::NumFuncASCContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncLEN(DARICParser::NumFuncLENContext* context)
 {
+    set_pos(context->start);
     visit(context->strExpr());
     ensure_stack_is_string();
     stack_pop();
@@ -189,6 +211,7 @@ antlrcpp::Any Compiler::visitNumFuncLEN(DARICParser::NumFuncLENContext* context)
 
 antlrcpp::Any Compiler::visitNumFuncINSTR2(DARICParser::NumFuncINSTR2Context* context)
 {
+    set_pos(context->start);
     visit(context->strExpr(0));
     ensure_stack_is_string();
     stack_pop();
@@ -203,6 +226,7 @@ antlrcpp::Any Compiler::visitNumFuncINSTR2(DARICParser::NumFuncINSTR2Context* co
 
 antlrcpp::Any Compiler::visitNumFuncINSTR3(DARICParser::NumFuncINSTR3Context* context)
 {
+    set_pos(context->start);
     visit(context->strExpr(0));
     ensure_stack_is_string();
     stack_pop();
@@ -218,6 +242,7 @@ antlrcpp::Any Compiler::visitNumFuncINSTR3(DARICParser::NumFuncINSTR3Context* co
 
 antlrcpp::Any Compiler::visitNumFuncVAL(DARICParser::NumFuncVALContext* context)
 {
+    set_pos(context->start);
     visit(context->strExpr());
     ensure_stack_is_string();
     stack_pop();

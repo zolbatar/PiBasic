@@ -12,51 +12,10 @@ antlrcpp::Any Compiler::visitLine(DARICParser::LineContext* context)
 
 antlrcpp::Any Compiler::visitLinenumber(DARICParser::LinenumberContext* context)
 {
-    antlrcpp::Any result = visitChildren(context);
-    return result;
+    return visitChildren(context);
 }
 
 antlrcpp::Any Compiler::visitStmt(DARICParser::StmtContext* context)
-{
-    if (context->LET() != NULL) {
-        return Compile_LET(context);
-    } else if (context->PRINT() != NULL) {
-        return Compile_PRINT(context);
-    }
-    return NULL;
-}
-
-antlrcpp::Any Compiler::visitVar(DARICParser::VarContext* context)
-{
-    return visitChildren(context);
-}
-
-antlrcpp::Any Compiler::visitNumVar(DARICParser::NumVarContext* context)
-{
-    return visitChildren(context);
-}
-
-antlrcpp::Any Compiler::visitStrVar(DARICParser::StrVarContext* context)
-{
-    return visitChildren(context);
-}
-
-antlrcpp::Any Compiler::visitVarName(DARICParser::VarNameContext* context)
-{
-    return visitChildren(context);
-}
-
-antlrcpp::Any Compiler::visitVarDecl(DARICParser::VarDeclContext* context)
-{
-    return visitChildren(context);
-}
-
-antlrcpp::Any Compiler::visitVarAssign(DARICParser::VarAssignContext* context)
-{
-    return visitChildren(context);
-}
-
-antlrcpp::Any Compiler::visitVarList(DARICParser::VarListContext* context)
 {
     return visitChildren(context);
 }

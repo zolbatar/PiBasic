@@ -2,6 +2,7 @@
 
 antlrcpp::Any Compiler::visitNumberInteger(DARICParser::NumberIntegerContext* context)
 {
+    set_pos(context->start);
     auto v = context->getText();
     auto i = std::stoi(v, nullptr, 10);
     if (state == CompilerState::DATA) {
@@ -26,6 +27,7 @@ antlrcpp::Any Compiler::visitNumberInteger(DARICParser::NumberIntegerContext* co
 
 antlrcpp::Any Compiler::visitNumberHex(DARICParser::NumberHexContext* context)
 {
+    set_pos(context->start);
     auto v = context->getText();
     v.erase(0, 1);
     auto i = std::stoi(v, nullptr, 16);
@@ -51,6 +53,7 @@ antlrcpp::Any Compiler::visitNumberHex(DARICParser::NumberHexContext* context)
 
 antlrcpp::Any Compiler::visitNumberBinary(DARICParser::NumberBinaryContext* context)
 {
+    set_pos(context->start);
     auto v = context->getText();
     v.erase(0, 1);
     auto i = std::stoi(v, nullptr, 2);
@@ -76,6 +79,7 @@ antlrcpp::Any Compiler::visitNumberBinary(DARICParser::NumberBinaryContext* cont
 
 antlrcpp::Any Compiler::visitNumberFloat(DARICParser::NumberFloatContext* context)
 {
+    set_pos(context->start);
     auto v = context->getText();
     auto i = std::stod(v);
     if (state == CompilerState::DATA) {
@@ -100,6 +104,7 @@ antlrcpp::Any Compiler::visitNumberFloat(DARICParser::NumberFloatContext* contex
 
 antlrcpp::Any Compiler::visitString(DARICParser::StringContext* context)
 {
+    set_pos(context->start);
     auto v = context->getText();
     v.erase(0, 1);
     v.erase(v.length() - 1, 1);

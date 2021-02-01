@@ -2,6 +2,7 @@
 
 antlrcpp::Any Compiler::visitNumExprNOT(DARICParser::NumExprNOTContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_integer();
     insert_bytecode(Bytecodes::BOOL_NOT);
@@ -10,6 +11,7 @@ antlrcpp::Any Compiler::visitNumExprNOT(DARICParser::NumExprNOTContext* context)
 
 antlrcpp::Any Compiler::visitNumExprAND(DARICParser::NumExprANDContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -19,6 +21,7 @@ antlrcpp::Any Compiler::visitNumExprAND(DARICParser::NumExprANDContext* context)
 
 antlrcpp::Any Compiler::visitNumExprOR(DARICParser::NumExprORContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -28,6 +31,7 @@ antlrcpp::Any Compiler::visitNumExprOR(DARICParser::NumExprORContext* context)
 
 antlrcpp::Any Compiler::visitNumExprEOR(DARICParser::NumExprEORContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -42,7 +46,7 @@ void Compiler::boolean(Bytecodes i)
         insert_bytecode(i);
         break;
     default:
-        throw std::runtime_error("Booleans must be int");
+        error("Booleans must be int");
     }
     stack_pop();
     stack_pop();

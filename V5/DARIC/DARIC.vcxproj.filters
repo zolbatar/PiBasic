@@ -225,6 +225,9 @@
     <ClCompile Include="..\src\compiler\compiler_maths.cpp">
       <Filter>Source Files\Compiler</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_variables.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">
@@ -295,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="..\src\vm\performance.h">
       <Filter>Header Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\exception.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

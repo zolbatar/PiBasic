@@ -14,8 +14,10 @@ linenumber
     ;
 
 stmt
-    : LET? varAssign
-    | PRINT printList?
+    : INPUT (strExpr COMMA)? varList                                # stmtINPUT
+    | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*     # stmtLET
+    | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                # stmtLOCAL
+    | PRINT printList?                                              # stmtPRINT
     ;
 
 // Variables
@@ -25,12 +27,12 @@ var
     ;
 
 numVar
-    : varName
-    | varName PERCENT
+    : varName           #numVarFloat
+    | varName PERCENT   #numVarInteger
     ;
 
 strVar
-    : varName DOLLAR
+    : varName DOLLAR    #numVarString
     ;
 
 varName
@@ -38,11 +40,8 @@ varName
     ;
 
 varDecl
-    : var (LPAREN exprList RPAREN)*
-    ;
-   
-varAssign
-    : varDecl EQ expr (COMMA varDecl EQ expr)*
+    : var                                              #varDeclInd
+    | var (LPAREN numExpr (COMMA numExpr)* RPAREN)*    #varDeclArrayed
     ;
    
 // Lists
@@ -54,8 +53,18 @@ exprList
     : expr (COMMA expr)*
     ;
 
+printListItem
+    : expr                          # printListExpr
+    | COMMA                         # printListComma
+    | SEMICOLON                     # printListSemicolon
+    | TILDE                         # printListTilde
+    | TICK                          # printListTick
+    | SPC LPAREN numExpr RPAREN     # printListSPCP
+    | SPC numExpr                   # printListSPC
+    ;
+
 printList
-    : expr ((COMMA | SEMICOLON) expr?)*
+    : printListItem+
     ;
 
 // Expressions and such
@@ -89,16 +98,16 @@ numberFloat
     ;
 
 strFunc
-    : TIMES 
-    | CHRS LPAREN numExpr RPAREN
-    | CHRS numExpr 
-    | LEFTS LPAREN strExpr COMMA numExpr RPAREN
-    | MIDS LPAREN strExpr COMMA numExpr COMMA numExpr RPAREN
-    | MIDS LPAREN strExpr COMMA numExpr RPAREN
-    | RIGHTS LPAREN strExpr COMMA numExpr RPAREN
-    | STRS LPAREN numExpr RPAREN
-    | STRS TILDE LPAREN numExpr RPAREN
-    | STRINGS LPAREN numExpr COMMA strExpr RPAREN
+    : TIMES                                                     #strFuncTIMES   
+    | CHRS LPAREN numExpr RPAREN                                #strFuncCHRSP
+    | CHRS numExpr                                              #strFuncCHRS
+    | LEFTS LPAREN strExpr COMMA numExpr RPAREN                 #strFuncLEFTS
+    | MIDS LPAREN strExpr COMMA numExpr COMMA numExpr RPAREN    #strFuncMIDS3
+    | MIDS LPAREN strExpr COMMA numExpr RPAREN                  #strFuncMIDS2
+    | RIGHTS LPAREN strExpr COMMA numExpr RPAREN                #strFuncRIGHTS
+    | STRS LPAREN numExpr RPAREN                                #strFuncSTRS
+    | STRS TILDE LPAREN numExpr RPAREN                          #strFuncSTRSHEX
+    | STRINGS LPAREN numExpr COMMA strExpr RPAREN               #strFuncSTRINGS
     ;
 
 string
@@ -173,9 +182,11 @@ compare
     ;
    
 // Lexer stuff
+INPUT           : 'INPUT' | 'Input' | 'input' ;
 LET             : 'LET' | 'Let' | 'let' ;
 PRINT           : 'PRINT' | 'Print' | 'print' ;
 REM             : 'REM' | 'Rem' | 'rem' ;
+SPC             : 'SPC' | 'Spc' | 'spc' ;
 
 TIME            : 'TIME' | 'Time' | 'time' ;
 PI              : 'PI' | 'Pi' | 'pi' ;
@@ -233,6 +244,7 @@ DIVIDE          : '/' ;
 SHL             : '<<' ;
 SHR             : '>>' ;
 
+TICK            : '\'' ;
 TILDE           : '~' ;
 COLON           : ':' ;
 COMMA           : ',' ;

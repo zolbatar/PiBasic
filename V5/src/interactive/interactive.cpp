@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "interactive.h"
 #include "../environment.h"
+#include "../exception.h"
 #include "../libs/string.h"
 #include "../parser/parser.h"
 #include "../vm/vm.h"
@@ -214,8 +215,8 @@ void Interactive::execute_line(std::string s)
     try {
         MyParser parser(temp_filename);
         parser.parse_and_compile();
-    } catch (const std::runtime_error& ex) {
-        g_env.graphics.print_console(ex.what());
+    } catch (const DARICException& ex) {
+        ex.pretty_print();
         return;
     }
 
@@ -283,9 +284,20 @@ void Interactive::run_file(std::string filename)
     _kernel_swi(DDEUtils_Prefix, &regs, &regs);
 #endif
 
-    /*    g_vm = std::make_unique<VM>();
-    parse_and_compile(filename.c_str(), false, nullptr);
-    run_vm();
+#ifdef WINDOWS
+    filename += ".daric";
+#endif
+
+    create_empty_vm();
+    try {
+        MyParser parser(filename);
+        parser.parse_and_compile();
+    } catch (const DARICException& ex) {
+        ex.pretty_print();
+        return;
+    }
+    // Run!
+    g_vm->run();
     g_env.graphics.cls();
-    welcome_prompt();*/
+    welcome_prompt();
 }

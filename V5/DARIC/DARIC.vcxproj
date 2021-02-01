@@ -182,6 +182,7 @@
     <ClCompile Include="..\src\compiler\compiler_stack.cpp" />
     <ClCompile Include="..\src\compiler\compiler_string_expression.cpp" />
     <ClCompile Include="..\src\compiler\compiler_string_function.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_variables.cpp" />
     <ClCompile Include="..\src\compiler\visitor.cpp" />
     <ClCompile Include="..\src\debugger\debugger.cpp" />
     <ClCompile Include="..\src\debugger\disassembly.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="..\src\debugger\manual\manual.h" />
     <ClInclude Include="..\src\engine\engine.h" />
     <ClInclude Include="..\src\environment.h" />
+    <ClInclude Include="..\src\exception.h" />
     <ClInclude Include="..\src\graphics\graphics.h" />
     <ClInclude Include="..\src\graphics\stb_truetype.h" />
     <ClInclude Include="..\src\interactive\interactive.h" />

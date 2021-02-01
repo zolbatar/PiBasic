@@ -10,7 +10,7 @@ void Compiler::insert_instruction_based_on_type(std::map<Type, Bytecodes> m, Typ
 {
     auto t = m.find(type);
     if (t == m.end()) {
-        throw std::runtime_error("Unknown type for instruction. This is normally an internal DARIC error.");
+        error("Unknown type for instruction. This is normally an internal DARIC error.");
     }
     insert_instruction((*t).second, value);
 }
@@ -32,7 +32,7 @@ void Compiler::ensure_stack_is_integer()
         stack_push(Type::INTEGER);
         break;
     default:
-        throw std::runtime_error("Unknown type conversion");
+        error("Unknown type conversion");
     }
 }
 
@@ -47,7 +47,7 @@ void Compiler::ensure_stack_is_float()
         stack_push(Type::REAL);
         break;
     default:
-        throw std::runtime_error("Unknown type conversion");
+        error("Unknown type conversion");
     }
 }
 
@@ -57,6 +57,6 @@ void Compiler::ensure_stack_is_string()
     case Type::STRING:
         break;
     default:
-        throw std::runtime_error("Unknown type conversion: String expected");
+        error("Unknown type conversion: string expected");
     }
 }

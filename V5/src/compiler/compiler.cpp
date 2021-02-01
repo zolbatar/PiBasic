@@ -1,9 +1,10 @@
 #include "compiler.h"
 #include <cassert>
 
-Compiler::Compiler(VM* vm, DARICParser::ProgContext* tree)
+Compiler::Compiler(VM* vm, DARICParser::ProgContext* tree, std::string filename)
 {
     this->vm = vm;
+    this->filename = filename;
 
     // Lookahead, figure out function definitions and types
     phase = CompilerPhase::LOOKAHEAD;

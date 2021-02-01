@@ -2,6 +2,7 @@
 
 antlrcpp::Any Compiler::visitNumExprHat(DARICParser::NumExprHatContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -15,6 +16,7 @@ antlrcpp::Any Compiler::visitNumExprHat(DARICParser::NumExprHatContext* context)
 
 antlrcpp::Any Compiler::visitNumExprMultiply(DARICParser::NumExprMultiplyContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -28,6 +30,7 @@ antlrcpp::Any Compiler::visitNumExprMultiply(DARICParser::NumExprMultiplyContext
 
 antlrcpp::Any Compiler::visitNumExprDivide(DARICParser::NumExprDivideContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, true);
@@ -38,6 +41,7 @@ antlrcpp::Any Compiler::visitNumExprDivide(DARICParser::NumExprDivideContext* co
 
 antlrcpp::Any Compiler::visitNumExprDIV(DARICParser::NumExprDIVContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -53,13 +57,14 @@ antlrcpp::Any Compiler::visitNumExprDIV(DARICParser::NumExprDIVContext* context)
         stack_push(Type::INTEGER);
         break;
     default:
-        throw std::runtime_error("Unknown type for DIV");
+        error("Unknown type for DIV");
     }
     return NULL;
 }
 
 antlrcpp::Any Compiler::visitNumExprMOD(DARICParser::NumExprMODContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -75,13 +80,14 @@ antlrcpp::Any Compiler::visitNumExprMOD(DARICParser::NumExprMODContext* context)
         stack_push(Type::INTEGER);
         break;
     default:
-        throw std::runtime_error("Unknown type for MOD");
+        error("Unknown type for MOD");
     }
     return NULL;
 }
 
 antlrcpp::Any Compiler::visitNumExprPlus(DARICParser::NumExprPlusContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -95,6 +101,7 @@ antlrcpp::Any Compiler::visitNumExprPlus(DARICParser::NumExprPlusContext* contex
 
 antlrcpp::Any Compiler::visitNumExprSubtract(DARICParser::NumExprSubtractContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -108,6 +115,7 @@ antlrcpp::Any Compiler::visitNumExprSubtract(DARICParser::NumExprSubtractContext
 
 antlrcpp::Any Compiler::visitNumExprSHL(DARICParser::NumExprSHLContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -119,6 +127,7 @@ antlrcpp::Any Compiler::visitNumExprSHL(DARICParser::NumExprSHLContext* context)
 
 antlrcpp::Any Compiler::visitNumExprSHR(DARICParser::NumExprSHRContext* context)
 {
+    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -132,10 +141,8 @@ void Compiler::expression_type_conversion(DARICParser::NumExprContext* context, 
 {
     // Check types
     if (stack_size() >= 2) {
-        stack_pop_keep();
-        Type type2 = var_type;
-        stack_pop_keep();
-        Type type1 = var_type;
+        Type type2 = stack_pop();
+        Type type1 = stack_pop();
 
         if (DIVIDE) {
             // Is this a divide? If so, we always promote to a float

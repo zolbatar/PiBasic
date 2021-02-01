@@ -266,6 +266,7 @@ public:
     Bytecodes opcode;
     UINT32 data;
     UINT32 line_number;
+    short char_position;
     short file_number;
 
     inline bool is_local_variable() { return data & LocalVariableFlag; }
@@ -275,13 +276,6 @@ public:
     std::string filename()
     {
         return g_env.get_filename_by_number(file_number);
-    }
-
-    std::string location_string()
-    {
-        std::stringstream s;
-        s << " at line " << line_number << ", file '" << filename() + "'";
-        return s.str();
     }
 };
 

@@ -5,6 +5,7 @@
 
 extern Environment g_env;
 extern VM* g_vm;
+std::string parsing_filename;
 
 using namespace antlr4;
 
@@ -17,9 +18,7 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
         const std::string& msg,
         std::exception_ptr e) override
     {
-        std::stringstream s;
-        s << "Syntax error '" << msg << "' at " << line << ":" << charPositionInLine << "\r";
-        throw std::runtime_error(s.str());
+        throw DARICException(ErrorLocation::PARSER, parsing_filename, static_cast<UINT32>(line), static_cast<short>(charPositionInLine), msg);
     }
 };
 
@@ -27,6 +26,10 @@ void MyParser::parse_and_compile()
 {
     std::ifstream stream;
     stream.open(filename);
+    if (!stream.is_open()) {
+        throw std::runtime_error("File not found\r");
+    }
+    parsing_filename = filename;
 
     ANTLRInputStream input(stream);
 
@@ -46,5 +49,5 @@ void MyParser::parse_and_compile()
     // Add to files list
     g_vm->add_filename(filename);
 
-    Compiler compiler(g_vm, tree);
+    Compiler compiler(g_vm, tree, filename);
 }

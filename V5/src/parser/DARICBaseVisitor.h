@@ -27,7 +27,19 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitStmt(DARICParser::StmtContext *ctx) override {
+  virtual antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtLOCAL(DARICParser::StmtLOCALContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -35,11 +47,15 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNumVar(DARICParser::NumVarContext *ctx) override {
+  virtual antlrcpp::Any visitNumVarFloat(DARICParser::NumVarFloatContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitStrVar(DARICParser::StrVarContext *ctx) override {
+  virtual antlrcpp::Any visitNumVarInteger(DARICParser::NumVarIntegerContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumVarString(DARICParser::NumVarStringContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -47,11 +63,11 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitVarDecl(DARICParser::VarDeclContext *ctx) override {
+  virtual antlrcpp::Any visitVarDeclInd(DARICParser::VarDeclIndContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitVarAssign(DARICParser::VarAssignContext *ctx) override {
+  virtual antlrcpp::Any visitVarDeclArrayed(DARICParser::VarDeclArrayedContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -60,6 +76,34 @@ public:
   }
 
   virtual antlrcpp::Any visitExprList(DARICParser::ExprListContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitPrintListExpr(DARICParser::PrintListExprContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitPrintListComma(DARICParser::PrintListCommaContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitPrintListSemicolon(DARICParser::PrintListSemicolonContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitPrintListTilde(DARICParser::PrintListTildeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitPrintListTick(DARICParser::PrintListTickContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitPrintListSPCP(DARICParser::PrintListSPCPContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitPrintListSPC(DARICParser::PrintListSPCContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -91,7 +135,43 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitStrFunc(DARICParser::StrFuncContext *ctx) override {
+  virtual antlrcpp::Any visitStrFuncTIMES(DARICParser::StrFuncTIMESContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStrFuncCHRSP(DARICParser::StrFuncCHRSPContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStrFuncCHRS(DARICParser::StrFuncCHRSContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStrFuncLEFTS(DARICParser::StrFuncLEFTSContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStrFuncMIDS3(DARICParser::StrFuncMIDS3Context *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStrFuncMIDS2(DARICParser::StrFuncMIDS2Context *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStrFuncRIGHTS(DARICParser::StrFuncRIGHTSContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStrFuncSTRS(DARICParser::StrFuncSTRSContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStrFuncSTRSHEX(DARICParser::StrFuncSTRSHEXContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStrFuncSTRINGS(DARICParser::StrFuncSTRINGSContext *ctx) override {
     return visitChildren(ctx);
   }
 

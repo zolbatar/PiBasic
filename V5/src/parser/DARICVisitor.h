@@ -25,23 +25,45 @@ public:
 
     virtual antlrcpp::Any visitLinenumber(DARICParser::LinenumberContext *context) = 0;
 
-    virtual antlrcpp::Any visitStmt(DARICParser::StmtContext *context) = 0;
+    virtual antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtLOCAL(DARICParser::StmtLOCALContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext *context) = 0;
 
     virtual antlrcpp::Any visitVar(DARICParser::VarContext *context) = 0;
 
-    virtual antlrcpp::Any visitNumVar(DARICParser::NumVarContext *context) = 0;
+    virtual antlrcpp::Any visitNumVarFloat(DARICParser::NumVarFloatContext *context) = 0;
 
-    virtual antlrcpp::Any visitStrVar(DARICParser::StrVarContext *context) = 0;
+    virtual antlrcpp::Any visitNumVarInteger(DARICParser::NumVarIntegerContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumVarString(DARICParser::NumVarStringContext *context) = 0;
 
     virtual antlrcpp::Any visitVarName(DARICParser::VarNameContext *context) = 0;
 
-    virtual antlrcpp::Any visitVarDecl(DARICParser::VarDeclContext *context) = 0;
+    virtual antlrcpp::Any visitVarDeclInd(DARICParser::VarDeclIndContext *context) = 0;
 
-    virtual antlrcpp::Any visitVarAssign(DARICParser::VarAssignContext *context) = 0;
+    virtual antlrcpp::Any visitVarDeclArrayed(DARICParser::VarDeclArrayedContext *context) = 0;
 
     virtual antlrcpp::Any visitVarList(DARICParser::VarListContext *context) = 0;
 
     virtual antlrcpp::Any visitExprList(DARICParser::ExprListContext *context) = 0;
+
+    virtual antlrcpp::Any visitPrintListExpr(DARICParser::PrintListExprContext *context) = 0;
+
+    virtual antlrcpp::Any visitPrintListComma(DARICParser::PrintListCommaContext *context) = 0;
+
+    virtual antlrcpp::Any visitPrintListSemicolon(DARICParser::PrintListSemicolonContext *context) = 0;
+
+    virtual antlrcpp::Any visitPrintListTilde(DARICParser::PrintListTildeContext *context) = 0;
+
+    virtual antlrcpp::Any visitPrintListTick(DARICParser::PrintListTickContext *context) = 0;
+
+    virtual antlrcpp::Any visitPrintListSPCP(DARICParser::PrintListSPCPContext *context) = 0;
+
+    virtual antlrcpp::Any visitPrintListSPC(DARICParser::PrintListSPCContext *context) = 0;
 
     virtual antlrcpp::Any visitPrintList(DARICParser::PrintListContext *context) = 0;
 
@@ -57,7 +79,25 @@ public:
 
     virtual antlrcpp::Any visitNumberFloat(DARICParser::NumberFloatContext *context) = 0;
 
-    virtual antlrcpp::Any visitStrFunc(DARICParser::StrFuncContext *context) = 0;
+    virtual antlrcpp::Any visitStrFuncTIMES(DARICParser::StrFuncTIMESContext *context) = 0;
+
+    virtual antlrcpp::Any visitStrFuncCHRSP(DARICParser::StrFuncCHRSPContext *context) = 0;
+
+    virtual antlrcpp::Any visitStrFuncCHRS(DARICParser::StrFuncCHRSContext *context) = 0;
+
+    virtual antlrcpp::Any visitStrFuncLEFTS(DARICParser::StrFuncLEFTSContext *context) = 0;
+
+    virtual antlrcpp::Any visitStrFuncMIDS3(DARICParser::StrFuncMIDS3Context *context) = 0;
+
+    virtual antlrcpp::Any visitStrFuncMIDS2(DARICParser::StrFuncMIDS2Context *context) = 0;
+
+    virtual antlrcpp::Any visitStrFuncRIGHTS(DARICParser::StrFuncRIGHTSContext *context) = 0;
+
+    virtual antlrcpp::Any visitStrFuncSTRS(DARICParser::StrFuncSTRSContext *context) = 0;
+
+    virtual antlrcpp::Any visitStrFuncSTRSHEX(DARICParser::StrFuncSTRSHEXContext *context) = 0;
+
+    virtual antlrcpp::Any visitStrFuncSTRINGS(DARICParser::StrFuncSTRINGSContext *context) = 0;
 
     virtual antlrcpp::Any visitString(DARICParser::StringContext *context) = 0;
 
