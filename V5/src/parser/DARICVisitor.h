@@ -149,7 +149,17 @@ public:
 
     virtual antlrcpp::Any visitNumExprDIV(DARICParser::NumExprDIVContext *context) = 0;
 
-    virtual antlrcpp::Any visitCompare(DARICParser::CompareContext *context) = 0;
+    virtual antlrcpp::Any visitCompareEQ(DARICParser::CompareEQContext *context) = 0;
+
+    virtual antlrcpp::Any visitCompareNE(DARICParser::CompareNEContext *context) = 0;
+
+    virtual antlrcpp::Any visitCompareGT(DARICParser::CompareGTContext *context) = 0;
+
+    virtual antlrcpp::Any visitCompareGE(DARICParser::CompareGEContext *context) = 0;
+
+    virtual antlrcpp::Any visitCompareLT(DARICParser::CompareLTContext *context) = 0;
+
+    virtual antlrcpp::Any visitCompareLE(DARICParser::CompareLEContext *context) = 0;
 
 
 };

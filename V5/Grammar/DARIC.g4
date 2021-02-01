@@ -164,14 +164,12 @@ numExpr
     ;
 
 compare
-    : EQ
-    | NE
-    | GT
-    | GE
-    | LT
-    | LE
-    | AND
-    | OR
+    : EQ        #compareEQ
+    | NE        #compareNE
+    | GT        #compareGT
+    | GE        #compareGE
+    | LT        #compareLT
+    | LE        #compareLE
     ;
    
 // Lexer stuff

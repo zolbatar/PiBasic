@@ -275,7 +275,27 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitCompare(DARICParser::CompareContext *ctx) override {
+  virtual antlrcpp::Any visitCompareEQ(DARICParser::CompareEQContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitCompareNE(DARICParser::CompareNEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitCompareGT(DARICParser::CompareGTContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitCompareGE(DARICParser::CompareGEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitCompareLT(DARICParser::CompareLTContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitCompareLE(DARICParser::CompareLEContext *ctx) override {
     return visitChildren(ctx);
   }
 

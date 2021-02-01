@@ -146,7 +146,7 @@ protected:
     antlrcpp::Any visitNumFuncRAD(DARICParser::NumFuncRADContext* context);
     antlrcpp::Any visitNumFuncSQR(DARICParser::NumFuncSQRContext* context);
     antlrcpp::Any visitNumFuncSGN(DARICParser::NumFuncSGNContext* context);
-    
+
     /* Numeric functions taking string */
     antlrcpp::Any visitNumFuncASC(DARICParser::NumFuncASCContext* context);
     antlrcpp::Any visitNumFuncLEN(DARICParser::NumFuncLENContext* context);
@@ -173,7 +173,13 @@ protected:
     antlrcpp::Any visitNumExprEOR(DARICParser::NumExprEORContext* context);
 
     /* Comparisons */
-    antlrcpp::Any visitCompare(DARICParser::CompareContext* context);
+    void comparison(Bytecodes i, Bytecodes f, Bytecodes s);
     antlrcpp::Any visitNumExprStrRelop(DARICParser::NumExprStrRelopContext* context);
     antlrcpp::Any visitNumExprNumRelop(DARICParser::NumExprNumRelopContext* context);
+    antlrcpp::Any visitCompareEQ(DARICParser::CompareEQContext* context);
+    antlrcpp::Any visitCompareNE(DARICParser::CompareNEContext* context);
+    antlrcpp::Any visitCompareGT(DARICParser::CompareGTContext* context);
+    antlrcpp::Any visitCompareGE(DARICParser::CompareGEContext* context);
+    antlrcpp::Any visitCompareLT(DARICParser::CompareLTContext* context);
+    antlrcpp::Any visitCompareLE(DARICParser::CompareLEContext* context);
 };

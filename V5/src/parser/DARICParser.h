@@ -944,19 +944,68 @@ public:
   class  CompareContext : public antlr4::ParserRuleContext {
   public:
     CompareContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-    virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *EQ();
-    antlr4::tree::TerminalNode *NE();
-    antlr4::tree::TerminalNode *GT();
-    antlr4::tree::TerminalNode *GE();
-    antlr4::tree::TerminalNode *LT();
-    antlr4::tree::TerminalNode *LE();
-    antlr4::tree::TerminalNode *AND();
-    antlr4::tree::TerminalNode *OR();
+   
+    CompareContext() = default;
+    void copyFrom(CompareContext *context);
+    using antlr4::ParserRuleContext::copyFrom;
 
+    virtual size_t getRuleIndex() const override;
+
+   
+  };
+
+  class  CompareLEContext : public CompareContext {
+  public:
+    CompareLEContext(CompareContext *ctx);
+
+    antlr4::tree::TerminalNode *LE();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-   
+  };
+
+  class  CompareLTContext : public CompareContext {
+  public:
+    CompareLTContext(CompareContext *ctx);
+
+    antlr4::tree::TerminalNode *LT();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  CompareNEContext : public CompareContext {
+  public:
+    CompareNEContext(CompareContext *ctx);
+
+    antlr4::tree::TerminalNode *NE();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  CompareGEContext : public CompareContext {
+  public:
+    CompareGEContext(CompareContext *ctx);
+
+    antlr4::tree::TerminalNode *GE();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  CompareGTContext : public CompareContext {
+  public:
+    CompareGTContext(CompareContext *ctx);
+
+    antlr4::tree::TerminalNode *GT();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  CompareEQContext : public CompareContext {
+  public:
+    CompareEQContext(CompareContext *ctx);
+
+    antlr4::tree::TerminalNode *EQ();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
   CompareContext* compare();
