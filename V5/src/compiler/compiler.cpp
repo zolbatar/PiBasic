@@ -1,6 +1,11 @@
 #include "compiler.h"
 #include <cassert>
 
+void Compiler::reset() {
+    globals.clear();
+    locals.clear();
+}
+
 Compiler::Compiler(VM* vm, DARICParser::ProgContext* tree, std::string filename)
 {
     this->vm = vm;
@@ -11,6 +16,7 @@ Compiler::Compiler(VM* vm, DARICParser::ProgContext* tree, std::string filename)
     auto daric = visitProg(tree);
     assert(vm->helper_bytecodes().size == 0);
     assert(stack_size() == 0);
+    reset();
 
     // Size, figure out sizing for jumps etc.
     vm->helper_bytecodes().pc = 0;
@@ -18,6 +24,7 @@ Compiler::Compiler(VM* vm, DARICParser::ProgContext* tree, std::string filename)
     daric = visitProg(tree);
     vm->helper_bytecodes().size = vm->helper_bytecodes().pc;
     assert(stack_size() == 0);
+    reset();
 
     // Compile! Build the VM
     vm->helper_bytecodes().pc = 0;

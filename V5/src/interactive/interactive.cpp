@@ -229,6 +229,9 @@ void Interactive::execute_line(std::string s)
     for (auto it = v.begin(); it != v.end(); ++it) {
         variables.push_back(std::move(*it));
     }
+
+    // Reset PC
+    g_vm->helper_bytecodes().pc = 0;
 }
 
 void Interactive::run_all_lines()

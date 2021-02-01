@@ -183,6 +183,8 @@ compare
    
 // Lexer stuff
 INPUT           : 'INPUT' | 'Input' | 'input' ;
+GLOBAL          : 'GLOBAL' | 'Global' | 'global' ;
+LOCAL           : 'LOCAL' | 'Local' | 'local' ;
 LET             : 'LET' | 'Let' | 'let' ;
 PRINT           : 'PRINT' | 'Print' | 'print' ;
 REM             : 'REM' | 'Rem' | 'rem' ;

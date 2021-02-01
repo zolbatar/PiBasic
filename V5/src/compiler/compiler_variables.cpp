@@ -36,6 +36,13 @@ antlrcpp::Any Compiler::visitNumVarFloat(DARICParser::NumVarFloatContext* contex
     set_pos(context->start);
     visit(context->varName());
     last_var.type = Type::REAL;
+    if (state == CompilerState::NOSTATE) {
+        if (!find_variable()) {
+            error("Variable '" + last_var.name + "' not found");
+        }
+        insert_instruction(Bytecodes::LOAD_F, last_var.id);
+        stack_push(Type::REAL);
+    }
     return NULL;
 }
 
@@ -45,6 +52,13 @@ antlrcpp::Any Compiler::visitNumVarInteger(DARICParser::NumVarIntegerContext* co
     visit(context->varName());
     last_var.type = Type::INTEGER;
     last_var.name += "%";
+    if (state == CompilerState::NOSTATE) {
+        if (!find_variable()) {
+            error("Variable '" + last_var.name + "' not found");
+        }
+        insert_instruction(Bytecodes::LOAD_I, last_var.id);
+        stack_push(Type::INTEGER);
+    }
     return NULL;
 }
 
@@ -54,6 +68,13 @@ antlrcpp::Any Compiler::visitNumVarString(DARICParser::NumVarStringContext* cont
     visit(context->varName());
     last_var.type = Type::STRING;
     last_var.name += "$";
+    if (state == CompilerState::NOSTATE) {
+        if (!find_variable()) {
+            error("Variable '" + last_var.name + "' not found");
+        }
+        insert_instruction(Bytecodes::LOAD_S, last_var.id);
+        stack_push(Type::STRING);
+    }
     return NULL;
 }
 
@@ -108,27 +129,23 @@ void Compiler::find_or_create_variable(VariableScope scope)
         return;
     last_var.id = 0;
     if (scope == VariableScope::GLOBAL) {
-        if (phase == CompilerPhase::COMPILE) {
-            Boxed var;
-            var.constant = false;
-            var.name = last_var.name;
-            var.type = last_var.type;
-            var.index = global_var_index++;
-            var.value_string = last_var.custom_type_name;
-            globals[var.name] = var;
-            last_var.id = var.index;
-        }
+        Boxed var;
+        var.constant = false;
+        var.name = last_var.name;
+        var.type = last_var.type;
+        var.index = global_var_index++;
+        var.value_string = last_var.custom_type_name;
+        globals[var.name] = var;
+        last_var.id = var.index;
     } else if (inside_function) {
-        if (phase == CompilerPhase::COMPILE) {
-            Boxed var;
-            var.constant = false;
-            var.name = last_var.name;
-            var.type = last_var.type;
-            var.index = local_var_index++;
-            var.value_string = last_var.custom_type_name;
-            locals[var.name] = var;
-            last_var.id = var.index | LocalVariableFlag;
-        }
+        Boxed var;
+        var.constant = false;
+        var.name = last_var.name;
+        var.type = last_var.type;
+        var.index = local_var_index++;
+        var.value_string = last_var.custom_type_name;
+        locals[var.name] = var;
+        last_var.id = var.index | LocalVariableFlag;
     } else {
         error("Variable '" + last_var.name + "' not found");
     }

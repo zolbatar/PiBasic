@@ -40,6 +40,7 @@ private:
     std::string filename;
     CompilerState state = CompilerState::NOSTATE;
     CompilerPhase phase = CompilerPhase::LOOKAHEAD;
+    void reset();
 
     // Position
     void set_pos(antlr4::Token* t)
