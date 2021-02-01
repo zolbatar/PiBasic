@@ -55,7 +55,15 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitNumVarFloatArray(DARICParser::NumVarFloatArrayContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitNumVarInteger(DARICParser::NumVarIntegerContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumVarIntegerArray(DARICParser::NumVarIntegerArrayContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -63,7 +71,19 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitVarName(DARICParser::VarNameContext *ctx) override {
+  virtual antlrcpp::Any visitNumVarStringArray(DARICParser::NumVarStringArrayContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitVarNameFloat(DARICParser::VarNameFloatContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitVarNameInteger(DARICParser::VarNameIntegerContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitVarNameString(DARICParser::VarNameStringContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -88,18 +108,6 @@ public:
   }
 
   virtual antlrcpp::Any visitPrintListExpr(DARICParser::PrintListExprContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitPrintListComma(DARICParser::PrintListCommaContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitPrintListSemicolon(DARICParser::PrintListSemicolonContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitPrintListTilde(DARICParser::PrintListTildeContext *ctx) override {
     return visitChildren(ctx);
   }
 

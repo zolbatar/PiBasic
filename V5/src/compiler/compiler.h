@@ -158,10 +158,15 @@ protected:
     antlrcpp::Any visitVar(DARICParser::VarContext* context);
     antlrcpp::Any visitNumVar(DARICParser::NumVarContext* context);
     antlrcpp::Any visitNumVarFloat(DARICParser::NumVarFloatContext* context);
+    antlrcpp::Any visitNumVarFloatArray(DARICParser::NumVarFloatArrayContext* context);
     antlrcpp::Any visitNumVarInteger(DARICParser::NumVarIntegerContext* context);
+    antlrcpp::Any visitNumVarIntegerArray(DARICParser::NumVarIntegerArrayContext* context);
     antlrcpp::Any visitNumVarString(DARICParser::NumVarStringContext* context);
+    antlrcpp::Any visitNumVarStringArray(DARICParser::NumVarStringArrayContext* context);
     antlrcpp::Any visitStrVar(DARICParser::StrVarContext* context);
-    antlrcpp::Any visitVarName(DARICParser::VarNameContext* context);
+    antlrcpp::Any visitVarNameFloat(DARICParser::VarNameFloatContext* context);
+    antlrcpp::Any visitVarNameInteger(DARICParser::VarNameIntegerContext* context);
+    antlrcpp::Any visitVarNameString(DARICParser::VarNameStringContext* context);
     antlrcpp::Any visitVarDecl(DARICParser::VarDeclContext* context);
     antlrcpp::Any visitVarDeclWithDimension(DARICParser::VarDeclWithDimensionContext* context);
     antlrcpp::Any visitVarDeclInd(DARICParser::VarDeclIndContext* context);
@@ -188,9 +193,6 @@ protected:
     antlrcpp::Any visitPrintList(DARICParser::PrintListContext* context);
     antlrcpp::Any visitPrintListItem(DARICParser::PrintListItemContext* context);
     antlrcpp::Any visitPrintListExpr(DARICParser::PrintListExprContext* context);
-    antlrcpp::Any visitPrintListComma(DARICParser::PrintListCommaContext* context);
-    antlrcpp::Any visitPrintListSemicolon(DARICParser::PrintListSemicolonContext* context);
-    antlrcpp::Any visitPrintListTilde(DARICParser::PrintListTildeContext* context);
     antlrcpp::Any visitPrintListTick(DARICParser::PrintListTickContext* context);
     antlrcpp::Any visitPrintListSPCP(DARICParser::PrintListSPCPContext* context);
     antlrcpp::Any visitPrintListSPC(DARICParser::PrintListSPCContext* context);

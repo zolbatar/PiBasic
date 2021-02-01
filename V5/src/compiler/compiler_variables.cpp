@@ -18,7 +18,21 @@ antlrcpp::Any Compiler::visitStrVar(DARICParser::StrVarContext* context)
     return visitChildren(context);
 }
 
-antlrcpp::Any Compiler::visitVarName(DARICParser::VarNameContext* context)
+antlrcpp::Any Compiler::visitVarNameFloat(DARICParser::VarNameFloatContext* context)
+{
+    set_pos(context->start);
+    last_var.name = context->getText();
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitVarNameInteger(DARICParser::VarNameIntegerContext* context)
+{
+    set_pos(context->start);
+    last_var.name = context->getText();
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitVarNameString(DARICParser::VarNameStringContext* context)
 {
     set_pos(context->start);
     last_var.name = context->getText();
@@ -34,14 +48,14 @@ antlrcpp::Any Compiler::visitVarDecl(DARICParser::VarDeclContext* context)
 antlrcpp::Any Compiler::visitNumVarFloat(DARICParser::NumVarFloatContext* context)
 {
     set_pos(context->start);
-    visit(context->varName());
-    last_var.type = Type::REAL;
+    visit(context->varNameFloat());
+    last_var.type = Type::FLOAT;
     if (state == CompilerState::NOSTATE) {
         if (!find_variable()) {
             error("Variable '" + last_var.name + "' not found");
         }
         insert_instruction(Bytecodes::LOAD_F, last_var.id);
-        stack_push(Type::REAL);
+        stack_push(Type::FLOAT);
     }
     return NULL;
 }
@@ -49,9 +63,8 @@ antlrcpp::Any Compiler::visitNumVarFloat(DARICParser::NumVarFloatContext* contex
 antlrcpp::Any Compiler::visitNumVarInteger(DARICParser::NumVarIntegerContext* context)
 {
     set_pos(context->start);
-    visit(context->varName());
+    visit(context->varNameInteger());
     last_var.type = Type::INTEGER;
-    last_var.name += "%";
     if (state == CompilerState::NOSTATE) {
         if (!find_variable()) {
             error("Variable '" + last_var.name + "' not found");
@@ -65,9 +78,8 @@ antlrcpp::Any Compiler::visitNumVarInteger(DARICParser::NumVarIntegerContext* co
 antlrcpp::Any Compiler::visitNumVarString(DARICParser::NumVarStringContext* context)
 {
     set_pos(context->start);
-    visit(context->varName());
+    visit(context->varNameString());
     last_var.type = Type::STRING;
-    last_var.name += "$";
     if (state == CompilerState::NOSTATE) {
         if (!find_variable()) {
             error("Variable '" + last_var.name + "' not found");

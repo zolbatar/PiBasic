@@ -33,7 +33,7 @@ public:
     {
         Boxed* b = &stack[stack_pointer++];
         b->value_float = v;
-        b->type = Type::REAL;
+        b->type = Type::FLOAT;
         if (!performance_build)
             check(bc);
     }
@@ -68,7 +68,7 @@ public:
         if (!performance_build)
             check(bc);
         Boxed* b = &stack[--stack_pointer];
-        if (b->type != Type::REAL) {
+        if (b->type != Type::FLOAT) {
             throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Expected float on stack (This may be a recursion issue, or an internal DARIC error)");
         }
         return b->value_float;

@@ -171,7 +171,7 @@ void Debugger::debugger_variables()
                     case Type::INTEGER:
                         g_env.graphics.print_text(disassembly_font, "INTEGER       ", -1, -1);
                         break;
-                    case Type::REAL:
+                    case Type::FLOAT:
                         g_env.graphics.print_text(disassembly_font, "FLOAT         ", -1, -1);
                         break;
                     case Type::STRING:
@@ -180,7 +180,7 @@ void Debugger::debugger_variables()
                     case Type::INTEGER_ARRAY:
                         g_env.graphics.print_text(disassembly_font, "INTEGER ARRAY ", -1, -1);
                         break;
-                    case Type::REAL_ARRAY:
+                    case Type::FLOAT_ARRAY:
                         g_env.graphics.print_text(disassembly_font, "FLOAT ARRAY   ", -1, -1);
                         break;
                     case Type::STRING_ARRAY:
@@ -208,7 +208,7 @@ void Debugger::debugger_variables()
                     case Type::INTEGER:
                         g_env.graphics.print_text(disassembly_font, std::to_string(v->value_int), -1, -1);
                         break;
-                    case Type::REAL:
+                    case Type::FLOAT:
                         g_env.graphics.print_text(disassembly_font, std::to_string(v->value_float), -1, -1);
                         break;
                     case Type::STRING:
@@ -217,7 +217,7 @@ void Debugger::debugger_variables()
                     case Type::INTEGER_ARRAY:
                         g_env.graphics.print_text(disassembly_font, std::to_string(v->value_int_array.size()) + " entries", -1, -1);
                         break;
-                    case Type::REAL_ARRAY:
+                    case Type::FLOAT_ARRAY:
                         g_env.graphics.print_text(disassembly_font, std::to_string(v->value_float_array.size()) + " entries", -1, -1);
                         break;
                     case Type::STRING_ARRAY:

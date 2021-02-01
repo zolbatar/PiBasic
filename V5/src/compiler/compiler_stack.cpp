@@ -26,7 +26,7 @@ void Compiler::ensure_stack_is_integer()
     switch (peek_type()) {
     case Type::INTEGER:
         break;
-    case Type::REAL:
+    case Type::FLOAT:
         insert_bytecode(Bytecodes::F_TO_I);
         stack_pop();
         stack_push(Type::INTEGER);
@@ -39,12 +39,12 @@ void Compiler::ensure_stack_is_integer()
 void Compiler::ensure_stack_is_float()
 {
     switch (peek_type()) {
-    case Type::REAL:
+    case Type::FLOAT:
         break;
     case Type::INTEGER:
         insert_bytecode(Bytecodes::I_TO_F);
         stack_pop();
-        stack_push(Type::REAL);
+        stack_push(Type::FLOAT);
         break;
     default:
         error("Unknown type conversion");

@@ -3,10 +3,10 @@
 enum class Type {
     NOTYPE,
     INTEGER,
-    REAL,
+    FLOAT,
     STRING,
     INTEGER_ARRAY,
-    REAL_ARRAY,
+    FLOAT_ARRAY,
     STRING_ARRAY,
     TYPE,
     TYPE_ARRAY

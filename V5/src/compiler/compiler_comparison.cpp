@@ -72,7 +72,7 @@ void Compiler::comparison(Bytecodes i, Bytecodes f, Bytecodes s)
     case Type::INTEGER:
         insert_bytecode(i);
         break;
-    case Type::REAL:
+    case Type::FLOAT:
         insert_bytecode(f);
         break;
     case Type::STRING:

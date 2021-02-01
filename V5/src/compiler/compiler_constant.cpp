@@ -5,7 +5,7 @@ UINT32 Compiler::constant_float_create(VM_FLOAT v)
     if (phase == CompilerPhase::COMPILE) {
         // Do we have a matching constant first?
         for (auto c : constants) {
-            if (c.type == Type::REAL && c.value_float == v) {
+            if (c.type == Type::FLOAT && c.value_float == v) {
                 return c.index;
             }
         }
@@ -14,7 +14,7 @@ UINT32 Compiler::constant_float_create(VM_FLOAT v)
         var.value_int = (VM_INT)v;
         var.value_float = v;
         var.index = global_var_index++;
-        var.type = Type::REAL;
+        var.type = Type::FLOAT;
         constants.push_back(var);
         last_var.id = var.index;
         return var.index;

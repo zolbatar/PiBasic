@@ -28,16 +28,27 @@ var
     ;
 
 numVar
-    : varName           #numVarFloat
-    | varName PERCENT   #numVarInteger
+    : varNameFloat                                                  #numVarFloat
+    | varNameFloat (LPAREN numExpr (COMMA numExpr)? RPAREN)*        #numVarFloatArray
+    | varNameInteger                                                #numVarInteger
+    | varNameInteger (LPAREN numExpr (COMMA numExpr)? RPAREN)*      #numVarIntegerArray
     ;
 
 strVar
-    : varName DOLLAR    #numVarString
+    : varNameString                                                 #numVarString
+    | varNameString (LPAREN numExpr (COMMA numExpr)? RPAREN)*       #numVarStringArray
     ;
 
-varName
+varNameFloat
     : VARIABLE
+    ;
+
+varNameInteger
+    : VARIABLE_I
+    ;
+
+varNameString
+    : VARIABLE_S
     ;
 
 varDecl
@@ -60,16 +71,13 @@ exprList
 
 printListItem
     : expr                          # printListExpr
-    | COMMA                         # printListComma
-    | SEMICOLON                     # printListSemicolon
-    | TILDE                         # printListTilde
     | TICK                          # printListTick
     | SPC LPAREN numExpr RPAREN     # printListSPCP
     | SPC numExpr                   # printListSPC
     ;
 
 printList
-    : printListItem+
+    : TILDE? printListItem ((COMMA | SEMICOLON) TILDE? printListItem?)*
     ;
 
 // Expressions and such
@@ -265,6 +273,8 @@ UNDERSCORE      : '_' ;
 COMMENT         : REM ~ [\r\n]* ;
 STRINGLITERAL   : '"' ~ ["\r\n]* '"' ;
 VARIABLE        : ([a-z]|[A-Z]|[_])+([a-z]|[A-Z]|[_]|[0-9])* ;
+VARIABLE_I      : ([a-z]|[A-Z]|[_])+([a-z]|[A-Z]|[_]|[0-9])*'%' ;
+VARIABLE_S      : ([a-z]|[A-Z]|[_])+([a-z]|[A-Z]|[_]|[0-9])*'$' ;
 LETTERS         : [a-z|A-Z]+ ;
 HEXNUMBER       : '&' [0-9A-Fa-f]+ ;
 BINARYNUMBER    : '%' [0|1]+ ;

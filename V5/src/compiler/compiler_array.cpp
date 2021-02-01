@@ -15,7 +15,7 @@ antlrcpp::Any Compiler::visitStmtDIM(DARICParser::StmtDIMContext* context)
         insert_instruction_based_on_type(
             {
                 { Type::INTEGER_ARRAY, Bytecodes::DIM_I },
-                { Type::REAL_ARRAY, Bytecodes::DIM_F },
+                { Type::FLOAT_ARRAY, Bytecodes::DIM_F },
                 { Type::STRING_ARRAY, Bytecodes::DIM_S },
             },
             last_var.type, last_var.id);
@@ -37,8 +37,8 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
     case Type::INTEGER:
         last_var.type = Type::INTEGER_ARRAY;
         break;
-    case Type::REAL:
-        last_var.type = Type::REAL_ARRAY;
+    case Type::FLOAT:
+        last_var.type = Type::FLOAT_ARRAY;
         break;
     case Type::STRING:
         last_var.type = Type::STRING_ARRAY;
@@ -68,7 +68,70 @@ antlrcpp::Any Compiler::visitVarDeclArrayed(DARICParser::VarDeclArrayedContext* 
     last_array_num_dimensions = static_cast<UINT32>(context->numExpr().size());
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
+        ensure_stack_is_integer();
+        stack_pop();
     }
     state = saved_state;
+    visit(context->var());
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitNumVarFloatArray(DARICParser::NumVarFloatArrayContext* context)
+{
+    set_pos(context->start);
+    auto saved_state = state;
+    last_array_num_dimensions = static_cast<UINT32>(context->numExpr().size());
+    for (auto i = 0; i < context->numExpr().size(); i++) {
+        visit(context->numExpr(i));
+        ensure_stack_is_integer();
+        stack_pop();
+    }
+    visit(context->varNameFloat());
+    if (state == CompilerState::NOSTATE) {
+        find_variable();
+        insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
+        insert_instruction(Bytecodes::LOAD_F_ARRAY, last_var.id);
+        stack_push(Type::FLOAT);
+    }
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitNumVarIntegerArray(DARICParser::NumVarIntegerArrayContext* context)
+{
+    set_pos(context->start);
+    auto saved_state = state;
+    last_array_num_dimensions = static_cast<UINT32>(context->numExpr().size());
+    for (auto i = 0; i < context->numExpr().size(); i++) {
+        visit(context->numExpr(i));
+        ensure_stack_is_integer();
+        stack_pop();
+    }
+    visit(context->varNameInteger());
+    if (state == CompilerState::NOSTATE) {
+        find_variable();
+        insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
+        insert_instruction(Bytecodes::LOAD_I_ARRAY, last_var.id);
+        stack_push(Type::INTEGER);
+    }
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitNumVarStringArray(DARICParser::NumVarStringArrayContext* context)
+{
+    set_pos(context->start);
+    auto saved_state = state;
+    last_array_num_dimensions = static_cast<UINT32>(context->numExpr().size());
+    for (auto i = 0; i < context->numExpr().size(); i++) {
+        visit(context->numExpr(i));
+        ensure_stack_is_integer();
+        stack_pop();
+    }
+    visit(context->varNameString());
+    if (state == CompilerState::NOSTATE) {
+        find_variable();
+        insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
+        insert_instruction(Bytecodes::LOAD_S_ARRAY, last_var.id);
+        stack_push(Type::STRING);
+    }
     return NULL;
 }

@@ -40,7 +40,7 @@ antlrcpp::Any Compiler::visitPrintListExpr(DARICParser::PrintListExprContext* co
         insert_instruction_based_on_type(
             {
                 { Type::INTEGER, Bytecodes::PRINT_I },
-                { Type::REAL, Bytecodes::PRINT_F },
+                { Type::FLOAT, Bytecodes::PRINT_F },
                 { Type::STRING, Bytecodes::PRINT_S },
             },
             peek_type(), create_print_flag());
@@ -51,7 +51,7 @@ antlrcpp::Any Compiler::visitPrintListExpr(DARICParser::PrintListExprContext* co
     return NULL;
 }
 
-antlrcpp::Any Compiler::visitPrintListComma(DARICParser::PrintListCommaContext* context)
+/*antlrcpp::Any Compiler::visitPrintListComma(DARICParser::PrintListCommaContext* context)
 {
     set_pos(context->start);
     print_justify = true;
@@ -67,15 +67,15 @@ antlrcpp::Any Compiler::visitPrintListSemicolon(DARICParser::PrintListSemicolonC
     print_hex = false;
     print_semicolon_active = true;
     return NULL;
-}
+}*/
 
-antlrcpp::Any Compiler::visitPrintListTilde(DARICParser::PrintListTildeContext* context)
+/*antlrcpp::Any Compiler::visitPrintListTilde(DARICParser::PrintListTildeContext* context)
 {
     set_pos(context->start);
     print_hex = true;
     print_semicolon_active = false;
     return NULL;
-}
+}*/
 
 antlrcpp::Any Compiler::visitPrintListTick(DARICParser::PrintListTickContext* context)
 {

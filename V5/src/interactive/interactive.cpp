@@ -50,7 +50,7 @@ void Interactive::welcome_prompt()
     g_env.graphics.print_console(" to run the test suite\r");
     g_env.graphics.print_console("Commands: ");
     g_env.graphics.colour(255, 255, 0);
-    g_env.graphics.print_console("LOAD NEW RUN SAVE QUIT\r\r");
+    g_env.graphics.print_console("CHAIN LOAD NEW RUN SAVE QUIT\r\r");
     g_env.graphics.colour(255, 255, 255);
 }
 
@@ -117,9 +117,11 @@ void Interactive::run()
                     }
                 }
             } else if (upper.compare("WELCOME") == 0) {
-                run_file("Welcome");
+                run_demo_file("Welcome");
             } else if (upper.compare("TEST") == 0) {
-                run_file("Tester");
+                run_demo_file("Tester");
+            } else if (upper.substr(0, 6).compare("CHAIN ") == 0) {
+                run_file(s);
             } else if (upper.substr(0, 5).compare("LOAD ") == 0) {
                 load(s);
             } else if (upper.substr(0, 5).compare("SAVE ") == 0) {
@@ -188,7 +190,6 @@ UINT32 Interactive::add_line(std::string s, UINT32 auto_line)
         if (!std::isdigit(s[i]))
             break;
     }
-
     replaceAll(s, "\n", "");
 
     // Extract line number
@@ -218,6 +219,9 @@ void Interactive::execute_line(std::string s)
         parser.parse_and_compile(variables);
     } catch (const DARICException& ex) {
         ex.pretty_print();
+        return;
+    } catch (const std::runtime_error& ex) {
+        g_env.graphics.print_console(ex.what());
         return;
     }
 
@@ -268,7 +272,31 @@ void Interactive::run_all_lines()
     }*/
 }
 
-void Interactive::run_file(std::string filename)
+void Interactive::run_file(std::string s)
+{
+    auto filename = s.substr(6, s.length() - 6);
+    replaceAll(filename, "\"", "");
+#ifdef WINDOWS
+    filename += ".daric";
+#endif
+    create_empty_vm();
+    variables.clear();
+    try {
+        MyParser parser(filename);
+        parser.parse_and_compile(variables);
+    } catch (const DARICException& ex) {
+        ex.pretty_print();
+        return;
+    } catch (const std::runtime_error& ex) {
+        g_env.graphics.print_console(ex.what());
+        return;
+    }
+
+    // Run!
+    g_vm->run();
+}
+
+void Interactive::run_demo_file(std::string filename)
 {
     // Directory for source files
     std::string path(g_env.cwd);
@@ -299,6 +327,9 @@ void Interactive::run_file(std::string filename)
         parser.parse_and_compile(variables);
     } catch (const DARICException& ex) {
         ex.pretty_print();
+        return;
+    } catch (const std::runtime_error& ex) {
+        g_env.graphics.print_console(ex.what());
         return;
     }
     // Run!

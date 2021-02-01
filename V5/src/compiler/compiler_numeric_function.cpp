@@ -4,7 +4,7 @@ antlrcpp::Any Compiler::visitNumFuncPI(DARICParser::NumFuncPIContext* context)
 {
     set_pos(context->start);
     insert_bytecode(Bytecodes::PI);
-    stack_push(Type::REAL);
+    stack_push(Type::FLOAT);
     return NULL;
 }
 
@@ -29,7 +29,7 @@ antlrcpp::Any Compiler::visitNumFuncRND0(DARICParser::NumFuncRND0Context* contex
     set_pos(context->start);
     insert_instruction(Bytecodes::CONST_I, 0);
     insert_bytecode(Bytecodes::RNDREAL);
-    stack_push(Type::REAL);
+    stack_push(Type::FLOAT);
     return NULL;
 }
 
@@ -38,7 +38,7 @@ antlrcpp::Any Compiler::visitNumFuncRND1(DARICParser::NumFuncRND1Context* contex
     set_pos(context->start);
     insert_instruction(Bytecodes::CONST_I, 1);
     insert_bytecode(Bytecodes::RNDREAL);
-    stack_push(Type::REAL);
+    stack_push(Type::FLOAT);
     return NULL;
 }
 
@@ -122,7 +122,7 @@ antlrcpp::Any Compiler::visitNumFuncABS(DARICParser::NumFuncABSContext* context)
     case Type::INTEGER:
         insert_bytecode(Bytecodes::ABS_I);
         break;
-    case Type::REAL:
+    case Type::FLOAT:
         insert_bytecode(Bytecodes::ABS_F);
         break;
     default:
@@ -247,6 +247,6 @@ antlrcpp::Any Compiler::visitNumFuncVAL(DARICParser::NumFuncVALContext* context)
     ensure_stack_is_string();
     stack_pop();
     insert_bytecode(Bytecodes::VAL);
-    stack_push(Type::REAL);
+    stack_push(Type::FLOAT);
     return NULL;
 }

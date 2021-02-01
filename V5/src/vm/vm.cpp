@@ -749,7 +749,7 @@ void VM::opcode_ARRAYSIZE()
     case Type::INTEGER_ARRAY:
         size = static_cast<VM_INT>(variables.get_variable(bc).value_int_array.size());
         break;
-    case Type::REAL_ARRAY:
+    case Type::FLOAT_ARRAY:
         size = static_cast<VM_INT>(variables.get_variable(bc).value_float_array.size());
         break;
     case Type::STRING_ARRAY:
@@ -766,7 +766,7 @@ void VM::opcode_ARRAYSIZE()
 void VM::opcode_DIM_F()
 {
     VM_INT dimensions = stack.pop_int(bc);
-    variables.get_variable(bc).type = Type::REAL_ARRAY;
+    variables.get_variable(bc).type = Type::FLOAT_ARRAY;
     variables.get_variable(bc).value_int = dimensions;
     if (dimensions == 1) {
         auto size = static_cast<size_t>(stack.pop_int(bc)) + 1;
@@ -1439,7 +1439,7 @@ void VM::opcode_UNPACK_F()
 {
     auto b = stack.pop_boxed(bc);
     switch (b.type) {
-    case Type::REAL:
+    case Type::FLOAT:
         variables.get_variable(bc).value_float = b.value_float;
         break;
     case Type::INTEGER:
@@ -1459,7 +1459,7 @@ void VM::opcode_UNPACK_I()
     case Type::INTEGER:
         variables.get_variable(bc).value_int = b.value_int;
         break;
-    case Type::REAL:
+    case Type::FLOAT:
         variables.get_variable(bc).value_int = static_cast<VM_INT>(b.value_float);
         break;
     default:
@@ -2262,17 +2262,17 @@ void VM::opcode_CREATEVERTEX()
 
     // X
     Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(base)];
-    field->type = Type::REAL;
+    field->type = Type::FLOAT;
     field->value_float = x;
 
     // Y
     field = &variables.get_variable(bc).fields[static_cast<size_t>(base + 1)];
-    field->type = Type::REAL;
+    field->type = Type::FLOAT;
     field->value_float = y;
 
     // Z
     field = &variables.get_variable(bc).fields[static_cast<size_t>(base + 2)];
-    field->type = Type::REAL;
+    field->type = Type::FLOAT;
     field->value_float = z;
 
     // colour

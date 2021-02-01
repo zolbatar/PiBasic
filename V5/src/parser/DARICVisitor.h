@@ -39,11 +39,21 @@ public:
 
     virtual antlrcpp::Any visitNumVarFloat(DARICParser::NumVarFloatContext *context) = 0;
 
+    virtual antlrcpp::Any visitNumVarFloatArray(DARICParser::NumVarFloatArrayContext *context) = 0;
+
     virtual antlrcpp::Any visitNumVarInteger(DARICParser::NumVarIntegerContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumVarIntegerArray(DARICParser::NumVarIntegerArrayContext *context) = 0;
 
     virtual antlrcpp::Any visitNumVarString(DARICParser::NumVarStringContext *context) = 0;
 
-    virtual antlrcpp::Any visitVarName(DARICParser::VarNameContext *context) = 0;
+    virtual antlrcpp::Any visitNumVarStringArray(DARICParser::NumVarStringArrayContext *context) = 0;
+
+    virtual antlrcpp::Any visitVarNameFloat(DARICParser::VarNameFloatContext *context) = 0;
+
+    virtual antlrcpp::Any visitVarNameInteger(DARICParser::VarNameIntegerContext *context) = 0;
+
+    virtual antlrcpp::Any visitVarNameString(DARICParser::VarNameStringContext *context) = 0;
 
     virtual antlrcpp::Any visitVarDeclInd(DARICParser::VarDeclIndContext *context) = 0;
 
@@ -56,12 +66,6 @@ public:
     virtual antlrcpp::Any visitExprList(DARICParser::ExprListContext *context) = 0;
 
     virtual antlrcpp::Any visitPrintListExpr(DARICParser::PrintListExprContext *context) = 0;
-
-    virtual antlrcpp::Any visitPrintListComma(DARICParser::PrintListCommaContext *context) = 0;
-
-    virtual antlrcpp::Any visitPrintListSemicolon(DARICParser::PrintListSemicolonContext *context) = 0;
-
-    virtual antlrcpp::Any visitPrintListTilde(DARICParser::PrintListTildeContext *context) = 0;
 
     virtual antlrcpp::Any visitPrintListTick(DARICParser::PrintListTickContext *context) = 0;
 

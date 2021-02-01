@@ -10,70 +10,96 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
         // Get variable name and type
         visit(context->varDecl(i));
         find_or_create_variable(VariableScope::GLOBAL);
-        auto var_type = last_var.type;
+        auto saved = last_var;
 
-        // Now get value
+        // Get value
         visit(context->expr(i));
-
         auto type = stack_pop();
 
         // Now do stuff based on the type on the stack and the variable type
-        switch (var_type) {
+        switch (saved.type) {
         case Type::INTEGER:
             switch (type) {
-            case Type::REAL:
+            case Type::FLOAT:
                 insert_bytecode(Bytecodes::F_TO_I);
-                insert_instruction(Bytecodes::STORE_I, last_var.id);
+                insert_instruction(Bytecodes::STORE_I, saved.id);
                 break;
             case Type::INTEGER:
-                insert_instruction(Bytecodes::STORE_I, last_var.id);
+                insert_instruction(Bytecodes::STORE_I, saved.id);
                 break;
             default:
                 std::stringstream s;
-                s << "Variable '" << last_var.name << "', assigned value is of the wrong type";
+                s << "Variable '" << saved.name << "', assigned value is of the wrong type";
                 error(s.str());
             }
             break;
-        case Type::REAL:
+        case Type::FLOAT:
             switch (type) {
             case Type::INTEGER:
                 insert_bytecode(Bytecodes::I_TO_F);
-                insert_instruction(Bytecodes::STORE_F, last_var.id);
+                insert_instruction(Bytecodes::STORE_F, saved.id);
                 break;
-            case Type::REAL:
-                insert_instruction(Bytecodes::STORE_F, last_var.id);
+            case Type::FLOAT:
+                insert_instruction(Bytecodes::STORE_F, saved.id);
                 break;
             default:
                 std::stringstream s;
-                s << "Variable '" << last_var.name << "', assigned value is of the wrong type";
+                s << "Variable '" << saved.name << "', assigned value is of the wrong type";
                 error(s.str());
             }
             break;
         case Type::STRING:
             switch (type) {
             case Type::STRING:
-                insert_instruction(Bytecodes::STORE_S, last_var.id);
+                insert_instruction(Bytecodes::STORE_S, saved.id);
                 break;
             default:
                 std::stringstream s;
-                s << "Variable '" << last_var.name << "', assigned value is of the wrong type";
+                s << "Variable '" << saved.name << "', assigned value is of the wrong type";
                 error(s.str());
             }
             break;
         case Type::INTEGER_ARRAY:
+            switch (type) {
+            case Type::FLOAT:
+                insert_bytecode(Bytecodes::F_TO_I);
+                break;
+            case Type::INTEGER:
+                break;
+            default:
+                std::stringstream s;
+                s << "Variable '" << saved.name << "', assigned value is of the wrong type";
+                error(s.str());
+            }
             insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
-            insert_instruction(Bytecodes::STORE_I_ARRAY, last_var.id);
-            stack_pop();
+            insert_instruction(Bytecodes::STORE_I_ARRAY, saved.id);
             break;
-        case Type::REAL_ARRAY:
+        case Type::FLOAT_ARRAY:
+            switch (type) {
+            case Type::INTEGER:
+                insert_bytecode(Bytecodes::I_TO_F);
+                break;
+            case Type::FLOAT:
+                break;
+            default:
+                std::stringstream s;
+                s << "Variable '" << saved.name << "', assigned value is of the wrong type";
+                error(s.str());
+            }
             insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
-            insert_instruction(Bytecodes::STORE_F_ARRAY, last_var.id);
-            stack_pop();
+            insert_instruction(Bytecodes::STORE_F_ARRAY, saved.id);
             break;
         case Type::STRING_ARRAY:
+            switch (type) {
+            case Type::STRING:
+                break;
+            default:
+                std::stringstream s;
+                s << "Variable '" << saved.name << "', assigned value is of the wrong type";
+                error(s.str());
+            }
             insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
-            insert_instruction(Bytecodes::STORE_S_ARRAY, last_var.id);
-            stack_pop();
+            insert_instruction(Bytecodes::STORE_S_ARRAY, saved.id);
             break;
         }
     }

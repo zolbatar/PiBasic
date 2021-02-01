@@ -86,7 +86,7 @@ antlrcpp::Any Compiler::visitNumberFloat(DARICParser::NumberFloatContext* contex
         switch (phase) {
         case CompilerPhase::LOOKAHEAD: {
             Boxed b;
-            b.type = Type::REAL;
+            b.type = Type::FLOAT;
             b.value_float = i;
             vm->add_data(b);
             break;
@@ -97,7 +97,7 @@ antlrcpp::Any Compiler::visitNumberFloat(DARICParser::NumberFloatContext* contex
         }
     } else {
         insert_instruction(Bytecodes::LOAD_F, constant_float_create(i));
-        stack_push(Type::REAL);
+        stack_push(Type::FLOAT);
     }
     return NULL;
 }
