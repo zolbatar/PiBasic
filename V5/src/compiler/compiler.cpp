@@ -47,7 +47,7 @@ Compiler::Compiler(VM* vm, DARICParser::ProgContext* tree, std::string filename,
     daric = visitProg(tree);
     assert(stack_size() == 0);
 
-    insert_bytecode(Bytecodes::HALT);
+    insert_bytecode(Bytecodes::HALT, Type::NOTYPE);
 
     // Now we MOVE the variables into the VM class
     vm->helper_variables().set_variables_size(global_var_index);

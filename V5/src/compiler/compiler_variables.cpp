@@ -54,7 +54,7 @@ antlrcpp::Any Compiler::visitNumVarFloat(DARICParser::NumVarFloatContext* contex
         if (!find_variable()) {
             error("Variable '" + last_var.name + "' not found");
         }
-        insert_instruction(Bytecodes::LOAD_F, last_var.id);
+        insert_instruction(Bytecodes::LOAD, Type::FLOAT, last_var.id);
         stack_push(Type::FLOAT);
     }
     return NULL;
@@ -69,7 +69,7 @@ antlrcpp::Any Compiler::visitNumVarInteger(DARICParser::NumVarIntegerContext* co
         if (!find_variable()) {
             error("Variable '" + last_var.name + "' not found");
         }
-        insert_instruction(Bytecodes::LOAD_I, last_var.id);
+        insert_instruction(Bytecodes::LOAD, Type::INTEGER, last_var.id);
         stack_push(Type::INTEGER);
     }
     return NULL;
@@ -84,7 +84,7 @@ antlrcpp::Any Compiler::visitNumVarString(DARICParser::NumVarStringContext* cont
         if (!find_variable()) {
             error("Variable '" + last_var.name + "' not found");
         }
-        insert_instruction(Bytecodes::LOAD_S, last_var.id);
+        insert_instruction(Bytecodes::LOAD, Type::STRING, last_var.id);
         stack_push(Type::STRING);
     }
     return NULL;

@@ -6,10 +6,7 @@ antlrcpp::Any Compiler::visitNumExprHat(DARICParser::NumExprHatContext* context)
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
-    insert_bytecode_based_on_peektype({
-        { Type::INTEGER, Bytecodes::POWER_I },
-        { Type::FLOAT, Bytecodes::POWER_F },
-    });
+    insert_bytecode(Bytecodes::POWER, peek_type());
     stack_pop();
     return NULL;
 }
@@ -20,10 +17,7 @@ antlrcpp::Any Compiler::visitNumExprMultiply(DARICParser::NumExprMultiplyContext
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
-    insert_bytecode_based_on_peektype({
-        { Type::INTEGER, Bytecodes::MULTIPLY_I },
-        { Type::FLOAT, Bytecodes::MULTIPLY_F },
-    });
+    insert_bytecode(Bytecodes::MULTIPLY, peek_type());
     stack_pop();
     return NULL;
 }
@@ -34,7 +28,7 @@ antlrcpp::Any Compiler::visitNumExprDivide(DARICParser::NumExprDivideContext* co
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, true);
-    insert_bytecode(Bytecodes::DIVIDE_F);
+    insert_bytecode(Bytecodes::DIVIDE, peek_type());
     stack_pop();
     return NULL;
 }
@@ -47,11 +41,11 @@ antlrcpp::Any Compiler::visitNumExprDIV(DARICParser::NumExprDIVContext* context)
     expression_type_conversion(context, false);
     switch (peek_type()) {
     case Type::INTEGER:
-        insert_bytecode(Bytecodes::DIV_I);
+        insert_bytecode(Bytecodes::DIV, peek_type());
         stack_pop();
         break;
     case Type::FLOAT:
-        insert_bytecode(Bytecodes::DIV_F);
+        insert_bytecode(Bytecodes::DIV, peek_type());
         stack_pop();
         stack_pop();
         stack_push(Type::INTEGER);
@@ -70,11 +64,11 @@ antlrcpp::Any Compiler::visitNumExprMOD(DARICParser::NumExprMODContext* context)
     expression_type_conversion(context, false);
     switch (peek_type()) {
     case Type::INTEGER:
-        insert_bytecode(Bytecodes::MOD_I);
+        insert_bytecode(Bytecodes::MOD, peek_type());
         stack_pop();
         break;
     case Type::FLOAT:
-        insert_bytecode(Bytecodes::MOD_F);
+        insert_bytecode(Bytecodes::MOD, peek_type());
         stack_pop();
         stack_pop();
         stack_push(Type::INTEGER);
@@ -91,10 +85,7 @@ antlrcpp::Any Compiler::visitNumExprPlus(DARICParser::NumExprPlusContext* contex
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
-    insert_bytecode_based_on_peektype({
-        { Type::INTEGER, Bytecodes::ADD_I },
-        { Type::FLOAT, Bytecodes::ADD_F },
-    });
+    insert_bytecode(Bytecodes::ADD, peek_type());
     stack_pop();
     return NULL;
 }
@@ -105,10 +96,7 @@ antlrcpp::Any Compiler::visitNumExprSubtract(DARICParser::NumExprSubtractContext
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
-    insert_bytecode_based_on_peektype({
-        { Type::INTEGER, Bytecodes::SUBTRACT_I },
-        { Type::FLOAT, Bytecodes::SUBTRACT_F },
-    });
+    insert_bytecode(Bytecodes::SUBTRACT, peek_type());
     stack_pop();
     return NULL;
 }
@@ -120,7 +108,7 @@ antlrcpp::Any Compiler::visitNumExprSHL(DARICParser::NumExprSHLContext* context)
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
     ensure_stack_is_integer();
-    insert_bytecode(Bytecodes::SHL);
+    insert_bytecode(Bytecodes::SHL, Type::INTEGER);
     stack_pop();
     return NULL;
 }
@@ -132,7 +120,7 @@ antlrcpp::Any Compiler::visitNumExprSHR(DARICParser::NumExprSHRContext* context)
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
     ensure_stack_is_integer();
-    insert_bytecode(Bytecodes::SHR);
+    insert_bytecode(Bytecodes::SHR, Type::INTEGER);
     stack_pop();
     return NULL;
 }
@@ -147,23 +135,23 @@ void Compiler::expression_type_conversion(DARICParser::NumExprContext* context, 
         if (DIVIDE) {
             // Is this a divide? If so, we always promote to a float
             if (type2 == Type::FLOAT && type1 == Type::INTEGER) {
-                insert_bytecode(Bytecodes::I_TO_F2);
+                insert_bytecode(Bytecodes::I_TO_F2, Type::NOTYPE);
             } else if (type2 == Type::INTEGER && type1 == Type::FLOAT) {
-                insert_bytecode(Bytecodes::I_TO_F);
+                insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
             } else if (type2 == Type::INTEGER && type1 == Type::INTEGER) {
-                insert_bytecode(Bytecodes::I_TO_F);
-                insert_bytecode(Bytecodes::I_TO_F2);
+                insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
+                insert_bytecode(Bytecodes::I_TO_F2, Type::NOTYPE);
             }
             stack_push(Type::FLOAT);
             stack_push(Type::FLOAT);
         } else {
             // Do we need to promote (or demote)?
             if (type2 == Type::FLOAT && type1 == Type::INTEGER) {
-                insert_bytecode(Bytecodes::I_TO_F2);
+                insert_bytecode(Bytecodes::I_TO_F2, Type::NOTYPE);
                 stack_push(Type::FLOAT);
                 stack_push(Type::FLOAT);
             } else if (type2 == Type::INTEGER && type1 == Type::FLOAT) {
-                insert_bytecode(Bytecodes::I_TO_F);
+                insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
                 stack_push(Type::FLOAT);
                 stack_push(Type::FLOAT);
             } else {

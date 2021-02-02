@@ -69,365 +69,213 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
     ssh << std::uppercase << std::hex << std::setfill('0') << std::setw(8) << i << " : " << std::nouppercase << std::dec;
     ret.header = ssh.str();
 
+    // Set type
+    switch (bc.type) {
+    case Type::NOTYPE:
+        ret.type = "";
+        break;
+    case Type::INTEGER:
+        ret.type = "INTEGER";
+        break;
+    case Type::FLOAT:
+        ret.type = "FLOAT";
+        break;
+    case Type::STRING:
+        ret.type = "STRING";
+        break;
+    case Type::TYPE:
+        ret.type = "TYPE";
+        break;
+    case Type::INTEGER_ARRAY:
+        ret.type = "INTEGER ARRAY";
+        break;
+    case Type::FLOAT_ARRAY:
+        ret.type = "FLOAT ARRAY";
+        break;
+    case Type::STRING_ARRAY:
+        ret.type = "STRING ARRAY";
+        break;
+    case Type::TYPE_ARRAY:
+        ret.type = "TYPE ARRAY";
+        break;
+    }
+
     // Actual opcode and operands
     std::stringstream ss;
     switch (bc.opcode) {
     case Bytecodes::NOP:
         ret.opcode = "NOP";
-        ret.description = "No operation";
         break;
     case Bytecodes::HALT:
         ret.opcode = "HALT";
-        ret.description = "Stop program";
         break;
     case Bytecodes::TRACEON:
         ret.opcode = "TRACE ON";
-        ret.description = "Start tracing";
         break;
     case Bytecodes::TRACEOFF:
         ret.opcode = "TRACE OFF";
-        ret.description = "Stop tracing";
         break;
     case Bytecodes::BREAKPOINT:
         ret.opcode = "BREAKPOINT";
-        ret.description = "Pause execution and open debugger";
         break;
 
         // Load & store
     case Bytecodes::DROP:
         ret.opcode = "DROP";
-        ret.description = "Drop top value off stack";
         break;
-    case Bytecodes::CONST_I:
-        ret.opcode = "CONST_I";
-        ret.description = "Push constant integer onto stack";
+    case Bytecodes::FASTCONST:
+        ret.opcode = "CONST";
         ss << bc.data;
         ret.operand = ss.str();
         break;
-    case Bytecodes::CONST_I_VAR:
-        ret.opcode = "CONST_I_VAR";
-        ret.description = "Push variable pointer onto stack";
+    case Bytecodes::FASTCONST_VAR:
+        ret.opcode = "VARIABLE";
         name_for_operand(ret, bc, i);
         break;
-    case Bytecodes::LOAD_I:
-        ret.opcode = "LOAD_I";
+    case Bytecodes::LOAD:
         if (get_variable_bc(bc, i).constant) {
-            ret.description = "Push constant integer onto stack";
-            ss << get_variable_bc(bc, i).value_int;
-            ret.operand = ss.str();
+            ret.opcode = "CONST";
+            switch (bc.type) {
+            case Type::INTEGER:
+                ss << get_variable_bc(bc, i).value_int;
+                break;
+            case Type::FLOAT:
+                ss << get_variable_bc(bc, i).value_float;
+                break;
+            case Type::STRING:
+                ss << get_variable_bc(bc, i).value_string;
+                break;
+            }
         } else {
-            ret.description = "Push variable integer onto stack";
+            ret.opcode = "LOAD";
             name_for_operand(ret, bc, i);
         }
         break;
-    case Bytecodes::LOAD_F:
-        ret.opcode = "LOAD_F";
-        if (get_variable_bc(bc, i).constant) {
-            ret.description = "Push constant float onto stack";
-            ss << get_variable_bc(bc, i).value_float;
-            ret.operand = ss.str();
-        } else {
-            ret.description = "Push variable float onto stack";
-            name_for_operand(ret, bc, i);
-        }
-        break;
-    case Bytecodes::LOAD_S:
-        ret.opcode = "LOAD_S";
-        if (get_variable_bc(bc, i).constant) {
-            ret.description = "Push constant string onto stack";
-            ss << "'" << get_variable_bc(bc, i).value_string << "'";
-            ret.operand = ss.str();
-        } else {
-            ret.description = "Push variable string onto stack";
-            name_for_operand(ret, bc, i);
-        }
-        break;
-    case Bytecodes::STORE_I:
-        ret.opcode = "STORE_I";
-        ret.description = "Store integer value in variable from stack";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::STORE_F:
-        ret.opcode = "STORE_F";
-        ret.description = "Store float value in variable from stack";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::STORE_S:
-        ret.opcode = "STORE_S";
-        ret.description = "Store string value in variable from stack";
+    case Bytecodes::STORE:
+        ret.opcode = "STORE";
         name_for_operand(ret, bc, i);
         break;
 
         // Types
     case Bytecodes::NEW_TYPE:
-        ret.opcode = "NEW_TYPE";
-        ret.description = "Create variable as TYPEd";
+        ret.opcode = "NEW TYPE";
         name_for_operand(ret, bc, i);
         break;
-    case Bytecodes::STORE_I_FIELD:
-        ret.opcode = "STORE_I_FIELD";
-        ret.description = "Store integer value from stack in TYPE FIELD";
+    case Bytecodes::STORE_FIELD:
+        ret.opcode = "STORE FIELD";
         name_for_operand(ret, bc, i);
         break;
-    case Bytecodes::STORE_F_FIELD:
-        ret.opcode = "STORE_F_FIELD";
-        ret.description = "Store float value from stack in TYPE FIELD";
+    case Bytecodes::STORE_FIELD_ARRAY:
+        ret.opcode = "STORE FIELD ARRAY";
         name_for_operand(ret, bc, i);
         break;
-    case Bytecodes::STORE_S_FIELD:
-        ret.opcode = "STORE_S_FIELD";
-        ret.description = "Store string value from stack in TYPE FIELD";
+    case Bytecodes::LOAD_FIELD:
+        ret.opcode = "LOAD FIELD";
         name_for_operand(ret, bc, i);
         break;
-    case Bytecodes::STORE_I_FIELD_ARRAY:
-        ret.opcode = "STORE_I_FIELD_ARRAY";
-        ret.description = "Store integer value from stack in TYPE FIELD";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::STORE_F_FIELD_ARRAY:
-        ret.opcode = "STORE_F_FIELD_ARRAY";
-        ret.description = "Store float value from stack in TYPE FIELD";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::STORE_S_FIELD_ARRAY:
-        ret.opcode = "STORE_S_FIELD_ARRAY";
-        ret.description = "Store string value from stack in TYPE FIELD";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::LOAD_I_FIELD:
-        ret.opcode = "LOAD_I_FIELD";
-        ret.description = "Push integer value from TYPE FIELD onto stack";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::LOAD_F_FIELD:
-        ret.opcode = "LOAD_F_FIELD";
-        ret.description = "Push float value from TYPE FIELD onto stack";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::LOAD_S_FIELD:
-        ret.opcode = "LOAD_S_FIELD";
-        ret.description = "Push string value from TYPE FIELD onto stack";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::LOAD_I_FIELD_ARRAY:
-        ret.opcode = "LOAD_I_FIELD_ARRAY";
-        ret.description = "Push integer value from arrayed TYPE FIELD onto stack";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::LOAD_F_FIELD_ARRAY:
-        ret.opcode = "LOAD_F_FIELD_ARRAY";
-        ret.description = "Push float value from arrayed TYPE FIELD onto stack";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::LOAD_S_FIELD_ARRAY:
-        ret.opcode = "LOAD_S_FIELD_ARRAY";
-        ret.description = "Push string value from arrayed TYPE FIELD onto stack";
+    case Bytecodes::LOAD_FIELD_ARRAY:
+        ret.opcode = "LOAD FIELD ARRAY";
         name_for_operand(ret, bc, i);
         break;
 
         // Arrays
-    case Bytecodes::DIM_I:
-        ret.opcode = "DIM_I";
-        ret.description = "DIMension integer array";
+    case Bytecodes::DIM:
+        ret.opcode = "DIM";
         name_for_operand(ret, bc, i);
         break;
-    case Bytecodes::DIM_F:
-        ret.opcode = "DIM_F";
-        ret.description = "DIMension float array";
+    case Bytecodes::LOAD_ARRAY:
+        ret.opcode = "LOAD ARRAY";
         name_for_operand(ret, bc, i);
         break;
-    case Bytecodes::DIM_S:
-        ret.opcode = "DIM_S";
-        ret.description = "DIMension string array";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::LOAD_I_ARRAY:
-        ret.opcode = "LOAD_I_ARRAY";
-        ret.description = "Push integer from array onto stack";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::LOAD_F_ARRAY:
-        ret.opcode = "LOAD_F_ARRAY";
-        ret.description = "Push float from array onto stack";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::LOAD_S_ARRAY:
-        ret.opcode = "LOAD_S_ARRAY";
-        ret.description = "Push string from array onto stack";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::STORE_I_ARRAY:
-        ret.opcode = "STORE_I_ARRAY";
-        ret.description = "Store integer from stack in array";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::STORE_F_ARRAY:
-        ret.opcode = "STORE_F_ARRAY";
-        ret.description = "Store float from stack in array";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::STORE_S_ARRAY:
-        ret.opcode = "STORE_S_ARRAY";
-        ret.description = "Store string from stack in array";
+    case Bytecodes::STORE_ARRAY:
+        ret.opcode = "STORE ARRAY";
         name_for_operand(ret, bc, i);
         break;
 
         // DATA statements
-    case Bytecodes::READ_I:
-        ret.opcode = "READ_I";
-        ret.description = "READ integer from DATA and store in variable";
+    case Bytecodes::READ:
+        ret.opcode = "READ";
         name_for_operand(ret, bc, i);
         break;
-    case Bytecodes::READ_F:
-        ret.opcode = "READ_F";
-        ret.description = "READ float from DATA and store in variable";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::READ_S:
-        ret.opcode = "READ_F";
-        ret.description = "READ string from DATA and store in variable";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::READ_I_ARRAY:
-        ret.opcode = "READ_I_ARRAY";
-        ret.description = "READ integer from DATA and store in variable array";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::READ_F_ARRAY:
-        ret.opcode = "READ_F_ARRAY";
-        ret.description = "READ float from DATA and store in variable array";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::READ_S_ARRAY:
-        ret.opcode = "READ_S_ARRAY";
-        ret.description = "READ string from DATA and store in variable array";
+    case Bytecodes::READ_ARRAY:
+        ret.opcode = "READ ARRAY";
         name_for_operand(ret, bc, i);
         break;
     case Bytecodes::RESTORE:
         ret.opcode = "RESTORE";
-        ret.description = "RESTORE DATA pointer to start";
         name_for_operand(ret, bc, i);
         break;
 
         // Calling and return
-    case Bytecodes::FORIN_I:
-        ret.opcode = "FORIN_I";
-        ret.description = "FOR IN, initialise for integer variable array";
+    case Bytecodes::FORIN:
+        ret.opcode = "FOR IN";
         name_for_operand(ret, bc, i);
         break;
-    case Bytecodes::FORIN_F:
-        ret.opcode = "FORIN_I";
-        ret.description = "FOR IN, initialise for float variable array";
+    case Bytecodes::NEXTIN:
+        ret.opcode = "NEXT IN";
         name_for_operand(ret, bc, i);
         break;
-    case Bytecodes::FORIN_S:
-        ret.opcode = "FORIN_S";
-        ret.description = "FOR IN, initialise for string variable array";
+    case Bytecodes::FOR:
+        ret.opcode = "FOR";
         name_for_operand(ret, bc, i);
         break;
-    case Bytecodes::NEXTIN_I:
-        ret.opcode = "NEXTIN_I";
-        ret.description = "NEXT for integer variable array";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::NEXTIN_F:
-        ret.opcode = "NEXTIN_F";
-        ret.description = "NEXT for float variable array";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::NEXTIN_S:
-        ret.opcode = "NEXTIN_S";
-        ret.description = "NEXT for string variable array";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::FOR_I:
-        ret.opcode = "FOR_I";
-        ret.description = "FOR for integer variable";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::FOR_F:
-        ret.opcode = "FOR_F";
-        ret.description = "FOR for float variable";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::NEXT_I:
-        ret.opcode = "NEXT_I";
-        ret.description = "NEXT for integer variable";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::NEXT_F:
-        ret.opcode = "NEXT_F";
-        ret.description = "NEXT for float variable";
+    case Bytecodes::NEXT:
+        ret.opcode = "NEXT";
         name_for_operand(ret, bc, i);
         break;
     case Bytecodes::REPEAT:
         ret.opcode = "REPEAT";
-        ret.description = "Start of REPEAT loop";
         break;
     case Bytecodes::RETURN:
         ret.opcode = "RETURN";
-        ret.description = "RETURN from GOSUB";
         break;
     case Bytecodes::CALL:
         ret.opcode = "CALL";
-        ret.description = "Call FN or PROC at address";
         address_for_jump(ret, bc);
         break;
     case Bytecodes::JUMP:
         ret.opcode = "JUMP";
-        ret.description = "Jump to address";
         address_for_jump(ret, bc);
         break;
     case Bytecodes::JNE:
         ret.opcode = "JNE";
-        ret.description = "Jump to address if integer on stack = 0";
         address_for_jump(ret, bc);
         break;
     case Bytecodes::JNEREP:
-        ret.opcode = "JNEREP";
-        ret.description = "Jump to REPEAT if integer on stack = 0";
+        ret.opcode = "JNE (REPEAT)";        
         break;
     case Bytecodes::CASE_C:
-        ret.opcode = "CASE_C";
-        ret.description = "Clear CASE flag";
+        ret.opcode = "CASE CLEAR";
         break;
     case Bytecodes::CASE_S:
-        ret.opcode = "CASE_S";
-        ret.description = "Set CASE flag";
+        ret.opcode = "CASE SET";
         break;
     case Bytecodes::CJUMPT:
-        ret.opcode = "CJUMPT";
-        ret.description = "Test for CASE statement, jump to address if integer on stack = 0";
+        ret.opcode = "CASE JUMP TEST";
         address_for_jump(ret, bc);
         break;
     case Bytecodes::CHAIN:
         ret.opcode = "CHAIN";
-        ret.description = "Chain source file using string value on top of stack";
         break;
     case Bytecodes::GOTO:
         ret.opcode = "GOTO";
-        ret.description = "GOTO address for line number";
         address_for_jump(ret, bc);
         break;
     case Bytecodes::GOSUB:
-        ret.opcode = "GOTO";
-        ret.description = "GOSUB address for line number, storing program counter for RETURN";
+        ret.opcode = "GOSUB";
         address_for_jump(ret, bc);
         break;
 
     case Bytecodes::TIME:
-        ret.opcode = "TIME";
         break;
     case Bytecodes::TIMES:
         ret.opcode = "TIME$";
         break;
     case Bytecodes::RND:
         ret.opcode = "RND";
-        ret.description = "Push float RND (between 0 and 1) onto stack";
         break;
     case Bytecodes::RNDRANGE:
         ret.opcode = "RND_RANGE";
-        ret.description = "Pull range from stack, push random integer in range onto stack";
         break;
     case Bytecodes::CLOSE:
         ret.opcode = "CLOSE#";
@@ -455,171 +303,73 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         break;
     case Bytecodes::PTR:
         ret.opcode = "PTR#";
-        ret.description = "Push PTR# integer value onto stack";
         break;
     case Bytecodes::PTRA:
-        ret.opcode = "PTR#=";
-        ret.description = "Assign PTR# from integer value on stack";
+        ret.opcode = "PTR# =";
         break;
     case Bytecodes::LISTFILES:
         ret.opcode = "LISTFILES";
         break;
 
     case Bytecodes::I_TO_F:
-        ret.opcode = "I_TO_F";
-        ret.description = "Convert integer on stack to float";
+        ret.opcode = "I TO F";
         break;
     case Bytecodes::I_TO_F2:
-        ret.opcode = "I_TO_F2";
-        ret.description = "Convert integer on stack (2nd down) to float";
+        ret.opcode = "I TO F (2)";
         break;
     case Bytecodes::F_TO_I:
-        ret.opcode = "F_TO_I";
-        ret.description = "Convert float on stack to integer";
+        ret.opcode = "F TO I";
         break;
     case Bytecodes::F_TO_I2:
-        ret.opcode = "F_TO_I2";
-        ret.description = "Convert float on stack (2nd down) to integer";
+        ret.opcode = "F TO I (2)";
         break;
     case Bytecodes::I_TO_S:
-        ret.opcode = "I_TO_S";
-        ret.description = "Convert integer on stack to string";
+        ret.opcode = "I TO S";
         break;
     case Bytecodes::F_TO_S:
-        ret.opcode = "F_TO_S";
-        ret.description = "Convert float on stack to string";
+        ret.opcode = "F TO S";
         break;
-    case Bytecodes::DUP_I:
-        ret.opcode = "DUP_I";
-        ret.description = "Duplicate integer value on stack";
+    case Bytecodes::DUP:
+        ret.opcode = "DUP";
         break;
-    case Bytecodes::DUP_F:
-        ret.opcode = "DUP_F";
-        ret.description = "Duplicate float value on stack";
-        break;
-    case Bytecodes::ROT_I:
-        ret.opcode = "ROT_I";
-        ret.description = "Rotate integer values on stack";
-        break;
-    case Bytecodes::ROT_F:
-        ret.opcode = "ROT_F";
-        ret.description = "Rotate float values on stack";
+    case Bytecodes::ROT:
+        ret.opcode = "ROT";
         break;
     case Bytecodes::SHR:
         ret.opcode = "SHR";
-        ret.description = "Shift right integer value on stack";
         break;
     case Bytecodes::SHL:
         ret.opcode = "SHL";
-        ret.description = "Shift left integer value on stack";
         break;
-    case Bytecodes::ADD_I:
-        ret.opcode = "ADD_I";
-        ret.description = "Add integer values on stack, pushing result";
+    case Bytecodes::ADD:
+        ret.opcode = "ADD";
         break;
-    case Bytecodes::ADD_F:
-        ret.opcode = "ADD_I";
-        ret.description = "Add float values on stack, pushing result";
+    case Bytecodes::SUBTRACT:
+        ret.opcode = "SUBTRACT";
         break;
-    case Bytecodes::ADD_S:
-        ret.opcode = "ADD_I";
-        ret.description = "Add string values on stack, pushing result";
+    case Bytecodes::DIVIDE:
+        ret.opcode = "DIVIDE";
         break;
-    case Bytecodes::SUBTRACT_I:
-        ret.opcode = "SUBTRACT_I";
-        ret.description = "Substract integer values on stack, pushing result";
+    case Bytecodes::MULTIPLY:
+        ret.opcode = "MULTIPLY";
         break;
-    case Bytecodes::SUBTRACT_F:
-        ret.opcode = "SUBTRACT_F";
-        ret.description = "Substract float values on stack, pushing result";
+    case Bytecodes::CMP_E:
+        ret.opcode = "CMP EQ";
         break;
-    case Bytecodes::DIVIDE_I:
-        ret.opcode = "DIVIDE_I";
-        ret.description = "Divide integer values on stack, pushing result";
+    case Bytecodes::CMP_NE:
+        ret.opcode = "CMP NE";
         break;
-    case Bytecodes::DIVIDE_F:
-        ret.opcode = "DIVIDE_F";
-        ret.description = "Divide float values on stack, pushing result";
+    case Bytecodes::CMP_LE:
+        ret.opcode = "CMP LE";
         break;
-    case Bytecodes::MULTIPLY_I:
-        ret.opcode = "MULTIPLY_I";
-        ret.description = "Multiply integer values on stack, pushing result";
+    case Bytecodes::CMP_GE:
+        ret.opcode = "CMP GE";
         break;
-    case Bytecodes::MULTIPLY_F:
-        ret.opcode = "MULTIPLY_F";
-        ret.description = "Multiply float values on stack, pushing result";
+    case Bytecodes::CMP_G:
+        ret.opcode = "CMP GT";
         break;
-    case Bytecodes::CMP_E_F:
-        ret.opcode = "CMP_E_F";
-        ret.description = "Compare float values on stack for =";
-        break;
-    case Bytecodes::CMP_E_I:
-        ret.opcode = "CMP_E_I";
-        ret.description = "Compare integer values on stack for =";
-        break;
-    case Bytecodes::CMP_E_S:
-        ret.opcode = "CMP_E_S";
-        ret.description = "Compare string values on stack for =";
-        break;
-    case Bytecodes::CMP_NE_F:
-        ret.opcode = "CMP_NE_F";
-        ret.description = "Compare float values on stack for <>";
-        break;
-    case Bytecodes::CMP_NE_S:
-        ret.opcode = "CMP_NE_S";
-        ret.description = "Compare string values on stack for <>";
-        break;
-    case Bytecodes::CMP_NE_I:
-        ret.opcode = "CMP_NE_I";
-        ret.description = "Compare integer values on stack for <>";
-        break;
-    case Bytecodes::CMP_LE_F:
-        ret.opcode = "CMP_LE_F";
-        ret.description = "Compare integer values on stack for <=";
-        break;
-    case Bytecodes::CMP_LE_I:
-        ret.opcode = "CMP_LE_I";
-        ret.description = "Compare float values on stack for <=";
-        break;
-    case Bytecodes::CMP_LE_S:
-        ret.opcode = "CMP_LE_S";
-        ret.description = "Compare string values on stack for <=";
-        break;
-    case Bytecodes::CMP_GE_F:
-        ret.opcode = "CMP_GE_F";
-        ret.description = "Compare float values on stack for >=";
-        break;
-    case Bytecodes::CMP_GE_I:
-        ret.opcode = "CMP_GE_I";
-        ret.description = "Compare integer values on stack for >=";
-        break;
-    case Bytecodes::CMP_GE_S:
-        ret.opcode = "CMP_GE_S";
-        ret.description = "Compare string values on stack for >=";
-        break;
-    case Bytecodes::CMP_G_F:
-        ret.opcode = "CMP_G_F";
-        ret.description = "Compare float values on stack for >";
-        break;
-    case Bytecodes::CMP_G_I:
-        ret.opcode = "CMP_G_I";
-        ret.description = "Compare integer values on stack for >";
-        break;
-    case Bytecodes::CMP_G_S:
-        ret.opcode = "CMP_G_S";
-        ret.description = "Compare string values on stack for >";
-        break;
-    case Bytecodes::CMP_L_F:
-        ret.opcode = "CMP_L_F";
-        ret.description = "Compare float values on stack for <";
-        break;
-    case Bytecodes::CMP_L_I:
-        ret.opcode = "CMP_L_I";
-        ret.description = "Compare integer values on stack for <";
-        break;
-    case Bytecodes::CMP_L_S:
-        ret.opcode = "CMP_L_S";
-        ret.description = "Compare string values on stack for <";
+    case Bytecodes::CMP_L:
+        ret.opcode = "CMP LT";
         break;
 
     case Bytecodes::BOOL_OR:
@@ -636,58 +386,26 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         break;
 
         // Parameters for FN/PROC
-    case Bytecodes::UNPACK_I:
-        ret.opcode = "UNPACK_I";
-        ret.description = "Unpack integer variable from stack into FN/PROC parameter";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::UNPACK_F:
-        ret.opcode = "UNPACK_F";
-        ret.description = "Unpack float variable from stack into FN/PROC parameter";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::UNPACK_S:
-        ret.opcode = "UNPACK_S";
-        ret.description = "Unpack string variable from stack into FN/PROC parameter";
+    case Bytecodes::UNPACK:
+        ret.opcode = "UNPACK";
         name_for_operand(ret, bc, i);
         break;
 
-    case Bytecodes::PRINT_I:
-        ret.opcode = "PRINT_I";
-        ret.description = "PRINT integer variable from stack";
-        break;
-    case Bytecodes::PRINT_F:
-        ret.opcode = "PRINT_F";
-        ret.description = "PRINT float variable from stack";
-        break;
-    case Bytecodes::PRINT_S:
-        ret.opcode = "PRINT_S";
-        ret.description = "PRINT string variable from stack";
+    case Bytecodes::PRINT:
+        ret.opcode = "PRINT";
         break;
     case Bytecodes::PRINT_NL:
         ret.opcode = "PRINT_NL";
-        ret.description = "PRINT new line";
         break;
     case Bytecodes::PRINT_SPC:
         ret.opcode = "PRINT_SPC";
-        ret.description = "PRINT SPC spaces";
         break;
 
-    case Bytecodes::MOD_I:
-        ret.opcode = "MOD_I";
-        ret.description = "MOD integer value from stack";
+    case Bytecodes::MOD:
+        ret.opcode = "MOD";
         break;
-    case Bytecodes::MOD_F:
-        ret.opcode = "MOD_F";
-        ret.description = "MOD float value from stack";
-        break;
-    case Bytecodes::DIV_F:
-        ret.opcode = "DIV_F";
-        ret.description = "DIV float value from stack";
-        break;
-    case Bytecodes::DIV_I:
-        ret.opcode = "DIV_I";
-        ret.description = "DIV integer value from stack";
+    case Bytecodes::DIV:
+        ret.opcode = "DIV";
         break;
 
     case Bytecodes::SQR:
@@ -726,13 +444,8 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
     case Bytecodes::RAD:
         ret.opcode = "RAD";
         break;
-    case Bytecodes::ABS_F:
-        ret.opcode = "ABS_F";
-        ret.description = "ABS for float value on stack";
-        break;
-    case Bytecodes::ABS_I:
-        ret.opcode = "ABS_I";
-        ret.description = "ABS for integer value on stack";
+    case Bytecodes::ABS:
+        ret.opcode = "ABS";
         break;
     case Bytecodes::SGN:
         ret.opcode = "SGN";
@@ -740,19 +453,8 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
     case Bytecodes::PI:
         ret.opcode = "PI";
         break;
-    case Bytecodes::SWAP_I:
-        ret.opcode = "SWAP_I";
-        ret.description = "SWAP for integer variables";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::SWAP_F:
-        ret.opcode = "SWAP_F";
-        ret.description = "SWAP for float variables";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::SWAP_S:
-        ret.opcode = "SWAP_S";
-        ret.description = "SWAP for string variables";
+    case Bytecodes::SWAP:
+        ret.opcode = "SWAP";
         name_for_operand(ret, bc, i);
         break;
 
@@ -940,19 +642,8 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         ret.operand = "SHOW FPS";
         break;
 
-    case Bytecodes::INPUT_I:
-        ret.opcode = "INPUT_I";
-        ret.description = "INPUT for integer variable";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::INPUT_F:
-        ret.opcode = "INPUT_F";
-        ret.description = "INPUT for float variable";
-        name_for_operand(ret, bc, i);
-        break;
-    case Bytecodes::INPUT_S:
-        ret.opcode = "INPUT_S";
-        ret.description = "INPUT for string variable";
+    case Bytecodes::INPUT:
+        ret.opcode = "INPUT";
         name_for_operand(ret, bc, i);
         break;
     case Bytecodes::INKEY:

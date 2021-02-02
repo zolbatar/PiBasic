@@ -27,8 +27,8 @@ enum class KeywordCategory {
 struct Disassembly {
     std::string header;
     std::string opcode;
+    std::string type;
     std::string operand;
-    std::string description;
 };
 
 class Debugger {

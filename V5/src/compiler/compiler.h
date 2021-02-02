@@ -100,20 +100,15 @@ private:
     // Arrays
     UINT32 last_array_num_dimensions = 0;
 
-    // Create bytecode based on stack
-    void insert_bytecode_based_on_type(std::map<Type, Bytecodes> m, Type type);
-    void insert_instruction_based_on_type(std::map<Type, Bytecodes> m, Type type, UINT32 value);
-    void insert_bytecode_based_on_peektype(std::map<Type, Bytecodes> m);
-
     // Create bytecode
-    inline void insert_instruction(Bytecodes bc, UINT32 data)
+    inline void insert_instruction(Bytecodes bc, Type type, UINT32 data)
     {
-        vm->helper_bytecodes().insert_instruction(line_number, file_number, phase == CompilerPhase::COMPILE, bc, data);
+        vm->helper_bytecodes().insert_instruction(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, type, data);
     }
 
-    inline void insert_bytecode(Bytecodes bc)
+    inline void insert_bytecode(Bytecodes bc, Type type)
     {
-        vm->helper_bytecodes().insert_bytecode(line_number, file_number, phase == CompilerPhase::COMPILE, bc);
+        vm->helper_bytecodes().insert_bytecode(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, type);
     }
 
     // Constants
@@ -251,7 +246,6 @@ protected:
     antlrcpp::Any visitNumExprEOR(DARICParser::NumExprEORContext* context);
 
     /* Comparisons */
-    void comparison(Bytecodes i, Bytecodes f, Bytecodes s);
     antlrcpp::Any visitNumExprStrRelop(DARICParser::NumExprStrRelopContext* context);
     antlrcpp::Any visitNumExprNumRelop(DARICParser::NumExprNumRelopContext* context);
     antlrcpp::Any visitCompare(DARICParser::CompareContext* context);

@@ -21,11 +21,11 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
         case Type::INTEGER:
             switch (type) {
             case Type::FLOAT:
-                insert_bytecode(Bytecodes::F_TO_I);
-                insert_instruction(Bytecodes::STORE_I, saved.id);
+                insert_bytecode(Bytecodes::F_TO_I, Type::NOTYPE);
+                insert_instruction(Bytecodes::STORE, Type::INTEGER, saved.id);
                 break;
             case Type::INTEGER:
-                insert_instruction(Bytecodes::STORE_I, saved.id);
+                insert_instruction(Bytecodes::STORE, Type::INTEGER, saved.id);
                 break;
             default:
                 std::stringstream s;
@@ -36,11 +36,11 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
         case Type::FLOAT:
             switch (type) {
             case Type::INTEGER:
-                insert_bytecode(Bytecodes::I_TO_F);
-                insert_instruction(Bytecodes::STORE_F, saved.id);
+                insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
+                insert_instruction(Bytecodes::STORE, Type::FLOAT, saved.id);
                 break;
             case Type::FLOAT:
-                insert_instruction(Bytecodes::STORE_F, saved.id);
+                insert_instruction(Bytecodes::STORE, Type::FLOAT, saved.id);
                 break;
             default:
                 std::stringstream s;
@@ -51,7 +51,7 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
         case Type::STRING:
             switch (type) {
             case Type::STRING:
-                insert_instruction(Bytecodes::STORE_S, saved.id);
+                insert_instruction(Bytecodes::STORE, Type::STRING, saved.id);
                 break;
             default:
                 std::stringstream s;
@@ -62,7 +62,7 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
         case Type::INTEGER_ARRAY:
             switch (type) {
             case Type::FLOAT:
-                insert_bytecode(Bytecodes::F_TO_I);
+                insert_bytecode(Bytecodes::F_TO_I, Type::NOTYPE);
                 break;
             case Type::INTEGER:
                 break;
@@ -71,13 +71,13 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
                 s << "Variable '" << saved.name << "', assigned value is of the wrong type";
                 error(s.str());
             }
-            insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
-            insert_instruction(Bytecodes::STORE_I_ARRAY, saved.id);
+            insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
+            insert_instruction(Bytecodes::STORE_ARRAY, Type::INTEGER_ARRAY, saved.id);
             break;
         case Type::FLOAT_ARRAY:
             switch (type) {
             case Type::INTEGER:
-                insert_bytecode(Bytecodes::I_TO_F);
+                insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
                 break;
             case Type::FLOAT:
                 break;
@@ -86,8 +86,8 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
                 s << "Variable '" << saved.name << "', assigned value is of the wrong type";
                 error(s.str());
             }
-            insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
-            insert_instruction(Bytecodes::STORE_F_ARRAY, saved.id);
+            insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
+            insert_instruction(Bytecodes::STORE_ARRAY, Type::FLOAT_ARRAY, saved.id);
             break;
         case Type::STRING_ARRAY:
             switch (type) {
@@ -98,8 +98,8 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
                 s << "Variable '" << saved.name << "', assigned value is of the wrong type";
                 error(s.str());
             }
-            insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
-            insert_instruction(Bytecodes::STORE_S_ARRAY, saved.id);
+            insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
+            insert_instruction(Bytecodes::STORE_ARRAY, Type::STRING_ARRAY, saved.id);
             break;
         }
     }

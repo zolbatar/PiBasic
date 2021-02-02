@@ -350,23 +350,18 @@ void Debugger::debugger_disassembly()
                         for (int i = 0; i < a; i++) {
                             g_env.graphics.print_text(disassembly_font, ".", -1, -1);
                         }
+                        g_env.graphics.colour(100, 0, 255);
+                        g_env.graphics.print_text(disassembly_font, s.type, -1, -1);
+
+                        g_env.graphics.colour(40, 40, 40);
+                        a = 15 - static_cast<int>(s.type.length());
+                        for (int i = 0; i < a; i++) {
+                            g_env.graphics.print_text(disassembly_font, ".", -1, -1);
+                        }
 
                         g_env.graphics.colour(0, 100, 255);
                         g_env.graphics.print_text(disassembly_font, s.operand, -1, -1);
 
-                        if (g_env.graphics.get_actual_width() > 1024) {
-                            // Pad out with near invisible dots
-                            if (s.description.length() > 0) {
-                                g_env.graphics.colour(40, 40, 40);
-                                a = 40 - static_cast<int>(s.operand.length());
-                                for (int i = 0; i < a; i++) {
-                                    g_env.graphics.print_text(disassembly_font, ".", -1, -1);
-                                }
-                            }
-
-                            g_env.graphics.colour(128, 128, 128);
-                            g_env.graphics.print_text(prop_font, s.description, -1, -1);
-                        }
                         g_env.graphics.print_text(prop_font, "\r", -1, -1);
                     }
                 }

@@ -16,52 +16,36 @@ enum class Bytecodes {
     HALT, // Stop program
     CHAIN, // Load next program
 
-    // Load/store
+    // Stack manipulation
     DROP, // Drop top item
-    CONST_I, // Fast int constant push
-    CONST_I_VAR, // Fast int constant push (points to variable)
-    LOAD_F, // Load float
-    LOAD_I, // Load int
-    LOAD_S, // Load string
-    STORE_F, // Store float
-    STORE_I, // Store int
-    STORE_S, // Store string
-    STORE_I_ARRAY, // Store int in array
-    STORE_F_ARRAY, // Store float in array
-    STORE_S_ARRAY, // Store string in array
-    LOAD_I_ARRAY, // Load int from array
-    LOAD_F_ARRAY, // Load float from array
-    LOAD_S_ARRAY, // Load string from array
+    DUP, // Duplicate
+    ROT, // Rotate top two float
+
+    // Load/store
+    FASTCONST, // Fast constant push
+    FASTCONST_VAR, // Fast int constant push (points to variable)
+    LOAD, // Load variable
+    STORE, // Store variable
+
+    // Arrays
+    DIM, // Dimension array
+    STORE_ARRAY, // Store in array
+    LOAD_ARRAY, // Load from array
     ARRAYSIZE, // Return array size
-    DIM_F, // Dimension real array
-    DIM_I, // Dimension int array
-    DIM_S, // Dimension string array
+
+    // Types and fields
     NEW_TYPE, // Do any init needed on a type
-    LOAD_I_FIELD, // Load int from field
-    LOAD_F_FIELD, // Load float from field
-    LOAD_S_FIELD, // Load string from field
-    LOAD_I_FIELD_ARRAY, // Load int from field (array)
-    LOAD_F_FIELD_ARRAY, // Load float from field (array)
-    LOAD_S_FIELD_ARRAY, // Load string from field (array)
-    STORE_I_FIELD, // Store int in field
-    STORE_F_FIELD, // Store float in field
-    STORE_S_FIELD, // Store string in field
-    STORE_I_FIELD_ARRAY, // Store int in field array
-    STORE_F_FIELD_ARRAY, // Store float in field array
-    STORE_S_FIELD_ARRAY, // Store string in field array
+    LOAD_FIELD, // Load from field
+    LOAD_FIELD_ARRAY, // Load from field (array)
+    STORE_FIELD, // Store in field
+    STORE_FIELD_ARRAY, // Store in field array
 
     // Function parameter
-    UNPACK_F, // Store parameter stack float in variable
-    UNPACK_I, // Store parameter stack int in variable
-    UNPACK_S, // Store parameter stack string in variable
+    UNPACK, // Store parameter stack in variable
 
     // Data
-    READ_I, // Request int DATA
-    READ_F, // Request float DATA
-    READ_S, // Request string DATA
-    READ_I_ARRAY, // Request int array DATA
-    READ_F_ARRAY, // Request float array DATA
-    READ_S_ARRAY, // Request string array DATA
+    READ, // Request DATA
+    READ_ARRAY, // Request array DATA
     RESTORE, // Reset data pointer
 
     // Conversion
@@ -73,16 +57,10 @@ enum class Bytecodes {
     F_TO_S, // Float -> string
 
     // Looping and flow control
-    FOR_I, // For (int)
-    FOR_F, // For (float)
-    NEXT_I, // Next loop int
-    NEXT_F, // Next loop float
-    FORIN_I, // For In (int)
-    FORIN_F, // For In (float)
-    FORIN_S, // For In (string)
-    NEXTIN_I, // Next (int) loop int
-    NEXTIN_F, // Next (float) loop int
-    NEXTIN_S, // Next (string) loop int
+    FOR, // For
+    NEXT, // Next loop
+    FORIN, // For In
+    NEXTIN, // Next (in) loop
     REPEAT, // Store PC for repeat loop
     JNEREP, // Jump <>, repeat
     JUMP, // Jump
@@ -97,56 +75,47 @@ enum class Bytecodes {
     GOSUB, // Go subroutine
 
     // Maths
-    DUP_F, // Duplicate float
-    DUP_I, // Duplicate int
-    ROT_F, // Rotate top two float
-    ROT_I, // Rotate top two int
-    ADD_F, // Add floats
-    ADD_I, // Add ints
-    ADD_S, // Add strings
-    DIVIDE_F, // Divide floats
-    DIVIDE_I, // Divide ints
-    MULTIPLY_F, // Multiply floats
-    MULTIPLY_I, // Multiply ints
-    SUBTRACT_F, // Subtract floats
-    SUBTRACT_I, // Subtract ints
-    POWER_F, // To the power float
-    POWER_I, // To the power int
+    ADD, // Add
+    DIVIDE, // Divide
+    MULTIPLY, // Multiply
+    SUBTRACT, // Subtract
+    POWER, // To the power
+    SHL, // Shift left
+    SHR, // Shift right
+    DIV, // Quotient
+    MOD, // Modulo
+    SQR, // Square root
+    LN, // Natural log
+    LOG, // Logarithm
+    EXP, // Exponential
+    ATN, // Arc tangent
+    TAN, // Tangent
+    COS, // Cosine
+    SIN, // Sine
+    ABS, // Absolute
+    ACS, // Arc cosine
+    ASN, // Arc sine
+    DEG, // Radians to degrees
+    RAD, // Degrees to radians
+    SGN, // Get sign of number
+    PI, // The constant PI
 
     // Swapping
-    SWAP_I, // Swap integer
-    SWAP_F, // Swap float
-    SWAP_S, // Swap string
+    SWAP, // Swap
 
     // Printing and inputting
-    PRINT_I, // Print int
-    PRINT_F, // Print float
-    PRINT_S, // Print string
+    PRINT, // Print variable
     PRINT_NL, // Print newline
     PRINT_SPC, // Print spaces
-    INPUT_I, // Input int
-    INPUT_F, // Input float
-    INPUT_S, // Input string
+    INPUT, // Input variable
 
     // Boolean and comparison
-    CMP_E_F, // Compare if =, float
-    CMP_E_I, // Compare if =, int
-    CMP_E_S, // Compare if =, string
-    CMP_NE_F, // Compare if <>, float
-    CMP_NE_I, // Compare if <>, int
-    CMP_NE_S, // Compare if <>, string
-    CMP_GE_I, // Compare if >=, int
-    CMP_GE_F, // Compare if >=, float
-    CMP_GE_S, // Compare if >=, string
-    CMP_LE_F, // Compare if <=, float
-    CMP_LE_I, // Compare if <=, int
-    CMP_LE_S, // Compare if <=, string
-    CMP_G_F, // Compare if >, float
-    CMP_G_I, // Compare if >, int
-    CMP_G_S, // Compare if >, string
-    CMP_L_F, // Compare if <, float
-    CMP_L_I, // Compare if <, int
-    CMP_L_S, // Compare if <, string
+    CMP_E, // Compare if =
+    CMP_NE, // Compare if <>
+    CMP_GE, // Compare if >=
+    CMP_LE, // Compare if <=
+    CMP_G, // Compare if >
+    CMP_L, // Compare if <
     BOOL_OR, // Logical OR, int
     BOOL_AND, // Logical AND, int
     BOOL_EOR, // Logical EOR, int
@@ -211,29 +180,6 @@ enum class Bytecodes {
     RENDERFRAME, // Render the 3D frame
     DELETEOBJECT, // Delete object
 
-    DIV_I, // Quotient ints
-    DIV_F, // Quotient floats
-    SHL, // Shift left
-    SHR, // Shift right
-    MOD_I, // Modulo ints
-    MOD_F, // Modulo floats
-    SQR, // Square root
-    LN, // Natural log
-    LOG, // Logarithm
-    EXP, // Exponential
-    ATN, // Arc tangent
-    TAN, // Tangent
-    COS, // Cosine
-    SIN, // Sine
-    ABS_I, // Absolute int
-    ABS_F, // Absolute float
-    ACS, // Arc cosine
-    ASN, // Arc sine
-    DEG, // Radians to degrees
-    RAD, // Degrees to radians
-    SGN, // Get sign of number
-    PI, // The constant PI
-
     // String
     ASC, // Get ascii value for first character in string
     CHRS, // CHR$
@@ -264,6 +210,7 @@ enum class Bytecodes {
 class Bytecode {
 public:
     Bytecodes opcode;
+    Type type;
     UINT32 data;
     UINT32 line_number;
     short char_position;
@@ -293,7 +240,7 @@ public:
         pc = 0;
     }
 
-    void insert_instruction(UINT32 line_number, short file_number, bool write, Bytecodes bytecode, UINT32 operand)
+    void insert_instruction(UINT32 line_number, short file_number, short char_position, bool write, Bytecodes bytecode, Type type, UINT32 operand)
     {
         if (write) {
             Bytecode b;
@@ -301,12 +248,13 @@ public:
             b.data = operand;
             b.line_number = line_number;
             b.file_number = file_number;
+            b.char_position = char_position;
             code.push_back(std::move(b));
         }
         pc++;
     }
 
-    void insert_bytecode(UINT32 line_number, short file_number, bool write, Bytecodes bytecode)
+    void insert_bytecode(UINT32 line_number, short file_number, short char_position, bool write, Bytecodes bytecode, Type type)
     {
         if (write) {
             Bytecode b;
@@ -314,6 +262,7 @@ public:
             b.data = 0;
             b.line_number = line_number;
             b.file_number = file_number;
+            b.char_position = char_position;
             code.push_back(std::move(b));
         }
         pc++;

@@ -11,14 +11,8 @@ antlrcpp::Any Compiler::visitStmtDIM(DARICParser::StmtDIMContext* context)
         find_or_create_variable(VariableScope::GLOBAL);
 
         // Set number of dimensions
-        insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
-        insert_instruction_based_on_type(
-            {
-                { Type::INTEGER_ARRAY, Bytecodes::DIM_I },
-                { Type::FLOAT_ARRAY, Bytecodes::DIM_F },
-                { Type::STRING_ARRAY, Bytecodes::DIM_S },
-            },
-            last_var.type, last_var.id);
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
+        insert_instruction(Bytecodes::DIM, last_var.type, last_var.id);
     }
 
     state = CompilerState::NOSTATE;
@@ -89,8 +83,8 @@ antlrcpp::Any Compiler::visitNumVarFloatArray(DARICParser::NumVarFloatArrayConte
     visit(context->varNameFloat());
     if (state == CompilerState::NOSTATE) {
         find_variable();
-        insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
-        insert_instruction(Bytecodes::LOAD_F_ARRAY, last_var.id);
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
+        insert_instruction(Bytecodes::LOAD_ARRAY, Type::FLOAT_ARRAY, last_var.id);
         stack_push(Type::FLOAT);
     }
     return NULL;
@@ -109,8 +103,8 @@ antlrcpp::Any Compiler::visitNumVarIntegerArray(DARICParser::NumVarIntegerArrayC
     visit(context->varNameInteger());
     if (state == CompilerState::NOSTATE) {
         find_variable();
-        insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
-        insert_instruction(Bytecodes::LOAD_I_ARRAY, last_var.id);
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
+        insert_instruction(Bytecodes::LOAD_ARRAY, Type::INTEGER_ARRAY, last_var.id);
         stack_push(Type::INTEGER);
     }
     return NULL;
@@ -129,8 +123,8 @@ antlrcpp::Any Compiler::visitNumVarStringArray(DARICParser::NumVarStringArrayCon
     visit(context->varNameString());
     if (state == CompilerState::NOSTATE) {
         find_variable();
-        insert_instruction(Bytecodes::CONST_I, last_array_num_dimensions);
-        insert_instruction(Bytecodes::LOAD_S_ARRAY, last_var.id);
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
+        insert_instruction(Bytecodes::LOAD_ARRAY, Type::STRING_ARRAY, last_var.id);
         stack_push(Type::STRING);
     }
     return NULL;

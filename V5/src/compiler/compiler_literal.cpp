@@ -19,7 +19,7 @@ antlrcpp::Any Compiler::visitNumberInteger(DARICParser::NumberIntegerContext* co
             break;
         }
     } else {
-        insert_instruction(Bytecodes::CONST_I, i);
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, i);
         stack_push(Type::INTEGER);
     }
     return NULL;
@@ -45,7 +45,7 @@ antlrcpp::Any Compiler::visitNumberHex(DARICParser::NumberHexContext* context)
             break;
         }
     } else {
-        insert_instruction(Bytecodes::CONST_I, i);
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, i);
         stack_push(Type::INTEGER);
     }
     return NULL;
@@ -71,7 +71,7 @@ antlrcpp::Any Compiler::visitNumberBinary(DARICParser::NumberBinaryContext* cont
             break;
         }
     } else {
-        insert_instruction(Bytecodes::CONST_I, i);
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, i);
         stack_push(Type::INTEGER);
     }
     return NULL;
@@ -96,7 +96,7 @@ antlrcpp::Any Compiler::visitNumberFloat(DARICParser::NumberFloatContext* contex
             break;
         }
     } else {
-        insert_instruction(Bytecodes::LOAD_F, constant_float_create(i));
+        insert_instruction(Bytecodes::LOAD, Type::FLOAT, constant_float_create(i));
         stack_push(Type::FLOAT);
     }
     return NULL;
@@ -122,7 +122,7 @@ antlrcpp::Any Compiler::visitString(DARICParser::StringContext* context)
             break;
         }
     } else {
-        insert_instruction(Bytecodes::LOAD_S, constant_string_create(v));
+        insert_instruction(Bytecodes::LOAD, Type::STRING, constant_string_create(v));
         stack_push(Type::STRING);
     }
     return NULL;

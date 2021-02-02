@@ -6,7 +6,7 @@ antlrcpp::Any Compiler::visitStrExpr(DARICParser::StrExprContext* context)
     if (context->PLUS() != NULL) {
         visit(context->strExpr(0));
         visit(context->strExpr(1));
-        insert_bytecode(Bytecodes::ADD_S);
+        insert_bytecode(Bytecodes::ADD, Type::STRING);
         stack_pop();
     } else {
         visitChildren(context);

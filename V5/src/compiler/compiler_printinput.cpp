@@ -8,7 +8,7 @@ antlrcpp::Any Compiler::visitStmtPRINT(DARICParser::StmtPRINTContext* context)
     print_justify = false;
     visit(context->printList());
     if (!print_semicolon_active) {
-        insert_bytecode(Bytecodes::PRINT_NL);
+        insert_bytecode(Bytecodes::PRINT_NL, Type::NOTYPE);
     }
     return NULL;
 }
@@ -37,13 +37,7 @@ antlrcpp::Any Compiler::visitPrintListExpr(DARICParser::PrintListExprContext* co
 
     // Work through the stack and print anything off
     while (stack_size() >= 1) {
-        insert_instruction_based_on_type(
-            {
-                { Type::INTEGER, Bytecodes::PRINT_I },
-                { Type::FLOAT, Bytecodes::PRINT_F },
-                { Type::STRING, Bytecodes::PRINT_S },
-            },
-            peek_type(), create_print_flag());
+        insert_instruction(Bytecodes::PRINT, peek_type(), create_print_flag());
         stack_pop();
     }
     print_semicolon_active = false;
@@ -81,7 +75,7 @@ antlrcpp::Any Compiler::visitPrintListTick(DARICParser::PrintListTickContext* co
 {
     set_pos(context->start);
     print_semicolon_active = false;
-    insert_bytecode(Bytecodes::PRINT_NL);
+    insert_bytecode(Bytecodes::PRINT_NL, Type::NOTYPE);
     return NULL;
 }
 
@@ -92,7 +86,7 @@ antlrcpp::Any Compiler::visitPrintListSPCP(DARICParser::PrintListSPCPContext* co
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
-    insert_bytecode(Bytecodes::PRINT_SPC);
+    insert_bytecode(Bytecodes::PRINT_SPC, Type::NOTYPE);
     return NULL;
 }
 
@@ -103,6 +97,6 @@ antlrcpp::Any Compiler::visitPrintListSPC(DARICParser::PrintListSPCContext* cont
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
-    insert_bytecode(Bytecodes::PRINT_SPC);
+    insert_bytecode(Bytecodes::PRINT_SPC, Type::NOTYPE);
     return NULL;
 }

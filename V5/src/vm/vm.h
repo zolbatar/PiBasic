@@ -62,6 +62,10 @@ private:
     {
         throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, err);
     }
+    void opcode_type_error()
+    {
+        throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Invalid type for opcode");
+    }
 
     std::stack<UINT32> repeats; // Repeat addresses
     std::stack<UINT32> call_stack; // Call stack
@@ -88,129 +92,35 @@ private:
     // The actual opcodes methods
     void opcode_HALT();
     void opcode_DROP();
-    void opcode_CONST_I();
-    void opcode_LOAD_F();
-    void opcode_LOAD_I();
-    void opcode_LOAD_S();
-    void opcode_ADD_F();
-    void opcode_ADD_I();
-    void opcode_ADD_S();
-    void opcode_SUBTRACT_F();
-    void opcode_SUBTRACT_I();
-    void opcode_MULTIPLY_F();
-    void opcode_MULTIPLY_I();
-    void opcode_POWER_I();
-    void opcode_POWER_F();
-    void opcode_DIVIDE_F();
-    void opcode_DIVIDE_I();
+    void opcode_FASTCONST();
+
+    // Loading and storing
+    void opcode_LOAD();
+    void opcode_STORE();
+
+    // Arrays
+    void opcode_DIM();
+    void opcode_ARRAYSIZE();
+    void opcode_LOAD_ARRAY();
+    void opcode_STORE_ARRAY();
+
+    // Types and fields
+    void opcode_STORE_FIELD();
+    void opcode_LOAD_FIELD();
+    void opcode_LOAD_FIELD_ARRAY();
+    void opcode_STORE_FIELD_ARRAY();
+    void opcode_NEW_TYPE();
+
+    // Maths
+    void opcode_ADD();
+    void opcode_SUBTRACT();
+    void opcode_MULTIPLY();
+    void opcode_POWER();
+    void opcode_DIVIDE();
     void opcode_SHL();
     void opcode_SHR();
-    void opcode_I_TO_F();
-    void opcode_I_TO_F2();
-    void opcode_F_TO_I();
-    void opcode_F_TO_I2();
-    void opcode_STORE_I();
-    void opcode_STORE_F();
-    void opcode_STORE_S();
-    void opcode_PRINT_F();
-    void opcode_PRINT_I();
-    void opcode_PRINT_S();
-    void opcode_INPUT_F();
-    void opcode_INPUT_I();
-    void opcode_INPUT_S();
-    void opcode_PRINT_NL();
-    void opcode_PRINT_SPC();
-    void opcode_LOAD_F_ARRAY();
-    void opcode_LOAD_I_ARRAY();
-    void opcode_LOAD_S_ARRAY();
-    void opcode_STORE_F_ARRAY();
-    void opcode_STORE_I_ARRAY();
-    void opcode_STORE_S_ARRAY();
-    void opcode_STORE_I_FIELD();
-    void opcode_STORE_F_FIELD();
-    void opcode_STORE_S_FIELD();
-    void opcode_LOAD_I_FIELD();
-    void opcode_LOAD_F_FIELD();
-    void opcode_LOAD_S_FIELD();
-    void opcode_LOAD_I_FIELD_ARRAY();
-    void opcode_LOAD_F_FIELD_ARRAY();
-    void opcode_LOAD_S_FIELD_ARRAY();
-    void opcode_STORE_I_FIELD_ARRAY();
-    void opcode_STORE_F_FIELD_ARRAY();
-    void opcode_STORE_S_FIELD_ARRAY();
-    void opcode_NEW_TYPE();
-    void opcode_ARRAYSIZE();
-    void opcode_DIM_F();
-    void opcode_DIM_I();
-    void opcode_DIM_S();
-    void opcode_DUP_I();
-    void opcode_DUP_F();
-    void opcode_ROT_I();
-    void opcode_ROT_F();
-    void opcode_FOR_I();
-    void opcode_FOR_F();
-    void opcode_NEXT_I();
-    void opcode_NEXT_F();
-    void opcode_FORIN_I();
-    void opcode_FORIN_F();
-    void opcode_FORIN_S();
-    void opcode_NEXTIN_I();
-    void opcode_NEXTIN_F();
-    void opcode_NEXTIN_S();
-
-    void opcode_READ_I();
-    void opcode_REPEAT();
-    void opcode_READ_F();
-    void opcode_READ_S();
-    void opcode_READ_I_ARRAY();
-    void opcode_READ_F_ARRAY();
-    void opcode_READ_S_ARRAY();
-    void opcode_RESTORE();
-
-    void opcode_SWAP_I();
-    void opcode_SWAP_F();
-    void opcode_SWAP_S();
-
-    void opcode_CMP_E_F();
-    void opcode_CMP_E_I();
-    void opcode_CMP_E_S();
-    void opcode_CMP_NE_F();
-    void opcode_CMP_NE_I();
-    void opcode_CMP_NE_S();
-    void opcode_CMP_GE_F();
-    void opcode_CMP_GE_I();
-    void opcode_CMP_GE_S();
-    void opcode_CMP_LE_F();
-    void opcode_CMP_LE_I();
-    void opcode_CMP_LE_S();
-    void opcode_CMP_G_F();
-    void opcode_CMP_G_I();
-    void opcode_CMP_G_S();
-    void opcode_CMP_L_F();
-    void opcode_CMP_L_I();
-    void opcode_CMP_L_S();
-    void opcode_BOOL_OR();
-    void opcode_BOOL_AND();
-    void opcode_BOOL_EOR();
-    void opcode_BOOL_NOT();
-    void opcode_JNEREP();
-    void opcode_JUMP();
-    void opcode_JNE();
-    void opcode_JE();
-    void opcode_CALL();
-    void opcode_RETURN();
-    void opcode_GOTO();
-    void opcode_GOSUB();
-    void opcode_UNPACK_F();
-    void opcode_UNPACK_I();
-    void opcode_UNPACK_S();
-    void opcode_CASE_C();
-    void opcode_CASE_S();
-    void opcode_CJUMPT();
-    void opcode_DIV_I();
-    void opcode_DIV_F();
-    void opcode_MOD_I();
-    void opcode_MOD_F();
+    void opcode_DIV();
+    void opcode_MOD();
     void opcode_SQR();
     void opcode_LN();
     void opcode_LOG();
@@ -223,11 +133,69 @@ private:
     void opcode_ASN();
     void opcode_DEG();
     void opcode_RAD();
-    void opcode_ABS_I();
-    void opcode_ABS_F();
+    void opcode_ABS();
     void opcode_SGN();
     void opcode_PI();
 
+
+    // Type conversion
+    void opcode_I_TO_F();
+    void opcode_I_TO_F2();
+    void opcode_F_TO_I();
+    void opcode_F_TO_I2();
+
+    // Input and print
+    void opcode_PRINT();
+    void opcode_INPUT();
+    void opcode_PRINT_NL();
+    void opcode_PRINT_SPC();
+
+    // Stack operations
+    void opcode_DUP();
+    void opcode_ROT();
+
+    // Looping
+    void opcode_FOR();
+    void opcode_NEXT();
+    void opcode_FORIN();
+    void opcode_NEXTIN();
+    void opcode_REPEAT();
+    void opcode_JNEREP();
+    void opcode_JUMP();
+    void opcode_JNE();
+    void opcode_JE();
+    void opcode_CASE_C();
+    void opcode_CASE_S();
+    void opcode_CJUMPT();
+
+    // Functions
+    void opcode_CALL();
+    void opcode_RETURN();
+    void opcode_GOTO();
+    void opcode_GOSUB();
+    void opcode_UNPACK();
+
+    // Data
+    void opcode_READ();
+    void opcode_READ_ARRAY();
+    void opcode_RESTORE();
+
+    // Swapping values
+    void opcode_SWAP();
+
+    /* Comparison and boolean */
+    void opcode_CMP_E();
+    void opcode_CMP_NE();
+    void opcode_CMP_GE();
+    void opcode_CMP_LE();
+    void opcode_CMP_G();
+    void opcode_CMP_L();
+    void opcode_BOOL_OR();
+    void opcode_BOOL_AND();
+    void opcode_BOOL_EOR();
+    void opcode_BOOL_NOT();
+
+    // String functions
     void opcode_ASC();
     void opcode_CHRS();
     void opcode_INSTR();

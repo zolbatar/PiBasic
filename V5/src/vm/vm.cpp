@@ -1,3 +1,21 @@
+/*
+
+    switch (bc.type) {
+    case Type::INTEGER: {
+        return;
+    }
+    case Type::FLOAT: {
+        return;
+    }
+    case Type::STRING: {
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
+
+    */
+
 #pragma warning(disable : 4996) //_CRT_SECURE_NO_WARNINGS
 #define _GLIBCXX_USE_C99 1
 #ifdef RISCOS
@@ -49,192 +67,247 @@ void VM::opcode_DROP()
         g_env.log << "Dropping top item off stack" << std::endl;
 }
 
-void VM::opcode_CONST_I()
+void VM::opcode_FASTCONST()
 {
-    stack.push_int(bc, bc.data);
-    if (!performance_build && runtime_debug) {
-        g_env.log << "Push constant int " << bc.data << " onto the stack" << std::endl;
-    }
-}
-
-void VM::opcode_LOAD_F()
-{
-    stack.push_float(bc, variables.get_variable(bc).value_float);
-    if (!performance_build && runtime_debug) {
-        if (!variables.get_variable(bc).constant) {
-            g_env.log << "Push variable '" << variables.get_variable(bc).name << "', float " << variables.get_variable(bc).value_float << " onto the stack" << std::endl;
-        } else {
-            g_env.log << "Push constant float " << variables.get_variable(bc).value_float << " onto the stack" << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        stack.push_int(bc, bc.data);
+        if (!performance_build && runtime_debug) {
+            g_env.log << "Push constant int " << bc.data << " onto the stack" << std::endl;
         }
+        return;
+    }
+    default:
+        opcode_type_error();
     }
 }
 
-void VM::opcode_LOAD_I()
+void VM::opcode_LOAD()
 {
-    stack.push_int(bc, variables.get_variable(bc).value_int);
-    if (!performance_build && runtime_debug) {
-        if (!variables.get_variable(bc).constant) {
-            g_env.log << "Push variable '" << variables.get_variable(bc).name << "', int " << variables.get_variable(bc).value_int << " onto the stack" << std::endl;
-        } else {
-            g_env.log << "Push constant int " << variables.get_variable(bc).value_int << " onto the stack" << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        stack.push_int(bc, variables.get_variable(bc).value_int);
+        if (!performance_build && runtime_debug) {
+            if (!variables.get_variable(bc).constant) {
+                g_env.log << "Push variable '" << variables.get_variable(bc).name << "', int " << variables.get_variable(bc).value_int << " onto the stack" << std::endl;
+            } else {
+                g_env.log << "Push constant int " << variables.get_variable(bc).value_int << " onto the stack" << std::endl;
+            }
         }
+        return;
     }
-}
-
-void VM::opcode_LOAD_S()
-{
-    stack.push_string(bc, variables.get_variable(bc).value_string);
-    if (!performance_build && runtime_debug) {
-        if (!variables.get_variable(bc).constant) {
-            g_env.log << "Push variable '" << variables.get_variable(bc).name << "', string '" << variables.get_variable(bc).value_string << "' onto the stack" << std::endl;
-        } else {
-            g_env.log << "Push constant string '" << variables.get_variable(bc).value_string << "' onto the stack" << std::endl;
+    case Type::FLOAT: {
+        stack.push_float(bc, variables.get_variable(bc).value_float);
+        if (!performance_build && runtime_debug) {
+            if (!variables.get_variable(bc).constant) {
+                g_env.log << "Push variable '" << variables.get_variable(bc).name << "', float " << variables.get_variable(bc).value_float << " onto the stack" << std::endl;
+            } else {
+                g_env.log << "Push constant float " << variables.get_variable(bc).value_float << " onto the stack" << std::endl;
+            }
         }
+        return;
+    }
+    case Type::STRING: {
+        stack.push_string(bc, variables.get_variable(bc).value_string);
+        if (!performance_build && runtime_debug) {
+            if (!variables.get_variable(bc).constant) {
+                g_env.log << "Push variable '" << variables.get_variable(bc).name << "', string '" << variables.get_variable(bc).value_string << "' onto the stack" << std::endl;
+            } else {
+                g_env.log << "Push constant string '" << variables.get_variable(bc).value_string << "' onto the stack" << std::endl;
+            }
+        }
+        return;
+    }
+    default:
+        opcode_type_error();
     }
 }
 
-void VM::opcode_ADD_F()
+void VM::opcode_ADD()
 {
-    VM_FLOAT v2 = stack.pop_float(bc);
-    VM_FLOAT v1 = stack.pop_float(bc);
-    VM_FLOAT v3 = v1 + v2;
-    stack.push_float(bc, v3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Add float " << v1 << " + " << v2 << " = " << v3 << std::endl;
-}
-
-void VM::opcode_ADD_I()
-{
-    VM_INT v2 = stack.pop_int(bc);
-    VM_INT v1 = stack.pop_int(bc);
-    VM_INT v3 = v1 + v2;
-    stack.push_int(bc, v3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Add int " << v1 << " + " << v2 << " = " << v3 << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT v2 = stack.pop_int(bc);
+        VM_INT v1 = stack.pop_int(bc);
+        VM_INT v3 = v1 + v2;
+        stack.push_int(bc, v3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Add int " << v1 << " + " << v2 << " = " << v3 << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT v2 = stack.pop_float(bc);
+        VM_FLOAT v1 = stack.pop_float(bc);
+        VM_FLOAT v3 = v1 + v2;
+        stack.push_float(bc, v3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Add float " << v1 << " + " << v2 << " = " << v3 << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        VM_STRING v2 = stack.pop_string(bc);
+        VM_STRING v1 = stack.pop_string(bc);
+        if (!performance_build && runtime_debug) {
+            VM_STRING v3 = v1;
+            v3.append(v2);
+            stack.push_string(bc, v3);
+            if (!performance_build && runtime_debug)
+                g_env.log << "Add string '" << v1 << "' + '" << v2 << "' = '" << v3 << "'" << std::endl;
+        } else {
+            v1.append(v2);
+            stack.push_string(bc, v1);
+        }
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
 void VM::opcode_SHL()
 {
-    VM_INT v2 = stack.pop_int(bc);
-    VM_INT v1 = stack.pop_int(bc);
-    VM_INT v3 = v1 << v2;
-    stack.push_int(bc, v3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "<< int " << v1 << " + " << v2 << " = " << v3 << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT v2 = stack.pop_int(bc);
+        VM_INT v1 = stack.pop_int(bc);
+        VM_INT v3 = v1 << v2;
+        stack.push_int(bc, v3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "<< int " << v1 << " + " << v2 << " = " << v3 << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
 void VM::opcode_SHR()
 {
-    VM_INT v2 = stack.pop_int(bc);
-    VM_INT v1 = stack.pop_int(bc);
-    VM_INT v3 = v1 >> v2;
-    stack.push_int(bc, v3);
-    if (!performance_build && runtime_debug)
-        g_env.log << ">> int " << v1 << " + " << v2 << " = " << v3 << std::endl;
-}
-
-void VM::opcode_SUBTRACT_F()
-{
-    VM_FLOAT v2 = stack.pop_float(bc);
-    VM_FLOAT v1 = stack.pop_float(bc);
-    VM_FLOAT v3 = v1 - v2;
-    stack.push_float(bc, v3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Subtract float " << v1 << " - " << v2 << " = " << v3 << std::endl;
-}
-
-void VM::opcode_SUBTRACT_I()
-{
-    VM_INT v2 = stack.pop_int(bc);
-    VM_INT v1 = stack.pop_int(bc);
-    VM_INT v3 = v1 - v2;
-    stack.push_int(bc, v3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Subtract int " << v1 << " - " << v2 << " = " << v3 << std::endl;
-}
-
-void VM::opcode_ADD_S()
-{
-    VM_STRING v2 = stack.pop_string(bc);
-    VM_STRING v1 = stack.pop_string(bc);
-    if (!performance_build && runtime_debug) {
-        VM_STRING v3 = v1;
-        v3.append(v2);
-        stack.push_string(bc, v3);
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT v2 = stack.pop_int(bc);
+        VM_INT v1 = stack.pop_int(bc);
+        VM_INT v3 = v1 >> v2;
+        stack.push_int(bc, v3);
         if (!performance_build && runtime_debug)
-            g_env.log << "Add string '" << v1 << "' + '" << v2 << "' = '" << v3 << "'" << std::endl;
-    } else {
-        v1.append(v2);
-        stack.push_string(bc, v1);
+            g_env.log << ">> int " << v1 << " + " << v2 << " = " << v3 << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
     }
 }
 
-void VM::opcode_MULTIPLY_F()
+void VM::opcode_SUBTRACT()
 {
-    VM_FLOAT v2 = stack.pop_float(bc);
-    VM_FLOAT v1 = stack.pop_float(bc);
-    VM_FLOAT v3 = v1 * v2;
-    stack.push_float(bc, v3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Multiply float " << v1 << " * " << v2 << " = " << v3 << std::endl;
-}
-
-void VM::opcode_POWER_I()
-{
-    VM_FLOAT v2 = static_cast<VM_FLOAT>(stack.pop_int(bc));
-    VM_FLOAT v1 = static_cast<VM_FLOAT>(stack.pop_int(bc));
-    VM_INT v3 = static_cast<VM_INT>(std::pow(v1, v2));
-    stack.push_int(bc, v3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Power int " << v1 << " ^ " << v2 << " = " << v3 << std::endl;
-}
-
-void VM::opcode_POWER_F()
-{
-    VM_FLOAT v2 = stack.pop_float(bc);
-    VM_FLOAT v1 = stack.pop_float(bc);
-    VM_FLOAT v3 = std::pow(v1, v2);
-    stack.push_float(bc, v3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Power float " << v1 << " ^ " << v2 << " = " << v3 << std::endl;
-}
-
-void VM::opcode_MULTIPLY_I()
-{
-    VM_INT v2 = stack.pop_int(bc);
-    VM_INT v1 = stack.pop_int(bc);
-    VM_INT v3 = v1 * v2;
-    stack.push_int(bc, v3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Multiply int " << v1 << " * " << v2 << " = " << v3 << std::endl;
-}
-
-void VM::opcode_DIVIDE_F()
-{
-    VM_FLOAT v2 = stack.pop_float(bc);
-    if (v2 == 0.0) {
-        std::cout << "Divide by zero error\n";
-        exit(1);
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT v2 = stack.pop_int(bc);
+        VM_INT v1 = stack.pop_int(bc);
+        VM_INT v3 = v1 - v2;
+        stack.push_int(bc, v3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Subtract int " << v1 << " - " << v2 << " = " << v3 << std::endl;
+        return;
     }
-    VM_FLOAT v1 = stack.pop_float(bc);
-    VM_FLOAT v3 = v1 / v2;
-    stack.push_float(bc, v3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Divide float " << v1 << " / " << v2 << " = " << v3 << std::endl;
+    case Type::FLOAT: {
+        VM_FLOAT v2 = stack.pop_float(bc);
+        VM_FLOAT v1 = stack.pop_float(bc);
+        VM_FLOAT v3 = v1 - v2;
+        stack.push_float(bc, v3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Subtract float " << v1 << " - " << v2 << " = " << v3 << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
-void VM::opcode_DIVIDE_I()
+void VM::opcode_MULTIPLY()
 {
-    VM_INT v2 = stack.pop_int(bc);
-    if (v2 == 0) {
-        std::cout << "Divide by zero error\n";
-        exit(1);
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT v2 = stack.pop_int(bc);
+        VM_INT v1 = stack.pop_int(bc);
+        VM_INT v3 = v1 * v2;
+        stack.push_int(bc, v3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Multiply int " << v1 << " * " << v2 << " = " << v3 << std::endl;
+        return;
     }
-    VM_INT v1 = stack.pop_int(bc);
-    VM_INT v3 = v1 / v2;
-    stack.push_int(bc, v3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Divide int " << v1 << " / " << v2 << " = " << v3 << std::endl;
+    case Type::FLOAT: {
+        VM_FLOAT v2 = stack.pop_float(bc);
+        VM_FLOAT v1 = stack.pop_float(bc);
+        VM_FLOAT v3 = v1 * v2;
+        stack.push_float(bc, v3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Multiply float " << v1 << " * " << v2 << " = " << v3 << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
+}
+
+void VM::opcode_POWER()
+{
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_FLOAT v2 = static_cast<VM_FLOAT>(stack.pop_int(bc));
+        VM_FLOAT v1 = static_cast<VM_FLOAT>(stack.pop_int(bc));
+        VM_INT v3 = static_cast<VM_INT>(std::pow(v1, v2));
+        stack.push_int(bc, v3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Power int " << v1 << " ^ " << v2 << " = " << v3 << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT v2 = stack.pop_float(bc);
+        VM_FLOAT v1 = stack.pop_float(bc);
+        VM_FLOAT v3 = std::pow(v1, v2);
+        stack.push_float(bc, v3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Power float " << v1 << " ^ " << v2 << " = " << v3 << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
+}
+
+void VM::opcode_DIVIDE()
+{
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT v2 = stack.pop_int(bc);
+        if (v2 == 0) {
+            std::cout << "Divide by zero error\n";
+            exit(1);
+        }
+        VM_INT v1 = stack.pop_int(bc);
+        VM_INT v3 = v1 / v2;
+        stack.push_int(bc, v3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Divide int " << v1 << " / " << v2 << " = " << v3 << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT v2 = stack.pop_float(bc);
+        if (v2 == 0.0) {
+            std::cout << "Divide by zero error\n";
+            exit(1);
+        }
+        VM_FLOAT v1 = stack.pop_float(bc);
+        VM_FLOAT v3 = v1 / v2;
+        stack.push_float(bc, v3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Divide float " << v1 << " / " << v2 << " = " << v3 << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
 void VM::opcode_I_TO_F()
@@ -277,158 +350,168 @@ void VM::opcode_F_TO_I2()
         g_env.log << "Convert " << v1 << " (float) -> " << v2 << " (int)\n";
 }
 
-void VM::opcode_SWAP_I()
+void VM::opcode_SWAP()
 {
-    VM_INT v = stack.pop_int(bc);
-    VM_INT t = variables.get_variable(bc).value_int;
-    variables.get_variable(bc).value_int = variables.get_variable_by_int(v).value_int;
-    variables.get_variable_by_int(v).value_int = t;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Swap " << variables.get_variable(bc).name << " and " << variables.get_variable_by_int(v).name << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT v = stack.pop_int(bc);
+        VM_INT t = variables.get_variable(bc).value_int;
+        variables.get_variable(bc).value_int = variables.get_variable_by_int(v).value_int;
+        variables.get_variable_by_int(v).value_int = t;
+        if (!performance_build && runtime_debug)
+            g_env.log << "Swap " << variables.get_variable(bc).name << " and " << variables.get_variable_by_int(v).name << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_INT v = stack.pop_int(bc);
+        VM_FLOAT t = variables.get_variable(bc).value_float;
+        variables.get_variable(bc).value_float = variables.get_variable_by_int(v).value_float;
+        variables.get_variable_by_int(v).value_float = t;
+        if (!performance_build && runtime_debug)
+            g_env.log << "Swap " << variables.get_variable(bc).name << " and " << variables.get_variable_by_int(v).name << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        VM_INT v = stack.pop_int(bc);
+        VM_STRING t = variables.get_variable(bc).value_string;
+        variables.get_variable(bc).value_string = variables.get_variable_by_int(v).value_string;
+        variables.get_variable_by_int(v).value_string = t;
+        if (!performance_build && runtime_debug)
+            g_env.log << "Swap " << variables.get_variable(bc).name << " and " << variables.get_variable_by_int(v).name << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
-void VM::opcode_SWAP_F()
+void VM::opcode_STORE()
 {
-    VM_INT v = stack.pop_int(bc);
-    VM_FLOAT t = variables.get_variable(bc).value_float;
-    variables.get_variable(bc).value_float = variables.get_variable_by_int(v).value_float;
-    variables.get_variable_by_int(v).value_float = t;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Swap " << variables.get_variable(bc).name << " and " << variables.get_variable_by_int(v).name << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT v = stack.pop_int(bc);
+        variables.get_variable(bc).value_int = v;
+        if (!performance_build && runtime_debug)
+            g_env.log << "Store integer " << v << " in " << variables.get_variable(bc).name << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT v = stack.pop_float(bc);
+        variables.get_variable(bc).value_float = v;
+        if (!performance_build && runtime_debug)
+            g_env.log << "Store float " << v << " in " << variables.get_variable(bc).name << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        VM_STRING v = stack.pop_string(bc);
+        variables.get_variable(bc).value_string = v;
+        if (!performance_build && runtime_debug)
+            g_env.log << "Store string '" << v << "' in " << variables.get_variable(bc).name << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
-void VM::opcode_SWAP_S()
-{
-    VM_INT v = stack.pop_int(bc);
-    VM_STRING t = variables.get_variable(bc).value_string;
-    variables.get_variable(bc).value_string = variables.get_variable_by_int(v).value_string;
-    variables.get_variable_by_int(v).value_string = t;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Swap " << variables.get_variable(bc).name << " and " << variables.get_variable_by_int(v).name << std::endl;
-}
-
-void VM::opcode_STORE_I()
-{
-    VM_INT v = stack.pop_int(bc);
-    variables.get_variable(bc).value_int = v;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Store integer " << v << " in " << variables.get_variable(bc).name << std::endl;
-}
-
-void VM::opcode_STORE_F()
-{
-    VM_FLOAT v = stack.pop_float(bc);
-    variables.get_variable(bc).value_float = v;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Store float " << v << " in " << variables.get_variable(bc).name << std::endl;
-}
-
-void VM::opcode_STORE_S()
-{
-    VM_STRING v = stack.pop_string(bc);
-    variables.get_variable(bc).value_string = v;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Store string '" << v << "' in " << variables.get_variable(bc).name << std::endl;
-}
-
-void VM::opcode_INPUT_F()
+void VM::opcode_INPUT()
 {
     VM_INT qmark = stack.pop_int(bc);
     if (qmark) {
         g_env.graphics.print_text(console_font, "?", -1, -1);
     }
     auto s = g_env.graphics.input();
-    double v = std::stod(s);
-    variables.get_variable(bc).value_float = v;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Inputted and stored float " << variables.get_variable(bc).value_float << " in " << variables.get_variable(bc).name << std::endl;
-}
-
-void VM::opcode_INPUT_I()
-{
-    VM_INT qmark = stack.pop_int(bc);
-    if (qmark) {
-        g_env.graphics.print_text(console_font, "?", -1, -1);
-    }
-    auto s = g_env.graphics.input();
-    int v = std::stoi(s);
-    variables.get_variable(bc).value_int = v;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Inputted and stored integer " << variables.get_variable(bc).value_int << " in " << variables.get_variable(bc).name << std::endl;
-}
-
-void VM::opcode_INPUT_S()
-{
-    VM_INT qmark = stack.pop_int(bc);
-    if (qmark) {
-        g_env.graphics.print_text(console_font, "?", -1, -1);
-    }
-    auto v = g_env.graphics.input();
-    variables.get_variable(bc).value_string = v;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Inputted and stored string " << variables.get_variable(bc).value_string << " in " << variables.get_variable(bc).name << std::endl;
-}
-
-void VM::opcode_PRINT_F()
-{
-    VM_FLOAT v1 = stack.pop_float(bc);
-    print_right_justify = bc.data & 1;
-    print_hex = bc.data & 2;
-
-    // First let's store to a string so we can figure out X positions etc.
-    std::stringstream stream;
-    if (print_right_justify) {
-        stream << std::setw(tab_spacing);
-    }
-    if (print_hex) {
+    switch (bc.type) {
+    case Type::INTEGER: {
+        int v = std::stoi(s);
+        variables.get_variable(bc).value_int = v;
         if (!performance_build && runtime_debug)
-            g_env.log << "Print float as hex: ";
-        stream << std::hex << static_cast<int>(v1);
-    } else {
-        if (!performance_build && runtime_debug)
-            g_env.log << "Print float: ";
-        stream << std::setprecision(tab_spacing) << v1;
+            g_env.log << "Inputted and stored integer " << variables.get_variable(bc).value_int << " in " << variables.get_variable(bc).name << std::endl;
+        return;
     }
-    VM_STRING v(stream.str());
-    g_env.graphics.print_console(v);
-    if (!performance_build && runtime_debug)
-        g_env.log << std::endl;
+    case Type::FLOAT: {
+        double v = std::stod(s);
+        variables.get_variable(bc).value_float = v;
+        if (!performance_build && runtime_debug)
+            g_env.log << "Inputted and stored float " << variables.get_variable(bc).value_float << " in " << variables.get_variable(bc).name << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        variables.get_variable(bc).value_string = s;
+        if (!performance_build && runtime_debug)
+            g_env.log << "Inputted and stored string " << variables.get_variable(bc).value_string << " in " << variables.get_variable(bc).name << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
-void VM::opcode_PRINT_I()
+void VM::opcode_PRINT()
 {
-    VM_INT v1 = stack.pop_int(bc);
-    print_right_justify = bc.data & 1;
-    print_hex = bc.data & 2;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT v1 = stack.pop_int(bc);
+        print_right_justify = bc.data & 1;
+        print_hex = bc.data & 2;
 
-    // First let's store to a string so we can figure out X positions etc.
-    std::stringstream stream;
-    if (print_right_justify) {
-        stream << std::setw(tab_spacing);
-    }
-    if (print_hex) {
+        // First let's store to a string so we can figure out X positions etc.
+        std::stringstream stream;
+        if (print_right_justify) {
+            stream << std::setw(tab_spacing);
+        }
+        if (print_hex) {
+            if (!performance_build && runtime_debug)
+                g_env.log << "Print float as hex: ";
+            stream << std::hex << v1;
+        } else {
+            if (!performance_build && runtime_debug)
+                g_env.log << "Print int: ";
+            stream << v1;
+        }
+        VM_STRING v(stream.str());
+        g_env.graphics.print_console(v);
         if (!performance_build && runtime_debug)
-            g_env.log << "Print float as hex: ";
-        stream << std::hex << v1;
-    } else {
-        if (!performance_build && runtime_debug)
-            g_env.log << "Print int: ";
-        stream << v1;
+            g_env.log << std::endl;
+        return;
     }
-    VM_STRING v(stream.str());
-    g_env.graphics.print_console(v);
-    if (!performance_build && runtime_debug)
-        g_env.log << std::endl;
-}
+    case Type::FLOAT: {
+        VM_FLOAT v1 = stack.pop_float(bc);
+        print_right_justify = bc.data & 1;
+        print_hex = bc.data & 2;
 
-void VM::opcode_PRINT_S()
-{
-    VM_STRING v = stack.pop_string(bc);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Print string: '";
-    g_env.graphics.print_console(v);
-    if (!performance_build && runtime_debug)
-        g_env.log << "'" << std::endl;
+        // First let's store to a string so we can figure out X positions etc.
+        std::stringstream stream;
+        if (print_right_justify) {
+            stream << std::setw(tab_spacing);
+        }
+        if (print_hex) {
+            if (!performance_build && runtime_debug)
+                g_env.log << "Print float as hex: ";
+            stream << std::hex << static_cast<int>(v1);
+        } else {
+            if (!performance_build && runtime_debug)
+                g_env.log << "Print float: ";
+            stream << std::setprecision(tab_spacing) << v1;
+        }
+        VM_STRING v(stream.str());
+        g_env.graphics.print_console(v);
+        if (!performance_build && runtime_debug)
+            g_env.log << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        VM_STRING v = stack.pop_string(bc);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Print string: '";
+        g_env.graphics.print_console(v);
+        if (!performance_build && runtime_debug)
+            g_env.log << "'" << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
 void VM::opcode_PRINT_NL()
@@ -454,280 +537,263 @@ void VM::opcode_PRINT_SPC()
         g_env.log << "Print " << v1 << " spaces";
 }
 
-void VM::opcode_LOAD_F_ARRAY()
+void VM::opcode_LOAD_ARRAY()
 {
     VM_INT dimensions = stack.pop_int(bc);
-    if (dimensions == 1) {
-        VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_float_array.size()))
-            error("Invalid array or array index");
-        VM_FLOAT v = variables.get_variable(bc).value_float_array[index];
-        stack.push_float(bc, v);
-        if (!performance_build && runtime_debug)
-            g_env.log << "Push variable " << variables.get_variable(bc).name << ", float " << v << " (index " << index << ") onto the stack\n";
-    } else {
-        VM_INT index2 = stack.pop_int(bc);
-        VM_INT index1 = stack.pop_int(bc);
-        VM_INT size = variables.get_variable(bc).fields[0].value_int;
-        int index = index2 * size + index1;
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_float_array.size()))
-            error("Invalid array or array index");
-        VM_FLOAT v = variables.get_variable(bc).value_float_array[index];
-        stack.push_float(bc, v);
-        if (!performance_build && runtime_debug)
-            g_env.log << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
-    }
-}
+    VM_INT index;
 
-void VM::opcode_LOAD_I_ARRAY()
-{
-    VM_INT dimensions = stack.pop_int(bc);
+    // Common
     if (dimensions == 1) {
-        VM_INT index = stack.pop_int(bc);
+        index = stack.pop_int(bc);
         if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
             error("Invalid array or array index");
-        VM_INT v = variables.get_variable(bc).value_int_array[index];
-        stack.push_int(bc, v);
-        if (!performance_build && runtime_debug)
-            g_env.log << "Push variable " << variables.get_variable(bc).name << ", int " << v << " (index " << index << ") onto the stack\n";
     } else {
         VM_INT index2 = stack.pop_int(bc);
         VM_INT index1 = stack.pop_int(bc);
-        VM_INT size = variables.get_variable(bc).fields[0].value_int;
+        VM_INT size = variables.get_variable(bc).array_definition[0];
         int index = index2 * size + index1;
         if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
             error("Invalid array or array index");
-        VM_INT v = variables.get_variable(bc).value_int_array[index];
-        stack.push_int(bc, v);
-        if (!performance_build && runtime_debug)
-            g_env.log << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+    }
+
+    switch (bc.type) {
+    case Type::INTEGER: {
+        if (dimensions == 1) {
+            VM_INT v = variables.get_variable(bc).value_int_array[index];
+            stack.push_int(bc, v);
+            if (!performance_build && runtime_debug)
+                g_env.log << "Push variable " << variables.get_variable(bc).name << ", int " << v << " (index " << index << ") onto the stack\n";
+        } else {
+            VM_INT v = variables.get_variable(bc).value_int_array[index];
+            stack.push_int(bc, v);
+            if (!performance_build && runtime_debug)
+                g_env.log << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+        }
+        return;
+    }
+    case Type::FLOAT: {
+        if (dimensions == 1) {
+            VM_FLOAT v = variables.get_variable(bc).value_float_array[index];
+            stack.push_float(bc, v);
+            if (!performance_build && runtime_debug)
+                g_env.log << "Push variable " << variables.get_variable(bc).name << ", float " << v << " (index " << index << ") onto the stack\n";
+        } else {
+            VM_FLOAT v = variables.get_variable(bc).value_float_array[index];
+            stack.push_float(bc, v);
+            if (!performance_build && runtime_debug)
+                g_env.log << "Push variable " << variables.get_variable(bc).name << ", float '" << v << "' (index " << index << ") onto the stack\n";
+        }
+        return;
+    }
+    case Type::STRING: {
+        if (dimensions == 1) {
+            VM_STRING v = variables.get_variable(bc).value_string_array[index];
+            stack.push_string(bc, v);
+            if (!performance_build && runtime_debug)
+                g_env.log << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+        } else {
+            VM_STRING v = variables.get_variable(bc).value_string_array[index];
+            stack.push_string(bc, v);
+            if (!performance_build && runtime_debug)
+                g_env.log << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+        }
+        return;
+    }
+    default:
+        opcode_type_error();
     }
 }
 
-void VM::opcode_LOAD_S_ARRAY()
+void VM::opcode_STORE_ARRAY()
 {
     VM_INT dimensions = stack.pop_int(bc);
+    VM_INT index;
+
+    // Common
     if (dimensions == 1) {
-        VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
+        index = stack.pop_int(bc);
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
             error("Invalid array or array index");
-        VM_STRING v = variables.get_variable(bc).value_string_array[index];
-        stack.push_string(bc, v);
-        if (!performance_build && runtime_debug)
-            g_env.log << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
     } else {
         VM_INT index2 = stack.pop_int(bc);
         VM_INT index1 = stack.pop_int(bc);
-        VM_INT size = variables.get_variable(bc).fields[0].value_int;
+        VM_INT size = variables.get_variable(bc).array_definition[0];
         int index = index2 * size + index1;
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
+        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
             error("Invalid array or array index");
-        VM_STRING v = variables.get_variable(bc).value_string_array[index];
-        stack.push_string(bc, v);
-        if (!performance_build && runtime_debug)
-            g_env.log << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+    }
+
+    // Common
+    switch (bc.type) {
+    case Type::INTEGER: {
+        if (dimensions == 1) {
+            VM_INT v = stack.pop_int(bc);
+            variables.get_variable(bc).value_int_array[index] = v;
+            if (!performance_build && runtime_debug)
+                g_env.log << "Store int array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+        } else {
+            VM_INT v = stack.pop_int(bc);
+            variables.get_variable(bc).value_int_array[index] = v;
+            if (!performance_build && runtime_debug)
+                g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+        }
+        return;
+    }
+    case Type::FLOAT: {
+        if (dimensions == 1) {
+            VM_FLOAT v = stack.pop_float(bc);
+            variables.get_variable(bc).value_float_array[index] = v;
+            if (!performance_build && runtime_debug)
+                g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+        } else {
+            VM_FLOAT v = stack.pop_float(bc);
+            variables.get_variable(bc).value_float_array[index] = v;
+            if (!performance_build && runtime_debug)
+                g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+        }
+        return;
+    }
+    case Type::STRING: {
+        if (dimensions == 1) {
+            VM_STRING v = stack.pop_string(bc);
+            variables.get_variable(bc).value_string_array[index] = v;
+            if (!performance_build && runtime_debug)
+                g_env.log << "Store string array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+        } else {
+            VM_STRING v = stack.pop_string(bc);
+            variables.get_variable(bc).value_string_array[index] = v;
+            if (!performance_build && runtime_debug)
+                g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+        }
+        return;
+    }
+    default:
+        opcode_type_error();
     }
 }
 
-void VM::opcode_STORE_F_ARRAY()
+void VM::opcode_LOAD_FIELD()
 {
-    VM_INT dimensions = stack.pop_int(bc);
-    if (dimensions == 1) {
-        VM_FLOAT v = stack.pop_float(bc);
-        VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_float_array.size()))
-            error("Invalid array or array index");
-        variables.get_variable(bc).value_float_array[index] = v;
+    VM_INT index = stack.pop_int(bc);
+    Boxed* field = &variables.get_variable(bc).fields[index];
+    switch (bc.type) {
+    case Type::INTEGER: {
+        stack.push_int(bc, field->value_int);
         if (!performance_build && runtime_debug)
-            g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
-    } else {
-        VM_FLOAT v = stack.pop_float(bc);
-        VM_INT index2 = stack.pop_int(bc);
-        VM_INT index1 = stack.pop_int(bc);
-        VM_INT size = variables.get_variable(bc).fields[0].value_int;
-        int index = index2 * size + index1;
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_float_array.size()))
-            error("Invalid array or array index");
-        variables.get_variable(bc).value_float_array[index] = v;
+            g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_int << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        stack.push_float(bc, field->value_float);
         if (!performance_build && runtime_debug)
-            g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+            g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_float << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        stack.push_string(bc, field->value_string);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_string << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
     }
 }
 
-void VM::opcode_STORE_I_ARRAY()
+void VM::opcode_STORE_FIELD()
 {
-    VM_INT dimensions = stack.pop_int(bc);
-    if (dimensions == 1) {
+    VM_INT index = stack.pop_int(bc);
+    switch (bc.type) {
+    case Type::INTEGER: {
         VM_INT v = stack.pop_int(bc);
-        VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
-            error("Invalid array or array index");
-        variables.get_variable(bc).value_int_array[index] = v;
+        Boxed* field = &variables.get_variable(bc).fields.at(index);
+        field->value_int = v;
         if (!performance_build && runtime_debug)
-            g_env.log << "Store int array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
-    } else {
+            g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT v = stack.pop_float(bc);
+        Boxed* field = &variables.get_variable(bc).fields.at(index);
+        field->value_float = v;
+        if (!performance_build && runtime_debug)
+            g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        VM_STRING v = stack.pop_string(bc);
+        Boxed* field = &variables.get_variable(bc).fields.at(index);
+        field->value_string.assign(v);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value '" << v << "'" << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
+}
+
+void VM::opcode_LOAD_FIELD_ARRAY()
+{
+    VM_INT fields = stack.pop_int(bc);
+    VM_INT index = stack.pop_int(bc);
+    VM_INT array_index = stack.pop_int(bc);
+    Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index];
+    switch (bc.type) {
+    case Type::INTEGER: {
+        stack.push_float(bc, field->value_int);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_int << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        stack.push_float(bc, field->value_float);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_float << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        stack.push_string(bc, field->value_string);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value '" << field->value_string << "'" << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
+}
+
+void VM::opcode_STORE_FIELD_ARRAY()
+{
+    VM_INT fields = stack.pop_int(bc);
+    VM_INT index = stack.pop_int(bc);
+    VM_INT array_index = stack.pop_int(bc);
+    Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index];
+    switch (bc.type) {
+    case Type::INTEGER: {
         VM_INT v = stack.pop_int(bc);
-        VM_INT index2 = stack.pop_int(bc);
-        VM_INT index1 = stack.pop_int(bc);
-        VM_INT size = variables.get_variable(bc).fields[0].value_int;
-        int index = index2 * size + index1;
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
-            error("Invalid array or array index");
-        variables.get_variable(bc).value_int_array[index] = v;
+        field->value_int = v;
         if (!performance_build && runtime_debug)
-            g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+            g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+        return;
     }
-}
-
-void VM::opcode_STORE_S_ARRAY()
-{
-    VM_INT dimensions = stack.pop_int(bc);
-    if (dimensions == 1) {
-        VM_STRING v = stack.pop_string(bc);
-        VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
-            error("Invalid array or array index");
-        variables.get_variable(bc).value_string_array[index] = v;
+    case Type::FLOAT: {
+        VM_FLOAT v = stack.pop_float(bc);
+        field->value_float = v;
         if (!performance_build && runtime_debug)
-            g_env.log << "Store string array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
-    } else {
-        VM_STRING v = stack.pop_string(bc);
-        VM_INT index2 = stack.pop_int(bc);
-        VM_INT index1 = stack.pop_int(bc);
-        VM_INT size = variables.get_variable(bc).fields[0].value_int;
-        int index = index2 * size + index1;
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
-            error("Invalid array or array index");
-        variables.get_variable(bc).value_string_array[index] = v;
-        if (!performance_build && runtime_debug)
-            g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+            g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
+        return;
     }
-}
-
-void VM::opcode_LOAD_I_FIELD()
-{
-    VM_INT index = stack.pop_int(bc);
-    Boxed* field = &variables.get_variable(bc).fields.at(index);
-    stack.push_int(bc, field->value_int);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_int << std::endl;
-}
-
-void VM::opcode_LOAD_F_FIELD()
-{
-    VM_INT index = stack.pop_int(bc);
-    Boxed* field = &variables.get_variable(bc).fields.at(index);
-    stack.push_float(bc, field->value_float);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_float << std::endl;
-}
-
-void VM::opcode_LOAD_S_FIELD()
-{
-    VM_INT index = stack.pop_int(bc);
-    Boxed* field = &variables.get_variable(bc).fields.at(index);
-    stack.push_string(bc, field->value_string);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_string << std::endl;
-}
-
-void VM::opcode_STORE_I_FIELD()
-{
-    VM_INT index = stack.pop_int(bc);
-    VM_INT v = stack.pop_int(bc);
-    Boxed* field = &variables.get_variable(bc).fields.at(index);
-    field->value_int = v;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
-}
-
-void VM::opcode_STORE_F_FIELD()
-{
-    VM_INT index = stack.pop_int(bc);
-    VM_FLOAT v = stack.pop_float(bc);
-    Boxed* field = &variables.get_variable(bc).fields.at(index);
-    field->value_float = v;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
-}
-
-void VM::opcode_STORE_S_FIELD()
-{
-    VM_INT index = stack.pop_int(bc);
-    VM_STRING v = stack.pop_string(bc);
-    Boxed* field = &variables.get_variable(bc).fields.at(index);
-    field->value_string.assign(v);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value '" << v << "'" << std::endl;
-}
-
-void VM::opcode_LOAD_I_FIELD_ARRAY()
-{
-    VM_INT fields = stack.pop_int(bc);
-    VM_INT index = stack.pop_int(bc);
-    VM_INT array_index = stack.pop_int(bc);
-    Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
-    stack.push_float(bc, field->value_int);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_int << std::endl;
-}
-
-void VM::opcode_LOAD_F_FIELD_ARRAY()
-{
-    VM_INT fields = stack.pop_int(bc);
-    VM_INT index = stack.pop_int(bc);
-    VM_INT array_index = stack.pop_int(bc);
-    Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
-    stack.push_float(bc, field->value_float);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_float << std::endl;
-}
-
-void VM::opcode_LOAD_S_FIELD_ARRAY()
-{
-    VM_INT fields = stack.pop_int(bc);
-    VM_INT index = stack.pop_int(bc);
-    VM_INT array_index = stack.pop_int(bc);
-    Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
-    stack.push_string(bc, field->value_string);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value '" << field->value_string << "'" << std::endl;
-}
-
-void VM::opcode_STORE_I_FIELD_ARRAY()
-{
-    VM_INT fields = stack.pop_int(bc);
-    VM_INT index = stack.pop_int(bc);
-    VM_INT v = stack.pop_int(bc);
-    VM_INT array_index = stack.pop_int(bc);
-    Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
-    field->value_int = v;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
-}
-
-void VM::opcode_STORE_F_FIELD_ARRAY()
-{
-    VM_INT fields = stack.pop_int(bc);
-    VM_INT index = stack.pop_int(bc);
-    VM_FLOAT v = stack.pop_float(bc);
-    VM_INT array_index = stack.pop_int(bc);
-    Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
-    field->value_float = v;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
-}
-
-void VM::opcode_STORE_S_FIELD_ARRAY()
-{
-    VM_INT fields = stack.pop_int(bc);
-    VM_INT index = stack.pop_int(bc);
-    VM_STRING v = stack.pop_string(bc);
-    VM_INT array_index = stack.pop_int(bc);
-    Boxed* field = &variables.get_variable(bc).fields.at(static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index);
-    field->value_string.assign(v);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value '" << v << "'" << std::endl;
+    case Type::STRING: {
+        VM_STRING v = stack.pop_string(bc);
+        field->value_string.assign(v);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value '" << v << "'" << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
 void VM::opcode_NEW_TYPE()
@@ -763,185 +829,205 @@ void VM::opcode_ARRAYSIZE()
         g_env.log << "Size of array requested for variable'" << variables.get_variable(bc).name << "' result=" << size << std::endl;
 }
 
-void VM::opcode_DIM_F()
+void VM::opcode_DIM()
 {
     VM_INT dimensions = stack.pop_int(bc);
-    variables.get_variable(bc).type = Type::FLOAT_ARRAY;
-    variables.get_variable(bc).value_int = dimensions;
+    VM_INT size, size1, size2;
     if (dimensions == 1) {
-        auto size = static_cast<size_t>(stack.pop_int(bc)) + 1;
+        size = stack.pop_int(bc) + 1;
         if (size == 1)
             error("DIM array of 0 size not allowed");
-        variables.get_variable(bc).value_float_array.resize(size);
-        if (!performance_build && runtime_debug)
-            g_env.log << "Dimension float variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
+        variables.get_variable(bc).array_definition.resize(1);
+        variables.get_variable(bc).array_definition[0] = size;
     } else {
         variables.get_variable(bc).fields.clear();
-        auto size2 = static_cast<size_t>(stack.pop_int(bc)) + 1;
+        size2 = stack.pop_int(bc) + 1;
         if (size2 == 1)
             error("DIM array of 0 size not allowed");
-        auto size1 = static_cast<size_t>(stack.pop_int(bc)) + 1;
+        size1 = stack.pop_int(bc) + 1;
         if (size1 == 1)
             error("DIM array of 0 size not allowed");
-        Boxed b;
-        b.value_int = static_cast<VM_INT>(size1);
-        variables.get_variable(bc).fields.push_back(std::move(b));
-        variables.get_variable(bc).value_float_array.resize(size1 * size2);
-        if (!performance_build && runtime_debug)
-            g_env.log << "Dimension float variable " << variables.get_variable(bc).name << " with size " << size1 << "x" << size2 << std::endl;
+        variables.get_variable(bc).array_definition.resize(2);
+        variables.get_variable(bc).array_definition[0] = size1;
+        variables.get_variable(bc).array_definition[1] = size2;
     }
-}
 
-void VM::opcode_DIM_I()
-{
-    VM_INT dimensions = stack.pop_int(bc);
-    variables.get_variable(bc).type = Type::INTEGER_ARRAY;
-    variables.get_variable(bc).value_int = dimensions;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        variables.get_variable(bc).type = Type::INTEGER_ARRAY;
+        if (dimensions == 1) {
+            variables.get_variable(bc).value_int_array.resize(size);
+        } else {
+            variables.get_variable(bc).value_int_array.resize(size1 * size2);
+        }
+        break;
+    }
+    case Type::FLOAT: {
+        variables.get_variable(bc).type = Type::FLOAT_ARRAY;
+        if (dimensions == 1) {
+            variables.get_variable(bc).value_float_array.resize(size);
+        } else {
+            variables.get_variable(bc).value_float_array.resize(size1 * size2);
+        }
+        break;
+    }
+    case Type::STRING: {
+        variables.get_variable(bc).type = Type::STRING_ARRAY;
+        if (dimensions == 1) {
+            variables.get_variable(bc).value_string_array.resize(size);
+        } else {
+            variables.get_variable(bc).value_string_array.resize(size1 * size2);
+        }
+        break;
+    }
+    default:
+        opcode_type_error();
+    }
     if (dimensions == 1) {
-        auto size = static_cast<size_t>(stack.pop_int(bc)) + 1;
-        if (size == 1)
-            error("DIM array of 0 size not allowed");
-        variables.get_variable(bc).value_int_array.resize(size);
         if (!performance_build && runtime_debug)
-            g_env.log << "Dimension int variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
+            g_env.log << "Dimension variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
     } else {
-        variables.get_variable(bc).fields.clear();
-        auto size2 = static_cast<size_t>(stack.pop_int(bc)) + 1;
-        if (size2 == 1)
-            error("DIM array of 0 size not allowed");
-        auto size1 = static_cast<size_t>(stack.pop_int(bc)) + 1;
-        if (size1 == 1)
-            error("DIM array of 0 size not allowed");
-        Boxed b;
-        b.value_int = static_cast<VM_INT>(size1);
-        variables.get_variable(bc).fields.push_back(std::move(b));
-        variables.get_variable(bc).value_int_array.resize(size1 * size2);
         if (!performance_build && runtime_debug)
-            g_env.log << "Dimension int variable " << variables.get_variable(bc).name << " with size " << size1 << "x" << size2 << std::endl;
+            g_env.log << "Dimension variable " << variables.get_variable(bc).name << " with size " << size1 << "x" << size2 << std::endl;
     }
 }
 
-void VM::opcode_DIM_S()
+void VM::opcode_DUP()
 {
-    VM_INT dimensions = stack.pop_int(bc);
-    variables.get_variable(bc).type = Type::STRING_ARRAY;
-    variables.get_variable(bc).value_int = dimensions;
-    if (dimensions == 1) {
-        auto size = static_cast<size_t>(stack.pop_int(bc)) + 1;
-        if (size == 1)
-            error("DIM array of 0 size not allowed");
-        variables.get_variable(bc).value_string_array.resize(size);
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT v = stack.pop_int(bc);
+        stack.push_int(bc, v);
+        stack.push_int(bc, v);
         if (!performance_build && runtime_debug)
-            g_env.log << "Dimension string variable " << variables.get_variable(bc).name << " with size " << size << std::endl;
-    } else {
-        variables.get_variable(bc).fields.clear();
-        auto size2 = static_cast<size_t>(stack.pop_int(bc)) + 1;
-        if (size2 == 1)
-            error("DIM array of 0 size not allowed");
-        auto size1 = static_cast<size_t>(stack.pop_int(bc)) + 1;
-        if (size1 == 1)
-            error("DIM array of 0 size not allowed");
-        Boxed b;
-        b.value_int = static_cast<VM_INT>(size1);
-        variables.get_variable(bc).fields.push_back(std::move(b));
-        variables.get_variable(bc).value_string_array.resize(size1 * size2);
+            g_env.log << "Duplicate int " << v << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT v = stack.pop_float(bc);
+        stack.push_float(bc, v);
+        stack.push_float(bc, v);
         if (!performance_build && runtime_debug)
-            g_env.log << "Dimension string variable " << variables.get_variable(bc).name << " with size " << size1 << "x" << size2 << std::endl;
+            g_env.log << "Duplicate float " << v << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        VM_STRING v = stack.pop_string(bc);
+        stack.push_string(bc, v);
+        stack.push_string(bc, v);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Duplicate int " << v << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
     }
 }
 
-void VM::opcode_DUP_F()
+void VM::opcode_ROT()
 {
-    VM_FLOAT v = stack.pop_float(bc);
-    stack.push_float(bc, v);
-    stack.push_float(bc, v);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Duplicate float " << v << std::endl;
-}
-
-void VM::opcode_DUP_I()
-{
-    VM_INT v = stack.pop_int(bc);
-    stack.push_int(bc, v);
-    stack.push_int(bc, v);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Duplicate int " << v << std::endl;
-}
-
-void VM::opcode_ROT_F()
-{
-    VM_FLOAT v1 = stack.pop_float(bc);
-    VM_FLOAT v2 = stack.pop_float(bc);
-    stack.push_float(bc, v1);
-    stack.push_float(bc, v2);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Rotate float " << v1 << "/" << v2 << std::endl;
-}
-
-void VM::opcode_ROT_I()
-{
-    VM_INT v1 = stack.pop_int(bc);
-    VM_INT v2 = stack.pop_int(bc);
-    stack.push_int(bc, v1);
-    stack.push_int(bc, v2);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Rotate int " << v1 << "/" << v2 << std::endl;
-}
-
-void VM::opcode_FOR_I()
-{
-    variables.get_variable(bc).value_int_array.resize(3);
-    VM_INT pc = stack.pop_int(bc);
-    VM_INT step = stack.pop_int(bc);
-    VM_INT iterations = stack.pop_int(bc);
-    variables.get_variable(bc).value_int_array[0] = iterations / step;
-    variables.get_variable(bc).value_int_array[1] = step;
-    variables.get_variable(bc).value_int_array[2] = pc;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Initialising FOR loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
-}
-
-void VM::opcode_FOR_F()
-{
-    variables.get_variable(bc).value_int_array.resize(2);
-    variables.get_variable(bc).value_float_array.resize(1);
-    VM_INT pc = stack.pop_int(bc);
-    VM_FLOAT step = stack.pop_float(bc);
-    VM_FLOAT iterations = stack.pop_float(bc);
-    variables.get_variable(bc).value_int_array[0] = static_cast<int>(iterations / step);
-    variables.get_variable(bc).value_float_array[0] = step;
-    variables.get_variable(bc).value_int_array[1] = pc;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Initialising FOR loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
-}
-
-void VM::opcode_NEXT_I()
-{
-    VM_INT step = variables.get_variable(bc).value_int_array[1];
-    variables.get_variable(bc).value_int += step;
-    variables.get_variable(bc).value_int_array[0]--; // iterations - 1
-    if (variables.get_variable(bc).value_int_array[0] >= 0) {
-        helper_bytecodes().pc = variables.get_variable(bc).value_int_array[2];
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT v1 = stack.pop_int(bc);
+        VM_INT v2 = stack.pop_int(bc);
+        stack.push_int(bc, v1);
+        stack.push_int(bc, v2);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Rotate int " << v1 << "/" << v2 << std::endl;
+        return;
     }
-    if (!performance_build && runtime_debug)
-        g_env.log << "NEXT integer variable " << variables.get_variable(bc).name << ", step " << step << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
-                  << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[2] << std::dec << std::endl;
-}
-
-void VM::opcode_NEXT_F()
-{
-    VM_FLOAT step = variables.get_variable(bc).value_float_array[0];
-    variables.get_variable(bc).value_float += step;
-    variables.get_variable(bc).value_int_array[0]--; // iterations - 1
-    if (variables.get_variable(bc).value_int_array[0] >= 0) {
-        helper_bytecodes().pc = variables.get_variable(bc).value_int_array[1];
+    case Type::FLOAT: {
+        VM_FLOAT v1 = stack.pop_float(bc);
+        VM_FLOAT v2 = stack.pop_float(bc);
+        stack.push_float(bc, v1);
+        stack.push_float(bc, v2);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Rotate float " << v1 << "/" << v2 << std::endl;
+        return;
     }
-    if (!performance_build && runtime_debug)
-        g_env.log << "NEXT float variable " << variables.get_variable(bc).name << ", step " << step << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
-                  << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[1] << std::dec << std::endl;
+    case Type::STRING: {
+        VM_STRING v1 = stack.pop_string(bc);
+        VM_STRING v2 = stack.pop_string(bc);
+        stack.push_string(bc, v1);
+        stack.push_string(bc, v2);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Rotate string '" << v1 << "'/'" << v2 << "'" << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
-void VM::opcode_FORIN_I()
+void VM::opcode_FOR()
+{
+    switch (bc.type) {
+    case Type::INTEGER: {
+        variables.get_variable(bc).value_int_array.resize(3);
+        VM_INT pc = stack.pop_int(bc);
+        VM_INT step = stack.pop_int(bc);
+        VM_INT iterations = stack.pop_int(bc);
+        variables.get_variable(bc).value_int_array[0] = iterations / step;
+        variables.get_variable(bc).value_int_array[1] = step;
+        variables.get_variable(bc).value_int_array[2] = pc;
+        if (!performance_build && runtime_debug)
+            g_env.log << "Initialising FOR loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        variables.get_variable(bc).value_int_array.resize(2);
+        variables.get_variable(bc).value_float_array.resize(1);
+        VM_INT pc = stack.pop_int(bc);
+        VM_FLOAT step = stack.pop_float(bc);
+        VM_FLOAT iterations = stack.pop_float(bc);
+        variables.get_variable(bc).value_int_array[0] = static_cast<int>(iterations / step);
+        variables.get_variable(bc).value_float_array[0] = step;
+        variables.get_variable(bc).value_int_array[1] = pc;
+        if (!performance_build && runtime_debug)
+            g_env.log << "Initialising FOR loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
+}
+
+void VM::opcode_NEXT()
+{
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT step = variables.get_variable(bc).value_int_array[1];
+        variables.get_variable(bc).value_int += step;
+        variables.get_variable(bc).value_int_array[0]--; // iterations - 1
+        if (variables.get_variable(bc).value_int_array[0] >= 0) {
+            helper_bytecodes().pc = variables.get_variable(bc).value_int_array[2];
+        }
+        if (!performance_build && runtime_debug)
+            g_env.log << "NEXT integer variable " << variables.get_variable(bc).name << ", step " << step << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
+                      << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[2] << std::dec << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT step = variables.get_variable(bc).value_float_array[0];
+        variables.get_variable(bc).value_float += step;
+        variables.get_variable(bc).value_int_array[0]--; // iterations - 1
+        if (variables.get_variable(bc).value_int_array[0] >= 0) {
+            helper_bytecodes().pc = variables.get_variable(bc).value_int_array[1];
+        }
+        if (!performance_build && runtime_debug)
+            g_env.log << "NEXT float variable " << variables.get_variable(bc).name << ", step " << step << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
+                      << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[1] << std::dec << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
+}
+
+void VM::opcode_FORIN()
 {
     variables.get_variable(bc).value_int_array.resize(4);
     VM_INT pc = stack.pop_int(bc);
@@ -952,113 +1038,84 @@ void VM::opcode_FORIN_I()
     variables.get_variable(bc).value_int_array[1] = pc;
     variables.get_variable(bc).value_int_array[2] = var_array_index;
     variables.get_variable(bc).value_int_array[3] = 0;
-    variables.get_variable(bc).value_int = variable_array.value_int_array[0];
+    switch (bc.type) {
+    case Type::INTEGER: {
+        variables.get_variable(bc).value_int = variable_array.value_int_array[0];
+        break;
+    }
+    case Type::FLOAT: {
+        variables.get_variable(bc).value_float = variable_array.value_float_array[0];
+        break;
+    }
+    case Type::STRING: {
+        variables.get_variable(bc).value_string = variable_array.value_string_array[0];
+        break;
+    }
+    default:
+        opcode_type_error();
+    }
     if (!performance_build && runtime_debug)
         g_env.log << "Initialising FOR IN loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
 }
 
-void VM::opcode_FORIN_F()
-{
-    variables.get_variable(bc).value_int_array.resize(4);
-    VM_INT pc = stack.pop_int(bc);
-    VM_INT var_array_index = stack.pop_int(bc);
-    auto variable_array = variables.get_variable_by_int(var_array_index);
-    VM_INT iterations = static_cast<VM_INT>(variable_array.value_float_array.size());
-    variables.get_variable(bc).value_int_array[0] = iterations;
-    variables.get_variable(bc).value_int_array[1] = pc;
-    variables.get_variable(bc).value_int_array[2] = var_array_index;
-    variables.get_variable(bc).value_int_array[3] = 0;
-    variables.get_variable(bc).value_float = variable_array.value_float_array[0];
-    if (!performance_build && runtime_debug)
-        g_env.log << "Initialising FOR IN loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
-}
-
-void VM::opcode_FORIN_S()
-{
-    variables.get_variable(bc).value_int_array.resize(4);
-    VM_INT pc = stack.pop_int(bc);
-    VM_INT var_array_index = stack.pop_int(bc);
-    auto variable_array = variables.get_variable_by_int(var_array_index);
-    VM_INT iterations = static_cast<VM_INT>(variable_array.value_string_array.size());
-    variables.get_variable(bc).value_int_array[0] = iterations;
-    variables.get_variable(bc).value_int_array[1] = pc;
-    variables.get_variable(bc).value_int_array[2] = var_array_index;
-    variables.get_variable(bc).value_int_array[3] = 0;
-    variables.get_variable(bc).value_string = variable_array.value_string_array[0];
-    if (!performance_build && runtime_debug)
-        g_env.log << "Initialising FOR IN loop for variable '" << variables.get_variable(bc).name << "', " << variables.get_variable(bc).value_int_array[0] << " iterations" << std::endl;
-}
-
-void VM::opcode_NEXTIN_I()
+void VM::opcode_NEXTIN()
 {
     auto variable_array = variables.get_variable_by_int(variables.get_variable(bc).value_int_array[2]);
     if (variables.get_variable(bc).value_int_array[0] == 0) {
         if (!performance_build && runtime_debug)
-            g_env.log << "NEXT IN integer variable " << variables.get_variable(bc).name << ", complete" << std::endl;
+            g_env.log << "NEXT IN variable " << variables.get_variable(bc).name << ", complete" << std::endl;
+        return;
     } else {
         variables.get_variable(bc).value_int_array[0]--;
+    }
+
+    switch (bc.type) {
+    case Type::INTEGER: {
         variables.get_variable(bc).value_int = variable_array.value_int_array[variables.get_variable(bc).value_int_array[3]++];
-        helper_bytecodes().pc = variables.get_variable(bc).value_int_array[1];
-        if (!performance_build && runtime_debug)
-            g_env.log << "NEXT IN integer variable " << variables.get_variable(bc).name << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
-                      << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[1] << std::dec << std::endl;
+        break;
     }
-}
-
-void VM::opcode_NEXTIN_F()
-{
-    auto variable_array = variables.get_variable_by_int(variables.get_variable(bc).value_int_array[2]);
-    if (variables.get_variable(bc).value_int_array[0] == 0) {
-        if (!performance_build && runtime_debug)
-            g_env.log << "NEXT IN float variable " << variables.get_variable(bc).name << ", complete" << std::endl;
-    } else {
-        variables.get_variable(bc).value_int_array[0]--;
+    case Type::FLOAT: {
         variables.get_variable(bc).value_float = variable_array.value_float_array[variables.get_variable(bc).value_int_array[3]++];
-        helper_bytecodes().pc = variables.get_variable(bc).value_int_array[1];
-        if (!performance_build && runtime_debug)
-            g_env.log << "NEXT IN float variable " << variables.get_variable(bc).name << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
-                      << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[1] << std::dec << std::endl;
+        break;
     }
-}
-
-void VM::opcode_NEXTIN_S()
-{
-    auto variable_array = variables.get_variable_by_int(variables.get_variable(bc).value_int_array[2]);
-    if (variables.get_variable(bc).value_int_array[0] == 0) {
-        if (!performance_build && runtime_debug)
-            g_env.log << "NEXT IN string variable " << variables.get_variable(bc).name << ", complete" << std::endl;
-    } else {
-        variables.get_variable(bc).value_int_array[0]--;
+    case Type::STRING: {
         variables.get_variable(bc).value_string = variable_array.value_string_array[variables.get_variable(bc).value_int_array[3]++];
-        helper_bytecodes().pc = variables.get_variable(bc).value_int_array[1];
-        if (!performance_build && runtime_debug)
-            g_env.log << "NEXT IN string variable " << variables.get_variable(bc).name << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
-                      << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[1] << std::dec << std::endl;
+        break;
     }
+    default:
+        opcode_type_error();
+    }
+    helper_bytecodes().pc = variables.get_variable(bc).value_int_array[1];
+    if (!performance_build && runtime_debug)
+        g_env.log << "NEXT IN variable " << variables.get_variable(bc).name << ", iterations left " << (variables.get_variable(bc).value_int_array[0] + 1)
+                  << ", loop PC is 0x" << std::hex << variables.get_variable(bc).value_int_array[1] << std::dec << std::endl;
 }
 
-void VM::opcode_READ_I()
+void VM::opcode_READ()
 {
     Boxed b = *data_iterator++;
-    variables.get_variable(bc).value_int = b.value_int;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Read integer " << b.value_int << " in " << variables.get_variable(bc).name << std::endl;
-}
-
-void VM::opcode_READ_F()
-{
-    Boxed b = *data_iterator++;
-    variables.get_variable(bc).value_float = b.value_float;
-    if (!performance_build && runtime_debug)
-        g_env.log << "Read float " << b.value_float << " in " << variables.get_variable(bc).name << std::endl;
-}
-
-void VM::opcode_READ_S()
-{
-    Boxed b = *data_iterator++;
-    variables.get_variable(bc).value_string.assign(b.value_string);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Read string " << b.value_string << " in " << variables.get_variable(bc).name << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        variables.get_variable(bc).value_int = b.value_int;
+        if (!performance_build && runtime_debug)
+            g_env.log << "Read integer " << b.value_int << " in " << variables.get_variable(bc).name << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        variables.get_variable(bc).value_float = b.value_float;
+        if (!performance_build && runtime_debug)
+            g_env.log << "Read float " << b.value_float << " in " << variables.get_variable(bc).name << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        variables.get_variable(bc).value_string.assign(b.value_string);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Read string " << b.value_string << " in " << variables.get_variable(bc).name << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
 void VM::opcode_RESTORE()
@@ -1069,232 +1126,250 @@ void VM::opcode_RESTORE()
     }
 }
 
-void VM::opcode_READ_I_ARRAY()
+void VM::opcode_READ_ARRAY()
 {
     Boxed b = *data_iterator++;
     VM_INT dimensions = stack.pop_int(bc);
     if (dimensions == 1) {
-        VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
-            error("Invalid array or array index");
+    } else {
+        error("READ not supported yet for 2d arrays");
+    }
+    VM_INT index = stack.pop_int(bc);
+    if (index < 0 || index >= static_cast<VM_INT>(variables.get_variable(bc).value_int_array.size()))
+        error("Invalid array or array index");
+
+    switch (bc.type) {
+    case Type::INTEGER: {
         variables.get_variable(bc).value_int_array[index] = b.value_int;
         if (!performance_build && runtime_debug)
             g_env.log << "Read int vector variable " << variables.get_variable(bc).name << " index " << index << " value " << b.value_int << std::endl;
-    } else {
-        error("No read 2d arrays");
+        return;
     }
-}
-
-void VM::opcode_READ_S_ARRAY()
-{
-    Boxed b = *data_iterator++;
-    VM_INT dimensions = stack.pop_int(bc);
-    if (dimensions == 1) {
-        VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
-            error("Invalid array or array index");
-        variables.get_variable(bc).value_string_array[index].assign(b.value_string);
-        if (!performance_build && runtime_debug)
-            g_env.log << "Read string vector variable " << variables.get_variable(bc).name << " index " << index << " value " << b.value_int << std::endl;
-    } else {
-        error("No read 2d arrays");
-    }
-}
-
-void VM::opcode_READ_F_ARRAY()
-{
-    Boxed b = *data_iterator++;
-    VM_INT dimensions = stack.pop_int(bc);
-    if (dimensions == 1) {
-        VM_INT index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_float_array.size()))
-            error("Invalid array or array index");
+    case Type::FLOAT: {
         variables.get_variable(bc).value_float_array[index] = b.value_float;
         if (!performance_build && runtime_debug)
             g_env.log << "Read float vector variable " << variables.get_variable(bc).name << " index " << index << " value " << b.value_int << std::endl;
-    } else {
-        error("No read 2d arrays");
+        return;
+    }
+    case Type::STRING: {
+        variables.get_variable(bc).value_string_array[index].assign(b.value_string);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Read string vector variable " << variables.get_variable(bc).name << " index " << index << " value " << b.value_int << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
     }
 }
 
-void VM::opcode_CMP_E_F()
+void VM::opcode_CMP_E()
 {
-    VM_FLOAT c2 = stack.pop_float(bc);
-    VM_FLOAT c1 = stack.pop_float(bc);
-    VM_INT c3 = c1 == c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Float = compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT c2 = stack.pop_int(bc);
+        VM_INT c1 = stack.pop_int(bc);
+        VM_INT c3 = c1 == c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Int = compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT c2 = stack.pop_float(bc);
+        VM_FLOAT c1 = stack.pop_float(bc);
+        VM_INT c3 = c1 == c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Float = compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        VM_STRING c2 = stack.pop_string(bc);
+        VM_STRING c1 = stack.pop_string(bc);
+        VM_INT c3 = c1 == c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "String = compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
-void VM::opcode_CMP_E_I()
+void VM::opcode_CMP_NE()
 {
-    VM_INT c2 = stack.pop_int(bc);
-    VM_INT c1 = stack.pop_int(bc);
-    VM_INT c3 = c1 == c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Int = compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT c2 = stack.pop_int(bc);
+        VM_INT c1 = stack.pop_int(bc);
+        VM_INT c3 = c1 != c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Int <> compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT c2 = stack.pop_float(bc);
+        VM_FLOAT c1 = stack.pop_float(bc);
+        VM_INT c3 = c1 != c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Float <> compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        VM_STRING c2 = stack.pop_string(bc);
+        VM_STRING c1 = stack.pop_string(bc);
+        VM_INT c3 = c1 != c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "String <> compare of '" << c1 << "' and '" << c2 << "' is " << c3 << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
-void VM::opcode_CMP_E_S()
+void VM::opcode_CMP_GE()
 {
-    VM_STRING c2 = stack.pop_string(bc);
-    VM_STRING c1 = stack.pop_string(bc);
-    VM_INT c3 = c1 == c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "String = compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT c2 = stack.pop_int(bc);
+        VM_INT c1 = stack.pop_int(bc);
+        VM_INT c3 = c1 >= c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Int >= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT c2 = stack.pop_float(bc);
+        VM_FLOAT c1 = stack.pop_float(bc);
+        VM_INT c3 = c1 >= c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Float >= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        VM_STRING c2 = stack.pop_string(bc);
+        VM_STRING c1 = stack.pop_string(bc);
+        VM_INT c3 = c1 >= c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "String >= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
-void VM::opcode_CMP_NE_F()
+void VM::opcode_CMP_LE()
 {
-    VM_FLOAT c2 = stack.pop_float(bc);
-    VM_FLOAT c1 = stack.pop_float(bc);
-    VM_INT c3 = c1 != c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Float <> compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT c2 = stack.pop_int(bc);
+        VM_INT c1 = stack.pop_int(bc);
+        VM_INT c3 = c1 <= c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Int <= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT c2 = stack.pop_float(bc);
+        VM_FLOAT c1 = stack.pop_float(bc);
+        VM_INT c3 = c1 <= c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Float <= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        VM_STRING c2 = stack.pop_string(bc);
+        VM_STRING c1 = stack.pop_string(bc);
+        VM_INT c3 = c1 <= c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "String <= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
-void VM::opcode_CMP_NE_I()
+void VM::opcode_CMP_G()
 {
-    VM_INT c2 = stack.pop_int(bc);
-    VM_INT c1 = stack.pop_int(bc);
-    VM_INT c3 = c1 != c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Int <> compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT c2 = stack.pop_int(bc);
+        VM_INT c1 = stack.pop_int(bc);
+        VM_INT c3 = c1 > c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Int > compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT c2 = stack.pop_float(bc);
+        VM_FLOAT c1 = stack.pop_float(bc);
+        VM_INT c3 = c1 > c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Float > compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        VM_STRING c2 = stack.pop_string(bc);
+        VM_STRING c1 = stack.pop_string(bc);
+        VM_INT c3 = c1 > c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "String > compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
-void VM::opcode_CMP_NE_S()
+void VM::opcode_CMP_L()
 {
-    VM_STRING c2 = stack.pop_string(bc);
-    VM_STRING c1 = stack.pop_string(bc);
-    VM_INT c3 = c1 != c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "String <> compare of '" << c1 << "' and '" << c2 << "' is " << c3 << std::endl;
-}
-
-void VM::opcode_CMP_GE_F()
-{
-    VM_FLOAT c2 = stack.pop_float(bc);
-    VM_FLOAT c1 = stack.pop_float(bc);
-    VM_INT c3 = c1 >= c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Float >= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
-}
-
-void VM::opcode_CMP_GE_I()
-{
-    VM_INT c2 = stack.pop_int(bc);
-    VM_INT c1 = stack.pop_int(bc);
-    VM_INT c3 = c1 >= c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Int >= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
-}
-
-void VM::opcode_CMP_GE_S()
-{
-    VM_STRING c2 = stack.pop_string(bc);
-    VM_STRING c1 = stack.pop_string(bc);
-    VM_INT c3 = c1 >= c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "String >= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
-}
-
-void VM::opcode_CMP_LE_F()
-{
-    VM_FLOAT c2 = stack.pop_float(bc);
-    VM_FLOAT c1 = stack.pop_float(bc);
-    VM_INT c3 = c1 <= c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Float <= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
-}
-
-void VM::opcode_CMP_LE_I()
-{
-    VM_INT c2 = stack.pop_int(bc);
-    VM_INT c1 = stack.pop_int(bc);
-    VM_INT c3 = c1 <= c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Int <= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
-}
-
-void VM::opcode_CMP_LE_S()
-{
-    VM_STRING c2 = stack.pop_string(bc);
-    VM_STRING c1 = stack.pop_string(bc);
-    VM_INT c3 = c1 <= c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "String <= compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
-}
-
-void VM::opcode_CMP_G_F()
-{
-    VM_FLOAT c2 = stack.pop_float(bc);
-    VM_FLOAT c1 = stack.pop_float(bc);
-    VM_INT c3 = c1 > c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Float > compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
-}
-
-void VM::opcode_CMP_G_I()
-{
-    VM_INT c2 = stack.pop_int(bc);
-    VM_INT c1 = stack.pop_int(bc);
-    VM_INT c3 = c1 > c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Int > compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
-}
-
-void VM::opcode_CMP_G_S()
-{
-    VM_STRING c2 = stack.pop_string(bc);
-    VM_STRING c1 = stack.pop_string(bc);
-    VM_INT c3 = c1 > c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "String > compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
-}
-
-void VM::opcode_CMP_L_F()
-{
-    VM_FLOAT c2 = stack.pop_float(bc);
-    VM_FLOAT c1 = stack.pop_float(bc);
-    VM_INT c3 = c1 < c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Float < compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
-}
-
-void VM::opcode_CMP_L_I()
-{
-    VM_INT c2 = stack.pop_int(bc);
-    VM_INT c1 = stack.pop_int(bc);
-    VM_INT c3 = c1 < c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Int < compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
-}
-
-void VM::opcode_CMP_L_S()
-{
-    VM_STRING c2 = stack.pop_string(bc);
-    VM_STRING c1 = stack.pop_string(bc);
-    VM_INT c3 = c1 < c2;
-    stack.push_int(bc, c3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "String < compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT c2 = stack.pop_int(bc);
+        VM_INT c1 = stack.pop_int(bc);
+        VM_INT c3 = c1 < c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Int < compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT c2 = stack.pop_float(bc);
+        VM_FLOAT c1 = stack.pop_float(bc);
+        VM_INT c3 = c1 < c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Float < compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    case Type::STRING: {
+        VM_STRING c2 = stack.pop_string(bc);
+        VM_STRING c1 = stack.pop_string(bc);
+        VM_INT c3 = c1 < c2;
+        stack.push_int(bc, c3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "String < compare of " << c1 << " and " << c2 << " is " << c3 << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
 void VM::opcode_BOOL_OR()
@@ -1435,52 +1510,55 @@ void VM::opcode_GOSUB()
     helper_bytecodes().pc = new_pc;
 }
 
-void VM::opcode_UNPACK_F()
+void VM::opcode_UNPACK()
 {
     auto b = stack.pop_boxed(bc);
-    switch (b.type) {
-    case Type::FLOAT:
-        variables.get_variable(bc).value_float = b.value_float;
-        break;
-    case Type::INTEGER:
-        variables.get_variable(bc).value_float = static_cast<VM_FLOAT>(b.value_int);
-        break;
-    default:
-        error("Unsupported unpack casting");
+    switch (bc.type) {
+    case Type::INTEGER: {
+        switch (b.type) {
+        case Type::INTEGER:
+            variables.get_variable(bc).value_int = b.value_int;
+            break;
+        case Type::FLOAT:
+            variables.get_variable(bc).value_int = static_cast<VM_INT>(b.value_float);
+            break;
+        default:
+            error("Unsupported unpack casting");
+        }
+        if (!performance_build && runtime_debug)
+            g_env.log << "Unpacked int value of " << variables.get_variable(bc).value_int << " in variable " << variables.get_variable(bc).name << std::endl;
+        return;
     }
-    if (!performance_build && runtime_debug)
-        g_env.log << "Unpacked float value of " << variables.get_variable(bc).value_float << " in variable " << variables.get_variable(bc).name << std::endl;
-}
-
-void VM::opcode_UNPACK_I()
-{
-    auto b = stack.pop_boxed(bc);
-    switch (b.type) {
-    case Type::INTEGER:
-        variables.get_variable(bc).value_int = b.value_int;
-        break;
-    case Type::FLOAT:
-        variables.get_variable(bc).value_int = static_cast<VM_INT>(b.value_float);
-        break;
-    default:
-        error("Unsupported unpack casting");
+    case Type::FLOAT: {
+        switch (b.type) {
+        case Type::FLOAT:
+            variables.get_variable(bc).value_float = b.value_float;
+            break;
+        case Type::INTEGER:
+            variables.get_variable(bc).value_float = static_cast<VM_FLOAT>(b.value_int);
+            break;
+        default:
+            error("Unsupported unpack casting");
+        }
+        if (!performance_build && runtime_debug)
+            g_env.log << "Unpacked float value of " << variables.get_variable(bc).value_float << " in variable " << variables.get_variable(bc).name << std::endl;
+        return;
     }
-    if (!performance_build && runtime_debug)
-        g_env.log << "Unpacked int value of " << variables.get_variable(bc).value_int << " in variable " << variables.get_variable(bc).name << std::endl;
-}
-
-void VM::opcode_UNPACK_S()
-{
-    auto b = stack.pop_boxed(bc);
-    switch (b.type) {
-    case Type::STRING:
-        variables.get_variable(bc).value_string.assign(b.value_string);
-        break;
-    default:
-        error("Unsupported unpack casting");
+    case Type::STRING: {
+        switch (b.type) {
+        case Type::STRING:
+            variables.get_variable(bc).value_string.assign(b.value_string);
+            break;
+        default:
+            error("Unsupported unpack casting");
+        }
+        if (!performance_build && runtime_debug)
+            g_env.log << "Unpacked string value of '" << variables.get_variable(bc).value_int << " in variable " << variables.get_variable(bc).name << "'" << std::endl;
+        return;
     }
-    if (!performance_build && runtime_debug)
-        g_env.log << "Unpacked string value of '" << variables.get_variable(bc).value_int << " in variable " << variables.get_variable(bc).name << "'" << std::endl;
+    default:
+        opcode_type_error();
+    }
 }
 
 void VM::opcode_JNE()
@@ -1512,44 +1590,56 @@ void VM::opcode_JE()
     }
 }
 
-void VM::opcode_DIV_F()
+void VM::opcode_DIV()
 {
-    VM_FLOAT v2 = stack.pop_float(bc);
-    VM_FLOAT v1 = stack.pop_float(bc);
-    VM_FLOAT v3 = (float)((int)v1 / (int)v2);
-    stack.push_int(bc, static_cast<VM_INT>(v3));
-    if (!performance_build && runtime_debug)
-        g_env.log << "Quotient divide float " << v1 << " / " << v2 << " = " << v3 << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT v2 = stack.pop_int(bc);
+        VM_INT v1 = stack.pop_int(bc);
+        VM_INT v3 = v1 / v2;
+        stack.push_int(bc, static_cast<VM_INT>(v3));
+        if (!performance_build && runtime_debug)
+            g_env.log << "Quotient divide int " << v1 << " / " << v2 << " = " << v3 << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT v2 = stack.pop_float(bc);
+        VM_FLOAT v1 = stack.pop_float(bc);
+        VM_FLOAT v3 = (float)((int)v1 / (int)v2);
+        stack.push_int(bc, static_cast<VM_INT>(v3));
+        if (!performance_build && runtime_debug)
+            g_env.log << "Quotient divide float " << v1 << " / " << v2 << " = " << v3 << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
-void VM::opcode_DIV_I()
+void VM::opcode_MOD()
 {
-    VM_INT v2 = stack.pop_int(bc);
-    VM_INT v1 = stack.pop_int(bc);
-    VM_INT v3 = v1 / v2;
-    stack.push_int(bc, static_cast<VM_INT>(v3));
-    if (!performance_build && runtime_debug)
-        g_env.log << "Quotient divide int " << v1 << " / " << v2 << " = " << v3 << std::endl;
-}
-
-void VM::opcode_MOD_F()
-{
-    VM_FLOAT v2 = stack.pop_float(bc);
-    VM_FLOAT v1 = stack.pop_float(bc);
-    VM_INT v3 = static_cast<VM_INT>(v1) % static_cast<VM_INT>(v2);
-    stack.push_int(bc, v3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Modulo float " << v1 << " / " << v2 << " = " << v3 << std::endl;
-}
-
-void VM::opcode_MOD_I()
-{
-    VM_INT v2 = stack.pop_int(bc);
-    VM_INT v1 = stack.pop_int(bc);
-    VM_INT v3 = v1 % v2;
-    stack.push_int(bc, v3);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Modulo int " << v1 << " / " << v2 << " = " << v3 << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT v2 = stack.pop_int(bc);
+        VM_INT v1 = stack.pop_int(bc);
+        VM_INT v3 = v1 % v2;
+        stack.push_int(bc, v3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Modulo int " << v1 << " / " << v2 << " = " << v3 << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT v2 = stack.pop_float(bc);
+        VM_FLOAT v1 = stack.pop_float(bc);
+        VM_INT v3 = static_cast<VM_INT>(v1) % static_cast<VM_INT>(v2);
+        stack.push_int(bc, v3);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Modulo float " << v1 << " / " << v2 << " = " << v3 << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
 void VM::opcode_SQR()
@@ -1674,22 +1764,28 @@ void VM::opcode_SGN()
         g_env.log << "SGN of " << v1 << " =" << r << std::endl;
 }
 
-void VM::opcode_ABS_I()
+void VM::opcode_ABS()
 {
-    VM_INT v1 = stack.pop_int(bc);
-    VM_INT v2 = abs(v1);
-    stack.push_int(bc, v2);
-    if (!performance_build && runtime_debug)
-        g_env.log << "ABS (Int) " << v1 << " = " << v2 << std::endl;
-}
-
-void VM::opcode_ABS_F()
-{
-    VM_FLOAT v1 = stack.pop_float(bc);
-    VM_FLOAT v2 = fabs(v1);
-    stack.push_float(bc, v2);
-    if (!performance_build && runtime_debug)
-        g_env.log << "ABS (Float) " << v1 << " = " << v2 << std::endl;
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT v1 = stack.pop_int(bc);
+        VM_INT v2 = abs(v1);
+        stack.push_int(bc, v2);
+        if (!performance_build && runtime_debug)
+            g_env.log << "ABS (Int) " << v1 << " = " << v2 << std::endl;
+        return;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT v1 = stack.pop_float(bc);
+        VM_FLOAT v2 = fabs(v1);
+        stack.push_float(bc, v2);
+        if (!performance_build && runtime_debug)
+            g_env.log << "ABS (Float) " << v1 << " = " << v2 << std::endl;
+        return;
+    }
+    default:
+        opcode_type_error();
+    }
 }
 
 void VM::opcode_PI()
@@ -2515,674 +2611,534 @@ std::string VM::run()
     data_iterator = data.begin();
     bool quit = false;
     int poll_count = 0;
-    while (!quit) {
-        poll_count++;
-        if (poll_count == 100) {
-            if (g_env.interactive && g_env.graphics.inkey(-113)) {
-                g_env.graphics.print_console("Escape\r");
-                return "";
+    try {
+        while (!quit) {
+            poll_count++;
+            if (poll_count == 100) {
+                if (g_env.interactive && g_env.graphics.inkey(-113)) {
+                    g_env.graphics.print_console("Escape\r");
+                    return "";
+                }
+                g_env.graphics.poll();
+                poll_count = 0;
             }
-            g_env.graphics.poll();
-            poll_count = 0;
-        }
-        bc = helper_bytecodes().get_current_bytecode();
-        if (!performance_build && runtime_debug) {
-            g_env.log << std::uppercase << "[" << std::setw(4) << bc.file_number << " : " << std::setw(8) << bc.line_number << " : " << std::hex << std::setw(8)
-                      << helper_bytecodes().pc - 1 << " : " << std::setw(2) << (int)bc.opcode << "]  " << std::nouppercase << std::dec;
-        }
-        switch (bc.opcode) {
-        case Bytecodes::NOP:
-            if (!performance_build && runtime_debug)
-                g_env.log << "NOP" << std::endl;
-            break;
-        case Bytecodes::HALT:
-            opcode_HALT();
-            quit = true;
-            break;
-        case Bytecodes::TRACEON:
-            runtime_debug = true;
-            break;
-        case Bytecodes::TRACEOFF:
-            g_env.log << std::endl;
-            runtime_debug = false;
-            break;
-        case Bytecodes::BREAKPOINT:
-            //TODO Debugger();
-            break;
-        case Bytecodes::DROP:
-            opcode_DROP();
-            break;
-        case Bytecodes::CONST_I:
-        case Bytecodes::CONST_I_VAR:
-            opcode_CONST_I();
-            break;
-        case Bytecodes::LOAD_F:
-            opcode_LOAD_F();
-            break;
-        case Bytecodes::LOAD_I:
-            opcode_LOAD_I();
-            break;
-        case Bytecodes::LOAD_S:
-            opcode_LOAD_S();
-            break;
-        case Bytecodes::MULTIPLY_F:
-            opcode_MULTIPLY_F();
-            break;
-        case Bytecodes::MULTIPLY_I:
-            opcode_MULTIPLY_I();
-            break;
-        case Bytecodes::DIVIDE_F:
-            opcode_DIVIDE_F();
-            break;
-        case Bytecodes::DIVIDE_I:
-            opcode_DIVIDE_I();
-            break;
-        case Bytecodes::ADD_I:
-            opcode_ADD_I();
-            break;
-        case Bytecodes::ADD_F:
-            opcode_ADD_F();
-            break;
-        case Bytecodes::SHL:
-            opcode_SHL();
-            break;
-        case Bytecodes::SHR:
-            opcode_SHR();
-            break;
-        case Bytecodes::SUBTRACT_I:
-            opcode_SUBTRACT_I();
-            break;
-        case Bytecodes::SUBTRACT_F:
-            opcode_SUBTRACT_F();
-            break;
-        case Bytecodes::POWER_I:
-            opcode_POWER_I();
-            break;
-        case Bytecodes::POWER_F:
-            opcode_POWER_F();
-            break;
-        case Bytecodes::ADD_S:
-            opcode_ADD_S();
-            break;
-        case Bytecodes::I_TO_F:
-            opcode_I_TO_F();
-            break;
-        case Bytecodes::I_TO_F2:
-            opcode_I_TO_F2();
-            break;
-        case Bytecodes::F_TO_I:
-            opcode_F_TO_I();
-            break;
-        case Bytecodes::F_TO_I2:
-            opcode_F_TO_I2();
-            break;
-        case Bytecodes::STORE_I:
-            opcode_STORE_I();
-            break;
-        case Bytecodes::STORE_F:
-            opcode_STORE_F();
-            break;
-        case Bytecodes::STORE_S:
-            opcode_STORE_S();
-            break;
-        case Bytecodes::LOAD_I_ARRAY:
-            opcode_LOAD_I_ARRAY();
-            break;
-        case Bytecodes::LOAD_F_ARRAY:
-            opcode_LOAD_F_ARRAY();
-            break;
-        case Bytecodes::LOAD_S_ARRAY:
-            opcode_LOAD_S_ARRAY();
-            break;
-        case Bytecodes::STORE_I_ARRAY:
-            opcode_STORE_I_ARRAY();
-            break;
-        case Bytecodes::STORE_F_ARRAY:
-            opcode_STORE_F_ARRAY();
-            break;
-        case Bytecodes::STORE_S_ARRAY:
-            opcode_STORE_S_ARRAY();
-            break;
-        case Bytecodes::LOAD_I_FIELD:
-            opcode_LOAD_I_FIELD();
-            break;
-        case Bytecodes::LOAD_F_FIELD:
-            opcode_LOAD_F_FIELD();
-            break;
-        case Bytecodes::LOAD_S_FIELD:
-            opcode_LOAD_S_FIELD();
-            break;
-        case Bytecodes::STORE_I_FIELD:
-            opcode_STORE_I_FIELD();
-            break;
-        case Bytecodes::STORE_F_FIELD:
-            opcode_STORE_F_FIELD();
-            break;
-        case Bytecodes::STORE_S_FIELD:
-            opcode_STORE_S_FIELD();
-            break;
-        case Bytecodes::LOAD_I_FIELD_ARRAY:
-            opcode_LOAD_I_FIELD_ARRAY();
-            break;
-        case Bytecodes::LOAD_F_FIELD_ARRAY:
-            opcode_LOAD_F_FIELD_ARRAY();
-            break;
-        case Bytecodes::LOAD_S_FIELD_ARRAY:
-            opcode_LOAD_S_FIELD_ARRAY();
-            break;
-        case Bytecodes::STORE_I_FIELD_ARRAY:
-            opcode_STORE_I_FIELD_ARRAY();
-            break;
-        case Bytecodes::STORE_F_FIELD_ARRAY:
-            opcode_STORE_F_FIELD_ARRAY();
-            break;
-        case Bytecodes::STORE_S_FIELD_ARRAY:
-            opcode_STORE_S_FIELD_ARRAY();
-            break;
-        case Bytecodes::INPUT_I:
-            opcode_INPUT_I();
-            break;
-        case Bytecodes::INPUT_F:
-            opcode_INPUT_F();
-            break;
-        case Bytecodes::INPUT_S:
-            opcode_INPUT_S();
-            break;
-        case Bytecodes::PRINT_F:
-            opcode_PRINT_F();
-            break;
-        case Bytecodes::PRINT_I:
-            opcode_PRINT_I();
-            break;
-        case Bytecodes::PRINT_S:
-            opcode_PRINT_S();
-            break;
-        case Bytecodes::PRINT_NL:
-            opcode_PRINT_NL();
-            break;
-        case Bytecodes::PRINT_SPC:
-            opcode_PRINT_SPC();
-            break;
-        case Bytecodes::NEW_TYPE:
-            opcode_NEW_TYPE();
-            break;
-        case Bytecodes::ARRAYSIZE:
-            opcode_ARRAYSIZE();
-            break;
-        case Bytecodes::DIM_F:
-            opcode_DIM_F();
-            break;
-        case Bytecodes::DIM_I:
-            opcode_DIM_I();
-            break;
-        case Bytecodes::DIM_S:
-            opcode_DIM_S();
-            break;
-        case Bytecodes::DUP_I:
-            opcode_DUP_I();
-            break;
-        case Bytecodes::DUP_F:
-            opcode_DUP_F();
-            break;
-        case Bytecodes::ROT_I:
-            opcode_ROT_I();
-            break;
-        case Bytecodes::ROT_F:
-            opcode_ROT_F();
-            break;
-        case Bytecodes::FOR_I:
-            opcode_FOR_I();
-            break;
-        case Bytecodes::FOR_F:
-            opcode_FOR_F();
-            break;
-        case Bytecodes::NEXT_I:
-            opcode_NEXT_I();
-            break;
-        case Bytecodes::NEXT_F:
-            opcode_NEXT_F();
-            break;
+            bc = helper_bytecodes().get_current_bytecode();
+            if (!performance_build && runtime_debug) {
+                g_env.log << std::uppercase << "[" << std::setw(4) << bc.file_number << " : " << std::setw(8) << bc.line_number << " : " << std::hex << std::setw(8)
+                          << helper_bytecodes().pc - 1 << " : " << std::setw(2) << (int)bc.opcode << "]  " << std::nouppercase << std::dec;
+            }
+            switch (bc.opcode) {
+            case Bytecodes::NOP:
+                if (!performance_build && runtime_debug)
+                    g_env.log << "NOP" << std::endl;
+                break;
+            case Bytecodes::HALT:
+                opcode_HALT();
+                quit = true;
+                break;
+            case Bytecodes::TRACEON:
+                runtime_debug = true;
+                break;
+            case Bytecodes::TRACEOFF:
+                g_env.log << std::endl;
+                runtime_debug = false;
+                break;
+            case Bytecodes::BREAKPOINT:
+                //TODO Debugger();
+                break;
+            case Bytecodes::DROP:
+                opcode_DROP();
+                break;
 
-        case Bytecodes::FORIN_F:
-            opcode_FORIN_I();
-            break;
-        case Bytecodes::FORIN_I:
-            opcode_FORIN_F();
-            break;
-        case Bytecodes::FORIN_S:
-            opcode_FORIN_S();
-            break;
-        case Bytecodes::NEXTIN_I:
-            opcode_NEXTIN_I();
-            break;
-        case Bytecodes::NEXTIN_F:
-            opcode_NEXTIN_F();
-            break;
-        case Bytecodes::NEXTIN_S:
-            opcode_NEXTIN_S();
-            break;
+                // Loading and storing
+            case Bytecodes::FASTCONST_VAR:
+                error("FASTCONST_VAR not supported");
+                break;
+            case Bytecodes::FASTCONST:
+                opcode_FASTCONST();
+                break;
+            case Bytecodes::LOAD:
+                opcode_LOAD();
+                break;
+            case Bytecodes::STORE:
+                opcode_STORE();
+                break;
 
-        case Bytecodes::REPEAT:
-            opcode_REPEAT();
-            break;
-        case Bytecodes::READ_I:
-            opcode_READ_I();
-            break;
-        case Bytecodes::READ_F:
-            opcode_READ_F();
-            break;
-        case Bytecodes::READ_S:
-            opcode_READ_S();
-            break;
-        case Bytecodes::READ_I_ARRAY:
-            opcode_READ_I_ARRAY();
-            break;
-        case Bytecodes::READ_F_ARRAY:
-            opcode_READ_F_ARRAY();
-            break;
-        case Bytecodes::READ_S_ARRAY:
-            opcode_READ_S_ARRAY();
-            break;
-        case Bytecodes::RESTORE:
-            opcode_RESTORE();
-            break;
-        case Bytecodes::TIME:
-            opcode_TIME();
-            break;
-        case Bytecodes::TIMES:
-            opcode_TIMES();
-            break;
-        case Bytecodes::RND:
-            opcode_RND();
-            break;
-        case Bytecodes::RNDRANGE:
-            opcode_RNDRANGE();
-            break;
-        case Bytecodes::RNDREAL:
-            opcode_RNDREAL();
-            break;
-        case Bytecodes::CLOSE:
-            opcode_CLOSE();
-            break;
-        case Bytecodes::OPENIN:
-            opcode_OPENIN();
-            break;
-        case Bytecodes::OPENOUT:
-            opcode_OPENOUT();
-            break;
-        case Bytecodes::OPENUP:
-            opcode_OPENUP();
-            break;
-        case Bytecodes::BPUT:
-            opcode_BPUT();
-            break;
-        case Bytecodes::BGET:
-            opcode_BGET();
-            break;
-        case Bytecodes::EOFH:
-            opcode_EOFH();
-            break;
-        case Bytecodes::PTR:
-            opcode_PTR();
-            break;
-        case Bytecodes::PTRA:
-            opcode_PTRA();
-            break;
-        case Bytecodes::GETSH:
-            opcode_GETSH();
-            break;
-        case Bytecodes::LISTFILES:
-            opcode_LISTFILES();
-            break;
-        case Bytecodes::CLS:
-            opcode_CLS();
-            break;
-        case Bytecodes::COLOURRGB:
-            opcode_COLOURRGB();
-            break;
-        case Bytecodes::COLOURHEX:
-            opcode_COLOURHEX();
-            break;
-        case Bytecodes::COLOURBGRGB:
-            opcode_COLOURBGRGB();
-            break;
-        case Bytecodes::COLOURBGHEX:
-            opcode_COLOURBGHEX();
-            break;
-        case Bytecodes::COLOUREXPRESSION:
-            opcode_COLOUREXPRESSION();
-            break;
-        case Bytecodes::FLIP:
-            opcode_FLIP();
-            break;
-        case Bytecodes::GRAPHICS:
-            opcode_GRAPHICS();
-            break;
-        case Bytecodes::LINE:
-            opcode_LINE();
-            break;
-        case Bytecodes::PLOT:
-            opcode_PLOT();
-            break;
-        case Bytecodes::POINT:
-            opcode_POINT();
-            break;
-        case Bytecodes::CIRCLE:
-            opcode_CIRCLE();
-            break;
-        case Bytecodes::CIRCLEFILL:
-            opcode_CIRCLEFILL();
-            break;
-        case Bytecodes::RECTANGLE:
-            opcode_RECTANGLE();
-            break;
-        case Bytecodes::RECTANGLEFILL:
-            opcode_RECTANGLEFILL();
-            break;
-        case Bytecodes::TRIANGLE:
-            opcode_TRIANGLE();
-            break;
-        case Bytecodes::TRIANGLEFILL:
-            opcode_TRIANGLEFILL();
-            break;
-        case Bytecodes::TRIANGLESHADED:
-            opcode_TRIANGLESHADED();
-            break;
-        case Bytecodes::CLIP:
-            opcode_CLIP();
-            break;
-        case Bytecodes::CLIPOFF:
-            opcode_CLIPOFF();
-            break;
-        case Bytecodes::SHOWFPS:
-            opcode_SHOWFPS();
-            break;
-        case Bytecodes::SCREENWIDTH:
-            opcode_SCREENWIDTH();
-            break;
-        case Bytecodes::SCREENHEIGHT:
-            opcode_SCREENHEIGHT();
-            break;
-        case Bytecodes::CREATEFONT:
-            opcode_CREATEFONT();
-            break;
-        case Bytecodes::LOADTYPEFACE:
-            opcode_LOADTYPEFACE();
-            break;
-        case Bytecodes::TEXT:
-            opcode_TEXT();
-            break;
-        case Bytecodes::TEXTRIGHT:
-            opcode_TEXTRIGHT();
-            break;
-        case Bytecodes::TEXTCENTRE:
-            opcode_TEXTCENTRE();
-            break;
+                /* Arrays */
+            case Bytecodes::DIM:
+                opcode_DIM();
+                break;
+            case Bytecodes::ARRAYSIZE:
+                opcode_ARRAYSIZE();
+                break;
+            case Bytecodes::LOAD_ARRAY:
+                opcode_LOAD_ARRAY();
+                break;
+            case Bytecodes::STORE_ARRAY:
+                opcode_STORE_ARRAY();
+                break;
 
-        case Bytecodes::CREATEVERTEX:
-            opcode_CREATEVERTEX();
-            break;
-        case Bytecodes::CREATETRIANGLE:
-            opcode_CREATETRIANGLE();
-            break;
-        case Bytecodes::CREATESHAPE:
-            opcode_CREATESHAPE();
-            break;
-        case Bytecodes::CREATEOBJECT:
-            opcode_CREATEOBJECT();
-            break;
-        case Bytecodes::OBJECTTRANSLATE:
-            opcode_OBJECTTRANSLATE();
-            break;
-        case Bytecodes::OBJECTROTATE:
-            opcode_OBJECTROTATE();
-            break;
-        case Bytecodes::OBJECTSCALE:
-            opcode_OBJECTSCALE();
-            break;
-        case Bytecodes::DELETEOBJECT:
-            opcode_DELETEOBJECT();
-            break;
+                /* Types and fields */
+            case Bytecodes::LOAD_FIELD:
+                opcode_LOAD_FIELD();
+                break;
+            case Bytecodes::STORE_FIELD:
+                opcode_STORE_FIELD();
+                break;
+            case Bytecodes::LOAD_FIELD_ARRAY:
+                opcode_LOAD_FIELD_ARRAY();
+                break;
+            case Bytecodes::STORE_FIELD_ARRAY:
+                opcode_STORE_FIELD_ARRAY();
+                break;
 
-        case Bytecodes::INKEY:
-            opcode_INKEY();
-            break;
-        case Bytecodes::INKEYS:
-            opcode_INKEYS();
-            break;
-        case Bytecodes::GET:
-            opcode_GET();
-            break;
-        case Bytecodes::GETS:
-            opcode_GETS();
-            break;
-        case Bytecodes::MOUSE:
-            opcode_MOUSE();
-            break;
+                /* Maths*/
+            case Bytecodes::MULTIPLY:
+                opcode_MULTIPLY();
+                break;
+            case Bytecodes::DIVIDE:
+                opcode_DIVIDE();
+                break;
+            case Bytecodes::ADD:
+                opcode_ADD();
+                break;
+            case Bytecodes::SHL:
+                opcode_SHL();
+                break;
+            case Bytecodes::SHR:
+                opcode_SHR();
+                break;
+            case Bytecodes::SUBTRACT:
+                opcode_SUBTRACT();
+                break;
+            case Bytecodes::POWER:
+                opcode_POWER();
+                break;
+            case Bytecodes::DIV:
+                opcode_DIV();
+                break;
+            case Bytecodes::MOD:
+                opcode_MOD();
+                break;
+            case Bytecodes::SQR:
+                opcode_SQR();
+                break;
+            case Bytecodes::LN:
+                opcode_LN();
+                break;
+            case Bytecodes::LOG:
+                opcode_LOG();
+                break;
+            case Bytecodes::EXP:
+                opcode_EXP();
+                break;
+            case Bytecodes::ATN:
+                opcode_ATN();
+                break;
+            case Bytecodes::TAN:
+                opcode_TAN();
+                break;
+            case Bytecodes::COS:
+                opcode_COS();
+                break;
+            case Bytecodes::SIN:
+                opcode_SIN();
+                break;
+            case Bytecodes::ACS:
+                opcode_ACS();
+                break;
+            case Bytecodes::ASN:
+                opcode_ASN();
+                break;
+            case Bytecodes::DEG:
+                opcode_DEG();
+                break;
+            case Bytecodes::RAD:
+                opcode_RAD();
+                break;
+            case Bytecodes::SGN:
+                opcode_SGN();
+                break;
+            case Bytecodes::ABS:
+                opcode_ABS();
+                break;
+            case Bytecodes::PI:
+                opcode_PI();
+                break;
 
-        case Bytecodes::RENDERFRAME:
-            opcode_RENDERFRAME();
-            break;
-        case Bytecodes::CMP_E_F:
-            opcode_CMP_E_F();
-            break;
-        case Bytecodes::CMP_E_I:
-            opcode_CMP_E_I();
-            break;
-        case Bytecodes::CMP_E_S:
-            opcode_CMP_E_S();
-            break;
-        case Bytecodes::CMP_NE_F:
-            opcode_CMP_NE_F();
-            break;
-        case Bytecodes::CMP_NE_I:
-            opcode_CMP_NE_I();
-            break;
-        case Bytecodes::CMP_NE_S:
-            opcode_CMP_NE_S();
-            break;
-        case Bytecodes::CMP_GE_F:
-            opcode_CMP_GE_F();
-            break;
-        case Bytecodes::CMP_GE_I:
-            opcode_CMP_GE_I();
-            break;
-        case Bytecodes::CMP_GE_S:
-            opcode_CMP_GE_S();
-            break;
-        case Bytecodes::CMP_LE_F:
-            opcode_CMP_LE_F();
-            break;
-        case Bytecodes::CMP_LE_I:
-            opcode_CMP_LE_I();
-            break;
-        case Bytecodes::CMP_LE_S:
-            opcode_CMP_LE_S();
-            break;
-        case Bytecodes::CMP_G_F:
-            opcode_CMP_G_F();
-            break;
-        case Bytecodes::CMP_G_I:
-            opcode_CMP_G_I();
-            break;
-        case Bytecodes::CMP_G_S:
-            opcode_CMP_G_S();
-            break;
-        case Bytecodes::CMP_L_F:
-            opcode_CMP_L_F();
-            break;
-        case Bytecodes::CMP_L_I:
-            opcode_CMP_L_I();
-            break;
-        case Bytecodes::CMP_L_S:
-            opcode_CMP_L_S();
-            break;
-        case Bytecodes::BOOL_OR:
-            opcode_BOOL_OR();
-            break;
-        case Bytecodes::BOOL_AND:
-            opcode_BOOL_AND();
-            break;
-        case Bytecodes::BOOL_EOR:
-            opcode_BOOL_EOR();
-            break;
-        case Bytecodes::BOOL_NOT:
-            opcode_BOOL_NOT();
-            break;
-        case Bytecodes::JNEREP:
-            opcode_JNEREP();
-            break;
-        case Bytecodes::JNE:
-            opcode_JNE();
-            break;
-        case Bytecodes::JE:
-            opcode_JE();
-            break;
-        case Bytecodes::JUMP:
-            opcode_JUMP();
-            break;
-        case Bytecodes::CALL:
-            opcode_CALL();
-            break;
-        case Bytecodes::CASE_C:
-            opcode_CASE_C();
-            break;
-        case Bytecodes::CASE_S:
-            opcode_CASE_S();
-            break;
-        case Bytecodes::CJUMPT:
-            opcode_CJUMPT();
-            break;
-        case Bytecodes::UNPACK_F:
-            opcode_UNPACK_F();
-            break;
-        case Bytecodes::UNPACK_I:
-            opcode_UNPACK_I();
-            break;
-        case Bytecodes::UNPACK_S:
-            opcode_UNPACK_S();
-            break;
-        case Bytecodes::RETURN:
-            opcode_RETURN();
-            break;
-        case Bytecodes::GOTO:
-            opcode_GOTO();
-            break;
-        case Bytecodes::GOSUB:
-            opcode_GOSUB();
-            break;
-        case Bytecodes::DIV_I:
-            opcode_DIV_I();
-            break;
-        case Bytecodes::DIV_F:
-            opcode_DIV_F();
-            break;
-        case Bytecodes::MOD_I:
-            opcode_MOD_I();
-            break;
-        case Bytecodes::MOD_F:
-            opcode_MOD_F();
-            break;
-        case Bytecodes::SQR:
-            opcode_SQR();
-            break;
-        case Bytecodes::LN:
-            opcode_LN();
-            break;
-        case Bytecodes::LOG:
-            opcode_LOG();
-            break;
-        case Bytecodes::EXP:
-            opcode_EXP();
-            break;
-        case Bytecodes::ATN:
-            opcode_ATN();
-            break;
-        case Bytecodes::TAN:
-            opcode_TAN();
-            break;
-        case Bytecodes::COS:
-            opcode_COS();
-            break;
-        case Bytecodes::SIN:
-            opcode_SIN();
-            break;
-        case Bytecodes::ACS:
-            opcode_ACS();
-            break;
-        case Bytecodes::ASN:
-            opcode_ASN();
-            break;
-        case Bytecodes::DEG:
-            opcode_DEG();
-            break;
-        case Bytecodes::RAD:
-            opcode_RAD();
-            break;
-        case Bytecodes::SGN:
-            opcode_SGN();
-            break;
-        case Bytecodes::ABS_I:
-            opcode_ABS_I();
-            break;
-        case Bytecodes::ABS_F:
-            opcode_ABS_F();
-            break;
-        case Bytecodes::PI:
-            opcode_PI();
-            break;
+                /* Type conversions */
+            case Bytecodes::I_TO_F:
+                opcode_I_TO_F();
+                break;
+            case Bytecodes::I_TO_F2:
+                opcode_I_TO_F2();
+                break;
+            case Bytecodes::F_TO_I:
+                opcode_F_TO_I();
+                break;
+            case Bytecodes::F_TO_I2:
+                opcode_F_TO_I2();
+                break;
 
-        case Bytecodes::ASC:
-            opcode_ASC();
-            break;
-        case Bytecodes::CHRS:
-            opcode_CHRS();
-            break;
-        case Bytecodes::INSTR:
-            opcode_INSTR();
-            break;
-        case Bytecodes::LEFTS:
-            opcode_LEFTS();
-            break;
-        case Bytecodes::MIDS:
-            opcode_MIDS();
-            break;
-        case Bytecodes::RIGHTS:
-            opcode_RIGHTS();
-            break;
-        case Bytecodes::LEN:
-            opcode_LEN();
-            break;
-        case Bytecodes::VAL:
-            opcode_VAL();
-            break;
-        case Bytecodes::STRS:
-            opcode_STRS();
-            break;
-        case Bytecodes::STRS_H:
-            opcode_STRS_H();
-            break;
-        case Bytecodes::STRINGS:
-            opcode_STRINGS();
-            break;
-        case Bytecodes::SWAP_I:
-            opcode_SWAP_I();
-            break;
-        case Bytecodes::SWAP_F:
-            opcode_SWAP_F();
-            break;
-        case Bytecodes::SWAP_S:
-            opcode_SWAP_S();
-            break;
-        case Bytecodes::CHAIN: {
-            VM_STRING file = stack.pop_string(bc);
-            variables.store_chained_variables(stack);
-            return file;
-        }
-        default:
-            error("Unknown token: " + std::to_string((int)bc.opcode));
-        }
-    };
+                /* Print and input */
+            case Bytecodes::INPUT:
+                opcode_INPUT();
+                break;
+            case Bytecodes::PRINT:
+                opcode_PRINT();
+                break;
+            case Bytecodes::PRINT_NL:
+                opcode_PRINT_NL();
+                break;
+            case Bytecodes::PRINT_SPC:
+                opcode_PRINT_SPC();
+                break;
+            case Bytecodes::NEW_TYPE:
+                opcode_NEW_TYPE();
+                break;
+            case Bytecodes::DUP:
+                opcode_DUP();
+                break;
+            case Bytecodes::ROT:
+                opcode_ROT();
+                break;
+            case Bytecodes::FOR:
+                opcode_FOR();
+                break;
+            case Bytecodes::NEXT:
+                opcode_NEXT();
+                break;
+            case Bytecodes::FORIN:
+                opcode_FORIN();
+                break;
+            case Bytecodes::NEXTIN:
+                opcode_NEXTIN();
+                break;
+            case Bytecodes::REPEAT:
+                opcode_REPEAT();
+                break;
+            case Bytecodes::JNEREP:
+                opcode_JNEREP();
+                break;
+
+                /* DATA */
+            case Bytecodes::READ:
+                opcode_READ();
+                break;
+            case Bytecodes::READ_ARRAY:
+                opcode_READ_ARRAY();
+                break;
+            case Bytecodes::RESTORE:
+                opcode_RESTORE();
+                break;
+
+                /* Functions */
+            case Bytecodes::TIME:
+                opcode_TIME();
+                break;
+            case Bytecodes::TIMES:
+                opcode_TIMES();
+                break;
+            case Bytecodes::RND:
+                opcode_RND();
+                break;
+            case Bytecodes::RNDRANGE:
+                opcode_RNDRANGE();
+                break;
+            case Bytecodes::RNDREAL:
+                opcode_RNDREAL();
+                break;
+
+            /* File I/O */
+            case Bytecodes::CLOSE:
+                opcode_CLOSE();
+                break;
+            case Bytecodes::OPENIN:
+                opcode_OPENIN();
+                break;
+            case Bytecodes::OPENOUT:
+                opcode_OPENOUT();
+                break;
+            case Bytecodes::OPENUP:
+                opcode_OPENUP();
+                break;
+            case Bytecodes::BPUT:
+                opcode_BPUT();
+                break;
+            case Bytecodes::BGET:
+                opcode_BGET();
+                break;
+            case Bytecodes::EOFH:
+                opcode_EOFH();
+                break;
+            case Bytecodes::PTR:
+                opcode_PTR();
+                break;
+            case Bytecodes::PTRA:
+                opcode_PTRA();
+                break;
+            case Bytecodes::GETSH:
+                opcode_GETSH();
+                break;
+            case Bytecodes::LISTFILES:
+                opcode_LISTFILES();
+                break;
+
+                /* 2D Graphics */
+            case Bytecodes::CLS:
+                opcode_CLS();
+                break;
+            case Bytecodes::COLOURRGB:
+                opcode_COLOURRGB();
+                break;
+            case Bytecodes::COLOURHEX:
+                opcode_COLOURHEX();
+                break;
+            case Bytecodes::COLOURBGRGB:
+                opcode_COLOURBGRGB();
+                break;
+            case Bytecodes::COLOURBGHEX:
+                opcode_COLOURBGHEX();
+                break;
+            case Bytecodes::COLOUREXPRESSION:
+                opcode_COLOUREXPRESSION();
+                break;
+            case Bytecodes::FLIP:
+                opcode_FLIP();
+                break;
+            case Bytecodes::GRAPHICS:
+                opcode_GRAPHICS();
+                break;
+            case Bytecodes::LINE:
+                opcode_LINE();
+                break;
+            case Bytecodes::PLOT:
+                opcode_PLOT();
+                break;
+            case Bytecodes::POINT:
+                opcode_POINT();
+                break;
+            case Bytecodes::CIRCLE:
+                opcode_CIRCLE();
+                break;
+            case Bytecodes::CIRCLEFILL:
+                opcode_CIRCLEFILL();
+                break;
+            case Bytecodes::RECTANGLE:
+                opcode_RECTANGLE();
+                break;
+            case Bytecodes::RECTANGLEFILL:
+                opcode_RECTANGLEFILL();
+                break;
+            case Bytecodes::TRIANGLE:
+                opcode_TRIANGLE();
+                break;
+            case Bytecodes::TRIANGLEFILL:
+                opcode_TRIANGLEFILL();
+                break;
+            case Bytecodes::TRIANGLESHADED:
+                opcode_TRIANGLESHADED();
+                break;
+            case Bytecodes::CLIP:
+                opcode_CLIP();
+                break;
+            case Bytecodes::CLIPOFF:
+                opcode_CLIPOFF();
+                break;
+            case Bytecodes::SHOWFPS:
+                opcode_SHOWFPS();
+                break;
+            case Bytecodes::SCREENWIDTH:
+                opcode_SCREENWIDTH();
+                break;
+            case Bytecodes::SCREENHEIGHT:
+                opcode_SCREENHEIGHT();
+                break;
+            case Bytecodes::CREATEFONT:
+                opcode_CREATEFONT();
+                break;
+            case Bytecodes::LOADTYPEFACE:
+                opcode_LOADTYPEFACE();
+                break;
+            case Bytecodes::TEXT:
+                opcode_TEXT();
+                break;
+            case Bytecodes::TEXTRIGHT:
+                opcode_TEXTRIGHT();
+                break;
+            case Bytecodes::TEXTCENTRE:
+                opcode_TEXTCENTRE();
+                break;
+
+                /* 3d Graphics */
+            case Bytecodes::CREATEVERTEX:
+                opcode_CREATEVERTEX();
+                break;
+            case Bytecodes::CREATETRIANGLE:
+                opcode_CREATETRIANGLE();
+                break;
+            case Bytecodes::CREATESHAPE:
+                opcode_CREATESHAPE();
+                break;
+            case Bytecodes::CREATEOBJECT:
+                opcode_CREATEOBJECT();
+                break;
+            case Bytecodes::OBJECTTRANSLATE:
+                opcode_OBJECTTRANSLATE();
+                break;
+            case Bytecodes::OBJECTROTATE:
+                opcode_OBJECTROTATE();
+                break;
+            case Bytecodes::OBJECTSCALE:
+                opcode_OBJECTSCALE();
+                break;
+            case Bytecodes::DELETEOBJECT:
+                opcode_DELETEOBJECT();
+                break;
+            case Bytecodes::RENDERFRAME:
+                opcode_RENDERFRAME();
+                break;
+
+            /* Keyboard and mouse */
+            case Bytecodes::INKEY:
+                opcode_INKEY();
+                break;
+            case Bytecodes::INKEYS:
+                opcode_INKEYS();
+                break;
+            case Bytecodes::GET:
+                opcode_GET();
+                break;
+            case Bytecodes::GETS:
+                opcode_GETS();
+                break;
+            case Bytecodes::MOUSE:
+                opcode_MOUSE();
+                break;
+
+            /* Comparison and boolean */
+            case Bytecodes::CMP_E:
+                opcode_CMP_E();
+                break;
+            case Bytecodes::CMP_NE:
+                opcode_CMP_NE();
+                break;
+            case Bytecodes::CMP_GE:
+                opcode_CMP_GE();
+                break;
+            case Bytecodes::CMP_LE:
+                opcode_CMP_LE();
+                break;
+            case Bytecodes::CMP_G:
+                opcode_CMP_G();
+                break;
+            case Bytecodes::CMP_L:
+                opcode_CMP_L();
+                break;
+            case Bytecodes::BOOL_OR:
+                opcode_BOOL_OR();
+                break;
+            case Bytecodes::BOOL_AND:
+                opcode_BOOL_AND();
+                break;
+            case Bytecodes::BOOL_EOR:
+                opcode_BOOL_EOR();
+                break;
+            case Bytecodes::BOOL_NOT:
+                opcode_BOOL_NOT();
+                break;
+            case Bytecodes::JNE:
+                opcode_JNE();
+                break;
+            case Bytecodes::JE:
+                opcode_JE();
+                break;
+            case Bytecodes::CASE_C:
+                opcode_CASE_C();
+                break;
+            case Bytecodes::CASE_S:
+                opcode_CASE_S();
+                break;
+            case Bytecodes::CJUMPT:
+                opcode_CJUMPT();
+                break;
+
+                /* Functions */
+            case Bytecodes::UNPACK:
+                opcode_UNPACK();
+                break;
+            case Bytecodes::RETURN:
+                opcode_RETURN();
+                break;
+            case Bytecodes::GOTO:
+                opcode_GOTO();
+                break;
+            case Bytecodes::GOSUB:
+                opcode_GOSUB();
+                break;
+            case Bytecodes::JUMP:
+                opcode_JUMP();
+                break;
+            case Bytecodes::CALL:
+                opcode_CALL();
+                break;
+
+                /* Swapping */
+            case Bytecodes::SWAP:
+                opcode_SWAP();
+                break;
+
+                /* String functions*/
+            case Bytecodes::ASC:
+                opcode_ASC();
+                break;
+            case Bytecodes::CHRS:
+                opcode_CHRS();
+                break;
+            case Bytecodes::INSTR:
+                opcode_INSTR();
+                break;
+            case Bytecodes::LEFTS:
+                opcode_LEFTS();
+                break;
+            case Bytecodes::MIDS:
+                opcode_MIDS();
+                break;
+            case Bytecodes::RIGHTS:
+                opcode_RIGHTS();
+                break;
+            case Bytecodes::LEN:
+                opcode_LEN();
+                break;
+            case Bytecodes::VAL:
+                opcode_VAL();
+                break;
+            case Bytecodes::STRS:
+                opcode_STRS();
+                break;
+            case Bytecodes::STRS_H:
+                opcode_STRS_H();
+                break;
+            case Bytecodes::STRINGS:
+                opcode_STRINGS();
+                break;
+
+            case Bytecodes::CHAIN: {
+                VM_STRING file = stack.pop_string(bc);
+                variables.store_chained_variables(stack);
+                return file;
+            }
+            default:
+                error("Unknown token: " + std::to_string((int)bc.opcode));
+            }
+        };
+    } catch (const DARICException& ex) {
+        ex.pretty_print();
+        return "";
+    } catch (const std::runtime_error& ex) {
+        g_env.graphics.print_console(ex.what());
+        return "";
+    }
     return "";
 }
 

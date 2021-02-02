@@ -5,7 +5,7 @@ antlrcpp::Any Compiler::visitNumExprNOT(DARICParser::NumExprNOTContext* context)
     set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_integer();
-    insert_bytecode(Bytecodes::BOOL_NOT);
+    insert_bytecode(Bytecodes::BOOL_NOT, Type::NOTYPE);
     return NULL;
 }
 
@@ -43,10 +43,10 @@ void Compiler::boolean(Bytecodes i)
 {
     switch (peek_type()) {
     case Type::INTEGER:
-        insert_bytecode(i);
+        insert_bytecode(i, Type::NOTYPE);
         break;
     default:
-        error("Booleans must be int");
+        error("Booleans must be integers");
     }
     stack_pop();
     stack_pop();

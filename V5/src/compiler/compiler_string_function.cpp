@@ -9,7 +9,7 @@ antlrcpp::Any Compiler::visitStrFunc(DARICParser::StrFuncContext* context)
 antlrcpp::Any Compiler::visitStrFuncTIMES(DARICParser::StrFuncTIMESContext* context)
 {
     set_pos(context->start);
-    insert_bytecode(Bytecodes::TIMES);
+    insert_bytecode(Bytecodes::TIMES, Type::STRING);
     stack_push(Type::STRING);
     return NULL;
 }
@@ -20,7 +20,7 @@ antlrcpp::Any Compiler::visitStrFuncCHRSP(DARICParser::StrFuncCHRSPContext* cont
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
-    insert_bytecode(Bytecodes::CHRS);
+    insert_bytecode(Bytecodes::CHRS, Type::STRING);
     stack_push(Type::STRING);
     return NULL;
 }
@@ -31,7 +31,7 @@ antlrcpp::Any Compiler::visitStrFuncCHRS(DARICParser::StrFuncCHRSContext* contex
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
-    insert_bytecode(Bytecodes::CHRS);
+    insert_bytecode(Bytecodes::CHRS, Type::STRING);
     stack_push(Type::STRING);
     return NULL;
 }
@@ -45,7 +45,7 @@ antlrcpp::Any Compiler::visitStrFuncLEFTS(DARICParser::StrFuncLEFTSContext* cont
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
-    insert_bytecode(Bytecodes::LEFTS);
+    insert_bytecode(Bytecodes::LEFTS, Type::STRING);
     stack_push(Type::STRING);
     return NULL;
 }
@@ -62,7 +62,7 @@ antlrcpp::Any Compiler::visitStrFuncMIDS3(DARICParser::StrFuncMIDS3Context* cont
     visit(context->numExpr(1));
     ensure_stack_is_integer();
     stack_pop();
-    insert_bytecode(Bytecodes::MIDS);
+    insert_bytecode(Bytecodes::MIDS, Type::STRING);
     stack_push(Type::STRING);
     return NULL;
 }
@@ -76,8 +76,8 @@ antlrcpp::Any Compiler::visitStrFuncMIDS2(DARICParser::StrFuncMIDS2Context* cont
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
-    insert_instruction(Bytecodes::CONST_I, 0);
-    insert_bytecode(Bytecodes::MIDS);
+    insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);
+    insert_bytecode(Bytecodes::MIDS, Type::STRING);
     stack_push(Type::STRING);
     return NULL;
 }
@@ -91,7 +91,7 @@ antlrcpp::Any Compiler::visitStrFuncRIGHTS(DARICParser::StrFuncRIGHTSContext* co
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
-    insert_bytecode(Bytecodes::RIGHTS);
+    insert_bytecode(Bytecodes::RIGHTS, Type::STRING);
     stack_push(Type::STRING);
     return NULL;
 }
@@ -102,7 +102,7 @@ antlrcpp::Any Compiler::visitStrFuncSTRS(DARICParser::StrFuncSTRSContext* contex
     visit(context->numExpr());
     ensure_stack_is_float();
     stack_pop();
-    insert_bytecode(Bytecodes::STRS);
+    insert_bytecode(Bytecodes::STRS, Type::STRING);
     stack_push(Type::STRING);
     return NULL;
 }
@@ -113,7 +113,7 @@ antlrcpp::Any Compiler::visitStrFuncSTRSHEX(DARICParser::StrFuncSTRSHEXContext* 
     visit(context->numExpr());
     ensure_stack_is_float();
     stack_pop();
-    insert_bytecode(Bytecodes::STRS_H);
+    insert_bytecode(Bytecodes::STRS_H, Type::STRING);
     stack_push(Type::STRING);
     return NULL;
 }
@@ -126,6 +126,6 @@ antlrcpp::Any Compiler::visitStrFuncSTRINGS(DARICParser::StrFuncSTRINGSContext* 
     stack_pop();
     visit(context->strExpr());
     ensure_stack_is_string();
-    insert_bytecode(Bytecodes::STRINGS);
+    insert_bytecode(Bytecodes::STRINGS, Type::STRING);
     return NULL;
 }
