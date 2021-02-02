@@ -245,10 +245,7 @@ CHAIN "TesterLineNumbers"
 END
 
 REM Check Forward FN/PROC calls
-Type VertexTest
-	Field x:Field y:Field z
-	Field rgb%
-EndType
+Type VertexTest(x,y,z,rgb%)
 
 DEFPROCLocalVars()
 	Local G% = 10

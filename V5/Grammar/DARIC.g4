@@ -19,6 +19,7 @@ stmt
     | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*     # stmtLET
     | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                # stmtLOCAL
     | PRINT printList?                                              # stmtPRINT
+    | TYPE varName LPAREN varDecl (COMMA varDecl*) RPAREN           # stmtTYPE
     ;
 
 // Variables
@@ -28,8 +29,8 @@ var
     ;
 
 numVar
-    : varNameFloat                                                  #numVarFloat
-    | varNameFloat (LPAREN numExpr (COMMA numExpr)? RPAREN)*        #numVarFloatArray
+    : varName                                                       #numVarFloat
+    | varName (LPAREN numExpr (COMMA numExpr)? RPAREN)*             #numVarFloatArray
     | varNameInteger                                                #numVarInteger
     | varNameInteger (LPAREN numExpr (COMMA numExpr)? RPAREN)*      #numVarIntegerArray
     ;
@@ -39,7 +40,7 @@ strVar
     | varNameString (LPAREN numExpr (COMMA numExpr)? RPAREN)*       #numVarStringArray
     ;
 
-varNameFloat
+varName
     : VARIABLE
     ;
 
@@ -196,6 +197,7 @@ compare
    
 // Lexer stuff
 DIM             : 'DIM' | 'Dim' | 'dim' ;
+FIELD           : 'FIELD' | 'Field' | ' field' ;
 INPUT           : 'INPUT' | 'Input' | 'input' ;
 GLOBAL          : 'GLOBAL' | 'Global' | 'global' ;
 LOCAL           : 'LOCAL' | 'Local' | 'local' ;
@@ -203,6 +205,7 @@ LET             : 'LET' | 'Let' | 'let' ;
 PRINT           : 'PRINT' | 'Print' | 'print' ;
 REM             : 'REM' | 'Rem' | 'rem' ;
 SPC             : 'SPC' | 'Spc' | 'spc' ;
+TYPE            : 'TYPE' | 'Type' | 'type';
 
 TIME            : 'TIME' | 'Time' | 'time' ;
 PI              : 'PI' | 'Pi' | 'pi' ;

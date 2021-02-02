@@ -99,6 +99,7 @@ void Interactive::run()
             } else if (upper.compare("NEW") == 0) {
                 lines.clear();
                 variables.clear();
+                create_empty_vm();
             } else if (upper.compare("LIST") == 0) {
                 for (auto it = lines.begin(); it != lines.end(); it++) {
                     std::stringstream stream;
@@ -220,7 +221,6 @@ void Interactive::execute_line(std::string s)
         saved_bytecodes.swap(g_vm->helper_bytecodes().get_code());
     }
 
-    create_empty_vm();
     try {
         MyParser parser(temp_filename);
         parser.parse_and_compile(variables);
@@ -241,7 +241,7 @@ void Interactive::execute_line(std::string s)
     for (auto it = v.begin(); it != v.end(); ++it) {
         variables.push_back(std::move(*it));
     }
-    
+
     // Restore bytecodes
     if (save) {
         g_vm->helper_bytecodes().get_code().swap(saved_bytecodes);
@@ -262,7 +262,6 @@ void Interactive::run_all_lines()
     }
     fclose(fp);
 
-    create_empty_vm();
     try {
         MyParser parser(temp_filename);
         parser.parse_and_compile(variables);
@@ -295,7 +294,6 @@ void Interactive::run_file(std::string s)
 #ifdef WINDOWS
     filename += ".daric";
 #endif
-    create_empty_vm();
     variables.clear();
     try {
         MyParser parser(filename);
@@ -336,8 +334,6 @@ void Interactive::run_demo_file(std::string filename)
     filename += ".daric";
 #endif
 
-    create_empty_vm();
-    variables.clear();
     try {
         MyParser parser(filename);
         parser.parse_and_compile(variables);
@@ -348,8 +344,15 @@ void Interactive::run_demo_file(std::string filename)
         g_env.graphics.print_console(ex.what());
         return;
     }
+
     // Run!
     g_vm->run();
+
+    // Clear it all
+    lines.clear();
+    variables.clear();
+    create_empty_vm();
+
     g_env.graphics.cls();
     welcome_prompt();
 }

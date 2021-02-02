@@ -4,6 +4,7 @@
 #include "../parser/DARICVisitor.h"
 #include "../vm/vm.h"
 #include "antlr4-runtime.h"
+#include "custom_types.h"
 
 enum class CompilerState {
     NOSTATE,
@@ -58,8 +59,12 @@ private:
     std::string function_name;
 
     // Globals
-    int global_var_index = 0;
+    UINT32 global_var_index = 0;
     std::map<std::string, Boxed> globals;
+
+    // Custom types
+    UINT32 custom_type_index = 0;
+    std::map<std::string, CustomType> custom_types;
 
     // Locals and functions
     int local_var_index = 0;
@@ -79,7 +84,6 @@ private:
     VarReference last_var;
 
     // Stack
-    //Type var_type = Type::NOTYPE;
     void ensure_stack_is_float();
     void ensure_stack_is_integer();
     void ensure_stack_is_string();
@@ -101,15 +105,11 @@ private:
     UINT32 last_array_num_dimensions = 0;
 
     // Create bytecode
-    inline void insert_instruction(Bytecodes bc, Type type, UINT32 data)
-    {
-        vm->helper_bytecodes().insert_instruction(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, type, data);
-    }
+    inline void insert_instruction(Bytecodes bc, Type type, UINT32 data) { vm->helper_bytecodes().insert_instruction(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, type, data); }
+    inline void insert_bytecode(Bytecodes bc, Type type) { vm->helper_bytecodes().insert_bytecode(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, type); }
 
-    inline void insert_bytecode(Bytecodes bc, Type type)
-    {
-        vm->helper_bytecodes().insert_bytecode(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, type);
-    }
+    // 3D types
+    void setup_3d_types();
 
     // Constants
     UINT32 constant_float_create(VM_FLOAT v);
@@ -138,6 +138,7 @@ protected:
     antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext* context);
     antlrcpp::Any visitStmtLOCAL(DARICParser::StmtLOCALContext* context);
     antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext* context);
+    antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext* context);
 
     /* Literals */
     antlrcpp::Any visitNumber(DARICParser::NumberContext* context);
@@ -159,7 +160,7 @@ protected:
     antlrcpp::Any visitNumVarString(DARICParser::NumVarStringContext* context);
     antlrcpp::Any visitNumVarStringArray(DARICParser::NumVarStringArrayContext* context);
     antlrcpp::Any visitStrVar(DARICParser::StrVarContext* context);
-    antlrcpp::Any visitVarNameFloat(DARICParser::VarNameFloatContext* context);
+    antlrcpp::Any visitVarName(DARICParser::VarNameContext* context);
     antlrcpp::Any visitVarNameInteger(DARICParser::VarNameIntegerContext* context);
     antlrcpp::Any visitVarNameString(DARICParser::VarNameStringContext* context);
     antlrcpp::Any visitVarDecl(DARICParser::VarDeclContext* context);

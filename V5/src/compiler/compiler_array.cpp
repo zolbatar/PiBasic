@@ -44,7 +44,7 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
 
     // Number of dimensions
     last_array_num_dimensions = static_cast<UINT32>(context->numExpr().size());
-    for (auto i = 0; i < last_array_num_dimensions; i++) {
+    for (UINT32 i = 0; i < last_array_num_dimensions; i++) {
         visit(context->numExpr(i));
         ensure_stack_is_integer();
         stack_pop();
@@ -80,7 +80,7 @@ antlrcpp::Any Compiler::visitNumVarFloatArray(DARICParser::NumVarFloatArrayConte
         ensure_stack_is_integer();
         stack_pop();
     }
-    visit(context->varNameFloat());
+    visit(context->varName());
     if (state == CompilerState::NOSTATE) {
         find_variable();
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);

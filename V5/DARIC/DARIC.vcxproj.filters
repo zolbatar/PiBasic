@@ -231,6 +231,9 @@
     <ClCompile Include="..\src\compiler\compiler_array.cpp">
       <Filter>Source Files\Compiler</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_type.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">
@@ -304,6 +307,9 @@
     </ClInclude>
     <ClInclude Include="..\src\exception.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\compiler\custom_types.h">
+      <Filter>Header Files\Compiler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -18,7 +18,7 @@ antlrcpp::Any Compiler::visitStrVar(DARICParser::StrVarContext* context)
     return visitChildren(context);
 }
 
-antlrcpp::Any Compiler::visitVarNameFloat(DARICParser::VarNameFloatContext* context)
+antlrcpp::Any Compiler::visitVarName(DARICParser::VarNameContext* context)
 {
     set_pos(context->start);
     last_var.name = context->getText();
@@ -48,7 +48,7 @@ antlrcpp::Any Compiler::visitVarDecl(DARICParser::VarDeclContext* context)
 antlrcpp::Any Compiler::visitNumVarFloat(DARICParser::NumVarFloatContext* context)
 {
     set_pos(context->start);
-    visit(context->varNameFloat());
+    visit(context->varName());
     last_var.type = Type::FLOAT;
     if (state == CompilerState::NOSTATE) {
         if (!find_variable()) {

@@ -1,4 +1,4 @@
-DIM A(100):A(10)=123.45:PRINT A(10)
-DIM A%(100):A%(10)=123.45:PRINT A%(10)
-DIM A$(100):A$(10)="AA123":PRINT A$(10)
-DIM B(10,10):B(10,2)=123.45:PRINT B(10,2)
+DIM a(100),
+B(10)
+
+Type VertexTest(x,y,z)

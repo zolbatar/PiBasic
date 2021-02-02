@@ -35,6 +35,8 @@ public:
 
     virtual antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext *context) = 0;
+
     virtual antlrcpp::Any visitVar(DARICParser::VarContext *context) = 0;
 
     virtual antlrcpp::Any visitNumVarFloat(DARICParser::NumVarFloatContext *context) = 0;
@@ -49,7 +51,7 @@ public:
 
     virtual antlrcpp::Any visitNumVarStringArray(DARICParser::NumVarStringArrayContext *context) = 0;
 
-    virtual antlrcpp::Any visitVarNameFloat(DARICParser::VarNameFloatContext *context) = 0;
+    virtual antlrcpp::Any visitVarName(DARICParser::VarNameContext *context) = 0;
 
     virtual antlrcpp::Any visitVarNameInteger(DARICParser::VarNameIntegerContext *context) = 0;
 

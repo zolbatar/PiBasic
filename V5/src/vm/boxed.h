@@ -3,7 +3,15 @@
 #include "../vm/type.h"
 #include <vector>
 
-struct Boxed {
+class Boxed {
+public:
+    Boxed() { }
+    Boxed(std::string name, Type type, int index)
+    {
+        this->name = name;
+        this->type = type;
+        this->index = index;
+    }
     Type type = Type::NOTYPE;
     UINT32 index;
     bool constant = false;

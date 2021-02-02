@@ -12,24 +12,24 @@
 class  DARICParser : public antlr4::Parser {
 public:
   enum {
-    DIM = 1, INPUT = 2, GLOBAL = 3, LOCAL = 4, LET = 5, PRINT = 6, REM = 7, 
-    SPC = 8, TIME = 9, PI = 10, SQR = 11, LN = 12, LOG = 13, EXP = 14, ATN = 15, 
-    TAN = 16, COS = 17, SIN = 18, ABS = 19, ACS = 20, ASN = 21, DEG = 22, 
-    RAD = 23, SGN = 24, ASC = 25, LEN = 26, INSTR = 27, VAL = 28, TIMES = 29, 
-    STRS = 30, STRINGS = 31, CHRS = 32, LEFTS = 33, MIDS = 34, RIGHTS = 35, 
-    RND = 36, RND0 = 37, RND1 = 38, EQ = 39, NE = 40, GT = 41, GE = 42, 
-    LT = 43, LE = 44, NOT = 45, AND = 46, OR = 47, EOR = 48, MOD = 49, DIV = 50, 
-    HAT = 51, PLUS = 52, MINUS = 53, MULTIPLY = 54, DIVIDE = 55, SHL = 56, 
-    SHR = 57, TICK = 58, TILDE = 59, COLON = 60, COMMA = 61, DOLLAR = 62, 
-    LPAREN = 63, PERCENT = 64, RPAREN = 65, SEMICOLON = 66, UNDERSCORE = 67, 
-    COMMENT = 68, STRINGLITERAL = 69, VARIABLE = 70, VARIABLE_I = 71, VARIABLE_S = 72, 
-    LETTERS = 73, HEXNUMBER = 74, BINARYNUMBER = 75, NUMBER = 76, FLOAT = 77, 
-    WS = 78
+    DIM = 1, FIELD = 2, INPUT = 3, GLOBAL = 4, LOCAL = 5, LET = 6, PRINT = 7, 
+    REM = 8, SPC = 9, TYPE = 10, TIME = 11, PI = 12, SQR = 13, LN = 14, 
+    LOG = 15, EXP = 16, ATN = 17, TAN = 18, COS = 19, SIN = 20, ABS = 21, 
+    ACS = 22, ASN = 23, DEG = 24, RAD = 25, SGN = 26, ASC = 27, LEN = 28, 
+    INSTR = 29, VAL = 30, TIMES = 31, STRS = 32, STRINGS = 33, CHRS = 34, 
+    LEFTS = 35, MIDS = 36, RIGHTS = 37, RND = 38, RND0 = 39, RND1 = 40, 
+    EQ = 41, NE = 42, GT = 43, GE = 44, LT = 45, LE = 46, NOT = 47, AND = 48, 
+    OR = 49, EOR = 50, MOD = 51, DIV = 52, HAT = 53, PLUS = 54, MINUS = 55, 
+    MULTIPLY = 56, DIVIDE = 57, SHL = 58, SHR = 59, TICK = 60, TILDE = 61, 
+    COLON = 62, COMMA = 63, DOLLAR = 64, LPAREN = 65, PERCENT = 66, RPAREN = 67, 
+    SEMICOLON = 68, UNDERSCORE = 69, COMMENT = 70, STRINGLITERAL = 71, VARIABLE = 72, 
+    VARIABLE_I = 73, VARIABLE_S = 74, LETTERS = 75, HEXNUMBER = 76, BINARYNUMBER = 77, 
+    NUMBER = 78, FLOAT = 79, WS = 80
   };
 
   enum {
     RuleProg = 0, RuleLine = 1, RuleLinenumber = 2, RuleStmt = 3, RuleVar = 4, 
-    RuleNumVar = 5, RuleStrVar = 6, RuleVarNameFloat = 7, RuleVarNameInteger = 8, 
+    RuleNumVar = 5, RuleStrVar = 6, RuleVarName = 7, RuleVarNameInteger = 8, 
     RuleVarNameString = 9, RuleVarDecl = 10, RuleVarDeclWithDimension = 11, 
     RuleVarList = 12, RuleExprList = 13, RulePrintListItem = 14, RulePrintList = 15, 
     RuleExpr = 16, RuleNumber = 17, RuleNumberInteger = 18, RuleNumberHex = 19, 
@@ -54,7 +54,7 @@ public:
   class VarContext;
   class NumVarContext;
   class StrVarContext;
-  class VarNameFloatContext;
+  class VarNameContext;
   class VarNameIntegerContext;
   class VarNameStringContext;
   class VarDeclContext;
@@ -166,6 +166,21 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  StmtTYPEContext : public StmtContext {
+  public:
+    StmtTYPEContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *TYPE();
+    VarNameContext *varName();
+    antlr4::tree::TerminalNode *LPAREN();
+    std::vector<VarDeclContext *> varDecl();
+    VarDeclContext* varDecl(size_t i);
+    antlr4::tree::TerminalNode *RPAREN();
+    antlr4::tree::TerminalNode *COMMA();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  StmtLETContext : public StmtContext {
   public:
     StmtLETContext(StmtContext *ctx);
@@ -239,7 +254,7 @@ public:
   public:
     NumVarFloatArrayContext(NumVarContext *ctx);
 
-    VarNameFloatContext *varNameFloat();
+    VarNameContext *varName();
     std::vector<antlr4::tree::TerminalNode *> LPAREN();
     antlr4::tree::TerminalNode* LPAREN(size_t i);
     std::vector<NumExprContext *> numExpr();
@@ -256,7 +271,7 @@ public:
   public:
     NumVarFloatContext(NumVarContext *ctx);
 
-    VarNameFloatContext *varNameFloat();
+    VarNameContext *varName();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -330,9 +345,9 @@ public:
 
   StrVarContext* strVar();
 
-  class  VarNameFloatContext : public antlr4::ParserRuleContext {
+  class  VarNameContext : public antlr4::ParserRuleContext {
   public:
-    VarNameFloatContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    VarNameContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *VARIABLE();
 
@@ -341,7 +356,7 @@ public:
    
   };
 
-  VarNameFloatContext* varNameFloat();
+  VarNameContext* varName();
 
   class  VarNameIntegerContext : public antlr4::ParserRuleContext {
   public:

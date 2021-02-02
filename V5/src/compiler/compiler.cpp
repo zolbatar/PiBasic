@@ -80,3 +80,24 @@ Compiler::Compiler(VM* vm, DARICParser::ProgContext* tree, std::string filename,
         }
     }*/
 }
+
+void Compiler::setup_3d_types()
+{
+    // Pi3D_Vertex
+    CustomType custom_type;
+    custom_type.id = custom_type_index++;
+    custom_type.members.insert(std::pair<std::string, Boxed>("x", std::move(Boxed("x", Type::FLOAT, 0))));
+    custom_type.members.insert(std::pair<std::string, Boxed>("y", std::move(Boxed("y", Type::FLOAT, 1))));
+    custom_type.members.insert(std::pair<std::string, Boxed>("z", std::move(Boxed("z", Type::FLOAT, 2))));
+    custom_type.members.insert(std::pair<std::string, Boxed>("rgb%", std::move(Boxed("rgb%", Type::INTEGER, 3))));
+    custom_types.insert(std::pair<std::string, CustomType>("Vertex3D", std::move(custom_type)));
+
+    // Pi3D_Vertex
+    CustomType custom_type2;
+    custom_type2.id = custom_type_index++;
+    custom_type2.members.insert(std::pair<std::string, Boxed>("v1", std::move(Boxed("v1", Type::INTEGER, 0))));
+    custom_type2.members.insert(std::pair<std::string, Boxed>("v2", std::move(Boxed("v2", Type::INTEGER, 1))));
+    custom_type2.members.insert(std::pair<std::string, Boxed>("v3", std::move(Boxed("v3", Type::INTEGER, 2))));
+    custom_type2.members.insert(std::pair<std::string, Boxed>("rgb%", std::move(Boxed("rgb%", Type::INTEGER, 3))));
+    custom_types.insert(std::pair<std::string, CustomType>("Triangle3D", std::move(custom_type2)));
+}
