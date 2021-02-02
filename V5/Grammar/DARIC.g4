@@ -26,6 +26,11 @@ stmt
 var
     : numVar
     | strVar
+    | typeVar
+    ;
+
+typeVar
+    : varNameType                                                   #typeVarType
     ;
 
 numVar
@@ -47,15 +52,19 @@ justVar
     ;
 
 varName
-    : VARIABLE
+    : VARIABLE_FLOAT
     ;
 
 varNameInteger
-    : VARIABLE_I
+    : VARIABLE_INTEGER
     ;
 
 varNameString
-    : VARIABLE_S
+    : VARIABLE_STRING
+    ;
+
+varNameType
+    : VARIABLE_TYPE
     ;
 
 varDecl
@@ -90,7 +99,6 @@ printList
 // Expressions and such
 expr
     : numExpr
-    | numVar
     | strExpr
     ;
     
@@ -173,6 +181,7 @@ numFunc
 
 numExpr
     : number                                #numExprNumber
+    | numVar                                #numExprVar
     | numFunc                               #numExprFunc
     | NOT numExpr                           #numExprNOT
     | LPAREN numExpr RPAREN                 #numExprNested
@@ -281,9 +290,10 @@ SEMICOLON       : ';' ;
 UNDERSCORE      : '_' ;
 COMMENT         : REM ~ [\r\n]* ;
 STRINGLITERAL   : '"' ~ ["\r\n]* '"' ;
-VARIABLE        : ([a-z]|[A-Z]|[_])+([a-z]|[A-Z]|[_]|[0-9])* ;
-VARIABLE_I      : ([a-z]|[A-Z]|[_])+([a-z]|[A-Z]|[_]|[0-9])*'%' ;
-VARIABLE_S      : ([a-z]|[A-Z]|[_])+([a-z]|[A-Z]|[_]|[0-9])*'$' ;
+VARIABLE_FLOAT          : ([a-z]|[A-Z]|[_])+([a-z]|[A-Z]|[_]|[0-9])* ;
+VARIABLE_INTEGER        : ([a-z]|[A-Z]|[_])+([a-z]|[A-Z]|[_]|[0-9])*'%' ;
+VARIABLE_STRING         : ([a-z]|[A-Z]|[_])+([a-z]|[A-Z]|[_]|[0-9])*'$' ;
+VARIABLE_TYPE           : ([a-z]|[A-Z]|[_])+([a-z]|[A-Z]|[_]|[0-9])*'!' ;
 LETTERS         : [a-z|A-Z]+ ;
 HEXNUMBER       : '&' [0-9A-Fa-f]+ ;
 BINARYNUMBER    : '%' [0|1]+ ;

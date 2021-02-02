@@ -55,6 +55,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitTypeVarType(DARICParser::TypeVarTypeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitNumVarFloat(DARICParser::NumVarFloatContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -92,6 +96,10 @@ public:
   }
 
   virtual antlrcpp::Any visitVarNameString(DARICParser::VarNameStringContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitVarNameType(DARICParser::VarNameTypeContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -316,6 +324,10 @@ public:
   }
 
   virtual antlrcpp::Any visitNumExprSubtract(DARICParser::NumExprSubtractContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumExprVar(DARICParser::NumExprVarContext *ctx) override {
     return visitChildren(ctx);
   }
 

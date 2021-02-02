@@ -14,7 +14,12 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
 
         // Get value
         visit(context->expr(i));
-        auto type = stack_pop();
+        Type type;
+        if (last_var.type == Type::TYPE) {
+            type = Type::TYPE;
+        } else {
+            type = stack_pop();
+        }
 
         // Now do stuff based on the type on the stack and the variable type
         switch (saved.type) {
@@ -101,6 +106,12 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
             insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
             insert_instruction(Bytecodes::STORE_ARRAY, Type::STRING_ARRAY, saved.id);
             break;
+        case Type::TYPE:
+            insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
+            insert_instruction(Bytecodes::NEW_TYPE, Type::TYPE, saved.id);
+            break;
+        default:
+            error("Unknown type in assignment");
         }
     }
 

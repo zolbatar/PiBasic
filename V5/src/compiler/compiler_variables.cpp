@@ -45,6 +45,13 @@ antlrcpp::Any Compiler::visitVarNameString(DARICParser::VarNameStringContext* co
     return NULL;
 }
 
+antlrcpp::Any Compiler::visitVarNameType(DARICParser::VarNameTypeContext* context)
+{
+    set_pos(context->start);
+    last_var.name = context->getText();
+    return NULL;
+}
+
 antlrcpp::Any Compiler::visitVarDecl(DARICParser::VarDeclContext* context)
 {
     set_pos(context->start);
@@ -55,13 +62,21 @@ antlrcpp::Any Compiler::visitNumVarFloat(DARICParser::NumVarFloatContext* contex
 {
     set_pos(context->start);
     visit(context->varName());
-    last_var.type = Type::FLOAT;
-    if (state == CompilerState::NOSTATE) {
-        if (!find_variable()) {
-            error("Variable '" + last_var.name + "' not found");
+
+    // Is this a custom type?
+    if (custom_types.count(last_var.name) == 1) {
+        last_var.type = Type::TYPE;
+        auto f = custom_types.find(last_var.name);
+        last_type_num_dimensions = static_cast<UINT32>((*f).second.members.size());
+    } else {
+        last_var.type = Type::FLOAT;
+        if (state == CompilerState::NOSTATE) {
+            if (!find_variable()) {
+                error("Variable '" + last_var.name + "' not found");
+            }
+            insert_instruction(Bytecodes::LOAD, Type::FLOAT, last_var.id);
+            stack_push(Type::FLOAT);
         }
-        insert_instruction(Bytecodes::LOAD, Type::FLOAT, last_var.id);
-        stack_push(Type::FLOAT);
     }
     return NULL;
 }

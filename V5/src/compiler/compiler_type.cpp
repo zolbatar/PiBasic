@@ -1,5 +1,20 @@
 #include "compiler.h"
 
+antlrcpp::Any Compiler::visitTypeVarType(DARICParser::TypeVarTypeContext* context)
+{
+    set_pos(context->start);
+    visit(context->varNameType());
+    last_var.type = Type::TYPE;
+    if (state == CompilerState::NOSTATE) {
+        if (!find_variable()) {
+            error("Variable '" + last_var.name + "' not found");
+        }
+        insert_instruction(Bytecodes::LOAD, Type::TYPE, last_var.id);
+        stack_push(Type::FLOAT);
+    }
+    return NULL;
+}
+
 antlrcpp::Any Compiler::visitStmtTYPE(DARICParser::StmtTYPEContext* context)
 {
     set_pos(context->start);
@@ -7,7 +22,7 @@ antlrcpp::Any Compiler::visitStmtTYPE(DARICParser::StmtTYPEContext* context)
     // We only gather type information in the lookahead phase
     if (phase == CompilerPhase::LOOKAHEAD) {
         auto name = context->varName()->getText();
-      
+
         // Do we have it?
         if (custom_types.count(name) > 0) {
             std::stringstream ss;

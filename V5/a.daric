@@ -1,4 +1,3 @@
-DIM a(100),
-B(10)
-
 Type VertexTest(x,y,z)
+
+A!=VertexTest

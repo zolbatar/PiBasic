@@ -22,19 +22,20 @@ public:
     OR = 49, EOR = 50, MOD = 51, DIV = 52, HAT = 53, PLUS = 54, MINUS = 55, 
     MULTIPLY = 56, DIVIDE = 57, SHL = 58, SHR = 59, TICK = 60, TILDE = 61, 
     COLON = 62, COMMA = 63, DOLLAR = 64, LPAREN = 65, PERCENT = 66, RPAREN = 67, 
-    SEMICOLON = 68, UNDERSCORE = 69, COMMENT = 70, STRINGLITERAL = 71, VARIABLE = 72, 
-    VARIABLE_I = 73, VARIABLE_S = 74, LETTERS = 75, HEXNUMBER = 76, BINARYNUMBER = 77, 
-    NUMBER = 78, FLOAT = 79, WS = 80
+    SEMICOLON = 68, UNDERSCORE = 69, COMMENT = 70, STRINGLITERAL = 71, VARIABLE_FLOAT = 72, 
+    VARIABLE_INTEGER = 73, VARIABLE_STRING = 74, VARIABLE_TYPE = 75, LETTERS = 76, 
+    HEXNUMBER = 77, BINARYNUMBER = 78, NUMBER = 79, FLOAT = 80, WS = 81
   };
 
   enum {
     RuleProg = 0, RuleLine = 1, RuleLinenumber = 2, RuleStmt = 3, RuleVar = 4, 
-    RuleNumVar = 5, RuleStrVar = 6, RuleJustVar = 7, RuleVarName = 8, RuleVarNameInteger = 9, 
-    RuleVarNameString = 10, RuleVarDecl = 11, RuleVarDeclWithDimension = 12, 
-    RuleVarList = 13, RuleExprList = 14, RulePrintListItem = 15, RulePrintList = 16, 
-    RuleExpr = 17, RuleNumber = 18, RuleNumberInteger = 19, RuleNumberHex = 20, 
-    RuleNumberBinary = 21, RuleNumberFloat = 22, RuleStrFunc = 23, RuleString = 24, 
-    RuleStrExpr = 25, RuleNumFunc = 26, RuleNumExpr = 27, RuleCompare = 28
+    RuleTypeVar = 5, RuleNumVar = 6, RuleStrVar = 7, RuleJustVar = 8, RuleVarName = 9, 
+    RuleVarNameInteger = 10, RuleVarNameString = 11, RuleVarNameType = 12, 
+    RuleVarDecl = 13, RuleVarDeclWithDimension = 14, RuleVarList = 15, RuleExprList = 16, 
+    RulePrintListItem = 17, RulePrintList = 18, RuleExpr = 19, RuleNumber = 20, 
+    RuleNumberInteger = 21, RuleNumberHex = 22, RuleNumberBinary = 23, RuleNumberFloat = 24, 
+    RuleStrFunc = 25, RuleString = 26, RuleStrExpr = 27, RuleNumFunc = 28, 
+    RuleNumExpr = 29, RuleCompare = 30
   };
 
   explicit DARICParser(antlr4::TokenStream *input);
@@ -52,12 +53,14 @@ public:
   class LinenumberContext;
   class StmtContext;
   class VarContext;
+  class TypeVarContext;
   class NumVarContext;
   class StrVarContext;
   class JustVarContext;
   class VarNameContext;
   class VarNameIntegerContext;
   class VarNameStringContext;
+  class VarNameTypeContext;
   class VarDeclContext;
   class VarDeclWithDimensionContext;
   class VarListContext;
@@ -231,6 +234,7 @@ public:
     virtual size_t getRuleIndex() const override;
     NumVarContext *numVar();
     StrVarContext *strVar();
+    TypeVarContext *typeVar();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -238,6 +242,30 @@ public:
   };
 
   VarContext* var();
+
+  class  TypeVarContext : public antlr4::ParserRuleContext {
+  public:
+    TypeVarContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+   
+    TypeVarContext() = default;
+    void copyFrom(TypeVarContext *context);
+    using antlr4::ParserRuleContext::copyFrom;
+
+    virtual size_t getRuleIndex() const override;
+
+   
+  };
+
+  class  TypeVarTypeContext : public TypeVarContext {
+  public:
+    TypeVarTypeContext(TypeVarContext *ctx);
+
+    VarNameTypeContext *varNameType();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  TypeVarContext* typeVar();
 
   class  NumVarContext : public antlr4::ParserRuleContext {
   public:
@@ -366,7 +394,7 @@ public:
   public:
     VarNameContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *VARIABLE();
+    antlr4::tree::TerminalNode *VARIABLE_FLOAT();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -379,7 +407,7 @@ public:
   public:
     VarNameIntegerContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *VARIABLE_I();
+    antlr4::tree::TerminalNode *VARIABLE_INTEGER();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -392,7 +420,7 @@ public:
   public:
     VarNameStringContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *VARIABLE_S();
+    antlr4::tree::TerminalNode *VARIABLE_STRING();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -400,6 +428,19 @@ public:
   };
 
   VarNameStringContext* varNameString();
+
+  class  VarNameTypeContext : public antlr4::ParserRuleContext {
+  public:
+    VarNameTypeContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *VARIABLE_TYPE();
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  VarNameTypeContext* varNameType();
 
   class  VarDeclContext : public antlr4::ParserRuleContext {
   public:
@@ -575,7 +616,6 @@ public:
     ExprContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     NumExprContext *numExpr();
-    NumVarContext *numVar();
     StrExprContext *strExpr();
 
 
@@ -1175,6 +1215,15 @@ public:
     std::vector<NumExprContext *> numExpr();
     NumExprContext* numExpr(size_t i);
     antlr4::tree::TerminalNode *MINUS();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  NumExprVarContext : public NumExprContext {
+  public:
+    NumExprVarContext(NumExprContext *ctx);
+
+    NumVarContext *numVar();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };

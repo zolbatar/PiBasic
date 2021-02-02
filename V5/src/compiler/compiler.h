@@ -65,6 +65,7 @@ private:
     // Custom types
     UINT32 custom_type_index = 0;
     std::map<std::string, CustomType> custom_types;
+    UINT32 last_type_num_dimensions = 0;
 
     // Locals and functions
     int local_var_index = 0;
@@ -95,6 +96,9 @@ private:
     UINT32 stack_size() { return static_cast<UINT32>(type_list.size()); }
     Type stack_pop()
     {
+        if (type_list.size() == 0) {
+            error("Error compiling");
+        }
         auto var_type = type_list.top();
         type_list.pop();
         return var_type;
@@ -163,6 +167,8 @@ protected:
     antlrcpp::Any visitVarName(DARICParser::VarNameContext* context);
     antlrcpp::Any visitVarNameInteger(DARICParser::VarNameIntegerContext* context);
     antlrcpp::Any visitVarNameString(DARICParser::VarNameStringContext* context);
+    antlrcpp::Any visitVarNameType(DARICParser::VarNameTypeContext* context);
+    antlrcpp::Any visitTypeVarType(DARICParser::TypeVarTypeContext* context);
     antlrcpp::Any visitVarDecl(DARICParser::VarDeclContext* context);
     antlrcpp::Any visitVarDeclWithDimension(DARICParser::VarDeclWithDimensionContext* context);
     antlrcpp::Any visitVarDeclInd(DARICParser::VarDeclIndContext* context);
@@ -196,6 +202,7 @@ protected:
 
     /* Numeric expressions */
     antlrcpp::Any visitNumExprNumber(DARICParser::NumExprNumberContext* context);
+    antlrcpp::Any visitNumExprVar(DARICParser::NumExprVarContext* context);
     antlrcpp::Any visitNumExprFunc(DARICParser::NumExprFuncContext* context);
     antlrcpp::Any visitNumExprNested(DARICParser::NumExprNestedContext* context);
 
