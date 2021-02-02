@@ -1,4 +1,5 @@
 #pragma once
+#include "../compiler/compiler.h"
 #include "../graphics/graphics.h"
 #include "../vm/boxed.h"
 #include <list>
@@ -11,8 +12,8 @@ public:
     void run();
 
 private:
-    std::vector<Boxed> variables;
     std::map<UINT32, std::string> lines;
+    Compiler *compiler = new Compiler();
 
     void welcome_prompt();
     UINT32 add_line(std::string s, UINT32 auto_line);

@@ -18,6 +18,12 @@ antlrcpp::Any Compiler::visitStrVar(DARICParser::StrVarContext* context)
     return visitChildren(context);
 }
 
+antlrcpp::Any Compiler::visitJustVar(DARICParser::JustVarContext* context)
+{
+    set_pos(context->start);
+    return visitChildren(context);
+}
+
 antlrcpp::Any Compiler::visitVarName(DARICParser::VarNameContext* context)
 {
     set_pos(context->start);

@@ -3,29 +3,26 @@
 
 void Compiler::reset()
 {
-    globals.clear();
-    global_var_index = 0;
+    type_list.empty();
     locals.clear();
     local_var_index = 0;
+    vm->helper_bytecodes().clear();
 }
 
-void Compiler::inject_variables(std::vector<Boxed>& variables)
+Compiler::Compiler()
 {
-    global_var_index = static_cast<int>(variables.size());
-    for (auto it = variables.begin(); it != variables.end(); ++it) {
-        auto v = (*it);
-        globals.insert(std::make_pair(v.name, v));
-    }
+    // Set up the 3D stuff
+    setup_3d_types();
 }
 
-Compiler::Compiler(VM* vm, DARICParser::ProgContext* tree, std::string filename, std::vector<Boxed>& variables)
+void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filename)
 {
     this->vm = vm;
     this->filename = filename;
+    reset();
 
     // Lookahead, figure out function definitions and types
     phase = CompilerPhase::LOOKAHEAD;
-    inject_variables(variables);
     auto daric = visitProg(tree);
     assert(vm->helper_bytecodes().get_size() == 0);
     assert(stack_size() == 0);
@@ -34,7 +31,6 @@ Compiler::Compiler(VM* vm, DARICParser::ProgContext* tree, std::string filename,
     // Size, figure out sizing for jumps etc.
     vm->helper_bytecodes().pc = 0;
     phase = CompilerPhase::SIZE;
-    inject_variables(variables);
     daric = visitProg(tree);
     assert(stack_size() == 0);
     reset();
@@ -42,7 +38,6 @@ Compiler::Compiler(VM* vm, DARICParser::ProgContext* tree, std::string filename,
     // Compile! Build the VM
     vm->helper_bytecodes().pc = 0;
     phase = CompilerPhase::COMPILE;
-    inject_variables(variables);
     daric = visitProg(tree);
     assert(stack_size() == 0);
 
@@ -52,11 +47,15 @@ Compiler::Compiler(VM* vm, DARICParser::ProgContext* tree, std::string filename,
     vm->helper_variables().set_variables_size(global_var_index);
     for (auto g = globals.begin(); g != globals.end(); ++g) {
         auto glob = (*g).second;
-        vm->helper_variables().add_variable((*g).second, glob.index);
+        if (vm->helper_variables().get_variable_by_int(glob.index).type == Type::NOTYPE) {
+            vm->helper_variables().add_variable((*g).second, glob.index);
+        }
     }
     for (auto g = constants.begin(); g != constants.end(); ++g) {
         auto glob = (*g);
-        vm->helper_variables().add_variable(glob, glob.index);
+        if (vm->helper_variables().get_variable_by_int(glob.index).type == Type::NOTYPE) {
+            vm->helper_variables().add_variable(glob, glob.index);
+        }
     }
 
     // Size to number of functions

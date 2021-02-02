@@ -1,3 +1,4 @@
+#include "../compiler/compiler.h"
 #include "../vm/boxed.h"
 #include "DARICLexer.h"
 #include "DARICParser.h"
@@ -8,7 +9,7 @@ class MyParser {
 public:
     MyParser(std::string filename)
         : filename(filename) {};
-    void parse_and_compile(std::vector<Boxed>& variables);
+    void parse_and_compile(Compiler* compiler);
 
 private:
     std::string filename;

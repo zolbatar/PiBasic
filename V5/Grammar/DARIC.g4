@@ -19,7 +19,7 @@ stmt
     | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*     # stmtLET
     | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                # stmtLOCAL
     | PRINT printList?                                              # stmtPRINT
-    | TYPE varName LPAREN varDecl (COMMA varDecl*) RPAREN           # stmtTYPE
+    | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN           # stmtTYPE
     ;
 
 // Variables
@@ -38,6 +38,12 @@ numVar
 strVar
     : varNameString                                                 #numVarString
     | varNameString (LPAREN numExpr (COMMA numExpr)? RPAREN)*       #numVarStringArray
+    ;
+
+justVar
+    : varName           
+    | varNameInteger        
+    | varNameString
     ;
 
 varName

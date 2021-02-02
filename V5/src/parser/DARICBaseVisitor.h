@@ -79,6 +79,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitJustVar(DARICParser::JustVarContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitVarName(DARICParser::VarNameContext *ctx) override {
     return visitChildren(ctx);
   }

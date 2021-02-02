@@ -34,7 +34,8 @@ public:
 
 class Compiler : public DARICVisitor {
 public:
-    Compiler(VM* vm, DARICParser::ProgContext* tree, std::string filename, std::vector<Boxed>& variables);
+    Compiler();
+    void compile(VM* vm, DARICParser::ProgContext* tree, std::string filename);
 
 private:
     VM* vm;
@@ -43,7 +44,6 @@ private:
     CompilerPhase phase = CompilerPhase::LOOKAHEAD;
 
     // Compilation stuff
-    void inject_variables(std::vector<Boxed>& variables);
     void reset();
 
     // Position
@@ -168,6 +168,7 @@ protected:
     antlrcpp::Any visitVarDeclInd(DARICParser::VarDeclIndContext* context);
     antlrcpp::Any visitVarDeclArrayed(DARICParser::VarDeclArrayedContext* context);
     antlrcpp::Any visitVarList(DARICParser::VarListContext* context);
+    antlrcpp::Any visitJustVar(DARICParser::JustVarContext* context);
 
     /* String expressions */
     antlrcpp::Any visitStrFunc(DARICParser::StrFuncContext* context);

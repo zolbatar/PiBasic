@@ -22,7 +22,7 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
     }
 };
 
-void MyParser::parse_and_compile(std::vector<Boxed>& variables)
+void MyParser::parse_and_compile(Compiler* compiler)
 {
     std::ifstream stream;
     stream.open(filename);
@@ -47,5 +47,5 @@ void MyParser::parse_and_compile(std::vector<Boxed>& variables)
     // Add to files list
     g_vm->add_filename(filename);
 
-    Compiler compiler(g_vm, tree, filename, variables);
+    compiler->compile(g_vm, tree, filename);
 }

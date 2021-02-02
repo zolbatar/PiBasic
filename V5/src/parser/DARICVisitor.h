@@ -51,6 +51,8 @@ public:
 
     virtual antlrcpp::Any visitNumVarStringArray(DARICParser::NumVarStringArrayContext *context) = 0;
 
+    virtual antlrcpp::Any visitJustVar(DARICParser::JustVarContext *context) = 0;
+
     virtual antlrcpp::Any visitVarName(DARICParser::VarNameContext *context) = 0;
 
     virtual antlrcpp::Any visitVarNameInteger(DARICParser::VarNameIntegerContext *context) = 0;

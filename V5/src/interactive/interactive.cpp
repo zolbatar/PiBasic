@@ -98,8 +98,9 @@ void Interactive::run()
                 return;
             } else if (upper.compare("NEW") == 0) {
                 lines.clear();
-                variables.clear();
                 create_empty_vm();
+                delete compiler;
+                compiler = new Compiler();
             } else if (upper.compare("LIST") == 0) {
                 for (auto it = lines.begin(); it != lines.end(); it++) {
                     std::stringstream stream;
@@ -214,16 +215,9 @@ void Interactive::execute_line(std::string s)
     fwrite(s.c_str(), s.length(), 1, fp);
     fclose(fp);
 
-    // Save bytecodes
-    std::vector<Bytecode> saved_bytecodes;
-    bool save = g_vm->helper_bytecodes().get_size() > 0;
-    if (save) {
-        saved_bytecodes.swap(g_vm->helper_bytecodes().get_code());
-    }
-
     try {
         MyParser parser(temp_filename);
-        parser.parse_and_compile(variables);
+        parser.parse_and_compile(compiler);
     } catch (const DARICException& ex) {
         ex.pretty_print();
         return;
@@ -234,18 +228,6 @@ void Interactive::execute_line(std::string s)
 
     // Run!
     g_vm->run();
-
-    // Save variables
-    variables.clear();
-    auto v = g_vm->helper_variables().get_variables();
-    for (auto it = v.begin(); it != v.end(); ++it) {
-        variables.push_back(std::move(*it));
-    }
-
-    // Restore bytecodes
-    if (save) {
-        g_vm->helper_bytecodes().get_code().swap(saved_bytecodes);
-    }
 
     // Reset PC
     g_vm->helper_bytecodes().pc = 0;
@@ -264,7 +246,7 @@ void Interactive::run_all_lines()
 
     try {
         MyParser parser(temp_filename);
-        parser.parse_and_compile(variables);
+        parser.parse_and_compile(compiler);
     } catch (const DARICException& ex) {
         ex.pretty_print();
         return;
@@ -278,13 +260,6 @@ void Interactive::run_all_lines()
 
     // Reset PC
     g_vm->helper_bytecodes().pc = 0;
-
-    // Save variables
-    variables.clear();
-    auto v = g_vm->helper_variables().get_variables();
-    for (auto it = v.begin(); it != v.end(); ++it) {
-        variables.push_back(std::move(*it));
-    }
 }
 
 void Interactive::run_file(std::string s)
@@ -294,10 +269,9 @@ void Interactive::run_file(std::string s)
 #ifdef WINDOWS
     filename += ".daric";
 #endif
-    variables.clear();
     try {
         MyParser parser(filename);
-        parser.parse_and_compile(variables);
+        parser.parse_and_compile(compiler);
     } catch (const DARICException& ex) {
         ex.pretty_print();
         return;
@@ -336,7 +310,7 @@ void Interactive::run_demo_file(std::string filename)
 
     try {
         MyParser parser(filename);
-        parser.parse_and_compile(variables);
+        parser.parse_and_compile(compiler);
     } catch (const DARICException& ex) {
         ex.pretty_print();
         return;
@@ -350,7 +324,6 @@ void Interactive::run_demo_file(std::string filename)
 
     // Clear it all
     lines.clear();
-    variables.clear();
     create_empty_vm();
 
     g_env.graphics.cls();

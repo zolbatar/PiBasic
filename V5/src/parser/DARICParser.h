@@ -29,12 +29,12 @@ public:
 
   enum {
     RuleProg = 0, RuleLine = 1, RuleLinenumber = 2, RuleStmt = 3, RuleVar = 4, 
-    RuleNumVar = 5, RuleStrVar = 6, RuleVarName = 7, RuleVarNameInteger = 8, 
-    RuleVarNameString = 9, RuleVarDecl = 10, RuleVarDeclWithDimension = 11, 
-    RuleVarList = 12, RuleExprList = 13, RulePrintListItem = 14, RulePrintList = 15, 
-    RuleExpr = 16, RuleNumber = 17, RuleNumberInteger = 18, RuleNumberHex = 19, 
-    RuleNumberBinary = 20, RuleNumberFloat = 21, RuleStrFunc = 22, RuleString = 23, 
-    RuleStrExpr = 24, RuleNumFunc = 25, RuleNumExpr = 26, RuleCompare = 27
+    RuleNumVar = 5, RuleStrVar = 6, RuleJustVar = 7, RuleVarName = 8, RuleVarNameInteger = 9, 
+    RuleVarNameString = 10, RuleVarDecl = 11, RuleVarDeclWithDimension = 12, 
+    RuleVarList = 13, RuleExprList = 14, RulePrintListItem = 15, RulePrintList = 16, 
+    RuleExpr = 17, RuleNumber = 18, RuleNumberInteger = 19, RuleNumberHex = 20, 
+    RuleNumberBinary = 21, RuleNumberFloat = 22, RuleStrFunc = 23, RuleString = 24, 
+    RuleStrExpr = 25, RuleNumFunc = 26, RuleNumExpr = 27, RuleCompare = 28
   };
 
   explicit DARICParser(antlr4::TokenStream *input);
@@ -54,6 +54,7 @@ public:
   class VarContext;
   class NumVarContext;
   class StrVarContext;
+  class JustVarContext;
   class VarNameContext;
   class VarNameIntegerContext;
   class VarNameStringContext;
@@ -173,10 +174,11 @@ public:
     antlr4::tree::TerminalNode *TYPE();
     VarNameContext *varName();
     antlr4::tree::TerminalNode *LPAREN();
-    std::vector<VarDeclContext *> varDecl();
-    VarDeclContext* varDecl(size_t i);
+    std::vector<JustVarContext *> justVar();
+    JustVarContext* justVar(size_t i);
     antlr4::tree::TerminalNode *RPAREN();
-    antlr4::tree::TerminalNode *COMMA();
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -344,6 +346,21 @@ public:
   };
 
   StrVarContext* strVar();
+
+  class  JustVarContext : public antlr4::ParserRuleContext {
+  public:
+    JustVarContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    VarNameContext *varName();
+    VarNameIntegerContext *varNameInteger();
+    VarNameStringContext *varNameString();
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  JustVarContext* justVar();
 
   class  VarNameContext : public antlr4::ParserRuleContext {
   public:
