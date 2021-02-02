@@ -213,6 +213,13 @@ void Interactive::execute_line(std::string s)
     fwrite(s.c_str(), s.length(), 1, fp);
     fclose(fp);
 
+    // Save bytecodes
+    std::vector<Bytecode> saved_bytecodes;
+    bool save = g_vm->helper_bytecodes().get_size() > 0;
+    if (save) {
+        saved_bytecodes.swap(g_vm->helper_bytecodes().get_code());
+    }
+
     create_empty_vm();
     try {
         MyParser parser(temp_filename);
@@ -234,6 +241,11 @@ void Interactive::execute_line(std::string s)
     for (auto it = v.begin(); it != v.end(); ++it) {
         variables.push_back(std::move(*it));
     }
+    
+    // Restore bytecodes
+    if (save) {
+        g_vm->helper_bytecodes().get_code().swap(saved_bytecodes);
+    }
 
     // Reset PC
     g_vm->helper_bytecodes().pc = 0;
@@ -250,26 +262,30 @@ void Interactive::run_all_lines()
     }
     fclose(fp);
 
-    // Now parse and compile
-    /*    g_vm = std::make_unique<VM>();
-    parse_and_compile(temp_filename.c_str(), true, &variables);
-    bool done = false;
-    if (g_vm->compile_successful) {
-        do {
-            std::string chain = g_vm->run();
-            done = true;
-            if (chain.length() > 0) {
-                g_env.graphics.print_console("CHAIN from interactive mode not supported yet\r");
-                done = false;
-                exit(1);
-                variables.clear();
-                auto v = g_vm->helper_variables().get_variables();
-                for (auto it = v.begin(); it != v.end(); ++it) {
-                    variables.push_back(std::move(*it));
-                }
-            }
-        } while (!done);
-    }*/
+    create_empty_vm();
+    try {
+        MyParser parser(temp_filename);
+        parser.parse_and_compile(variables);
+    } catch (const DARICException& ex) {
+        ex.pretty_print();
+        return;
+    } catch (const std::runtime_error& ex) {
+        g_env.graphics.print_console(ex.what());
+        return;
+    }
+
+    // Run!
+    g_vm->run();
+
+    // Reset PC
+    g_vm->helper_bytecodes().pc = 0;
+
+    // Save variables
+    variables.clear();
+    auto v = g_vm->helper_variables().get_variables();
+    for (auto it = v.begin(); it != v.end(); ++it) {
+        variables.push_back(std::move(*it));
+    }
 }
 
 void Interactive::run_file(std::string s)

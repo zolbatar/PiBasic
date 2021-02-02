@@ -229,14 +229,16 @@ public:
 class BytecodeContainer {
 public:
     UINT32 pc = 0; // Program counter
-    UINT32 size = 0; // Size of bytecode
 
+    std::vector<Bytecode>& get_code() { return code; }
+    void set_code(std::vector<Bytecode>& new_code) { }
     Bytecode& get_bytecode(size_t i) { return code[i]; }
     Bytecode& get_current_bytecode() { return code[pc++]; }
 
+    UINT32 get_size() { return static_cast<UINT32>(code.size()); }
+
     void build_bytecode()
     {
-        size = pc;
         pc = 0;
     }
 
@@ -245,6 +247,7 @@ public:
         if (write) {
             Bytecode b;
             b.opcode = bytecode;
+            b.type = type;
             b.data = operand;
             b.line_number = line_number;
             b.file_number = file_number;
@@ -259,6 +262,7 @@ public:
         if (write) {
             Bytecode b;
             b.opcode = bytecode;
+            b.type = type;
             b.data = 0;
             b.line_number = line_number;
             b.file_number = file_number;

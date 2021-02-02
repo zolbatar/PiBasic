@@ -27,7 +27,7 @@ Compiler::Compiler(VM* vm, DARICParser::ProgContext* tree, std::string filename,
     phase = CompilerPhase::LOOKAHEAD;
     inject_variables(variables);
     auto daric = visitProg(tree);
-    assert(vm->helper_bytecodes().size == 0);
+    assert(vm->helper_bytecodes().get_size() == 0);
     assert(stack_size() == 0);
     reset();
 
@@ -36,7 +36,6 @@ Compiler::Compiler(VM* vm, DARICParser::ProgContext* tree, std::string filename,
     phase = CompilerPhase::SIZE;
     inject_variables(variables);
     daric = visitProg(tree);
-    vm->helper_bytecodes().size = vm->helper_bytecodes().pc;
     assert(stack_size() == 0);
     reset();
 

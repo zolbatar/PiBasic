@@ -146,6 +146,7 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
                 ss << get_variable_bc(bc, i).value_string;
                 break;
             }
+            ret.operand = ss.str();
         } else {
             ret.opcode = "LOAD";
             name_for_operand(ret, bc, i);
@@ -671,8 +672,8 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
 
 std::vector<Disassembly> Debugger::disassemble_entire_file()
 {
-    std::vector<Disassembly> ret(g_vm->helper_bytecodes().size);
-    for (UINT32 i = 0; i < g_vm->helper_bytecodes().size; i++) {
+    std::vector<Disassembly> ret(g_vm->helper_bytecodes().get_size());
+    for (UINT32 i = 0; i < g_vm->helper_bytecodes().get_size(); i++) {
         auto bc = g_vm->helper_bytecodes().get_bytecode(i);
         auto s = disassemble_instruction(bc, i);
         ret[i] = s;

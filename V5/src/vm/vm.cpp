@@ -542,28 +542,23 @@ void VM::opcode_LOAD_ARRAY()
     VM_INT dimensions = stack.pop_int(bc);
     VM_INT index;
 
-    // Common
-    if (dimensions == 1) {
-        index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
-            error("Invalid array or array index");
-    } else {
-        VM_INT index2 = stack.pop_int(bc);
-        VM_INT index1 = stack.pop_int(bc);
-        VM_INT size = variables.get_variable(bc).array_definition[0];
-        int index = index2 * size + index1;
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
-            error("Invalid array or array index");
-    }
-
     switch (bc.type) {
-    case Type::INTEGER: {
+    case Type::INTEGER_ARRAY: {
         if (dimensions == 1) {
+            index = stack.pop_int(bc);
+            if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
+                error("Invalid array or array index");
             VM_INT v = variables.get_variable(bc).value_int_array[index];
             stack.push_int(bc, v);
             if (!performance_build && runtime_debug)
                 g_env.log << "Push variable " << variables.get_variable(bc).name << ", int " << v << " (index " << index << ") onto the stack\n";
         } else {
+            VM_INT index2 = stack.pop_int(bc);
+            VM_INT index1 = stack.pop_int(bc);
+            VM_INT size = variables.get_variable(bc).array_definition[0];
+            int index = index2 * size + index1;
+            if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
+                error("Invalid array or array index");
             VM_INT v = variables.get_variable(bc).value_int_array[index];
             stack.push_int(bc, v);
             if (!performance_build && runtime_debug)
@@ -571,13 +566,22 @@ void VM::opcode_LOAD_ARRAY()
         }
         return;
     }
-    case Type::FLOAT: {
+    case Type::FLOAT_ARRAY: {
         if (dimensions == 1) {
+            index = stack.pop_int(bc);
+            if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_float_array.size()))
+                error("Invalid array or array index");
             VM_FLOAT v = variables.get_variable(bc).value_float_array[index];
             stack.push_float(bc, v);
             if (!performance_build && runtime_debug)
                 g_env.log << "Push variable " << variables.get_variable(bc).name << ", float " << v << " (index " << index << ") onto the stack\n";
         } else {
+            VM_INT index2 = stack.pop_int(bc);
+            VM_INT index1 = stack.pop_int(bc);
+            VM_INT size = variables.get_variable(bc).array_definition[0];
+            int index = index2 * size + index1;
+            if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_float_array.size()))
+                error("Invalid array or array index");
             VM_FLOAT v = variables.get_variable(bc).value_float_array[index];
             stack.push_float(bc, v);
             if (!performance_build && runtime_debug)
@@ -585,13 +589,22 @@ void VM::opcode_LOAD_ARRAY()
         }
         return;
     }
-    case Type::STRING: {
+    case Type::STRING_ARRAY: {
         if (dimensions == 1) {
+            index = stack.pop_int(bc);
+            if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
+                error("Invalid array or array index");
             VM_STRING v = variables.get_variable(bc).value_string_array[index];
             stack.push_string(bc, v);
             if (!performance_build && runtime_debug)
                 g_env.log << "Push variable " << variables.get_variable(bc).name << ", string '" << v << "' (index " << index << ") onto the stack\n";
         } else {
+            VM_INT index2 = stack.pop_int(bc);
+            VM_INT index1 = stack.pop_int(bc);
+            VM_INT size = variables.get_variable(bc).array_definition[0];
+            int index = index2 * size + index1;
+            if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
+                error("Invalid array or array index");
             VM_STRING v = variables.get_variable(bc).value_string_array[index];
             stack.push_string(bc, v);
             if (!performance_build && runtime_debug)
@@ -607,60 +620,71 @@ void VM::opcode_LOAD_ARRAY()
 void VM::opcode_STORE_ARRAY()
 {
     VM_INT dimensions = stack.pop_int(bc);
-    VM_INT index;
 
-    // Common
-    if (dimensions == 1) {
-        index = stack.pop_int(bc);
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
-            error("Invalid array or array index");
-    } else {
-        VM_INT index2 = stack.pop_int(bc);
-        VM_INT index1 = stack.pop_int(bc);
-        VM_INT size = variables.get_variable(bc).array_definition[0];
-        int index = index2 * size + index1;
-        if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
-            error("Invalid array or array index");
-    }
-
-    // Common
     switch (bc.type) {
-    case Type::INTEGER: {
+    case Type::INTEGER_ARRAY: {
         if (dimensions == 1) {
             VM_INT v = stack.pop_int(bc);
+            VM_INT index = stack.pop_int(bc);
+            if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
+                error("Invalid array or array index");
             variables.get_variable(bc).value_int_array[index] = v;
             if (!performance_build && runtime_debug)
                 g_env.log << "Store int array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
         } else {
             VM_INT v = stack.pop_int(bc);
+            VM_INT index2 = stack.pop_int(bc);
+            VM_INT index1 = stack.pop_int(bc);
+            VM_INT size = variables.get_variable(bc).array_definition[0];
+            VM_INT index = index2 * size + index1;
+            if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_int_array.size()))
+                error("Invalid array or array index");
             variables.get_variable(bc).value_int_array[index] = v;
             if (!performance_build && runtime_debug)
                 g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
         }
         return;
     }
-    case Type::FLOAT: {
+    case Type::FLOAT_ARRAY: {
         if (dimensions == 1) {
             VM_FLOAT v = stack.pop_float(bc);
+            VM_INT index = stack.pop_int(bc);
+            if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_float_array.size()))
+                error("Invalid array or array index");
             variables.get_variable(bc).value_float_array[index] = v;
             if (!performance_build && runtime_debug)
                 g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
         } else {
             VM_FLOAT v = stack.pop_float(bc);
+            VM_INT index2 = stack.pop_int(bc);
+            VM_INT index1 = stack.pop_int(bc);
+            VM_INT size = variables.get_variable(bc).array_definition[0];
+            VM_INT index = index2 * size + index1;
+            if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_float_array.size()))
+                error("Invalid array or array index");
             variables.get_variable(bc).value_float_array[index] = v;
             if (!performance_build && runtime_debug)
                 g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
         }
         return;
     }
-    case Type::STRING: {
+    case Type::STRING_ARRAY: {
         if (dimensions == 1) {
             VM_STRING v = stack.pop_string(bc);
+            VM_INT index = stack.pop_int(bc);
+            if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
+                error("Invalid array or array index");
             variables.get_variable(bc).value_string_array[index] = v;
             if (!performance_build && runtime_debug)
                 g_env.log << "Store string array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
         } else {
             VM_STRING v = stack.pop_string(bc);
+            VM_INT index2 = stack.pop_int(bc);
+            VM_INT index1 = stack.pop_int(bc);
+            VM_INT size = variables.get_variable(bc).array_definition[0];
+            VM_INT index = index2 * size + index1;
+            if (index < 0 || index >= static_cast<int>(variables.get_variable(bc).value_string_array.size()))
+                error("Invalid array or array index");
             variables.get_variable(bc).value_string_array[index] = v;
             if (!performance_build && runtime_debug)
                 g_env.log << "Store float array variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
@@ -853,7 +877,7 @@ void VM::opcode_DIM()
     }
 
     switch (bc.type) {
-    case Type::INTEGER: {
+    case Type::INTEGER_ARRAY: {
         variables.get_variable(bc).type = Type::INTEGER_ARRAY;
         if (dimensions == 1) {
             variables.get_variable(bc).value_int_array.resize(size);
@@ -862,7 +886,7 @@ void VM::opcode_DIM()
         }
         break;
     }
-    case Type::FLOAT: {
+    case Type::FLOAT_ARRAY: {
         variables.get_variable(bc).type = Type::FLOAT_ARRAY;
         if (dimensions == 1) {
             variables.get_variable(bc).value_float_array.resize(size);
@@ -871,7 +895,7 @@ void VM::opcode_DIM()
         }
         break;
     }
-    case Type::STRING: {
+    case Type::STRING_ARRAY: {
         variables.get_variable(bc).type = Type::STRING_ARRAY;
         if (dimensions == 1) {
             variables.get_variable(bc).value_string_array.resize(size);
