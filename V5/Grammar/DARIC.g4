@@ -89,14 +89,17 @@ exprList
     ;
 
 printListItem
-    : expr                          # printListExpr
-    | TICK                          # printListTick
+    : TILDE? expr                   # printListExpr
     | SPC LPAREN numExpr RPAREN     # printListSPCP
     | SPC numExpr                   # printListSPC
     ;
 
+printStartingTicks                  
+    : (TICK)+                       # printListTick
+    ;
+
 printList
-    : COMMA? TILDE? printListItem ((COMMA | SEMICOLON) TILDE? printListItem?)*
+    : printStartingTicks? COMMA?  printListItem ((COMMA | SEMICOLON | TICK) printListItem?)*
     ;
 
 // Expressions and such

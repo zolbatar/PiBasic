@@ -32,10 +32,10 @@ public:
     RuleTypeVar = 5, RuleNumVar = 6, RuleStrVar = 7, RuleJustVar = 8, RuleVarName = 9, 
     RuleVarNameInteger = 10, RuleVarNameString = 11, RuleVarNameType = 12, 
     RuleVarDecl = 13, RuleVarDeclWithDimension = 14, RuleVarList = 15, RuleExprList = 16, 
-    RulePrintListItem = 17, RulePrintList = 18, RuleExpr = 19, RuleNumber = 20, 
-    RuleNumberInteger = 21, RuleNumberHex = 22, RuleNumberBinary = 23, RuleNumberFloat = 24, 
-    RuleStrFunc = 25, RuleString = 26, RuleStrExpr = 27, RuleNumFunc = 28, 
-    RuleNumExpr = 29, RuleCompare = 30
+    RulePrintListItem = 17, RulePrintStartingTicks = 18, RulePrintList = 19, 
+    RuleExpr = 20, RuleNumber = 21, RuleNumberInteger = 22, RuleNumberHex = 23, 
+    RuleNumberBinary = 24, RuleNumberFloat = 25, RuleStrFunc = 26, RuleString = 27, 
+    RuleStrExpr = 28, RuleNumFunc = 29, RuleNumExpr = 30, RuleCompare = 31
   };
 
   explicit DARICParser(antlr4::TokenStream *input);
@@ -66,6 +66,7 @@ public:
   class VarListContext;
   class ExprListContext;
   class PrintListItemContext;
+  class PrintStartingTicksContext;
   class PrintListContext;
   class ExprContext;
   class NumberContext;
@@ -606,20 +607,12 @@ public:
    
   };
 
-  class  PrintListTickContext : public PrintListItemContext {
-  public:
-    PrintListTickContext(PrintListItemContext *ctx);
-
-    antlr4::tree::TerminalNode *TICK();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
   class  PrintListExprContext : public PrintListItemContext {
   public:
     PrintListExprContext(PrintListItemContext *ctx);
 
     ExprContext *expr();
+    antlr4::tree::TerminalNode *TILDE();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -648,18 +641,44 @@ public:
 
   PrintListItemContext* printListItem();
 
+  class  PrintStartingTicksContext : public antlr4::ParserRuleContext {
+  public:
+    PrintStartingTicksContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+   
+    PrintStartingTicksContext() = default;
+    void copyFrom(PrintStartingTicksContext *context);
+    using antlr4::ParserRuleContext::copyFrom;
+
+    virtual size_t getRuleIndex() const override;
+
+   
+  };
+
+  class  PrintListTickContext : public PrintStartingTicksContext {
+  public:
+    PrintListTickContext(PrintStartingTicksContext *ctx);
+
+    std::vector<antlr4::tree::TerminalNode *> TICK();
+    antlr4::tree::TerminalNode* TICK(size_t i);
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  PrintStartingTicksContext* printStartingTicks();
+
   class  PrintListContext : public antlr4::ParserRuleContext {
   public:
     PrintListContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     std::vector<PrintListItemContext *> printListItem();
     PrintListItemContext* printListItem(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> TILDE();
-    antlr4::tree::TerminalNode* TILDE(size_t i);
+    PrintStartingTicksContext *printStartingTicks();
     std::vector<antlr4::tree::TerminalNode *> COMMA();
     antlr4::tree::TerminalNode* COMMA(size_t i);
     std::vector<antlr4::tree::TerminalNode *> SEMICOLON();
     antlr4::tree::TerminalNode* SEMICOLON(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> TICK();
+    antlr4::tree::TerminalNode* TICK(size_t i);
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;

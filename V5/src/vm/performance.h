@@ -1,3 +1,3 @@
 #pragma once
 
-const bool performance_build = true;
+const bool performance_build = false;

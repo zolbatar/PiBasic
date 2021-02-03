@@ -147,15 +147,15 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitPrintListTick(DARICParser::PrintListTickContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual antlrcpp::Any visitPrintListSPCP(DARICParser::PrintListSPCPContext *ctx) override {
     return visitChildren(ctx);
   }
 
   virtual antlrcpp::Any visitPrintListSPC(DARICParser::PrintListSPCContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitPrintListTick(DARICParser::PrintListTickContext *ctx) override {
     return visitChildren(ctx);
   }
 

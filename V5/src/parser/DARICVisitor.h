@@ -85,11 +85,11 @@ public:
 
     virtual antlrcpp::Any visitPrintListExpr(DARICParser::PrintListExprContext *context) = 0;
 
-    virtual antlrcpp::Any visitPrintListTick(DARICParser::PrintListTickContext *context) = 0;
-
     virtual antlrcpp::Any visitPrintListSPCP(DARICParser::PrintListSPCPContext *context) = 0;
 
     virtual antlrcpp::Any visitPrintListSPC(DARICParser::PrintListSPCContext *context) = 0;
+
+    virtual antlrcpp::Any visitPrintListTick(DARICParser::PrintListTickContext *context) = 0;
 
     virtual antlrcpp::Any visitPrintList(DARICParser::PrintListContext *context) = 0;
 

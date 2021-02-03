@@ -3,4 +3,6 @@ Type VertexTest(x,y,z)
 A!=VertexTest
 A!x = 123.45
 B%=100
+PRINT ~B%
 PRINT ,A!x,A!y,A!z,~B%
+PRINT A!x'A!y'A!z'~B%

@@ -81,19 +81,21 @@ void Debugger::debugger_disassembly()
                         g_env.graphics.colour(40, 40, 40);
                         int a = 25 - static_cast<int>(s.opcode.length());
                         for (int i = 0; i < a; i++) {
-                            g_env.graphics.print_text(disassembly_font, ".", -1, -1);
+                            g_env.graphics.print_text(disassembly_font, " ", -1, -1);
                         }
                         g_env.graphics.colour(100, 0, 255);
                         g_env.graphics.print_text(disassembly_font, s.type, -1, -1);
 
-                        g_env.graphics.colour(40, 40, 40);
-                        a = 20 - static_cast<int>(s.type.length());
-                        for (int i = 0; i < a; i++) {
-                            g_env.graphics.print_text(disassembly_font, ".", -1, -1);
-                        }
+                        if (s.operand.length() > 0) {
+                            g_env.graphics.colour(40, 40, 40);
+                            a = 20 - static_cast<int>(s.type.length());
+                            for (int i = 0; i < a; i++) {
+                                g_env.graphics.print_text(disassembly_font, " ", -1, -1);
+                            }
 
-                        g_env.graphics.colour(0, 100, 255);
-                        g_env.graphics.print_text(disassembly_font, s.operand, -1, -1);
+                            g_env.graphics.colour(0, 100, 255);
+                            g_env.graphics.print_text(disassembly_font, s.operand, -1, -1);
+                        }
 
                         g_env.graphics.print_text(prop_font, "\r", -1, -1);
                     }

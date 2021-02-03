@@ -21,6 +21,9 @@ antlrcpp::Any Compiler::visitStmtINPUT(DARICParser::StmtINPUTContext* context)
 antlrcpp::Any Compiler::visitPrintList(DARICParser::PrintListContext* context)
 {
     set_pos(context->start);
+    if (context->printStartingTicks() != NULL) {
+        visit(context->printStartingTicks());
+    }
     for (int i = 0; i < context->printListItem().size(); i++) {
         if (context->COMMA(i) != NULL) {
             print_justify = true;
@@ -30,8 +33,6 @@ antlrcpp::Any Compiler::visitPrintList(DARICParser::PrintListContext* context)
             print_justify = false;
             print_hex = false;
             print_semicolon_active = true;
-        } else if (context->TILDE(i) != NULL) {
-            print_hex = true;
         }
         visit(context->printListItem(i));
     }
@@ -48,6 +49,9 @@ antlrcpp::Any Compiler::visitPrintListExpr(DARICParser::PrintListExprContext* co
 {
     set_pos(context->start);
     visitChildren(context);
+    if (context->TILDE() != NULL) {
+        print_hex = true;
+    }
 
     // Work through the stack and print anything off
     while (stack_size() >= 1) {
@@ -62,8 +66,11 @@ antlrcpp::Any Compiler::visitPrintListExpr(DARICParser::PrintListExprContext* co
 antlrcpp::Any Compiler::visitPrintListTick(DARICParser::PrintListTickContext* context)
 {
     set_pos(context->start);
+    auto n = context->TICK().size();
+    for (auto i = 0; i < n; i++) {
+        insert_bytecode(Bytecodes::PRINT_NL, Type::NOTYPE);
+    }
     print_semicolon_active = false;
-    insert_bytecode(Bytecodes::PRINT_NL, Type::NOTYPE);
     return NULL;
 }
 
