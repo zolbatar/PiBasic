@@ -79,6 +79,8 @@ public:
 
     virtual antlrcpp::Any visitVarDeclType(DARICParser::VarDeclTypeContext *context) = 0;
 
+    virtual antlrcpp::Any visitVarDeclTypeArrayed(DARICParser::VarDeclTypeArrayedContext *context) = 0;
+
     virtual antlrcpp::Any visitVarDeclWithDimension(DARICParser::VarDeclWithDimensionContext *context) = 0;
 
     virtual antlrcpp::Any visitVarList(DARICParser::VarListContext *context) = 0;

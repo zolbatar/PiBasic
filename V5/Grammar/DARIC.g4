@@ -74,6 +74,7 @@ varDecl
     : var                                               #varDeclInd
     | var (LPAREN numExpr (COMMA numExpr)? RPAREN)*     #varDeclArrayed
     | typeVar varName                                   #varDeclType
+    | typeVar LPAREN numExpr RPAREN varName             #varDeclTypeArrayed
     ;
    
 varDeclWithDimension

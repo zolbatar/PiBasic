@@ -74,6 +74,8 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
         current_var.type = Type::TYPE_ARRAY;
         find_or_create_variable(VariableScope::GLOBAL);
 
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 1);
+        insert_bytecode(Bytecodes::ADD, Type::INTEGER);
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
         insert_bytecode(Bytecodes::MULTIPLY, Type::INTEGER);
         insert_instruction(Bytecodes::NEW_TYPE, Type::TYPE, current_var.id);

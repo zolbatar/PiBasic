@@ -146,7 +146,6 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
                         }
                     }
                 }
-
             } else {
                 insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
                 switch (current_var.field_type) {
@@ -196,18 +195,59 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
             if (last_array_dimensions != last_array_num_dimensions) {
                 error("Variable '" + saved.name + "', array dimension mismatch");
             }
-            auto a = current_var.field_type;
-            switch (type) {
+            switch (current_var.field_type) {
+            case Type::INTEGER:
+                switch (type) {
+                case Type::FLOAT:
+                    insert_bytecode(Bytecodes::F_TO_I, Type::NOTYPE);
+                    insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
+                    insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
+                    insert_instruction(Bytecodes::STORE_FIELD_ARRAY, Type::INTEGER, saved.id);
+                    break;
+                case Type::INTEGER:
+                    insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
+                    insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
+                    insert_instruction(Bytecodes::STORE_FIELD_ARRAY, Type::INTEGER, saved.id);
+                    break;
+                default:
+                    error("Failed conversion for assignment");
+                }
+                break;
+            case Type::FLOAT:
+                switch (type) {
+                case Type::INTEGER:
+                    insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
+                    insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
+                    insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
+                    insert_instruction(Bytecodes::STORE_FIELD_ARRAY, Type::FLOAT, saved.id);
+                    break;
+                case Type::FLOAT:
+                    insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
+                    insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
+                    insert_instruction(Bytecodes::STORE_FIELD_ARRAY, Type::FLOAT, saved.id);
+                    break;
+                default:
+                    error("Failed conversion for assignment");
+                    break;
+                }
+                break;
+            case Type::STRING:
+                switch (type) {
+                case Type::STRING:
+                    insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
+                    insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
+                    insert_instruction(Bytecodes::STORE_FIELD_ARRAY, Type::STRING, saved.id);
+                    break;
+                default:
+                    error("Failed conversion for assignment");
+                    break;
+                }
+                break;
             default:
-                std::stringstream s;
-                s << "Variable '" << saved.name << "', assigned value is of the wrong type";
-                error(s.str());
+                error("Unknown TYPE field variable type");
             }
             break;
         }
-        default:
-
-            error("Unknown type in assignment");
         }
     }
 

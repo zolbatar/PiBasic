@@ -185,6 +185,7 @@ protected:
     antlrcpp::Any visitVarDeclInd(DARICParser::VarDeclIndContext* context);
     antlrcpp::Any visitVarDeclType(DARICParser::VarDeclTypeContext* context);
     antlrcpp::Any visitVarDeclArrayed(DARICParser::VarDeclArrayedContext* context);
+    antlrcpp::Any visitVarDeclTypeArrayed(DARICParser::VarDeclTypeArrayedContext* context);
     antlrcpp::Any visitVarList(DARICParser::VarListContext* context);
     antlrcpp::Any visitJustVar(DARICParser::JustVarContext* context);
     antlrcpp::Any visitJustVarName(DARICParser::JustVarNameContext* context);

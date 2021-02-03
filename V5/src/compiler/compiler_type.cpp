@@ -26,7 +26,7 @@ antlrcpp::Any Compiler::visitStmtTYPE(DARICParser::StmtTYPEContext* context)
         auto name = context->varName()->getText();
 
         // Do we have it?
-/*        if (custom_types.count(name) > 0) {
+        /*        if (custom_types.count(name) > 0) {
             std::stringstream ss;
             ss << "Type '" << name << "' already exists";
             error(ss.str());
@@ -52,11 +52,38 @@ antlrcpp::Any Compiler::visitVarDeclType(DARICParser::VarDeclTypeContext* contex
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     set_pos(context->start);
-    current_var.name = context->typeVar()->getText();
+    visit(context->typeVar());
     current_var.field_name = context->varName()->getText();
     current_var.type = Type::TYPE;
     find_variable(true, true);
     last_array_dimensions = 0;
+    if (state == CompilerState::NOSTATE) {
+    }
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitVarDeclTypeArrayed(DARICParser::VarDeclTypeArrayedContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    visit(context->typeVar());
+    auto saved = current_var;
+    visit(context->numExpr());
+    ensure_stack_is_integer();
+    stack_pop();
+    last_array_dimensions = 1;
+
+    // Get field type
+    visit(context->varName());
+    current_var.field_name = current_var.name;
+    current_var.name = saved.name;
+    current_var.type = Type::TYPE_ARRAY;
+    find_variable(true, true);
+    last_array_dimensions = 1;
+    last_array_num_dimensions = 1; 
+    if (state == CompilerState::NOSTATE) {
+    }
     return NULL;
 }
 

@@ -549,6 +549,19 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  VarDeclTypeArrayedContext : public VarDeclContext {
+  public:
+    VarDeclTypeArrayedContext(VarDeclContext *ctx);
+
+    TypeVarContext *typeVar();
+    antlr4::tree::TerminalNode *LPAREN();
+    NumExprContext *numExpr();
+    antlr4::tree::TerminalNode *RPAREN();
+    VarNameContext *varName();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   VarDeclContext* varDecl();
 
   class  VarDeclWithDimensionContext : public antlr4::ParserRuleContext {
