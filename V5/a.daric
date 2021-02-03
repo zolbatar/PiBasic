@@ -2,3 +2,4 @@ Type VertexTest(x,y,z)
 
 A!=VertexTest
 A!x = 123.45
+PRINT A!x

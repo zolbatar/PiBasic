@@ -49,6 +49,10 @@ public:
 
     virtual antlrcpp::Any visitNumVarIntegerArray(DARICParser::NumVarIntegerArrayContext *context) = 0;
 
+    virtual antlrcpp::Any visitNumVarFloatField(DARICParser::NumVarFloatFieldContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumVarIntegerField(DARICParser::NumVarIntegerFieldContext *context) = 0;
+
     virtual antlrcpp::Any visitNumVarString(DARICParser::NumVarStringContext *context) = 0;
 
     virtual antlrcpp::Any visitNumVarStringArray(DARICParser::NumVarStringArrayContext *context) = 0;
@@ -69,9 +73,9 @@ public:
 
     virtual antlrcpp::Any visitVarDeclInd(DARICParser::VarDeclIndContext *context) = 0;
 
-    virtual antlrcpp::Any visitVarDeclType(DARICParser::VarDeclTypeContext *context) = 0;
-
     virtual antlrcpp::Any visitVarDeclArrayed(DARICParser::VarDeclArrayedContext *context) = 0;
+
+    virtual antlrcpp::Any visitVarDeclType(DARICParser::VarDeclTypeContext *context) = 0;
 
     virtual antlrcpp::Any visitVarDeclWithDimension(DARICParser::VarDeclWithDimensionContext *context) = 0;
 

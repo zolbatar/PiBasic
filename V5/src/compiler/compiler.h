@@ -157,7 +157,7 @@ protected:
     antlrcpp::Any visitString(DARICParser::StringContext* context);
 
     /* Varibles */
-    bool find_variable();
+    bool find_variable(bool field, bool fire_error);
     void find_or_create_variable(VariableScope scope);
     void set_custom_type(std::string type);
     antlrcpp::Any visitVar(DARICParser::VarContext* context);
@@ -168,6 +168,8 @@ protected:
     antlrcpp::Any visitNumVarIntegerArray(DARICParser::NumVarIntegerArrayContext* context);
     antlrcpp::Any visitNumVarString(DARICParser::NumVarStringContext* context);
     antlrcpp::Any visitNumVarStringArray(DARICParser::NumVarStringArrayContext* context);
+    antlrcpp::Any visitNumVarFloatField(DARICParser::NumVarFloatFieldContext* context);
+    antlrcpp::Any visitNumVarIntegerField(DARICParser::NumVarIntegerFieldContext* context);
     antlrcpp::Any visitStrVar(DARICParser::StrVarContext* context);
     antlrcpp::Any visitVarName(DARICParser::VarNameContext* context);
     antlrcpp::Any visitVarNameInteger(DARICParser::VarNameIntegerContext* context);

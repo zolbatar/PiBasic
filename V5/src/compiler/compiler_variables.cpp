@@ -83,21 +83,20 @@ antlrcpp::Any Compiler::visitNumVarFloat(DARICParser::NumVarFloatContext* contex
 {
     set_pos(context->start);
     visit(context->varName());
+    current_var.type = Type::FLOAT;
+    if (state == CompilerState::NOSTATE) {
 
-    // Is this a custom type?
-    if (custom_types.count(current_var.name) == 1) {
-        current_var.type = Type::TYPE;
-        auto f = custom_types.find(current_var.name);
-        last_type_num_dimensions = static_cast<UINT32>((*f).second.members.size());
-    } else {
-        current_var.type = Type::FLOAT;
-        if (state == CompilerState::NOSTATE) {
-            if (!find_variable()) {
-                error("Variable '" + current_var.name + "' not found");
-            }
-            insert_instruction(Bytecodes::LOAD, Type::FLOAT, current_var.id);
-            stack_push(Type::FLOAT);
+        // Is this a type?
+        if (custom_types.count(current_var.name) == 1) {
+            current_var.type = Type::TYPE;
+            auto f = custom_types.find(current_var.name);
+            last_type_num_dimensions = static_cast<UINT32>((*f).second.members.size());
+            return NULL;
         }
+
+        find_variable(false, true);
+        insert_instruction(Bytecodes::LOAD, Type::FLOAT, current_var.id);
+        stack_push(Type::FLOAT);
     }
     return NULL;
 }
@@ -108,9 +107,7 @@ antlrcpp::Any Compiler::visitNumVarInteger(DARICParser::NumVarIntegerContext* co
     visit(context->varNameInteger());
     current_var.type = Type::INTEGER;
     if (state == CompilerState::NOSTATE) {
-        if (!find_variable()) {
-            error("Variable '" + current_var.name + "' not found");
-        }
+        find_variable(false, true);
         insert_instruction(Bytecodes::LOAD, Type::INTEGER, current_var.id);
         stack_push(Type::INTEGER);
     }
@@ -123,9 +120,7 @@ antlrcpp::Any Compiler::visitNumVarString(DARICParser::NumVarStringContext* cont
     visit(context->varNameString());
     current_var.type = Type::STRING;
     if (state == CompilerState::NOSTATE) {
-        if (!find_variable()) {
-            error("Variable '" + current_var.name + "' not found");
-        }
+        !find_variable(false, true);
         insert_instruction(Bytecodes::LOAD, Type::STRING, current_var.id);
         stack_push(Type::STRING);
     }
@@ -144,7 +139,7 @@ antlrcpp::Any Compiler::visitVarList(DARICParser::VarListContext* context)
     return visitChildren(context);
 }
 
-bool Compiler::find_variable()
+bool Compiler::find_variable(bool field, bool fire_error)
 {
     // Search locals first (if valid), then globals
     if (locals.count(current_var.name) == 1 && inside_function) {
@@ -153,6 +148,17 @@ bool Compiler::find_variable()
         current_var.id = var_id | LocalVariableFlag;
         current_var.custom_type_name = (*g).second.custom_type_name;
         current_var.type = (*g).second.type;
+
+        if (field) {
+            auto f = custom_types.find(current_var.custom_type_name);
+            if ((*f).second.members.count(current_var.field_name) == 0) {
+                error("Field '" + current_var.field_name + "' for variable '" + current_var.name + "' not found");
+            }
+            auto field = (*f).second.members.find(current_var.field_name);
+            current_var.field_type = (*field).second.type;
+            current_var.field_index = (*field).second.index;
+        }
+
         return true;
     } else if (globals.count(current_var.name) == 1) {
         auto g = globals.find(current_var.name);
@@ -160,8 +166,22 @@ bool Compiler::find_variable()
         current_var.id = var_id;
         current_var.custom_type_name = (*g).second.custom_type_name;
         current_var.type = (*g).second.type;
+
+        if (field) {
+            auto f = custom_types.find(current_var.custom_type_name);
+            if ((*f).second.members.count(current_var.field_name) == 0) {
+                error("Field '" + current_var.field_name + "' for variable '" + current_var.name + "' not found");
+            }
+            auto field = (*f).second.members.find(current_var.field_name);
+            current_var.field_type = (*field).second.type;
+            current_var.field_index = (*field).second.index;
+        }
+
         return true;
     } else {
+        if (fire_error) {
+            error("Variable (or type) '" + current_var.name + "' not found");
+        }
         return false;
     }
 }
@@ -169,7 +189,7 @@ bool Compiler::find_variable()
 void Compiler::find_or_create_variable(VariableScope scope)
 {
     // Try and find first
-    if (find_variable())
+    if (find_variable(false, false))
         return;
     current_var.id = 0;
     if (scope == VariableScope::GLOBAL) {

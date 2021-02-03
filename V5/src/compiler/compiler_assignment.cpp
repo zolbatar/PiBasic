@@ -4,17 +4,19 @@
 antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
 {
     set_pos(context->start);
-    state = CompilerState::ASSIGNMENT;
     for (auto i = 0; i < context->varDecl().size(); i++) {
 
         // Get variable name and type
+        state = CompilerState::ASSIGNMENT;
         current_var.field_index = -1;
         visit(context->varDecl(i));
         find_or_create_variable(VariableScope::GLOBAL);
         auto saved = current_var;
 
         // Get value
+        state = CompilerState::NOSTATE;
         visit(context->expr(i));
+        state = CompilerState::ASSIGNMENT;
         Type type;
 
         // Is this a type creation thing?

@@ -38,6 +38,8 @@ numVar
     | varName (LPAREN numExpr (COMMA numExpr)? RPAREN)*             #numVarFloatArray
     | varNameInteger                                                #numVarInteger
     | varNameInteger (LPAREN numExpr (COMMA numExpr)? RPAREN)*      #numVarIntegerArray
+    | typeVar varName                                               #numVarFloatField
+    | typeVar varNameInteger                                        #numVarIntegerField
     ;
 
 strVar
@@ -69,8 +71,8 @@ varNameType
 
 varDecl
     : var                                              #varDeclInd
-    | typeVar varName                                  #varDeclType
     | var (LPAREN numExpr (COMMA numExpr)? RPAREN)*    #varDeclArrayed
+    | typeVar varName                                  #varDeclType
     ;
    
 varDeclWithDimension

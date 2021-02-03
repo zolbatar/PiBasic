@@ -82,7 +82,7 @@ antlrcpp::Any Compiler::visitNumVarFloatArray(DARICParser::NumVarFloatArrayConte
     }
     visit(context->varName());
     if (state == CompilerState::NOSTATE) {
-        find_variable();
+        find_variable(false, true);
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
         insert_instruction(Bytecodes::LOAD_ARRAY, Type::FLOAT_ARRAY, current_var.id);
         stack_push(Type::FLOAT);
@@ -102,7 +102,7 @@ antlrcpp::Any Compiler::visitNumVarIntegerArray(DARICParser::NumVarIntegerArrayC
     }
     visit(context->varNameInteger());
     if (state == CompilerState::NOSTATE) {
-        find_variable();
+        find_variable(false, true);
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
         insert_instruction(Bytecodes::LOAD_ARRAY, Type::INTEGER_ARRAY, current_var.id);
         stack_push(Type::INTEGER);
@@ -122,7 +122,7 @@ antlrcpp::Any Compiler::visitNumVarStringArray(DARICParser::NumVarStringArrayCon
     }
     visit(context->varNameString());
     if (state == CompilerState::NOSTATE) {
-        find_variable();
+        find_variable(false, true);
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
         insert_instruction(Bytecodes::LOAD_ARRAY, Type::STRING_ARRAY, current_var.id);
         stack_push(Type::STRING);

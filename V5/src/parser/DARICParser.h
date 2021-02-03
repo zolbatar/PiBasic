@@ -280,6 +280,16 @@ public:
    
   };
 
+  class  NumVarFloatFieldContext : public NumVarContext {
+  public:
+    NumVarFloatFieldContext(NumVarContext *ctx);
+
+    TypeVarContext *typeVar();
+    VarNameContext *varName();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  NumVarFloatArrayContext : public NumVarContext {
   public:
     NumVarFloatArrayContext(NumVarContext *ctx);
@@ -327,6 +337,16 @@ public:
   public:
     NumVarIntegerContext(NumVarContext *ctx);
 
+    VarNameIntegerContext *varNameInteger();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  NumVarIntegerFieldContext : public NumVarContext {
+  public:
+    NumVarIntegerFieldContext(NumVarContext *ctx);
+
+    TypeVarContext *typeVar();
     VarNameIntegerContext *varNameInteger();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;

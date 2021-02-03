@@ -21,7 +21,19 @@ antlrcpp::Any Compiler::visitStmtINPUT(DARICParser::StmtINPUTContext* context)
 antlrcpp::Any Compiler::visitPrintList(DARICParser::PrintListContext* context)
 {
     set_pos(context->start);
-    return visitChildren(context);
+    for (int i = 0; i < context->printListItem().size(); i++) {
+        visit(context->printListItem(i));
+        if (context->COMMA(i) != NULL) {
+            print_justify = true;
+            print_hex = false;
+            print_semicolon_active = false;
+        } else if (context->SEMICOLON(i) != NULL) {
+            print_justify = false;
+            print_hex = false;
+            print_semicolon_active = true;
+        }
+    }
+    return NULL;
 }
 
 antlrcpp::Any Compiler::visitPrintListItem(DARICParser::PrintListItemContext* context)
@@ -44,32 +56,6 @@ antlrcpp::Any Compiler::visitPrintListExpr(DARICParser::PrintListExprContext* co
 
     return NULL;
 }
-
-/*antlrcpp::Any Compiler::visitPrintListComma(DARICParser::PrintListCommaContext* context)
-{
-    set_pos(context->start);
-    print_justify = true;
-    print_hex = false;
-    print_semicolon_active = false;
-    return NULL;
-}
-
-antlrcpp::Any Compiler::visitPrintListSemicolon(DARICParser::PrintListSemicolonContext* context)
-{
-    set_pos(context->start);
-    print_justify = false;
-    print_hex = false;
-    print_semicolon_active = true;
-    return NULL;
-}*/
-
-/*antlrcpp::Any Compiler::visitPrintListTilde(DARICParser::PrintListTildeContext* context)
-{
-    set_pos(context->start);
-    print_hex = true;
-    print_semicolon_active = false;
-    return NULL;
-}*/
 
 antlrcpp::Any Compiler::visitPrintListTick(DARICParser::PrintListTickContext* context)
 {

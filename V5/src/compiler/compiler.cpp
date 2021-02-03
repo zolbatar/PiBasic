@@ -7,6 +7,8 @@ void Compiler::reset()
     locals.clear();
     local_var_index = 0;
     vm->helper_bytecodes().clear();
+    line_number = 0;
+    char_position = 0;
 }
 
 Compiler::Compiler()
