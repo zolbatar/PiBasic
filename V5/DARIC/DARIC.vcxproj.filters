@@ -240,6 +240,9 @@
     <ClCompile Include="..\src\debugger\debugger_disassembly.cpp">
       <Filter>Source Files\Debugger</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_token.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">

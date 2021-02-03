@@ -15,6 +15,7 @@ linenumber
 
 stmt
     : DIM varDeclWithDimension (COMMA varDeclWithDimension)*        # stmtDIM
+    | END                                                           # stmtEND
     | INPUT (strExpr COMMA)? varList                                # stmtINPUT
     | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*     # stmtLET
     | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                # stmtLOCAL
@@ -218,6 +219,7 @@ compare
    
 // Lexer stuff
 DIM             : 'DIM' | 'Dim' | 'dim' ;
+END             : 'END' | 'End' | 'end' ;
 FIELD           : 'FIELD' | 'Field' | ' field' ;
 INPUT           : 'INPUT' | 'Input' | 'input' ;
 GLOBAL          : 'GLOBAL' | 'Global' | 'global' ;

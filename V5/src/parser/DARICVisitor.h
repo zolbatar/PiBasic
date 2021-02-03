@@ -27,6 +27,8 @@ public:
 
     virtual antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtEND(DARICParser::StmtENDContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext *context) = 0;

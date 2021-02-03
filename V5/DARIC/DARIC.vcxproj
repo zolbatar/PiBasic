@@ -184,6 +184,7 @@
     <ClCompile Include="..\src\compiler\compiler_stack.cpp" />
     <ClCompile Include="..\src\compiler\compiler_string_expression.cpp" />
     <ClCompile Include="..\src\compiler\compiler_string_function.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_token.cpp" />
     <ClCompile Include="..\src\compiler\compiler_type.cpp" />
     <ClCompile Include="..\src\compiler\compiler_variables.cpp" />
     <ClCompile Include="..\src\compiler\visitor.cpp" />

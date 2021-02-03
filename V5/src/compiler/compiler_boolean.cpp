@@ -2,6 +2,8 @@
 
 antlrcpp::Any Compiler::visitNumExprNOT(DARICParser::NumExprNOTContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_integer();
@@ -11,6 +13,8 @@ antlrcpp::Any Compiler::visitNumExprNOT(DARICParser::NumExprNOTContext* context)
 
 antlrcpp::Any Compiler::visitNumExprAND(DARICParser::NumExprANDContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
@@ -21,6 +25,8 @@ antlrcpp::Any Compiler::visitNumExprAND(DARICParser::NumExprANDContext* context)
 
 antlrcpp::Any Compiler::visitNumExprOR(DARICParser::NumExprORContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
@@ -31,6 +37,8 @@ antlrcpp::Any Compiler::visitNumExprOR(DARICParser::NumExprORContext* context)
 
 antlrcpp::Any Compiler::visitNumExprEOR(DARICParser::NumExprEORContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));

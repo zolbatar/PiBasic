@@ -2,6 +2,8 @@
 
 antlrcpp::Any Compiler::visitStmtPRINT(DARICParser::StmtPRINTContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     print_semicolon_active = false;
     print_hex = false;
@@ -15,11 +17,16 @@ antlrcpp::Any Compiler::visitStmtPRINT(DARICParser::StmtPRINTContext* context)
 
 antlrcpp::Any Compiler::visitStmtINPUT(DARICParser::StmtINPUTContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     return NULL;
 }
+
 antlrcpp::Any Compiler::visitPrintList(DARICParser::PrintListContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     if (context->printStartingTicks() != NULL) {
         visit(context->printStartingTicks());
@@ -41,12 +48,16 @@ antlrcpp::Any Compiler::visitPrintList(DARICParser::PrintListContext* context)
 
 antlrcpp::Any Compiler::visitPrintListItem(DARICParser::PrintListItemContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     return visitChildren(context);
 }
 
 antlrcpp::Any Compiler::visitPrintListExpr(DARICParser::PrintListExprContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visitChildren(context);
     if (context->TILDE() != NULL) {
@@ -65,6 +76,8 @@ antlrcpp::Any Compiler::visitPrintListExpr(DARICParser::PrintListExprContext* co
 
 antlrcpp::Any Compiler::visitPrintListTick(DARICParser::PrintListTickContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     auto n = context->TICK().size();
     for (auto i = 0; i < n; i++) {
@@ -76,6 +89,8 @@ antlrcpp::Any Compiler::visitPrintListTick(DARICParser::PrintListTickContext* co
 
 antlrcpp::Any Compiler::visitPrintListSPCP(DARICParser::PrintListSPCPContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     print_semicolon_active = false;
     visit(context->numExpr());
@@ -87,6 +102,8 @@ antlrcpp::Any Compiler::visitPrintListSPCP(DARICParser::PrintListSPCPContext* co
 
 antlrcpp::Any Compiler::visitPrintListSPC(DARICParser::PrintListSPCContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     print_semicolon_active = false;
     visit(context->numExpr());

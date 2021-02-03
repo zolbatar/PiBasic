@@ -38,7 +38,7 @@ void Interactive::welcome_prompt()
     g_env.graphics.colour(0, 0, 255);
     g_env.graphics.print_console("C");
     g_env.graphics.colour(255, 255, 255);
-    g_env.graphics.print_console(" " + g_env.version + ", https://dariclang.com\r\r");
+    g_env.graphics.print_console(" " + g_env.version + ", http://dariclang.com\r\r");
     g_env.graphics.print_console("Type ");
     g_env.graphics.colour(255, 255, 0);
     g_env.graphics.print_console("WELCOME");
@@ -50,7 +50,7 @@ void Interactive::welcome_prompt()
     g_env.graphics.print_console(" to run the test suite\r");
     g_env.graphics.print_console("Commands: ");
     g_env.graphics.colour(255, 255, 0);
-    g_env.graphics.print_console("EXEC LOAD NEW RUN SAVE QUIT\r\r");
+    g_env.graphics.print_console("EXEC LIST LOAD NEW RUN SAVE QUIT\r\r");
     g_env.graphics.colour(255, 255, 255);
 }
 

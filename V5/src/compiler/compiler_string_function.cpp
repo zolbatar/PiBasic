@@ -2,12 +2,16 @@
 
 antlrcpp::Any Compiler::visitStrFunc(DARICParser::StrFuncContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     return visitChildren(context);
 }
 
 antlrcpp::Any Compiler::visitStrFuncTIMES(DARICParser::StrFuncTIMESContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     insert_bytecode(Bytecodes::TIMES, Type::STRING);
     stack_push(Type::STRING);
@@ -16,6 +20,8 @@ antlrcpp::Any Compiler::visitStrFuncTIMES(DARICParser::StrFuncTIMESContext* cont
 
 antlrcpp::Any Compiler::visitStrFuncCHRSP(DARICParser::StrFuncCHRSPContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_integer();
@@ -27,6 +33,8 @@ antlrcpp::Any Compiler::visitStrFuncCHRSP(DARICParser::StrFuncCHRSPContext* cont
 
 antlrcpp::Any Compiler::visitStrFuncCHRS(DARICParser::StrFuncCHRSContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_integer();
@@ -38,6 +46,8 @@ antlrcpp::Any Compiler::visitStrFuncCHRS(DARICParser::StrFuncCHRSContext* contex
 
 antlrcpp::Any Compiler::visitStrFuncLEFTS(DARICParser::StrFuncLEFTSContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->strExpr());
     ensure_stack_is_string();
@@ -52,6 +62,8 @@ antlrcpp::Any Compiler::visitStrFuncLEFTS(DARICParser::StrFuncLEFTSContext* cont
 
 antlrcpp::Any Compiler::visitStrFuncMIDS3(DARICParser::StrFuncMIDS3Context* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->strExpr());
     ensure_stack_is_string();
@@ -69,6 +81,8 @@ antlrcpp::Any Compiler::visitStrFuncMIDS3(DARICParser::StrFuncMIDS3Context* cont
 
 antlrcpp::Any Compiler::visitStrFuncMIDS2(DARICParser::StrFuncMIDS2Context* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->strExpr());
     ensure_stack_is_string();
@@ -84,6 +98,8 @@ antlrcpp::Any Compiler::visitStrFuncMIDS2(DARICParser::StrFuncMIDS2Context* cont
 
 antlrcpp::Any Compiler::visitStrFuncRIGHTS(DARICParser::StrFuncRIGHTSContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->strExpr());
     ensure_stack_is_string();
@@ -98,6 +114,8 @@ antlrcpp::Any Compiler::visitStrFuncRIGHTS(DARICParser::StrFuncRIGHTSContext* co
 
 antlrcpp::Any Compiler::visitStrFuncSTRS(DARICParser::StrFuncSTRSContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_float();
@@ -109,6 +127,8 @@ antlrcpp::Any Compiler::visitStrFuncSTRS(DARICParser::StrFuncSTRSContext* contex
 
 antlrcpp::Any Compiler::visitStrFuncSTRSHEX(DARICParser::StrFuncSTRSHEXContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_float();
@@ -120,6 +140,8 @@ antlrcpp::Any Compiler::visitStrFuncSTRSHEX(DARICParser::StrFuncSTRSHEXContext* 
 
 antlrcpp::Any Compiler::visitStrFuncSTRINGS(DARICParser::StrFuncSTRINGSContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_integer();

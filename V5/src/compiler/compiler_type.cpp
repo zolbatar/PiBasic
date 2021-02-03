@@ -2,6 +2,8 @@
 
 antlrcpp::Any Compiler::visitTypeVarType(DARICParser::TypeVarTypeContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->varNameType());
     current_var.type = Type::TYPE;
@@ -47,16 +49,21 @@ antlrcpp::Any Compiler::visitStmtTYPE(DARICParser::StmtTYPEContext* context)
 
 antlrcpp::Any Compiler::visitVarDeclType(DARICParser::VarDeclTypeContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     current_var.name = context->typeVar()->getText();
     current_var.field_name = context->varName()->getText();
     current_var.type = Type::TYPE;
     find_variable(true, true);
+    last_array_dimensions = 0;
     return NULL;
 }
 
 antlrcpp::Any Compiler::visitNumVarFloatField(DARICParser::NumVarFloatFieldContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     current_var.name = context->typeVar()->getText();
     current_var.field_name = context->varName()->getText();
@@ -71,6 +78,8 @@ antlrcpp::Any Compiler::visitNumVarFloatField(DARICParser::NumVarFloatFieldConte
 
 antlrcpp::Any Compiler::visitNumVarIntegerField(DARICParser::NumVarIntegerFieldContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     current_var.name = context->typeVar()->getText();
     current_var.field_name = context->varNameInteger()->getText();

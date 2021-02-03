@@ -65,6 +65,9 @@ private:
     UINT32 global_var_index = 0;
     std::map<std::string, Boxed> globals;
 
+    // Arrays
+    UINT32 last_array_dimensions = 0;
+
     // Custom types
     UINT32 custom_type_index = 0;
     std::map<std::string, CustomType> custom_types;
@@ -142,6 +145,7 @@ protected:
     /* Statements */
     antlrcpp::Any visitStmt(DARICParser::StmtContext* context);
     antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext* context);
+    antlrcpp::Any visitStmtEND(DARICParser::StmtENDContext* context);
     antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext* context);
     antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext* context);
     antlrcpp::Any visitStmtLOCAL(DARICParser::StmtLOCALContext* context);

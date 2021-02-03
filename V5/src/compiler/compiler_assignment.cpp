@@ -3,6 +3,8 @@
 
 antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     for (auto i = 0; i < context->varDecl().size(); i++) {
 
@@ -42,9 +44,7 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
                 insert_instruction(Bytecodes::STORE, Type::INTEGER, saved.id);
                 break;
             default:
-                std::stringstream s;
-                s << "Variable '" << saved.name << "', assigned value is of the wrong type";
-                error(s.str());
+                error("Variable '" + saved.name + "', assigned value is of the wrong type");
             }
             break;
         case Type::FLOAT:
@@ -57,9 +57,7 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
                 insert_instruction(Bytecodes::STORE, Type::FLOAT, saved.id);
                 break;
             default:
-                std::stringstream s;
-                s << "Variable '" << saved.name << "', assigned value is of the wrong type";
-                error(s.str());
+                error("Variable '" + saved.name + "', assigned value is of the wrong type");
             }
             break;
         case Type::STRING:
@@ -68,12 +66,13 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
                 insert_instruction(Bytecodes::STORE, Type::STRING, saved.id);
                 break;
             default:
-                std::stringstream s;
-                s << "Variable '" << saved.name << "', assigned value is of the wrong type";
-                error(s.str());
+                error("Variable '" + saved.name + "', assigned value is of the wrong type");
             }
             break;
         case Type::INTEGER_ARRAY:
+            if (last_array_dimensions != last_array_num_dimensions) {
+                error("Variable '" + saved.name + "', array dimension mismatch");
+            }
             switch (type) {
             case Type::FLOAT:
                 insert_bytecode(Bytecodes::F_TO_I, Type::NOTYPE);
@@ -81,14 +80,15 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
             case Type::INTEGER:
                 break;
             default:
-                std::stringstream s;
-                s << "Variable '" << saved.name << "', assigned value is of the wrong type";
-                error(s.str());
+                error("Variable '" + saved.name + "', assigned value is of the wrong type");
             }
             insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
             insert_instruction(Bytecodes::STORE_ARRAY, Type::INTEGER_ARRAY, saved.id);
             break;
         case Type::FLOAT_ARRAY:
+            if (last_array_dimensions != last_array_num_dimensions) {
+                error("Variable '" + saved.name + "', array dimension mismatch");
+            }
             switch (type) {
             case Type::INTEGER:
                 insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
@@ -96,21 +96,20 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
             case Type::FLOAT:
                 break;
             default:
-                std::stringstream s;
-                s << "Variable '" << saved.name << "', assigned value is of the wrong type";
-                error(s.str());
+                error("Variable '" + saved.name + "', assigned value is of the wrong type");
             }
             insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
             insert_instruction(Bytecodes::STORE_ARRAY, Type::FLOAT_ARRAY, saved.id);
             break;
         case Type::STRING_ARRAY:
+            if (last_array_dimensions != last_array_num_dimensions) {
+                error("Variable '" + saved.name + "', array dimension mismatch");
+            }
             switch (type) {
             case Type::STRING:
                 break;
             default:
-                std::stringstream s;
-                s << "Variable '" << saved.name << "', assigned value is of the wrong type";
-                error(s.str());
+                error("Variable '" + saved.name + "', assigned value is of the wrong type");
             }
             insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
             insert_instruction(Bytecodes::STORE_ARRAY, Type::STRING_ARRAY, saved.id);
@@ -193,7 +192,21 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
                 }
             }
             break;
+        case Type::TYPE_ARRAY: {
+            if (last_array_dimensions != last_array_num_dimensions) {
+                error("Variable '" + saved.name + "', array dimension mismatch");
+            }
+            auto a = current_var.field_type;
+            switch (type) {
+            default:
+                std::stringstream s;
+                s << "Variable '" << saved.name << "', assigned value is of the wrong type";
+                error(s.str());
+            }
+            break;
+        }
         default:
+
             error("Unknown type in assignment");
         }
     }
@@ -204,6 +217,8 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
 
 antlrcpp::Any Compiler::visitStmtLOCAL(DARICParser::StmtLOCALContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     return visitChildren(context);
 }

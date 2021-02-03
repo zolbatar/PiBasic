@@ -81,18 +81,21 @@ antlrcpp::Any Compiler::visitVarDecl(DARICParser::VarDeclContext* context)
 
 antlrcpp::Any Compiler::visitNumVarFloat(DARICParser::NumVarFloatContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->varName());
     current_var.type = Type::FLOAT;
-    if (state != CompilerState::ASSIGNMENT) {
 
-        // Is this a type?
-        if (custom_types.count(current_var.name) == 1) {
-            current_var.type = Type::TYPE;
-            auto f = custom_types.find(current_var.name);
-            last_type_num_dimensions = static_cast<UINT32>((*f).second.members.size());
-            return NULL;
-        }
+    // Is this a type?
+    if (custom_types.count(current_var.name) == 1) {
+        current_var.type = Type::TYPE;
+        auto f = custom_types.find(current_var.name);
+        last_type_num_dimensions = static_cast<UINT32>((*f).second.members.size());
+        return NULL;
+    }
+
+    if (state == CompilerState::NOSTATE) {
 
         find_variable(false, true);
         insert_instruction(Bytecodes::LOAD, Type::FLOAT, current_var.id);
@@ -103,10 +106,12 @@ antlrcpp::Any Compiler::visitNumVarFloat(DARICParser::NumVarFloatContext* contex
 
 antlrcpp::Any Compiler::visitNumVarInteger(DARICParser::NumVarIntegerContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->varNameInteger());
     current_var.type = Type::INTEGER;
-    if (state != CompilerState::ASSIGNMENT) {
+    if (state == CompilerState::NOSTATE) {
         find_variable(false, true);
         insert_instruction(Bytecodes::LOAD, Type::INTEGER, current_var.id);
         stack_push(Type::INTEGER);
@@ -116,6 +121,8 @@ antlrcpp::Any Compiler::visitNumVarInteger(DARICParser::NumVarIntegerContext* co
 
 antlrcpp::Any Compiler::visitNumVarString(DARICParser::NumVarStringContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->varNameString());
     current_var.type = Type::STRING;
@@ -129,7 +136,10 @@ antlrcpp::Any Compiler::visitNumVarString(DARICParser::NumVarStringContext* cont
 
 antlrcpp::Any Compiler::visitVarDeclInd(DARICParser::VarDeclIndContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
+    last_array_dimensions = 0;
     return visitChildren(context);
 }
 
@@ -150,6 +160,9 @@ bool Compiler::find_variable(bool field, bool fire_error)
         current_var.type = (*g).second.get_type();
 
         if (field) {
+            if (custom_types.count(current_var.custom_type_name) == 0) {
+                error("Type '" + current_var.custom_type_name + "' for variable '" + current_var.name + "' not found");
+            }
             auto f = custom_types.find(current_var.custom_type_name);
             if ((*f).second.members.count(current_var.field_name) == 0) {
                 error("Field '" + current_var.field_name + "' for variable '" + current_var.name + "' not found");
@@ -168,6 +181,9 @@ bool Compiler::find_variable(bool field, bool fire_error)
         current_var.type = (*g).second.get_type();
 
         if (field) {
+            if (custom_types.count(current_var.custom_type_name) == 0) {
+                error("Type '" + current_var.custom_type_name + "' for variable '" + current_var.name + "' not found");
+            }
             auto f = custom_types.find(current_var.custom_type_name);
             if ((*f).second.members.count(current_var.field_name) == 0) {
                 error("Field '" + current_var.field_name + "' for variable '" + current_var.name + "' not found");

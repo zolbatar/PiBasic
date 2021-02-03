@@ -2,6 +2,8 @@
 
 antlrcpp::Any Compiler::visitNumExprHat(DARICParser::NumExprHatContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
@@ -13,6 +15,8 @@ antlrcpp::Any Compiler::visitNumExprHat(DARICParser::NumExprHatContext* context)
 
 antlrcpp::Any Compiler::visitNumExprMultiply(DARICParser::NumExprMultiplyContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
@@ -24,6 +28,8 @@ antlrcpp::Any Compiler::visitNumExprMultiply(DARICParser::NumExprMultiplyContext
 
 antlrcpp::Any Compiler::visitNumExprDivide(DARICParser::NumExprDivideContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
@@ -35,6 +41,8 @@ antlrcpp::Any Compiler::visitNumExprDivide(DARICParser::NumExprDivideContext* co
 
 antlrcpp::Any Compiler::visitNumExprDIV(DARICParser::NumExprDIVContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
@@ -58,6 +66,8 @@ antlrcpp::Any Compiler::visitNumExprDIV(DARICParser::NumExprDIVContext* context)
 
 antlrcpp::Any Compiler::visitNumExprMOD(DARICParser::NumExprMODContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
@@ -81,6 +91,8 @@ antlrcpp::Any Compiler::visitNumExprMOD(DARICParser::NumExprMODContext* context)
 
 antlrcpp::Any Compiler::visitNumExprPlus(DARICParser::NumExprPlusContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
@@ -92,6 +104,8 @@ antlrcpp::Any Compiler::visitNumExprPlus(DARICParser::NumExprPlusContext* contex
 
 antlrcpp::Any Compiler::visitNumExprSubtract(DARICParser::NumExprSubtractContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
@@ -103,6 +117,8 @@ antlrcpp::Any Compiler::visitNumExprSubtract(DARICParser::NumExprSubtractContext
 
 antlrcpp::Any Compiler::visitNumExprSHL(DARICParser::NumExprSHLContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
@@ -115,6 +131,8 @@ antlrcpp::Any Compiler::visitNumExprSHL(DARICParser::NumExprSHLContext* context)
 
 antlrcpp::Any Compiler::visitNumExprSHR(DARICParser::NumExprSHRContext* context)
 {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));

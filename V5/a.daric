@@ -1,13 +1,21 @@
+DIM B!(5, VertexTest)
+
+END
+
+DIM A(100)
+A(100)=0
+
+TYPE V3D(X,Y,Z):DIM A!(10,V3D):A!X=0
+
+
 Type VertexTest(x,y,z)
 
-REM A!=VertexTest
-REM A!x = 123.45
-REM B%=100
-REM PRINT ~B%
-REM PRINT ,A!x,A!y,A!z,~B%
-REM PRINT A!x'A!y'A!z'~B%
+A!=VertexTest
+A!x = 123.45
+B%=100
+PRINT ~B%
+PRINT ,A!x,A!y,A!z,~B%
+PRINT A!x'A!y'A!z'~B%
 
-REM DIM A(100,10)
-DIM B!(5, VertexTest)
 
 REM B!(4)y = 100.0
