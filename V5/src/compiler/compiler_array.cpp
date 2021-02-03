@@ -9,10 +9,6 @@ antlrcpp::Any Compiler::visitStmtDIM(DARICParser::StmtDIMContext* context)
         // Get variable name and type
         visit(context->varDeclWithDimension(i));
         find_or_create_variable(VariableScope::GLOBAL);
-
-        // Set number of dimensions
-        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
-        insert_instruction(Bytecodes::DIM, current_var.type, current_var.id);
     }
 
     state = CompilerState::NOSTATE;
@@ -23,34 +19,63 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
 {
     set_pos(context->start);
 
-    // Get variable name and type
-    visit(context->var());
+    // Regular array?
+    auto num_exprs = context->numExpr().size();
+    auto second = context->numExpr(1)->getText();
+    bool is_type = custom_types.count(second) == 1;
+    if (!is_type) {
 
-    // Adjust type to array version
-    switch (current_var.type) {
-    case Type::INTEGER:
-        current_var.type = Type::INTEGER_ARRAY;
-        break;
-    case Type::FLOAT:
-        current_var.type = Type::FLOAT_ARRAY;
-        break;
-    case Type::STRING:
-        current_var.type = Type::STRING_ARRAY;
-        break;
-    default:
-        error("Unexpected array type");
-    }
-    auto saved_type = current_var.type;
+        // Get variable name and type
+        visit(context->var());
 
-    // Number of dimensions
-    last_array_num_dimensions = static_cast<UINT32>(context->numExpr().size());
-    for (UINT32 i = 0; i < last_array_num_dimensions; i++) {
-        visit(context->numExpr(i));
+        // Adjust type to array version
+        switch (current_var.type) {
+        case Type::INTEGER:
+            current_var.type = Type::INTEGER_ARRAY;
+            break;
+        case Type::FLOAT:
+            current_var.type = Type::FLOAT_ARRAY;
+            break;
+        case Type::STRING:
+            current_var.type = Type::STRING_ARRAY;
+            break;
+        default:
+            error("Unexpected array type");
+        }
+        auto saved_type = current_var.type;
+
+        // Number of dimensions
+        last_array_num_dimensions = static_cast<UINT32>(context->numExpr().size());
+        for (UINT32 i = 0; i < last_array_num_dimensions; i++) {
+            visit(context->numExpr(i));
+            ensure_stack_is_integer();
+            stack_pop();
+        }
+
+        current_var.type = saved_type;
+
+        // Set number of dimensions
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
+        insert_instruction(Bytecodes::DIM, current_var.type, current_var.id);
+    } else {
+
+        // Get number of entries
+        visit(context->numExpr(0));
         ensure_stack_is_integer();
         stack_pop();
-    }
 
-    current_var.type = saved_type;
+        // Get type
+        visit(context->numExpr(1));
+
+        // Get variable name and type
+        visit(context->var());
+
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
+        insert_bytecode(Bytecodes::MULTIPLY, Type::INTEGER);
+        insert_instruction(Bytecodes::NEW_TYPE, Type::TYPE, current_var.id);
+
+        current_var.type = Type::TYPE_ARRAY;
+    }
     return NULL;
 }
 

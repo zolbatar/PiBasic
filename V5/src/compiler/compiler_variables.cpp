@@ -84,7 +84,7 @@ antlrcpp::Any Compiler::visitNumVarFloat(DARICParser::NumVarFloatContext* contex
     set_pos(context->start);
     visit(context->varName());
     current_var.type = Type::FLOAT;
-    if (state == CompilerState::NOSTATE) {
+    if (state != CompilerState::ASSIGNMENT) {
 
         // Is this a type?
         if (custom_types.count(current_var.name) == 1) {
@@ -106,7 +106,7 @@ antlrcpp::Any Compiler::visitNumVarInteger(DARICParser::NumVarIntegerContext* co
     set_pos(context->start);
     visit(context->varNameInteger());
     current_var.type = Type::INTEGER;
-    if (state == CompilerState::NOSTATE) {
+    if (state != CompilerState::ASSIGNMENT) {
         find_variable(false, true);
         insert_instruction(Bytecodes::LOAD, Type::INTEGER, current_var.id);
         stack_push(Type::INTEGER);
@@ -119,7 +119,7 @@ antlrcpp::Any Compiler::visitNumVarString(DARICParser::NumVarStringContext* cont
     set_pos(context->start);
     visit(context->varNameString());
     current_var.type = Type::STRING;
-    if (state == CompilerState::NOSTATE) {
+    if (state != CompilerState::ASSIGNMENT) {
         find_variable(false, true);
         insert_instruction(Bytecodes::LOAD, Type::STRING, current_var.id);
         stack_push(Type::STRING);

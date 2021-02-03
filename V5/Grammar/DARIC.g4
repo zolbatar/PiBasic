@@ -70,13 +70,13 @@ varNameType
     ;
 
 varDecl
-    : var                                              #varDeclInd
-    | var (LPAREN numExpr (COMMA numExpr)? RPAREN)*    #varDeclArrayed
-    | typeVar varName                                  #varDeclType
+    : var                                               #varDeclInd
+    | var (LPAREN numExpr (COMMA numExpr)? RPAREN)*     #varDeclArrayed
+    | typeVar varName                                   #varDeclType
     ;
    
 varDeclWithDimension
-    : var (LPAREN numExpr (COMMA numExpr)? RPAREN)*
+    : var LPAREN numExpr (COMMA numExpr)* RPAREN
     ;
 
 // Lists
