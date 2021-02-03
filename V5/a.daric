@@ -1,3 +1,4 @@
 Type VertexTest(x,y,z)
 
 A!=VertexTest
+A!x = 123.45

@@ -378,14 +378,41 @@ public:
   class  JustVarContext : public antlr4::ParserRuleContext {
   public:
     JustVarContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-    virtual size_t getRuleIndex() const override;
-    VarNameContext *varName();
-    VarNameIntegerContext *varNameInteger();
-    VarNameStringContext *varNameString();
+   
+    JustVarContext() = default;
+    void copyFrom(JustVarContext *context);
+    using antlr4::ParserRuleContext::copyFrom;
 
+    virtual size_t getRuleIndex() const override;
+
+   
+  };
+
+  class  JustVarNameIntegerContext : public JustVarContext {
+  public:
+    JustVarNameIntegerContext(JustVarContext *ctx);
+
+    VarNameIntegerContext *varNameInteger();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-   
+  };
+
+  class  JustVarNameContext : public JustVarContext {
+  public:
+    JustVarNameContext(JustVarContext *ctx);
+
+    VarNameContext *varName();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  JustVarNameStringContext : public JustVarContext {
+  public:
+    JustVarNameStringContext(JustVarContext *ctx);
+
+    VarNameStringContext *varNameString();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
   JustVarContext* justVar();
@@ -477,6 +504,16 @@ public:
     antlr4::tree::TerminalNode* RPAREN(size_t i);
     std::vector<antlr4::tree::TerminalNode *> COMMA();
     antlr4::tree::TerminalNode* COMMA(size_t i);
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  VarDeclTypeContext : public VarDeclContext {
+  public:
+    VarDeclTypeContext(VarDeclContext *ctx);
+
+    TypeVarContext *typeVar();
+    VarNameContext *varName();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };

@@ -83,7 +83,15 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitJustVar(DARICParser::JustVarContext *ctx) override {
+  virtual antlrcpp::Any visitJustVarName(DARICParser::JustVarNameContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitJustVarNameInteger(DARICParser::JustVarNameIntegerContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitJustVarNameString(DARICParser::JustVarNameStringContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -104,6 +112,10 @@ public:
   }
 
   virtual antlrcpp::Any visitVarDeclInd(DARICParser::VarDeclIndContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitVarDeclType(DARICParser::VarDeclTypeContext *ctx) override {
     return visitChildren(ctx);
   }
 

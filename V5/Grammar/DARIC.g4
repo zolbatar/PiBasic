@@ -46,9 +46,9 @@ strVar
     ;
 
 justVar
-    : varName           
-    | varNameInteger        
-    | varNameString
+    : varName           #justVarName
+    | varNameInteger    #justVarNameInteger    
+    | varNameString     #justVarNameString
     ;
 
 varName
@@ -69,6 +69,7 @@ varNameType
 
 varDecl
     : var                                              #varDeclInd
+    | typeVar varName                                  #varDeclType
     | var (LPAREN numExpr (COMMA numExpr)? RPAREN)*    #varDeclArrayed
     ;
    

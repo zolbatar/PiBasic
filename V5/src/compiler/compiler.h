@@ -28,7 +28,10 @@ class VarReference {
 public:
     int id;
     std::string name;
+    std::string field_name;
+    int field_index;
     Type type;
+    Type field_type;
     std::string custom_type_name;
 };
 
@@ -65,6 +68,7 @@ private:
     // Custom types
     UINT32 custom_type_index = 0;
     std::map<std::string, CustomType> custom_types;
+    std::string custom_type_name;
     UINT32 last_type_num_dimensions = 0;
 
     // Locals and functions
@@ -82,7 +86,7 @@ private:
     UINT32 create_print_flag() { return print_justify + (print_hex << 1); }
 
     // Variable stack, used for assignments etc.
-    VarReference last_var;
+    VarReference current_var;
 
     // Stack
     void ensure_stack_is_float();
@@ -155,6 +159,7 @@ protected:
     /* Varibles */
     bool find_variable();
     void find_or_create_variable(VariableScope scope);
+    void set_custom_type(std::string type);
     antlrcpp::Any visitVar(DARICParser::VarContext* context);
     antlrcpp::Any visitNumVar(DARICParser::NumVarContext* context);
     antlrcpp::Any visitNumVarFloat(DARICParser::NumVarFloatContext* context);
@@ -172,9 +177,13 @@ protected:
     antlrcpp::Any visitVarDecl(DARICParser::VarDeclContext* context);
     antlrcpp::Any visitVarDeclWithDimension(DARICParser::VarDeclWithDimensionContext* context);
     antlrcpp::Any visitVarDeclInd(DARICParser::VarDeclIndContext* context);
+    antlrcpp::Any visitVarDeclType(DARICParser::VarDeclTypeContext* context);
     antlrcpp::Any visitVarDeclArrayed(DARICParser::VarDeclArrayedContext* context);
     antlrcpp::Any visitVarList(DARICParser::VarListContext* context);
     antlrcpp::Any visitJustVar(DARICParser::JustVarContext* context);
+    antlrcpp::Any visitJustVarName(DARICParser::JustVarNameContext* context);
+    antlrcpp::Any visitJustVarNameInteger(DARICParser::JustVarNameIntegerContext* context);
+    antlrcpp::Any visitJustVarNameString(DARICParser::JustVarNameStringContext* context);
 
     /* String expressions */
     antlrcpp::Any visitStrFunc(DARICParser::StrFuncContext* context);

@@ -16,6 +16,7 @@ public:
     UINT32 index;
     bool constant = false;
     std::string name;
+    std::string custom_type_name;
     VM_INT value_int;
     VM_FLOAT value_float;
     VM_STRING value_string;

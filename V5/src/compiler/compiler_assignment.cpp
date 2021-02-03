@@ -8,18 +8,25 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
     for (auto i = 0; i < context->varDecl().size(); i++) {
 
         // Get variable name and type
+        current_var.field_index = -1;
         visit(context->varDecl(i));
         find_or_create_variable(VariableScope::GLOBAL);
-        auto saved = last_var;
+        auto saved = current_var;
 
         // Get value
         visit(context->expr(i));
         Type type;
-        if (last_var.type == Type::TYPE) {
+
+        // Is this a type creation thing?
+        if (current_var.type == Type::TYPE && saved.field_index == -1) {
             type = Type::TYPE;
+            auto t = current_var.name;
+            current_var = saved;
+            set_custom_type(t);
         } else {
             type = stack_pop();
         }
+        assert(stack_size() == 0);
 
         // Now do stuff based on the type on the stack and the variable type
         switch (saved.type) {
@@ -107,8 +114,53 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
             insert_instruction(Bytecodes::STORE_ARRAY, Type::STRING_ARRAY, saved.id);
             break;
         case Type::TYPE:
-            insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
-            insert_instruction(Bytecodes::NEW_TYPE, Type::TYPE, saved.id);
+            if (current_var.field_index == -1) {
+                insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
+                insert_instruction(Bytecodes::NEW_TYPE, Type::TYPE, saved.id);
+            } else {
+                insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
+                switch (current_var.field_type) {
+                case Type::INTEGER:
+                    switch (type) {
+                    case Type::FLOAT:
+                        insert_bytecode(Bytecodes::F_TO_I, Type::NOTYPE);
+                        insert_instruction(Bytecodes::STORE_FIELD, Type::INTEGER, saved.id);
+                        break;
+                    case Type::INTEGER:
+                        insert_instruction(Bytecodes::STORE_FIELD, Type::INTEGER, saved.id);
+                        break;
+                    default:
+                        error("Failed conversion for assignment");
+                    }
+                    break;
+                case Type::FLOAT:
+                    switch (type) {
+                    case Type::INTEGER:
+                        insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
+                        insert_instruction(Bytecodes::STORE_FIELD, Type::FLOAT, saved.id);
+                        break;
+                    case Type::FLOAT:
+                        insert_instruction(Bytecodes::STORE_FIELD, Type::FLOAT, saved.id);
+                        break;
+                    default:
+                        error("Failed conversion for assignment");
+                        break;
+                    }
+                    break;
+                case Type::STRING:
+                    switch (type) {
+                    case Type::STRING:
+                        insert_instruction(Bytecodes::STORE_FIELD, Type::STRING, saved.id);
+                        break;
+                    default:
+                        error("Failed conversion for assignment");
+                        break;
+                    }
+                    break;
+                default:
+                    error("Unknown TYPE field variable type");
+                }
+            }
             break;
         default:
             error("Unknown type in assignment");

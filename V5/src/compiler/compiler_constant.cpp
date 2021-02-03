@@ -16,7 +16,7 @@ UINT32 Compiler::constant_float_create(VM_FLOAT v)
         var.index = global_var_index++;
         var.type = Type::FLOAT;
         constants.push_back(var);
-        last_var.id = var.index;
+        current_var.id = var.index;
         return var.index;
     } else {
         return 0;
@@ -38,7 +38,7 @@ UINT32 Compiler::constant_string_create(std::string v)
         var.index = global_var_index++;
         var.type = Type::STRING;
         constants.push_back(var);
-        last_var.id = var.index;
+        current_var.id = var.index;
         return var.index;
     } else {
         return 0;

@@ -12,7 +12,7 @@ antlrcpp::Any Compiler::visitStmtDIM(DARICParser::StmtDIMContext* context)
 
         // Set number of dimensions
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
-        insert_instruction(Bytecodes::DIM, last_var.type, last_var.id);
+        insert_instruction(Bytecodes::DIM, current_var.type, current_var.id);
     }
 
     state = CompilerState::NOSTATE;
@@ -27,20 +27,20 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
     visit(context->var());
 
     // Adjust type to array version
-    switch (last_var.type) {
+    switch (current_var.type) {
     case Type::INTEGER:
-        last_var.type = Type::INTEGER_ARRAY;
+        current_var.type = Type::INTEGER_ARRAY;
         break;
     case Type::FLOAT:
-        last_var.type = Type::FLOAT_ARRAY;
+        current_var.type = Type::FLOAT_ARRAY;
         break;
     case Type::STRING:
-        last_var.type = Type::STRING_ARRAY;
+        current_var.type = Type::STRING_ARRAY;
         break;
     default:
         error("Unexpected array type");
     }
-    auto saved_type = last_var.type;
+    auto saved_type = current_var.type;
 
     // Number of dimensions
     last_array_num_dimensions = static_cast<UINT32>(context->numExpr().size());
@@ -50,7 +50,7 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
         stack_pop();
     }
 
-    last_var.type = saved_type;
+    current_var.type = saved_type;
     return NULL;
 }
 
@@ -84,7 +84,7 @@ antlrcpp::Any Compiler::visitNumVarFloatArray(DARICParser::NumVarFloatArrayConte
     if (state == CompilerState::NOSTATE) {
         find_variable();
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
-        insert_instruction(Bytecodes::LOAD_ARRAY, Type::FLOAT_ARRAY, last_var.id);
+        insert_instruction(Bytecodes::LOAD_ARRAY, Type::FLOAT_ARRAY, current_var.id);
         stack_push(Type::FLOAT);
     }
     return NULL;
@@ -104,7 +104,7 @@ antlrcpp::Any Compiler::visitNumVarIntegerArray(DARICParser::NumVarIntegerArrayC
     if (state == CompilerState::NOSTATE) {
         find_variable();
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
-        insert_instruction(Bytecodes::LOAD_ARRAY, Type::INTEGER_ARRAY, last_var.id);
+        insert_instruction(Bytecodes::LOAD_ARRAY, Type::INTEGER_ARRAY, current_var.id);
         stack_push(Type::INTEGER);
     }
     return NULL;
@@ -124,7 +124,7 @@ antlrcpp::Any Compiler::visitNumVarStringArray(DARICParser::NumVarStringArrayCon
     if (state == CompilerState::NOSTATE) {
         find_variable();
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
-        insert_instruction(Bytecodes::LOAD_ARRAY, Type::STRING_ARRAY, last_var.id);
+        insert_instruction(Bytecodes::LOAD_ARRAY, Type::STRING_ARRAY, current_var.id);
         stack_push(Type::STRING);
     }
     return NULL;

@@ -1,21 +1,3 @@
-/*
-
-    switch (bc.type) {
-    case Type::INTEGER: {
-        return;
-    }
-    case Type::FLOAT: {
-        return;
-    }
-    case Type::STRING: {
-        return;
-    }
-    default:
-        opcode_type_error();
-    }
-
-    */
-
 #pragma warning(disable : 4996) //_CRT_SECURE_NO_WARNINGS
 #define _GLIBCXX_USE_C99 1
 #ifdef RISCOS
