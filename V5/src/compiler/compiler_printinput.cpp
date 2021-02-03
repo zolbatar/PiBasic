@@ -22,7 +22,6 @@ antlrcpp::Any Compiler::visitPrintList(DARICParser::PrintListContext* context)
 {
     set_pos(context->start);
     for (int i = 0; i < context->printListItem().size(); i++) {
-        visit(context->printListItem(i));
         if (context->COMMA(i) != NULL) {
             print_justify = true;
             print_hex = false;
@@ -31,7 +30,10 @@ antlrcpp::Any Compiler::visitPrintList(DARICParser::PrintListContext* context)
             print_justify = false;
             print_hex = false;
             print_semicolon_active = true;
+        } else if (context->TILDE(i) != NULL) {
+            print_hex = true;
         }
+        visit(context->printListItem(i));
     }
     return NULL;
 }

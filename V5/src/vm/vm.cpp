@@ -464,9 +464,6 @@ void VM::opcode_PRINT()
 
         // First let's store to a string so we can figure out X positions etc.
         std::stringstream stream;
-        if (print_right_justify) {
-            stream << std::setw(tab_spacing);
-        }
         if (print_hex) {
             if (!performance_build && runtime_debug)
                 g_env.log << "Print float as hex: ";
@@ -477,6 +474,21 @@ void VM::opcode_PRINT()
             stream << std::setprecision(tab_spacing) << v1;
         }
         VM_STRING v(stream.str());
+
+        // Pad?
+        if (print_right_justify) {
+            auto l = v.length();
+            int d = tab_spacing - l;
+            while (d < 0) {
+                d += tab_spacing;
+            }
+            std::string v2 = "";
+            for (int i = 0; i < d; i++) {
+                v2 += " ";
+            }
+            v = v2 + v;
+        }
+
         g_env.graphics.print_console(v);
         if (!performance_build && runtime_debug)
             g_env.log << std::endl;
@@ -817,7 +829,7 @@ void VM::opcode_ARRAYSIZE()
 {
     VM_INT dimension = stack.pop_int(bc);
     VM_INT size = 0;
-    switch (variables.get_variable(bc).type) {
+    switch (variables.get_variable(bc).get_type()) {
     case Type::INTEGER_ARRAY:
         size = static_cast<VM_INT>(variables.get_variable(bc).value_int_array.size());
         break;
@@ -860,29 +872,26 @@ void VM::opcode_DIM()
 
     switch (bc.type) {
     case Type::INTEGER_ARRAY: {
-        variables.get_variable(bc).type = Type::INTEGER_ARRAY;
         if (dimensions == 1) {
-            variables.get_variable(bc).value_int_array.resize(size);
+            variables.get_variable(bc).set_integer_array(size);
         } else {
-            variables.get_variable(bc).value_int_array.resize(size1 * size2);
+            variables.get_variable(bc).set_integer_array(size1 * size2);
         }
         break;
     }
     case Type::FLOAT_ARRAY: {
-        variables.get_variable(bc).type = Type::FLOAT_ARRAY;
         if (dimensions == 1) {
-            variables.get_variable(bc).value_float_array.resize(size);
+            variables.get_variable(bc).set_float_array(size);
         } else {
-            variables.get_variable(bc).value_float_array.resize(size1 * size2);
+            variables.get_variable(bc).set_float_array(size1 * size2);
         }
         break;
     }
     case Type::STRING_ARRAY: {
-        variables.get_variable(bc).type = Type::STRING_ARRAY;
         if (dimensions == 1) {
-            variables.get_variable(bc).value_string_array.resize(size);
+            variables.get_variable(bc).set_string_array(size);
         } else {
-            variables.get_variable(bc).value_string_array.resize(size1 * size2);
+            variables.get_variable(bc).set_string_array(size1 * size2);
         }
         break;
     }
@@ -1521,7 +1530,7 @@ void VM::opcode_UNPACK()
     auto b = stack.pop_boxed(bc);
     switch (bc.type) {
     case Type::INTEGER: {
-        switch (b.type) {
+        switch (b.get_type()) {
         case Type::INTEGER:
             variables.get_variable(bc).value_int = b.value_int;
             break;
@@ -1536,7 +1545,7 @@ void VM::opcode_UNPACK()
         return;
     }
     case Type::FLOAT: {
-        switch (b.type) {
+        switch (b.get_type()) {
         case Type::FLOAT:
             variables.get_variable(bc).value_float = b.value_float;
             break;
@@ -1551,7 +1560,7 @@ void VM::opcode_UNPACK()
         return;
     }
     case Type::STRING: {
-        switch (b.type) {
+        switch (b.get_type()) {
         case Type::STRING:
             variables.get_variable(bc).value_string.assign(b.value_string);
             break;
@@ -2364,23 +2373,19 @@ void VM::opcode_CREATEVERTEX()
 
     // X
     Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(base)];
-    field->type = Type::FLOAT;
-    field->value_float = x;
+    field->set_float(z);
 
     // Y
     field = &variables.get_variable(bc).fields[static_cast<size_t>(base + 1)];
-    field->type = Type::FLOAT;
-    field->value_float = y;
+    field->set_float(z);
 
     // Z
     field = &variables.get_variable(bc).fields[static_cast<size_t>(base + 2)];
-    field->type = Type::FLOAT;
-    field->value_float = z;
+    field->set_float(z);
 
     // colour
     field = &variables.get_variable(bc).fields[static_cast<size_t>(base + 3)];
-    field->type = Type::INTEGER;
-    field->value_int = colour;
+    field->set_integer(colour);
 }
 
 void VM::opcode_CREATETRIANGLE()
@@ -2395,23 +2400,19 @@ void VM::opcode_CREATETRIANGLE()
 
     // Vertex 1
     Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(base)];
-    field->type = Type::INTEGER;
-    field->value_int = v1;
+    field->set_integer(v1);
 
     // Vertex 2
     field = &variables.get_variable(bc).fields[static_cast<size_t>(base + 1)];
-    field->type = Type::INTEGER;
-    field->value_int = v2;
+    field->set_integer(v2);
 
     // Vertex 3
     field = &variables.get_variable(bc).fields[static_cast<size_t>(base + 2)];
-    field->type = Type::INTEGER;
-    field->value_int = v3;
+    field->set_integer(v3);
 
     // colour
     field = &variables.get_variable(bc).fields[static_cast<size_t>(base + 3)];
-    field->type = Type::INTEGER;
-    field->value_int = colour;
+    field->set_integer(colour);
 }
 
 void VM::opcode_CREATESHAPE()

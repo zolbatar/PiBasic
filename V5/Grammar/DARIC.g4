@@ -96,7 +96,7 @@ printListItem
     ;
 
 printList
-    : TILDE? printListItem ((COMMA | SEMICOLON) TILDE? printListItem?)*
+    : COMMA? TILDE? printListItem ((COMMA | SEMICOLON) TILDE? printListItem?)*
     ;
 
 // Expressions and such

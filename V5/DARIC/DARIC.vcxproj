@@ -188,6 +188,8 @@
     <ClCompile Include="..\src\compiler\compiler_variables.cpp" />
     <ClCompile Include="..\src\compiler\visitor.cpp" />
     <ClCompile Include="..\src\debugger\debugger.cpp" />
+    <ClCompile Include="..\src\debugger\debugger_disassembly.cpp" />
+    <ClCompile Include="..\src\debugger\debugger_variables.cpp" />
     <ClCompile Include="..\src\debugger\disassembly.cpp" />
     <ClCompile Include="..\src\debugger\manual.cpp" />
     <ClCompile Include="..\src\debugger\manual\manual_2d.cpp" />

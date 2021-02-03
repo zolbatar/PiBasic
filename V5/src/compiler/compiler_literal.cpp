@@ -9,8 +9,7 @@ antlrcpp::Any Compiler::visitNumberInteger(DARICParser::NumberIntegerContext* co
         switch (phase) {
         case CompilerPhase::LOOKAHEAD: {
             Boxed b;
-            b.type = Type::INTEGER;
-            b.value_int = i;
+            b.set_integer(i);
             vm->add_data(b);
             break;
         }
@@ -35,8 +34,7 @@ antlrcpp::Any Compiler::visitNumberHex(DARICParser::NumberHexContext* context)
         switch (phase) {
         case CompilerPhase::LOOKAHEAD: {
             Boxed b;
-            b.type = Type::INTEGER;
-            b.value_int = i;
+            b.set_integer(i);
             vm->add_data(b);
             break;
         }
@@ -61,8 +59,7 @@ antlrcpp::Any Compiler::visitNumberBinary(DARICParser::NumberBinaryContext* cont
         switch (phase) {
         case CompilerPhase::LOOKAHEAD: {
             Boxed b;
-            b.type = Type::INTEGER;
-            b.value_int = i;
+            b.set_integer(i);
             vm->add_data(b);
             break;
         }
@@ -86,8 +83,7 @@ antlrcpp::Any Compiler::visitNumberFloat(DARICParser::NumberFloatContext* contex
         switch (phase) {
         case CompilerPhase::LOOKAHEAD: {
             Boxed b;
-            b.type = Type::FLOAT;
-            b.value_float = i;
+            b.set_float(i);
             vm->add_data(b);
             break;
         }
@@ -112,8 +108,7 @@ antlrcpp::Any Compiler::visitString(DARICParser::StringContext* context)
         switch (phase) {
         case CompilerPhase::LOOKAHEAD: {
             Boxed b;
-            b.type = Type::STRING;
-            b.value_string = v;
+            b.set_string(v);
             vm->add_data(b);
             break;
         }

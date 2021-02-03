@@ -120,7 +120,7 @@ antlrcpp::Any Compiler::visitNumVarString(DARICParser::NumVarStringContext* cont
     visit(context->varNameString());
     current_var.type = Type::STRING;
     if (state == CompilerState::NOSTATE) {
-        !find_variable(false, true);
+        find_variable(false, true);
         insert_instruction(Bytecodes::LOAD, Type::STRING, current_var.id);
         stack_push(Type::STRING);
     }
@@ -147,7 +147,7 @@ bool Compiler::find_variable(bool field, bool fire_error)
         auto var_id = (*g).second.index;
         current_var.id = var_id | LocalVariableFlag;
         current_var.custom_type_name = (*g).second.custom_type_name;
-        current_var.type = (*g).second.type;
+        current_var.type = (*g).second.get_type();
 
         if (field) {
             auto f = custom_types.find(current_var.custom_type_name);
@@ -155,7 +155,7 @@ bool Compiler::find_variable(bool field, bool fire_error)
                 error("Field '" + current_var.field_name + "' for variable '" + current_var.name + "' not found");
             }
             auto field = (*f).second.members.find(current_var.field_name);
-            current_var.field_type = (*field).second.type;
+            current_var.field_type = (*field).second.get_type();
             current_var.field_index = (*field).second.index;
         }
 
@@ -165,7 +165,7 @@ bool Compiler::find_variable(bool field, bool fire_error)
         auto var_id = (*g).second.index;
         current_var.id = var_id;
         current_var.custom_type_name = (*g).second.custom_type_name;
-        current_var.type = (*g).second.type;
+        current_var.type = (*g).second.get_type();
 
         if (field) {
             auto f = custom_types.find(current_var.custom_type_name);
@@ -173,7 +173,7 @@ bool Compiler::find_variable(bool field, bool fire_error)
                 error("Field '" + current_var.field_name + "' for variable '" + current_var.name + "' not found");
             }
             auto field = (*f).second.members.find(current_var.field_name);
-            current_var.field_type = (*field).second.type;
+            current_var.field_type = (*field).second.get_type();
             current_var.field_index = (*field).second.index;
         }
 
@@ -194,17 +194,17 @@ void Compiler::find_or_create_variable(VariableScope scope)
     current_var.id = 0;
     if (scope == VariableScope::GLOBAL) {
         Boxed var;
+        var.set_type_default(current_var.type);
         var.constant = false;
         var.name = current_var.name;
-        var.type = current_var.type;
         var.index = global_var_index++;
         globals[var.name] = var;
         current_var.id = var.index;
     } else if (inside_function) {
         Boxed var;
+        var.set_type_default(current_var.type);
         var.constant = false;
         var.name = current_var.name;
-        var.type = current_var.type;
         var.index = local_var_index++;
         locals[var.name] = var;
         current_var.id = var.index | LocalVariableFlag;

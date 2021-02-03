@@ -32,8 +32,7 @@ public:
     inline void push_float(Bytecode& bc, const VM_FLOAT v)
     {
         Boxed* b = &stack[stack_pointer++];
-        b->value_float = v;
-        b->type = Type::FLOAT;
+        b->set_float(v);
         if (!performance_build)
             check(bc);
     }
@@ -41,8 +40,7 @@ public:
     inline void push_int(Bytecode& bc, const VM_INT v)
     {
         Boxed* b = &stack[stack_pointer++];
-        b->value_int = v;
-        b->type = Type::INTEGER;
+        b->set_integer(v);
         if (!performance_build)
             check(bc);
     }
@@ -50,8 +48,7 @@ public:
     inline void push_string(Bytecode& bc, const VM_STRING& v)
     {
         Boxed* b = &stack[stack_pointer++];
-        b->value_string = v;
-        b->type = Type::STRING;
+        b->set_string(v);
         if (!performance_build)
             check(bc);
     }
@@ -68,7 +65,7 @@ public:
         if (!performance_build)
             check(bc);
         Boxed* b = &stack[--stack_pointer];
-        if (b->type != Type::FLOAT) {
+        if (b->get_type() != Type::FLOAT) {
             throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Expected float on stack (This may be a recursion issue, or an internal DARIC error)");
         }
         return b->value_float;
@@ -79,7 +76,7 @@ public:
         if (!performance_build)
             check(bc);
         Boxed* b = &stack[--stack_pointer];
-        if (b->type != Type::INTEGER) {
+        if (b->get_type() != Type::INTEGER) {
             throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Expected integer on stack (This may be a recursion issue, or an internal DARIC error)");
         }
         return b->value_int;
@@ -96,7 +93,7 @@ public:
         if (!performance_build)
             check(bc);
         Boxed* b = &stack[--stack_pointer];
-        if (b->type != Type::STRING) {
+        if (b->get_type() != Type::STRING) {
             throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Expected string on stack (This may be a recursion issue, or an internal DARIC error)");
         }
         return b->value_string;
