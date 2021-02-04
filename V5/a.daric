@@ -1,1 +1,3 @@
 DEF PROCPass(x,y,z):PRINT "PASS":ENDPROC
+
+DEF FNTest%(a%):=a%+20:ENDFN

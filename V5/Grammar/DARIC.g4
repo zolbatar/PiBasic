@@ -5,7 +5,8 @@ prog
     ;
 
 line
-    : COLON NEWLINE
+    : NEWLINE
+    | COLON NEWLINE
     | content NEWLINE
     | linenumber content NEWLINE
     ;
@@ -26,8 +27,9 @@ linenumber
 stmt
     : DIM varDeclWithDimension (COMMA varDeclWithDimension)*                # stmtDIM
     | END                                                                   # stmtEND
+    | EQ expr?                                                              # stmtRETURN
     | RETURN expr?                                                          # stmtRETURN
-    | DEF fnName LPAREN functionVarList? RPAREN body* ENDFN                 # stmtDEFFN
+    | DEF fnName LPAREN functionVarList? RPAREN COLON? body* ENDFN          # stmtDEFFN
     | DEF PROC_NAME LPAREN functionVarList? RPAREN COLON? body* ENDPROC     # stmtDEFPROC
     | INPUT (strExpr COMMA)? varList                                        # stmtINPUT
     | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*             # stmtLET

@@ -108,8 +108,8 @@ public:
   public:
     LineContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *COLON();
     antlr4::tree::TerminalNode *NEWLINE();
+    antlr4::tree::TerminalNode *COLON();
     ContentContext *content();
     LinenumberContext *linenumber();
 
@@ -300,6 +300,7 @@ public:
     antlr4::tree::TerminalNode *RPAREN();
     antlr4::tree::TerminalNode *ENDFN();
     FunctionVarListContext *functionVarList();
+    antlr4::tree::TerminalNode *COLON();
     std::vector<BodyContext *> body();
     BodyContext* body(size_t i);
 
@@ -310,8 +311,9 @@ public:
   public:
     StmtRETURNContext(StmtContext *ctx);
 
-    antlr4::tree::TerminalNode *RETURN();
+    antlr4::tree::TerminalNode *EQ();
     ExprContext *expr();
+    antlr4::tree::TerminalNode *RETURN();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
