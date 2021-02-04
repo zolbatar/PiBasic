@@ -15,7 +15,7 @@ content
     ;
 
 body
-    : COLON? content COLON?
+    : content
     | line
     ;
 
@@ -24,20 +24,24 @@ linenumber
     ;
 
 stmt
-    : DIM varDeclWithDimension (COMMA varDeclWithDimension)*        # stmtDIM
-    | END                                                           # stmtEND
-    | EQ expr                                                       # stmtRETURN
-    | RETURN                                                        # stmtRETURN
-    | FN justVar LPAREN functionVarList RPAREN body* ENDFN          # stmtDEF
-    | INPUT (strExpr COMMA)? varList                                # stmtINPUT
-    | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*     # stmtLET
-    | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                # stmtLOCAL
-    | PRINT printList?                                              # stmtPRINT
-    | PROC justVar LPAREN functionVarList RPAREN body* ENDPROC      # stmtDEF
-    | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN           # stmtTYPE
+    : DIM varDeclWithDimension (COMMA varDeclWithDimension)*                # stmtDIM
+    | END                                                                   # stmtEND
+    | RETURN expr?                                                          # stmtRETURN
+    | DEF fnName LPAREN functionVarList? RPAREN body* ENDFN                 # stmtDEFFN
+    | DEF PROC_NAME LPAREN functionVarList? RPAREN COLON? body* ENDPROC     # stmtDEFPROC
+    | INPUT (strExpr COMMA)? varList                                        # stmtINPUT
+    | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*             # stmtLET
+    | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                        # stmtLOCAL
+    | PRINT printList?                                                      # stmtPRINT
+    | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN                   # stmtTYPE
     ;
 
-// Variables
+fnName
+    : FN_FLOAT
+    | FN_INTEGER
+    | FN_STRING
+    ;
+
 var
     : numVar
     | strVar
@@ -67,9 +71,9 @@ strVar
     ;
 
 justVar
-    : varName           #justVarName
-    | varNameInteger    #justVarNameInteger    
-    | varNameString     #justVarNameString
+    : varName
+    | varNameInteger
+    | varNameString
     ;
 
 varName
@@ -105,7 +109,7 @@ varList
     ;
 
 functionVarList
-    : (RETURN? justVar)? (COMMA RETURN? justVar)*
+    : RETURN? justVar (COMMA RETURN? justVar)*
     ;
 
 exprList
@@ -246,8 +250,7 @@ DIM             : 'DIM' | 'Dim' | 'dim' ;
 END             : 'END' | 'End' | 'end' ;
 ENDFN           : 'ENDFN' | 'EndFn' | 'endfn' ;
 ENDPROC         : 'ENDPROC' | 'EndProc' | 'endproc' ;
-FIELD           : 'FIELD' | 'Field' | ' field' ;
-FN              : 'FN' | 'Fn' | ' fn' ;
+FN              : 'FN' | 'Fn' | 'fn' ;
 INPUT           : 'INPUT' | 'Input' | 'input' ;
 GLOBAL          : 'GLOBAL' | 'Global' | 'global' ;
 LOCAL           : 'LOCAL' | 'Local' | 'local' ;
@@ -328,13 +331,19 @@ SEMICOLON       : ';' ;
 UNDERSCORE      : '_' ;
 COMMENT         : REM ~ [\r\n]* ;
 STRINGLITERAL   : '"' ~ ["\r\n]* '"' ;
-VARIABLE_FLOAT          : ([a-z]|[A-Z]|[_])+([a-z]|[A-Z]|[_]|[0-9])* ;
-VARIABLE_INTEGER        : ([a-z]|[A-Z]|[_])+([a-z]|[A-Z]|[_]|[0-9])*'%' ;
-VARIABLE_STRING         : ([a-z]|[A-Z]|[_])+([a-z]|[A-Z]|[_]|[0-9])*'$' ;
-VARIABLE_TYPE           : ([a-z]|[A-Z]|[_])+([a-z]|[A-Z]|[_]|[0-9])*'!' ;
-LETTERS         : [a-z|A-Z]+ ;
+PROC_NAME         : PROC NAME ;
+FN_INTEGER        : FN NAME '%' ;
+FN_FLOAT          : FN NAME ;
+FN_STRING         : FN NAME '$' ;
+VARIABLE_FLOAT    : NAME ;
+VARIABLE_INTEGER  : NAME '%' ;
+VARIABLE_STRING   : NAME '$' ;
+VARIABLE_TYPE   : NAME '!' ;
+NAME            : ALPHA  (ALPHA|DIGIT)* ;
+ALPHA           : [a-zA-Z] ;
+DIGIT           : [0-9] ;
 HEXNUMBER       : '&' [0-9A-Fa-f]+ ;
 BINARYNUMBER    : '%' [0|1]+ ;
 NUMBER          : [0-9]+ ([e|E] NUMBER)* ;
 FLOAT           : [0-9]* '.' [0-9]* ([e|E] [0-9]+ )* ;
-WS              : [ \r\n\t] + -> channel (HIDDEN) ;
+WS              : [ \r\t] + -> channel (HIDDEN) ;

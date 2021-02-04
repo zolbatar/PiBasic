@@ -204,9 +204,11 @@ protected:
     antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext* context);
 
     /* Functions */
-    antlrcpp::Any visitStmtDEF(DARICParser::StmtDEFContext* context);
+    antlrcpp::Any visitStmtDEFFN(DARICParser::StmtDEFFNContext* context);
+    antlrcpp::Any visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* context);
     antlrcpp::Any visitStmtRETURN(DARICParser::StmtRETURNContext* context);
     antlrcpp::Any visitFunctionVarList(DARICParser::FunctionVarListContext* context);
+    antlrcpp::Any visitFnName(DARICParser::FnNameContext* context);
 
     /* Literals */
     antlrcpp::Any visitNumber(DARICParser::NumberContext* context);
@@ -257,9 +259,6 @@ protected:
 
     /* JustVar */
     antlrcpp::Any visitJustVar(DARICParser::JustVarContext* context);
-    antlrcpp::Any visitJustVarName(DARICParser::JustVarNameContext* context);
-    antlrcpp::Any visitJustVarNameInteger(DARICParser::JustVarNameIntegerContext* context);
-    antlrcpp::Any visitJustVarNameString(DARICParser::JustVarNameStringContext* context);
 
     /* String expressions */
     antlrcpp::Any visitStrFunc(DARICParser::StrFuncContext* context);

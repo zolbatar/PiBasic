@@ -1,5 +1,5 @@
 
-// Generated from C:\Users\d_dud\source\repos\PiBasic\V5\Grammar\DARIC.g4 by ANTLR 4.9.1
+// Generated from DARIC.g4 by ANTLR 4.9.1
 
 #pragma once
 
@@ -12,21 +12,22 @@
 class  DARICLexer : public antlr4::Lexer {
 public:
   enum {
-    DEF = 1, DIM = 2, END = 3, ENDFN = 4, ENDPROC = 5, FIELD = 6, FN = 7, 
-    INPUT = 8, GLOBAL = 9, LOCAL = 10, LET = 11, PRINT = 12, PROC = 13, 
-    REM = 14, RETURN = 15, SPC = 16, TYPE = 17, TIME = 18, PI = 19, SQR = 20, 
-    LN = 21, LOG = 22, EXP = 23, ATN = 24, TAN = 25, COS = 26, SIN = 27, 
-    ABS = 28, ACS = 29, ASN = 30, DEG = 31, RAD = 32, SGN = 33, ASC = 34, 
-    LEN = 35, INSTR = 36, VAL = 37, TIMES = 38, STRS = 39, STRINGS = 40, 
-    CHRS = 41, LEFTS = 42, MIDS = 43, RIGHTS = 44, RND = 45, RND0 = 46, 
-    RND1 = 47, EQ = 48, NE = 49, GT = 50, GE = 51, LT = 52, LE = 53, NOT = 54, 
-    AND = 55, OR = 56, EOR = 57, MOD = 58, DIV = 59, HAT = 60, PLUS = 61, 
-    MINUS = 62, MULTIPLY = 63, DIVIDE = 64, SHL = 65, SHR = 66, NEWLINE = 67, 
-    TICK = 68, TILDE = 69, COLON = 70, COMMA = 71, DOLLAR = 72, LPAREN = 73, 
-    PERCENT = 74, RPAREN = 75, SEMICOLON = 76, UNDERSCORE = 77, COMMENT = 78, 
-    STRINGLITERAL = 79, VARIABLE_FLOAT = 80, VARIABLE_INTEGER = 81, VARIABLE_STRING = 82, 
-    VARIABLE_TYPE = 83, LETTERS = 84, HEXNUMBER = 85, BINARYNUMBER = 86, 
-    NUMBER = 87, FLOAT = 88, WS = 89
+    DEF = 1, DIM = 2, END = 3, ENDFN = 4, ENDPROC = 5, FN = 6, INPUT = 7, 
+    GLOBAL = 8, LOCAL = 9, LET = 10, PRINT = 11, PROC = 12, REM = 13, RETURN = 14, 
+    SPC = 15, TYPE = 16, TIME = 17, PI = 18, SQR = 19, LN = 20, LOG = 21, 
+    EXP = 22, ATN = 23, TAN = 24, COS = 25, SIN = 26, ABS = 27, ACS = 28, 
+    ASN = 29, DEG = 30, RAD = 31, SGN = 32, ASC = 33, LEN = 34, INSTR = 35, 
+    VAL = 36, TIMES = 37, STRS = 38, STRINGS = 39, CHRS = 40, LEFTS = 41, 
+    MIDS = 42, RIGHTS = 43, RND = 44, RND0 = 45, RND1 = 46, EQ = 47, NE = 48, 
+    GT = 49, GE = 50, LT = 51, LE = 52, NOT = 53, AND = 54, OR = 55, EOR = 56, 
+    MOD = 57, DIV = 58, HAT = 59, PLUS = 60, MINUS = 61, MULTIPLY = 62, 
+    DIVIDE = 63, SHL = 64, SHR = 65, NEWLINE = 66, TICK = 67, TILDE = 68, 
+    COLON = 69, COMMA = 70, DOLLAR = 71, LPAREN = 72, PERCENT = 73, RPAREN = 74, 
+    SEMICOLON = 75, UNDERSCORE = 76, COMMENT = 77, STRINGLITERAL = 78, PROC_NAME = 79, 
+    FN_INTEGER = 80, FN_FLOAT = 81, FN_STRING = 82, VARIABLE_FLOAT = 83, 
+    VARIABLE_INTEGER = 84, VARIABLE_STRING = 85, VARIABLE_TYPE = 86, NAME = 87, 
+    ALPHA = 88, DIGIT = 89, HEXNUMBER = 90, BINARYNUMBER = 91, NUMBER = 92, 
+    FLOAT = 93, WS = 94
   };
 
   explicit DARICLexer(antlr4::CharStream *input);

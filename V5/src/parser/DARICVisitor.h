@@ -1,5 +1,5 @@
 
-// Generated from C:\Users\d_dud\source\repos\PiBasic\V5\Grammar\DARIC.g4 by ANTLR 4.9.1
+// Generated from DARIC.g4 by ANTLR 4.9.1
 
 #pragma once
 
@@ -35,7 +35,9 @@ public:
 
     virtual antlrcpp::Any visitStmtRETURN(DARICParser::StmtRETURNContext *context) = 0;
 
-    virtual antlrcpp::Any visitStmtDEF(DARICParser::StmtDEFContext *context) = 0;
+    virtual antlrcpp::Any visitStmtDEFFN(DARICParser::StmtDEFFNContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtDEFPROC(DARICParser::StmtDEFPROCContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext *context) = 0;
 
@@ -46,6 +48,8 @@ public:
     virtual antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext *context) = 0;
+
+    virtual antlrcpp::Any visitFnName(DARICParser::FnNameContext *context) = 0;
 
     virtual antlrcpp::Any visitVar(DARICParser::VarContext *context) = 0;
 
@@ -75,11 +79,7 @@ public:
 
     virtual antlrcpp::Any visitNumVarStringFieldArray(DARICParser::NumVarStringFieldArrayContext *context) = 0;
 
-    virtual antlrcpp::Any visitJustVarName(DARICParser::JustVarNameContext *context) = 0;
-
-    virtual antlrcpp::Any visitJustVarNameInteger(DARICParser::JustVarNameIntegerContext *context) = 0;
-
-    virtual antlrcpp::Any visitJustVarNameString(DARICParser::JustVarNameStringContext *context) = 0;
+    virtual antlrcpp::Any visitJustVar(DARICParser::JustVarContext *context) = 0;
 
     virtual antlrcpp::Any visitVarName(DARICParser::VarNameContext *context) = 0;
 

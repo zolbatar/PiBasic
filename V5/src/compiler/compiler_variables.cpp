@@ -21,28 +21,17 @@ antlrcpp::Any Compiler::visitStrVar(DARICParser::StrVarContext* context)
 antlrcpp::Any Compiler::visitJustVar(DARICParser::JustVarContext* context)
 {
     set_pos(context->start);
-    return visitChildren(context);
-}
-
-antlrcpp::Any Compiler::visitJustVarName(DARICParser::JustVarNameContext* context)
-{
-    set_pos(context->start);
-    current_var.type = Type::FLOAT;
-    return visitChildren(context);
-}
-
-antlrcpp::Any Compiler::visitJustVarNameInteger(DARICParser::JustVarNameIntegerContext* context)
-{
-    set_pos(context->start);
-    current_var.type = Type::INTEGER;
-    return visitChildren(context);
-}
-
-antlrcpp::Any Compiler::visitJustVarNameString(DARICParser::JustVarNameStringContext* context)
-{
-    set_pos(context->start);
-    current_var.type = Type::STRING;
-    return visitChildren(context);
+    if (context->varName() != NULL) {
+        current_var.type = Type::FLOAT;
+        return visit(context->varName());
+    } else if (context->varNameInteger() != NULL) {
+        current_var.type = Type::INTEGER;
+        return visit(context->varNameInteger());
+    } else if (context->varNameString() != NULL) {
+        current_var.type = Type::STRING;
+        return visit(context->varNameString());
+    }
+    return NULL;
 }
 
 antlrcpp::Any Compiler::visitVarName(DARICParser::VarNameContext* context)

@@ -1,5 +1,5 @@
 
-// Generated from C:\Users\d_dud\source\repos\PiBasic\V5\Grammar\DARIC.g4 by ANTLR 4.9.1
+// Generated from DARIC.g4 by ANTLR 4.9.1
 
 #pragma once
 
@@ -47,7 +47,11 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitStmtDEF(DARICParser::StmtDEFContext *ctx) override {
+  virtual antlrcpp::Any visitStmtDEFFN(DARICParser::StmtDEFFNContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtDEFPROC(DARICParser::StmtDEFPROCContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -68,6 +72,10 @@ public:
   }
 
   virtual antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitFnName(DARICParser::FnNameContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -127,15 +135,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitJustVarName(DARICParser::JustVarNameContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitJustVarNameInteger(DARICParser::JustVarNameIntegerContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitJustVarNameString(DARICParser::JustVarNameStringContext *ctx) override {
+  virtual antlrcpp::Any visitJustVar(DARICParser::JustVarContext *ctx) override {
     return visitChildren(ctx);
   }
 

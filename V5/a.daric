@@ -1,1 +1,1 @@
-PROC Pass(x,y%,z$):PRINT "PASS":ENDPROC
+DEF PROCPass(x,y,z):PRINT "PASS":ENDPROC
