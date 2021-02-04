@@ -6,60 +6,60 @@ PRINT "::Arrays::"
 DIM A%(6)
 A%(0) = 10
 A%(5) = 15
-PRINT "Index 0            = ";:IF A%(0) = 10 THEN PROCPass() ELSE PROCFail()
-PRINT "Index 5            = ";:IF A%(5) = 15 THEN PROCPass() ELSE PROCFail()
+PRINT "Index 0            = ";:IF A%(0) = 10 THEN Pass() ELSE Fail()
+PRINT "Index 5            = ";:IF A%(5) = 15 THEN Pass() ELSE Fail()
 DIM ta1$(2)
 ta1$(0) = "Test"
 ta1$(1) = ta1$(0)
-PRINT "String arrays      = ";:IF ta1$(1) = "Test" THEN PROCPass() ELSE PROCFail()
+PRINT "String arrays      = ";:IF ta1$(1) = "Test" THEN Pass() ELSE Fail()
 DIM ta2$(2, 3)
 ta2$(0, 1) = "Test"
 ta2$(1, 2) = ta2$(0, 1)
-PRINT "2D arrays          = ";:IF ta2$(1, 2) = "Test" THEN PROCPass() ELSE PROCFail()
+PRINT "2D arrays          = ";:IF ta2$(1, 2) = "Test" THEN Pass() ELSE Fail()
 PRINT
 
 REM PRINT "::BBC Basic Compatibility::"
-REM PRINT "LET                = ";:LETA=1:IF A = 1 THEN PROCPass() ELSE PROCFail()
+REM PRINT "LET                = ";:LETA=1:IF A = 1 THEN Pass() ELSE Fail()
 PRINT
 
 PRINT "::Boolean::"
-PRINT "Or                 = ";:IF (&F0 OR &F0 = &F0) AND (&F0 OR &0F = &FF) THEN PROCPass() ELSE PROCFail()
-PRINT "Eor                = ";:IF (1 EOR 1 = 0) AND (1 EOR 0 = 1) AND (0 EOR 0 = 0) THEN PROCPass() ELSE PROCFail()
-PRINT "And                = ";:IF ((&F0 AND &F0) = &F0) AND ((&F0 AND &0F) = &0) THEN PROCPass() ELSE PROCFail()
-PRINT "Not                = ";:IF NOT 1 = 0 THEN PROCPass() ELSE PROCFail()
-PRINT "True               = ";:IF TRUE = 1 THEN PROCPass() ELSE PROCFail()
-PRINT "False              = ";:IF FALSE = 0 THEN PROCPass() ELSE PROCFail()
+PRINT "Or                 = ";:IF (&F0 OR &F0 = &F0) AND (&F0 OR &0F = &FF) THEN Pass() ELSE Fail()
+PRINT "Eor                = ";:IF (1 EOR 1 = 0) AND (1 EOR 0 = 1) AND (0 EOR 0 = 0) THEN Pass() ELSE Fail()
+PRINT "And                = ";:IF ((&F0 AND &F0) = &F0) AND ((&F0 AND &0F) = &0) THEN Pass() ELSE Fail()
+PRINT "Not                = ";:IF NOT 1 = 0 THEN Pass() ELSE Fail()
+PRINT "True               = ";:IF TRUE = 1 THEN Pass() ELSE Fail()
+PRINT "False              = ";:IF FALSE = 0 THEN Pass() ELSE Fail()
 PRINT
 
 PRINT "::Comparison::"
-PRINT "Int =              = ";:IF 5 = 5 THEN PROCPass() ELSE PROCFail()
-PRINT "Int <>             = ";:IF 5 <> 6 THEN PROCPass() ELSE PROCFail()
-PRINT "Int <              = ";:IF 5 < 10 THEN PROCPass() ELSE PROCFail()
-PRINT "Int <= (<)         = ";:IF 4 <= 5 THEN PROCPass() ELSE PROCFail()
-PRINT "Int <= (=)         = ";:IF 5 <= 5 THEN PROCPass() ELSE PROCFail()
-PRINT "Int >              = ";:IF 10 > 5 THEN PROCPass() ELSE PROCFail()
-PRINT "Int >= (>)         = ";:IF 10 >= 5 THEN PROCPass() ELSE PROCFail()
-PRINT "Int >= (>=)        = ";:IF 5 >= 5 THEN PROCPass() ELSE PROCFail()
-PRINT "Float =            = ";:IF 5.0 = 5.0 THEN PROCPass() ELSE PROCFail()
-PRINT "Float <>           = ";:IF 5.0 <> 6.0 THEN PROCPass() ELSE PROCFail()
-PRINT "Float <            = ";:IF 5.0 < 10.0 THEN PROCPass() ELSE PROCFail()
-PRINT "Float <= (<)       = ";:IF 4.0 <= 5.0 THEN PROCPass() ELSE PROCFail()
-PRINT "Float <= (=)       = ";:IF 5.0 <= 5.0 THEN PROCPass() ELSE PROCFail()
-PRINT "Float >            = ";:IF 10.0 > 5.0 THEN PROCPass() ELSE PROCFail()
-PRINT "Float >= (>)       = ";:IF 10.0 >= 5.0 THEN PROCPass() ELSE PROCFail()
-PRINT "Float >= (>=)      = ";:IF 5.0 >= 5.0 THEN PROCPass() ELSE PROCFail()
-PRINT "String =           = ";:IF "Fred" = "Fred" THEN PROCPass() ELSE PROCFail()
-PRINT "String <>          = ";:IF "Fred" <> "fred" THEN PROCPass() ELSE PROCFail()
-PRINT "String <           = ";:IF "Fred" < "fred" THEN PROCPass() ELSE PROCFail()
-PRINT "String <= (<)      = ";:IF "Fred" <= "fred" THEN PROCPass() ELSE PROCFail()
-PRINT "String <= (=)      = ";:IF "Fred" <= "Fred" THEN PROCPass() ELSE PROCFail()
-PRINT "String >           = ";:IF "fred" > "Fred" THEN PROCPass() ELSE PROCFail()
-PRINT "String >= (>)      = ";:IF "fred" >= "Fred" THEN PROCPass() ELSE PROCFail()
-PRINT "String >= (>=)     = ";:IF "Fred" >= "Fred" THEN PROCPass() ELSE PROCFail()
+PRINT "Int =              = ";:IF 5 = 5 THEN Pass() ELSE Fail()
+PRINT "Int <>             = ";:IF 5 <> 6 THEN Pass() ELSE Fail()
+PRINT "Int <              = ";:IF 5 < 10 THEN Pass() ELSE Fail()
+PRINT "Int <= (<)         = ";:IF 4 <= 5 THEN Pass() ELSE Fail()
+PRINT "Int <= (=)         = ";:IF 5 <= 5 THEN Pass() ELSE Fail()
+PRINT "Int >              = ";:IF 10 > 5 THEN Pass() ELSE Fail()
+PRINT "Int >= (>)         = ";:IF 10 >= 5 THEN Pass() ELSE Fail()
+PRINT "Int >= (>=)        = ";:IF 5 >= 5 THEN Pass() ELSE Fail()
+PRINT "Float =            = ";:IF 5.0 = 5.0 THEN Pass() ELSE Fail()
+PRINT "Float <>           = ";:IF 5.0 <> 6.0 THEN Pass() ELSE Fail()
+PRINT "Float <            = ";:IF 5.0 < 10.0 THEN Pass() ELSE Fail()
+PRINT "Float <= (<)       = ";:IF 4.0 <= 5.0 THEN Pass() ELSE Fail()
+PRINT "Float <= (=)       = ";:IF 5.0 <= 5.0 THEN Pass() ELSE Fail()
+PRINT "Float >            = ";:IF 10.0 > 5.0 THEN Pass() ELSE Fail()
+PRINT "Float >= (>)       = ";:IF 10.0 >= 5.0 THEN Pass() ELSE Fail()
+PRINT "Float >= (>=)      = ";:IF 5.0 >= 5.0 THEN Pass() ELSE Fail()
+PRINT "String =           = ";:IF "Fred" = "Fred" THEN Pass() ELSE Fail()
+PRINT "String <>          = ";:IF "Fred" <> "fred" THEN Pass() ELSE Fail()
+PRINT "String <           = ";:IF "Fred" < "fred" THEN Pass() ELSE Fail()
+PRINT "String <= (<)      = ";:IF "Fred" <= "fred" THEN Pass() ELSE Fail()
+PRINT "String <= (=)      = ";:IF "Fred" <= "Fred" THEN Pass() ELSE Fail()
+PRINT "String >           = ";:IF "fred" > "Fred" THEN Pass() ELSE Fail()
+PRINT "String >= (>)      = ";:IF "fred" >= "Fred" THEN Pass() ELSE Fail()
+PRINT "String >= (>=)     = ";:IF "Fred" >= "Fred" THEN Pass() ELSE Fail()
 PRINT
 
 PRINT "::Conversion::"
-PRINT "10 + 15.5          = ";:IF 10 + 15.5 = 25.5 THEN PROCPass() ELSE PROCFail()
+PRINT "10 + 15.5          = ";:IF 10 + 15.5 = 25.5 THEN Pass() ELSE Fail()
 PRINT
 
 PRINT "::Data::"
@@ -67,17 +67,17 @@ LET d1% = 0, d2$ = "", d3 = 0.0
 DIM dat%(5)
 Read d1%, d2$, d3
 Data 100, "Fred", 10.5
-PRINT "Data (Int)         = ";:IF d1% = 100 THEN PROCPass() ELSE PROCFail()
-PRINT "Data (Float)       = ";:IF d3 = 10.5 THEN PROCPass() ELSE PROCFail()
-PRINT "Data (String)      = ";:IF d2$ = "Fred" THEN PROCPass() ELSE PROCFail()
+PRINT "Data (Int)         = ";:IF d1% = 100 THEN Pass() ELSE Fail()
+PRINT "Data (Float)       = ";:IF d3 = 10.5 THEN Pass() ELSE Fail()
+PRINT "Data (String)      = ";:IF d2$ = "Fred" THEN Pass() ELSE Fail()
 FOR I% = 0 TO 4:READ dat%(I%):NEXT
 DATA 1, 2, 3, 4, 5
-PRINT "Data (Array)       = ";:IF dat%(0) + dat%(1) + dat%(2) + dat%(3) + dat%(4) = 15 THEN PROCPass() ELSE PROCFail()
+PRINT "Data (Array)       = ";:IF dat%(0) + dat%(1) + dat%(2) + dat%(3) + dat%(4) = 15 THEN Pass() ELSE Fail()
 DATA 1, 2, 3, 4, 5:REM used by function FuncTestLocalVariables. Data can't be inside functions yet
-PROCTestLocalVariables()
+TestLocalVariables()
 RESTORE
 READ d1%
-PRINT "ResTOre            = ";:IF d1% = 100 THEN PROCPass() ELSE PROCFail()
+PRINT "ResTOre            = ";:IF d1% = 100 THEN Pass() ELSE Fail()
 PRINT
 
 PRINT "::File I/O::"
@@ -87,25 +87,25 @@ BPUT# C%, ASC("A")
 CLOSE# C%
 C%=OPENIN("Test")
 V%=BGET# C%
-IF V% = 65 THEN PROCPass() ELSE PROCFail()
+IF V% = 65 THEN Pass() ELSE Fail()
 CLOSE# C%
 PRINT
 
 PRINT "::Functions::"
 PRINT "Function (Return)  = ";:PROCTest()
-PRINT "Function (Int)     = ";:IF FNTestReturn%(10, 5.5) = 20 THEN PROCPass() ELSE PROCFail()
-PRINT "Function (Float)   = ";:IF FNTestReturn(10, 5.5) = 20.5 THEN PROCPass() ELSE PROCFail()
-PRINT "Proc (RETURN)      = ";:AA%=1:BB%=2:PROCTestRet(AA%, BB%):IF AA% = 100 And BB%=200 THEN PROCPass() ELSE PROCFail()
+PRINT "Function (Int)     = ";:IF TestReturn%(10, 5.5) = 20 THEN Pass() ELSE Fail()
+PRINT "Function (Float)   = ";:IF TestReturn(10, 5.5) = 20.5 THEN Pass() ELSE Fail()
+PRINT "Proc (RETURN)      = ";:AA%=1:BB%=2:TestRet(AA%, BB%):IF AA% = 100 And BB%=200 THEN Pass() ELSE Fail()
 PRINT	
 
 PRINT "::Locals & Globals::"
 G%=5
 PROCLocalVars()
-PRINT "Preserving Global  = ";:IF G% = 5 THEN PROCPass() ELSE PROCFail()
+PRINT "Preserving Global  = ";:IF G% = 5 THEN Pass() ELSE Fail()
 PRINT
 
 PRINT "::Looping::"	
-PRINT "One line IF        = ";:IF 1 = 1 THEN PROCPass() ELSE PROCFail()
+PRINT "One line IF        = ";:IF 1 = 1 THEN Pass() ELSE Fail()
 PRINT "Multiline IF       = ";
 IF 1 = 1
 	PROCPass()
@@ -116,88 +116,88 @@ I% = 0
 Repeat
 	I% = I% + 1
 Until I% = 10
-PRINT "Repeat             = ";:IF I% = 10 THEN PROCPass() ELSE PROCFail()
+PRINT "Repeat             = ";:IF I% = 10 THEN Pass() ELSE Fail()
 I% = 0
 While I% < 10
 	I% = I% + 1
 EndWhile
-PRINT "While              = ";:IF I% = 10 THEN PROCPass() ELSE PROCFail()
+PRINT "While              = ";:IF I% = 10 THEN Pass() ELSE Fail()
 I% = 0
 FOR J% = 0 TO 9
 	I% = I% + 1
 NEXT
-PRINT "FOR (Int)          = ";:IF I% = 10 THEN PROCPass() ELSE PROCFail()
+PRINT "FOR (Int)          = ";:IF I% = 10 THEN Pass() ELSE Fail()
 I% = 0
 FOR J% = 0 TO 9 Step 2
 	I% = I% + 1
 NEXT
-PRINT "FOR + Step (Int)   = ";:IF I% = 5 THEN PROCPass() ELSE PROCFail()
+PRINT "FOR + Step (Int)   = ";:IF I% = 5 THEN Pass() ELSE Fail()
 I% = 0
 FOR J = 0 TO 9
 	I% = I% + 1
 NEXT
-PRINT "FOR (Float)        = ";:IF I% = 10 THEN PROCPass() ELSE PROCFail()
+PRINT "FOR (Float)        = ";:IF I% = 10 THEN Pass() ELSE Fail()
 I% = 0
 FOR J = 0 TO 9 Step 2
 	I% = I% + 1
 NEXT
-PRINT "FOR + Step (Float) = ";:IF I% = 5 THEN PROCPass() ELSE PROCFail()
+PRINT "FOR + Step (Float) = ";:IF I% = 5 THEN Pass() ELSE Fail()
 PRINT "Case               = ";
 I%=1
 CASE I% OF
-	WHEN 0, 1, 2: PROCPass()
-	WHEN 3: PROCFail()
+	WHEN 0, 1, 2: Pass()
+	WHEN 3: Fail()
 	OTHERWISE PRINT "Neither"
 ENDCASE
 PRINT "Case (Otherwise)   = ";
 I%=4
 Case I% OF
-	WHEN 0, 1, 2: PROCFail()
-	WHEN 3: PROCFail()
-	OTHERWISE PROCPass()
+	WHEN 0, 1, 2: Fail()
+	WHEN 3: Fail()
+	OTHERWISE Pass()
 ENDCASE
 PRINT
 
 PRINT "::Maths::"
-PRINT "- (Unary)          = ";:IF 2 - -2 = 4 THEN PROCPass() ELSE PROCFail()
-PRINT "- (Int)            = ";:IF 10 - 8 = 2 THEN PROCPass() ELSE PROCFail()
-PRINT "+ (Int)            = ";:IF 10 + 8 = 18 THEN PROCPass() ELSE PROCFail()
-PRINT "* (Int)            = ";:IF 10 * 8 = 80 THEN PROCPass() ELSE PROCFail()
-PRINT "/ (Int)            = ";:IF 17 / 5 = 3.4 THEN PROCPass() ELSE PROCFail()
-PRINT "^ (Int)            = ";:IF 2 ^ 3 = 8 THEN PROCPass() ELSE PROCFail()
-PRINT "Mod (Int)          = ";:IF 11 Mod 5 = 1 THEN PROCPass() ELSE PROCFail()
-PRINT "Div (Int)          = ";:IF 11 Div 5 = 2 THEN PROCPass() ELSE PROCFail()
-PRINT "Abs (Int)          = ";:IF Abs(-10) = 10 THEN PROCPass() ELSE PROCFail()
-PRINT "- (Float)          = ";:IF 10.5 - 8.25 = 2.25 THEN PROCPass() ELSE PROCFail()
-PRINT "+ (Float)          = ";:IF 10.4 + 8.1 = 18.5 THEN PROCPass() ELSE PROCFail()
-PRINT "* (Float)          = ";:IF 2.5 * 4.5 = 11.25 THEN PROCPass() ELSE PROCFail()
-PRINT "/ (Float)          = ";:IF 8.4 / 4.2 = 2.0 THEN PROCPass() ELSE PROCFail()
-PRINT "Mod (Float)        = ";:IF 11.0 Mod 5.0 = 1 THEN PROCPass() ELSE PROCFail()
-PRINT "Div (Float)        = ";:IF 11.0 Div 5.0 = 2 THEN PROCPass() ELSE PROCFail()
-PRINT "Abs (Float)        = ";:IF Abs(-10.5) = 10.5 THEN PROCPass() ELSE PROCFail()
-PRINT "Sqr                = ";:IF Sqr(16) = 4 THEN PROCPass() ELSE PROCFail()
-PRINT "Ln                 = ";:IF Int(Ln(16) * 100.0) = 277 THEN PROCPass() ELSE PROCFail()
-PRINT "Log                = ";:IF Int(Log(16) * 100.0) = 120 THEN PROCPass() ELSE PROCFail()
-PRINT "Exp                = ";:IF Int(Exp(1) * 100.0) = 271 THEN PROCPass() ELSE PROCFail()
-PRINT "Atn                = ";:IF Int(Atn(3) * 100.0) = 124 THEN PROCPass() ELSE PROCFail()
-PRINT "Tan                = ";:IF Int(Tan(3) * 100.0) = -15 THEN PROCPass() ELSE PROCFail()
-PRINT "Sin                = ";:IF Int(Sin(3) * 100.0) = 14 THEN PROCPass() ELSE PROCFail()
-PRINT "Cos                = ";:IF Int(Cos(3) * 100.0) = -99 THEN PROCPass() ELSE PROCFail()
-PRINT "Acs                = ";:IF Int(Acs(0.5) * 100.0) = 104 THEN PROCPass() ELSE PROCFail()
-PRINT "Asn                = ";:IF Int(Asn(0.5) * 100.0) = 52 THEN PROCPass() ELSE PROCFail()
-PRINT "Rad                = ";:IF Int(Rad(90) * 100.0) = 157 THEN PROCPass() ELSE PROCFail()
-PRINT "Deg                = ";:IF Int(Deg(1.5)) = 85 THEN PROCPass() ELSE PROCFail()
-PRINT "Sgn (-)            = ";:IF Sgn(-10) = -1 THEN PROCPass() ELSE PROCFail()
-PRINT "Sgn                = ";:IF Sgn(0) = 0 THEN PROCPass() ELSE PROCFail()
-PRINT "Sgn (+)            = ";:IF Sgn(10) = 1 THEN PROCPass() ELSE PROCFail()
-PRINT "<< (ShIFt left)    = ";:IF 60 << 2 = 240 THEN PROCPass() ELSE PROCFail()
-PRINT ">> (ShIFt right)   = ";:IF 200 >> 2 = 50 THEN PROCPass() ELSE PROCFail()
-PRINT "<<=                = ";:AA%=1:AA%<<=4:IF AA%=16 THEN PROCPass() ELSE PROCFail()
+PRINT "- (Unary)          = ";:IF 2 - -2 = 4 THEN Pass() ELSE Fail()
+PRINT "- (Int)            = ";:IF 10 - 8 = 2 THEN Pass() ELSE Fail()
+PRINT "+ (Int)            = ";:IF 10 + 8 = 18 THEN Pass() ELSE Fail()
+PRINT "* (Int)            = ";:IF 10 * 8 = 80 THEN Pass() ELSE Fail()
+PRINT "/ (Int)            = ";:IF 17 / 5 = 3.4 THEN Pass() ELSE Fail()
+PRINT "^ (Int)            = ";:IF 2 ^ 3 = 8 THEN Pass() ELSE Fail()
+PRINT "Mod (Int)          = ";:IF 11 Mod 5 = 1 THEN Pass() ELSE Fail()
+PRINT "Div (Int)          = ";:IF 11 Div 5 = 2 THEN Pass() ELSE Fail()
+PRINT "Abs (Int)          = ";:IF Abs(-10) = 10 THEN Pass() ELSE Fail()
+PRINT "- (Float)          = ";:IF 10.5 - 8.25 = 2.25 THEN Pass() ELSE Fail()
+PRINT "+ (Float)          = ";:IF 10.4 + 8.1 = 18.5 THEN Pass() ELSE Fail()
+PRINT "* (Float)          = ";:IF 2.5 * 4.5 = 11.25 THEN Pass() ELSE Fail()
+PRINT "/ (Float)          = ";:IF 8.4 / 4.2 = 2.0 THEN Pass() ELSE Fail()
+PRINT "Mod (Float)        = ";:IF 11.0 Mod 5.0 = 1 THEN Pass() ELSE Fail()
+PRINT "Div (Float)        = ";:IF 11.0 Div 5.0 = 2 THEN Pass() ELSE Fail()
+PRINT "Abs (Float)        = ";:IF Abs(-10.5) = 10.5 THEN Pass() ELSE Fail()
+PRINT "Sqr                = ";:IF Sqr(16) = 4 THEN Pass() ELSE Fail()
+PRINT "Ln                 = ";:IF Int(Ln(16) * 100.0) = 277 THEN Pass() ELSE Fail()
+PRINT "Log                = ";:IF Int(Log(16) * 100.0) = 120 THEN Pass() ELSE Fail()
+PRINT "Exp                = ";:IF Int(Exp(1) * 100.0) = 271 THEN Pass() ELSE Fail()
+PRINT "Atn                = ";:IF Int(Atn(3) * 100.0) = 124 THEN Pass() ELSE Fail()
+PRINT "Tan                = ";:IF Int(Tan(3) * 100.0) = -15 THEN Pass() ELSE Fail()
+PRINT "Sin                = ";:IF Int(Sin(3) * 100.0) = 14 THEN Pass() ELSE Fail()
+PRINT "Cos                = ";:IF Int(Cos(3) * 100.0) = -99 THEN Pass() ELSE Fail()
+PRINT "Acs                = ";:IF Int(Acs(0.5) * 100.0) = 104 THEN Pass() ELSE Fail()
+PRINT "Asn                = ";:IF Int(Asn(0.5) * 100.0) = 52 THEN Pass() ELSE Fail()
+PRINT "Rad                = ";:IF Int(Rad(90) * 100.0) = 157 THEN Pass() ELSE Fail()
+PRINT "Deg                = ";:IF Int(Deg(1.5)) = 85 THEN Pass() ELSE Fail()
+PRINT "Sgn (-)            = ";:IF Sgn(-10) = -1 THEN Pass() ELSE Fail()
+PRINT "Sgn                = ";:IF Sgn(0) = 0 THEN Pass() ELSE Fail()
+PRINT "Sgn (+)            = ";:IF Sgn(10) = 1 THEN Pass() ELSE Fail()
+PRINT "<< (ShIFt left)    = ";:IF 60 << 2 = 240 THEN Pass() ELSE Fail()
+PRINT ">> (ShIFt right)   = ";:IF 200 >> 2 = 50 THEN Pass() ELSE Fail()
+PRINT "<<=                = ";:AA%=1:AA%<<=4:IF AA%=16 THEN Pass() ELSE Fail()
 PRINT
 
 PRINT "::Numbers::"
-PRINT "Hex                = ";:IF &40 = 64 THEN PROCPass() ELSE PROCFail()
-PRINT "Binary             = ";:IF %100 = 4 THEN PROCPass() ELSE PROCFail()
+PRINT "Hex                = ";:IF &40 = 64 THEN Pass() ELSE Fail()
+PRINT "Binary             = ";:IF %100 = 4 THEN Pass() ELSE Fail()
 PRINT
 
 PRINT "::PRINT & Input::"
@@ -207,29 +207,29 @@ PRINT "Multi-PRINT end ;  = ";:PRINT 10;151.2;"Test";:PRINT
 PRINT
 
 PRINT "::Strings::"
-PRINT "+                  = ";:IF "Bob" + "Jack" = "BobJack" THEN PROCPass() ELSE PROCFail()
-PRINT "Asc                = ";:IF (Asc("Fred") = 70) And (Asc("") = -1) THEN PROCPass() ELSE PROCFail()
-PRINT "Chr$               = ";:IF Chr$(65) = "A" THEN PROCPass() ELSE PROCFail()
-PRINT "Instr              = ";:IF Instr("Test this this string", "this") = 6 THEN PROCPass() ELSE PROCFail()
-PRINT "Instr (with start) = ";:IF Instr("Test this this string", "this", 8) = 11 THEN PROCPass() ELSE PROCFail()
-PRINT "Left$              = ";:IF Left$("A test string", 6) = "A test" THEN PROCPass() ELSE PROCFail()
-PRINT "Mid$               = ";:IF Mid$("A test string", 3, 4) = "test" THEN PROCPass() ELSE PROCFail()
-PRINT "Right$             = ";:IF Right$("A test string", 6) = "string" THEN PROCPass() ELSE PROCFail()
-PRINT "Len                = ";:IF Len("A test string") = 13 THEN PROCPass() ELSE PROCFail()
-PRINT "Val                = ";:IF Val("10.5") = 10.5 THEN PROCPass() ELSE PROCFail()
-PRINT "Str$               = ";:IF Str$(10.5) = "10.5" THEN PROCPass() ELSE PROCFail()
-PRINT "Str$ (Hex)         = ";:IF Str$~(15) = "F" THEN PROCPass() ELSE PROCFail()
-PRINT "String$            = ";:IF String$(4, "A") = "AAAA" THEN PROCPass() ELSE PROCFail()
+PRINT "+                  = ";:IF "Bob" + "Jack" = "BobJack" THEN Pass() ELSE Fail()
+PRINT "Asc                = ";:IF (Asc("Fred") = 70) And (Asc("") = -1) THEN Pass() ELSE Fail()
+PRINT "Chr$               = ";:IF Chr$(65) = "A" THEN Pass() ELSE Fail()
+PRINT "Instr              = ";:IF Instr("Test this this string", "this") = 6 THEN Pass() ELSE Fail()
+PRINT "Instr (with start) = ";:IF Instr("Test this this string", "this", 8) = 11 THEN Pass() ELSE Fail()
+PRINT "Left$              = ";:IF Left$("A test string", 6) = "A test" THEN Pass() ELSE Fail()
+PRINT "Mid$               = ";:IF Mid$("A test string", 3, 4) = "test" THEN Pass() ELSE Fail()
+PRINT "Right$             = ";:IF Right$("A test string", 6) = "string" THEN Pass() ELSE Fail()
+PRINT "Len                = ";:IF Len("A test string") = 13 THEN Pass() ELSE Fail()
+PRINT "Val                = ";:IF Val("10.5") = 10.5 THEN Pass() ELSE Fail()
+PRINT "Str$               = ";:IF Str$(10.5) = "10.5" THEN Pass() ELSE Fail()
+PRINT "Str$ (Hex)         = ";:IF Str$~(15) = "F" THEN Pass() ELSE Fail()
+PRINT "String$            = ";:IF String$(4, "A") = "AAAA" THEN Pass() ELSE Fail()
 PRINT
 
 PRINT "::Tokens::"
-PRINT "Swap               = ";:SWAPA%=1:SWAPB%=2:SWAP SWAPA%,SWAPB%:IF SWAPA%=2 AND SWAPB%=1 THEN PROCPass() ELSE PROCFail()
+PRINT "Swap               = ";:SWAPA%=1:SWAPB%=2:SWAP SWAPA%,SWAPB%:IF SWAPA%=2 AND SWAPB%=1 THEN Pass() ELSE Fail()
 PRINT
 
 PRINT "::System/OS::"
 PRINT "Oscli              = ";:Oscli "FX0":PRINT " - NOT TESTED"
-PRINT "Time               = ";:IF Time > 0 THEN PROCPass() ELSE PROCFail()
-PRINT "Time$              = ";:IF Len(Time$) = 22 THEN PROCPass() ELSE PROCFail()
+PRINT "Time               = ";:IF Time > 0 THEN Pass() ELSE Fail()
+PRINT "Time$              = ";:IF Len(Time$) = 22 THEN Pass() ELSE Fail()
 PRINT 
 
 PRINT "::Types::"
@@ -237,8 +237,8 @@ PROCTestTypes()
 PRINT 
 
 PRINT "::Keyboard::"
-PRINT "Inkey (timeout)    = ";:IF INKEY(10) = -1 THEN PROCPass() ELSE PROCFail()
-PRINT "Inkey (wait)       = ";:IF INKEY(1000) <> -1 THEN PROCPass() ELSE PROCFail()
+PRINT "Inkey (timeout)    = ";:IF INKEY(10) = -1 THEN Pass() ELSE Fail()
+PRINT "Inkey (wait)       = ";:IF INKEY(1000) <> -1 THEN Pass() ELSE Fail()
 
 PRINT
 CHAIN "TesterLineNumbers"
@@ -247,57 +247,53 @@ END
 REM Check Forward FN/PROC calls
 Type VertexTest(x,y,z,rgb%)
 
-DEFPROCLocalVars()
+DEF LocalVars()
 	Local G% = 10
-ENDPROC
+ENDDEF
 
-DEFPROCTestTypes()
+DEF TestTypes()
 	Local A! = VertexTest
 	A!x = 50.0
  	A!y = 100.5
  	A!rgb% = &FF2080
- 	PRINT "Load field (float) = ";: IF A!y = 100.5 THEN PROCPass() ELSE PROCFail()
-	PRINT "Load field (int)   = ";: IF A!rgb% = &FF2080 THEN PROCPass() ELSE PROCFail()
+ 	PRINT "Load field (float) = ";: IF A!y = 100.5 THEN Pass() ELSE Fail()
+	PRINT "Load field (int)   = ";: IF A!rgb% = &FF2080 THEN Pass() ELSE Fail()
 	DIM B!(5, VertexTest)
  	B!(4)y = 100.0
- 	PRINT "Load field (array) = ";: IF B!(4)y = 100.0 THEN PROCPass() ELSE PROCFail()
-ENDPROC
+ 	PRINT "Load field (array) = ";: IF B!(4)y = 100.0 THEN Pass() ELSE Fail()
+ENDDEF
 
-DEFPROCTest()
+PROC Test()
 	PROCPass()
 	Return
 	PRINT "FAIL"
 ENDPROC
 
-DEFPROCTestRet(RETURN a%, RETURN b%)
+FN TestRet(RETURN a%, RETURN b%)
 	a%=100
 	b%=200
-ENDPROC
+ENDFN
 
-DEFFNTestReturn%(x%, y) 
+FN TestReturn%(x%, y) 
 	RETURN Int(x% + y + 5)
 ENDFN
 
-DEFFNTestReturn(x%, y) 
+FN TestReturn(x%, y) 
 	RETURN x% + y + 5.0
 ENDFN
 
-DEFPROCTestLocalVariables()
+PROC TestLocalVariables()
 	Local DIM C%(5)
 	FOR LOCAL J% = 0 TO 4
 		Read C%(J%)
 	NEXT
-	PRINT "Func Local (Array) = ";:IF C%(0) + C%(1) + C%(2) + C%(3) + C%(4) = 15 THEN PROCPass() ELSE PROCFail()
+	PRINT "Func Local (Array) = ";:IF C%(0) + C%(1) + C%(2) + C%(3) + C%(4) = 15 THEN Pass() ELSE Fail()
 ENDPROC
 
-DEFPROCFail()
+PROC Fail()
 	COLOUR RED
 	PRINT  "!! FAILED TEST !!"
 	END
 ENDPROC
 
-DEFPROCPass()
-	COLOUR GREEN
-	PRINT "PASS"
-	COLOUR WHITE
-ENDPROC
+PROC Pass():COLOUR GREEN:PRINT "PASS":COLOUR WHITE:ENDPROC

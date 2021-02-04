@@ -176,6 +176,7 @@
     <ClCompile Include="..\src\compiler\compiler_boolean.cpp" />
     <ClCompile Include="..\src\compiler\compiler_comparison.cpp" />
     <ClCompile Include="..\src\compiler\compiler_constant.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_functions.cpp" />
     <ClCompile Include="..\src\compiler\compiler_literal.cpp" />
     <ClCompile Include="..\src\compiler\compiler_maths.cpp" />
     <ClCompile Include="..\src\compiler\compiler_numeric_expression.cpp" />

@@ -139,6 +139,8 @@ protected:
     antlrcpp::Any visitProg(DARICParser::ProgContext* context);
     antlrcpp::Any visitLine(DARICParser::LineContext* context);
     antlrcpp::Any visitLinenumber(DARICParser::LinenumberContext* context);
+    antlrcpp::Any visitBody(DARICParser::BodyContext* context);
+    antlrcpp::Any visitContent(DARICParser::ContentContext* context);
     antlrcpp::Any visitExprList(DARICParser::ExprListContext* context);
     antlrcpp::Any visitExpr(DARICParser::ExprContext* context);
 
@@ -151,6 +153,10 @@ protected:
     antlrcpp::Any visitStmtLOCAL(DARICParser::StmtLOCALContext* context);
     antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext* context);
     antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext* context);
+
+    /* Functions */
+    antlrcpp::Any visitStmtDEF(DARICParser::StmtDEFContext* context);
+    antlrcpp::Any visitStmtRETURN(DARICParser::StmtRETURNContext* context);
 
     /* Literals */
     antlrcpp::Any visitNumber(DARICParser::NumberContext* context);

@@ -23,6 +23,14 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitContent(DARICParser::ContentContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitBody(DARICParser::BodyContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitLinenumber(DARICParser::LinenumberContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -32,6 +40,14 @@ public:
   }
 
   virtual antlrcpp::Any visitStmtEND(DARICParser::StmtENDContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtRETURN(DARICParser::StmtRETURNContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtDEF(DARICParser::StmtDEFContext *ctx) override {
     return visitChildren(ctx);
   }
 

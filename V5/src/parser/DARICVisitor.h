@@ -23,11 +23,19 @@ public:
 
     virtual antlrcpp::Any visitLine(DARICParser::LineContext *context) = 0;
 
+    virtual antlrcpp::Any visitContent(DARICParser::ContentContext *context) = 0;
+
+    virtual antlrcpp::Any visitBody(DARICParser::BodyContext *context) = 0;
+
     virtual antlrcpp::Any visitLinenumber(DARICParser::LinenumberContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtEND(DARICParser::StmtENDContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtRETURN(DARICParser::StmtRETURNContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtDEF(DARICParser::StmtDEFContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext *context) = 0;
 

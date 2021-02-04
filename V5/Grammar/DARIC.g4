@@ -1,12 +1,22 @@
 grammar DARIC;
 
 prog
-    : line + EOF
+    : line* EOF
     ;
 
 line
+    : COLON NEWLINE
+    | content NEWLINE
+    | linenumber content NEWLINE
+    ;
+
+content
     : ((stmt (COLON stmt?)*) | (COMMENT | REM))
-    | (linenumber ((stmt (COLON stmt?)*) | (COMMENT | REM)))
+    ;
+
+body
+    : COLON? content COLON?
+    | line
     ;
 
 linenumber
@@ -16,10 +26,16 @@ linenumber
 stmt
     : DIM varDeclWithDimension (COMMA varDeclWithDimension)*        # stmtDIM
     | END                                                           # stmtEND
+    | EQ expr                                                       # stmtRETURN
+    | RETURN                                                        # stmtRETURN
+    | FN varName LPAREN RPAREN body* ENDFN                          # stmtDEF
+    | FN varNameInteger LPAREN RPAREN body* ENDFN                   # stmtDEF
+    | FN varNameString LPAREN RPAREN body* ENDFN                    # stmtDEF
     | INPUT (strExpr COMMA)? varList                                # stmtINPUT
     | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*     # stmtLET
     | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                # stmtLOCAL
     | PRINT printList?                                              # stmtPRINT
+    | PROC varName LPAREN RPAREN body* ENDPROC                      # stmtDEF
     | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN           # stmtTYPE
     ;
 
@@ -223,15 +239,21 @@ compare
     ;
    
 // Lexer stuff
+DEF             : 'DEF' | 'Def' | 'def' ;
 DIM             : 'DIM' | 'Dim' | 'dim' ;
 END             : 'END' | 'End' | 'end' ;
+ENDFN           : 'ENDFN' | 'EndFn' | 'endfn' ;
+ENDPROC         : 'ENDPROC' | 'EndProc' | 'endproc' ;
 FIELD           : 'FIELD' | 'Field' | ' field' ;
+FN              : 'FN' | 'Fn' | ' fn' ;
 INPUT           : 'INPUT' | 'Input' | 'input' ;
 GLOBAL          : 'GLOBAL' | 'Global' | 'global' ;
 LOCAL           : 'LOCAL' | 'Local' | 'local' ;
 LET             : 'LET' | 'Let' | 'let' ;
 PRINT           : 'PRINT' | 'Print' | 'print' ;
+PROC            : 'PROC' | 'Proc' | 'proc' ;
 REM             : 'REM' | 'Rem' | 'rem' ;
+RETURN          : 'RETURN' | 'Return' | 'return' ;
 SPC             : 'SPC' | 'Spc' | 'spc' ;
 TYPE            : 'TYPE' | 'Type' | 'type';
 
@@ -291,6 +313,7 @@ DIVIDE          : '/' ;
 SHL             : '<<' ;
 SHR             : '>>' ;
 
+NEWLINE         : '\n'+ ;
 TICK            : '\'' ;
 TILDE           : '~' ;
 COLON           : ':' ;

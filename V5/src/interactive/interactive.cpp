@@ -205,6 +205,13 @@ UINT32 Interactive::add_line(std::string s, UINT32 auto_line)
     if (lines.count(line) != 0) {
         lines.erase(line);
     }
+
+    // If empty, convert to just a colon
+    rtrim(rest_of_line);
+    if (rest_of_line.length() == 0) {
+        rest_of_line = ":";
+    }
+
     lines.insert(std::make_pair(line, rest_of_line));
     return line + 10;
 }

@@ -8,7 +8,9 @@ antlrcpp::Any Compiler::visitStmtPRINT(DARICParser::StmtPRINTContext* context)
     print_semicolon_active = false;
     print_hex = false;
     print_justify = false;
-    visit(context->printList());
+    if (context->printList() != NULL) {
+        visit(context->printList());
+    }
     if (!print_semicolon_active) {
         insert_bytecode(Bytecodes::PRINT_NL, Type::NOTYPE);
     }
