@@ -101,6 +101,8 @@ public:
 
     virtual antlrcpp::Any visitVarList(DARICParser::VarListContext *context) = 0;
 
+    virtual antlrcpp::Any visitFunctionVarList(DARICParser::FunctionVarListContext *context) = 0;
+
     virtual antlrcpp::Any visitExprList(DARICParser::ExprListContext *context) = 0;
 
     virtual antlrcpp::Any visitPrintListExpr(DARICParser::PrintListExprContext *context) = 0;

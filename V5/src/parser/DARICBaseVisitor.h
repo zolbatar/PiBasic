@@ -179,6 +179,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitFunctionVarList(DARICParser::FunctionVarListContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitExprList(DARICParser::ExprListContext *ctx) override {
     return visitChildren(ctx);
   }

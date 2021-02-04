@@ -152,8 +152,8 @@ antlrcpp::Any Compiler::visitVarList(DARICParser::VarListContext* context)
 bool Compiler::find_variable(bool field, bool fire_error)
 {
     // Search locals first (if valid), then globals
-    if (locals.count(current_var.name) == 1 && inside_function) {
-        auto g = locals.find(current_var.name);
+    if (inside_function() && current_function->locals.count(current_var.name) == 1) {
+        auto g = current_function->locals.find(current_var.name);
         auto var_id = (*g).second.index;
         current_var.id = var_id | LocalVariableFlag;
         current_var.custom_type_name = (*g).second.custom_type_name;
@@ -216,13 +216,13 @@ void Compiler::find_or_create_variable(VariableScope scope)
         var.index = global_var_index++;
         globals[var.name] = var;
         current_var.id = var.index;
-    } else if (inside_function) {
+    } else if (inside_function()) {
         Boxed var;
         var.set_type_default(current_var.type);
         var.constant = false;
         var.name = current_var.name;
-        var.index = local_var_index++;
-        locals[var.name] = var;
+        var.index = current_function->local_var_index++;
+        current_function->locals[var.name] = var;
         current_var.id = var.index | LocalVariableFlag;
     } else {
         error("Variable '" + current_var.name + "' not found");
@@ -232,8 +232,8 @@ void Compiler::find_or_create_variable(VariableScope scope)
 void Compiler::set_custom_type(std::string type)
 {
     // At this point, we KNOW the variable exists
-    if (locals.count(current_var.name) == 1 && inside_function) {
-        auto g = locals.find(current_var.name);
+    if (inside_function() && current_function->locals.count(current_var.name) == 1) {
+        auto g = current_function->locals.find(current_var.name);
         g->second.custom_type_name = type;
     } else if (globals.count(current_var.name) == 1) {
         auto g = globals.find(current_var.name);

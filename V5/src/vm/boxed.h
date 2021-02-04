@@ -49,6 +49,11 @@ public:
         value_string_array.resize(size);
     }
 
+    void set_type_nodefault(Type t)
+    {
+        type = t;
+    }
+
     void set_type_default(Type t)
     {
         type = t;

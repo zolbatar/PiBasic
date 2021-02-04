@@ -4,8 +4,6 @@
 void Compiler::reset()
 {
     type_list.empty();
-    locals.clear();
-    local_var_index = 0;
     vm->helper_bytecodes().clear();
     line_number = 0;
     char_position = 0;
@@ -61,25 +59,27 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
     }
 
     // Size to number of functions
-    //    g_vm->resize_function_locals(static_cast<int>(functions.size()));
+    vm->functions.reserve(functions.size());
 
     // Setup each function locals now
-    /*   for (auto g = compiler.functions.begin(); g != compiler.functions.end(); ++g) {
+    for (auto g = functions.begin(); g != functions.end(); ++g) {
         auto func = (*g).second;
 
+        // Create VM func reference
         VMFunction b;
-        b.id = func.id;
         b.pc_start = func.pc_start;
         b.pc_end = func.pc_end;
-        g_vm->functions.push_back(std::move(b));
 
-        for (auto l = func.local_names.begin(); l != func.local_names.end(); ++l) {
-            Boxed b;
-            b.name = (*l).name;
-            b.type = (*l).type;
-            g_vm->get_function_locals(func.id).push_back(std::move(b));
+        // Now create locals for debugger lookup of name and type
+        for (auto l = func.locals.begin(); l != func.locals.end(); ++l) {
+            auto ll = (*l).second;
+            Boxed b2;
+            b2.name = ll.name;
+            b2.set_type_nodefault(ll.get_type());
+            b.locals.push_back(std::move(b2));
         }
-    }*/
+        vm->functions.push_back(std::move(b));
+    }
 }
 
 void Compiler::setup_3d_types()

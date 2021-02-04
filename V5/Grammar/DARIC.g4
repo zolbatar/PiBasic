@@ -28,14 +28,12 @@ stmt
     | END                                                           # stmtEND
     | EQ expr                                                       # stmtRETURN
     | RETURN                                                        # stmtRETURN
-    | FN varName LPAREN RPAREN body* ENDFN                          # stmtDEF
-    | FN varNameInteger LPAREN RPAREN body* ENDFN                   # stmtDEF
-    | FN varNameString LPAREN RPAREN body* ENDFN                    # stmtDEF
+    | FN justVar LPAREN functionVarList RPAREN body* ENDFN          # stmtDEF
     | INPUT (strExpr COMMA)? varList                                # stmtINPUT
     | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*     # stmtLET
     | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                # stmtLOCAL
     | PRINT printList?                                              # stmtPRINT
-    | PROC varName LPAREN RPAREN body* ENDPROC                      # stmtDEF
+    | PROC justVar LPAREN functionVarList RPAREN body* ENDPROC      # stmtDEF
     | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN           # stmtTYPE
     ;
 
@@ -104,6 +102,10 @@ varDeclWithDimension
 // Lists
 varList
     : varDecl (COMMA varDecl)*
+    ;
+
+functionVarList
+    : (RETURN? justVar)? (COMMA RETURN? justVar)*
     ;
 
 exprList

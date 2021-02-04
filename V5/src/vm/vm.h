@@ -18,25 +18,23 @@
 
 const int GosubCallFlag = 1 << 31;
 
-typedef struct
-{
-    int id;
+struct VMFunction {
     UINT32 pc_start;
     UINT32 pc_end;
     Type type;
-} VMFunction;
+    std::vector<Boxed> locals;
+    UINT32 locals_count;
+};
 
 class VM {
 public:
     std::string run();
     bool compile_successful = false;
-    void inject_variables(std::vector<Boxed> variables);
     void add_data(Boxed boxed) { data.push_back(std::move(boxed)); }
-    void resize_function_locals(int c) { function_locals.resize(c); };
-    std::vector<Boxed>& get_function_locals(int idx) { return function_locals[idx]; }
-    UINT32 get_function_locals_count(int idx) { return static_cast<UINT32>(function_locals[idx].size()); }
+
+    // Function locals
     std::vector<VMFunction> functions;
-    std::vector<Boxed> get_function_local(size_t id) { return function_locals[id]; }
+    std::vector<Boxed> locals;
 
     // Return the "helper" classes
     Variables& helper_variables() { return variables; }
@@ -69,9 +67,6 @@ private:
 
     std::stack<UINT32> repeats; // Repeat addresses
     std::stack<UINT32> call_stack; // Call stack
-
-    // Locals for a function, this is used for name lookup in disassembly
-    std::vector<std::vector<Boxed>> function_locals;
 
     // Data statements
     std::vector<Boxed> data; // Data statements
@@ -136,7 +131,6 @@ private:
     void opcode_ABS();
     void opcode_SGN();
     void opcode_PI();
-
 
     // Type conversion
     void opcode_I_TO_F();

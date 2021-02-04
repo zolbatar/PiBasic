@@ -22,20 +22,12 @@ std::string Debugger::get_name_for_operand(Bytecode& bc, UINT32 i)
     if (bc.is_local_variable()) {
 
         // Find function id
-        int func_id = -1;
         for (auto g = g_vm->functions.begin(); g != g_vm->functions.end(); ++g) {
             if (g->pc_start <= i && g->pc_end > i) {
-                func_id = g->id;
+                auto id = bc.data ^ LocalVariableFlag;
+                return "Local variable: " + (*g).locals[id].name + " (" + ToString(id) + ")";
             }
         }
-        if (func_id == -1) {
-            std::cout << "Panic: unknown function id\n";
-            exit(1);
-        }
-
-        int id = bc.data ^ LocalVariableFlag;
-        auto a = g_vm->get_function_locals(func_id)[id];
-        return "Local variable: " + a.name + " (" + ToString(id) + ")";
     } else {
         auto variable = get_variable_bc(bc, i);
         if (variable.name.length() > 0) {

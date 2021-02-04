@@ -24,6 +24,23 @@ enum class VariableScope {
     GLOBAL
 };
 
+struct FunctionParameter {
+    std::string name;
+    Type type;
+    bool return_parameter;
+    UINT32 index;
+};
+
+struct Function {
+    std::string name;
+    UINT32 pc_start;
+    UINT32 pc_end;
+    Type type;
+    std::vector<FunctionParameter> parameters;
+    std::map<std::string, Boxed> locals;
+    UINT32 local_var_index = 0;
+};
+
 class VarReference {
 public:
     int id;
@@ -41,6 +58,7 @@ public:
     void compile(VM* vm, DARICParser::ProgContext* tree, std::string filename);
 
 private:
+    friend class Typelist;
     VM* vm;
     std::string filename;
     CompilerState state = CompilerState::NOSTATE;
@@ -58,9 +76,6 @@ private:
     UINT32 line_number;
     short file_number, char_position;
 
-    // Creating variables
-    std::string function_name;
-
     // Globals
     UINT32 global_var_index = 0;
     std::map<std::string, Boxed> globals;
@@ -75,9 +90,9 @@ private:
     UINT32 last_type_num_dimensions = 0;
 
     // Locals and functions
-    int local_var_index = 0;
-    std::map<std::string, Boxed> locals;
-    bool inside_function = false;
+    Function *current_function = nullptr;
+    std::map<std::string, Function> functions;
+    bool inside_function() { return current_function != nullptr; }
 
     // Constants
     std::list<Boxed> constants;
@@ -92,9 +107,43 @@ private:
     VarReference current_var;
 
     // Stack
-    void ensure_stack_is_float();
-    void ensure_stack_is_integer();
-    void ensure_stack_is_string();
+    void ensure_stack_is_float()
+    {
+        switch (peek_type()) {
+        case Type::FLOAT:
+            break;
+        case Type::INTEGER:
+            insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
+            stack_pop();
+            stack_push(Type::FLOAT);
+            break;
+        default:
+            error("Unknown type conversion");
+        }
+    }
+    void ensure_stack_is_integer()
+    {
+        switch (peek_type()) {
+        case Type::INTEGER:
+            break;
+        case Type::FLOAT:
+            insert_bytecode(Bytecodes::F_TO_I, Type::NOTYPE);
+            stack_pop();
+            stack_push(Type::INTEGER);
+            break;
+        default:
+            error("Unknown type conversion");
+        }
+    }
+    void ensure_stack_is_string()
+    {
+        switch (peek_type()) {
+        case Type::STRING:
+            break;
+        default:
+            error("Unknown type conversion: string expected");
+        }
+    }
     std::stack<Type> type_list;
     void stack_push(Type type)
     {
@@ -116,8 +165,8 @@ private:
     UINT32 last_array_num_dimensions = 0;
 
     // Create bytecode
-    inline void insert_instruction(Bytecodes bc, Type type, UINT32 data) { vm->helper_bytecodes().insert_instruction(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, type, data); }
-    inline void insert_bytecode(Bytecodes bc, Type type) { vm->helper_bytecodes().insert_bytecode(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, type); }
+    void insert_instruction(Bytecodes bc, Type type, UINT32 data) { vm->helper_bytecodes().insert_instruction(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, type, data); }
+    void insert_bytecode(Bytecodes bc, Type type) { vm->helper_bytecodes().insert_bytecode(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, type); }
 
     // 3D types
     void setup_3d_types();
@@ -157,6 +206,7 @@ protected:
     /* Functions */
     antlrcpp::Any visitStmtDEF(DARICParser::StmtDEFContext* context);
     antlrcpp::Any visitStmtRETURN(DARICParser::StmtRETURNContext* context);
+    antlrcpp::Any visitFunctionVarList(DARICParser::FunctionVarListContext* context);
 
     /* Literals */
     antlrcpp::Any visitNumber(DARICParser::NumberContext* context);
@@ -166,7 +216,7 @@ protected:
     antlrcpp::Any visitNumberBinary(DARICParser::NumberBinaryContext* context);
     antlrcpp::Any visitString(DARICParser::StringContext* context);
 
-    /* Varibles */
+    /* Variables */
     bool find_variable(bool field, bool fire_error);
     void find_or_create_variable(VariableScope scope);
     void set_custom_type(std::string type);

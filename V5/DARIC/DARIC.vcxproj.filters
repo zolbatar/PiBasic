@@ -156,9 +156,6 @@
     <ClCompile Include="..\src\compiler\compiler_constant.cpp">
       <Filter>Source Files\Compiler</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\compiler\compiler_stack.cpp">
-      <Filter>Source Files\Compiler</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\debugger\debugger.cpp">
       <Filter>Source Files\Debugger</Filter>
     </ClCompile>

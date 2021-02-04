@@ -1478,7 +1478,7 @@ void VM::opcode_CALL()
     UINT32 new_pc = bc.data;
     if (!performance_build && runtime_debug)
         g_env.log << "Calling " << new_pc << std::endl;
-    variables.create_locals_on_call(get_function_locals_count(l));
+    variables.create_locals_on_call(functions[l].locals_count);
     call_stack.push(helper_bytecodes().pc);
     helper_bytecodes().pc = new_pc;
 }
@@ -3163,30 +3163,6 @@ std::string VM::run()
         return "";
     }
     return "";
-}
-
-void VM::inject_variables(std::vector<Boxed> chained_variables)
-{
-    for (auto it = chained_variables.begin(); it != chained_variables.end(); ++it) {
-
-        // Now find this
-        bool match = false;
-        for (auto itv = variables.get_variables().begin(); itv != variables.get_variables().end(); ++itv) {
-
-            // Match?
-            if ((*it).name.compare((*itv).name) == 0) {
-                (*itv).value_float = (*it).value_float;
-                (*itv).value_int = (*it).value_int;
-                (*itv).value_string = (*it).value_string;
-                match = true;
-                break;
-            }
-        }
-
-        if (!match) {
-            error("Unable to match EXPECT variable");
-        }
-    }
 }
 
 void create_empty_vm()

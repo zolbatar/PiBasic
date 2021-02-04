@@ -62,9 +62,7 @@ private:
             // Find the function we are in
             for (auto it = g_vm->functions.begin(); it != g_vm->functions.end(); ++it) {
                 if (pc >= (*it).pc_start && pc <= (*it).pc_end) {
-                    auto fl = g_vm->get_function_local((*it).id);
-                    int index = bc.data ^ LocalVariableFlag;
-                    return fl[index];
+                    return it->locals[bc.data ^ LocalVariableFlag];
                 }
             }
         } else {
