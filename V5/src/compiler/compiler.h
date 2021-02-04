@@ -165,7 +165,13 @@ protected:
     void find_or_create_variable(VariableScope scope);
     void set_custom_type(std::string type);
     antlrcpp::Any visitVar(DARICParser::VarContext* context);
+
+    /* NumVar */
     antlrcpp::Any visitNumVar(DARICParser::NumVarContext* context);
+    antlrcpp::Any visitStrVar(DARICParser::StrVarContext* context);
+    antlrcpp::Any visitTypeVarType(DARICParser::TypeVarTypeContext* context);
+    antlrcpp::Any visitVarList(DARICParser::VarListContext* context);
+
     antlrcpp::Any visitNumVarFloat(DARICParser::NumVarFloatContext* context);
     antlrcpp::Any visitNumVarFloatArray(DARICParser::NumVarFloatArrayContext* context);
     antlrcpp::Any visitNumVarInteger(DARICParser::NumVarIntegerContext* context);
@@ -174,19 +180,26 @@ protected:
     antlrcpp::Any visitNumVarStringArray(DARICParser::NumVarStringArrayContext* context);
     antlrcpp::Any visitNumVarFloatField(DARICParser::NumVarFloatFieldContext* context);
     antlrcpp::Any visitNumVarIntegerField(DARICParser::NumVarIntegerFieldContext* context);
-    antlrcpp::Any visitStrVar(DARICParser::StrVarContext* context);
+    antlrcpp::Any visitNumVarStringField(DARICParser::NumVarStringFieldContext* context);
+    antlrcpp::Any visitNumVarFloatFieldArray(DARICParser::NumVarFloatFieldArrayContext* context);
+    antlrcpp::Any visitNumVarIntegerFieldArray(DARICParser::NumVarIntegerFieldArrayContext* context);
+    antlrcpp::Any visitNumVarStringFieldArray(DARICParser::NumVarStringFieldArrayContext* context);
+
+    /* VarName */
     antlrcpp::Any visitVarName(DARICParser::VarNameContext* context);
     antlrcpp::Any visitVarNameInteger(DARICParser::VarNameIntegerContext* context);
     antlrcpp::Any visitVarNameString(DARICParser::VarNameStringContext* context);
     antlrcpp::Any visitVarNameType(DARICParser::VarNameTypeContext* context);
-    antlrcpp::Any visitTypeVarType(DARICParser::TypeVarTypeContext* context);
+
+    /* Var Decl */
     antlrcpp::Any visitVarDecl(DARICParser::VarDeclContext* context);
     antlrcpp::Any visitVarDeclWithDimension(DARICParser::VarDeclWithDimensionContext* context);
     antlrcpp::Any visitVarDeclInd(DARICParser::VarDeclIndContext* context);
     antlrcpp::Any visitVarDeclType(DARICParser::VarDeclTypeContext* context);
     antlrcpp::Any visitVarDeclArrayed(DARICParser::VarDeclArrayedContext* context);
     antlrcpp::Any visitVarDeclTypeArrayed(DARICParser::VarDeclTypeArrayedContext* context);
-    antlrcpp::Any visitVarList(DARICParser::VarListContext* context);
+
+    /* JustVar */
     antlrcpp::Any visitJustVar(DARICParser::JustVarContext* context);
     antlrcpp::Any visitJustVarName(DARICParser::JustVarNameContext* context);
     antlrcpp::Any visitJustVarNameInteger(DARICParser::JustVarNameIntegerContext* context);

@@ -25,13 +25,6 @@ antlrcpp::Any Compiler::visitStmtTYPE(DARICParser::StmtTYPEContext* context)
     if (phase == CompilerPhase::LOOKAHEAD) {
         auto name = context->varName()->getText();
 
-        // Do we have it?
-        /*        if (custom_types.count(name) > 0) {
-            std::stringstream ss;
-            ss << "Type '" << name << "' already exists";
-            error(ss.str());
-        }*/
-
         CustomType custom_type;
         custom_type.id = custom_type_index++;
 
@@ -81,7 +74,7 @@ antlrcpp::Any Compiler::visitVarDeclTypeArrayed(DARICParser::VarDeclTypeArrayedC
     current_var.type = Type::TYPE_ARRAY;
     find_variable(true, true);
     last_array_dimensions = 1;
-    last_array_num_dimensions = 1; 
+    last_array_num_dimensions = 1;
     if (state == CompilerState::NOSTATE) {
     }
     return NULL;
@@ -113,7 +106,92 @@ antlrcpp::Any Compiler::visitNumVarIntegerField(DARICParser::NumVarIntegerFieldC
     find_variable(true, true);
     if (state == CompilerState::NOSTATE) {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
-        insert_instruction(Bytecodes::LOAD_FIELD, current_var.field_type, current_var.id);
+        insert_instruction(Bytecodes::LOAD_FIELD_ARRAY, current_var.field_type, current_var.id);
+        stack_push(current_var.field_type);
+    }
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitNumVarStringField(DARICParser::NumVarStringFieldContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    current_var.name = context->typeVar()->getText();
+    current_var.field_name = context->varNameString()->getText();
+    find_variable(true, true);
+    if (state == CompilerState::NOSTATE) {
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
+        insert_instruction(Bytecodes::LOAD_FIELD_ARRAY, current_var.field_type, current_var.id);
+        stack_push(current_var.field_type);
+    }
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitNumVarFloatFieldArray(DARICParser::NumVarFloatFieldArrayContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+
+    // Array index
+    visit(context->numExpr());
+    ensure_stack_is_integer();
+    stack_pop();
+
+    current_var.name = context->typeVar()->getText();
+    current_var.field_name = context->varName()->getText();
+    find_variable(true, true);
+    if (state == CompilerState::NOSTATE) {
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
+        insert_instruction(Bytecodes::LOAD_FIELD_ARRAY, current_var.field_type, current_var.id);
+        stack_push(current_var.field_type);
+    }
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitNumVarIntegerFieldArray(DARICParser::NumVarIntegerFieldArrayContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+
+    // Array index
+    visit(context->numExpr());
+    ensure_stack_is_integer();
+    stack_pop();
+
+    current_var.name = context->typeVar()->getText();
+    current_var.field_name = context->varNameInteger()->getText();
+    find_variable(true, true);
+    if (state == CompilerState::NOSTATE) {
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
+        insert_instruction(Bytecodes::LOAD_FIELD_ARRAY, current_var.field_type, current_var.id);
+        stack_push(current_var.field_type);
+    }
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitNumVarStringFieldArray(DARICParser::NumVarStringFieldArrayContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+
+    // Array index
+    visit(context->numExpr());
+    ensure_stack_is_integer();
+    stack_pop();
+
+    current_var.name = context->typeVar()->getText();
+    current_var.field_name = context->varNameString()->getText();
+    find_variable(true, true);
+    if (state == CompilerState::NOSTATE) {
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
+        insert_instruction(Bytecodes::LOAD_FIELD_ARRAY, current_var.field_type, current_var.id);
         stack_push(current_var.field_type);
     }
     return NULL;

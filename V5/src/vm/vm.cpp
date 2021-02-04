@@ -756,7 +756,10 @@ void VM::opcode_LOAD_FIELD_ARRAY()
     VM_INT fields = stack.pop_int(bc);
     VM_INT index = stack.pop_int(bc);
     VM_INT array_index = stack.pop_int(bc);
-    Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index];
+    auto real_index = array_index * fields + index;
+    if (real_index < 0 || real_index >= static_cast<int>(variables.get_variable(bc).fields.size()))
+        error("Invalid array or array index");
+    Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(real_index)];
     switch (bc.type) {
     case Type::INTEGER: {
         stack.push_float(bc, field->value_int);
@@ -789,7 +792,10 @@ void VM::opcode_STORE_FIELD_ARRAY()
     case Type::INTEGER: {
         VM_INT v = stack.pop_int(bc);
         VM_INT array_index = stack.pop_int(bc);
-        Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index];
+        auto real_index = array_index * fields + index;
+        if (real_index < 0 || real_index >= static_cast<int>(variables.get_variable(bc).fields.size()))
+            error("Invalid array or array index");
+        Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(real_index)];
         field->value_int = v;
         if (!performance_build && runtime_debug)
             g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
@@ -798,7 +804,10 @@ void VM::opcode_STORE_FIELD_ARRAY()
     case Type::FLOAT: {
         VM_FLOAT v = stack.pop_float(bc);
         VM_INT array_index = stack.pop_int(bc);
-        Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index];
+        auto real_index = array_index * fields + index;
+        if (real_index < 0 || real_index >= static_cast<int>(variables.get_variable(bc).fields.size()))
+            error("Invalid array or array index");
+        Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(real_index)];
         field->value_float = v;
         if (!performance_build && runtime_debug)
             g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value " << v << std::endl;
@@ -807,7 +816,10 @@ void VM::opcode_STORE_FIELD_ARRAY()
     case Type::STRING: {
         VM_STRING v = stack.pop_string(bc);
         VM_INT array_index = stack.pop_int(bc);
-        Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(array_index) * static_cast<size_t>(fields) + index];
+        auto real_index = array_index * fields + index;
+        if (real_index < 0 || real_index >= static_cast<int>(variables.get_variable(bc).fields.size()))
+            error("Invalid array or array index");
+        Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(real_index)];
         field->value_string.assign(v);
         if (!performance_build && runtime_debug)
             g_env.log << "Store field variable " << variables.get_variable(bc).name << " index " << index << " value '" << v << "'" << std::endl;

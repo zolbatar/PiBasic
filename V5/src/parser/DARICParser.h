@@ -301,6 +301,19 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  NumVarIntegerFieldArrayContext : public NumVarContext {
+  public:
+    NumVarIntegerFieldArrayContext(NumVarContext *ctx);
+
+    TypeVarContext *typeVar();
+    antlr4::tree::TerminalNode *LPAREN();
+    NumExprContext *numExpr();
+    antlr4::tree::TerminalNode *RPAREN();
+    VarNameIntegerContext *varNameInteger();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  NumVarFloatArrayContext : public NumVarContext {
   public:
     NumVarFloatArrayContext(NumVarContext *ctx);
@@ -353,6 +366,19 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  NumVarFloatFieldArrayContext : public NumVarContext {
+  public:
+    NumVarFloatFieldArrayContext(NumVarContext *ctx);
+
+    TypeVarContext *typeVar();
+    antlr4::tree::TerminalNode *LPAREN();
+    NumExprContext *numExpr();
+    antlr4::tree::TerminalNode *RPAREN();
+    VarNameContext *varName();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  NumVarIntegerFieldContext : public NumVarContext {
   public:
     NumVarIntegerFieldContext(NumVarContext *ctx);
@@ -399,6 +425,29 @@ public:
   public:
     NumVarStringContext(StrVarContext *ctx);
 
+    VarNameStringContext *varNameString();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  NumVarStringFieldContext : public StrVarContext {
+  public:
+    NumVarStringFieldContext(StrVarContext *ctx);
+
+    TypeVarContext *typeVar();
+    VarNameStringContext *varNameString();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  NumVarStringFieldArrayContext : public StrVarContext {
+  public:
+    NumVarStringFieldArrayContext(StrVarContext *ctx);
+
+    TypeVarContext *typeVar();
+    antlr4::tree::TerminalNode *LPAREN();
+    NumExprContext *numExpr();
+    antlr4::tree::TerminalNode *RPAREN();
     VarNameStringContext *varNameString();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;

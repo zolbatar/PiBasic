@@ -40,12 +40,16 @@ numVar
     | varNameInteger                                                #numVarInteger
     | varNameInteger (LPAREN numExpr (COMMA numExpr)? RPAREN)*      #numVarIntegerArray
     | typeVar varName                                               #numVarFloatField
+    | typeVar LPAREN numExpr RPAREN varName                         #numVarFloatFieldArray
     | typeVar varNameInteger                                        #numVarIntegerField
+    | typeVar LPAREN numExpr RPAREN varNameInteger                  #numVarIntegerFieldArray
     ;
 
 strVar
     : varNameString                                                 #numVarString
     | varNameString (LPAREN numExpr (COMMA numExpr)? RPAREN)*       #numVarStringArray
+    | typeVar varNameString                                         #numVarStringField
+    | typeVar LPAREN numExpr RPAREN varNameString                   #numVarStringFieldArray
     ;
 
 justVar

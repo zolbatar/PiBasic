@@ -192,9 +192,6 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
             }
             break;
         case Type::TYPE_ARRAY: {
-            if (last_array_dimensions != last_array_num_dimensions) {
-                error("Variable '" + saved.name + "', array dimension mismatch");
-            }
             switch (current_var.field_type) {
             case Type::INTEGER:
                 switch (type) {

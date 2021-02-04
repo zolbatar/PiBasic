@@ -92,7 +92,6 @@ antlrcpp::Any Compiler::visitVarDeclArrayed(DARICParser::VarDeclArrayedContext* 
     set_pos(context->start);
     auto saved_state = state;
     state = CompilerState::NOSTATE;
-    last_array_num_dimensions = static_cast<UINT32>(context->numExpr().size());
     last_array_dimensions = 0;
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
@@ -111,7 +110,6 @@ antlrcpp::Any Compiler::visitNumVarFloatArray(DARICParser::NumVarFloatArrayConte
         return NULL;
     set_pos(context->start);
     auto saved_state = state;
-    last_array_num_dimensions = static_cast<UINT32>(context->numExpr().size());
     last_array_dimensions = 0;
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
@@ -135,7 +133,6 @@ antlrcpp::Any Compiler::visitNumVarIntegerArray(DARICParser::NumVarIntegerArrayC
         return NULL;
     set_pos(context->start);
     auto saved_state = state;
-    last_array_num_dimensions = static_cast<UINT32>(context->numExpr().size());
     last_array_dimensions = 0;
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
@@ -159,7 +156,6 @@ antlrcpp::Any Compiler::visitNumVarStringArray(DARICParser::NumVarStringArrayCon
         return NULL;
     set_pos(context->start);
     auto saved_state = state;
-    last_array_num_dimensions = static_cast<UINT32>(context->numExpr().size());
     last_array_dimensions = 0;
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
