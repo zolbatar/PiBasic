@@ -762,7 +762,7 @@ void VM::opcode_LOAD_FIELD_ARRAY()
     Boxed* field = &variables.get_variable(bc).fields[static_cast<size_t>(real_index)];
     switch (bc.type) {
     case Type::INTEGER: {
-        stack.push_float(bc, field->value_int);
+        stack.push_int(bc, field->value_int);
         if (!performance_build && runtime_debug)
             g_env.log << "Load field variable " << variables.get_variable(bc).name << " index " << index << " value " << field->value_int << std::endl;
         return;
