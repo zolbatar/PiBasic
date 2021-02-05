@@ -47,6 +47,16 @@ public interface DARICListener extends ParseTreeListener {
 	 */
 	void exitBody(DARICParser.BodyContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link DARICParser#bodyStar}.
+	 * @param ctx the parse tree
+	 */
+	void enterBodyStar(DARICParser.BodyStarContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DARICParser#bodyStar}.
+	 * @param ctx the parse tree
+	 */
+	void exitBodyStar(DARICParser.BodyStarContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link DARICParser#linenumber}.
 	 * @param ctx the parse tree
 	 */
@@ -153,6 +163,18 @@ public interface DARICListener extends ParseTreeListener {
 	 */
 	void exitStmtIF(DARICParser.StmtIFContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code stmtIFMultiline}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtIFMultiline(DARICParser.StmtIFMultilineContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtIFMultiline}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtIFMultiline(DARICParser.StmtIFMultilineContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code stmtINPUT}
 	 * labeled alternative in {@link DARICParser#stmt}.
 	 * @param ctx the parse tree
@@ -248,6 +270,18 @@ public interface DARICListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStmtTYPE(DARICParser.StmtTYPEContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code stmtREPEAT}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtREPEAT(DARICParser.StmtREPEATContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtREPEAT}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtREPEAT(DARICParser.StmtREPEATContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link DARICParser#fnName}.
 	 * @param ctx the parse tree

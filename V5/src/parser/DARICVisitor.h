@@ -27,6 +27,8 @@ public:
 
     virtual antlrcpp::Any visitBody(DARICParser::BodyContext *context) = 0;
 
+    virtual antlrcpp::Any visitBodyStar(DARICParser::BodyStarContext *context) = 0;
+
     virtual antlrcpp::Any visitLinenumber(DARICParser::LinenumberContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtBREAKPOINT(DARICParser::StmtBREAKPOINTContext *context) = 0;
@@ -45,6 +47,8 @@ public:
 
     virtual antlrcpp::Any visitStmtIF(DARICParser::StmtIFContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtIFMultiline(DARICParser::StmtIFMultilineContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext *context) = 0;
@@ -60,6 +64,8 @@ public:
     virtual antlrcpp::Any visitStmtTRACEOFF(DARICParser::StmtTRACEOFFContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtREPEAT(DARICParser::StmtREPEATContext *context) = 0;
 
     virtual antlrcpp::Any visitFnName(DARICParser::FnNameContext *context) = 0;
 

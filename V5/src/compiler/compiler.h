@@ -200,6 +200,7 @@ protected:
     antlrcpp::Any visitLine(DARICParser::LineContext* context);
     antlrcpp::Any visitLinenumber(DARICParser::LinenumberContext* context);
     antlrcpp::Any visitBody(DARICParser::BodyContext* context);
+    antlrcpp::Any visitBodyStar(DARICParser::BodyStarContext* context);
     antlrcpp::Any visitContent(DARICParser::ContentContext* context);
     antlrcpp::Any visitExprList(DARICParser::ExprListContext* context);
     antlrcpp::Any visitExpr(DARICParser::ExprContext* context);
@@ -210,10 +211,12 @@ protected:
     antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext* context);
     antlrcpp::Any visitStmtEND(DARICParser::StmtENDContext* context);
     antlrcpp::Any visitStmtIF(DARICParser::StmtIFContext* context);
+    antlrcpp::Any visitStmtIFMultiline(DARICParser::StmtIFMultilineContext* context);
     antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext* context);
     antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext* context);
     antlrcpp::Any visitStmtLOCAL(DARICParser::StmtLOCALContext* context);
     antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext* context);
+    antlrcpp::Any visitStmtREPEAT(DARICParser::StmtREPEATContext* context);
     antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext* context);
     antlrcpp::Any visitStmtTRACEON(DARICParser::StmtTRACEONContext* context);
     antlrcpp::Any visitStmtTRACEOFF(DARICParser::StmtTRACEOFFContext* context);

@@ -20,6 +20,10 @@ body
     | line
     ;
 
+bodyStar
+    : body*
+    ;
+
 linenumber
     : NUMBER
     ;
@@ -30,10 +34,11 @@ stmt
     | END                                                                   # stmtEND
     | EQ expr?                                                              # stmtRETURN
     | RETURN expr?                                                          # stmtRETURN
-    | DEF fnName LPAREN functionVarList? RPAREN COLON? body* ENDFN          # stmtDEFFN
-    | DEF PROC_NAME LPAREN functionVarList? RPAREN COLON? body* ENDPROC     # stmtDEFPROC
+    | DEF fnName LPAREN functionVarList? RPAREN COLON? bodyStar ENDFN       # stmtDEFFN
+    | DEF PROC_NAME LPAREN functionVarList? RPAREN COLON? bodyStar ENDPROC  # stmtDEFPROC
     | fnName LPAREN functionParList? RPAREN                                 # stmtCallFN
-    | IF expr THEN? body* (ELSE body*)?                                     # stmtIF
+    | IF expr THEN? t=content (ELSE f=content)?                             # stmtIF
+    | IF expr THEN? t=bodyStar (ELSE f=bodyStar)? ENDIF                     # stmtIFMultiline
     | INPUT (strExpr COMMA)? varList                                        # stmtINPUT
     | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*             # stmtLET
     | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                        # stmtLOCAL
@@ -42,6 +47,7 @@ stmt
     | TRACEON                                                               # stmtTRACEON
     | TRACEOFF                                                              # stmtTRACEOFF
     | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN                   # stmtTYPE
+    | REPEAT body* UNTIL expr                                               # stmtREPEAT
     ;
 
 fnName
@@ -265,6 +271,7 @@ DEF             : 'DEF' | 'Def' | 'def' ;
 DIM             : 'DIM' | 'Dim' | 'dim' ;
 ELSE            : 'ELSE' | 'Else' | 'else' ;
 END             : 'END' | 'End' | 'end' ;
+ENDIF           : 'ENDIF' | 'EndIf' | 'endif' ;
 ENDFN           : 'ENDFN' | 'EndFn' | 'endfn' ;
 ENDPROC         : 'ENDPROC' | 'EndProc' | 'endproc' ;
 FN              : 'FN' | 'Fn' | 'fn' ;
@@ -277,11 +284,13 @@ THEN            : 'THEN' | 'Then' | 'then' ;
 PRINT           : 'PRINT' | 'Print' | 'print' ;
 PROC            : 'PROC' | 'Proc' | 'proc' ;
 REM             : 'REM' | 'Rem' | 'rem' ;
+REPEAT          : 'REPEAT' | 'Repeat' | 'repeat' ;
 RETURN          : 'RETURN' | 'Return' | 'return' ;
 SPC             : 'SPC' | 'Spc' | 'spc' ;
 TRACEON         : 'TRACEON' | 'TraceOn' | 'traceon';
 TRACEOFF        : 'TRACEOFF' | 'TraceOff' | 'traceoff';
 TYPE            : 'TYPE' | 'Type' | 'type';
+UNTIL           : 'UNTIL' | 'Until' | 'until' ;
 
 TIME            : 'TIME' | 'Time' | 'time' ;
 PI              : 'PI' | 'Pi' | 'pi' ;
@@ -367,10 +376,10 @@ VARIABLE_INTEGER  : NAME '%' ;
 VARIABLE_STRING   : NAME '$' ;
 VARIABLE_TYPE   : NAME '!' ;
 NAME            : ALPHA  (ALPHA|DIGIT)* ;
-ALPHA           : [a-zA-Z] ;
-DIGIT           : [0-9] ;
 HEXNUMBER       : '&' [0-9A-Fa-f]+ ;
 BINARYNUMBER    : '%' [0|1]+ ;
-NUMBER          : [0-9]+ ([e|E] NUMBER)* ;
-FLOAT           : [0-9]* '.' [0-9]* ([e|E] [0-9]+ )* ;
+NUMBER          : DIGIT+ ([e|E] NUMBER)* ;
+FLOAT           : DIGIT* '.' DIGIT* ([e|E] [0-9]+ )* ;
+ALPHA           : [a-zA-Z] ;
+DIGIT           : [0-9] ;
 WS              : [ \r\t] + -> channel (HIDDEN) ;

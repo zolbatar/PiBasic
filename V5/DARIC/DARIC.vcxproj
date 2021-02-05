@@ -180,6 +180,7 @@
     <ClCompile Include="..\src\compiler\compiler_debugging.cpp" />
     <ClCompile Include="..\src\compiler\compiler_functions.cpp" />
     <ClCompile Include="..\src\compiler\compiler_literal.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_looping.cpp" />
     <ClCompile Include="..\src\compiler\compiler_maths.cpp" />
     <ClCompile Include="..\src\compiler\compiler_numeric_expression.cpp" />
     <ClCompile Include="..\src\compiler\compiler_numeric_function.cpp" />

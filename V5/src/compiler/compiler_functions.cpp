@@ -18,7 +18,7 @@ antlrcpp::Any Compiler::visitStmtDEFFN(DARICParser::StmtDEFFNContext* context)
     current_function = &(*functions.find(current_var.name)).second;
 
     // Parameters
-    if (phase == CompilerPhase::LOOKAHEAD) {
+    if (phase == CompilerPhase::LOOKAHEAD && context->functionVarList() != nullptr) {
         visit(context->functionVarList());
     }
 
@@ -45,9 +45,7 @@ antlrcpp::Any Compiler::visitStmtDEFFN(DARICParser::StmtDEFFNContext* context)
             insert_instruction(Bytecodes::STORE_PARAMETER, a.type, a.index | LocalVariableFlag);
         }
 
-        for (int i = 0; i < context->body().size(); i++) {
-            visit(context->body(i));
-        }
+        visit(context->bodyStar());
 
         // Do we have any RETURNs? If so, push the values onto the stack
         for (auto it = current_function->parameters.cbegin(); it != current_function->parameters.cend(); ++it) {
@@ -105,7 +103,7 @@ antlrcpp::Any Compiler::visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* contex
     current_function = &(*functions.find(current_var.name)).second;
 
     // Parameters
-    if (phase == CompilerPhase::LOOKAHEAD) {
+    if (phase == CompilerPhase::LOOKAHEAD && context->functionVarList() != nullptr) {
         visit(context->functionVarList());
     }
 
@@ -132,9 +130,7 @@ antlrcpp::Any Compiler::visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* contex
             insert_instruction(Bytecodes::STORE_PARAMETER, a.type, a.index | LocalVariableFlag);
         }
 
-        for (int i = 0; i < context->body().size(); i++) {
-            visit(context->body(i));
-        }
+        visit(context->bodyStar());
 
         // Do we have any RETURNs? If so, push the values onto the stack
         for (auto it = current_function->parameters.cbegin(); it != current_function->parameters.cend(); ++it) {
@@ -321,7 +317,9 @@ antlrcpp::Any Compiler::visitStmtCallPROC(DARICParser::StmtCallPROCContext* cont
     }
 
     // Parameters
-    visit(context->functionParList());
+    if (context->functionParList() != nullptr) {
+        visit(context->functionParList());
+    }
 
     // Do call
     general_call_fnproc();
@@ -340,7 +338,9 @@ antlrcpp::Any Compiler::visitStmtCallFN(DARICParser::StmtCallFNContext* context)
     }
 
     // Parameters
-    visit(context->functionParList());
+    if (context->functionParList() != nullptr) {
+        visit(context->functionParList());
+    }
 
     // Do call
     general_call_fnproc();

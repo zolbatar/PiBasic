@@ -63,6 +63,18 @@ public class DARICBaseListener implements DARICListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBodyStar(DARICParser.BodyStarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBodyStar(DARICParser.BodyStarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterLinenumber(DARICParser.LinenumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -171,6 +183,18 @@ public class DARICBaseListener implements DARICListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStmtIFMultiline(DARICParser.StmtIFMultilineContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtIFMultiline(DARICParser.StmtIFMultilineContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStmtINPUT(DARICParser.StmtINPUTContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -262,6 +286,18 @@ public class DARICBaseListener implements DARICListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStmtTYPE(DARICParser.StmtTYPEContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStmtREPEAT(DARICParser.StmtREPEATContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtREPEAT(DARICParser.StmtREPEATContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

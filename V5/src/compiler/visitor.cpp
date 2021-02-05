@@ -24,6 +24,12 @@ antlrcpp::Any Compiler::visitBody(DARICParser::BodyContext* context)
     return visitChildren(context);
 }
 
+antlrcpp::Any Compiler::visitBodyStar(DARICParser::BodyStarContext* context)
+{
+    set_pos(context->start);
+    return visitChildren(context);
+}
+
 antlrcpp::Any Compiler::visitContent(DARICParser::ContentContext* context)
 {
     set_pos(context->start);
