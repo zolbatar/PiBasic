@@ -26,6 +26,7 @@ enum class VariableScope {
 
 struct FunctionParameter {
     std::string name;
+    std::string current_return_variable;
     Type type;
     bool return_parameter;
     UINT32 index;

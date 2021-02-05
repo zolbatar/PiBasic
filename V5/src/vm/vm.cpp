@@ -3087,7 +3087,7 @@ std::string VM::run()
                 break;
 
                 /* Functions */
-            case Bytecodes::UNPACK:
+            case Bytecodes::STORE_PARAMETER:
                 opcode_UNPACK();
                 break;
             case Bytecodes::RETURN:

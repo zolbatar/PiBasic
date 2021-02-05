@@ -379,8 +379,8 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         break;
 
         // Parameters for FN/PROC
-    case Bytecodes::UNPACK:
-        ret.opcode = "UNPACK";
+    case Bytecodes::STORE_PARAMETER:
+        ret.opcode = "STORE PARAMETER";
         name_for_operand(ret, bc, i);
         break;
 
@@ -388,10 +388,10 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         ret.opcode = "PRINT";
         break;
     case Bytecodes::PRINT_NL:
-        ret.opcode = "PRINT_NL";
+        ret.opcode = "PRINT NL";
         break;
     case Bytecodes::PRINT_SPC:
-        ret.opcode = "PRINT_SPC";
+        ret.opcode = "PRINT SPC";
         break;
 
     case Bytecodes::MOD:

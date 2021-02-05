@@ -41,7 +41,7 @@ enum class Bytecodes {
     STORE_FIELD_ARRAY, // Store in field array
 
     // Function parameter
-    UNPACK, // Store parameter stack in variable
+    STORE_PARAMETER, // Store parameter stack in variable
 
     // Data
     READ, // Request DATA

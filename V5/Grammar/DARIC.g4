@@ -39,6 +39,9 @@ stmt
     | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN                   # stmtTYPE
     ;
 
+directNumOp
+    : 
+
 fnName
     : FN_FLOAT
     | FN_INTEGER
@@ -324,6 +327,12 @@ MULTIPLY        : '*' ;
 DIVIDE          : '/' ;
 SHL             : '<<' ;
 SHR             : '>>' ;
+PLUS_E          : '+' ;
+MINUS_E         : '-' ;
+MULTIPLY_E      : '*' ;
+DIVIDE_E        : '/' ;
+SHL_E           : '<<' ;
+SHR_E           : '>>' ;
 
 NEWLINE         : '\n'+ ;
 TICK            : '\'' ;

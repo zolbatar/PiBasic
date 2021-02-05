@@ -42,7 +42,7 @@ antlrcpp::Any Compiler::visitStmtDEFFN(DARICParser::StmtDEFFNContext* context)
             b.set_type_nodefault(a.type);
             current_function->locals.insert(std::pair<std::string, Boxed>(a.name, std::move(b)));
             current_function->local_var_index++;
-            insert_instruction(Bytecodes::UNPACK, a.type, a.index | LocalVariableFlag);
+            insert_instruction(Bytecodes::STORE_PARAMETER, a.type, a.index | LocalVariableFlag);
         }
 
         for (int i = 0; i < context->body().size(); i++) {
@@ -129,7 +129,7 @@ antlrcpp::Any Compiler::visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* contex
             b.set_type_nodefault(a.type);
             current_function->locals.insert(std::pair<std::string, Boxed>(a.name, std::move(b)));
             current_function->local_var_index++;
-            insert_instruction(Bytecodes::UNPACK, a.type, a.index | LocalVariableFlag);
+            insert_instruction(Bytecodes::STORE_PARAMETER, a.type, a.index | LocalVariableFlag);
         }
 
         for (int i = 0; i < context->body().size(); i++) {
@@ -228,14 +228,25 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
     // Process parameters, go backwards so on the stack in the correct order
     for (int i = 0; i < context->expr().size(); i++) {
         auto index = context->expr().size() - 1 - i;
+        auto fp = &func->parameters[index];
+
+        // Is it a return type? If so, it needs to be a variable
+        if (fp->return_parameter) {
+            current_var.name = context->expr(index)->getText();
+            auto f= find_variable(false, false);
+            if (!f) {
+                error("Variable '" + current_var.name + "' not found or a valid RETURN");
+            }
+            fp->current_return_variable = current_var.name;
+        }
+
         visit(context->expr(index));
 
         // Matching?
-        auto fp = func->parameters[index];
         auto type = stack_pop();
-        if (type != fp.type) {
+        if (type != fp->type) {
             // Can we convert?
-            switch (fp.type) {
+            switch (fp->type) {
             case Type::INTEGER:
                 switch (type) {
                 case Type::INTEGER:
@@ -244,7 +255,7 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
                     insert_bytecode(Bytecodes::F_TO_I, Type::NOTYPE);
                     break;
                 case Type::STRING:
-                    error("Parameter '" + fp.name + "' for call to '" + called_fnproc + "' is the wrong type");
+                    error("Parameter '" + fp->name + "' for call to '" + called_fnproc + "' is the wrong type");
                 }
                 break;
             case Type::FLOAT:
@@ -255,15 +266,15 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
                 case Type::FLOAT:
                     break;
                 case Type::STRING:
-                    error("Parameter '" + fp.name + "' for call to '" + called_fnproc + "' is the wrong type");
+                    error("Parameter '" + fp->name + "' for call to '" + called_fnproc + "' is the wrong type");
                 }
                 break;
             case Type::STRING:
                 switch (type) {
                 case Type::INTEGER:
-                    error("Parameter '" + fp.name + "' for call to '" + called_fnproc + "' is the wrong type");
+                    error("Parameter '" + fp->name + "' for call to '" + called_fnproc + "' is the wrong type");
                 case Type::FLOAT:
-                    error("Parameter '" + fp.name + "' for call to '" + called_fnproc + "' is the wrong type");
+                    error("Parameter '" + fp->name + "' for call to '" + called_fnproc + "' is the wrong type");
                 case Type::STRING:
                     break;
                 }
@@ -271,19 +282,6 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
             }
         }
     }
-
-    // Call
-    if (phase != CompilerPhase::COMPILE) {
-        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);
-        insert_instruction(Bytecodes::CALL, Type::NOTYPE, 0);
-    } else {
-        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, func->index);
-        insert_instruction(Bytecodes::CALL, Type::NOTYPE, func->pc_start);
-    }
-
-    // Do we have any return parameters?
-
-
     return NULL;
 }
 antlrcpp::Any Compiler::visitStmtCallPROC(DARICParser::StmtCallPROCContext* context)
@@ -295,7 +293,31 @@ antlrcpp::Any Compiler::visitStmtCallPROC(DARICParser::StmtCallPROCContext* cont
     if (functions.count(called_fnproc) == 0) {
         error("Function or procedure '" + called_fnproc + "' does not exist");
     }
+
+    // Parameters
     visit(context->functionParList());
+
+    // Find function
+    auto func = &(*functions.find(called_fnproc)).second;
+
+    // Call
+    if (phase != CompilerPhase::COMPILE) {
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);
+        insert_instruction(Bytecodes::CALL, Type::NOTYPE, 0);
+    } else {
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, func->index);
+        insert_instruction(Bytecodes::CALL, Type::NOTYPE, func->pc_start);
+    }
+
+    // Do we have any return parameters? If so, grab from stack and store
+    for (auto it = func->parameters.cbegin(); it != func->parameters.cend(); ++it) {
+        auto a = *it;
+        if (a.return_parameter) {
+            current_var.name = a.current_return_variable;
+            find_variable(false, true);
+            insert_instruction(Bytecodes::STORE, current_var.type, current_var.id);
+        }
+    }
 
     return NULL;
 }

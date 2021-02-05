@@ -2,4 +2,9 @@ DEF PROCPass(a,b%,c$):PRINT "PASS", a, b%, c$:ENDPROC
 
 DEF FNTest%(a%):=a%+20:ENDFN
 
-PROCPass(10,23.23, "")
+DEF PROCRet(RETURN a%):a%=a%+10:ENDPROC
+
+REM PROCPass(10,23.23, "")
+a%=50
+PROCRet(a%)
+PRINT a%
