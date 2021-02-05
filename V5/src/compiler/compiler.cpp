@@ -20,6 +20,7 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
     this->vm = vm;
     this->filename = filename;
     reset();
+    if_statements.clear();
     functions.clear();
 
     // Lookahead, figure out function definitions and types

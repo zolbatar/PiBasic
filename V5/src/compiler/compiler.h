@@ -43,6 +43,11 @@ struct Function {
     UINT32 local_var_index = 0;
 };
 
+struct IfStatement {
+    UINT32 end_pc;
+    UINT32 false_pc;
+};
+
 class VarReference {
 public:
     int id;
@@ -81,6 +86,9 @@ private:
     // Globals
     UINT32 global_var_index = 0;
     std::map<std::string, Boxed> globals;
+
+    // Looping
+    std::map<UINT32, IfStatement> if_statements;
 
     // Arrays
     UINT32 last_array_dimensions = 0;
@@ -200,6 +208,7 @@ protected:
     antlrcpp::Any visitStmt(DARICParser::StmtContext* context);
     antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext* context);
     antlrcpp::Any visitStmtEND(DARICParser::StmtENDContext* context);
+    antlrcpp::Any visitStmtIF(DARICParser::StmtIFContext* context);
     antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext* context);
     antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext* context);
     antlrcpp::Any visitStmtLOCAL(DARICParser::StmtLOCALContext* context);

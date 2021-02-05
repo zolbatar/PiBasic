@@ -41,6 +41,8 @@ public:
 
     virtual antlrcpp::Any visitStmtCallFN(DARICParser::StmtCallFNContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtIF(DARICParser::StmtIFContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext *context) = 0;

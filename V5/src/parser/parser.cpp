@@ -47,8 +47,5 @@ void MyParser::parse_and_compile(Compiler* compiler)
     // Add to files list
     g_vm->add_filename(filename);
 
-//    std::cout << tree->toStringTree() << std::endl;
-//    std::cout << tree->toInfoString(parser) << std::endl;
-
     compiler->compile(g_vm, tree, filename);
 }

@@ -32,6 +32,7 @@ stmt
     | DEF fnName LPAREN functionVarList? RPAREN COLON? body* ENDFN          # stmtDEFFN
     | DEF PROC_NAME LPAREN functionVarList? RPAREN COLON? body* ENDPROC     # stmtDEFPROC
     | fnName LPAREN functionParList? RPAREN                                 # stmtCallFN
+    | IF expr THEN? body* (ELSE body*)?                                     # stmtIF
     | INPUT (strExpr COMMA)? varList                                        # stmtINPUT
     | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*             # stmtLET
     | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                        # stmtLOCAL
@@ -260,14 +261,17 @@ compare
 // Lexer stuff
 DEF             : 'DEF' | 'Def' | 'def' ;
 DIM             : 'DIM' | 'Dim' | 'dim' ;
+ELSE            : 'ELSE' | 'Else' | 'else' ;
 END             : 'END' | 'End' | 'end' ;
 ENDFN           : 'ENDFN' | 'EndFn' | 'endfn' ;
 ENDPROC         : 'ENDPROC' | 'EndProc' | 'endproc' ;
 FN              : 'FN' | 'Fn' | 'fn' ;
+IF              : 'IF' | 'If' | 'if' ;
 INPUT           : 'INPUT' | 'Input' | 'input' ;
 GLOBAL          : 'GLOBAL' | 'Global' | 'global' ;
 LOCAL           : 'LOCAL' | 'Local' | 'local' ;
 LET             : 'LET' | 'Let' | 'let' ;
+THEN            : 'THEN' | 'Then' | 'then' ;
 PRINT           : 'PRINT' | 'Print' | 'print' ;
 PROC            : 'PROC' | 'Proc' | 'proc' ;
 REM             : 'REM' | 'Rem' | 'rem' ;

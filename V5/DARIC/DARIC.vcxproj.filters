@@ -249,6 +249,9 @@
     <ClCompile Include="..\src\compiler\compiler_debugging.cpp">
       <Filter>Source Files\Compiler</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_conditional.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">

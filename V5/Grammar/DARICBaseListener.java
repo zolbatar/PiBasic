@@ -147,6 +147,18 @@ public class DARICBaseListener implements DARICListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStmtIF(DARICParser.StmtIFContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtIF(DARICParser.StmtIFContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStmtINPUT(DARICParser.StmtINPUTContext ctx) { }
 	/**
 	 * {@inheritDoc}
