@@ -57,6 +57,18 @@ public interface DARICListener extends ParseTreeListener {
 	 */
 	void exitLinenumber(DARICParser.LinenumberContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code stmtBREAKPOINT}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtBREAKPOINT(DARICParser.StmtBREAKPOINTContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtBREAKPOINT}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtBREAKPOINT(DARICParser.StmtBREAKPOINTContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code stmtDIM}
 	 * labeled alternative in {@link DARICParser#stmt}.
 	 * @param ctx the parse tree

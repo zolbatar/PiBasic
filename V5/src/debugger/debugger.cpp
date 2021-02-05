@@ -13,9 +13,14 @@ Debugger::Debugger()
         return;
     debugger_open = true;
 
+    // Was this breakpoint triggered?
+    bool breakpoint = g_vm->helper_bytecodes().get_previous_bytecode().opcode == Bytecodes::BREAKPOINT;
+
     // Wait until not pressed
-    while (g_env.graphics.inkey(-31)) {
-        g_env.graphics.poll();
+    if (!breakpoint) {
+        while (g_env.graphics.inkey(-31)) {
+            g_env.graphics.poll();
+        }
     }
 
     // Save the current screen
@@ -29,7 +34,8 @@ Debugger::Debugger()
         g_env.graphics.poll();
         if (g_env.graphics.inkey(-17)) {
             exit(0);
-        } else if (g_env.graphics.inkey(-114)) {
+        } else if (breakpoint || g_env.graphics.inkey(-114)) {
+            breakpoint = false;
             // F1
             debugger_disassembly();
         } else if (g_env.graphics.inkey(-115)) {

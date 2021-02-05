@@ -25,7 +25,8 @@ linenumber
     ;
 
 stmt
-    : DIM varDeclWithDimension (COMMA varDeclWithDimension)*                # stmtDIM
+    : BREAKPOINT                                                            # stmtBREAKPOINT
+    | DIM varDeclWithDimension (COMMA varDeclWithDimension)*                # stmtDIM
     | END                                                                   # stmtEND
     | EQ expr?                                                              # stmtRETURN
     | RETURN expr?                                                          # stmtRETURN
@@ -259,6 +260,7 @@ compare
     ;
    
 // Lexer stuff
+BREAKPOINT      : 'BREAKPOINT' | 'Breakpoint' | 'breakpoint' ;
 DEF             : 'DEF' | 'Def' | 'def' ;
 DIM             : 'DIM' | 'Dim' | 'dim' ;
 ELSE            : 'ELSE' | 'Else' | 'else' ;

@@ -13,3 +13,10 @@ antlrcpp::Any Compiler::visitStmtTRACEOFF(DARICParser::StmtTRACEOFFContext* cont
     insert_bytecode(Bytecodes::TRACEOFF, Type::NOTYPE);
     return NULL;
 }
+
+antlrcpp::Any Compiler::visitStmtBREAKPOINT(DARICParser::StmtBREAKPOINTContext* context)
+{
+    set_pos(context->start);
+    insert_bytecode(Bytecodes::BREAKPOINT, Type::NOTYPE);
+    return NULL;
+}

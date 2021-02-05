@@ -187,10 +187,8 @@ public:
 
     Colour current_colour = Colour(255, 255, 255);
     Colour current_bg_colour = Colour(0, 0, 0);
-    bool is_debugger_requested() { return debugger_requested; }
 
 private:
-    bool debugger_requested = false;
     std::chrono::high_resolution_clock::time_point last_render;
     std::queue<Event> key_events;
     std::queue<Event> mouse_events;

@@ -35,6 +35,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtBREAKPOINT(DARICParser::StmtBREAKPOINTContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext *ctx) override {
     return visitChildren(ctx);
   }

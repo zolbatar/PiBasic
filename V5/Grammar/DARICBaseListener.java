@@ -75,6 +75,18 @@ public class DARICBaseListener implements DARICListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStmtBREAKPOINT(DARICParser.StmtBREAKPOINTContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtBREAKPOINT(DARICParser.StmtBREAKPOINTContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStmtDIM(DARICParser.StmtDIMContext ctx) { }
 	/**
 	 * {@inheritDoc}

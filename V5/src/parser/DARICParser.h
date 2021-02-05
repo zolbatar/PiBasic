@@ -12,23 +12,24 @@
 class  DARICParser : public antlr4::Parser {
 public:
   enum {
-    DEF = 1, DIM = 2, ELSE = 3, END = 4, ENDFN = 5, ENDPROC = 6, FN = 7, 
-    IF = 8, INPUT = 9, GLOBAL = 10, LOCAL = 11, LET = 12, THEN = 13, PRINT = 14, 
-    PROC = 15, REM = 16, RETURN = 17, SPC = 18, TRACEON = 19, TRACEOFF = 20, 
-    TYPE = 21, TIME = 22, PI = 23, SQR = 24, LN = 25, LOG = 26, EXP = 27, 
-    ATN = 28, TAN = 29, COS = 30, SIN = 31, ABS = 32, ACS = 33, ASN = 34, 
-    DEG = 35, RAD = 36, SGN = 37, ASC = 38, LEN = 39, INSTR = 40, VAL = 41, 
-    TIMES = 42, STRS = 43, STRINGS = 44, CHRS = 45, LEFTS = 46, MIDS = 47, 
-    RIGHTS = 48, RND = 49, RND0 = 50, RND1 = 51, EQ = 52, NE = 53, GT = 54, 
-    GE = 55, LT = 56, LE = 57, NOT = 58, AND = 59, OR = 60, EOR = 61, MOD = 62, 
-    DIV = 63, HAT = 64, PLUS = 65, MINUS = 66, MULTIPLY = 67, DIVIDE = 68, 
-    SHL = 69, SHR = 70, PLUS_E = 71, MINUS_E = 72, MULTIPLY_E = 73, DIVIDE_E = 74, 
-    SHL_E = 75, SHR_E = 76, NEWLINE = 77, TICK = 78, TILDE = 79, COLON = 80, 
-    COMMA = 81, DOLLAR = 82, LPAREN = 83, PERCENT = 84, RPAREN = 85, SEMICOLON = 86, 
-    UNDERSCORE = 87, COMMENT = 88, STRINGLITERAL = 89, PROC_NAME = 90, FN_INTEGER = 91, 
-    FN_FLOAT = 92, FN_STRING = 93, VARIABLE_FLOAT = 94, VARIABLE_INTEGER = 95, 
-    VARIABLE_STRING = 96, VARIABLE_TYPE = 97, NAME = 98, ALPHA = 99, DIGIT = 100, 
-    HEXNUMBER = 101, BINARYNUMBER = 102, NUMBER = 103, FLOAT = 104, WS = 105
+    BREAKPOINT = 1, DEF = 2, DIM = 3, ELSE = 4, END = 5, ENDFN = 6, ENDPROC = 7, 
+    FN = 8, IF = 9, INPUT = 10, GLOBAL = 11, LOCAL = 12, LET = 13, THEN = 14, 
+    PRINT = 15, PROC = 16, REM = 17, RETURN = 18, SPC = 19, TRACEON = 20, 
+    TRACEOFF = 21, TYPE = 22, TIME = 23, PI = 24, SQR = 25, LN = 26, LOG = 27, 
+    EXP = 28, ATN = 29, TAN = 30, COS = 31, SIN = 32, ABS = 33, ACS = 34, 
+    ASN = 35, DEG = 36, RAD = 37, SGN = 38, ASC = 39, LEN = 40, INSTR = 41, 
+    VAL = 42, TIMES = 43, STRS = 44, STRINGS = 45, CHRS = 46, LEFTS = 47, 
+    MIDS = 48, RIGHTS = 49, RND = 50, RND0 = 51, RND1 = 52, EQ = 53, NE = 54, 
+    GT = 55, GE = 56, LT = 57, LE = 58, NOT = 59, AND = 60, OR = 61, EOR = 62, 
+    MOD = 63, DIV = 64, HAT = 65, PLUS = 66, MINUS = 67, MULTIPLY = 68, 
+    DIVIDE = 69, SHL = 70, SHR = 71, PLUS_E = 72, MINUS_E = 73, MULTIPLY_E = 74, 
+    DIVIDE_E = 75, SHL_E = 76, SHR_E = 77, NEWLINE = 78, TICK = 79, TILDE = 80, 
+    COLON = 81, COMMA = 82, DOLLAR = 83, LPAREN = 84, PERCENT = 85, RPAREN = 86, 
+    SEMICOLON = 87, UNDERSCORE = 88, COMMENT = 89, STRINGLITERAL = 90, PROC_NAME = 91, 
+    FN_INTEGER = 92, FN_FLOAT = 93, FN_STRING = 94, VARIABLE_FLOAT = 95, 
+    VARIABLE_INTEGER = 96, VARIABLE_STRING = 97, VARIABLE_TYPE = 98, NAME = 99, 
+    ALPHA = 100, DIGIT = 101, HEXNUMBER = 102, BINARYNUMBER = 103, NUMBER = 104, 
+    FLOAT = 105, WS = 106
   };
 
   enum {
@@ -305,6 +306,15 @@ public:
     ExprContext* expr(size_t i);
     std::vector<antlr4::tree::TerminalNode *> COMMA();
     antlr4::tree::TerminalNode* COMMA(size_t i);
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtBREAKPOINTContext : public StmtContext {
+  public:
+    StmtBREAKPOINTContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *BREAKPOINT();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };

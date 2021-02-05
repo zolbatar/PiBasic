@@ -229,7 +229,9 @@ public:
     std::vector<Bytecode>& get_code() { return code; }
     void set_code(std::vector<Bytecode>& new_code) { }
     Bytecode& get_bytecode(size_t i) { return code[i]; }
-    Bytecode& get_current_bytecode() { return code[pc++]; }
+    Bytecode& get_current_bytecode() { return code[pc]; }
+    Bytecode& get_previous_bytecode() { return code[pc - 1]; }
+    void next() { pc++; }
     void clear() { code.clear(); }
 
     UINT32 get_size() { return static_cast<UINT32>(code.size()); }

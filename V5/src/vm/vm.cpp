@@ -9,6 +9,7 @@
 #include "../environment.h"
 #include "../libs/clock.h"
 #include "../libs/string.h"
+#include "../debugger/debugger.h"
 #include "vm.h"
 #include <array>
 #include <chrono>
@@ -2661,6 +2662,7 @@ std::string VM::run()
                 poll_count = 0;
             }
             bc = helper_bytecodes().get_current_bytecode();
+            helper_bytecodes().next();
             if (!performance_build && runtime_debug) {
                 g_env.log << std::uppercase << "[" << std::setw(4) << bc.file_number << " : " << std::setw(8) << bc.line_number << " : " << std::hex << std::setw(8)
                           << helper_bytecodes().pc - 1 << " : " << std::setw(2) << (int)bc.opcode << "]  " << std::nouppercase << std::dec;
@@ -2682,7 +2684,7 @@ std::string VM::run()
                 runtime_debug = false;
                 break;
             case Bytecodes::BREAKPOINT:
-                //TODO Debugger();
+                Debugger();
                 break;
             case Bytecodes::DROP:
                 opcode_DROP();

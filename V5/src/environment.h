@@ -14,6 +14,8 @@ public:
     bool debugger_requested = false;
     bool interactive;
 
+    bool is_debugger_requested() { return debugger_requested; }
+
     void process_log()
     {
         // Convert to list of vectors for performance of log

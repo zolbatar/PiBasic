@@ -29,6 +29,8 @@ public:
 
     virtual antlrcpp::Any visitLinenumber(DARICParser::LinenumberContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtBREAKPOINT(DARICParser::StmtBREAKPOINTContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtEND(DARICParser::StmtENDContext *context) = 0;

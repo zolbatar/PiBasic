@@ -206,6 +206,7 @@ protected:
 
     /* Statements */
     antlrcpp::Any visitStmt(DARICParser::StmtContext* context);
+    antlrcpp::Any visitStmtBREAKPOINT(DARICParser::StmtBREAKPOINTContext* context);
     antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext* context);
     antlrcpp::Any visitStmtEND(DARICParser::StmtENDContext* context);
     antlrcpp::Any visitStmtIF(DARICParser::StmtIFContext* context);
