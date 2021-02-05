@@ -8,6 +8,7 @@ antlrcpp::Any Compiler::visitStmtDEFFN(DARICParser::StmtDEFFNContext* context)
     // Create a function object to stuff with things
     if (phase == CompilerPhase::LOOKAHEAD) {
         Function f;
+        f.index = functions.size();
         f.name = current_var.name;
         f.type = current_var.type;
 
@@ -94,6 +95,7 @@ antlrcpp::Any Compiler::visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* contex
     // Create a function object to stuff with things
     if (phase == CompilerPhase::LOOKAHEAD) {
         Function f;
+        f.index = functions.size();
         f.name = current_var.name;
         f.type = current_var.type;
 
@@ -112,8 +114,8 @@ antlrcpp::Any Compiler::visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* contex
 
         // Jump around function
         if (phase != CompilerPhase::COMPILE) {
-            current_function->pc_start = vm->helper_bytecodes().pc;
             insert_instruction(Bytecodes::JUMP, Type::NOTYPE, 0);
+            current_function->pc_start = vm->helper_bytecodes().pc;
         } else {
             insert_instruction(Bytecodes::JUMP, Type::NOTYPE, current_function->pc_end);
         }
@@ -223,12 +225,13 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
     // Find function
     auto func = &(*functions.find(called_fnproc)).second;
 
-    // Process parameters
+    // Process parameters, go backwards so on the stack in the correct order
     for (int i = 0; i < context->expr().size(); i++) {
-        visit(context->expr(i));
+        auto index = context->expr().size() - 1 - i;
+        visit(context->expr(index));
 
         // Matching?
-        auto fp = func->parameters[i];
+        auto fp = func->parameters[index];
         auto type = stack_pop();
         if (type != fp.type) {
             // Can we convert?
@@ -268,6 +271,18 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
             }
         }
     }
+
+    // Call
+    if (phase != CompilerPhase::COMPILE) {
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);
+        insert_instruction(Bytecodes::CALL, Type::NOTYPE, 0);
+    } else {
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, func->index);
+        insert_instruction(Bytecodes::CALL, Type::NOTYPE, func->pc_start);
+    }
+
+    // Do we have any return parameters?
+
 
     return NULL;
 }

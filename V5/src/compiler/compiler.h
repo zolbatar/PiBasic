@@ -32,6 +32,7 @@ struct FunctionParameter {
 };
 
 struct Function {
+    UINT32 index;
     std::string name;
     UINT32 pc_start;
     UINT32 pc_end;

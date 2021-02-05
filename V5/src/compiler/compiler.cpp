@@ -20,6 +20,7 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
     this->vm = vm;
     this->filename = filename;
     reset();
+    functions.clear();
 
     // Lookahead, figure out function definitions and types
     phase = CompilerPhase::LOOKAHEAD;
@@ -59,7 +60,7 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
     }
 
     // Size to number of functions
-    vm->functions.reserve(functions.size());
+    vm->functions.resize(functions.size());
 
     // Setup each function locals now
     for (auto g = functions.begin(); g != functions.end(); ++g) {
@@ -78,7 +79,8 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
             b2.set_type_nodefault(ll.get_type());
             b.locals.push_back(std::move(b2));
         }
-        vm->functions.push_back(std::move(b));
+        b.locals_count = b.locals.size();
+        vm->functions[func.index] = std::move(b);
     }
 }
 
