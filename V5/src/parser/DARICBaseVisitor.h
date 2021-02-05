@@ -111,6 +111,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtWHILE(DARICParser::StmtWHILEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitFnName(DARICParser::FnNameContext *ctx) override {
     return visitChildren(ctx);
   }

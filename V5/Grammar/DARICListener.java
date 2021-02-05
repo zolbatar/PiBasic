@@ -283,6 +283,18 @@ public interface DARICListener extends ParseTreeListener {
 	 */
 	void exitStmtREPEAT(DARICParser.StmtREPEATContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code stmtWHILE}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtWHILE(DARICParser.StmtWHILEContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtWHILE}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtWHILE(DARICParser.StmtWHILEContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link DARICParser#fnName}.
 	 * @param ctx the parse tree
 	 */

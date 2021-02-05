@@ -67,6 +67,8 @@ public:
 
     virtual antlrcpp::Any visitStmtREPEAT(DARICParser::StmtREPEATContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtWHILE(DARICParser::StmtWHILEContext *context) = 0;
+
     virtual antlrcpp::Any visitFnName(DARICParser::FnNameContext *context) = 0;
 
     virtual antlrcpp::Any visitVar(DARICParser::VarContext *context) = 0;

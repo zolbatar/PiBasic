@@ -220,6 +220,7 @@ protected:
     antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext* context);
     antlrcpp::Any visitStmtTRACEON(DARICParser::StmtTRACEONContext* context);
     antlrcpp::Any visitStmtTRACEOFF(DARICParser::StmtTRACEOFFContext* context);
+    antlrcpp::Any visitStmtWHILE(DARICParser::StmtWHILEContext* context);
 
     /* Functions */
     void general_call_fnproc();

@@ -18,5 +18,11 @@ PROCTest()
 A%=0
 REPEAT
 	A%=A%+1
-	PRINT A%
+	PRINT "R: ";A%
 UNTIL A%=10
+
+A%=10
+WHILE A% > 0
+	A%=A%-1
+	PRINT "W: ";A%
+ENDWHILE

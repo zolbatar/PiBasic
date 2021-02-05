@@ -48,6 +48,7 @@ stmt
     | TRACEOFF                                                              # stmtTRACEOFF
     | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN                   # stmtTYPE
     | REPEAT body* UNTIL expr                                               # stmtREPEAT
+    | WHILE expr body* ENDWHILE                                             # stmtWHILE
     ;
 
 fnName
@@ -274,6 +275,7 @@ END             : 'END' | 'End' | 'end' ;
 ENDIF           : 'ENDIF' | 'EndIf' | 'endif' ;
 ENDFN           : 'ENDFN' | 'EndFn' | 'endfn' ;
 ENDPROC         : 'ENDPROC' | 'EndProc' | 'endproc' ;
+ENDWHILE        : 'ENDWHILE' | 'EndWhile' | 'endwhile' ;
 FN              : 'FN' | 'Fn' | 'fn' ;
 IF              : 'IF' | 'If' | 'if' ;
 INPUT           : 'INPUT' | 'Input' | 'input' ;
@@ -291,6 +293,7 @@ TRACEON         : 'TRACEON' | 'TraceOn' | 'traceon';
 TRACEOFF        : 'TRACEOFF' | 'TraceOff' | 'traceoff';
 TYPE            : 'TYPE' | 'Type' | 'type';
 UNTIL           : 'UNTIL' | 'Until' | 'until' ;
+WHILE           : 'WHILE' | 'While' | 'while' ;
 
 TIME            : 'TIME' | 'Time' | 'time' ;
 PI              : 'PI' | 'Pi' | 'pi' ;
