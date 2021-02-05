@@ -71,6 +71,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtCallPROC(DARICParser::StmtCallPROCContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -180,6 +184,10 @@ public:
   }
 
   virtual antlrcpp::Any visitFunctionVarList(DARICParser::FunctionVarListContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitFunctionParList(DARICParser::FunctionParListContext *ctx) override {
     return visitChildren(ctx);
   }
 

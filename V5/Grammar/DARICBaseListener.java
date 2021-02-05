@@ -183,6 +183,18 @@ public class DARICBaseListener implements DARICListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStmtCallPROC(DARICParser.StmtCallPROCContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtCallPROC(DARICParser.StmtCallPROCContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStmtTYPE(DARICParser.StmtTYPEContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -514,6 +526,18 @@ public class DARICBaseListener implements DARICListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFunctionVarList(DARICParser.FunctionVarListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunctionParList(DARICParser.FunctionParListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionParList(DARICParser.FunctionParListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

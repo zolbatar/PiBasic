@@ -1,3 +1,5 @@
-DEF PROCPass(x,y,z):PRINT "PASS":ENDPROC
+DEF PROCPass(a,b%,c$):PRINT "PASS":ENDPROC
 
 DEF FNTest%(a%):=a%+20:ENDFN
+
+PROCPass(10,23.23, "")

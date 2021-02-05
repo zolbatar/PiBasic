@@ -93,6 +93,7 @@ private:
     Function *current_function = nullptr;
     std::map<std::string, Function> functions;
     bool inside_function() { return current_function != nullptr; }
+    std::string called_fnproc;
 
     // Constants
     std::list<Boxed> constants;
@@ -208,7 +209,9 @@ protected:
     antlrcpp::Any visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* context);
     antlrcpp::Any visitStmtRETURN(DARICParser::StmtRETURNContext* context);
     antlrcpp::Any visitFunctionVarList(DARICParser::FunctionVarListContext* context);
+    antlrcpp::Any visitFunctionParList(DARICParser::FunctionParListContext* context);
     antlrcpp::Any visitFnName(DARICParser::FnNameContext* context);
+    antlrcpp::Any visitStmtCallPROC(DARICParser::StmtCallPROCContext* context);
 
     /* Literals */
     antlrcpp::Any visitNumber(DARICParser::NumberContext* context);

@@ -47,6 +47,8 @@ public:
 
     virtual antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtCallPROC(DARICParser::StmtCallPROCContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext *context) = 0;
 
     virtual antlrcpp::Any visitFnName(DARICParser::FnNameContext *context) = 0;
@@ -102,6 +104,8 @@ public:
     virtual antlrcpp::Any visitVarList(DARICParser::VarListContext *context) = 0;
 
     virtual antlrcpp::Any visitFunctionVarList(DARICParser::FunctionVarListContext *context) = 0;
+
+    virtual antlrcpp::Any visitFunctionParList(DARICParser::FunctionParListContext *context) = 0;
 
     virtual antlrcpp::Any visitExprList(DARICParser::ExprListContext *context) = 0;
 

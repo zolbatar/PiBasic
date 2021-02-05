@@ -211,5 +211,76 @@ antlrcpp::Any Compiler::visitFunctionVarList(DARICParser::FunctionVarListContext
         current_function->parameters.push_back(std::move(b));
     }
 
-    return visitChildren(context);
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext* context)
+{
+    set_pos(context->start);
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+
+    // Find function
+    auto func = &(*functions.find(called_fnproc)).second;
+
+    // Process parameters
+    for (int i = 0; i < context->expr().size(); i++) {
+        visit(context->expr(i));
+
+        // Matching?
+        auto fp = func->parameters[i];
+        auto type = stack_pop();
+        if (type != fp.type) {
+            // Can we convert?
+            switch (fp.type) {
+            case Type::INTEGER:
+                switch (type) {
+                case Type::INTEGER:
+                    break;
+                case Type::FLOAT:
+                    insert_bytecode(Bytecodes::F_TO_I, Type::NOTYPE);
+                    break;
+                case Type::STRING:
+                    error("Parameter '" + fp.name + "' for call to '" + called_fnproc + "' is the wrong type");
+                }
+                break;
+            case Type::FLOAT:
+                switch (type) {
+                case Type::INTEGER:
+                    insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
+                    break;
+                case Type::FLOAT:
+                    break;
+                case Type::STRING:
+                    error("Parameter '" + fp.name + "' for call to '" + called_fnproc + "' is the wrong type");
+                }
+                break;
+            case Type::STRING:
+                switch (type) {
+                case Type::INTEGER:
+                    error("Parameter '" + fp.name + "' for call to '" + called_fnproc + "' is the wrong type");
+                case Type::FLOAT:
+                    error("Parameter '" + fp.name + "' for call to '" + called_fnproc + "' is the wrong type");
+                case Type::STRING:
+                    break;
+                }
+                break;
+            }
+        }
+    }
+
+    return NULL;
+}
+antlrcpp::Any Compiler::visitStmtCallPROC(DARICParser::StmtCallPROCContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    called_fnproc = context->PROC_NAME()->getText();
+    if (functions.count(called_fnproc) == 0) {
+        error("Function or procedure '" + called_fnproc + "' does not exist");
+    }
+    visit(context->functionParList());
+
+    return NULL;
 }

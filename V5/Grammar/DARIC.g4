@@ -35,6 +35,7 @@ stmt
     | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*             # stmtLET
     | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                        # stmtLOCAL
     | PRINT printList?                                                      # stmtPRINT
+    | PROC_NAME LPAREN functionParList? RPAREN                              # stmtCallPROC
     | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN                   # stmtTYPE
     ;
 
@@ -112,6 +113,10 @@ varList
 
 functionVarList
     : RETURN? justVar (COMMA RETURN? justVar)*
+    ;
+
+functionParList
+    : expr (COMMA expr)*
     ;
 
 exprList

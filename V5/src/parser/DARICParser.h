@@ -35,11 +35,12 @@ public:
     RuleStmt = 5, RuleFnName = 6, RuleVar = 7, RuleTypeVar = 8, RuleNumVar = 9, 
     RuleStrVar = 10, RuleJustVar = 11, RuleVarName = 12, RuleVarNameInteger = 13, 
     RuleVarNameString = 14, RuleVarNameType = 15, RuleVarDecl = 16, RuleVarDeclWithDimension = 17, 
-    RuleVarList = 18, RuleFunctionVarList = 19, RuleExprList = 20, RulePrintListItem = 21, 
-    RulePrintStartingTicks = 22, RulePrintList = 23, RuleExpr = 24, RuleNumber = 25, 
-    RuleNumberInteger = 26, RuleNumberHex = 27, RuleNumberBinary = 28, RuleNumberFloat = 29, 
-    RuleStrFunc = 30, RuleString = 31, RuleStrExpr = 32, RuleNumFunc = 33, 
-    RuleNumExpr = 34, RuleCompare = 35
+    RuleVarList = 18, RuleFunctionVarList = 19, RuleFunctionParList = 20, 
+    RuleExprList = 21, RulePrintListItem = 22, RulePrintStartingTicks = 23, 
+    RulePrintList = 24, RuleExpr = 25, RuleNumber = 26, RuleNumberInteger = 27, 
+    RuleNumberHex = 28, RuleNumberBinary = 29, RuleNumberFloat = 30, RuleStrFunc = 31, 
+    RuleString = 32, RuleStrExpr = 33, RuleNumFunc = 34, RuleNumExpr = 35, 
+    RuleCompare = 36
   };
 
   explicit DARICParser(antlr4::TokenStream *input);
@@ -72,6 +73,7 @@ public:
   class VarDeclWithDimensionContext;
   class VarListContext;
   class FunctionVarListContext;
+  class FunctionParListContext;
   class ExprListContext;
   class PrintListItemContext;
   class PrintStartingTicksContext;
@@ -314,6 +316,18 @@ public:
     antlr4::tree::TerminalNode *EQ();
     ExprContext *expr();
     antlr4::tree::TerminalNode *RETURN();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtCallPROCContext : public StmtContext {
+  public:
+    StmtCallPROCContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *PROC_NAME();
+    antlr4::tree::TerminalNode *LPAREN();
+    antlr4::tree::TerminalNode *RPAREN();
+    FunctionParListContext *functionParList();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -734,6 +748,22 @@ public:
   };
 
   FunctionVarListContext* functionVarList();
+
+  class  FunctionParListContext : public antlr4::ParserRuleContext {
+  public:
+    FunctionParListContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    std::vector<ExprContext *> expr();
+    ExprContext* expr(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  FunctionParListContext* functionParList();
 
   class  ExprListContext : public antlr4::ParserRuleContext {
   public:

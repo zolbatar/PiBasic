@@ -165,6 +165,18 @@ public interface DARICListener extends ParseTreeListener {
 	 */
 	void exitStmtPRINT(DARICParser.StmtPRINTContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code stmtCallPROC}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtCallPROC(DARICParser.StmtCallPROCContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtCallPROC}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtCallPROC(DARICParser.StmtCallPROCContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code stmtTYPE}
 	 * labeled alternative in {@link DARICParser#stmt}.
 	 * @param ctx the parse tree
@@ -480,6 +492,16 @@ public interface DARICListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunctionVarList(DARICParser.FunctionVarListContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DARICParser#functionParList}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionParList(DARICParser.FunctionParListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DARICParser#functionParList}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionParList(DARICParser.FunctionParListContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link DARICParser#exprList}.
 	 * @param ctx the parse tree
