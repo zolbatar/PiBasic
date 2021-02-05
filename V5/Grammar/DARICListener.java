@@ -353,6 +353,42 @@ public interface DARICListener extends ParseTreeListener {
 	 */
 	void exitNumVarIntegerFieldArray(DARICParser.NumVarIntegerFieldArrayContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code numVarFloatFN}
+	 * labeled alternative in {@link DARICParser#numVar}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumVarFloatFN(DARICParser.NumVarFloatFNContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code numVarFloatFN}
+	 * labeled alternative in {@link DARICParser#numVar}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumVarFloatFN(DARICParser.NumVarFloatFNContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code numVarIntegerFN}
+	 * labeled alternative in {@link DARICParser#numVar}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumVarIntegerFN(DARICParser.NumVarIntegerFNContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code numVarIntegerFN}
+	 * labeled alternative in {@link DARICParser#numVar}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumVarIntegerFN(DARICParser.NumVarIntegerFNContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code numVarStringFN}
+	 * labeled alternative in {@link DARICParser#numVar}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumVarStringFN(DARICParser.NumVarStringFNContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code numVarStringFN}
+	 * labeled alternative in {@link DARICParser#numVar}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumVarStringFN(DARICParser.NumVarStringFNContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code numVarString}
 	 * labeled alternative in {@link DARICParser#strVar}.
 	 * @param ctx the parse tree

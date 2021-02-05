@@ -79,6 +79,12 @@ public:
 
     virtual antlrcpp::Any visitNumVarIntegerFieldArray(DARICParser::NumVarIntegerFieldArrayContext *context) = 0;
 
+    virtual antlrcpp::Any visitNumVarFloatFN(DARICParser::NumVarFloatFNContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumVarIntegerFN(DARICParser::NumVarIntegerFNContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumVarStringFN(DARICParser::NumVarStringFNContext *context) = 0;
+
     virtual antlrcpp::Any visitNumVarString(DARICParser::NumVarStringContext *context) = 0;
 
     virtual antlrcpp::Any visitNumVarStringArray(DARICParser::NumVarStringArrayContext *context) = 0;

@@ -233,7 +233,7 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
         // Is it a return type? If so, it needs to be a variable
         if (fp->return_parameter) {
             current_var.name = context->expr(index)->getText();
-            auto f= find_variable(false, false);
+            auto f = find_variable(false, false);
             if (!f) {
                 error("Variable '" + current_var.name + "' not found or a valid RETURN");
             }
@@ -284,19 +284,9 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
     }
     return NULL;
 }
-antlrcpp::Any Compiler::visitStmtCallPROC(DARICParser::StmtCallPROCContext* context)
+
+void Compiler::general_call_fnproc()
 {
-    if (phase == CompilerPhase::LOOKAHEAD)
-        return NULL;
-    set_pos(context->start);
-    called_fnproc = context->PROC_NAME()->getText();
-    if (functions.count(called_fnproc) == 0) {
-        error("Function or procedure '" + called_fnproc + "' does not exist");
-    }
-
-    // Parameters
-    visit(context->functionParList());
-
     // Find function
     auto func = &(*functions.find(called_fnproc)).second;
 
@@ -318,6 +308,23 @@ antlrcpp::Any Compiler::visitStmtCallPROC(DARICParser::StmtCallPROCContext* cont
             insert_instruction(Bytecodes::STORE, current_var.type, current_var.id);
         }
     }
+}
+
+antlrcpp::Any Compiler::visitStmtCallPROC(DARICParser::StmtCallPROCContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    called_fnproc = context->PROC_NAME()->getText();
+    if (functions.count(called_fnproc) == 0) {
+        error("Function or procedure '" + called_fnproc + "' does not exist");
+    }
+
+    // Parameters
+    visit(context->functionParList());
+
+    // Do call
+    general_call_fnproc();
 
     return NULL;
 }
@@ -335,30 +342,77 @@ antlrcpp::Any Compiler::visitStmtCallFN(DARICParser::StmtCallFNContext* context)
     // Parameters
     visit(context->functionParList());
 
-    // Find function
-    auto func = &(*functions.find(called_fnproc)).second;
-
-    // Call
-    if (phase != CompilerPhase::COMPILE) {
-        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);
-        insert_instruction(Bytecodes::CALL, Type::NOTYPE, 0);
-    } else {
-        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, func->index);
-        insert_instruction(Bytecodes::CALL, Type::NOTYPE, func->pc_start);
-    }
-
-    // Do we have any return parameters? If so, grab from stack and store
-    for (auto it = func->parameters.cbegin(); it != func->parameters.cend(); ++it) {
-        auto a = *it;
-        if (a.return_parameter) {
-            current_var.name = a.current_return_variable;
-            find_variable(false, true);
-            insert_instruction(Bytecodes::STORE, current_var.type, current_var.id);
-        }
-    }
+    // Do call
+    general_call_fnproc();
 
     // We are going to DROP the return in this case as it's called as a statement
     insert_bytecode(Bytecodes::DROP, Type::NOTYPE);
+
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitNumVarFloatFN(DARICParser::NumVarFloatFNContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    called_fnproc = context->FN_FLOAT()->getText();
+    if (functions.count(called_fnproc) == 0) {
+        error("Function or procedure '" + called_fnproc + "' does not exist");
+    }
+
+    // Parameters
+    visit(context->functionParList());
+
+    // Do call
+    general_call_fnproc();
+
+    // Put type onto stack
+    stack_push(Type::FLOAT);
+
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitNumVarIntegerFN(DARICParser::NumVarIntegerFNContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    called_fnproc = context->FN_INTEGER()->getText();
+    if (functions.count(called_fnproc) == 0) {
+        error("Function or procedure '" + called_fnproc + "' does not exist");
+    }
+
+    // Parameters
+    visit(context->functionParList());
+
+    // Do call
+    general_call_fnproc();
+
+    // Put type onto stack
+    stack_push(Type::INTEGER);
+
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitNumVarStringFN(DARICParser::NumVarStringFNContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    called_fnproc = context->FN_STRING()->getText();
+    if (functions.count(called_fnproc) == 0) {
+        error("Function or procedure '" + called_fnproc + "' does not exist");
+    }
+
+    // Parameters
+    visit(context->functionParList());
+
+    // Do call
+    general_call_fnproc();
+
+    // Put type onto stack
+    stack_push(Type::STRING);
 
     return NULL;
 }

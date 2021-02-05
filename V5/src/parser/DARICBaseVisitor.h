@@ -135,6 +135,18 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitNumVarFloatFN(DARICParser::NumVarFloatFNContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumVarIntegerFN(DARICParser::NumVarIntegerFNContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumVarStringFN(DARICParser::NumVarStringFNContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitNumVarString(DARICParser::NumVarStringContext *ctx) override {
     return visitChildren(ctx);
   }

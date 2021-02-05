@@ -464,7 +464,7 @@ void VM::opcode_PRINT()
         VM_STRING v(stream.str());
         g_env.graphics.print_console(v);
         if (!performance_build && runtime_debug)
-            g_env.log << std::endl;
+            g_env.log << v1 << std::endl;
         return;
     }
     case Type::FLOAT: {

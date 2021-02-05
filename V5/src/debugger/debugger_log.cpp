@@ -3,8 +3,8 @@
 void Debugger::debugger_log()
 {
     bool rerender = true;
-    UINT32 pos = 0;
     g_env.process_log();
+    UINT32 pos = (g_env.log_list.size() / log_lines) * log_lines;
     while (true) {
         if (rerender) {
             debugger_options(2, 1);

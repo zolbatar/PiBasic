@@ -92,7 +92,7 @@ private:
     UINT32 last_type_num_dimensions = 0;
 
     // Locals and functions
-    Function *current_function = nullptr;
+    Function* current_function = nullptr;
     std::map<std::string, Function> functions;
     bool inside_function() { return current_function != nullptr; }
     std::string called_fnproc;
@@ -209,6 +209,7 @@ protected:
     antlrcpp::Any visitStmtTRACEOFF(DARICParser::StmtTRACEOFFContext* context);
 
     /* Functions */
+    void general_call_fnproc();
     antlrcpp::Any visitStmtDEFFN(DARICParser::StmtDEFFNContext* context);
     antlrcpp::Any visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* context);
     antlrcpp::Any visitStmtRETURN(DARICParser::StmtRETURNContext* context);
@@ -250,6 +251,9 @@ protected:
     antlrcpp::Any visitNumVarFloatFieldArray(DARICParser::NumVarFloatFieldArrayContext* context);
     antlrcpp::Any visitNumVarIntegerFieldArray(DARICParser::NumVarIntegerFieldArrayContext* context);
     antlrcpp::Any visitNumVarStringFieldArray(DARICParser::NumVarStringFieldArrayContext* context);
+    antlrcpp::Any visitNumVarFloatFN(DARICParser::NumVarFloatFNContext* context);
+    antlrcpp::Any visitNumVarIntegerFN(DARICParser::NumVarIntegerFNContext* context);
+    antlrcpp::Any visitNumVarStringFN(DARICParser::NumVarStringFNContext* context);
 
     /* VarName */
     antlrcpp::Any visitVarName(DARICParser::VarNameContext* context);

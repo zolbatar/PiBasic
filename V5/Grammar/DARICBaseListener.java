@@ -375,6 +375,42 @@ public class DARICBaseListener implements DARICListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterNumVarFloatFN(DARICParser.NumVarFloatFNContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumVarFloatFN(DARICParser.NumVarFloatFNContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumVarIntegerFN(DARICParser.NumVarIntegerFNContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumVarIntegerFN(DARICParser.NumVarIntegerFNContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumVarStringFN(DARICParser.NumVarStringFNContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumVarStringFN(DARICParser.NumVarStringFNContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNumVarString(DARICParser.NumVarStringContext ctx) { }
 	/**
 	 * {@inheritDoc}

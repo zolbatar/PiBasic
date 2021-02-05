@@ -442,6 +442,30 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  NumVarIntegerFNContext : public NumVarContext {
+  public:
+    NumVarIntegerFNContext(NumVarContext *ctx);
+
+    antlr4::tree::TerminalNode *FN_INTEGER();
+    antlr4::tree::TerminalNode *LPAREN();
+    antlr4::tree::TerminalNode *RPAREN();
+    FunctionParListContext *functionParList();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  NumVarStringFNContext : public NumVarContext {
+  public:
+    NumVarStringFNContext(NumVarContext *ctx);
+
+    antlr4::tree::TerminalNode *FN_STRING();
+    antlr4::tree::TerminalNode *LPAREN();
+    antlr4::tree::TerminalNode *RPAREN();
+    FunctionParListContext *functionParList();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  NumVarIntegerFieldArrayContext : public NumVarContext {
   public:
     NumVarIntegerFieldArrayContext(NumVarContext *ctx);
@@ -477,6 +501,18 @@ public:
     NumVarFloatContext(NumVarContext *ctx);
 
     VarNameContext *varName();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  NumVarFloatFNContext : public NumVarContext {
+  public:
+    NumVarFloatFNContext(NumVarContext *ctx);
+
+    antlr4::tree::TerminalNode *FN_FLOAT();
+    antlr4::tree::TerminalNode *LPAREN();
+    antlr4::tree::TerminalNode *RPAREN();
+    FunctionParListContext *functionParList();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };

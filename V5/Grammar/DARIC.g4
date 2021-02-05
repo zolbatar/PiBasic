@@ -67,6 +67,9 @@ numVar
     | typeVar LPAREN numExpr RPAREN varName                         #numVarFloatFieldArray
     | typeVar varNameInteger                                        #numVarIntegerField
     | typeVar LPAREN numExpr RPAREN varNameInteger                  #numVarIntegerFieldArray
+    | FN_FLOAT LPAREN functionParList? RPAREN                       #numVarFloatFN
+    | FN_INTEGER LPAREN functionParList? RPAREN                     #numVarIntegerFN
+    | FN_STRING LPAREN functionParList? RPAREN                      #numVarStringFN
     ;
 
 strVar
