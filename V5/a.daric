@@ -1,3 +1,4 @@
+TRACEON
 DEF PROCPass(a,b%,c$):PRINT "PASS", a, b%, c$:ENDPROC
 
 DEF FNTest%(a%):=a%+20:ENDFN

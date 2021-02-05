@@ -218,7 +218,7 @@ void Debugger::debugger_manual()
             // RETURN
             debugger_manual_keyword(selected_keyword);
             updated = true;
-        } else if (g_env.graphics.inkey(-114) || g_env.graphics.inkey(-115) || g_env.graphics.inkey(-31)) {
+        } else if (g_env.graphics.inkey(-114) || g_env.graphics.inkey(-115) || g_env.graphics.inkey(-116) || g_env.graphics.inkey(-31)) {
             g_env.graphics.restore();
             return;
         }

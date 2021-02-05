@@ -7,6 +7,7 @@
 #include "performance.h"
 #include "stack.h"
 #include "variables.h"
+#include "vm_function.h"
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -17,14 +18,6 @@
 #include <vector>
 
 const int GosubCallFlag = 1 << 31;
-
-struct VMFunction {
-    UINT32 pc_start;
-    UINT32 pc_end;
-    Type type;
-    std::vector<Boxed> locals;
-    UINT32 locals_count;
-};
 
 class VM {
 public:

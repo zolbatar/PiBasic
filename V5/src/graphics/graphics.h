@@ -155,6 +155,7 @@ public:
     void delete_character(int index_ff);
     void print_character(int index_ff, char c, int* cursor_x, int* cursor_y);
     void print_console(VM_STRING text);
+    int max_horz_chars(int index_ff);
     void print_text(int index_ff, VM_STRING text, int cursor_x, int cursor_y);
     void print_text_centre(int index_ff, VM_STRING text, int cursor_x, int cursor_y);
     void print_text_right(int index_ff, VM_STRING text, int cursor_x, int cursor_y);

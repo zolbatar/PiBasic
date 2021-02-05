@@ -138,6 +138,13 @@ Font* Graphics::get_glyph(VM_INT index, VM_INT index_ff, BYTE ascii, VM_INT font
     return &(*font_glyphs.find(key)).second;
 }
 
+int Graphics::max_horz_chars(int index_ff)
+{
+    Font* f = get_glyph(0, index_ff, ' ', 0);
+    auto w = get_actual_width() / f->sc_width;
+    return w;
+}
+
 void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_y)
 {
     auto font_row_height = (*font_heights.find(index_ff)).second;
@@ -193,10 +200,18 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
                 if (v > 0) {
                     Colour c;
                     double a = static_cast<double>(v) / 255.0;
-                    alpha(current_bg_colour, saved_colour, c, a);
-                    //colour(saved_colour.r * v / 256, saved_colour.g * v / 256, saved_colour.b * v / 256);
+
+                    // X/Y
+                    auto x = *cursor_x + i + f->ix0 + margin;
+                    auto y = *cursor_y + j + f->iy0 + f->baseline;
+
+                    // Get current pixel colour, a little expensive but worth it for quality
+                    auto bg = point(x, y);  
+                    Colour bgC((bg & 0xFF0000) << 16, (bg & 0xFF00) << 8, bg & 0xFF);
+
+                    alpha(bgC, saved_colour, c, a);
                     set_colour(c);
-                    plot(*cursor_x + i + f->ix0 + margin, *cursor_y + j + f->iy0 + f->baseline);
+                    plot(x, y);
                 }
             }
         }

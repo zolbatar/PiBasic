@@ -131,7 +131,7 @@ void Debugger::debugger_disassembly()
                 g_env.graphics.poll();
             pos += debugger_lines;
             rerender = true;
-        } else if (g_env.graphics.inkey(-115) || g_env.graphics.inkey(-31) || g_env.graphics.inkey(-120)) {
+        } else if (g_env.graphics.inkey(-115) || g_env.graphics.inkey(-116) || g_env.graphics.inkey(-31) || g_env.graphics.inkey(-120)) {
             return;
         }
         if (pos > g_vm->helper_bytecodes().get_size()) {

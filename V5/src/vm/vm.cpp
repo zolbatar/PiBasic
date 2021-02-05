@@ -1488,7 +1488,8 @@ void VM::opcode_CALL()
     UINT32 new_pc = bc.data;
     if (!performance_build && runtime_debug)
         g_env.log << "Calling " << new_pc << std::endl;
-    variables.create_locals_on_call(functions[l].locals_count);
+    variables.create_locals_on_call(functions[l], runtime_debug);
+    //assert(call_stack.size() == 0);
     call_stack.push(helper_bytecodes().pc);
     helper_bytecodes().pc = new_pc;
 }
@@ -1529,6 +1530,7 @@ void VM::opcode_RETURN()
         variables.revert_locals_on_return();
     }
     call_stack.pop();
+    //assert(call_stack.size() == 0);
     if (!performance_build && runtime_debug)
         g_env.log << "Returning to " << new_pc << std::endl;
     helper_bytecodes().pc = new_pc;
@@ -2646,6 +2648,9 @@ std::string VM::run()
     int poll_count = 0;
     try {
         while (!quit) {
+            if (!performance_build && runtime_debug) {
+                g_env.process_log();
+            }
             poll_count++;
             if (poll_count == 100) {
                 if (g_env.interactive && g_env.graphics.inkey(-113)) {

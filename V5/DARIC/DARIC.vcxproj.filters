@@ -243,6 +243,12 @@
     <ClCompile Include="..\src\compiler\compiler_functions.cpp">
       <Filter>Source Files\Compiler</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\debugger\debugger_log.cpp">
+      <Filter>Source Files\Debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_debugging.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">
@@ -319,6 +325,9 @@
     </ClInclude>
     <ClInclude Include="..\src\compiler\custom_types.h">
       <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vm\vm_function.h">
+      <Filter>Header Files\VM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

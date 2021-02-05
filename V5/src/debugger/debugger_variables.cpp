@@ -176,7 +176,7 @@ void Debugger::debugger_variables()
                 g_env.graphics.poll();
             selected += debugger_lines;
             rerender = true;
-        } else if (g_env.graphics.inkey(-114) || g_env.graphics.inkey(-31) || g_env.graphics.inkey(-120)) {
+        } else if (g_env.graphics.inkey(-114) || g_env.graphics.inkey(-116) || g_env.graphics.inkey(-31) || g_env.graphics.inkey(-120)) {
             return;
         }
         if (selected < 0)

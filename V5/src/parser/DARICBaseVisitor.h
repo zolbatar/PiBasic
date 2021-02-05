@@ -79,6 +79,14 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtTRACEON(DARICParser::StmtTRACEONContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtTRACEOFF(DARICParser::StmtTRACEOFFContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext *ctx) override {
     return visitChildren(ctx);
   }

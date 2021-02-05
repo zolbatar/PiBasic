@@ -51,6 +51,10 @@ public:
 
     virtual antlrcpp::Any visitStmtCallPROC(DARICParser::StmtCallPROCContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtTRACEON(DARICParser::StmtTRACEONContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtTRACEOFF(DARICParser::StmtTRACEOFFContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext *context) = 0;
 
     virtual antlrcpp::Any visitFnName(DARICParser::FnNameContext *context) = 0;

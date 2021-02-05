@@ -37,6 +37,8 @@ stmt
     | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                        # stmtLOCAL
     | PRINT printList?                                                      # stmtPRINT
     | PROC_NAME LPAREN functionParList? RPAREN                              # stmtCallPROC
+    | TRACEON                                                               # stmtTRACEON
+    | TRACEOFF                                                              # stmtTRACEOFF
     | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN                   # stmtTYPE
     ;
 
@@ -268,6 +270,8 @@ PROC            : 'PROC' | 'Proc' | 'proc' ;
 REM             : 'REM' | 'Rem' | 'rem' ;
 RETURN          : 'RETURN' | 'Return' | 'return' ;
 SPC             : 'SPC' | 'Spc' | 'spc' ;
+TRACEON         : 'TRACEON' | 'TraceOn' | 'traceon';
+TRACEOFF        : 'TRACEOFF' | 'TraceOff' | 'traceoff';
 TYPE            : 'TYPE' | 'Type' | 'type';
 
 TIME            : 'TIME' | 'Time' | 'time' ;

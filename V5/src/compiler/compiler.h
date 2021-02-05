@@ -205,6 +205,8 @@ protected:
     antlrcpp::Any visitStmtLOCAL(DARICParser::StmtLOCALContext* context);
     antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext* context);
     antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext* context);
+    antlrcpp::Any visitStmtTRACEON(DARICParser::StmtTRACEONContext* context);
+    antlrcpp::Any visitStmtTRACEOFF(DARICParser::StmtTRACEOFFContext* context);
 
     /* Functions */
     antlrcpp::Any visitStmtDEFFN(DARICParser::StmtDEFFNContext* context);

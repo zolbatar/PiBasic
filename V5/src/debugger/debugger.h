@@ -12,6 +12,7 @@ extern VM* g_vm;
 const int debugger_height = 30;
 const int open_height = 300;
 const int debugger_lines = 11;
+const int log_lines = 14;
 const int disassembly_font = 1;
 const int prop_font = 10;
 const int menu_font = 11;
@@ -47,6 +48,7 @@ private:
     void debugger_manual();
     void debugger_manual_keyword(std::string keyword);
     void debugger_disassembly();
+    void debugger_log();
     void debugger_variables();
     int debugger_manual_keyword_section(KeywordCategory category, int* index, int selected, std::string* selected_keyword);
     Disassembly disassemble_instruction(Bytecode& bc, UINT32 i);

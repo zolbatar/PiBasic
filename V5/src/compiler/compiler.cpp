@@ -79,7 +79,7 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
             b2.set_type_nodefault(ll.get_type());
             b.locals.push_back(std::move(b2));
         }
-        b.locals_count = b.locals.size();
+        b.locals_count = static_cast<UINT32>(b.locals.size());
         vm->functions[func.index] = std::move(b);
     }
 }

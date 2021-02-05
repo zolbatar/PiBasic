@@ -14,21 +14,21 @@ public:
   enum {
     DEF = 1, DIM = 2, END = 3, ENDFN = 4, ENDPROC = 5, FN = 6, INPUT = 7, 
     GLOBAL = 8, LOCAL = 9, LET = 10, PRINT = 11, PROC = 12, REM = 13, RETURN = 14, 
-    SPC = 15, TYPE = 16, TIME = 17, PI = 18, SQR = 19, LN = 20, LOG = 21, 
-    EXP = 22, ATN = 23, TAN = 24, COS = 25, SIN = 26, ABS = 27, ACS = 28, 
-    ASN = 29, DEG = 30, RAD = 31, SGN = 32, ASC = 33, LEN = 34, INSTR = 35, 
-    VAL = 36, TIMES = 37, STRS = 38, STRINGS = 39, CHRS = 40, LEFTS = 41, 
-    MIDS = 42, RIGHTS = 43, RND = 44, RND0 = 45, RND1 = 46, EQ = 47, NE = 48, 
-    GT = 49, GE = 50, LT = 51, LE = 52, NOT = 53, AND = 54, OR = 55, EOR = 56, 
-    MOD = 57, DIV = 58, HAT = 59, PLUS = 60, MINUS = 61, MULTIPLY = 62, 
-    DIVIDE = 63, SHL = 64, SHR = 65, PLUS_E = 66, MINUS_E = 67, MULTIPLY_E = 68, 
-    DIVIDE_E = 69, SHL_E = 70, SHR_E = 71, NEWLINE = 72, TICK = 73, TILDE = 74, 
-    COLON = 75, COMMA = 76, DOLLAR = 77, LPAREN = 78, PERCENT = 79, RPAREN = 80, 
-    SEMICOLON = 81, UNDERSCORE = 82, COMMENT = 83, STRINGLITERAL = 84, PROC_NAME = 85, 
-    FN_INTEGER = 86, FN_FLOAT = 87, FN_STRING = 88, VARIABLE_FLOAT = 89, 
-    VARIABLE_INTEGER = 90, VARIABLE_STRING = 91, VARIABLE_TYPE = 92, NAME = 93, 
-    ALPHA = 94, DIGIT = 95, HEXNUMBER = 96, BINARYNUMBER = 97, NUMBER = 98, 
-    FLOAT = 99, WS = 100
+    SPC = 15, TRACEON = 16, TRACEOFF = 17, TYPE = 18, TIME = 19, PI = 20, 
+    SQR = 21, LN = 22, LOG = 23, EXP = 24, ATN = 25, TAN = 26, COS = 27, 
+    SIN = 28, ABS = 29, ACS = 30, ASN = 31, DEG = 32, RAD = 33, SGN = 34, 
+    ASC = 35, LEN = 36, INSTR = 37, VAL = 38, TIMES = 39, STRS = 40, STRINGS = 41, 
+    CHRS = 42, LEFTS = 43, MIDS = 44, RIGHTS = 45, RND = 46, RND0 = 47, 
+    RND1 = 48, EQ = 49, NE = 50, GT = 51, GE = 52, LT = 53, LE = 54, NOT = 55, 
+    AND = 56, OR = 57, EOR = 58, MOD = 59, DIV = 60, HAT = 61, PLUS = 62, 
+    MINUS = 63, MULTIPLY = 64, DIVIDE = 65, SHL = 66, SHR = 67, PLUS_E = 68, 
+    MINUS_E = 69, MULTIPLY_E = 70, DIVIDE_E = 71, SHL_E = 72, SHR_E = 73, 
+    NEWLINE = 74, TICK = 75, TILDE = 76, COLON = 77, COMMA = 78, DOLLAR = 79, 
+    LPAREN = 80, PERCENT = 81, RPAREN = 82, SEMICOLON = 83, UNDERSCORE = 84, 
+    COMMENT = 85, STRINGLITERAL = 86, PROC_NAME = 87, FN_INTEGER = 88, FN_FLOAT = 89, 
+    FN_STRING = 90, VARIABLE_FLOAT = 91, VARIABLE_INTEGER = 92, VARIABLE_STRING = 93, 
+    VARIABLE_TYPE = 94, NAME = 95, ALPHA = 96, DIGIT = 97, HEXNUMBER = 98, 
+    BINARYNUMBER = 99, NUMBER = 100, FLOAT = 101, WS = 102
   };
 
   enum {
@@ -181,32 +181,11 @@ public:
    
   };
 
-  class  StmtLOCALContext : public StmtContext {
+  class  StmtTRACEOFFContext : public StmtContext {
   public:
-    StmtLOCALContext(StmtContext *ctx);
+    StmtTRACEOFFContext(StmtContext *ctx);
 
-    antlr4::tree::TerminalNode *LOCAL();
-    std::vector<VarDeclContext *> varDecl();
-    VarDeclContext* varDecl(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> EQ();
-    antlr4::tree::TerminalNode* EQ(size_t i);
-    std::vector<ExprContext *> expr();
-    ExprContext* expr(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> COMMA();
-    antlr4::tree::TerminalNode* COMMA(size_t i);
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  StmtDIMContext : public StmtContext {
-  public:
-    StmtDIMContext(StmtContext *ctx);
-
-    antlr4::tree::TerminalNode *DIM();
-    std::vector<VarDeclWithDimensionContext *> varDeclWithDimension();
-    VarDeclWithDimensionContext* varDeclWithDimension(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> COMMA();
-    antlr4::tree::TerminalNode* COMMA(size_t i);
+    antlr4::tree::TerminalNode *TRACEOFF();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -271,6 +250,15 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  StmtTRACEONContext : public StmtContext {
+  public:
+    StmtTRACEONContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *TRACEON();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  StmtPRINTContext : public StmtContext {
   public:
     StmtPRINTContext(StmtContext *ctx);
@@ -293,6 +281,47 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  StmtRETURNContext : public StmtContext {
+  public:
+    StmtRETURNContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *EQ();
+    ExprContext *expr();
+    antlr4::tree::TerminalNode *RETURN();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtLOCALContext : public StmtContext {
+  public:
+    StmtLOCALContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *LOCAL();
+    std::vector<VarDeclContext *> varDecl();
+    VarDeclContext* varDecl(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> EQ();
+    antlr4::tree::TerminalNode* EQ(size_t i);
+    std::vector<ExprContext *> expr();
+    ExprContext* expr(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtDIMContext : public StmtContext {
+  public:
+    StmtDIMContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *DIM();
+    std::vector<VarDeclWithDimensionContext *> varDeclWithDimension();
+    VarDeclWithDimensionContext* varDeclWithDimension(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  StmtDEFFNContext : public StmtContext {
   public:
     StmtDEFFNContext(StmtContext *ctx);
@@ -306,17 +335,6 @@ public:
     antlr4::tree::TerminalNode *COLON();
     std::vector<BodyContext *> body();
     BodyContext* body(size_t i);
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  StmtRETURNContext : public StmtContext {
-  public:
-    StmtRETURNContext(StmtContext *ctx);
-
-    antlr4::tree::TerminalNode *EQ();
-    ExprContext *expr();
-    antlr4::tree::TerminalNode *RETURN();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };

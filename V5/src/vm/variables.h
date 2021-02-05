@@ -2,6 +2,7 @@
 #include "boxed.h"
 #include "bytecode.h"
 #include "stack.h"
+#include "vm_function.h"
 #include <cassert>
 #include <memory>
 #include <stack>
@@ -53,10 +54,21 @@ public:
         locals_stack.pop();
     }
 
-    inline void create_locals_on_call(VM_INT size)
+    inline void create_locals_on_call(VMFunction& function, bool debug)
     {
         locals_stack.push(std::move(locals));
-        locals = std::vector<Boxed>(size);
+        assert(locals.size() == 0);
+        if (debug) {
+            for (UINT32 i = 0; i < function.locals_count; i++)  {
+                // Move names for runtime log purposes
+                Boxed b;
+                b.name = function.locals[i].name;
+                b.set_type_nodefault(function.locals[i].get_type());
+                locals.push_back(std::move(b));
+            }
+        } else {
+            locals = std::vector<Boxed>(function.locals_count);
+        }
     }
 
 private:

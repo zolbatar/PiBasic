@@ -8,7 +8,7 @@ antlrcpp::Any Compiler::visitStmtDEFFN(DARICParser::StmtDEFFNContext* context)
     // Create a function object to stuff with things
     if (phase == CompilerPhase::LOOKAHEAD) {
         Function f;
-        f.index = functions.size();
+        f.index = static_cast<UINT32>(functions.size());
         f.name = current_var.name;
         f.type = current_var.type;
 
@@ -95,7 +95,7 @@ antlrcpp::Any Compiler::visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* contex
     // Create a function object to stuff with things
     if (phase == CompilerPhase::LOOKAHEAD) {
         Function f;
-        f.index = functions.size();
+        f.index = static_cast<UINT32>(functions.size());
         f.name = current_var.name;
         f.type = current_var.type;
 

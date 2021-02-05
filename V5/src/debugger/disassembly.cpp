@@ -117,8 +117,7 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         break;
     case Bytecodes::FASTCONST:
         ret.opcode = "CONST";
-        ss << bc.data;
-        ret.operand = ss.str();
+        ret.operand = std::to_string(bc.data);
         break;
     case Bytecodes::FASTCONST_VAR:
         ret.opcode = "VARIABLE";
@@ -306,9 +305,11 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
 
     case Bytecodes::CONV_FLOAT:
         ret.opcode = "CONV FLOAT";
+        ret.operand = std::to_string(bc.data);
         break;
     case Bytecodes::CONV_INT:
         ret.opcode = "CONV INT";
+        ret.operand = std::to_string(bc.data);
         break;
     case Bytecodes::DUP:
         ret.opcode = "DUP";

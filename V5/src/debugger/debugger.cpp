@@ -35,6 +35,9 @@ Debugger::Debugger()
         } else if (g_env.graphics.inkey(-115)) {
             // F2
             debugger_variables();
+        } else if (g_env.graphics.inkey(-116)) {
+            // F3
+            debugger_log();
         } else if (g_env.graphics.inkey(-120)) {
             // F9
             debugger_manual();
@@ -80,7 +83,7 @@ void Debugger::debugger_options(int selected, int open_mode)
     g_env.graphics.print_text(console_font, "", 0, g_env.graphics.get_actual_height() - debugger_height + 3 - height);
     debugger_prompt("F1", "Disassembly", selected == 0);
     debugger_prompt("F2", "Variables", selected == 1);
-    //    debugger_prompt("F3", "Trace Log", selected == 2);
+    debugger_prompt("F3", "Trace Log", selected == 2);
     //    debugger_prompt("F6", "Step", false);
     debugger_prompt("F9", "Manual", selected == 8);
     debugger_prompt("F10", "Continue", false);
