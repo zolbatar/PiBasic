@@ -27,8 +27,8 @@ antlrcpp::Any Compiler::visitStmtDEFFN(DARICParser::StmtDEFFNContext* context)
 
         // Jump around function
         if (phase != CompilerPhase::COMPILE) {
-            current_function->pc_start = vm->helper_bytecodes().pc;
             insert_instruction(Bytecodes::JUMP, Type::NOTYPE, 0);
+            current_function->pc_start = vm->helper_bytecodes().pc;
         } else {
             insert_instruction(Bytecodes::JUMP, Type::NOTYPE, current_function->pc_end);
         }

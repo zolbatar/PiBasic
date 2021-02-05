@@ -1469,7 +1469,7 @@ void VM::opcode_JNEREP()
     } else {
         UINT32 new_pc = repeats.top();
         if (!performance_build && runtime_debug)
-            g_env.log << "Until, false condition, so jumping to " << new_pc << std::endl;
+            g_env.log << "Until, false condition, so jumping to &" << std::hex << std::uppercase << new_pc << std::dec << std::nouppercase << std::endl;
         helper_bytecodes().pc = new_pc;
     }
 }
@@ -1478,7 +1478,7 @@ void VM::opcode_JUMP()
 {
     UINT32 new_pc = bc.data;
     if (!performance_build && runtime_debug)
-        g_env.log << "Jumping to " << new_pc << std::endl;
+        g_env.log << "Jumping to &" << std::hex << std::uppercase << new_pc << std::dec << std::nouppercase << std::endl;
     helper_bytecodes().pc = new_pc;
 }
 
@@ -1487,7 +1487,7 @@ void VM::opcode_CALL()
     VM_INT l = stack.pop_int(bc);
     UINT32 new_pc = bc.data;
     if (!performance_build && runtime_debug)
-        g_env.log << "Calling " << new_pc << std::endl;
+        g_env.log << "Calling &" << std::hex << std::uppercase << new_pc << std::dec << std::nouppercase << std::endl;
     variables.create_locals_on_call(functions[l], runtime_debug);
     //assert(call_stack.size() == 0);
     call_stack.push(helper_bytecodes().pc);
@@ -1516,7 +1516,7 @@ void VM::opcode_CJUMPT()
             g_env.log << "Case, otherwise, so no jump" << std::endl;
     } else {
         if (!performance_build && runtime_debug)
-            g_env.log << "Case, no otherwise, so jumping to " << new_pc << std::endl;
+            g_env.log << "Case, no otherwise, so jumping to &" << std::hex << std::uppercase << new_pc << std::dec << std::nouppercase << std::endl;
         helper_bytecodes().pc = new_pc;
     }
 }
@@ -1532,7 +1532,7 @@ void VM::opcode_RETURN()
     call_stack.pop();
     //assert(call_stack.size() == 0);
     if (!performance_build && runtime_debug)
-        g_env.log << "Returning to " << new_pc << std::endl;
+        g_env.log << "Returning to &" << std::hex << std::uppercase << new_pc << std::dec << std::nouppercase << std::endl;
     helper_bytecodes().pc = new_pc;
 }
 
@@ -1540,7 +1540,7 @@ void VM::opcode_GOTO()
 {
     UINT32 new_pc = bc.data;
     if (!performance_build && runtime_debug)
-        g_env.log << "Jumping to " << new_pc << std::endl;
+        g_env.log << "Jumping to &" << std::hex << std::uppercase << new_pc << std::dec << std::nouppercase << std::endl;
     helper_bytecodes().pc = new_pc;
 }
 
@@ -1549,7 +1549,7 @@ void VM::opcode_GOSUB()
     call_stack.push(helper_bytecodes().pc | GosubCallFlag);
     UINT32 new_pc = bc.data;
     if (!performance_build && runtime_debug)
-        g_env.log << "Calling subroutine at " << new_pc << std::endl;
+        g_env.log << "Calling subroutine at &" << std::hex << std::uppercase << new_pc << std::dec << std::nouppercase << std::endl;
     helper_bytecodes().pc = new_pc;
 }
 
@@ -1569,7 +1569,7 @@ void VM::opcode_UNPACK()
             error("Unsupported unpack casting");
         }
         if (!performance_build && runtime_debug)
-            g_env.log << "Unpacked int value of " << variables.get_variable(bc).value_int << " in variable " << variables.get_variable(bc).name << std::endl;
+            g_env.log << "Stored parameter int value of " << variables.get_variable(bc).value_int << " intp variable " << variables.get_variable(bc).name << std::endl;
         return;
     }
     case Type::FLOAT: {
@@ -1584,7 +1584,7 @@ void VM::opcode_UNPACK()
             error("Unsupported unpack casting");
         }
         if (!performance_build && runtime_debug)
-            g_env.log << "Unpacked float value of " << variables.get_variable(bc).value_float << " in variable " << variables.get_variable(bc).name << std::endl;
+            g_env.log << "Stored parameter float value of " << variables.get_variable(bc).value_float << " into variable " << variables.get_variable(bc).name << std::endl;
         return;
     }
     case Type::STRING: {
@@ -1596,7 +1596,7 @@ void VM::opcode_UNPACK()
             error("Unsupported unpack casting");
         }
         if (!performance_build && runtime_debug)
-            g_env.log << "Unpacked string value of '" << variables.get_variable(bc).value_int << " in variable " << variables.get_variable(bc).name << "'" << std::endl;
+            g_env.log << "Stored parameter string value of '" << variables.get_variable(bc).value_int << " into variable " << variables.get_variable(bc).name << "'" << std::endl;
         return;
     }
     default:
