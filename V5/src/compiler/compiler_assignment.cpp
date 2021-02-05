@@ -37,7 +37,7 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
         case Type::INTEGER:
             switch (type) {
             case Type::FLOAT:
-                insert_bytecode(Bytecodes::F_TO_I, Type::NOTYPE);
+                insert_instruction(Bytecodes::CONV_INT, Type::FLOAT, 0);
                 insert_instruction(Bytecodes::STORE, Type::INTEGER, saved.id);
                 break;
             case Type::INTEGER:
@@ -50,7 +50,7 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
         case Type::FLOAT:
             switch (type) {
             case Type::INTEGER:
-                insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
+                insert_instruction(Bytecodes::CONV_FLOAT, Type::INTEGER, 0);
                 insert_instruction(Bytecodes::STORE, Type::FLOAT, saved.id);
                 break;
             case Type::FLOAT:
@@ -75,7 +75,7 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
             }
             switch (type) {
             case Type::FLOAT:
-                insert_bytecode(Bytecodes::F_TO_I, Type::NOTYPE);
+                insert_bytecode(Bytecodes::CONV_INT, Type::NOTYPE);
                 break;
             case Type::INTEGER:
                 break;
@@ -91,7 +91,7 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
             }
             switch (type) {
             case Type::INTEGER:
-                insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
+                insert_bytecode(Bytecodes::CONV_FLOAT, Type::NOTYPE);
                 break;
             case Type::FLOAT:
                 break;
@@ -152,7 +152,7 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
                 case Type::INTEGER:
                     switch (type) {
                     case Type::FLOAT:
-                        insert_bytecode(Bytecodes::F_TO_I, Type::NOTYPE);
+                        insert_bytecode(Bytecodes::CONV_INT, Type::NOTYPE);
                         insert_instruction(Bytecodes::STORE_FIELD, Type::INTEGER, saved.id);
                         break;
                     case Type::INTEGER:
@@ -165,7 +165,7 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
                 case Type::FLOAT:
                     switch (type) {
                     case Type::INTEGER:
-                        insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
+                        insert_bytecode(Bytecodes::CONV_FLOAT, Type::NOTYPE);
                         insert_instruction(Bytecodes::STORE_FIELD, Type::FLOAT, saved.id);
                         break;
                     case Type::FLOAT:
@@ -196,7 +196,7 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
             case Type::INTEGER:
                 switch (type) {
                 case Type::FLOAT:
-                    insert_bytecode(Bytecodes::F_TO_I, Type::NOTYPE);
+                    insert_bytecode(Bytecodes::CONV_INT, Type::NOTYPE);
                     insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
                     insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
                     insert_instruction(Bytecodes::STORE_FIELD_ARRAY, Type::INTEGER, saved.id);
@@ -213,7 +213,7 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
             case Type::FLOAT:
                 switch (type) {
                 case Type::INTEGER:
-                    insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
+                    insert_bytecode(Bytecodes::CONV_FLOAT, Type::NOTYPE);
                     insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
                     insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
                     insert_instruction(Bytecodes::STORE_FIELD_ARRAY, Type::FLOAT, saved.id);

@@ -292,44 +292,54 @@ void VM::opcode_DIVIDE()
     }
 }
 
-void VM::opcode_I_TO_F()
+void VM::opcode_CONV_FLOAT()
 {
-    VM_INT v1 = stack.pop_int(bc);
-    VM_FLOAT v2 = v1;
-    stack.push_float(bc, v2);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Convert " << v1 << " (int) -> " << v2 << " (float)\n";
+    if (bc.data == 0) {
+        // Top stack
+        switch (bc.type) {
+        case Type::INTEGER:
+            VM_INT v1 = stack.pop_int(bc);
+            VM_FLOAT v2 = v1;
+            stack.push_float(bc, v2);
+            if (!performance_build && runtime_debug)
+                g_env.log << "Convert " << v1 << " (int) -> " << v2 << " (float)\n";
+            break;
+        }
+    } else if (bc.data == 1) {
+        // One from top
+        auto b = stack.pop_boxed(bc);
+        VM_INT v1 = stack.pop_int(bc);
+        VM_FLOAT v2 = v1;
+        stack.push_float(bc, v2);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Convert (2nd) " << v1 << " (int) -> " << v2 << " (float)\n";
+        stack.push_boxed(bc, b);
+    }
 }
 
-void VM::opcode_I_TO_F2()
+void VM::opcode_CONV_INT()
 {
-    VM_FLOAT v0 = stack.pop_float(bc);
-    VM_INT v1 = stack.pop_int(bc);
-    VM_FLOAT v2 = v1;
-    stack.push_float(bc, v2);
-    stack.push_float(bc, v0);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Convert " << v1 << " (int) -> " << v2 << " (float)\n";
-}
-
-void VM::opcode_F_TO_I()
-{
-    VM_FLOAT v1 = stack.pop_float(bc);
-    VM_INT v2 = static_cast<VM_INT>(floor(v1));
-    stack.push_int(bc, v2);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Convert " << v1 << " (float) -> " << v2 << " (int)\n";
-}
-
-void VM::opcode_F_TO_I2()
-{
-    VM_INT v0 = stack.pop_int(bc);
-    VM_FLOAT v1 = stack.pop_float(bc);
-    VM_INT v2 = static_cast<VM_INT>(floor(v1));
-    stack.push_int(bc, v2);
-    stack.push_int(bc, v0);
-    if (!performance_build && runtime_debug)
-        g_env.log << "Convert " << v1 << " (float) -> " << v2 << " (int)\n";
+    if (bc.data == 0) {
+        // Top stack
+        switch (bc.type) {
+        case Type::INTEGER:
+            VM_FLOAT v1 = stack.pop_float(bc);
+            VM_INT v2 = static_cast<VM_INT>(floor(v1));
+            stack.push_int(bc, v2);
+            if (!performance_build && runtime_debug)
+                g_env.log << "Convert " << v1 << " (float) -> " << v2 << " (int)\n";
+            break;
+        }
+    } else if (bc.data == 1) {
+        // One from top
+        auto b = stack.pop_boxed(bc);
+        VM_FLOAT v1 = stack.pop_float(bc);
+        VM_INT v2 = static_cast<VM_INT>(floor(v1));
+        stack.push_int(bc, v2);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Convert (2nd) " << v1 << " (float) -> " << v2 << " (int)\n";
+        stack.push_boxed(bc, b);
+    }
 }
 
 void VM::opcode_SWAP()
@@ -2790,17 +2800,11 @@ std::string VM::run()
                 break;
 
                 /* Type conversions */
-            case Bytecodes::I_TO_F:
-                opcode_I_TO_F();
+            case Bytecodes::CONV_FLOAT:
+                opcode_CONV_FLOAT();
                 break;
-            case Bytecodes::I_TO_F2:
-                opcode_I_TO_F2();
-                break;
-            case Bytecodes::F_TO_I:
-                opcode_F_TO_I();
-                break;
-            case Bytecodes::F_TO_I2:
-                opcode_F_TO_I2();
+            case Bytecodes::CONV_INT:
+                opcode_CONV_INT();
                 break;
 
                 /* Print and input */

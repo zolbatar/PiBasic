@@ -31,6 +31,7 @@ stmt
     | RETURN expr?                                                          # stmtRETURN
     | DEF fnName LPAREN functionVarList? RPAREN COLON? body* ENDFN          # stmtDEFFN
     | DEF PROC_NAME LPAREN functionVarList? RPAREN COLON? body* ENDPROC     # stmtDEFPROC
+    | fnName LPAREN functionParList? RPAREN                                 # stmtCallFN
     | INPUT (strExpr COMMA)? varList                                        # stmtINPUT
     | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*             # stmtLET
     | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                        # stmtLOCAL
@@ -38,9 +39,6 @@ stmt
     | PROC_NAME LPAREN functionParList? RPAREN                              # stmtCallPROC
     | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN                   # stmtTYPE
     ;
-
-directNumOp
-    : 
 
 fnName
     : FN_FLOAT
@@ -327,12 +325,12 @@ MULTIPLY        : '*' ;
 DIVIDE          : '/' ;
 SHL             : '<<' ;
 SHR             : '>>' ;
-PLUS_E          : '+' ;
-MINUS_E         : '-' ;
-MULTIPLY_E      : '*' ;
-DIVIDE_E        : '/' ;
-SHL_E           : '<<' ;
-SHR_E           : '>>' ;
+PLUS_E          : '+=' ;
+MINUS_E         : '-=' ;
+MULTIPLY_E      : '*=' ;
+DIVIDE_E        : '/=' ;
+SHL_E           : '<<=' ;
+SHR_E           : '>>=' ;
 
 NEWLINE         : '\n'+ ;
 TICK            : '\'' ;

@@ -304,23 +304,11 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         ret.opcode = "LISTFILES";
         break;
 
-    case Bytecodes::I_TO_F:
-        ret.opcode = "I TO F";
+    case Bytecodes::CONV_FLOAT:
+        ret.opcode = "CONV FLOAT";
         break;
-    case Bytecodes::I_TO_F2:
-        ret.opcode = "I TO F (2)";
-        break;
-    case Bytecodes::F_TO_I:
-        ret.opcode = "F TO I";
-        break;
-    case Bytecodes::F_TO_I2:
-        ret.opcode = "F TO I (2)";
-        break;
-    case Bytecodes::I_TO_S:
-        ret.opcode = "I TO S";
-        break;
-    case Bytecodes::F_TO_S:
-        ret.opcode = "F TO S";
+    case Bytecodes::CONV_INT:
+        ret.opcode = "CONV INT";
         break;
     case Bytecodes::DUP:
         ret.opcode = "DUP";

@@ -21,13 +21,14 @@ public:
     MIDS = 42, RIGHTS = 43, RND = 44, RND0 = 45, RND1 = 46, EQ = 47, NE = 48, 
     GT = 49, GE = 50, LT = 51, LE = 52, NOT = 53, AND = 54, OR = 55, EOR = 56, 
     MOD = 57, DIV = 58, HAT = 59, PLUS = 60, MINUS = 61, MULTIPLY = 62, 
-    DIVIDE = 63, SHL = 64, SHR = 65, NEWLINE = 66, TICK = 67, TILDE = 68, 
-    COLON = 69, COMMA = 70, DOLLAR = 71, LPAREN = 72, PERCENT = 73, RPAREN = 74, 
-    SEMICOLON = 75, UNDERSCORE = 76, COMMENT = 77, STRINGLITERAL = 78, PROC_NAME = 79, 
-    FN_INTEGER = 80, FN_FLOAT = 81, FN_STRING = 82, VARIABLE_FLOAT = 83, 
-    VARIABLE_INTEGER = 84, VARIABLE_STRING = 85, VARIABLE_TYPE = 86, NAME = 87, 
-    ALPHA = 88, DIGIT = 89, HEXNUMBER = 90, BINARYNUMBER = 91, NUMBER = 92, 
-    FLOAT = 93, WS = 94
+    DIVIDE = 63, SHL = 64, SHR = 65, PLUS_E = 66, MINUS_E = 67, MULTIPLY_E = 68, 
+    DIVIDE_E = 69, SHL_E = 70, SHR_E = 71, NEWLINE = 72, TICK = 73, TILDE = 74, 
+    COLON = 75, COMMA = 76, DOLLAR = 77, LPAREN = 78, PERCENT = 79, RPAREN = 80, 
+    SEMICOLON = 81, UNDERSCORE = 82, COMMENT = 83, STRINGLITERAL = 84, PROC_NAME = 85, 
+    FN_INTEGER = 86, FN_FLOAT = 87, FN_STRING = 88, VARIABLE_FLOAT = 89, 
+    VARIABLE_INTEGER = 90, VARIABLE_STRING = 91, VARIABLE_TYPE = 92, NAME = 93, 
+    ALPHA = 94, DIGIT = 95, HEXNUMBER = 96, BINARYNUMBER = 97, NUMBER = 98, 
+    FLOAT = 99, WS = 100
   };
 
   enum {
@@ -316,6 +317,18 @@ public:
     antlr4::tree::TerminalNode *EQ();
     ExprContext *expr();
     antlr4::tree::TerminalNode *RETURN();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtCallFNContext : public StmtContext {
+  public:
+    StmtCallFNContext(StmtContext *ctx);
+
+    FnNameContext *fnName();
+    antlr4::tree::TerminalNode *LPAREN();
+    antlr4::tree::TerminalNode *RPAREN();
+    FunctionParListContext *functionParList();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };

@@ -252,7 +252,7 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
                 case Type::INTEGER:
                     break;
                 case Type::FLOAT:
-                    insert_bytecode(Bytecodes::F_TO_I, Type::NOTYPE);
+                    insert_bytecode(Bytecodes::CONV_INT, Type::NOTYPE);
                     break;
                 case Type::STRING:
                     error("Parameter '" + fp->name + "' for call to '" + called_fnproc + "' is the wrong type");
@@ -261,7 +261,7 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
             case Type::FLOAT:
                 switch (type) {
                 case Type::INTEGER:
-                    insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
+                    insert_bytecode(Bytecodes::CONV_FLOAT, Type::NOTYPE);
                     break;
                 case Type::FLOAT:
                     break;
@@ -318,6 +318,47 @@ antlrcpp::Any Compiler::visitStmtCallPROC(DARICParser::StmtCallPROCContext* cont
             insert_instruction(Bytecodes::STORE, current_var.type, current_var.id);
         }
     }
+
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitStmtCallFN(DARICParser::StmtCallFNContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    called_fnproc = context->fnName()->getText();
+    if (functions.count(called_fnproc) == 0) {
+        error("Function or procedure '" + called_fnproc + "' does not exist");
+    }
+
+    // Parameters
+    visit(context->functionParList());
+
+    // Find function
+    auto func = &(*functions.find(called_fnproc)).second;
+
+    // Call
+    if (phase != CompilerPhase::COMPILE) {
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);
+        insert_instruction(Bytecodes::CALL, Type::NOTYPE, 0);
+    } else {
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, func->index);
+        insert_instruction(Bytecodes::CALL, Type::NOTYPE, func->pc_start);
+    }
+
+    // Do we have any return parameters? If so, grab from stack and store
+    for (auto it = func->parameters.cbegin(); it != func->parameters.cend(); ++it) {
+        auto a = *it;
+        if (a.return_parameter) {
+            current_var.name = a.current_return_variable;
+            find_variable(false, true);
+            insert_instruction(Bytecodes::STORE, current_var.type, current_var.id);
+        }
+    }
+
+    // We are going to DROP the return in this case as it's called as a statement
+    insert_bytecode(Bytecodes::DROP, Type::NOTYPE);
 
     return NULL;
 }

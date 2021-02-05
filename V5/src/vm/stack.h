@@ -36,6 +36,11 @@ public:
         stack.push(std::move(b));
     }
 
+    inline void push_boxed(Bytecode& bc, Boxed b)
+    {
+        stack.push(b);
+    }
+
     inline Boxed pop_boxed(Bytecode& bc)
     {
         auto a = stack.top();

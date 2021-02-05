@@ -116,7 +116,7 @@ private:
         case Type::FLOAT:
             break;
         case Type::INTEGER:
-            insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
+            insert_instruction(Bytecodes::CONV_FLOAT, Type::INTEGER, 0);
             stack_pop();
             stack_push(Type::FLOAT);
             break;
@@ -130,7 +130,7 @@ private:
         case Type::INTEGER:
             break;
         case Type::FLOAT:
-            insert_bytecode(Bytecodes::F_TO_I, Type::NOTYPE);
+            insert_instruction(Bytecodes::CONV_INT, Type::FLOAT, 0);
             stack_pop();
             stack_push(Type::INTEGER);
             break;
@@ -214,6 +214,7 @@ protected:
     antlrcpp::Any visitFunctionParList(DARICParser::FunctionParListContext* context);
     antlrcpp::Any visitFnName(DARICParser::FnNameContext* context);
     antlrcpp::Any visitStmtCallPROC(DARICParser::StmtCallPROCContext* context);
+    antlrcpp::Any visitStmtCallFN(DARICParser::StmtCallFNContext* context);
 
     /* Literals */
     antlrcpp::Any visitNumber(DARICParser::NumberContext* context);

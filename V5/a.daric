@@ -8,3 +8,5 @@ REM PROCPass(10,23.23, "")
 a%=50
 PROCRet(a%)
 PRINT a%
+
+FNTest%(100)

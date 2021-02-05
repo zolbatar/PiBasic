@@ -220,6 +220,7 @@ void Interactive::execute_line(std::string s)
 {
     FILE* fp = fopen(temp_filename.c_str(), "w");
     fwrite(s.c_str(), s.length(), 1, fp);
+    fwrite("\n", 1, 1, fp);
     fclose(fp);
 
     try {

@@ -49,12 +49,8 @@ enum class Bytecodes {
     RESTORE, // Reset data pointer
 
     // Conversion
-    I_TO_F, // Int -> float
-    I_TO_F2, // Int -> float (2nd below top)
-    F_TO_I, // Float -> int
-    F_TO_I2, // Float -> int (2nd below top)
-    I_TO_S, // Int -> string
-    F_TO_S, // Float -> string
+    CONV_FLOAT, // Convert to float
+    CONV_INT, // Convert to int
 
     // Looping and flow control
     FOR, // For

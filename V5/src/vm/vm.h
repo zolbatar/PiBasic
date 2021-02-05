@@ -133,10 +133,8 @@ private:
     void opcode_PI();
 
     // Type conversion
-    void opcode_I_TO_F();
-    void opcode_I_TO_F2();
-    void opcode_F_TO_I();
-    void opcode_F_TO_I2();
+    void opcode_CONV_FLOAT();
+    void opcode_CONV_INT();
 
     // Input and print
     void opcode_PRINT();

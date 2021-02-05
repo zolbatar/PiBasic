@@ -55,6 +55,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtCallFN(DARICParser::StmtCallFNContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext *ctx) override {
     return visitChildren(ctx);
   }

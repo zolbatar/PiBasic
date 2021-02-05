@@ -153,23 +153,23 @@ void Compiler::expression_type_conversion(DARICParser::NumExprContext* context, 
         if (DIVIDE) {
             // Is this a divide? If so, we always promote to a float
             if (type2 == Type::FLOAT && type1 == Type::INTEGER) {
-                insert_bytecode(Bytecodes::I_TO_F2, Type::NOTYPE);
+                insert_instruction(Bytecodes::CONV_FLOAT, Type::INTEGER, 1);
             } else if (type2 == Type::INTEGER && type1 == Type::FLOAT) {
-                insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
+                insert_instruction(Bytecodes::CONV_FLOAT, Type::NOTYPE, 0);
             } else if (type2 == Type::INTEGER && type1 == Type::INTEGER) {
-                insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
-                insert_bytecode(Bytecodes::I_TO_F2, Type::NOTYPE);
+                insert_instruction(Bytecodes::CONV_FLOAT, Type::NOTYPE, 0);
+                insert_instruction(Bytecodes::CONV_FLOAT, Type::NOTYPE, 1);
             }
             stack_push(Type::FLOAT);
             stack_push(Type::FLOAT);
         } else {
             // Do we need to promote (or demote)?
             if (type2 == Type::FLOAT && type1 == Type::INTEGER) {
-                insert_bytecode(Bytecodes::I_TO_F2, Type::NOTYPE);
+                insert_instruction(Bytecodes::CONV_FLOAT, Type::INTEGER, 1);
                 stack_push(Type::FLOAT);
                 stack_push(Type::FLOAT);
             } else if (type2 == Type::INTEGER && type1 == Type::FLOAT) {
-                insert_bytecode(Bytecodes::I_TO_F, Type::NOTYPE);
+                insert_instruction(Bytecodes::CONV_FLOAT, Type::INTEGER, 0);
                 stack_push(Type::FLOAT);
                 stack_push(Type::FLOAT);
             } else {
