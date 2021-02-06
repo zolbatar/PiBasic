@@ -52,7 +52,7 @@ struct IfStatement {
 
 class VarReference {
 public:
-    int id;
+    UINT32 id;
     std::string name;
     std::string field_name;
     int field_index;
@@ -253,8 +253,9 @@ protected:
 
     /* Variables */
     void save_to_variable(Type type, VarReference saved);
-    bool find_variable(bool field, bool fire_error, VariableScope scope);
+    bool find_variable(bool field, bool fire_error);
     void find_or_create_variable(VariableScope scope);
+    void find_or_create_variable_in_scope(VariableScope scope);
     void set_custom_type(std::string type);
     antlrcpp::Any visitVar(DARICParser::VarContext* context);
 

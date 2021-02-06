@@ -1,13 +1,19 @@
 DIM A$(10):A$(0)="Hi!"
 PRINT "G: ";A$(0)
+A=100
+PRINT "GA: ";A
 
 DEF PROCTest()
-PRINT "G?: ";A$(0)
+PRINT "LA: ";A
 LOCAL DIM A$(10)
+LOCAL A=200
+PRINT "LA: ";A
+PRINT "G?: ";A$(0)
 A$(0) = "NO!!"
 PRINT "L: ";A$(0)
 ENDPROC
 
+PRINT "GA: ";A
 PRINT "G:";A$(0)
 PROCTest()
 PRINT "G:";A$(0)

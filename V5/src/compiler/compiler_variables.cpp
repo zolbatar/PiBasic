@@ -86,7 +86,7 @@ antlrcpp::Any Compiler::visitNumVarFloat(DARICParser::NumVarFloatContext* contex
 
     if (state == CompilerState::NOSTATE) {
 
-        find_variable(false, true, VariableScope::DONTCARE);
+        find_variable(false, true);
         insert_instruction(Bytecodes::LOAD, Type::FLOAT, current_var.id);
         stack_push(Type::FLOAT);
     }
@@ -101,7 +101,7 @@ antlrcpp::Any Compiler::visitNumVarInteger(DARICParser::NumVarIntegerContext* co
     visit(context->varNameInteger());
     current_var.type = Type::INTEGER;
     if (state == CompilerState::NOSTATE) {
-        find_variable(false, true, VariableScope::DONTCARE);
+        find_variable(false, true);
         insert_instruction(Bytecodes::LOAD, Type::INTEGER, current_var.id);
         stack_push(Type::INTEGER);
     }
@@ -116,7 +116,7 @@ antlrcpp::Any Compiler::visitNumVarString(DARICParser::NumVarStringContext* cont
     visit(context->varNameString());
     current_var.type = Type::STRING;
     if (state != CompilerState::ASSIGNMENT) {
-        find_variable(false, true, VariableScope::DONTCARE);
+        find_variable(false, true);
         insert_instruction(Bytecodes::LOAD, Type::STRING, current_var.id);
         stack_push(Type::STRING);
     }
@@ -138,10 +138,10 @@ antlrcpp::Any Compiler::visitVarList(DARICParser::VarListContext* context)
     return visitChildren(context);
 }
 
-bool Compiler::find_variable(bool field, bool fire_error, VariableScope scope)
+bool Compiler::find_variable(bool field, bool fire_error)
 {
     // Search locals first (if valid), then globals
-    if (inside_function() && current_function->locals.count(current_var.name) == 1 && (scope == VariableScope::LOCAL || scope == VariableScope::DONTCARE)) {
+    if (inside_function() && current_function->locals.count(current_var.name) == 1) {
         auto g = current_function->locals.find(current_var.name);
         auto var_id = (*g).second.index;
         current_var.id = var_id | LocalVariableFlag;
@@ -162,7 +162,7 @@ bool Compiler::find_variable(bool field, bool fire_error, VariableScope scope)
         }
 
         return true;
-    } else if (globals.count(current_var.name) == 1 && (scope == VariableScope::GLOBAL || scope == VariableScope::DONTCARE)) {
+    } else if (globals.count(current_var.name) == 1) {
         auto g = globals.find(current_var.name);
         auto var_id = (*g).second.index;
         current_var.id = var_id;
@@ -191,10 +191,49 @@ bool Compiler::find_variable(bool field, bool fire_error, VariableScope scope)
     }
 }
 
+void Compiler::find_or_create_variable_in_scope(VariableScope scope)
+{
+    if (scope == VariableScope::GLOBAL) {
+        if (globals.count(current_var.name) == 1) {
+            auto g = globals.find(current_var.name);
+            auto var_id = (*g).second.index;
+            current_var.id = var_id;
+            current_var.custom_type_name = (*g).second.custom_type_name;
+            current_var.type = (*g).second.get_type();
+        } else {
+            Boxed var;
+            var.set_type_default(current_var.type);
+            var.constant = false;
+            var.name = current_var.name;
+            var.index = global_var_index++;
+            globals[var.name] = var;
+            current_var.id = var.index;
+        }
+    } else if (inside_function()) {
+        if (current_function->locals.count(current_var.name) == 1) {
+            auto g = current_function->locals.find(current_var.name);
+            auto var_id = (*g).second.index;
+            current_var.id = var_id | LocalVariableFlag;
+            current_var.custom_type_name = (*g).second.custom_type_name;
+            current_var.type = (*g).second.get_type();
+        } else {
+            Boxed var;
+            var.set_type_default(current_var.type);
+            var.constant = false;
+            var.name = current_var.name;
+            var.index = current_function->local_var_index++;
+            current_function->locals[var.name] = var;
+            current_var.id = var.index | LocalVariableFlag;
+        }
+    } else {
+        error("Variable '" + current_var.name + "' not found");
+    }
+}
+
 void Compiler::find_or_create_variable(VariableScope scope)
 {
     // Try and find first
-    if (find_variable(false, false, scope))
+    if (find_variable(false, false))
         return;
     current_var.id = 0;
     if (scope == VariableScope::GLOBAL) {

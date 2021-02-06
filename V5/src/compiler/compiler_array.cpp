@@ -64,9 +64,9 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
             error("Unexpected array type");
         }
         if (state == CompilerState::DIM) {
-            find_or_create_variable(VariableScope::GLOBAL);
+            find_or_create_variable_in_scope(VariableScope::GLOBAL);
         } else {
-            find_or_create_variable(VariableScope::LOCAL);
+            find_or_create_variable_in_scope(VariableScope::LOCAL);
         }
         auto saved_type = current_var.type;
 
@@ -95,7 +95,11 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
         // Get variable name and type
         visit(context->var());
         current_var.type = Type::TYPE_ARRAY;
-        find_or_create_variable(VariableScope::GLOBAL);
+        if (state == CompilerState::DIM) {
+            find_or_create_variable_in_scope(VariableScope::GLOBAL);
+        } else {
+            find_or_create_variable_in_scope(VariableScope::LOCAL);
+        }
 
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 1);
         insert_bytecode(Bytecodes::ADD, Type::INTEGER);
@@ -142,7 +146,7 @@ antlrcpp::Any Compiler::visitNumVarFloatArray(DARICParser::NumVarFloatArrayConte
     }
     visit(context->varName());
     if (state == CompilerState::NOSTATE) {
-        find_variable(false, true, VariableScope::DONTCARE);
+        find_variable(false, true);
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
         insert_instruction(Bytecodes::LOAD_ARRAY, Type::FLOAT_ARRAY, current_var.id);
         stack_push(Type::FLOAT);
@@ -165,7 +169,7 @@ antlrcpp::Any Compiler::visitNumVarIntegerArray(DARICParser::NumVarIntegerArrayC
     }
     visit(context->varNameInteger());
     if (state == CompilerState::NOSTATE) {
-        find_variable(false, true, VariableScope::DONTCARE);
+        find_variable(false, true);
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
         insert_instruction(Bytecodes::LOAD_ARRAY, Type::INTEGER_ARRAY, current_var.id);
         stack_push(Type::INTEGER);
@@ -188,7 +192,7 @@ antlrcpp::Any Compiler::visitNumVarStringArray(DARICParser::NumVarStringArrayCon
     }
     visit(context->varNameString());
     if (state == CompilerState::NOSTATE) {
-        find_variable(false, true, VariableScope::DONTCARE);
+        find_variable(false, true);
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
         insert_instruction(Bytecodes::LOAD_ARRAY, Type::STRING_ARRAY, current_var.id);
         stack_push(Type::STRING);

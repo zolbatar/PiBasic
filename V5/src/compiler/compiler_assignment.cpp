@@ -50,7 +50,7 @@ antlrcpp::Any Compiler::visitStmtLOCAL(DARICParser::StmtLOCALContext* context)
         state = CompilerState::ASSIGNMENT;
         visit(context->varDecl(i));
         state = CompilerState::NOSTATE;
-        find_or_create_variable(VariableScope::LOCAL);
+        find_or_create_variable_in_scope(VariableScope::LOCAL);
         auto saved = current_var;
 
         // Get value
@@ -166,7 +166,7 @@ void Compiler::save_to_variable(Type type, VarReference saved)
 
             // Zero all fields
             if (!performance_build) {
-                find_variable(false, true, VariableScope::DONTCARE);
+                find_variable(false, true);
                 auto t = (*custom_types.find(current_var.custom_type_name)).second;
                 for (auto it = t.members.begin(); it != t.members.end(); ++it) {
                     auto m = (*it).second;

@@ -229,7 +229,7 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
         // Is it a return type? If so, it needs to be a variable
         if (fp->return_parameter) {
             current_var.name = context->expr(index)->getText();
-            auto f = find_variable(false, false, VariableScope::DONTCARE);
+            auto f = find_variable(false, false);
             if (!f) {
                 error("Variable '" + current_var.name + "' not found or a valid RETURN");
             }
@@ -300,7 +300,7 @@ void Compiler::general_call_fnproc()
         auto a = *it;
         if (a.return_parameter) {
             current_var.name = a.current_return_variable;
-            find_variable(false, true, VariableScope::DONTCARE);
+            find_variable(false, true);
             insert_instruction(Bytecodes::STORE, current_var.type, current_var.id);
         }
     }

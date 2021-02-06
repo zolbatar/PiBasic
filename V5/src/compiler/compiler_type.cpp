@@ -8,7 +8,7 @@ antlrcpp::Any Compiler::visitTypeVarType(DARICParser::TypeVarTypeContext* contex
     visit(context->varNameType());
     current_var.type = Type::TYPE;
     if (state == CompilerState::NOSTATE) {
-        if (!find_variable(false, true, VariableScope::DONTCARE)) {
+        if (!find_variable(false, true)) {
             error("Variable '" + current_var.name + "' not found");
         }
         insert_instruction(Bytecodes::LOAD, Type::TYPE, current_var.id);
@@ -48,7 +48,7 @@ antlrcpp::Any Compiler::visitVarDeclType(DARICParser::VarDeclTypeContext* contex
     visit(context->typeVar());
     current_var.field_name = context->varName()->getText();
     current_var.type = Type::TYPE;
-    find_variable(true, true, VariableScope::DONTCARE);
+    find_variable(true, true);
     last_array_dimensions = 0;
     if (state == CompilerState::NOSTATE) {
     }
@@ -72,7 +72,7 @@ antlrcpp::Any Compiler::visitVarDeclTypeArrayed(DARICParser::VarDeclTypeArrayedC
     current_var.field_name = current_var.name;
     current_var.name = saved.name;
     current_var.type = Type::TYPE_ARRAY;
-    find_variable(true, true, VariableScope::DONTCARE);
+    find_variable(true, true);
     last_array_dimensions = 1;
     last_array_num_dimensions = 1;
     if (state == CompilerState::NOSTATE) {
@@ -87,7 +87,7 @@ antlrcpp::Any Compiler::visitNumVarFloatField(DARICParser::NumVarFloatFieldConte
     set_pos(context->start);
     current_var.name = context->typeVar()->getText();
     current_var.field_name = context->varName()->getText();
-    find_variable(true, true, VariableScope::DONTCARE);
+    find_variable(true, true);
     if (state == CompilerState::NOSTATE) {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
         insert_instruction(Bytecodes::LOAD_FIELD, current_var.field_type, current_var.id);
@@ -103,7 +103,7 @@ antlrcpp::Any Compiler::visitNumVarIntegerField(DARICParser::NumVarIntegerFieldC
     set_pos(context->start);
     current_var.name = context->typeVar()->getText();
     current_var.field_name = context->varNameInteger()->getText();
-    find_variable(true, true, VariableScope::DONTCARE);
+    find_variable(true, true);
     if (state == CompilerState::NOSTATE) {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
         insert_instruction(Bytecodes::LOAD_FIELD_ARRAY, current_var.field_type, current_var.id);
@@ -119,7 +119,7 @@ antlrcpp::Any Compiler::visitNumVarStringField(DARICParser::NumVarStringFieldCon
     set_pos(context->start);
     current_var.name = context->typeVar()->getText();
     current_var.field_name = context->varNameString()->getText();
-    find_variable(true, true, VariableScope::DONTCARE);
+    find_variable(true, true);
     if (state == CompilerState::NOSTATE) {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
         insert_instruction(Bytecodes::LOAD_FIELD_ARRAY, current_var.field_type, current_var.id);
@@ -141,7 +141,7 @@ antlrcpp::Any Compiler::visitNumVarFloatFieldArray(DARICParser::NumVarFloatField
 
     current_var.name = context->typeVar()->getText();
     current_var.field_name = context->varName()->getText();
-    find_variable(true, true, VariableScope::DONTCARE);
+    find_variable(true, true);
     if (state == CompilerState::NOSTATE) {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
@@ -164,7 +164,7 @@ antlrcpp::Any Compiler::visitNumVarIntegerFieldArray(DARICParser::NumVarIntegerF
 
     current_var.name = context->typeVar()->getText();
     current_var.field_name = context->varNameInteger()->getText();
-    find_variable(true, true, VariableScope::DONTCARE);
+    find_variable(true, true);
     if (state == CompilerState::NOSTATE) {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
@@ -187,7 +187,7 @@ antlrcpp::Any Compiler::visitNumVarStringFieldArray(DARICParser::NumVarStringFie
 
     current_var.name = context->typeVar()->getText();
     current_var.field_name = context->varNameString()->getText();
-    find_variable(true, true, VariableScope::DONTCARE);
+    find_variable(true, true);
     if (state == CompilerState::NOSTATE) {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
