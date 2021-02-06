@@ -38,7 +38,7 @@ antlrcpp::Any Compiler::visitStmtREAD(DARICParser::StmtREADContext* context)
         }
         insert_instruction(Bytecodes::READ, saved.type, saved.id);
         assert(stack_size() == 0);
-        //save_to_variable(saved.type, saved);
+        save_to_variable(saved.type, saved);
     }
 
     return NULL;

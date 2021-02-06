@@ -5,11 +5,11 @@
 #else
 #include <windows.h>
 #endif
+#include "../debugger/debugger.h"
 #include "../engine/engine.h"
 #include "../environment.h"
 #include "../libs/clock.h"
 #include "../libs/string.h"
-#include "../debugger/debugger.h"
 #include "vm.h"
 #include <array>
 #include <chrono>
@@ -1138,21 +1138,21 @@ void VM::opcode_READ()
     Boxed b = *data_iterator++;
     switch (bc.type) {
     case Type::INTEGER: {
-        variables.get_variable(bc).value_int = b.value_int;
+        stack.push_int(bc, b.value_int);
         if (!performance_build && runtime_debug)
-            g_env.log << "Read integer " << b.value_int << " in " << variables.get_variable(bc).name << std::endl;
+            g_env.log << "Read integer " << b.value_int << std::endl;
         return;
     }
     case Type::FLOAT: {
-        variables.get_variable(bc).value_float = b.value_float;
+        stack.push_float(bc, b.value_float);
         if (!performance_build && runtime_debug)
-            g_env.log << "Read float " << b.value_float << " in " << variables.get_variable(bc).name << std::endl;
+            g_env.log << "Read float " << b.value_float << std::endl;
         return;
     }
     case Type::STRING: {
-        variables.get_variable(bc).value_string.assign(b.value_string);
+        stack.push_string(bc, b.value_string);
         if (!performance_build && runtime_debug)
-            g_env.log << "Read string " << b.value_string << " in " << variables.get_variable(bc).name << std::endl;
+            g_env.log << "Read string " << b.value_string << std::endl;
         return;
     }
     default:
