@@ -43,6 +43,14 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtCHAIN(DARICParser::StmtCHAINContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtDATA(DARICParser::StmtDATAContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -95,6 +103,14 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtREAD(DARICParser::StmtREADContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtRESTORE(DARICParser::StmtRESTOREContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtTRACEON(DARICParser::StmtTRACEONContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -116,6 +132,10 @@ public:
   }
 
   virtual antlrcpp::Any visitFnName(DARICParser::FnNameContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitLiteral(DARICParser::LiteralContext *ctx) override {
     return visitChildren(ctx);
   }
 

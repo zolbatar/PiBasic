@@ -10,7 +10,7 @@ enum class CompilerState {
     NOSTATE,
     DATA,
     ASSIGNMENT,
-    DIM,
+    DIM
 };
 
 enum class CompilerPhase {
@@ -202,12 +202,14 @@ protected:
     antlrcpp::Any visitBody(DARICParser::BodyContext* context);
     antlrcpp::Any visitBodyStar(DARICParser::BodyStarContext* context);
     antlrcpp::Any visitContent(DARICParser::ContentContext* context);
+    antlrcpp::Any visitLiteral(DARICParser::LiteralContext* context);
     antlrcpp::Any visitExprList(DARICParser::ExprListContext* context);
     antlrcpp::Any visitExpr(DARICParser::ExprContext* context);
 
     /* Statements */
     antlrcpp::Any visitStmt(DARICParser::StmtContext* context);
     antlrcpp::Any visitStmtBREAKPOINT(DARICParser::StmtBREAKPOINTContext* context);
+    antlrcpp::Any visitStmtCHAIN(DARICParser::StmtCHAINContext* context);
     antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext* context);
     antlrcpp::Any visitStmtEND(DARICParser::StmtENDContext* context);
     antlrcpp::Any visitStmtIF(DARICParser::StmtIFContext* context);
@@ -221,6 +223,11 @@ protected:
     antlrcpp::Any visitStmtTRACEON(DARICParser::StmtTRACEONContext* context);
     antlrcpp::Any visitStmtTRACEOFF(DARICParser::StmtTRACEOFFContext* context);
     antlrcpp::Any visitStmtWHILE(DARICParser::StmtWHILEContext* context);
+
+    /* Data */
+    antlrcpp::Any visitStmtDATA(DARICParser::StmtDATAContext* context);
+    antlrcpp::Any visitStmtREAD(DARICParser::StmtREADContext* context);
+    antlrcpp::Any visitStmtRESTORE(DARICParser::StmtRESTOREContext* context);
 
     /* Functions */
     void general_call_fnproc();
@@ -242,6 +249,7 @@ protected:
     antlrcpp::Any visitString(DARICParser::StringContext* context);
 
     /* Variables */
+    void save_to_variable(Type type, VarReference saved);
     bool find_variable(bool field, bool fire_error);
     void find_or_create_variable(VariableScope scope);
     void set_custom_type(std::string type);

@@ -174,9 +174,11 @@
     <ClCompile Include="..\src\compiler\compiler_array.cpp" />
     <ClCompile Include="..\src\compiler\compiler_assignment.cpp" />
     <ClCompile Include="..\src\compiler\compiler_boolean.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_chain.cpp" />
     <ClCompile Include="..\src\compiler\compiler_comparison.cpp" />
     <ClCompile Include="..\src\compiler\compiler_conditional.cpp" />
     <ClCompile Include="..\src\compiler\compiler_constant.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_data.cpp" />
     <ClCompile Include="..\src\compiler\compiler_debugging.cpp" />
     <ClCompile Include="..\src\compiler\compiler_functions.cpp" />
     <ClCompile Include="..\src\compiler\compiler_literal.cpp" />

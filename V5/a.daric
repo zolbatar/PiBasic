@@ -1,28 +1,8 @@
-A%=100
-IF A% < 50 THEN PRINT "Lower" ELSE PRINT "Higher"
+A=100
+PRINT A
 
-PRINT "aa"
-IF A%=100 THEN
-	PRINT "YES"
-ELSE
-	PRINT "NO"
-ENDIF
-PRINT "b"
+DATA 100,200.50,"Help"
 
-DEF PROCTest()
-PRINT "A"
-ENDPROC
+READ A%,B,C$
 
-PROCTest()
-
-A%=0
-REPEAT
-	A%=A%+1
-	PRINT "R: ";A%
-UNTIL A%=10
-
-A%=10
-WHILE A% > 0
-	A%=A%-1
-	PRINT "W: ";A%
-ENDWHILE
+PRINT A%,B,C$

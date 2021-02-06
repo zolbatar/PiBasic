@@ -12,38 +12,39 @@
 class  DARICParser : public antlr4::Parser {
 public:
   enum {
-    BREAKPOINT = 1, DEF = 2, DIM = 3, ELSE = 4, END = 5, ENDIF = 6, ENDFN = 7, 
-    ENDPROC = 8, ENDWHILE = 9, FN = 10, IF = 11, INPUT = 12, GLOBAL = 13, 
-    LOCAL = 14, LET = 15, THEN = 16, PRINT = 17, PROC = 18, REM = 19, REPEAT = 20, 
-    RETURN = 21, SPC = 22, TRACEON = 23, TRACEOFF = 24, TYPE = 25, UNTIL = 26, 
-    WHILE = 27, TIME = 28, PI = 29, SQR = 30, LN = 31, LOG = 32, EXP = 33, 
-    ATN = 34, TAN = 35, COS = 36, SIN = 37, ABS = 38, ACS = 39, ASN = 40, 
-    DEG = 41, RAD = 42, SGN = 43, ASC = 44, LEN = 45, INSTR = 46, VAL = 47, 
-    TIMES = 48, STRS = 49, STRINGS = 50, CHRS = 51, LEFTS = 52, MIDS = 53, 
-    RIGHTS = 54, RND = 55, RND0 = 56, RND1 = 57, EQ = 58, NE = 59, GT = 60, 
-    GE = 61, LT = 62, LE = 63, NOT = 64, AND = 65, OR = 66, EOR = 67, MOD = 68, 
-    DIV = 69, HAT = 70, PLUS = 71, MINUS = 72, MULTIPLY = 73, DIVIDE = 74, 
-    SHL = 75, SHR = 76, PLUS_E = 77, MINUS_E = 78, MULTIPLY_E = 79, DIVIDE_E = 80, 
-    SHL_E = 81, SHR_E = 82, NEWLINE = 83, TICK = 84, TILDE = 85, COLON = 86, 
-    COMMA = 87, DOLLAR = 88, LPAREN = 89, PERCENT = 90, RPAREN = 91, SEMICOLON = 92, 
-    UNDERSCORE = 93, COMMENT = 94, STRINGLITERAL = 95, PROC_NAME = 96, FN_INTEGER = 97, 
-    FN_FLOAT = 98, FN_STRING = 99, VARIABLE_FLOAT = 100, VARIABLE_INTEGER = 101, 
-    VARIABLE_STRING = 102, VARIABLE_TYPE = 103, NAME = 104, HEXNUMBER = 105, 
-    BINARYNUMBER = 106, NUMBER = 107, FLOAT = 108, ALPHA = 109, DIGIT = 110, 
-    WS = 111
+    BREAKPOINT = 1, CHAIN = 2, DATA = 3, DEF = 4, DIM = 5, ELSE = 6, END = 7, 
+    ENDIF = 8, ENDFN = 9, ENDPROC = 10, ENDWHILE = 11, FN = 12, IF = 13, 
+    INPUT = 14, GLOBAL = 15, LOCAL = 16, LET = 17, THEN = 18, PRINT = 19, 
+    PROC = 20, READ = 21, REM = 22, REPEAT = 23, RESTORE = 24, RETURN = 25, 
+    SPC = 26, TRACEON = 27, TRACEOFF = 28, TYPE = 29, UNTIL = 30, WHILE = 31, 
+    TIME = 32, PI = 33, SQR = 34, LN = 35, LOG = 36, EXP = 37, ATN = 38, 
+    TAN = 39, COS = 40, SIN = 41, ABS = 42, ACS = 43, ASN = 44, DEG = 45, 
+    RAD = 46, SGN = 47, ASC = 48, LEN = 49, INSTR = 50, VAL = 51, TIMES = 52, 
+    STRS = 53, STRINGS = 54, CHRS = 55, LEFTS = 56, MIDS = 57, RIGHTS = 58, 
+    RND = 59, RND0 = 60, RND1 = 61, EQ = 62, NE = 63, GT = 64, GE = 65, 
+    LT = 66, LE = 67, NOT = 68, AND = 69, OR = 70, EOR = 71, MOD = 72, DIV = 73, 
+    HAT = 74, PLUS = 75, MINUS = 76, MULTIPLY = 77, DIVIDE = 78, SHL = 79, 
+    SHR = 80, PLUS_E = 81, MINUS_E = 82, MULTIPLY_E = 83, DIVIDE_E = 84, 
+    SHL_E = 85, SHR_E = 86, NEWLINE = 87, TICK = 88, TILDE = 89, COLON = 90, 
+    COMMA = 91, DOLLAR = 92, LPAREN = 93, PERCENT = 94, RPAREN = 95, SEMICOLON = 96, 
+    UNDERSCORE = 97, COMMENT = 98, STRINGLITERAL = 99, PROC_NAME = 100, 
+    FN_INTEGER = 101, FN_FLOAT = 102, FN_STRING = 103, VARIABLE_FLOAT = 104, 
+    VARIABLE_INTEGER = 105, VARIABLE_STRING = 106, VARIABLE_TYPE = 107, 
+    NAME = 108, HEXNUMBER = 109, BINARYNUMBER = 110, NUMBER = 111, FLOAT = 112, 
+    ALPHA = 113, DIGIT = 114, WS = 115
   };
 
   enum {
     RuleProg = 0, RuleLine = 1, RuleContent = 2, RuleBody = 3, RuleBodyStar = 4, 
-    RuleLinenumber = 5, RuleStmt = 6, RuleFnName = 7, RuleVar = 8, RuleTypeVar = 9, 
-    RuleNumVar = 10, RuleStrVar = 11, RuleJustVar = 12, RuleVarName = 13, 
-    RuleVarNameInteger = 14, RuleVarNameString = 15, RuleVarNameType = 16, 
-    RuleVarDecl = 17, RuleVarDeclWithDimension = 18, RuleVarList = 19, RuleFunctionVarList = 20, 
-    RuleFunctionParList = 21, RuleExprList = 22, RulePrintListItem = 23, 
-    RulePrintStartingTicks = 24, RulePrintList = 25, RuleExpr = 26, RuleNumber = 27, 
-    RuleNumberInteger = 28, RuleNumberHex = 29, RuleNumberBinary = 30, RuleNumberFloat = 31, 
-    RuleStrFunc = 32, RuleString = 33, RuleStrExpr = 34, RuleNumFunc = 35, 
-    RuleNumExpr = 36, RuleCompare = 37
+    RuleLinenumber = 5, RuleStmt = 6, RuleFnName = 7, RuleLiteral = 8, RuleVar = 9, 
+    RuleTypeVar = 10, RuleNumVar = 11, RuleStrVar = 12, RuleJustVar = 13, 
+    RuleVarName = 14, RuleVarNameInteger = 15, RuleVarNameString = 16, RuleVarNameType = 17, 
+    RuleVarDecl = 18, RuleVarDeclWithDimension = 19, RuleVarList = 20, RuleFunctionVarList = 21, 
+    RuleFunctionParList = 22, RuleExprList = 23, RulePrintListItem = 24, 
+    RulePrintStartingTicks = 25, RulePrintList = 26, RuleExpr = 27, RuleNumber = 28, 
+    RuleNumberInteger = 29, RuleNumberHex = 30, RuleNumberBinary = 31, RuleNumberFloat = 32, 
+    RuleStrFunc = 33, RuleString = 34, RuleStrExpr = 35, RuleNumFunc = 36, 
+    RuleNumExpr = 37, RuleCompare = 38
   };
 
   explicit DARICParser(antlr4::TokenStream *input);
@@ -64,6 +65,7 @@ public:
   class LinenumberContext;
   class StmtContext;
   class FnNameContext;
+  class LiteralContext;
   class VarContext;
   class TypeVarContext;
   class NumVarContext;
@@ -220,6 +222,15 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  StmtRESTOREContext : public StmtContext {
+  public:
+    StmtRESTOREContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *RESTORE();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  StmtDEFPROCContext : public StmtContext {
   public:
     StmtDEFPROCContext(StmtContext *ctx);
@@ -288,6 +299,16 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  StmtCHAINContext : public StmtContext {
+  public:
+    StmtCHAINContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *CHAIN();
+    StrExprContext *strExpr();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  StmtPRINTContext : public StmtContext {
   public:
     StmtPRINTContext(StmtContext *ctx);
@@ -317,6 +338,19 @@ public:
     antlr4::tree::TerminalNode *EQ();
     ExprContext *expr();
     antlr4::tree::TerminalNode *RETURN();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtDATAContext : public StmtContext {
+  public:
+    StmtDATAContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *DATA();
+    std::vector<LiteralContext *> literal();
+    LiteralContext* literal(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -422,6 +456,19 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  StmtREADContext : public StmtContext {
+  public:
+    StmtREADContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *READ();
+    std::vector<VarDeclContext *> varDecl();
+    VarDeclContext* varDecl(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  StmtCallFNContext : public StmtContext {
   public:
     StmtCallFNContext(StmtContext *ctx);
@@ -462,6 +509,20 @@ public:
   };
 
   FnNameContext* fnName();
+
+  class  LiteralContext : public antlr4::ParserRuleContext {
+  public:
+    LiteralContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    NumberContext *number();
+    StringContext *string();
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  LiteralContext* literal();
 
   class  VarContext : public antlr4::ParserRuleContext {
   public:

@@ -59,3 +59,9 @@ antlrcpp::Any Compiler::visitNumber(DARICParser::NumberContext* context)
     set_pos(context->start);
     return visitChildren(context);
 }
+
+antlrcpp::Any Compiler::visitLiteral(DARICParser::LiteralContext* context)
+{
+    set_pos(context->start);
+    return visitChildren(context);
+}

@@ -30,6 +30,8 @@ linenumber
 
 stmt
     : BREAKPOINT                                                            # stmtBREAKPOINT
+    | CHAIN strExpr                                                         # stmtCHAIN
+    | DATA literal (COMMA literal)*                                         # stmtDATA
     | DIM varDeclWithDimension (COMMA varDeclWithDimension)*                # stmtDIM
     | END                                                                   # stmtEND
     | EQ expr?                                                              # stmtRETURN
@@ -44,6 +46,8 @@ stmt
     | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                        # stmtLOCAL
     | PRINT printList?                                                      # stmtPRINT
     | PROC_NAME LPAREN functionParList? RPAREN                              # stmtCallPROC
+    | READ varDecl (COMMA varDecl)*                                         # stmtREAD
+    | RESTORE                                                               # stmtRESTORE
     | TRACEON                                                               # stmtTRACEON
     | TRACEOFF                                                              # stmtTRACEOFF
     | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN                   # stmtTYPE
@@ -55,6 +59,11 @@ fnName
     : FN_FLOAT
     | FN_INTEGER
     | FN_STRING
+    ;
+
+literal
+    : number
+    | string
     ;
 
 var
@@ -268,6 +277,8 @@ compare
    
 // Lexer stuff
 BREAKPOINT      : 'BREAKPOINT' | 'Breakpoint' | 'breakpoint' ;
+CHAIN           : 'CHAIN' | 'Chain' | 'chain' ;
+DATA            : 'DATA' | 'Data' | 'data' ;
 DEF             : 'DEF' | 'Def' | 'def' ;
 DIM             : 'DIM' | 'Dim' | 'dim' ;
 ELSE            : 'ELSE' | 'Else' | 'else' ;
@@ -285,8 +296,10 @@ LET             : 'LET' | 'Let' | 'let' ;
 THEN            : 'THEN' | 'Then' | 'then' ;
 PRINT           : 'PRINT' | 'Print' | 'print' ;
 PROC            : 'PROC' | 'Proc' | 'proc' ;
+READ            : 'READ' | 'Read' | 'read' ;
 REM             : 'REM' | 'Rem' | 'rem' ;
 REPEAT          : 'REPEAT' | 'Repeat' | 'repeat' ;
+RESTORE         : 'RESTORE' | 'Restore' | 'restore' ;
 RETURN          : 'RETURN' | 'Return' | 'return' ;
 SPC             : 'SPC' | 'Spc' | 'spc' ;
 TRACEON         : 'TRACEON' | 'TraceOn' | 'traceon';
