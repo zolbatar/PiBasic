@@ -11,8 +11,24 @@ antlrcpp::Any Compiler::visitStmtDIM(DARICParser::StmtDIMContext* context)
         // Get variable name and type
         visit(context->varDeclWithDimension(i));
     }
-
     state = CompilerState::NOSTATE;
+
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitStmtLOCALDIM(DARICParser::StmtLOCALDIMContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    state = CompilerState::LOCALDIM;
+    for (auto i = 0; i < context->varDeclWithDimension().size(); i++) {
+
+        // Get variable name and type
+        visit(context->varDeclWithDimension(i));
+    }
+    state = CompilerState::NOSTATE;
+
     return NULL;
 }
 
@@ -28,7 +44,10 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
     if (!is_type) {
 
         // Get variable name and type
+        auto saved_state = state;
+        state = CompilerState::ASSIGNMENT;
         visit(context->var());
+        state = saved_state;
 
         // Adjust type to array version
         switch (current_var.type) {
@@ -44,7 +63,11 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
         default:
             error("Unexpected array type");
         }
-        find_or_create_variable(VariableScope::GLOBAL);
+        if (state == CompilerState::DIM) {
+            find_or_create_variable(VariableScope::GLOBAL);
+        } else {
+            find_or_create_variable(VariableScope::LOCAL);
+        }
         auto saved_type = current_var.type;
 
         // Number of dimensions

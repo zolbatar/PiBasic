@@ -255,6 +255,18 @@ public class DARICBaseListener implements DARICListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStmtLOCALDIM(DARICParser.StmtLOCALDIMContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtLOCALDIM(DARICParser.StmtLOCALDIMContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStmtPRINT(DARICParser.StmtPRINTContext ctx) { }
 	/**
 	 * {@inheritDoc}

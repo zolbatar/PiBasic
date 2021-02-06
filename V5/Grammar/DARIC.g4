@@ -44,6 +44,7 @@ stmt
     | INPUT (strExpr COMMA)? varList                                        # stmtINPUT
     | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*             # stmtLET
     | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                        # stmtLOCAL
+    | LOCAL DIM varDeclWithDimension (COMMA varDeclWithDimension)*          # stmtLOCALDIM
     | PRINT printList?                                                      # stmtPRINT
     | PROC_NAME LPAREN functionParList? RPAREN                              # stmtCallPROC
     | READ varDecl (COMMA varDecl)*                                         # stmtREAD

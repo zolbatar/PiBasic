@@ -59,6 +59,8 @@ public:
 
     virtual antlrcpp::Any visitStmtLOCAL(DARICParser::StmtLOCALContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtLOCALDIM(DARICParser::StmtLOCALDIMContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtCallPROC(DARICParser::StmtCallPROCContext *context) = 0;

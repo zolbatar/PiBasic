@@ -1,12 +1,13 @@
-A%=100
-PRINT "G: ";A%
+DIM A$(10):A$(0)="Hi!"
+PRINT "G: ";A$(0)
 
 DEF PROCTest()
-	LOCAL A%=20
-	PRINT "L: ";A%
+PRINT "G?: ";A$(0)
+LOCAL DIM A$(10)
+A$(0) = "NO!!"
+PRINT "L: ";A$(0)
 ENDPROC
 
-PRINT "G: ";A%
+PRINT "G:";A$(0)
 PROCTest()
-PRINT "G: ";A%
-
+PRINT "G:";A$(0)

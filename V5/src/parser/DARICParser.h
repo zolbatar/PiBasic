@@ -209,6 +209,20 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  StmtLOCALDIMContext : public StmtContext {
+  public:
+    StmtLOCALDIMContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *LOCAL();
+    antlr4::tree::TerminalNode *DIM();
+    std::vector<VarDeclWithDimensionContext *> varDeclWithDimension();
+    VarDeclWithDimensionContext* varDeclWithDimension(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  StmtWHILEContext : public StmtContext {
   public:
     StmtWHILEContext(StmtContext *ctx);

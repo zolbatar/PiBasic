@@ -10,7 +10,8 @@ enum class CompilerState {
     NOSTATE,
     DATA,
     ASSIGNMENT,
-    DIM
+    DIM,
+    LOCALDIM
 };
 
 enum class CompilerPhase {
@@ -218,6 +219,7 @@ protected:
     antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext* context);
     antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext* context);
     antlrcpp::Any visitStmtLOCAL(DARICParser::StmtLOCALContext* context);
+    antlrcpp::Any visitStmtLOCALDIM(DARICParser::StmtLOCALDIMContext* context);
     antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext* context);
     antlrcpp::Any visitStmtREPEAT(DARICParser::StmtREPEATContext* context);
     antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext* context);

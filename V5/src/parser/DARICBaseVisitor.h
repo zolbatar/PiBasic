@@ -95,6 +95,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtLOCALDIM(DARICParser::StmtLOCALDIMContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext *ctx) override {
     return visitChildren(ctx);
   }
