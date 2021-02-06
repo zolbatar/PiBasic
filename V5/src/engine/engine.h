@@ -144,7 +144,7 @@ public:
         state.x_origin = screen_width / 2;
         state.y_origin = screen_height / 2;
     }
-    UINT32 create_shape(Boxed& vertices, Boxed& triangles);
+    UINT32 create_shape(Boxed* vertices, Boxed* triangles);
     UINT32 create_object(UINT32 index, VM_FLOAT x, VM_FLOAT y, VM_FLOAT z, VM_FLOAT rx, VM_FLOAT ry, VM_FLOAT rz, VM_FLOAT scale, VM_INT render_type);
     void object_translate(UINT32 index, VM_FLOAT x, VM_FLOAT y, VM_FLOAT z);
     void object_rotate(UINT32 index, VM_FLOAT x, VM_FLOAT y, VM_FLOAT z);

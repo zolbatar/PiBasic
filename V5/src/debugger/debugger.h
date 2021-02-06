@@ -58,17 +58,17 @@ private:
     std::vector<Disassembly> disassemble_entire_file();
     void debugger_options(int selected, int open_mode);
 
-    Boxed& get_variable_bc(Bytecode& bc, UINT32 pc)
+    Boxed* get_variable_bc(Bytecode& bc, UINT32 pc)
     {
         if (bc.is_local_variable()) {
             // Find the function we are in
             for (auto it = g_vm->functions.begin(); it != g_vm->functions.end(); ++it) {
                 if (pc >= (*it).pc_start && pc <= (*it).pc_end) {
-                    return it->locals[bc.data ^ LocalVariableFlag];
+                    return &it->locals[bc.data ^ LocalVariableFlag];
                 }
             }
         } else {
-            return g_vm->helper_variables().get_variable(bc);
+            return g_vm->helper_variables().get_variable(bc, false);
         }
     }
 };

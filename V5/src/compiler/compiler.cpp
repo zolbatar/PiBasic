@@ -48,13 +48,13 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
     vm->helper_variables().set_variables_size(global_var_index);
     for (auto g = globals.begin(); g != globals.end(); ++g) {
         auto glob = (*g).second;
-        if (vm->helper_variables().get_variable_by_int(glob.index).get_type() == Type::NOTYPE) {
+        if (vm->helper_variables().get_variable_by_int_checkless(glob.index)->get_type() == Type::NOTYPE) {
             vm->helper_variables().add_variable((*g).second, glob.index);
         }
     }
     for (auto g = constants.begin(); g != constants.end(); ++g) {
         auto glob = (*g);
-        if (vm->helper_variables().get_variable_by_int(glob.index).get_type() == Type::NOTYPE) {
+        if (vm->helper_variables().get_variable_by_int_checkless(glob.index)->get_type() == Type::NOTYPE) {
             vm->helper_variables().add_variable(glob, glob.index);
         }
     }

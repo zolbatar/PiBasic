@@ -14,37 +14,53 @@ public:
         locals = std::vector<Boxed>(0);
     }
 
-    void store_chained_variables(Stack& stack)
+/*    void store_chained_variables(Stack& stack)
     {
         VM_INT count = stack.pop_int_checkless();
         for (int i = 0; i < count; i++) {
             auto v = stack.pop_int_checkless();
-            chained_variables.push_back(std::move(get_variable_by_int(v)));
+            chained_variables.push_back(std::move(get_variable_by_int(bc, v, false)));
         }
-    }
+    }*/
     std::vector<Boxed> get_chained_variables() { return chained_variables; }
     std::vector<Boxed>& get_variables() { return variables; }
     void set_variables_size(int size) { variables.resize(size); }
     void add_variable(Boxed b, int index) { variables.at(index) = std::move(b); }
     std::vector<Boxed>& get_locals() { return locals; }
 
-    inline Boxed& get_variable(Bytecode& bc)
+    inline Boxed* get_variable(Bytecode& bc, bool init_check)
     {
         if (bc.is_local_variable()) {
             assert(bc.local_index() <= locals.size());
-            return locals[bc.local_index()];
+            if (init_check && locals[bc.local_index()].get_type() == Type::NOTYPE) {
+                throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Use of uninitialised variable, is it a LOCAL being used before being defined?");
+            }
+            return &locals[bc.local_index()];
         } else {
             assert(bc.global_index() <= variables.size());
-            return variables[bc.global_index()];
+            return &variables[bc.global_index()];
         }
     };
 
-    inline Boxed& get_variable_by_int(int v)
+    inline Boxed* get_variable_by_int(Bytecode& bc, int v, bool init_check)
     {
         if (v & LocalVariableFlag) {
-            return locals[static_cast<size_t>(v ^ LocalVariableFlag)];
+            auto l = locals[static_cast<size_t>(v ^ LocalVariableFlag)];
+            if (init_check && l.get_type() == Type::NOTYPE) {
+                throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Use of uninitialised variable, is it a LOCAL being used before being defined?");
+            }
+            return &l;
         } else {
-            return variables[static_cast<size_t>(v)];
+            return &variables[static_cast<size_t>(v)];
+        }
+    };
+
+    inline Boxed* get_variable_by_int_checkless(int v)
+    {
+        if (v & LocalVariableFlag) {
+            return &locals[static_cast<size_t>(v ^ LocalVariableFlag)];
+        } else {
+            return &variables[static_cast<size_t>(v)];
         }
     };
 
@@ -59,7 +75,7 @@ public:
         locals_stack.push(std::move(locals));
         assert(locals.size() == 0);
         if (debug) {
-            for (UINT32 i = 0; i < function.locals_count; i++)  {
+            for (UINT32 i = 0; i < function.locals_count; i++) {
                 // Move names for runtime log purposes
                 Boxed b;
                 b.name = function.locals[i].name;

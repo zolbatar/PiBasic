@@ -6,14 +6,6 @@
 #include <stdlib.h>
 #include <string>
 
-template <typename T>
-std::string ToString(T val)
-{
-    std::stringstream stream;
-    stream << val;
-    return stream.str();
-}
-
 const char no_name[] = "No variable name";
 const char local[] = "Local variable";
 
@@ -25,13 +17,13 @@ std::string Debugger::get_name_for_operand(Bytecode& bc, UINT32 i)
         for (auto g = g_vm->functions.begin(); g != g_vm->functions.end(); ++g) {
             if (g->pc_start <= i && g->pc_end > i) {
                 auto id = bc.data ^ LocalVariableFlag;
-                return "Local variable: " + (*g).locals[id].name + " (" + ToString(id) + ")";
+                return "Local variable: " + (*g).locals[id].name + " (" + std::to_string(id) + ")";
             }
         }
     } else {
         auto variable = get_variable_bc(bc, i);
-        if (variable.name.length() > 0) {
-            return variable.name.c_str();
+        if (variable->name.length() > 0) {
+            return variable->name.c_str();
         } else {
             return "No variable name";
         }
@@ -124,17 +116,17 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         name_for_operand(ret, bc, i);
         break;
     case Bytecodes::LOAD:
-        if (get_variable_bc(bc, i).constant) {
+        if (get_variable_bc(bc, i)->constant) {
             ret.opcode = "CONST";
             switch (bc.type) {
             case Type::INTEGER:
-                ss << get_variable_bc(bc, i).value_int;
+                ss << get_variable_bc(bc, i)->value_int;
                 break;
             case Type::FLOAT:
-                ss << get_variable_bc(bc, i).value_float;
+                ss << get_variable_bc(bc, i)->value_float;
                 break;
             case Type::STRING:
-                ss << get_variable_bc(bc, i).value_string;
+                ss << get_variable_bc(bc, i)->value_string;
                 break;
             }
             ret.operand = ss.str();

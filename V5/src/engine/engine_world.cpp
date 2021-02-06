@@ -6,34 +6,34 @@
 
 extern Environment g_env;
 
-UINT32 World::create_shape(Boxed& vertices, Boxed& triangles)
+UINT32 World::create_shape(Boxed* vertices, Boxed* triangles)
 {
     Shape shape;
 
     // Create and add vertices
-    size_t count = vertices.fields.size() / 4;
+    size_t count = vertices->fields.size() / 4;
     shape.vertices.reserve(count);
     for (size_t i = 0; i < count; i++) {
-        VM_FLOAT x = vertices.fields[i * 4].value_float;
-        VM_FLOAT y = vertices.fields[i * 4 + 1].value_float;
-        VM_FLOAT z = vertices.fields[i * 4 + 2].value_float;
-        VM_INT colour = vertices.fields[i * 4 + 3].value_int;
+        VM_FLOAT x = vertices->fields[i * 4].value_float;
+        VM_FLOAT y = vertices->fields[i * 4 + 1].value_float;
+        VM_FLOAT z = vertices->fields[i * 4 + 2].value_float;
+        VM_INT colour = vertices->fields[i * 4 + 3].value_int;
         Vertex v(x, y, z, colour);
         shape.vertices.push_back(std::move(v));
     }
 
     // Create and add triangles
-    count = triangles.fields.size() / 4;
+    count = triangles->fields.size() / 4;
     shape.triangles.reserve(count);
     for (size_t i = 0; i < count; i++) {
         Triangle v;
-        VM_INT v1 = triangles.fields[i * 4].value_int;
+        VM_INT v1 = triangles->fields[i * 4].value_int;
         v.vertex1 = v1;
-        VM_INT v2 = triangles.fields[i * 4 + 1].value_int;
+        VM_INT v2 = triangles->fields[i * 4 + 1].value_int;
         v.vertex2 = v2;
-        VM_INT v3 = triangles.fields[i * 4 + 2].value_int;
+        VM_INT v3 = triangles->fields[i * 4 + 2].value_int;
         v.vertex3 = v3;
-        UINT32 hex_colour = triangles.fields[i * 4 + 3].value_int;
+        UINT32 hex_colour = triangles->fields[i * 4 + 3].value_int;
         v.colour = Colour(
             (hex_colour & 0xFF0000) >> 16,
             (hex_colour & 0x00FF00) >> 8,
