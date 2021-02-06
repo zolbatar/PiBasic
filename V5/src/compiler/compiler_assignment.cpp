@@ -43,7 +43,36 @@ antlrcpp::Any Compiler::visitStmtLOCAL(DARICParser::StmtLOCALContext* context)
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     set_pos(context->start);
-    return visitChildren(context);
+    for (auto i = 0; i < context->varDecl().size(); i++) {
+
+        // Get variable name and type
+        current_var.field_index = -1;
+        state = CompilerState::ASSIGNMENT;
+        visit(context->varDecl(i));
+        state = CompilerState::NOSTATE;
+        find_or_create_variable(VariableScope::LOCAL);
+        auto saved = current_var;
+
+        // Get value
+        visit(context->expr(i));
+        Type type;
+
+        // Is this a type creation thing?
+        if (current_var.type == Type::TYPE && saved.field_index == -1) {
+            type = Type::TYPE;
+            auto t = current_var.name;
+            current_var = saved;
+            set_custom_type(t);
+        } else {
+            type = stack_pop();
+        }
+        assert(stack_size() == 0);
+
+        save_to_variable(type, saved);
+    }
+
+    state = CompilerState::NOSTATE;
+    return NULL;
 }
 
 void Compiler::save_to_variable(Type type, VarReference saved)
@@ -137,7 +166,7 @@ void Compiler::save_to_variable(Type type, VarReference saved)
 
             // Zero all fields
             if (!performance_build) {
-                find_variable(false, true);
+                find_variable(false, true, VariableScope::DONTCARE);
                 auto t = (*custom_types.find(current_var.custom_type_name)).second;
                 for (auto it = t.members.begin(); it != t.members.end(); ++it) {
                     auto m = (*it).second;

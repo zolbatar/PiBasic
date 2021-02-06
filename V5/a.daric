@@ -1,8 +1,12 @@
-A=100
-PRINT A
+A%=100
+PRINT "G: ";A%
 
-DATA 100,200.50,"Help"
+DEF PROCTest()
+	LOCAL A%=20
+	PRINT "L: ";A%
+ENDPROC
 
-READ A%,B,C$
+PRINT "G: ";A%
+PROCTest()
+PRINT "G: ";A%
 
-PRINT A%,B,C$

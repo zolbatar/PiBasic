@@ -20,6 +20,7 @@ enum class CompilerPhase {
 };
 
 enum class VariableScope {
+    DONTCARE,
     LOCAL,
     GLOBAL
 };
@@ -250,7 +251,7 @@ protected:
 
     /* Variables */
     void save_to_variable(Type type, VarReference saved);
-    bool find_variable(bool field, bool fire_error);
+    bool find_variable(bool field, bool fire_error, VariableScope scope);
     void find_or_create_variable(VariableScope scope);
     void set_custom_type(std::string type);
     antlrcpp::Any visitVar(DARICParser::VarContext* context);
