@@ -1,20 +1,14 @@
+I%=1
+CASE I% OF
+	WHEN 0, 1, 2: PROCPass()
+	WHEN "Donkey": PROCFail()
+	WHEN 3: PROCFail()
+	OTHERWISE PRINT "Neither"
+ENDCASE
 
-
-DIM A$(10):A$(0)="Hi!"
-PRINT "G: ";A$(0)
-A=100
-PRINT "GA: ";A
-
-DEF PROCTest()
-LOCAL DIM A$(10)
-LOCAL A=200
-PRINT "LA: ";A
-PRINT "G?: ";A$(0)
-A$(0) = "NO!!"
-PRINT "L: ";A$(0)
+DEF PROCFail()
+	PRINT  "!! FAILED TEST !!"
+	END
 ENDPROC
 
-PRINT "GA: ";A
-PRINT "G:";A$(0)
-PROCTest()
-PRINT "G:";A$(0)
+DEF PROCPass():PRINT "PASS":ENDPROC

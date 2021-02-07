@@ -43,6 +43,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtCASE(DARICParser::StmtCASEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtCHAIN(DARICParser::StmtCHAINContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -132,6 +136,10 @@ public:
   }
 
   virtual antlrcpp::Any visitStmtWHILE(DARICParser::StmtWHILEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitWhen(DARICParser::WhenContext *ctx) override {
     return visitChildren(ctx);
   }
 

@@ -12,39 +12,40 @@
 class  DARICParser : public antlr4::Parser {
 public:
   enum {
-    BREAKPOINT = 1, CHAIN = 2, DATA = 3, DEF = 4, DIM = 5, ELSE = 6, END = 7, 
-    ENDIF = 8, ENDFN = 9, ENDPROC = 10, ENDWHILE = 11, FN = 12, IF = 13, 
-    INPUT = 14, GLOBAL = 15, LOCAL = 16, LET = 17, THEN = 18, PRINT = 19, 
-    PROC = 20, READ = 21, REM = 22, REPEAT = 23, RESTORE = 24, RETURN = 25, 
-    SPC = 26, TRACEON = 27, TRACEOFF = 28, TYPE = 29, UNTIL = 30, WHILE = 31, 
-    TIME = 32, PI = 33, SQR = 34, LN = 35, LOG = 36, EXP = 37, ATN = 38, 
-    TAN = 39, COS = 40, SIN = 41, ABS = 42, ACS = 43, ASN = 44, DEG = 45, 
-    RAD = 46, SGN = 47, ASC = 48, LEN = 49, INSTR = 50, VAL = 51, TIMES = 52, 
-    STRS = 53, STRINGS = 54, CHRS = 55, LEFTS = 56, MIDS = 57, RIGHTS = 58, 
-    RND = 59, RND0 = 60, RND1 = 61, EQ = 62, NE = 63, GT = 64, GE = 65, 
-    LT = 66, LE = 67, NOT = 68, AND = 69, OR = 70, EOR = 71, MOD = 72, DIV = 73, 
-    HAT = 74, PLUS = 75, MINUS = 76, MULTIPLY = 77, DIVIDE = 78, SHL = 79, 
-    SHR = 80, PLUS_E = 81, MINUS_E = 82, MULTIPLY_E = 83, DIVIDE_E = 84, 
-    SHL_E = 85, SHR_E = 86, NEWLINE = 87, TICK = 88, TILDE = 89, COLON = 90, 
-    COMMA = 91, DOLLAR = 92, LPAREN = 93, PERCENT = 94, RPAREN = 95, SEMICOLON = 96, 
-    UNDERSCORE = 97, COMMENT = 98, STRINGLITERAL = 99, PROC_NAME = 100, 
-    FN_INTEGER = 101, FN_FLOAT = 102, FN_STRING = 103, VARIABLE_FLOAT = 104, 
-    VARIABLE_INTEGER = 105, VARIABLE_STRING = 106, VARIABLE_TYPE = 107, 
-    NAME = 108, HEXNUMBER = 109, BINARYNUMBER = 110, NUMBER = 111, FLOAT = 112, 
-    ALPHA = 113, DIGIT = 114, WS = 115
+    BREAKPOINT = 1, CASE = 2, CHAIN = 3, DATA = 4, DEF = 5, DIM = 6, ELSE = 7, 
+    END = 8, ENDCASE = 9, ENDIF = 10, ENDFN = 11, ENDPROC = 12, ENDWHILE = 13, 
+    FN = 14, IF = 15, INPUT = 16, GLOBAL = 17, LOCAL = 18, LET = 19, THEN = 20, 
+    OF = 21, OTHERWISE = 22, PRINT = 23, PROC = 24, READ = 25, REM = 26, 
+    REPEAT = 27, RESTORE = 28, RETURN = 29, SPC = 30, TRACEON = 31, TRACEOFF = 32, 
+    TYPE = 33, UNTIL = 34, WHEN = 35, WHILE = 36, TIME = 37, PI = 38, SQR = 39, 
+    LN = 40, LOG = 41, EXP = 42, ATN = 43, TAN = 44, COS = 45, SIN = 46, 
+    ABS = 47, ACS = 48, ASN = 49, DEG = 50, RAD = 51, SGN = 52, ASC = 53, 
+    LEN = 54, INSTR = 55, VAL = 56, TIMES = 57, STRS = 58, STRINGS = 59, 
+    CHRS = 60, LEFTS = 61, MIDS = 62, RIGHTS = 63, RND = 64, RND0 = 65, 
+    RND1 = 66, EQ = 67, NE = 68, GT = 69, GE = 70, LT = 71, LE = 72, NOT = 73, 
+    AND = 74, OR = 75, EOR = 76, MOD = 77, DIV = 78, HAT = 79, PLUS = 80, 
+    MINUS = 81, MULTIPLY = 82, DIVIDE = 83, SHL = 84, SHR = 85, PLUS_E = 86, 
+    MINUS_E = 87, MULTIPLY_E = 88, DIVIDE_E = 89, SHL_E = 90, SHR_E = 91, 
+    NEWLINE = 92, TICK = 93, TILDE = 94, COLON = 95, COMMA = 96, DOLLAR = 97, 
+    LPAREN = 98, PERCENT = 99, RPAREN = 100, SEMICOLON = 101, UNDERSCORE = 102, 
+    COMMENT = 103, STRINGLITERAL = 104, PROC_NAME = 105, FN_INTEGER = 106, 
+    FN_FLOAT = 107, FN_STRING = 108, VARIABLE_FLOAT = 109, VARIABLE_INTEGER = 110, 
+    VARIABLE_STRING = 111, VARIABLE_TYPE = 112, NAME = 113, HEXNUMBER = 114, 
+    BINARYNUMBER = 115, NUMBER = 116, FLOAT = 117, ALPHA = 118, DIGIT = 119, 
+    WS = 120
   };
 
   enum {
     RuleProg = 0, RuleLine = 1, RuleContent = 2, RuleBody = 3, RuleBodyStar = 4, 
-    RuleLinenumber = 5, RuleStmt = 6, RuleFnName = 7, RuleLiteral = 8, RuleVar = 9, 
-    RuleTypeVar = 10, RuleNumVar = 11, RuleStrVar = 12, RuleJustVar = 13, 
-    RuleVarName = 14, RuleVarNameInteger = 15, RuleVarNameString = 16, RuleVarNameType = 17, 
-    RuleVarDecl = 18, RuleVarDeclWithDimension = 19, RuleVarList = 20, RuleFunctionVarList = 21, 
-    RuleFunctionParList = 22, RuleExprList = 23, RulePrintListItem = 24, 
-    RulePrintStartingTicks = 25, RulePrintList = 26, RuleExpr = 27, RuleNumber = 28, 
-    RuleNumberInteger = 29, RuleNumberHex = 30, RuleNumberBinary = 31, RuleNumberFloat = 32, 
-    RuleStrFunc = 33, RuleString = 34, RuleStrExpr = 35, RuleNumFunc = 36, 
-    RuleNumExpr = 37, RuleCompare = 38
+    RuleLinenumber = 5, RuleStmt = 6, RuleWhen = 7, RuleFnName = 8, RuleLiteral = 9, 
+    RuleVar = 10, RuleTypeVar = 11, RuleNumVar = 12, RuleStrVar = 13, RuleJustVar = 14, 
+    RuleVarName = 15, RuleVarNameInteger = 16, RuleVarNameString = 17, RuleVarNameType = 18, 
+    RuleVarDecl = 19, RuleVarDeclWithDimension = 20, RuleVarList = 21, RuleFunctionVarList = 22, 
+    RuleFunctionParList = 23, RuleExprList = 24, RulePrintListItem = 25, 
+    RulePrintStartingTicks = 26, RulePrintList = 27, RuleExpr = 28, RuleNumber = 29, 
+    RuleNumberInteger = 30, RuleNumberHex = 31, RuleNumberBinary = 32, RuleNumberFloat = 33, 
+    RuleStrFunc = 34, RuleString = 35, RuleStrExpr = 36, RuleNumFunc = 37, 
+    RuleNumExpr = 38, RuleCompare = 39
   };
 
   explicit DARICParser(antlr4::TokenStream *input);
@@ -64,6 +65,7 @@ public:
   class BodyStarContext;
   class LinenumberContext;
   class StmtContext;
+  class WhenContext;
   class FnNameContext;
   class LiteralContext;
   class VarContext;
@@ -209,6 +211,147 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  StmtRESTOREContext : public StmtContext {
+  public:
+    StmtRESTOREContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *RESTORE();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtCASEContext : public StmtContext {
+  public:
+    StmtCASEContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *CASE();
+    ExprContext *expr();
+    antlr4::tree::TerminalNode *OF();
+    antlr4::tree::TerminalNode *NEWLINE();
+    antlr4::tree::TerminalNode *ENDCASE();
+    std::vector<WhenContext *> when();
+    WhenContext* when(size_t i);
+    antlr4::tree::TerminalNode *OTHERWISE();
+    BodyStarContext *bodyStar();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtTYPEContext : public StmtContext {
+  public:
+    StmtTYPEContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *TYPE();
+    VarNameContext *varName();
+    antlr4::tree::TerminalNode *LPAREN();
+    std::vector<JustVarContext *> justVar();
+    JustVarContext* justVar(size_t i);
+    antlr4::tree::TerminalNode *RPAREN();
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtCHAINContext : public StmtContext {
+  public:
+    StmtCHAINContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *CHAIN();
+    StrExprContext *strExpr();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtPRINTContext : public StmtContext {
+  public:
+    StmtPRINTContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *PRINT();
+    PrintListContext *printList();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtINPUTContext : public StmtContext {
+  public:
+    StmtINPUTContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *INPUT();
+    VarListContext *varList();
+    StrExprContext *strExpr();
+    antlr4::tree::TerminalNode *COMMA();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtDATAContext : public StmtContext {
+  public:
+    StmtDATAContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *DATA();
+    std::vector<LiteralContext *> literal();
+    LiteralContext* literal(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtLOCALContext : public StmtContext {
+  public:
+    StmtLOCALContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *LOCAL();
+    std::vector<VarDeclContext *> varDecl();
+    VarDeclContext* varDecl(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> EQ();
+    antlr4::tree::TerminalNode* EQ(size_t i);
+    std::vector<ExprContext *> expr();
+    ExprContext* expr(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtREADContext : public StmtContext {
+  public:
+    StmtREADContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *READ();
+    std::vector<VarDeclContext *> varDecl();
+    VarDeclContext* varDecl(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtCallFNContext : public StmtContext {
+  public:
+    StmtCallFNContext(StmtContext *ctx);
+
+    FnNameContext *fnName();
+    antlr4::tree::TerminalNode *LPAREN();
+    antlr4::tree::TerminalNode *RPAREN();
+    FunctionParListContext *functionParList();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StmtCallPROCContext : public StmtContext {
+  public:
+    StmtCallPROCContext(StmtContext *ctx);
+
+    antlr4::tree::TerminalNode *PROC_NAME();
+    antlr4::tree::TerminalNode *LPAREN();
+    antlr4::tree::TerminalNode *RPAREN();
+    FunctionParListContext *functionParList();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  StmtLOCALDIMContext : public StmtContext {
   public:
     StmtLOCALDIMContext(StmtContext *ctx);
@@ -236,15 +379,6 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
-  class  StmtRESTOREContext : public StmtContext {
-  public:
-    StmtRESTOREContext(StmtContext *ctx);
-
-    antlr4::tree::TerminalNode *RESTORE();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
   class  StmtDEFPROCContext : public StmtContext {
   public:
     StmtDEFPROCContext(StmtContext *ctx);
@@ -257,22 +391,6 @@ public:
     antlr4::tree::TerminalNode *ENDPROC();
     FunctionVarListContext *functionVarList();
     antlr4::tree::TerminalNode *COLON();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  StmtTYPEContext : public StmtContext {
-  public:
-    StmtTYPEContext(StmtContext *ctx);
-
-    antlr4::tree::TerminalNode *TYPE();
-    VarNameContext *varName();
-    antlr4::tree::TerminalNode *LPAREN();
-    std::vector<JustVarContext *> justVar();
-    JustVarContext* justVar(size_t i);
-    antlr4::tree::TerminalNode *RPAREN();
-    std::vector<antlr4::tree::TerminalNode *> COMMA();
-    antlr4::tree::TerminalNode* COMMA(size_t i);
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -313,38 +431,6 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
-  class  StmtCHAINContext : public StmtContext {
-  public:
-    StmtCHAINContext(StmtContext *ctx);
-
-    antlr4::tree::TerminalNode *CHAIN();
-    StrExprContext *strExpr();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  StmtPRINTContext : public StmtContext {
-  public:
-    StmtPRINTContext(StmtContext *ctx);
-
-    antlr4::tree::TerminalNode *PRINT();
-    PrintListContext *printList();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  StmtINPUTContext : public StmtContext {
-  public:
-    StmtINPUTContext(StmtContext *ctx);
-
-    antlr4::tree::TerminalNode *INPUT();
-    VarListContext *varList();
-    StrExprContext *strExpr();
-    antlr4::tree::TerminalNode *COMMA();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
   class  StmtRETURNContext : public StmtContext {
   public:
     StmtRETURNContext(StmtContext *ctx);
@@ -352,36 +438,6 @@ public:
     antlr4::tree::TerminalNode *EQ();
     ExprContext *expr();
     antlr4::tree::TerminalNode *RETURN();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  StmtDATAContext : public StmtContext {
-  public:
-    StmtDATAContext(StmtContext *ctx);
-
-    antlr4::tree::TerminalNode *DATA();
-    std::vector<LiteralContext *> literal();
-    LiteralContext* literal(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> COMMA();
-    antlr4::tree::TerminalNode* COMMA(size_t i);
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  StmtLOCALContext : public StmtContext {
-  public:
-    StmtLOCALContext(StmtContext *ctx);
-
-    antlr4::tree::TerminalNode *LOCAL();
-    std::vector<VarDeclContext *> varDecl();
-    VarDeclContext* varDecl(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> EQ();
-    antlr4::tree::TerminalNode* EQ(size_t i);
-    std::vector<ExprContext *> expr();
-    ExprContext* expr(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> COMMA();
-    antlr4::tree::TerminalNode* COMMA(size_t i);
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -470,44 +526,26 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
-  class  StmtREADContext : public StmtContext {
-  public:
-    StmtREADContext(StmtContext *ctx);
+  StmtContext* stmt();
 
-    antlr4::tree::TerminalNode *READ();
-    std::vector<VarDeclContext *> varDecl();
-    VarDeclContext* varDecl(size_t i);
+  class  WhenContext : public antlr4::ParserRuleContext {
+  public:
+    WhenContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *WHEN();
+    std::vector<ExprContext *> expr();
+    ExprContext* expr(size_t i);
+    antlr4::tree::TerminalNode *COLON();
+    BodyStarContext *bodyStar();
     std::vector<antlr4::tree::TerminalNode *> COMMA();
     antlr4::tree::TerminalNode* COMMA(size_t i);
 
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  StmtCallFNContext : public StmtContext {
-  public:
-    StmtCallFNContext(StmtContext *ctx);
-
-    FnNameContext *fnName();
-    antlr4::tree::TerminalNode *LPAREN();
-    antlr4::tree::TerminalNode *RPAREN();
-    FunctionParListContext *functionParList();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
-  class  StmtCallPROCContext : public StmtContext {
-  public:
-    StmtCallPROCContext(StmtContext *ctx);
-
-    antlr4::tree::TerminalNode *PROC_NAME();
-    antlr4::tree::TerminalNode *LPAREN();
-    antlr4::tree::TerminalNode *RPAREN();
-    FunctionParListContext *functionParList();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  StmtContext* stmt();
+  WhenContext* when();
 
   class  FnNameContext : public antlr4::ParserRuleContext {
   public:

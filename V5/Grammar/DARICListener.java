@@ -79,6 +79,18 @@ public interface DARICListener extends ParseTreeListener {
 	 */
 	void exitStmtBREAKPOINT(DARICParser.StmtBREAKPOINTContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code stmtCASE}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtCASE(DARICParser.StmtCASEContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtCASE}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtCASE(DARICParser.StmtCASEContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code stmtCHAIN}
 	 * labeled alternative in {@link DARICParser#stmt}.
 	 * @param ctx the parse tree
@@ -354,6 +366,16 @@ public interface DARICListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStmtWHILE(DARICParser.StmtWHILEContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DARICParser#when}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhen(DARICParser.WhenContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DARICParser#when}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhen(DARICParser.WhenContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link DARICParser#fnName}.
 	 * @param ctx the parse tree

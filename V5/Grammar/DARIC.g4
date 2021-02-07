@@ -30,6 +30,7 @@ linenumber
 
 stmt
     : BREAKPOINT                                                            # stmtBREAKPOINT
+    | CASE expr OF NEWLINE when+ (OTHERWISE bodyStar)? ENDCASE              # stmtCASE
     | CHAIN strExpr                                                         # stmtCHAIN
     | DATA literal (COMMA literal)*                                         # stmtDATA
     | DIM varDeclWithDimension (COMMA varDeclWithDimension)*                # stmtDIM
@@ -54,6 +55,10 @@ stmt
     | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN                   # stmtTYPE
     | REPEAT body* UNTIL expr                                               # stmtREPEAT
     | WHILE expr body* ENDWHILE                                             # stmtWHILE
+    ;
+
+when
+    : WHEN expr (COMMA expr)* COLON bodyStar
     ;
 
 fnName
@@ -278,12 +283,14 @@ compare
    
 // Lexer stuff
 BREAKPOINT      : 'BREAKPOINT' | 'Breakpoint' | 'breakpoint' ;
+CASE            : 'CASE' | 'Case' | 'case' ;
 CHAIN           : 'CHAIN' | 'Chain' | 'chain' ;
 DATA            : 'DATA' | 'Data' | 'data' ;
 DEF             : 'DEF' | 'Def' | 'def' ;
 DIM             : 'DIM' | 'Dim' | 'dim' ;
 ELSE            : 'ELSE' | 'Else' | 'else' ;
 END             : 'END' | 'End' | 'end' ;
+ENDCASE         : 'ENDCASE' | 'EndCase' | 'endcase' ;
 ENDIF           : 'ENDIF' | 'EndIf' | 'endif' ;
 ENDFN           : 'ENDFN' | 'EndFn' | 'endfn' ;
 ENDPROC         : 'ENDPROC' | 'EndProc' | 'endproc' ;
@@ -295,6 +302,8 @@ GLOBAL          : 'GLOBAL' | 'Global' | 'global' ;
 LOCAL           : 'LOCAL' | 'Local' | 'local' ;
 LET             : 'LET' | 'Let' | 'let' ;
 THEN            : 'THEN' | 'Then' | 'then' ;
+OF              : 'OF' | 'Of' | 'of' ;
+OTHERWISE       : 'OTHERWISE' | 'Otherwise' | 'otherwise' ;
 PRINT           : 'PRINT' | 'Print' | 'print' ;
 PROC            : 'PROC' | 'Proc' | 'proc' ;
 READ            : 'READ' | 'Read' | 'read' ;
@@ -307,6 +316,7 @@ TRACEON         : 'TRACEON' | 'TraceOn' | 'traceon';
 TRACEOFF        : 'TRACEOFF' | 'TraceOff' | 'traceoff';
 TYPE            : 'TYPE' | 'Type' | 'type';
 UNTIL           : 'UNTIL' | 'Until' | 'until' ;
+WHEN            : 'WHEN' | 'When' | 'when' ;
 WHILE           : 'WHILE' | 'While' | 'while' ;
 
 TIME            : 'TIME' | 'Time' | 'time' ;

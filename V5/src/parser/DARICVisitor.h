@@ -33,6 +33,8 @@ public:
 
     virtual antlrcpp::Any visitStmtBREAKPOINT(DARICParser::StmtBREAKPOINTContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtCASE(DARICParser::StmtCASEContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtCHAIN(DARICParser::StmtCHAINContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtDATA(DARICParser::StmtDATAContext *context) = 0;
@@ -78,6 +80,8 @@ public:
     virtual antlrcpp::Any visitStmtREPEAT(DARICParser::StmtREPEATContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtWHILE(DARICParser::StmtWHILEContext *context) = 0;
+
+    virtual antlrcpp::Any visitWhen(DARICParser::WhenContext *context) = 0;
 
     virtual antlrcpp::Any visitFnName(DARICParser::FnNameContext *context) = 0;
 

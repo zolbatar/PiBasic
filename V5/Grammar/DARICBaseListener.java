@@ -99,6 +99,18 @@ public class DARICBaseListener implements DARICListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStmtCASE(DARICParser.StmtCASEContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtCASE(DARICParser.StmtCASEContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStmtCHAIN(DARICParser.StmtCHAINContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -370,6 +382,18 @@ public class DARICBaseListener implements DARICListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStmtWHILE(DARICParser.StmtWHILEContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterWhen(DARICParser.WhenContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWhen(DARICParser.WhenContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

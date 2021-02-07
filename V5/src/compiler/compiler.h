@@ -91,6 +91,7 @@ private:
 
     // Looping
     std::map<UINT32, IfStatement> if_statements;
+    Type case_type;
 
     // Arrays
     UINT32 last_array_dimensions = 0;
@@ -211,6 +212,8 @@ protected:
     /* Statements */
     antlrcpp::Any visitStmt(DARICParser::StmtContext* context);
     antlrcpp::Any visitStmtBREAKPOINT(DARICParser::StmtBREAKPOINTContext* context);
+    antlrcpp::Any visitStmtCASE(DARICParser::StmtCASEContext* context);
+    antlrcpp::Any visitWhen(DARICParser::WhenContext* context);
     antlrcpp::Any visitStmtCHAIN(DARICParser::StmtCHAINContext* context);
     antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext* context);
     antlrcpp::Any visitStmtEND(DARICParser::StmtENDContext* context);
