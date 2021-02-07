@@ -1,3 +1,6 @@
-FOR I%=0 TO 4
-PRINT I%
+DIM FI$(3):FI$(0)="A":FI$(1)="B":FI$(2)="C"
+FC$=""
+FOR F$ IN FI$()
+FC$=FC$+F$
 NEXT
+PRINT "'";FC$;"'"

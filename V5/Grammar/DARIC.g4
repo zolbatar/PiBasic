@@ -40,6 +40,7 @@ stmt
     | DEF fnName LPAREN functionVarList? RPAREN COLON? bodyStar ENDFN                   # stmtDEFFN
     | DEF PROC_NAME LPAREN functionVarList? RPAREN COLON? bodyStar ENDPROC              # stmtDEFPROC
     | FOR LOCAL? justNumberVar EQ numExpr TO numExpr (STEP numExpr)? bodyStar NEXT      # stmtFOR
+    | FOR LOCAL? justVar IN justVar LPAREN RPAREN bodyStar NEXT                         # stmtFORIN
     | fnName LPAREN functionParList? RPAREN                                             # stmtCallFN
     | IF expr THEN? t=content (ELSE f=content)?                                         # stmtIF
     | IF expr THEN? t=bodyStar (ELSE f=bodyStar)? ENDIF                                 # stmtIFMultiline
@@ -304,6 +305,7 @@ ENDWHILE        : 'ENDWHILE' | 'EndWhile' | 'endwhile' ;
 FOR             : 'FOR' | 'For' | 'for' ;
 FN              : 'FN' | 'Fn' | 'fn' ;
 IF              : 'IF' | 'If' | 'if' ;
+IN              : 'IN' | 'In' | 'in' ;
 INPUT           : 'INPUT' | 'Input' | 'input' ;
 GLOBAL          : 'GLOBAL' | 'Global' | 'global' ;
 LOCAL           : 'LOCAL' | 'Local' | 'local' ;

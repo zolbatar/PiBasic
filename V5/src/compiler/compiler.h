@@ -219,6 +219,7 @@ protected:
     antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext* context);
     antlrcpp::Any visitStmtEND(DARICParser::StmtENDContext* context);
     antlrcpp::Any visitStmtFOR(DARICParser::StmtFORContext* context);
+    antlrcpp::Any visitStmtFORIN(DARICParser::StmtFORINContext* context);
     antlrcpp::Any visitStmtIF(DARICParser::StmtIFContext* context);
     antlrcpp::Any visitStmtIFMultiline(DARICParser::StmtIFMultilineContext* context);
     antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext* context);

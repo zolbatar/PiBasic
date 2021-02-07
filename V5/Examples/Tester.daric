@@ -142,6 +142,12 @@ FOR J = 0 TO 9 Step 2
 	I% = I% + 1
 NEXT
 PRINT "FOR + Step (Float) = ";:IF I% = 5 THEN PROCPass() ELSE PROCFail()
+DIM FI$(3):FI$(0)="A":FI$(1)="B":FI$(2)="C"
+FC$=""
+FOR F$ IN FI$()
+FC$=FC$+F$
+NEXT
+PRINT "FOR IN             = ";:IF FC$ = "ABC" THEN ProcPass() ELSE PROCFail()
 PRINT "Case               = ";
 I%=1
 CASE I% OF

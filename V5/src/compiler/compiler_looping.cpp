@@ -1,5 +1,21 @@
 #include "compiler.h"
 
+antlrcpp::Any Compiler::visitStmtFORIN(DARICParser::StmtFORINContext* context) {
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+
+    // Get variable
+    visit(context->justVar());
+    if (context->LOCAL() != NULL) {
+        find_or_create_variable(VariableScope::LOCAL);
+    } else {
+        find_or_create_variable(VariableScope::GLOBAL);
+    }
+
+    return NULL;
+}
+    
 antlrcpp::Any Compiler::visitStmtFOR(DARICParser::StmtFORContext* context)
 {
     if (phase == CompilerPhase::LOOKAHEAD)
