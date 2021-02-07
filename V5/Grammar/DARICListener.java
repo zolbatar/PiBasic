@@ -1351,6 +1351,18 @@ public interface DARICListener extends ParseTreeListener {
 	 */
 	void exitNumExprNumber(DARICParser.NumExprNumberContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code stmtFALSE}
+	 * labeled alternative in {@link DARICParser#numExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtFALSE(DARICParser.StmtFALSEContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtFALSE}
+	 * labeled alternative in {@link DARICParser#numExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtFALSE(DARICParser.StmtFALSEContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code numExprFunc}
 	 * labeled alternative in {@link DARICParser#numExpr}.
 	 * @param ctx the parse tree
@@ -1482,6 +1494,18 @@ public interface DARICListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumExprNOT(DARICParser.NumExprNOTContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code stmtTRUE}
+	 * labeled alternative in {@link DARICParser#numExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtTRUE(DARICParser.StmtTRUEContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtTRUE}
+	 * labeled alternative in {@link DARICParser#numExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtTRUE(DARICParser.StmtTRUEContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code numExprNested}
 	 * labeled alternative in {@link DARICParser#numExpr}.

@@ -1,7 +1,66 @@
-DIM FI$(3):FI$(0)="A":FI$(1)="B":FI$(2)="C"
-FC$=""
-FOR F$ IN FI$()
-PRINT F$
-REM FC$=FC$+F$
-NEXT
-REMPRINT "'";FC$;"'"
+PRINT "DARIC Test Rig"
+PRINT "--------------"
+PRINT
+
+PRINT "::Arrays::"
+DIM A%(6)
+A%(0) = 10
+A%(5) = 15
+PRINT "Index 0            = ";:IF A%(0) = 10 THEN PROCPass() ELSE PROCFail()
+PRINT "Index 5            = ";:IF A%(5) = 15 THEN PROCPass() ELSE PROCFail()
+DIM ta1$(2)
+ta1$(0) = "Test"
+ta1$(1) = ta1$(0)
+PRINT "String arrays      = ";:IF ta1$(1) = "Test" THEN PROCPass() ELSE PROCFail()
+DIM ta2$(2, 3)
+ta2$(0, 1) = "Test"
+ta2$(1, 2) = ta2$(0, 1)
+PRINT "2D arrays          = ";:IF ta2$(1, 2) = "Test" THEN PROCPass() ELSE PROCFail()
+PRINT
+
+REM PRINT "::BBC Basic Compatibility::"
+REM PRINT "LET                = ";:LETA=1:IF A = 1 THEN PROCPass() ELSE PROCFail()
+PRINT
+
+PRINT "::Boolean::"
+PRINT "Or                 = ";:IF (&F0 OR &F0 = &F0) AND (&F0 OR &0F = &FF) THEN PROCPass() ELSE PROCFail()
+PRINT "Eor                = ";:IF (1 EOR 1 = 0) AND (1 EOR 0 = 1) AND (0 EOR 0 = 0) THEN PROCPass() ELSE PROCFail()
+PRINT "And                = ";:IF ((&F0 AND &F0) = &F0) AND ((&F0 AND &0F) = &0) THEN PROCPass() ELSE PROCFail()
+PRINT "Not                = ";:IF NOT 1 = 0 THEN PROCPass() ELSE PROCFail()
+PRINT "True               = ";:IF TRUE = 1 THEN PROCPass() ELSE PROCFail()
+PRINT "False              = ";:IF FALSE = 0 THEN PROCPass() ELSE PROCFail()
+PRINT
+
+PRINT "::Comparison::"
+PRINT "Int =              = ";:IF 5 = 5 THEN PROCPass() ELSE PROCFail()
+PRINT "Int <>             = ";:IF 5 <> 6 THEN PROCPass() ELSE PROCFail()
+PRINT "Int <              = ";:IF 5 < 10 THEN PROCPass() ELSE PROCFail()
+PRINT "Int <= (<)         = ";:IF 4 <= 5 THEN PROCPass() ELSE PROCFail()
+PRINT "Int <= (=)         = ";:IF 5 <= 5 THEN PROCPass() ELSE PROCFail()
+PRINT "Int >              = ";:IF 10 > 5 THEN PROCPass() ELSE PROCFail()
+PRINT "Int >= (>)         = ";:IF 10 >= 5 THEN PROCPass() ELSE PROCFail()
+PRINT "Int >= (>=)        = ";:IF 5 >= 5 THEN PROCPass() ELSE PROCFail()
+PRINT "Float =            = ";:IF 5.0 = 5.0 THEN PROCPass() ELSE PROCFail()
+PRINT "Float <>           = ";:IF 5.0 <> 6.0 THEN PROCPass() ELSE PROCFail()
+PRINT "Float <            = ";:IF 5.0 < 10.0 THEN PROCPass() ELSE PROCFail()
+PRINT "Float <= (<)       = ";:IF 4.0 <= 5.0 THEN PROCPass() ELSE PROCFail()
+PRINT "Float <= (=)       = ";:IF 5.0 <= 5.0 THEN PROCPass() ELSE PROCFail()
+PRINT "Float >            = ";:IF 10.0 > 5.0 THEN PROCPass() ELSE PROCFail()
+PRINT "Float >= (>)       = ";:IF 10.0 >= 5.0 THEN PROCPass() ELSE PROCFail()
+PRINT "Float >= (>=)      = ";:IF 5.0 >= 5.0 THEN PROCPass() ELSE PROCFail()
+PRINT "String =           = ";:IF "Fred" = "Fred" THEN PROCPass() ELSE PROCFail()
+PRINT "String <>          = ";:IF "Fred" <> "fred" THEN PROCPass() ELSE PROCFail()
+PRINT "String <           = ";:IF "Fred" < "fred" THEN PROCPass() ELSE PROCFail()
+PRINT "String <= (<)      = ";:IF "Fred" <= "fred" THEN PROCPass() ELSE PROCFail()
+PRINT "String <= (=)      = ";:IF "Fred" <= "Fred" THEN PROCPass() ELSE PROCFail()
+PRINT "String >           = ";:IF "fred" > "Fred" THEN PROCPass() ELSE PROCFail()
+PRINT "String >= (>)      = ";:IF "fred" >= "Fred" THEN PROCPass() ELSE PROCFail()
+PRINT "String >= (>=)     = ";:IF "Fred" >= "Fred" THEN PROCPass() ELSE PROCFail()
+PRINT
+
+DEF PROCFail()
+	PRINT  "!! FAILED TEST !!"
+	END
+ENDPROC
+
+DEF PROCPass():PRINT "PASS":ENDPROC

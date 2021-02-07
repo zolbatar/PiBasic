@@ -253,6 +253,8 @@ public:
 
     virtual antlrcpp::Any visitNumExprNumber(DARICParser::NumExprNumberContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtFALSE(DARICParser::StmtFALSEContext *context) = 0;
+
     virtual antlrcpp::Any visitNumExprFunc(DARICParser::NumExprFuncContext *context) = 0;
 
     virtual antlrcpp::Any visitNumExprSubtract(DARICParser::NumExprSubtractContext *context) = 0;
@@ -274,6 +276,8 @@ public:
     virtual antlrcpp::Any visitNumExprMOD(DARICParser::NumExprMODContext *context) = 0;
 
     virtual antlrcpp::Any visitNumExprNOT(DARICParser::NumExprNOTContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtTRUE(DARICParser::StmtTRUEContext *context) = 0;
 
     virtual antlrcpp::Any visitNumExprNested(DARICParser::NumExprNestedContext *context) = 0;
 

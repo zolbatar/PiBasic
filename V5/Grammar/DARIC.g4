@@ -39,8 +39,8 @@ stmt
     | RETURN expr?                                                                      # stmtRETURN
     | DEF fnName LPAREN functionVarList? RPAREN COLON? bodyStar ENDFN                   # stmtDEFFN
     | DEF PROC_NAME LPAREN functionVarList? RPAREN COLON? bodyStar ENDPROC              # stmtDEFPROC
-    | FOR LOCAL? justNumberVar EQ numExpr TO numExpr (STEP numExpr)? bodyStar NEXT      # stmtFOR
-    | FOR LOCAL? justVar IN justVar LPAREN RPAREN bodyStar NEXT                         # stmtFORIN
+    | FOR LOCAL? justNumberVar EQ numExpr TO numExpr (STEP numExpr)? COLON? bodyStar NEXT      # stmtFOR
+    | FOR LOCAL? justVar IN justVar LPAREN RPAREN COLON? bodyStar NEXT                         # stmtFORIN
     | fnName LPAREN functionParList? RPAREN                                             # stmtCallFN
     | IF expr THEN? t=content (ELSE f=content)?                                         # stmtIF
     | IF expr THEN? t=bodyStar (ELSE f=bodyStar)? ENDIF                                 # stmtIFMultiline
@@ -259,6 +259,8 @@ numFunc
 
 numExpr
     : number                                #numExprNumber
+    | FALSE                                 # stmtFALSE
+    | TRUE                                  # stmtTRUE
     | numVar                                #numExprVar
     | numFunc                               #numExprFunc
     | NOT numExpr                           #numExprNOT
@@ -302,6 +304,7 @@ ENDIF           : 'ENDIF' | 'EndIf' | 'endif' ;
 ENDFN           : 'ENDFN' | 'EndFn' | 'endfn' ;
 ENDPROC         : 'ENDPROC' | 'EndProc' | 'endproc' ;
 ENDWHILE        : 'ENDWHILE' | 'EndWhile' | 'endwhile' ;
+FALSE           : 'FALSE' | 'False' | 'false' ;
 FOR             : 'FOR' | 'For' | 'for' ;
 FN              : 'FN' | 'Fn' | 'fn' ;
 IF              : 'IF' | 'If' | 'if' ;
@@ -326,6 +329,7 @@ THEN            : 'THEN' | 'Then' | 'then' ;
 TO              : 'TO' | 'To' | 'to' ;
 TRACEON         : 'TRACEON' | 'TraceOn' | 'traceon';
 TRACEOFF        : 'TRACEOFF' | 'TraceOff' | 'traceoff';
+TRUE            : 'TRUE' | 'True' | 'true' ;
 TYPE            : 'TYPE' | 'Type' | 'type';
 UNTIL           : 'UNTIL' | 'Until' | 'until' ;
 WHEN            : 'WHEN' | 'When' | 'when' ;

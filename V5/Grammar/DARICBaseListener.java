@@ -1419,6 +1419,18 @@ public class DARICBaseListener implements DARICListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStmtFALSE(DARICParser.StmtFALSEContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtFALSE(DARICParser.StmtFALSEContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNumExprFunc(DARICParser.NumExprFuncContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1546,6 +1558,18 @@ public class DARICBaseListener implements DARICListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNumExprNOT(DARICParser.NumExprNOTContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStmtTRUE(DARICParser.StmtTRUEContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtTRUE(DARICParser.StmtTRUEContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

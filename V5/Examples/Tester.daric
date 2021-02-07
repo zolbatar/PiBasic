@@ -73,11 +73,11 @@ PRINT "Data (String)      = ";:IF d2$ = "Fred" THEN PROCPass() ELSE PROCFail()
 FOR I% = 0 TO 4:READ dat%(I%):NEXT
 DATA 1, 2, 3, 4, 5
 PRINT "Data (Array)       = ";:IF dat%(0) + dat%(1) + dat%(2) + dat%(3) + dat%(4) = 15 THEN PROCPass() ELSE PROCFail()
-DATA 1, 2, 3, 4, 5:REM used by function FuncTestLocalVariables. Data can't be inside functions yet
-TestLocalVariables()
+DATA 1, 2, 3, 4, 5:REM used by function PROCTestLocalVariables. Data can't be inside functions yet
+PROCTestLocalVariables()
 RESTORE
 READ d1%
-PRINT "ResTOre            = ";:IF d1% = 100 THEN PROCPass() ELSE PROCFail()
+PRINT "Restore            = ";:IF d1% = 100 THEN PROCPass() ELSE PROCFail()
 PRINT
 
 PRINT "::File I/O::"

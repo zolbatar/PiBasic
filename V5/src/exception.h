@@ -39,11 +39,7 @@ public:
             break;
         }
         std::string serror = error;
-        if (error.length() > 40) {
-            serror = "..." + error.substr(error.length() - 41, 40);
-        }
-        replaceAll(serror, "\\n", " ");
-        s << " error [" << serror << "] at '" << filename << "':" << line_number << ":" << char_position << "\r";
+        s << " error [" << error << "] at '" << filename << "':" << line_number << ":" << char_position << "\r";
         return s.str().c_str();
     }
 
@@ -64,8 +60,9 @@ public:
             break;
         }
         std::string serror = error;
-        if (error.length() > 40) {
-            serror = "..." + error.substr(error.length() - 40, 40);
+        // Take first 60 and last 60
+        if (error.length() > 120) {
+            serror = error.substr(0, 60) + "..." + error.substr(error.length() - 60, 60);
         }
         replaceAll(serror, "\\n", " ");
         g_env.graphics.colour(255, 255, 255);

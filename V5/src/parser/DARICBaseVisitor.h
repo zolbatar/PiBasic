@@ -483,6 +483,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtFALSE(DARICParser::StmtFALSEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitNumExprFunc(DARICParser::NumExprFuncContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -524,6 +528,10 @@ public:
   }
 
   virtual antlrcpp::Any visitNumExprNOT(DARICParser::NumExprNOTContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtTRUE(DARICParser::StmtTRUEContext *ctx) override {
     return visitChildren(ctx);
   }
 

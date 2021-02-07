@@ -218,6 +218,7 @@ protected:
     antlrcpp::Any visitStmtCHAIN(DARICParser::StmtCHAINContext* context);
     antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext* context);
     antlrcpp::Any visitStmtEND(DARICParser::StmtENDContext* context);
+    antlrcpp::Any visitStmtFALSE(DARICParser::StmtFALSEContext* context);
     antlrcpp::Any visitStmtFOR(DARICParser::StmtFORContext* context);
     antlrcpp::Any visitStmtFORIN(DARICParser::StmtFORINContext* context);
     antlrcpp::Any visitStmtIF(DARICParser::StmtIFContext* context);
@@ -231,6 +232,7 @@ protected:
     antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext* context);
     antlrcpp::Any visitStmtTRACEON(DARICParser::StmtTRACEONContext* context);
     antlrcpp::Any visitStmtTRACEOFF(DARICParser::StmtTRACEOFFContext* context);
+    antlrcpp::Any visitStmtTRUE(DARICParser::StmtTRUEContext* context);
     antlrcpp::Any visitStmtWHILE(DARICParser::StmtWHILEContext* context);
 
     /* Data */
