@@ -92,6 +92,7 @@ private:
     // Looping
     std::map<UINT32, IfStatement> if_statements;
     Type case_type;
+    UINT32 case_end_pc;
 
     // Arrays
     UINT32 last_array_dimensions = 0;

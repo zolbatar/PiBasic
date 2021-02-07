@@ -1,8 +1,7 @@
 I%=1
 CASE I% OF
 	WHEN 0, 1, 2: PROCPass()
-	WHEN "Donkey": PROCFail()
-	WHEN 3: PROCFail()
+	WHEN 3: PROCFail()	
 	OTHERWISE PRINT "Neither"
 ENDCASE
 
