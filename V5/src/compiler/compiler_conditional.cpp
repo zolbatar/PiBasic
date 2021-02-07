@@ -109,9 +109,6 @@ antlrcpp::Any Compiler::visitStmtCASE(DARICParser::StmtCASEContext* context)
         visit(context->when(i));
     }
 
-    // Drop expression
-    insert_bytecode(Bytecodes::DROP, Type::NOTYPE);
-
     // And the otherwise if we have it
     if (context->OTHERWISE() != NULL) {
 
@@ -141,6 +138,9 @@ antlrcpp::Any Compiler::visitStmtCASE(DARICParser::StmtCASEContext* context)
         s.end_pc = vm->helper_bytecodes().pc;
         if_statements.insert(std::pair<UINT32, IfStatement>(start_pc, std::move(s)));
     }
+
+    // Drop expression
+    insert_bytecode(Bytecodes::DROP, Type::NOTYPE);
 
     return NULL;
 }

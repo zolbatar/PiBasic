@@ -84,6 +84,14 @@ public:
         return b.value_string;
     }
 
+    void clear_stack() {
+        stack.empty();
+    }
+
+    size_t get_stack_size() {
+        return stack.size();
+    }
+
 private:
     std::stack<Boxed> stack;
 };

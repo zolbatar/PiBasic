@@ -2694,6 +2694,7 @@ std::string VM::run()
     g_env.log << "-> Running" << std::endl;
     helper_bytecodes().pc = 0;
     data_iterator = data.begin();
+    stack.clear_stack();
     bool quit = false;
     int poll_count = 0;
     try {
@@ -3221,6 +3222,9 @@ std::string VM::run()
     } catch (const std::runtime_error& ex) {
         g_env.graphics.print_console(ex.what());
         return "";
+    }
+    if (stack.get_stack_size() != 0) {
+        g_env.graphics.print_console("Stack not empty on END\r");
     }
     return "";
 }
