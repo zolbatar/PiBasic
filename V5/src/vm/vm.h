@@ -81,6 +81,7 @@ private:
     void opcode_HALT();
     void opcode_DROP();
     void opcode_FASTCONST();
+    void opcode_FASTCONST_VAR();
 
     // Loading and storing
     void opcode_LOAD();

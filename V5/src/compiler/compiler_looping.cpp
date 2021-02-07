@@ -1,21 +1,65 @@
 #include "compiler.h"
 
-antlrcpp::Any Compiler::visitStmtFORIN(DARICParser::StmtFORINContext* context) {
+antlrcpp::Any Compiler::visitStmtFORIN(DARICParser::StmtFORINContext* context)
+{
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     set_pos(context->start);
 
-    // Get variable
-    visit(context->justVar());
+    // Get array variable and push onto stack
+    visit(context->justVar(1));
+    if (context->LOCAL() != NULL) {
+        find_or_create_variable(VariableScope::LOCAL);
+    } else {
+        find_or_create_variable(VariableScope::GLOBAL);
+    }
+    insert_instruction(Bytecodes::FASTCONST_VAR, Type::NOTYPE, current_var.id);
+    auto saved = current_var;
+
+    // Get loop variable
+    visit(context->justVar(0));
     if (context->LOCAL() != NULL) {
         find_or_create_variable(VariableScope::LOCAL);
     } else {
         find_or_create_variable(VariableScope::GLOBAL);
     }
 
+    // Check the types match
+    switch (saved.type) {
+    case Type::INTEGER_ARRAY:
+        if (current_var.type != Type::INTEGER) {
+            error("INTEGER ARRAY needs an INTEGER variable");
+        }
+        break;
+    case Type::FLOAT_ARRAY:
+        if (current_var.type != Type::FLOAT) {
+            error("FLOAT ARRAY needs an FLOAT variable");
+        }
+        break;
+    case Type::STRING_ARRAY:
+        if (current_var.type != Type::STRING) {
+            error("STRING ARRAY needs an STRING variable");
+        }
+        break;
+    default:
+        error("Unsupported type in FOR IN");
+    }
+
+    // PC
+    insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, vm->helper_bytecodes().pc + 2);
+
+    // Actual FOR loop token
+    insert_instruction(Bytecodes::FORIN, current_var.type, current_var.id);
+
+    // Process loop content
+    visit(context->bodyStar());
+
+    // And next
+    insert_instruction(Bytecodes::NEXTIN, current_var.type, current_var.id);
+
     return NULL;
 }
-    
+
 antlrcpp::Any Compiler::visitStmtFOR(DARICParser::StmtFORContext* context)
 {
     if (phase == CompilerPhase::LOOKAHEAD)

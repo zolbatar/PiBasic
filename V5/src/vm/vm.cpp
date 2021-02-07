@@ -65,6 +65,14 @@ void VM::opcode_FASTCONST()
     }
 }
 
+void VM::opcode_FASTCONST_VAR()
+{
+    stack.push_int(bc, bc.data);
+    if (!performance_build && runtime_debug) {
+        g_env.log << "Push var ID " << bc.data << " onto the stack" << std::endl;
+    }
+}
+
 void VM::opcode_LOAD()
 {
     auto var = variables.get_variable(bc, true);
@@ -1091,21 +1099,31 @@ void VM::opcode_FORIN()
     VM_INT pc = stack.pop_int(bc);
     VM_INT var_array_index = stack.pop_int(bc);
     auto variable_array = variables.get_variable_by_int(bc, var_array_index, true);
-    VM_INT iterations = static_cast<VM_INT>(variable_array->value_int_array.size());
-    var->value_int_array[0] = iterations;
-    var->value_int_array[1] = pc;
-    var->value_int_array[2] = var_array_index;
-    var->value_int_array[3] = 0;
     switch (bc.type) {
     case Type::INTEGER: {
+        VM_INT iterations = static_cast<VM_INT>(variable_array->value_int_array.size());
+        var->value_int_array[0] = iterations - 1;
+        var->value_int_array[1] = pc;
+        var->value_int_array[2] = var_array_index;
+        var->value_int_array[3] = 1;
         var->value_int = variable_array->value_int_array[0];
         break;
     }
     case Type::FLOAT: {
+        VM_INT iterations = static_cast<VM_INT>(variable_array->value_float_array.size());
+        var->value_int_array[0] = iterations - 1;
+        var->value_int_array[1] = pc;
+        var->value_int_array[2] = var_array_index;
+        var->value_int_array[3] = 1;
         var->value_float = variable_array->value_float_array[0];
         break;
     }
     case Type::STRING: {
+        VM_INT iterations = static_cast<VM_INT>(variable_array->value_string_array.size());
+        var->value_int_array[0] = iterations - 1;
+        var->value_int_array[1] = pc;
+        var->value_int_array[2] = var_array_index;
+        var->value_int_array[3] = 1;
         var->value_string = variable_array->value_string_array[0];
         break;
     }
@@ -2742,7 +2760,7 @@ std::string VM::run()
 
                 // Loading and storing
             case Bytecodes::FASTCONST_VAR:
-                error("FASTCONST_VAR not supported");
+                opcode_FASTCONST_VAR();
                 break;
             case Bytecodes::FASTCONST:
                 opcode_FASTCONST();

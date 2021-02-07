@@ -1,6 +1,7 @@
 DIM FI$(3):FI$(0)="A":FI$(1)="B":FI$(2)="C"
 FC$=""
 FOR F$ IN FI$()
-FC$=FC$+F$
+PRINT F$
+REM FC$=FC$+F$
 NEXT
-PRINT "'";FC$;"'"
+REMPRINT "'";FC$;"'"
