@@ -29,32 +29,33 @@ linenumber
     ;
 
 stmt
-    : BREAKPOINT                                                            # stmtBREAKPOINT
-    | CASE expr OF NEWLINE when+ (OTHERWISE bodyStar)? ENDCASE              # stmtCASE
-    | CHAIN strExpr                                                         # stmtCHAIN
-    | DATA literal (COMMA literal)*                                         # stmtDATA
-    | DIM varDeclWithDimension (COMMA varDeclWithDimension)*                # stmtDIM
-    | END                                                                   # stmtEND
-    | EQ expr?                                                              # stmtRETURN
-    | RETURN expr?                                                          # stmtRETURN
-    | DEF fnName LPAREN functionVarList? RPAREN COLON? bodyStar ENDFN       # stmtDEFFN
-    | DEF PROC_NAME LPAREN functionVarList? RPAREN COLON? bodyStar ENDPROC  # stmtDEFPROC
-    | fnName LPAREN functionParList? RPAREN                                 # stmtCallFN
-    | IF expr THEN? t=content (ELSE f=content)?                             # stmtIF
-    | IF expr THEN? t=bodyStar (ELSE f=bodyStar)? ENDIF                     # stmtIFMultiline
-    | INPUT (strExpr COMMA)? varList                                        # stmtINPUT
-    | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*             # stmtLET
-    | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                        # stmtLOCAL
-    | LOCAL DIM varDeclWithDimension (COMMA varDeclWithDimension)*          # stmtLOCALDIM
-    | PRINT printList?                                                      # stmtPRINT
-    | PROC_NAME LPAREN functionParList? RPAREN                              # stmtCallPROC
-    | READ varDecl (COMMA varDecl)*                                         # stmtREAD
-    | RESTORE                                                               # stmtRESTORE
-    | TRACEON                                                               # stmtTRACEON
-    | TRACEOFF                                                              # stmtTRACEOFF
-    | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN                   # stmtTYPE
-    | REPEAT body* UNTIL expr                                               # stmtREPEAT
-    | WHILE expr body* ENDWHILE                                             # stmtWHILE
+    : BREAKPOINT                                                                        # stmtBREAKPOINT
+    | CASE expr OF NEWLINE when+ (OTHERWISE bodyStar)? ENDCASE                          # stmtCASE
+    | CHAIN strExpr                                                                     # stmtCHAIN
+    | DATA literal (COMMA literal)*                                                     # stmtDATA
+    | DIM varDeclWithDimension (COMMA varDeclWithDimension)*                            # stmtDIM
+    | END                                                                               # stmtEND
+    | EQ expr?                                                                          # stmtRETURN
+    | RETURN expr?                                                                      # stmtRETURN
+    | DEF fnName LPAREN functionVarList? RPAREN COLON? bodyStar ENDFN                   # stmtDEFFN
+    | DEF PROC_NAME LPAREN functionVarList? RPAREN COLON? bodyStar ENDPROC              # stmtDEFPROC
+    | FOR LOCAL? justNumberVar EQ numExpr TO numExpr (STEP numExpr)? bodyStar NEXT      # stmtFOR
+    | fnName LPAREN functionParList? RPAREN                                             # stmtCallFN
+    | IF expr THEN? t=content (ELSE f=content)?                                         # stmtIF
+    | IF expr THEN? t=bodyStar (ELSE f=bodyStar)? ENDIF                                 # stmtIFMultiline
+    | INPUT (strExpr COMMA)? varList                                                    # stmtINPUT
+    | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*                         # stmtLET
+    | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                                    # stmtLOCAL
+    | LOCAL DIM varDeclWithDimension (COMMA varDeclWithDimension)*                      # stmtLOCALDIM
+    | PRINT printList?                                                                  # stmtPRINT
+    | PROC_NAME LPAREN functionParList? RPAREN                                          # stmtCallPROC
+    | READ varDecl (COMMA varDecl)*                                                     # stmtREAD
+    | RESTORE                                                                           # stmtRESTORE
+    | TRACEON                                                                           # stmtTRACEON
+    | TRACEOFF                                                                          # stmtTRACEOFF
+    | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN                               # stmtTYPE
+    | REPEAT body* UNTIL expr                                                           # stmtREPEAT
+    | WHILE expr body* ENDWHILE                                                         # stmtWHILE
     ;
 
 when
@@ -107,6 +108,11 @@ justVar
     : varName
     | varNameInteger
     | varNameString
+    ;
+
+justNumberVar
+    : varName
+    | varNameInteger
     ;
 
 varName
@@ -295,13 +301,14 @@ ENDIF           : 'ENDIF' | 'EndIf' | 'endif' ;
 ENDFN           : 'ENDFN' | 'EndFn' | 'endfn' ;
 ENDPROC         : 'ENDPROC' | 'EndProc' | 'endproc' ;
 ENDWHILE        : 'ENDWHILE' | 'EndWhile' | 'endwhile' ;
+FOR             : 'FOR' | 'For' | 'for' ;
 FN              : 'FN' | 'Fn' | 'fn' ;
 IF              : 'IF' | 'If' | 'if' ;
 INPUT           : 'INPUT' | 'Input' | 'input' ;
 GLOBAL          : 'GLOBAL' | 'Global' | 'global' ;
 LOCAL           : 'LOCAL' | 'Local' | 'local' ;
 LET             : 'LET' | 'Let' | 'let' ;
-THEN            : 'THEN' | 'Then' | 'then' ;
+NEXT            : 'NEXT' | 'Next' | 'next' ;
 OF              : 'OF' | 'Of' | 'of' ;
 OTHERWISE       : 'OTHERWISE' | 'Otherwise' | 'otherwise' ;
 PRINT           : 'PRINT' | 'Print' | 'print' ;
@@ -312,6 +319,9 @@ REPEAT          : 'REPEAT' | 'Repeat' | 'repeat' ;
 RESTORE         : 'RESTORE' | 'Restore' | 'restore' ;
 RETURN          : 'RETURN' | 'Return' | 'return' ;
 SPC             : 'SPC' | 'Spc' | 'spc' ;
+STEP            : 'STEP' | 'Step' | 'step' ;
+THEN            : 'THEN' | 'Then' | 'then' ;
+TO              : 'TO' | 'To' | 'to' ;
 TRACEON         : 'TRACEON' | 'TraceOn' | 'traceon';
 TRACEOFF        : 'TRACEOFF' | 'TraceOff' | 'traceoff';
 TYPE            : 'TYPE' | 'Type' | 'type';

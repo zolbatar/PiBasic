@@ -1,5 +1,135 @@
 #include "compiler.h"
 
+antlrcpp::Any Compiler::visitStmtFOR(DARICParser::StmtFORContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+
+    // Get variable
+    visit(context->justNumberVar());
+    if (context->LOCAL() != NULL) {
+        find_or_create_variable(VariableScope::LOCAL);
+    } else {
+        find_or_create_variable(VariableScope::GLOBAL);
+    }
+
+    // From value (and store in variable)
+    visit(context->numExpr(0));
+    switch (stack_pop()) {
+    case Type::INTEGER:
+        switch (current_var.type) {
+        case Type::INTEGER:
+            break;
+        case Type::FLOAT:
+            insert_bytecode(Bytecodes::CONV_INT, Type::FLOAT);
+            break;
+        default:
+            error("Invalid type in FOR loop");
+        }
+        break;
+    case Type::FLOAT:
+        switch (current_var.type) {
+        case Type::INTEGER:
+            insert_bytecode(Bytecodes::CONV_FLOAT, Type::INTEGER);
+            break;
+        case Type::FLOAT:
+            break;
+        default:
+            error("Invalid type in FOR loop");
+        }
+        break;
+    default:
+        error("Invalid type in FOR loop");
+    }
+    insert_bytecode(Bytecodes::STORE, current_var.type);
+
+    // To value
+    visit(context->numExpr(1));
+    switch (stack_pop()) {
+    case Type::INTEGER:
+        switch (current_var.type) {
+        case Type::INTEGER:
+            break;
+        case Type::FLOAT:
+            insert_bytecode(Bytecodes::CONV_INT, Type::FLOAT);
+            break;
+        default:
+            error("Invalid type in FOR loop");
+        }
+        break;
+    case Type::FLOAT:
+        switch (current_var.type) {
+        case Type::INTEGER:
+            insert_bytecode(Bytecodes::CONV_FLOAT, Type::INTEGER);
+            break;
+        case Type::FLOAT:
+            break;
+        default:
+            error("Invalid type in FOR loop");
+        }
+        break;
+    default:
+        error("Invalid type in FOR loop");
+    }
+    insert_instruction(Bytecodes::LOAD, current_var.type, current_var.id);
+    insert_bytecode(Bytecodes::SUBTRACT, current_var.type);
+
+    // Step?
+    if (context->STEP() != NULL) {
+        visit(context->numExpr(2));
+        switch (stack_pop()) {
+        case Type::INTEGER:
+            switch (current_var.type) {
+            case Type::INTEGER:
+                break;
+            case Type::FLOAT:
+                insert_bytecode(Bytecodes::CONV_INT, Type::FLOAT);
+                break;
+            default:
+                error("Invalid type in FOR loop");
+            }
+            break;
+        case Type::FLOAT:
+            switch (current_var.type) {
+            case Type::INTEGER:
+                insert_bytecode(Bytecodes::CONV_FLOAT, Type::INTEGER);
+                break;
+            case Type::FLOAT:
+                break;
+            default:
+                error("Invalid type in FOR loop");
+            }
+            break;
+        default:
+            error("Invalid type in FOR loop");
+        }
+    } else {
+        switch (current_var.type) {
+        case Type::INTEGER:
+            insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 1);
+            break;
+        case Type::FLOAT:
+            insert_instruction(Bytecodes::LOAD, Type::FLOAT, constant_float_create(1.0));
+            break;
+        }
+    }
+
+    // PC
+    insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, vm->helper_bytecodes().pc + 2);
+
+    // Actual FOR loop token
+    insert_instruction(Bytecodes::FOR, current_var.type, current_var.id);
+
+    // Process body
+    visit(context->bodyStar());
+
+    // And next
+    insert_instruction(Bytecodes::NEXT, current_var.type, current_var.id);
+
+    return NULL;
+}
+
 antlrcpp::Any Compiler::visitStmtREPEAT(DARICParser::StmtREPEATContext* context)
 {
     if (phase == CompilerPhase::LOOKAHEAD)

@@ -34,6 +34,19 @@ antlrcpp::Any Compiler::visitJustVar(DARICParser::JustVarContext* context)
     return NULL;
 }
 
+antlrcpp::Any Compiler::visitJustNumberVar(DARICParser::JustNumberVarContext* context)
+{
+    set_pos(context->start);
+    if (context->varName() != NULL) {
+        current_var.type = Type::FLOAT;
+        return visit(context->varName());
+    } else if (context->varNameInteger() != NULL) {
+        current_var.type = Type::INTEGER;
+        return visit(context->varNameInteger());
+    }
+    return NULL;
+}
+
 antlrcpp::Any Compiler::visitVarName(DARICParser::VarNameContext* context)
 {
     set_pos(context->start);

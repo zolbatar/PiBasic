@@ -195,6 +195,18 @@ public class DARICBaseListener implements DARICListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStmtFOR(DARICParser.StmtFORContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtFOR(DARICParser.StmtFORContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStmtCallFN(DARICParser.StmtCallFNContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -634,6 +646,18 @@ public class DARICBaseListener implements DARICListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitJustVar(DARICParser.JustVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJustNumberVar(DARICParser.JustNumberVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJustNumberVar(DARICParser.JustNumberVarContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

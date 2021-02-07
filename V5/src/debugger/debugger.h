@@ -3,6 +3,7 @@
 #include "../types.h"
 #include "../vm/bytecode.h"
 #include "../vm/vm.h"
+#include <exception>
 #include <memory>
 #include <string>
 #include <vector>
@@ -70,5 +71,6 @@ private:
         } else {
             return g_vm->helper_variables().get_variable(bc, false);
         }
+        throw std::runtime_error("Unable to find variable");
     }
 };

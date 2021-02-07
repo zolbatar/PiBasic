@@ -49,6 +49,8 @@ public:
 
     virtual antlrcpp::Any visitStmtDEFPROC(DARICParser::StmtDEFPROCContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtFOR(DARICParser::StmtFORContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtCallFN(DARICParser::StmtCallFNContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtIF(DARICParser::StmtIFContext *context) = 0;
@@ -122,6 +124,8 @@ public:
     virtual antlrcpp::Any visitNumVarStringFieldArray(DARICParser::NumVarStringFieldArrayContext *context) = 0;
 
     virtual antlrcpp::Any visitJustVar(DARICParser::JustVarContext *context) = 0;
+
+    virtual antlrcpp::Any visitJustNumberVar(DARICParser::JustNumberVarContext *context) = 0;
 
     virtual antlrcpp::Any visitVarName(DARICParser::VarNameContext *context) = 0;
 

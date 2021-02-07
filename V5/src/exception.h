@@ -1,5 +1,6 @@
 #pragma once
 #include "environment.h"
+#include "libs/string.h"
 #include "types.h"
 #include <exception>
 #include <sstream>
@@ -37,7 +38,12 @@ public:
             s << "Runtime";
             break;
         }
-        s << " error [" << error << "] at '" << filename << "':" << line_number << ":" << char_position << "\r";
+        std::string serror = error;
+        if (error.length() > 40) {
+            serror = "..." + error.substr(error.length() - 41, 40);
+        }
+        replaceAll(serror, "\\n", " ");
+        s << " error [" << serror << "] at '" << filename << "':" << line_number << ":" << char_position << "\r";
         return s.str().c_str();
     }
 
@@ -57,8 +63,13 @@ public:
             g_env.graphics.print_console("[Runtime] ");
             break;
         }
+        std::string serror = error;
+        if (error.length() > 40) {
+            serror = "..." + error.substr(error.length() - 40, 40);
+        }
+        replaceAll(serror, "\\n", " ");
         g_env.graphics.colour(255, 255, 255);
-        g_env.graphics.print_console(error);
+        g_env.graphics.print_console(serror);
         g_env.graphics.colour(128, 128, 128);
         g_env.graphics.print_console(" at ");
         g_env.graphics.colour(0, 255, 0);

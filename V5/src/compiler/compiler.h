@@ -218,6 +218,7 @@ protected:
     antlrcpp::Any visitStmtCHAIN(DARICParser::StmtCHAINContext* context);
     antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext* context);
     antlrcpp::Any visitStmtEND(DARICParser::StmtENDContext* context);
+    antlrcpp::Any visitStmtFOR(DARICParser::StmtFORContext* context);
     antlrcpp::Any visitStmtIF(DARICParser::StmtIFContext* context);
     antlrcpp::Any visitStmtIFMultiline(DARICParser::StmtIFMultilineContext* context);
     antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext* context);
@@ -301,6 +302,7 @@ protected:
 
     /* JustVar */
     antlrcpp::Any visitJustVar(DARICParser::JustVarContext* context);
+    antlrcpp::Any visitJustNumberVar(DARICParser::JustNumberVarContext* context);
 
     /* String expressions */
     antlrcpp::Any visitStrFunc(DARICParser::StrFuncContext* context);
