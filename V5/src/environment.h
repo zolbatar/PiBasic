@@ -6,7 +6,7 @@
 
 class Environment {
 public:
-    std::string version = "21.02.01";
+    std::string version = "21.02.08";
     std::string cwd; // Program directory
     std::vector<std::string> log_list; // Runtime log
     std::stringstream log; // Runtime log

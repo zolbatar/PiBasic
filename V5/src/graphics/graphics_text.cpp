@@ -209,7 +209,7 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
                     auto bg = point(x, y);  
                     Colour bgC((bg & 0xFF0000) << 16, (bg & 0xFF00) << 8, bg & 0xFF);
 
-                    alpha(bgC, saved_colour, c, a);
+                    alpha(bgC, saved_colour, c, v);
                     set_colour(c);
                     plot(x, y);
                 }

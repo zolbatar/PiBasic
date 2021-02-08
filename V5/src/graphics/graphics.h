@@ -121,7 +121,7 @@ public:
     void rectangle(int x1, int y1, int x2, int y2);
     void clipoff();
     void clip(int x1, int y1, int x2, int y2);
-    void alpha(Colour bg, Colour fg, Colour& out, double a);
+    void alpha(Colour bg, Colour fg, Colour& out, BYTE a);
     void show_fps() { showfps = true; }
     void cache();
     void restore();

@@ -344,11 +344,11 @@ void Graphics::show_cursors()
 #endif
 }
 
-void Graphics::alpha(Colour bg, Colour fg, Colour& out, double a)
+void Graphics::alpha(Colour bg, Colour fg, Colour& out, BYTE a)
 {
-    out.r = static_cast<BYTE>(static_cast<double>(bg.r) + static_cast<double>(fg.r - bg.r) * a);
-    out.g = static_cast<BYTE>(static_cast<double>(bg.g) + static_cast<double>(fg.g - bg.g) * a);
-    out.b = static_cast<BYTE>(static_cast<double>(bg.b) + static_cast<double>(fg.b - bg.b) * a);
+    out.r = ((fg.r * a) >> 8) + ((bg.r * (255 - a)) >> 8);
+    out.g = ((fg.g * a) >> 8) + ((bg.g * (255 - a)) >> 8);
+    out.b = ((fg.b * a) >> 8) + ((bg.b * (255 - a)) >> 8);
 }
 
 void Graphics::colour(BYTE r, BYTE g, BYTE b)

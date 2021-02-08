@@ -67,6 +67,18 @@ public interface DARICListener extends ParseTreeListener {
 	 */
 	void exitLinenumber(DARICParser.LinenumberContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code stmtREM}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtREM(DARICParser.StmtREMContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtREM}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtREM(DARICParser.StmtREMContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code stmtBREAKPOINT}
 	 * labeled alternative in {@link DARICParser#stmt}.
 	 * @param ctx the parse tree
@@ -283,6 +295,18 @@ public interface DARICListener extends ParseTreeListener {
 	 */
 	void exitStmtLOCALDIM(DARICParser.StmtLOCALDIMContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code stmtOSCLI}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtOSCLI(DARICParser.StmtOSCLIContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtOSCLI}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtOSCLI(DARICParser.StmtOSCLIContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code stmtPRINT}
 	 * labeled alternative in {@link DARICParser#stmt}.
 	 * @param ctx the parse tree
@@ -330,6 +354,18 @@ public interface DARICListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStmtRESTORE(DARICParser.StmtRESTOREContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code stmtSWAP}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtSWAP(DARICParser.StmtSWAPContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtSWAP}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtSWAP(DARICParser.StmtSWAPContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code stmtTRACEON}
 	 * labeled alternative in {@link DARICParser#stmt}.
@@ -390,6 +426,78 @@ public interface DARICListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStmtWHILE(DARICParser.StmtWHILEContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code stmtOperatorEqual}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtOperatorEqual(DARICParser.StmtOperatorEqualContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtOperatorEqual}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtOperatorEqual(DARICParser.StmtOperatorEqualContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code stmtBPUTH}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtBPUTH(DARICParser.StmtBPUTHContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtBPUTH}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtBPUTH(DARICParser.StmtBPUTHContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code stmtBGETH}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtBGETH(DARICParser.StmtBGETHContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtBGETH}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtBGETH(DARICParser.StmtBGETHContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code stmtPTRH}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtPTRH(DARICParser.StmtPTRHContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtPTRH}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtPTRH(DARICParser.StmtPTRHContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code stmtCLOSEH}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtCLOSEH(DARICParser.StmtCLOSEHContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtCLOSEH}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtCLOSEH(DARICParser.StmtCLOSEHContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code stmtLISTFILES}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStmtLISTFILES(DARICParser.StmtLISTFILESContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stmtLISTFILES}
+	 * labeled alternative in {@link DARICParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStmtLISTFILES(DARICParser.StmtLISTFILESContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link DARICParser#when}.
 	 * @param ctx the parse tree
@@ -1311,6 +1419,78 @@ public interface DARICListener extends ParseTreeListener {
 	 */
 	void exitNumFuncSGN(DARICParser.NumFuncSGNContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code numFuncBGETH}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumFuncBGETH(DARICParser.NumFuncBGETHContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code numFuncBGETH}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumFuncBGETH(DARICParser.NumFuncBGETHContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code numFuncEOFH}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumFuncEOFH(DARICParser.NumFuncEOFHContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code numFuncEOFH}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumFuncEOFH(DARICParser.NumFuncEOFHContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code numFuncOPENIN}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumFuncOPENIN(DARICParser.NumFuncOPENINContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code numFuncOPENIN}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumFuncOPENIN(DARICParser.NumFuncOPENINContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code numFuncOPENOUT}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumFuncOPENOUT(DARICParser.NumFuncOPENOUTContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code numFuncOPENOUT}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumFuncOPENOUT(DARICParser.NumFuncOPENOUTContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code numFuncOPENUP}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumFuncOPENUP(DARICParser.NumFuncOPENUPContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code numFuncOPENUP}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumFuncOPENUP(DARICParser.NumFuncOPENUPContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code numFuncPTR}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumFuncPTR(DARICParser.NumFuncPTRContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code numFuncPTR}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumFuncPTR(DARICParser.NumFuncPTRContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code numFuncASC}
 	 * labeled alternative in {@link DARICParser#numFunc}.
 	 * @param ctx the parse tree
@@ -1598,6 +1778,16 @@ public interface DARICListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumExprDIV(DARICParser.NumExprDIVContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DARICParser#numColours}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumColours(DARICParser.NumColoursContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DARICParser#numColours}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumColours(DARICParser.NumColoursContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code compareEQ}
 	 * labeled alternative in {@link DARICParser#compare}.

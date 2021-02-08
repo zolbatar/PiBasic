@@ -1,5 +1,44 @@
 #include "compiler.h"
 
+antlrcpp::Any Compiler::visitStmtOperatorEqual(DARICParser::StmtOperatorEqualContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    state = CompilerState::ASSIGNMENT;
+    visit(context->varDecl());
+    state = CompilerState::NOSTATE;
+    find_variable(false, true);
+    auto saved = current_var;
+
+    // Push value
+    insert_instruction(Bytecodes::LOAD, saved.type, current_var.id);
+
+    // Now push new value
+    visit(context->numExpr());
+
+    // Operator
+    if (context->PLUS_E() != NULL) {
+        insert_bytecode(Bytecodes::ADD, current_var.type);
+    } else if (context->MINUS_E() != NULL) {
+        insert_bytecode(Bytecodes::SUBTRACT, current_var.type);
+    } else if (context->MULTIPLY_E() != NULL) {
+        insert_bytecode(Bytecodes::MULTIPLY, current_var.type);
+    } else if (context->DIVIDE_E() != NULL) {
+        insert_bytecode(Bytecodes::DIVIDE, current_var.type);
+    } else if (context->SHL_E() != NULL) {
+        ensure_stack_is_integer();
+        insert_bytecode(Bytecodes::SHL, current_var.type);
+    } else if (context->SHR_E() != NULL) {
+        ensure_stack_is_integer();
+        insert_bytecode(Bytecodes::SHR, current_var.type);
+    }
+
+    save_to_variable(stack_pop(), saved);
+
+    return NULL;
+}
+
 antlrcpp::Any Compiler::visitNumExprHat(DARICParser::NumExprHatContext* context)
 {
     if (phase == CompilerPhase::LOOKAHEAD)

@@ -226,12 +226,18 @@ protected:
     antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext* context);
     antlrcpp::Any visitStmtLOCAL(DARICParser::StmtLOCALContext* context);
     antlrcpp::Any visitStmtLOCALDIM(DARICParser::StmtLOCALDIMContext* context);
+    antlrcpp::Any visitStmtOSCLI(DARICParser::StmtOSCLIContext* context);
     antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext* context);
     antlrcpp::Any visitStmtREPEAT(DARICParser::StmtREPEATContext* context);
+    antlrcpp::Any visitStmtREM(DARICParser::StmtREMContext* context);
+    antlrcpp::Any visitStmtSWAP(DARICParser::StmtSWAPContext* context);
     antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext* context);
     antlrcpp::Any visitStmtTRACEON(DARICParser::StmtTRACEONContext* context);
     antlrcpp::Any visitStmtTRACEOFF(DARICParser::StmtTRACEOFFContext* context);
     antlrcpp::Any visitStmtWHILE(DARICParser::StmtWHILEContext* context);
+
+    /* Graphics */
+    antlrcpp::Any visitNumColours(DARICParser::NumColoursContext* context);
 
     /* Data */
     antlrcpp::Any visitStmtDATA(DARICParser::StmtDATAContext* context);
@@ -361,6 +367,19 @@ protected:
     antlrcpp::Any visitNumFuncFALSE(DARICParser::NumFuncFALSEContext* context);
     antlrcpp::Any visitNumFuncTRUE(DARICParser::NumFuncTRUEContext* context);
 
+    /* I/O */
+    antlrcpp::Any visitStmtBPUTH(DARICParser::StmtBPUTHContext* context);
+    antlrcpp::Any visitStmtBGETH(DARICParser::StmtBGETHContext* context);
+    antlrcpp::Any visitStmtPTRH(DARICParser::StmtPTRHContext* context);
+    antlrcpp::Any visitStmtCLOSEH(DARICParser::StmtCLOSEHContext* context);
+    antlrcpp::Any visitStmtLISTFILES(DARICParser::StmtLISTFILESContext* context);
+    antlrcpp::Any visitNumFuncBGETH(DARICParser::NumFuncBGETHContext* context);
+    antlrcpp::Any visitNumFuncEOFH(DARICParser::NumFuncEOFHContext* context);
+    antlrcpp::Any visitNumFuncOPENIN(DARICParser::NumFuncOPENINContext* context);
+    antlrcpp::Any visitNumFuncOPENOUT(DARICParser::NumFuncOPENOUTContext* context);
+    antlrcpp::Any visitNumFuncOPENUP(DARICParser::NumFuncOPENUPContext* context);
+    antlrcpp::Any visitNumFuncPTR(DARICParser::NumFuncPTRContext* context);
+
     /* Numeric functions taking string */
     antlrcpp::Any visitNumFuncASC(DARICParser::NumFuncASCContext* context);
     antlrcpp::Any visitNumFuncLEN(DARICParser::NumFuncLENContext* context);
@@ -379,6 +398,7 @@ protected:
     antlrcpp::Any visitNumExprSubtract(DARICParser::NumExprSubtractContext* context);
     antlrcpp::Any visitNumExprSHL(DARICParser::NumExprSHLContext* context);
     antlrcpp::Any visitNumExprSHR(DARICParser::NumExprSHRContext* context);
+    antlrcpp::Any visitStmtOperatorEqual(DARICParser::StmtOperatorEqualContext* context);
 
     /* Numeric boolean */
     antlrcpp::Any visitNumExprNOT(DARICParser::NumExprNOTContext* context);

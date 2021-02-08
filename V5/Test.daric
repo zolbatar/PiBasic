@@ -1,0 +1,8 @@
+DEF PROCBob()
+LOCAL A=10,A$="Test"
+PRINT A
+A$ += 100
+ENDPROC
+
+PROBob()
+

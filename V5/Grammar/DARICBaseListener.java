@@ -87,6 +87,18 @@ public class DARICBaseListener implements DARICListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStmtREM(DARICParser.StmtREMContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtREM(DARICParser.StmtREMContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStmtBREAKPOINT(DARICParser.StmtBREAKPOINTContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -303,6 +315,18 @@ public class DARICBaseListener implements DARICListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStmtOSCLI(DARICParser.StmtOSCLIContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtOSCLI(DARICParser.StmtOSCLIContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStmtPRINT(DARICParser.StmtPRINTContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -346,6 +370,18 @@ public class DARICBaseListener implements DARICListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStmtRESTORE(DARICParser.StmtRESTOREContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStmtSWAP(DARICParser.StmtSWAPContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtSWAP(DARICParser.StmtSWAPContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -406,6 +442,78 @@ public class DARICBaseListener implements DARICListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStmtWHILE(DARICParser.StmtWHILEContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStmtOperatorEqual(DARICParser.StmtOperatorEqualContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtOperatorEqual(DARICParser.StmtOperatorEqualContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStmtBPUTH(DARICParser.StmtBPUTHContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtBPUTH(DARICParser.StmtBPUTHContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStmtBGETH(DARICParser.StmtBGETHContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtBGETH(DARICParser.StmtBGETHContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStmtPTRH(DARICParser.StmtPTRHContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtPTRH(DARICParser.StmtPTRHContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStmtCLOSEH(DARICParser.StmtCLOSEHContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtCLOSEH(DARICParser.StmtCLOSEHContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStmtLISTFILES(DARICParser.StmtLISTFILESContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStmtLISTFILES(DARICParser.StmtLISTFILESContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -1383,6 +1491,78 @@ public class DARICBaseListener implements DARICListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterNumFuncBGETH(DARICParser.NumFuncBGETHContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumFuncBGETH(DARICParser.NumFuncBGETHContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumFuncEOFH(DARICParser.NumFuncEOFHContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumFuncEOFH(DARICParser.NumFuncEOFHContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumFuncOPENIN(DARICParser.NumFuncOPENINContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumFuncOPENIN(DARICParser.NumFuncOPENINContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumFuncOPENOUT(DARICParser.NumFuncOPENOUTContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumFuncOPENOUT(DARICParser.NumFuncOPENOUTContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumFuncOPENUP(DARICParser.NumFuncOPENUPContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumFuncOPENUP(DARICParser.NumFuncOPENUPContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumFuncPTR(DARICParser.NumFuncPTRContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumFuncPTR(DARICParser.NumFuncPTRContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNumFuncASC(DARICParser.NumFuncASCContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1666,6 +1846,18 @@ public class DARICBaseListener implements DARICListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNumExprDIV(DARICParser.NumExprDIVContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumColours(DARICParser.NumColoursContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumColours(DARICParser.NumColoursContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

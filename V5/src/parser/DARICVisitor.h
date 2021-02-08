@@ -31,6 +31,8 @@ public:
 
     virtual antlrcpp::Any visitLinenumber(DARICParser::LinenumberContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtREM(DARICParser::StmtREMContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtBREAKPOINT(DARICParser::StmtBREAKPOINTContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtCASE(DARICParser::StmtCASEContext *context) = 0;
@@ -67,6 +69,8 @@ public:
 
     virtual antlrcpp::Any visitStmtLOCALDIM(DARICParser::StmtLOCALDIMContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtOSCLI(DARICParser::StmtOSCLIContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtCallPROC(DARICParser::StmtCallPROCContext *context) = 0;
@@ -74,6 +78,8 @@ public:
     virtual antlrcpp::Any visitStmtREAD(DARICParser::StmtREADContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtRESTORE(DARICParser::StmtRESTOREContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtSWAP(DARICParser::StmtSWAPContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtTRACEON(DARICParser::StmtTRACEONContext *context) = 0;
 
@@ -84,6 +90,18 @@ public:
     virtual antlrcpp::Any visitStmtREPEAT(DARICParser::StmtREPEATContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtWHILE(DARICParser::StmtWHILEContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtOperatorEqual(DARICParser::StmtOperatorEqualContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtBPUTH(DARICParser::StmtBPUTHContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtBGETH(DARICParser::StmtBGETHContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtPTRH(DARICParser::StmtPTRHContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtCLOSEH(DARICParser::StmtCLOSEHContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtLISTFILES(DARICParser::StmtLISTFILESContext *context) = 0;
 
     virtual antlrcpp::Any visitWhen(DARICParser::WhenContext *context) = 0;
 
@@ -247,6 +265,18 @@ public:
 
     virtual antlrcpp::Any visitNumFuncSGN(DARICParser::NumFuncSGNContext *context) = 0;
 
+    virtual antlrcpp::Any visitNumFuncBGETH(DARICParser::NumFuncBGETHContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncEOFH(DARICParser::NumFuncEOFHContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncOPENIN(DARICParser::NumFuncOPENINContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncOPENOUT(DARICParser::NumFuncOPENOUTContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncOPENUP(DARICParser::NumFuncOPENUPContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncPTR(DARICParser::NumFuncPTRContext *context) = 0;
+
     virtual antlrcpp::Any visitNumFuncASC(DARICParser::NumFuncASCContext *context) = 0;
 
     virtual antlrcpp::Any visitNumFuncLEN(DARICParser::NumFuncLENContext *context) = 0;
@@ -294,6 +324,8 @@ public:
     virtual antlrcpp::Any visitNumExprDivide(DARICParser::NumExprDivideContext *context) = 0;
 
     virtual antlrcpp::Any visitNumExprDIV(DARICParser::NumExprDIVContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumColours(DARICParser::NumColoursContext *context) = 0;
 
     virtual antlrcpp::Any visitCompareEQ(DARICParser::CompareEQContext *context) = 0;
 

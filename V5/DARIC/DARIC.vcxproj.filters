@@ -261,6 +261,15 @@
     <ClCompile Include="..\src\compiler\compiler_data.cpp">
       <Filter>Source Files\Compiler</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_graphics.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_io.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_riscos.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">
@@ -361,9 +370,6 @@
     <None Include="..\build-grammar.bat">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\a.daric">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\Examples\Cubes.daric">
       <Filter>Resource Files\Examples</Filter>
     </None>
@@ -426,6 +432,9 @@
     </None>
     <None Include="..\Examples\TesterLineNumbers.daric">
       <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Test.daric">
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
 </Project>

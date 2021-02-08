@@ -93,9 +93,9 @@ PRINT
 
 PRINT "::Functions::"
 PRINT "Function (Return)  = ";:PROCTest()
-PRINT "Function (Int)     = ";:IF TestReturn%(10, 5.5) = 20 THEN PROCPass() ELSE PROCFail()
-PRINT "Function (Float)   = ";:IF TestReturn(10, 5.5) = 20.5 THEN PROCPass() ELSE PROCFail()
-PRINT "Proc (RETURN)      = ";:AA%=1:BB%=2:TestRet(AA%, BB%):IF AA% = 100 And BB%=200 THEN PROCPass() ELSE PROCFail()
+PRINT "Function (Int)     = ";:IF FNTestReturn%(10, 5.5) = 20 THEN PROCPass() ELSE PROCFail()
+PRINT "Function (Float)   = ";:IF FNTestReturn(10, 5.5) = 20.5 THEN PROCPass() ELSE PROCFail()
+PRINT "Proc (RETURN)      = ";:AA%=1:BB%=2:FNTestRet(AA%, BB%):IF AA% = 100 And BB%=200 THEN PROCPass() ELSE PROCFail()
 PRINT	
 
 PRINT "::Locals & Globals::"
@@ -253,12 +253,12 @@ END
 REM Check Forward FN/PROC calls
 Type VertexTest(x,y,z,rgb%)
 
-DEF LocalVars()
+DEF PROCLocalVars()
 	Local G% = 10
-ENDDEF
+ENDPROC
 
-DEF TestTypes()
-	Local A! = VertexTest
+DEF PROCTestTypes()
+	LOCAL A! = VertexTest
 	A!x = 50.0
  	A!y = 100.5
  	A!rgb% = &FF2080
@@ -267,7 +267,7 @@ DEF TestTypes()
 	DIM B!(5, VertexTest)
  	B!(4)y = 100.0
  	PRINT "Load field (array) = ";: IF B!(4)y = 100.0 THEN PROCPass() ELSE PROCFail()
-ENDDEF
+ENDPROC
 
 DEF PROCTest()
 	PROCPass()
@@ -289,7 +289,7 @@ DEF FNTestReturn(x%, y)
 ENDFN
 
 DEF PROCTestLocalVariables()
-	Local DIM C%(5)
+	LOCAL DIM C%(5)
 	FOR LOCAL J% = 0 TO 4
 		Read C%(J%)
 	NEXT

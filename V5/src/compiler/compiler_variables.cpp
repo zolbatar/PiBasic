@@ -1,5 +1,29 @@
 #include "compiler.h"
 
+antlrcpp::Any Compiler::visitStmtSWAP(DARICParser::StmtSWAPContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+
+    // First var
+    visit(context->justVar(0));
+    find_variable(false, true);
+    auto saved = current_var;
+
+    // Second var
+    visit(context->justVar(1));
+    find_variable(false, true);
+
+    // Check they are same type
+    if (saved.type != current_var.type) {
+        error("SWAP needs two variables of the same type");
+    }
+
+    insert_instruction(Bytecodes::FASTCONST_VAR, current_var.type, current_var.id);
+    insert_instruction(Bytecodes::SWAP, saved.type, saved.id);
+    return NULL;
+}
+
 antlrcpp::Any Compiler::visitVar(DARICParser::VarContext* context)
 {
     set_pos(context->start);
