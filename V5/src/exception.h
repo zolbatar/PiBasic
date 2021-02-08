@@ -70,10 +70,12 @@ public:
         g_env.graphics.print_console(serror);
         g_env.graphics.colour(128, 128, 128);
         g_env.graphics.print_console(" at ");
-        g_env.graphics.colour(0, 255, 0);
-        g_env.graphics.print_console(filename);
-        g_env.graphics.colour(128, 128, 128);
-        g_env.graphics.print_console(":");
+        if (filename.length() > 0) {
+            g_env.graphics.colour(0, 255, 0);
+            g_env.graphics.print_console(filename);
+            g_env.graphics.colour(128, 128, 128);
+            g_env.graphics.print_console(":");
+        }
         g_env.graphics.colour(0, 255, 0);
         g_env.graphics.print_console(std::to_string(line_number));
         g_env.graphics.colour(128, 128, 128);

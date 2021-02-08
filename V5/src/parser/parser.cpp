@@ -11,6 +11,7 @@ bool fail_on_first_error = false;
 bool parse_errors = false;
 size_t error_line;
 short error_position;
+int file_count = 1;
 
 class MyParserErrorListener : public antlr4::BaseErrorListener {
 
@@ -63,10 +64,12 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
             g_env.graphics.print_console("[Parsing error]");
             g_env.graphics.colour(128, 128, 128);
             g_env.graphics.print_console(" at ");
-            g_env.graphics.colour(0, 255, 0);
-            g_env.graphics.print_console(parsing_filename);
-            g_env.graphics.colour(128, 128, 128);
-            g_env.graphics.print_console(":");
+            if (file_count > 1) {
+                g_env.graphics.colour(0, 255, 0);
+                g_env.graphics.print_console(parsing_filename);
+                g_env.graphics.colour(128, 128, 128);
+                g_env.graphics.print_console(":");
+            }
             g_env.graphics.colour(0, 255, 0);
             g_env.graphics.print_console(std::to_string(line));
             g_env.graphics.colour(128, 128, 128);
@@ -94,6 +97,7 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
 void MyParser::parse_and_compile(Compiler* compiler)
 {
     parse_errors = false;
+    file_count = 1;
     std::ifstream stream;
     stream.open(filename);
     if (!stream.is_open()) {
@@ -120,7 +124,11 @@ void MyParser::parse_and_compile(Compiler* compiler)
     DARICParser::ProgContext* tree = parser.prog();
 
     if (parse_errors) {
-        throw DARICException(ErrorLocation::PARSER, parsing_filename, static_cast<UINT32>(error_line), static_cast<short>(error_position), "Parsing error(s)");
+        if (file_count > 1) {
+            throw DARICException(ErrorLocation::PARSER, parsing_filename, static_cast<UINT32>(error_line), static_cast<short>(error_position), "Parsing error(s)");
+        } else {
+            throw DARICException(ErrorLocation::PARSER, "", static_cast<UINT32>(error_line), static_cast<short>(error_position), "Parsing error(s)");
+        }
     }
 
     // Add to files list
