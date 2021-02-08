@@ -39,9 +39,14 @@ void MyParser::parse_and_compile(Compiler* compiler)
 
     // Parser
     MyParserErrorListener errorListener;
+    //    DiagnosticErrorListener diagListener;
     DARICParser parser(&tokens);
+    parser.removeErrorListeners();
     parser.addErrorListener(&errorListener);
+    //    parser.addErrorListener(&diagListener);
     parser.setBuildParseTree(true);
+    parser.getInterpreter<atn::ParserATNSimulator>()->setPredictionMode(atn::PredictionMode::SLL);
+    //    parser.getInterpreter<atn::ParserATNSimulator>()->setPredictionMode(atn::PredictionMode::LL_EXACT_AMBIG_DETECTION);
     DARICParser::ProgContext* tree = parser.prog();
 
     // Add to files list

@@ -167,15 +167,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNumVarFloat(DARICParser::NumVarFloatContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual antlrcpp::Any visitNumVarFloatArray(DARICParser::NumVarFloatArrayContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitNumVarInteger(DARICParser::NumVarIntegerContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -183,19 +175,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNumVarFloatField(DARICParser::NumVarFloatFieldContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual antlrcpp::Any visitNumVarFloatFieldArray(DARICParser::NumVarFloatFieldArrayContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitNumVarIntegerField(DARICParser::NumVarIntegerFieldContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitNumVarIntegerFieldArray(DARICParser::NumVarIntegerFieldArrayContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -211,7 +191,23 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNumVarString(DARICParser::NumVarStringContext *ctx) override {
+  virtual antlrcpp::Any visitNumVarFloat(DARICParser::NumVarFloatContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumVarInteger(DARICParser::NumVarIntegerContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumVarFloatField(DARICParser::NumVarFloatFieldContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumVarIntegerField(DARICParser::NumVarIntegerFieldContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumVarIntegerFieldArray(DARICParser::NumVarIntegerFieldArrayContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -219,11 +215,15 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNumVarStringField(DARICParser::NumVarStringFieldContext *ctx) override {
+  virtual antlrcpp::Any visitNumVarStringFieldArray(DARICParser::NumVarStringFieldArrayContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNumVarStringFieldArray(DARICParser::NumVarStringFieldArrayContext *ctx) override {
+  virtual antlrcpp::Any visitNumVarString(DARICParser::NumVarStringContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumVarStringField(DARICParser::NumVarStringFieldContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -300,6 +300,10 @@ public:
   }
 
   virtual antlrcpp::Any visitPrintListTick(DARICParser::PrintListTickContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitPrintListSeparator(DARICParser::PrintListSeparatorContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -380,6 +384,14 @@ public:
   }
 
   virtual antlrcpp::Any visitNumFuncPI(DARICParser::NumFuncPIContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumFuncFALSE(DARICParser::NumFuncFALSEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumFuncTRUE(DARICParser::NumFuncTRUEContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -483,10 +495,6 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitStmtFALSE(DARICParser::StmtFALSEContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual antlrcpp::Any visitNumExprFunc(DARICParser::NumExprFuncContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -528,10 +536,6 @@ public:
   }
 
   virtual antlrcpp::Any visitNumExprNOT(DARICParser::NumExprNOTContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitStmtTRUE(DARICParser::StmtTRUEContext *ctx) override {
     return visitChildren(ctx);
   }
 

@@ -46,7 +46,7 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
         // Get variable name and type
         auto saved_state = state;
         state = CompilerState::ASSIGNMENT;
-        visit(context->var());
+        visit(context->justVar());
         state = saved_state;
 
         // Adjust type to array version
@@ -93,7 +93,7 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
         visit(context->numExpr(1));
 
         // Get variable name and type
-        visit(context->var());
+        visit(context->justVar());
         current_var.type = Type::TYPE_ARRAY;
         if (state == CompilerState::DIM) {
             find_or_create_variable_in_scope(VariableScope::GLOBAL);
@@ -127,7 +127,7 @@ antlrcpp::Any Compiler::visitVarDeclArrayed(DARICParser::VarDeclArrayedContext* 
         last_array_dimensions++;
     }
     state = saved_state;
-    visit(context->var());
+    visit(context->justVar());
     return NULL;
 }
 

@@ -1,5 +1,6 @@
 #include "compiler.h"
 #include <cassert>
+#include <chrono>
 
 void Compiler::reset()
 {
@@ -17,19 +18,25 @@ Compiler::Compiler()
 
 void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filename)
 {
+    using namespace std::chrono;
+
     this->vm = vm;
     this->filename = filename;
     reset();
     if_statements.clear();
 
-    // Lookahead, figure out function definitions and types
+    // Parse
+    auto t1 = high_resolution_clock::now();
     phase = CompilerPhase::LOOKAHEAD;
     auto daric = visitProg(tree);
+
+    // Lookahead, figure out function definitions and types
     assert(vm->helper_bytecodes().get_size() == 0);
     assert(stack_size() == 0);
     reset();
 
     // Size, figure out sizing for jumps etc.
+    t1 = high_resolution_clock::now();
     vm->helper_bytecodes().pc = 0;
     phase = CompilerPhase::SIZE;
     daric = visitProg(tree);
@@ -37,10 +44,14 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
     reset();
 
     // Compile! Build the VM
+    t1 = high_resolution_clock::now();
     vm->helper_bytecodes().pc = 0;
     phase = CompilerPhase::COMPILE;
     daric = visitProg(tree);
     assert(stack_size() == 0);
+    auto t2 = high_resolution_clock::now();
+    auto time_span = duration_cast<duration<double>>(t2 - t1);
+    g_env.log << "Parsing and compilation took " << time_span.count() << " seconds." << std::endl;
 
     insert_bytecode(Bytecodes::HALT, Type::NOTYPE);
 

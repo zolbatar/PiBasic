@@ -39,7 +39,7 @@ public:
             break;
         }
         std::string serror = error;
-        s << " error [" << error << "] at '" << filename << "':" << line_number << ":" << char_position << "\r";
+        s << "[" << error << "] at '" << filename << "':" << line_number << ":" << char_position << "\r";
         return s.str().c_str();
     }
 
@@ -59,6 +59,7 @@ public:
             g_env.graphics.print_console("[Runtime] ");
             break;
         }
+        g_env.log << "[" << error << "] at '" << filename << "':" << line_number << ":" << char_position << "\n";
         std::string serror = error;
         // Take first 60 and last 60
         if (error.length() > 120) {

@@ -21,7 +21,7 @@ body
     ;
 
 bodyStar
-    : body*
+    : COLON? body*
     ;
 
 linenumber
@@ -35,15 +35,14 @@ stmt
     | DATA literal (COMMA literal)*                                                     # stmtDATA
     | DIM varDeclWithDimension (COMMA varDeclWithDimension)*                            # stmtDIM
     | END                                                                               # stmtEND
-    | EQ expr?                                                                          # stmtRETURN
     | RETURN expr?                                                                      # stmtRETURN
-    | DEF fnName LPAREN functionVarList? RPAREN COLON? bodyStar ENDFN                   # stmtDEFFN
-    | DEF PROC_NAME LPAREN functionVarList? RPAREN COLON? bodyStar ENDPROC              # stmtDEFPROC
-    | FOR LOCAL? justNumberVar EQ numExpr TO numExpr (STEP numExpr)? COLON? bodyStar NEXT      # stmtFOR
-    | FOR LOCAL? justVar IN justVar LPAREN RPAREN COLON? bodyStar NEXT                         # stmtFORIN
+    | DEF fnName LPAREN functionVarList? RPAREN bodyStar ENDFN                          # stmtDEFFN
+    | DEF PROC_NAME LPAREN functionVarList? RPAREN bodyStar ENDPROC                     # stmtDEFPROC
+    | FOR LOCAL? justNumberVar EQ numExpr TO numExpr (STEP numExpr)? bodyStar NEXT      # stmtFOR
+    | FOR LOCAL? justVar IN justVar LPAREN RPAREN bodyStar NEXT                         # stmtFORIN
     | fnName LPAREN functionParList? RPAREN                                             # stmtCallFN
     | IF expr THEN? t=content (ELSE f=content)?                                         # stmtIF
-    | IF expr THEN? t=bodyStar (ELSE f=bodyStar)? ENDIF                                 # stmtIFMultiline
+    | IF expr THEN? NEWLINE t=bodyStar (ELSE f=bodyStar)? NEWLINE ENDIF                 # stmtIFMultiline
     | INPUT (strExpr COMMA)? varList                                                    # stmtINPUT
     | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*                         # stmtLET
     | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                                    # stmtLOCAL
@@ -85,24 +84,24 @@ typeVar
     ;
 
 numVar
-    : varName                                                       #numVarFloat
-    | varName (LPAREN numExpr (COMMA numExpr)? RPAREN)*             #numVarFloatArray
-    | varNameInteger                                                #numVarInteger
+    : varName (LPAREN numExpr (COMMA numExpr)? RPAREN)*             #numVarFloatArray
     | varNameInteger (LPAREN numExpr (COMMA numExpr)? RPAREN)*      #numVarIntegerArray
-    | typeVar varName                                               #numVarFloatField
     | typeVar LPAREN numExpr RPAREN varName                         #numVarFloatFieldArray
-    | typeVar varNameInteger                                        #numVarIntegerField
-    | typeVar LPAREN numExpr RPAREN varNameInteger                  #numVarIntegerFieldArray
     | FN_FLOAT LPAREN functionParList? RPAREN                       #numVarFloatFN
     | FN_INTEGER LPAREN functionParList? RPAREN                     #numVarIntegerFN
     | FN_STRING LPAREN functionParList? RPAREN                      #numVarStringFN
+    | varName                                                       #numVarFloat
+    | varNameInteger                                                #numVarInteger
+    | typeVar varName                                               #numVarFloatField
+    | typeVar varNameInteger                                        #numVarIntegerField
+    | typeVar LPAREN numExpr RPAREN varNameInteger                  #numVarIntegerFieldArray
     ;
 
 strVar
-    : varNameString                                                 #numVarString
-    | varNameString (LPAREN numExpr (COMMA numExpr)? RPAREN)*       #numVarStringArray
-    | typeVar varNameString                                         #numVarStringField
+    : varNameString (LPAREN numExpr (COMMA numExpr)? RPAREN)*       #numVarStringArray
     | typeVar LPAREN numExpr RPAREN varNameString                   #numVarStringFieldArray
+    | varNameString                                                 #numVarString
+    | typeVar varNameString                                         #numVarStringField
     ;
 
 justVar
@@ -133,14 +132,14 @@ varNameType
     ;
 
 varDecl
-    : var                                               #varDeclInd
-    | var (LPAREN numExpr (COMMA numExpr)? RPAREN)*     #varDeclArrayed
-    | typeVar varName                                   #varDeclType
-    | typeVar LPAREN numExpr RPAREN varName             #varDeclTypeArrayed
+    : justVar                                               #varDeclInd
+    | justVar (LPAREN numExpr (COMMA numExpr)? RPAREN)*     #varDeclArrayed
+    | typeVar varName                                       #varDeclType
+    | typeVar LPAREN numExpr RPAREN varName                 #varDeclTypeArrayed
     ;
    
 varDeclWithDimension
-    : var LPAREN numExpr (COMMA numExpr)* RPAREN
+    : justVar LPAREN numExpr (COMMA numExpr)* RPAREN
     ;
 
 // Lists
@@ -166,12 +165,18 @@ printListItem
     | SPC numExpr                   # printListSPC
     ;
 
-printStartingTicks                  
-    : (TICK)+                       # printListTick
+printListTick                  
+    : TICK+
+    ;
+
+printListSeparator
+    : COMMA
+    | SEMICOLON
+    | printListTick
     ;
 
 printList
-    : printStartingTicks? COMMA?  printListItem ((COMMA | SEMICOLON | TICK) printListItem?)*
+    : printListTick? s1=SEMICOLON? printListItem (printListSeparator printListItem)* s2=SEMICOLON?
     ;
 
 // Expressions and such
@@ -221,14 +226,16 @@ string
     ;
 
 strExpr
-    : string
-    | strVar
-    | strFunc
+    : strFunc
     | strExpr PLUS strExpr
+    | string
+    | strVar
     ;
 
 numFunc
     : PI                                    #numFuncPI
+    | FALSE                                 #numFuncFALSE
+    | TRUE                                  #numFuncTRUE
     | TIME                                  #numFuncTIME
     | RND                                   #numFuncRND
     | RND0                                  #numFuncRND0
@@ -258,11 +265,7 @@ numFunc
     ;
 
 numExpr
-    : number                                #numExprNumber
-    | FALSE                                 # stmtFALSE
-    | TRUE                                  # stmtTRUE
-    | numVar                                #numExprVar
-    | numFunc                               #numExprFunc
+    : numFunc                               #numExprFunc
     | NOT numExpr                           #numExprNOT
     | LPAREN numExpr RPAREN                 #numExprNested
     | <assoc=right> numExpr HAT numExpr     #numExprHat
@@ -279,6 +282,8 @@ numExpr
     | numExpr AND numExpr                   #numExprAND
     | numExpr OR numExpr                    #numExprOR
     | numExpr EOR numExpr                   #numExprEOR
+    | number                                #numExprNumber
+    | numVar                                #numExprVar
     ;
 
 compare

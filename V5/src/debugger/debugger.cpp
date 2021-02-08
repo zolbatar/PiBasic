@@ -14,7 +14,10 @@ Debugger::Debugger()
     debugger_open = true;
 
     // Was this breakpoint triggered?
-    bool breakpoint = g_vm->helper_bytecodes().get_previous_bytecode().opcode == Bytecodes::BREAKPOINT;
+    bool breakpoint = false;
+    if (g_vm->helper_bytecodes().pc > 0 && g_vm->helper_bytecodes().get_size() > 0 && g_vm->helper_bytecodes().get_previous_bytecode().opcode == Bytecodes::BREAKPOINT) {
+        breakpoint = true;
+    }
 
     // Wait until not pressed
     if (!breakpoint) {

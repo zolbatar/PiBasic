@@ -300,3 +300,23 @@ antlrcpp::Any Compiler::visitNumFuncVAL(DARICParser::NumFuncVALContext* context)
     stack_push(Type::FLOAT);
     return NULL;
 }
+
+antlrcpp::Any Compiler::visitNumFuncFALSE(DARICParser::NumFuncFALSEContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);
+    stack_push(Type::INTEGER);
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitNumFuncTRUE(DARICParser::NumFuncTRUEContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 1);
+    stack_push(Type::INTEGER);
+    return NULL;
+}

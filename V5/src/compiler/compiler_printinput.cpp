@@ -7,11 +7,10 @@ antlrcpp::Any Compiler::visitStmtPRINT(DARICParser::StmtPRINTContext* context)
     set_pos(context->start);
     print_semicolon_active = false;
     print_hex = false;
-    print_justify = false;
+    print_justify = true;
     if (context->printList() != NULL) {
         visit(context->printList());
-    }
-    if (!print_semicolon_active) {
+    } else {
         insert_bytecode(Bytecodes::PRINT_NL, Type::NOTYPE);
     }
     return NULL;
@@ -30,20 +29,41 @@ antlrcpp::Any Compiler::visitPrintList(DARICParser::PrintListContext* context)
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     set_pos(context->start);
-    if (context->printStartingTicks() != NULL) {
-        visit(context->printStartingTicks());
+    if (context->printListTick() != NULL) {
+        visit(context->printListTick());
+    }
+    if (context->s1 != nullptr) {
+        print_justify = false;
+        print_hex = false;
+        print_semicolon_active = true;
     }
     for (int i = 0; i < context->printListItem().size(); i++) {
-        if (context->COMMA(i) != NULL) {
-            print_justify = true;
-            print_hex = false;
-            print_semicolon_active = false;
-        } else if (context->SEMICOLON(i) != NULL) {
-            print_justify = false;
-            print_hex = false;
-            print_semicolon_active = true;
-        }
         visit(context->printListItem(i));
+        if (i != context->printListItem().size() - 1) {
+            visit(context->printListSeparator(i));
+        }
+    }
+    if (context->s2 == nullptr) {
+        insert_bytecode(Bytecodes::PRINT_NL, Type::NOTYPE);
+    }
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitPrintListSeparator(DARICParser::PrintListSeparatorContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    if (context->COMMA() != NULL) {
+        print_justify = true;
+        print_hex = false;
+        print_semicolon_active = false;
+    } else if (context->SEMICOLON() != NULL) {
+        print_justify = false;
+        print_hex = false;
+        print_semicolon_active = true;
+    } else if (context->printListTick() != NULL) {
+        visit(context->printListTick());
     }
     return NULL;
 }

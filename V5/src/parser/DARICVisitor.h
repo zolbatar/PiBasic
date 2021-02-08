@@ -95,21 +95,11 @@ public:
 
     virtual antlrcpp::Any visitTypeVarType(DARICParser::TypeVarTypeContext *context) = 0;
 
-    virtual antlrcpp::Any visitNumVarFloat(DARICParser::NumVarFloatContext *context) = 0;
-
     virtual antlrcpp::Any visitNumVarFloatArray(DARICParser::NumVarFloatArrayContext *context) = 0;
-
-    virtual antlrcpp::Any visitNumVarInteger(DARICParser::NumVarIntegerContext *context) = 0;
 
     virtual antlrcpp::Any visitNumVarIntegerArray(DARICParser::NumVarIntegerArrayContext *context) = 0;
 
-    virtual antlrcpp::Any visitNumVarFloatField(DARICParser::NumVarFloatFieldContext *context) = 0;
-
     virtual antlrcpp::Any visitNumVarFloatFieldArray(DARICParser::NumVarFloatFieldArrayContext *context) = 0;
-
-    virtual antlrcpp::Any visitNumVarIntegerField(DARICParser::NumVarIntegerFieldContext *context) = 0;
-
-    virtual antlrcpp::Any visitNumVarIntegerFieldArray(DARICParser::NumVarIntegerFieldArrayContext *context) = 0;
 
     virtual antlrcpp::Any visitNumVarFloatFN(DARICParser::NumVarFloatFNContext *context) = 0;
 
@@ -117,13 +107,23 @@ public:
 
     virtual antlrcpp::Any visitNumVarStringFN(DARICParser::NumVarStringFNContext *context) = 0;
 
-    virtual antlrcpp::Any visitNumVarString(DARICParser::NumVarStringContext *context) = 0;
+    virtual antlrcpp::Any visitNumVarFloat(DARICParser::NumVarFloatContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumVarInteger(DARICParser::NumVarIntegerContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumVarFloatField(DARICParser::NumVarFloatFieldContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumVarIntegerField(DARICParser::NumVarIntegerFieldContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumVarIntegerFieldArray(DARICParser::NumVarIntegerFieldArrayContext *context) = 0;
 
     virtual antlrcpp::Any visitNumVarStringArray(DARICParser::NumVarStringArrayContext *context) = 0;
 
-    virtual antlrcpp::Any visitNumVarStringField(DARICParser::NumVarStringFieldContext *context) = 0;
-
     virtual antlrcpp::Any visitNumVarStringFieldArray(DARICParser::NumVarStringFieldArrayContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumVarString(DARICParser::NumVarStringContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumVarStringField(DARICParser::NumVarStringFieldContext *context) = 0;
 
     virtual antlrcpp::Any visitJustVar(DARICParser::JustVarContext *context) = 0;
 
@@ -162,6 +162,8 @@ public:
     virtual antlrcpp::Any visitPrintListSPC(DARICParser::PrintListSPCContext *context) = 0;
 
     virtual antlrcpp::Any visitPrintListTick(DARICParser::PrintListTickContext *context) = 0;
+
+    virtual antlrcpp::Any visitPrintListSeparator(DARICParser::PrintListSeparatorContext *context) = 0;
 
     virtual antlrcpp::Any visitPrintList(DARICParser::PrintListContext *context) = 0;
 
@@ -202,6 +204,10 @@ public:
     virtual antlrcpp::Any visitStrExpr(DARICParser::StrExprContext *context) = 0;
 
     virtual antlrcpp::Any visitNumFuncPI(DARICParser::NumFuncPIContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncFALSE(DARICParser::NumFuncFALSEContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncTRUE(DARICParser::NumFuncTRUEContext *context) = 0;
 
     virtual antlrcpp::Any visitNumFuncTIME(DARICParser::NumFuncTIMEContext *context) = 0;
 
@@ -253,8 +259,6 @@ public:
 
     virtual antlrcpp::Any visitNumExprNumber(DARICParser::NumExprNumberContext *context) = 0;
 
-    virtual antlrcpp::Any visitStmtFALSE(DARICParser::StmtFALSEContext *context) = 0;
-
     virtual antlrcpp::Any visitNumExprFunc(DARICParser::NumExprFuncContext *context) = 0;
 
     virtual antlrcpp::Any visitNumExprSubtract(DARICParser::NumExprSubtractContext *context) = 0;
@@ -276,8 +280,6 @@ public:
     virtual antlrcpp::Any visitNumExprMOD(DARICParser::NumExprMODContext *context) = 0;
 
     virtual antlrcpp::Any visitNumExprNOT(DARICParser::NumExprNOTContext *context) = 0;
-
-    virtual antlrcpp::Any visitStmtTRUE(DARICParser::StmtTRUEContext *context) = 0;
 
     virtual antlrcpp::Any visitNumExprNested(DARICParser::NumExprNestedContext *context) = 0;
 

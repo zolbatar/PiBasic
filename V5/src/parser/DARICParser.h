@@ -43,11 +43,11 @@ public:
     RuleJustNumberVar = 15, RuleVarName = 16, RuleVarNameInteger = 17, RuleVarNameString = 18, 
     RuleVarNameType = 19, RuleVarDecl = 20, RuleVarDeclWithDimension = 21, 
     RuleVarList = 22, RuleFunctionVarList = 23, RuleFunctionParList = 24, 
-    RuleExprList = 25, RulePrintListItem = 26, RulePrintStartingTicks = 27, 
-    RulePrintList = 28, RuleExpr = 29, RuleNumber = 30, RuleNumberInteger = 31, 
-    RuleNumberHex = 32, RuleNumberBinary = 33, RuleNumberFloat = 34, RuleStrFunc = 35, 
-    RuleString = 36, RuleStrExpr = 37, RuleNumFunc = 38, RuleNumExpr = 39, 
-    RuleCompare = 40
+    RuleExprList = 25, RulePrintListItem = 26, RulePrintListTick = 27, RulePrintListSeparator = 28, 
+    RulePrintList = 29, RuleExpr = 30, RuleNumber = 31, RuleNumberInteger = 32, 
+    RuleNumberHex = 33, RuleNumberBinary = 34, RuleNumberFloat = 35, RuleStrFunc = 36, 
+    RuleString = 37, RuleStrExpr = 38, RuleNumFunc = 39, RuleNumExpr = 40, 
+    RuleCompare = 41
   };
 
   explicit DARICParser(antlr4::TokenStream *input);
@@ -87,7 +87,8 @@ public:
   class FunctionParListContext;
   class ExprListContext;
   class PrintListItemContext;
-  class PrintStartingTicksContext;
+  class PrintListTickContext;
+  class PrintListSeparatorContext;
   class PrintListContext;
   class ExprContext;
   class NumberContext;
@@ -169,6 +170,7 @@ public:
   public:
     BodyStarContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *COLON();
     std::vector<BodyContext *> body();
     BodyContext* body(size_t i);
 
@@ -393,7 +395,6 @@ public:
     BodyStarContext *bodyStar();
     antlr4::tree::TerminalNode *ENDPROC();
     FunctionVarListContext *functionVarList();
-    antlr4::tree::TerminalNode *COLON();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -438,9 +439,8 @@ public:
   public:
     StmtRETURNContext(StmtContext *ctx);
 
-    antlr4::tree::TerminalNode *EQ();
-    ExprContext *expr();
     antlr4::tree::TerminalNode *RETURN();
+    ExprContext *expr();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -494,7 +494,6 @@ public:
     antlr4::tree::TerminalNode *NEXT();
     antlr4::tree::TerminalNode *LOCAL();
     antlr4::tree::TerminalNode *STEP();
-    antlr4::tree::TerminalNode *COLON();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -528,7 +527,6 @@ public:
     BodyStarContext *bodyStar();
     antlr4::tree::TerminalNode *NEXT();
     antlr4::tree::TerminalNode *LOCAL();
-    antlr4::tree::TerminalNode *COLON();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -541,6 +539,8 @@ public:
     DARICParser::BodyStarContext *f = nullptr;
     antlr4::tree::TerminalNode *IF();
     ExprContext *expr();
+    std::vector<antlr4::tree::TerminalNode *> NEWLINE();
+    antlr4::tree::TerminalNode* NEWLINE(size_t i);
     antlr4::tree::TerminalNode *ENDIF();
     std::vector<BodyStarContext *> bodyStar();
     BodyStarContext* bodyStar(size_t i);
@@ -561,7 +561,6 @@ public:
     BodyStarContext *bodyStar();
     antlr4::tree::TerminalNode *ENDFN();
     FunctionVarListContext *functionVarList();
-    antlr4::tree::TerminalNode *COLON();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -732,15 +731,6 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
-  class  NumVarFloatContext : public NumVarContext {
-  public:
-    NumVarFloatContext(NumVarContext *ctx);
-
-    VarNameContext *varName();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
   class  NumVarFloatFNContext : public NumVarContext {
   public:
     NumVarFloatFNContext(NumVarContext *ctx);
@@ -749,6 +739,15 @@ public:
     antlr4::tree::TerminalNode *LPAREN();
     antlr4::tree::TerminalNode *RPAREN();
     FunctionParListContext *functionParList();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  NumVarFloatContext : public NumVarContext {
+  public:
+    NumVarFloatContext(NumVarContext *ctx);
+
+    VarNameContext *varName();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -770,15 +769,6 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
-  class  NumVarIntegerContext : public NumVarContext {
-  public:
-    NumVarIntegerContext(NumVarContext *ctx);
-
-    VarNameIntegerContext *varNameInteger();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
   class  NumVarFloatFieldArrayContext : public NumVarContext {
   public:
     NumVarFloatFieldArrayContext(NumVarContext *ctx);
@@ -788,6 +778,15 @@ public:
     NumExprContext *numExpr();
     antlr4::tree::TerminalNode *RPAREN();
     VarNameContext *varName();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  NumVarIntegerContext : public NumVarContext {
+  public:
+    NumVarIntegerContext(NumVarContext *ctx);
+
+    VarNameIntegerContext *varNameInteger();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -834,6 +833,19 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  NumVarStringFieldArrayContext : public StrVarContext {
+  public:
+    NumVarStringFieldArrayContext(StrVarContext *ctx);
+
+    TypeVarContext *typeVar();
+    antlr4::tree::TerminalNode *LPAREN();
+    NumExprContext *numExpr();
+    antlr4::tree::TerminalNode *RPAREN();
+    VarNameStringContext *varNameString();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  NumVarStringContext : public StrVarContext {
   public:
     NumVarStringContext(StrVarContext *ctx);
@@ -848,19 +860,6 @@ public:
     NumVarStringFieldContext(StrVarContext *ctx);
 
     TypeVarContext *typeVar();
-    VarNameStringContext *varNameString();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  NumVarStringFieldArrayContext : public StrVarContext {
-  public:
-    NumVarStringFieldArrayContext(StrVarContext *ctx);
-
-    TypeVarContext *typeVar();
-    antlr4::tree::TerminalNode *LPAREN();
-    NumExprContext *numExpr();
-    antlr4::tree::TerminalNode *RPAREN();
     VarNameStringContext *varNameString();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -966,7 +965,7 @@ public:
   public:
     VarDeclIndContext(VarDeclContext *ctx);
 
-    VarContext *var();
+    JustVarContext *justVar();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -975,7 +974,7 @@ public:
   public:
     VarDeclArrayedContext(VarDeclContext *ctx);
 
-    VarContext *var();
+    JustVarContext *justVar();
     std::vector<antlr4::tree::TerminalNode *> LPAREN();
     antlr4::tree::TerminalNode* LPAREN(size_t i);
     std::vector<NumExprContext *> numExpr();
@@ -1017,7 +1016,7 @@ public:
   public:
     VarDeclWithDimensionContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    VarContext *var();
+    JustVarContext *justVar();
     antlr4::tree::TerminalNode *LPAREN();
     std::vector<NumExprContext *> numExpr();
     NumExprContext* numExpr(size_t i);
@@ -1145,44 +1144,48 @@ public:
 
   PrintListItemContext* printListItem();
 
-  class  PrintStartingTicksContext : public antlr4::ParserRuleContext {
+  class  PrintListTickContext : public antlr4::ParserRuleContext {
   public:
-    PrintStartingTicksContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    PrintStartingTicksContext() = default;
-    void copyFrom(PrintStartingTicksContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
+    PrintListTickContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  PrintListTickContext : public PrintStartingTicksContext {
-  public:
-    PrintListTickContext(PrintStartingTicksContext *ctx);
-
     std::vector<antlr4::tree::TerminalNode *> TICK();
     antlr4::tree::TerminalNode* TICK(size_t i);
 
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
-  PrintStartingTicksContext* printStartingTicks();
+  PrintListTickContext* printListTick();
+
+  class  PrintListSeparatorContext : public antlr4::ParserRuleContext {
+  public:
+    PrintListSeparatorContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *COMMA();
+    antlr4::tree::TerminalNode *SEMICOLON();
+    PrintListTickContext *printListTick();
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  PrintListSeparatorContext* printListSeparator();
 
   class  PrintListContext : public antlr4::ParserRuleContext {
   public:
+    antlr4::Token *s1 = nullptr;
+    antlr4::Token *s2 = nullptr;
     PrintListContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     std::vector<PrintListItemContext *> printListItem();
     PrintListItemContext* printListItem(size_t i);
-    PrintStartingTicksContext *printStartingTicks();
-    std::vector<antlr4::tree::TerminalNode *> COMMA();
-    antlr4::tree::TerminalNode* COMMA(size_t i);
+    PrintListTickContext *printListTick();
+    std::vector<PrintListSeparatorContext *> printListSeparator();
+    PrintListSeparatorContext* printListSeparator(size_t i);
     std::vector<antlr4::tree::TerminalNode *> SEMICOLON();
     antlr4::tree::TerminalNode* SEMICOLON(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> TICK();
-    antlr4::tree::TerminalNode* TICK(size_t i);
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -1437,9 +1440,9 @@ public:
   public:
     StrExprContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
+    StrFuncContext *strFunc();
     StringContext *string();
     StrVarContext *strVar();
-    StrFuncContext *strFunc();
     std::vector<StrExprContext *> strExpr();
     StrExprContext* strExpr(size_t i);
     antlr4::tree::TerminalNode *PLUS();
@@ -1575,6 +1578,15 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  NumFuncFALSEContext : public NumFuncContext {
+  public:
+    NumFuncFALSEContext(NumFuncContext *ctx);
+
+    antlr4::tree::TerminalNode *FALSE();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  NumFuncRNDContext : public NumFuncContext {
   public:
     NumFuncRNDContext(NumFuncContext *ctx);
@@ -1695,6 +1707,15 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  NumFuncTRUEContext : public NumFuncContext {
+  public:
+    NumFuncTRUEContext(NumFuncContext *ctx);
+
+    antlr4::tree::TerminalNode *TRUE();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  NumFuncASCContext : public NumFuncContext {
   public:
     NumFuncASCContext(NumFuncContext *ctx);
@@ -1775,15 +1796,6 @@ public:
     NumExprNumberContext(NumExprContext *ctx);
 
     NumberContext *number();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  StmtFALSEContext : public NumExprContext {
-  public:
-    StmtFALSEContext(NumExprContext *ctx);
-
-    antlr4::tree::TerminalNode *FALSE();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -1900,15 +1912,6 @@ public:
 
     antlr4::tree::TerminalNode *NOT();
     NumExprContext *numExpr();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  StmtTRUEContext : public NumExprContext {
-  public:
-    StmtTRUEContext(NumExprContext *ctx);
-
-    antlr4::tree::TerminalNode *TRUE();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
