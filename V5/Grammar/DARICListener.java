@@ -575,6 +575,18 @@ public interface DARICListener extends ParseTreeListener {
 	 */
 	void exitNumVarIntegerArray(DARICParser.NumVarIntegerArrayContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code numVarIntegerFieldArray}
+	 * labeled alternative in {@link DARICParser#numVar}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumVarIntegerFieldArray(DARICParser.NumVarIntegerFieldArrayContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code numVarIntegerFieldArray}
+	 * labeled alternative in {@link DARICParser#numVar}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumVarIntegerFieldArray(DARICParser.NumVarIntegerFieldArrayContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code numVarFloatFieldArray}
 	 * labeled alternative in {@link DARICParser#numVar}.
 	 * @param ctx the parse tree
@@ -670,18 +682,6 @@ public interface DARICListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumVarIntegerField(DARICParser.NumVarIntegerFieldContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code numVarIntegerFieldArray}
-	 * labeled alternative in {@link DARICParser#numVar}.
-	 * @param ctx the parse tree
-	 */
-	void enterNumVarIntegerFieldArray(DARICParser.NumVarIntegerFieldArrayContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code numVarIntegerFieldArray}
-	 * labeled alternative in {@link DARICParser#numVar}.
-	 * @param ctx the parse tree
-	 */
-	void exitNumVarIntegerFieldArray(DARICParser.NumVarIntegerFieldArrayContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code numVarStringArray}
 	 * labeled alternative in {@link DARICParser#strVar}.

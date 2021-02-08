@@ -2777,7 +2777,7 @@ public class DARICParser extends Parser {
 				}
 				break;
 			case 3:
-				_localctx = new NumVarFloatFieldArrayContext(_localctx);
+				_localctx = new NumVarIntegerFieldArrayContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(463);
@@ -2789,37 +2789,31 @@ public class DARICParser extends Parser {
 				setState(466);
 				match(RPAREN);
 				setState(467);
-				varName();
+				varNameInteger();
 				}
 				break;
 			case 4:
-				_localctx = new NumVarFloatFNContext(_localctx);
+				_localctx = new NumVarFloatFieldArrayContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(469);
-				match(FN_FLOAT);
+				typeVar();
 				setState(470);
 				match(LPAREN);
+				setState(471);
+				numExpr(0);
 				setState(472);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << FALSE) | (1L << TRUE) | (1L << RED) | (1L << GREEN) | (1L << YELLOW) | (1L << BLUE) | (1L << MAGENTA) | (1L << CYAN) | (1L << WHITE) | (1L << BLACK) | (1L << BGETH) | (1L << EOFH) | (1L << OPENIN) | (1L << OPENOUT) | (1L << OPENUP) | (1L << PTRH))) != 0) || ((((_la - 85)) & ~0x3f) == 0 && ((1L << (_la - 85)) & ((1L << (TIME - 85)) | (1L << (PI - 85)) | (1L << (SQR - 85)) | (1L << (LN - 85)) | (1L << (LOG - 85)) | (1L << (EXP - 85)) | (1L << (ATN - 85)) | (1L << (TAN - 85)) | (1L << (COS - 85)) | (1L << (SIN - 85)) | (1L << (ABS - 85)) | (1L << (ACS - 85)) | (1L << (ASN - 85)) | (1L << (DEG - 85)) | (1L << (RAD - 85)) | (1L << (SGN - 85)) | (1L << (ASC - 85)) | (1L << (LEN - 85)) | (1L << (INSTR - 85)) | (1L << (VAL - 85)) | (1L << (TIMES - 85)) | (1L << (STRS - 85)) | (1L << (STRINGS - 85)) | (1L << (CHRS - 85)) | (1L << (LEFTS - 85)) | (1L << (MIDS - 85)) | (1L << (RIGHTS - 85)) | (1L << (RND - 85)) | (1L << (RND0 - 85)) | (1L << (RND1 - 85)) | (1L << (NOT - 85)) | (1L << (PLUS - 85)) | (1L << (MINUS - 85)) | (1L << (LPAREN - 85)))) != 0) || ((((_la - 153)) & ~0x3f) == 0 && ((1L << (_la - 153)) & ((1L << (STRINGLITERAL - 153)) | (1L << (FN_INTEGER - 153)) | (1L << (FN_FLOAT - 153)) | (1L << (FN_STRING - 153)) | (1L << (VARIABLE_FLOAT - 153)) | (1L << (VARIABLE_INTEGER - 153)) | (1L << (VARIABLE_STRING - 153)) | (1L << (VARIABLE_TYPE - 153)) | (1L << (HEXNUMBER - 153)) | (1L << (BINARYNUMBER - 153)) | (1L << (NUMBER - 153)) | (1L << (FLOAT - 153)))) != 0)) {
-					{
-					setState(471);
-					functionParList();
-					}
-				}
-
-				setState(474);
 				match(RPAREN);
+				setState(473);
+				varName();
 				}
 				break;
 			case 5:
-				_localctx = new NumVarIntegerFNContext(_localctx);
+				_localctx = new NumVarFloatFNContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(475);
-				match(FN_INTEGER);
+				match(FN_FLOAT);
 				setState(476);
 				match(LPAREN);
 				setState(478);
@@ -2837,11 +2831,11 @@ public class DARICParser extends Parser {
 				}
 				break;
 			case 6:
-				_localctx = new NumVarStringFNContext(_localctx);
+				_localctx = new NumVarIntegerFNContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(481);
-				match(FN_STRING);
+				match(FN_INTEGER);
 				setState(482);
 				match(LPAREN);
 				setState(484);
@@ -2859,53 +2853,59 @@ public class DARICParser extends Parser {
 				}
 				break;
 			case 7:
-				_localctx = new NumVarFloatContext(_localctx);
+				_localctx = new NumVarStringFNContext(_localctx);
 				enterOuterAlt(_localctx, 7);
 				{
 				setState(487);
-				varName();
+				match(FN_STRING);
+				setState(488);
+				match(LPAREN);
+				setState(490);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << FALSE) | (1L << TRUE) | (1L << RED) | (1L << GREEN) | (1L << YELLOW) | (1L << BLUE) | (1L << MAGENTA) | (1L << CYAN) | (1L << WHITE) | (1L << BLACK) | (1L << BGETH) | (1L << EOFH) | (1L << OPENIN) | (1L << OPENOUT) | (1L << OPENUP) | (1L << PTRH))) != 0) || ((((_la - 85)) & ~0x3f) == 0 && ((1L << (_la - 85)) & ((1L << (TIME - 85)) | (1L << (PI - 85)) | (1L << (SQR - 85)) | (1L << (LN - 85)) | (1L << (LOG - 85)) | (1L << (EXP - 85)) | (1L << (ATN - 85)) | (1L << (TAN - 85)) | (1L << (COS - 85)) | (1L << (SIN - 85)) | (1L << (ABS - 85)) | (1L << (ACS - 85)) | (1L << (ASN - 85)) | (1L << (DEG - 85)) | (1L << (RAD - 85)) | (1L << (SGN - 85)) | (1L << (ASC - 85)) | (1L << (LEN - 85)) | (1L << (INSTR - 85)) | (1L << (VAL - 85)) | (1L << (TIMES - 85)) | (1L << (STRS - 85)) | (1L << (STRINGS - 85)) | (1L << (CHRS - 85)) | (1L << (LEFTS - 85)) | (1L << (MIDS - 85)) | (1L << (RIGHTS - 85)) | (1L << (RND - 85)) | (1L << (RND0 - 85)) | (1L << (RND1 - 85)) | (1L << (NOT - 85)) | (1L << (PLUS - 85)) | (1L << (MINUS - 85)) | (1L << (LPAREN - 85)))) != 0) || ((((_la - 153)) & ~0x3f) == 0 && ((1L << (_la - 153)) & ((1L << (STRINGLITERAL - 153)) | (1L << (FN_INTEGER - 153)) | (1L << (FN_FLOAT - 153)) | (1L << (FN_STRING - 153)) | (1L << (VARIABLE_FLOAT - 153)) | (1L << (VARIABLE_INTEGER - 153)) | (1L << (VARIABLE_STRING - 153)) | (1L << (VARIABLE_TYPE - 153)) | (1L << (HEXNUMBER - 153)) | (1L << (BINARYNUMBER - 153)) | (1L << (NUMBER - 153)) | (1L << (FLOAT - 153)))) != 0)) {
+					{
+					setState(489);
+					functionParList();
+					}
+				}
+
+				setState(492);
+				match(RPAREN);
 				}
 				break;
 			case 8:
-				_localctx = new NumVarIntegerContext(_localctx);
+				_localctx = new NumVarFloatContext(_localctx);
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(488);
-				varNameInteger();
-				}
-				break;
-			case 9:
-				_localctx = new NumVarFloatFieldContext(_localctx);
-				enterOuterAlt(_localctx, 9);
-				{
-				setState(489);
-				typeVar();
-				setState(490);
+				setState(493);
 				varName();
 				}
 				break;
-			case 10:
-				_localctx = new NumVarIntegerFieldContext(_localctx);
-				enterOuterAlt(_localctx, 10);
+			case 9:
+				_localctx = new NumVarIntegerContext(_localctx);
+				enterOuterAlt(_localctx, 9);
 				{
-				setState(492);
-				typeVar();
-				setState(493);
+				setState(494);
 				varNameInteger();
 				}
 				break;
-			case 11:
-				_localctx = new NumVarIntegerFieldArrayContext(_localctx);
-				enterOuterAlt(_localctx, 11);
+			case 10:
+				_localctx = new NumVarFloatFieldContext(_localctx);
+				enterOuterAlt(_localctx, 10);
 				{
 				setState(495);
 				typeVar();
 				setState(496);
-				match(LPAREN);
-				setState(497);
-				numExpr(0);
+				varName();
+				}
+				break;
+			case 11:
+				_localctx = new NumVarIntegerFieldContext(_localctx);
+				enterOuterAlt(_localctx, 11);
+				{
 				setState(498);
-				match(RPAREN);
+				typeVar();
 				setState(499);
 				varNameInteger();
 				}
@@ -7085,9 +7085,9 @@ public class DARICParser extends Parser {
 		"\3\n\3\13\3\13\5\13\u01b7\n\13\3\f\3\f\3\f\5\f\u01bc\n\f\3\r\3\r\3\16"+
 		"\3\16\3\16\3\16\3\16\5\16\u01c5\n\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16"+
 		"\5\16\u01ce\n\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16"+
-		"\5\16\u01db\n\16\3\16\3\16\3\16\3\16\5\16\u01e1\n\16\3\16\3\16\3\16\3"+
-		"\16\5\16\u01e7\n\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16"+
-		"\3\16\3\16\3\16\3\16\3\16\5\16\u01f8\n\16\3\17\3\17\3\17\3\17\3\17\5\17"+
+		"\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u01e1\n\16\3\16\3\16\3\16\3\16\5\16"+
+		"\u01e7\n\16\3\16\3\16\3\16\3\16\5\16\u01ed\n\16\3\16\3\16\3\16\3\16\3"+
+		"\16\3\16\3\16\3\16\3\16\5\16\u01f8\n\16\3\17\3\17\3\17\3\17\3\17\5\17"+
 		"\u01ff\n\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17"+
 		"\5\17\u020d\n\17\3\20\3\20\3\20\5\20\u0212\n\20\3\21\3\21\5\21\u0216\n"+
 		"\21\3\22\3\22\3\23\3\23\3\24\3\24\3\25\3\25\3\26\3\26\3\26\3\26\3\26\3"+
@@ -7255,21 +7255,21 @@ public class DARICParser extends Parser {
 		"\u01cd\5R*\2\u01cb\u01cc\7\u0093\2\2\u01cc\u01ce\5R*\2\u01cd\u01cb\3\2"+
 		"\2\2\u01cd\u01ce\3\2\2\2\u01ce\u01cf\3\2\2\2\u01cf\u01d0\7\u0097\2\2\u01d0"+
 		"\u01f8\3\2\2\2\u01d1\u01d2\5\30\r\2\u01d2\u01d3\7\u0095\2\2\u01d3\u01d4"+
-		"\5R*\2\u01d4\u01d5\7\u0097\2\2\u01d5\u01d6\5\"\22\2\u01d6\u01f8\3\2\2"+
-		"\2\u01d7\u01d8\7\u009e\2\2\u01d8\u01da\7\u0095\2\2\u01d9\u01db\5\62\32"+
-		"\2\u01da\u01d9\3\2\2\2\u01da\u01db\3\2\2\2\u01db\u01dc\3\2\2\2\u01dc\u01f8"+
-		"\7\u0097\2\2\u01dd\u01de\7\u009d\2\2\u01de\u01e0\7\u0095\2\2\u01df\u01e1"+
-		"\5\62\32\2\u01e0\u01df\3\2\2\2\u01e0\u01e1\3\2\2\2\u01e1\u01e2\3\2\2\2"+
-		"\u01e2\u01f8\7\u0097\2\2\u01e3\u01e4\7\u009f\2\2\u01e4\u01e6\7\u0095\2"+
-		"\2\u01e5\u01e7\5\62\32\2\u01e6\u01e5\3\2\2\2\u01e6\u01e7\3\2\2\2\u01e7"+
-		"\u01e8\3\2\2\2\u01e8\u01f8\7\u0097\2\2\u01e9\u01f8\5\"\22\2\u01ea\u01f8"+
-		"\5$\23\2\u01eb\u01ec\5\30\r\2\u01ec\u01ed\5\"\22\2\u01ed\u01f8\3\2\2\2"+
-		"\u01ee\u01ef\5\30\r\2\u01ef\u01f0\5$\23\2\u01f0\u01f8\3\2\2\2\u01f1\u01f2"+
-		"\5\30\r\2\u01f2\u01f3\7\u0095\2\2\u01f3\u01f4\5R*\2\u01f4\u01f5\7\u0097"+
-		"\2\2\u01f5\u01f6\5$\23\2\u01f6\u01f8\3\2\2\2\u01f7\u01bf\3\2\2\2\u01f7"+
+		"\5R*\2\u01d4\u01d5\7\u0097\2\2\u01d5\u01d6\5$\23\2\u01d6\u01f8\3\2\2\2"+
+		"\u01d7\u01d8\5\30\r\2\u01d8\u01d9\7\u0095\2\2\u01d9\u01da\5R*\2\u01da"+
+		"\u01db\7\u0097\2\2\u01db\u01dc\5\"\22\2\u01dc\u01f8\3\2\2\2\u01dd\u01de"+
+		"\7\u009e\2\2\u01de\u01e0\7\u0095\2\2\u01df\u01e1\5\62\32\2\u01e0\u01df"+
+		"\3\2\2\2\u01e0\u01e1\3\2\2\2\u01e1\u01e2\3\2\2\2\u01e2\u01f8\7\u0097\2"+
+		"\2\u01e3\u01e4\7\u009d\2\2\u01e4\u01e6\7\u0095\2\2\u01e5\u01e7\5\62\32"+
+		"\2\u01e6\u01e5\3\2\2\2\u01e6\u01e7\3\2\2\2\u01e7\u01e8\3\2\2\2\u01e8\u01f8"+
+		"\7\u0097\2\2\u01e9\u01ea\7\u009f\2\2\u01ea\u01ec\7\u0095\2\2\u01eb\u01ed"+
+		"\5\62\32\2\u01ec\u01eb\3\2\2\2\u01ec\u01ed\3\2\2\2\u01ed\u01ee\3\2\2\2"+
+		"\u01ee\u01f8\7\u0097\2\2\u01ef\u01f8\5\"\22\2\u01f0\u01f8\5$\23\2\u01f1"+
+		"\u01f2\5\30\r\2\u01f2\u01f3\5\"\22\2\u01f3\u01f8\3\2\2\2\u01f4\u01f5\5"+
+		"\30\r\2\u01f5\u01f6\5$\23\2\u01f6\u01f8\3\2\2\2\u01f7\u01bf\3\2\2\2\u01f7"+
 		"\u01c8\3\2\2\2\u01f7\u01d1\3\2\2\2\u01f7\u01d7\3\2\2\2\u01f7\u01dd\3\2"+
-		"\2\2\u01f7\u01e3\3\2\2\2\u01f7\u01e9\3\2\2\2\u01f7\u01ea\3\2\2\2\u01f7"+
-		"\u01eb\3\2\2\2\u01f7\u01ee\3\2\2\2\u01f7\u01f1\3\2\2\2\u01f8\33\3\2\2"+
+		"\2\2\u01f7\u01e3\3\2\2\2\u01f7\u01e9\3\2\2\2\u01f7\u01ef\3\2\2\2\u01f7"+
+		"\u01f0\3\2\2\2\u01f7\u01f1\3\2\2\2\u01f7\u01f4\3\2\2\2\u01f8\33\3\2\2"+
 		"\2\u01f9\u01fa\5&\24\2\u01fa\u01fb\7\u0095\2\2\u01fb\u01fe\5R*\2\u01fc"+
 		"\u01fd\7\u0093\2\2\u01fd\u01ff\5R*\2\u01fe\u01fc\3\2\2\2\u01fe\u01ff\3"+
 		"\2\2\2\u01ff\u0200\3\2\2\2\u0200\u0201\7\u0097\2\2\u0201\u020d\3\2\2\2"+
@@ -7439,7 +7439,7 @@ public class DARICParser extends Parser {
 		"\u03d2\3\2\2\2\u03d4W\3\2\2\2U[chmrv{~\u0083\u0091\u0095\u00a1\u00aa\u00b0"+
 		"\u00b6\u00c0\u00c8\u00d1\u00d8\u00e5\u00ec\u00f1\u00f6\u00fc\u0105\u0109"+
 		"\u010c\u010e\u011a\u0128\u0132\u0139\u013e\u0147\u015a\u0163\u016d\u0199"+
-		"\u01a4\u01ac\u01b6\u01bb\u01c4\u01cd\u01da\u01e0\u01e6\u01f7\u01fe\u020c"+
+		"\u01a4\u01ac\u01b6\u01bb\u01c4\u01cd\u01e0\u01e6\u01ec\u01f7\u01fe\u020c"+
 		"\u0211\u0215\u0225\u022b\u023d\u0246\u0252\u0259\u025d\u0262\u0267\u026f"+
 		"\u0277\u027b\u0285\u028a\u028f\u0292\u0295\u029d\u02a1\u02a5\u02ac\u02af"+
 		"\u02b8\u02f4\u02fc\u0303\u038c\u039c\u03c6\u03c8\u03d3";

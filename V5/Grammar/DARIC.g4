@@ -104,6 +104,7 @@ typeVar
 numVar
     : varName LPAREN numExpr (COMMA numExpr)? RPAREN                #numVarFloatArray
     | varNameInteger LPAREN numExpr (COMMA numExpr)? RPAREN         #numVarIntegerArray
+    | typeVar LPAREN numExpr RPAREN varNameInteger                  #numVarIntegerFieldArray
     | typeVar LPAREN numExpr RPAREN varName                         #numVarFloatFieldArray
     | FN_FLOAT LPAREN functionParList? RPAREN                       #numVarFloatFN
     | FN_INTEGER LPAREN functionParList? RPAREN                     #numVarIntegerFN
@@ -112,7 +113,6 @@ numVar
     | varNameInteger                                                #numVarInteger
     | typeVar varName                                               #numVarFloatField
     | typeVar varNameInteger                                        #numVarIntegerField
-    | typeVar LPAREN numExpr RPAREN varNameInteger                  #numVarIntegerFieldArray
     ;
 
 strVar

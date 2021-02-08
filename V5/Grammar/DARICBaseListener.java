@@ -603,6 +603,18 @@ public class DARICBaseListener implements DARICListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterNumVarIntegerFieldArray(DARICParser.NumVarIntegerFieldArrayContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumVarIntegerFieldArray(DARICParser.NumVarIntegerFieldArrayContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNumVarFloatFieldArray(DARICParser.NumVarFloatFieldArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -694,18 +706,6 @@ public class DARICBaseListener implements DARICListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNumVarIntegerField(DARICParser.NumVarIntegerFieldContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNumVarIntegerFieldArray(DARICParser.NumVarIntegerFieldArrayContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNumVarIntegerFieldArray(DARICParser.NumVarIntegerFieldArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

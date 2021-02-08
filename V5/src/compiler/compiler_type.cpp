@@ -69,10 +69,8 @@ antlrcpp::Any Compiler::visitVarDeclTypeVarArrayed(DARICParser::VarDeclTypeVarAr
     auto saved = current_var;
     current_var.field_name = context->varName()->getText();
     current_var.name = saved.name;
-    current_var.type = Type::TYPE;
-    if (state == CompilerState::NOSTATE) {
-        find_variable(true, true);
-    }
+    current_var.type = Type::TYPE_ARRAY;
+    find_variable(true, true);
     return NULL;
 }
 
