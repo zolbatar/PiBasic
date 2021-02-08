@@ -289,7 +289,7 @@ DEF FNTestReturn(x%, y)
 ENDFN
 
 DEF PROCTestLocalVariables()
-	LOCAL DIM C%(5)
+	Local DIM C%(5)
 	FOR LOCAL J% = 0 TO 4
 		Read C%(J%)
 	NEXT

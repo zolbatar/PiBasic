@@ -815,6 +815,30 @@ public interface DARICListener extends ParseTreeListener {
 	 */
 	void exitVarDeclArrayed(DARICParser.VarDeclArrayedContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code varDeclTypeVar}
+	 * labeled alternative in {@link DARICParser#varDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterVarDeclTypeVar(DARICParser.VarDeclTypeVarContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code varDeclTypeVar}
+	 * labeled alternative in {@link DARICParser#varDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitVarDeclTypeVar(DARICParser.VarDeclTypeVarContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code varDeclTypeVarArrayed}
+	 * labeled alternative in {@link DARICParser#varDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterVarDeclTypeVarArrayed(DARICParser.VarDeclTypeVarArrayedContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code varDeclTypeVarArrayed}
+	 * labeled alternative in {@link DARICParser#varDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitVarDeclTypeVarArrayed(DARICParser.VarDeclTypeVarArrayedContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code varDeclType}
 	 * labeled alternative in {@link DARICParser#varDecl}.
 	 * @param ctx the parse tree

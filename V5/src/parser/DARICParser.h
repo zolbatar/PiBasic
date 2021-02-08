@@ -22,21 +22,25 @@ public:
     RED = 46, GREEN = 47, YELLOW = 48, BLUE = 49, MAGENTA = 50, CYAN = 51, 
     WHITE = 52, BLACK = 53, BGETH = 54, BPUTH = 55, CLOSEH = 56, EOFH = 57, 
     GETSH = 58, LISTFILES = 59, OPENIN = 60, OPENOUT = 61, OPENUP = 62, 
-    PTRH = 63, TIME = 64, PI = 65, SQR = 66, LN = 67, LOG = 68, EXP = 69, 
-    ATN = 70, TAN = 71, COS = 72, SIN = 73, ABS = 74, ACS = 75, ASN = 76, 
-    DEG = 77, RAD = 78, SGN = 79, ASC = 80, LEN = 81, INSTR = 82, VAL = 83, 
-    TIMES = 84, STRS = 85, STRINGS = 86, CHRS = 87, LEFTS = 88, MIDS = 89, 
-    RIGHTS = 90, RND = 91, RND0 = 92, RND1 = 93, EQ = 94, NE = 95, GT = 96, 
-    GE = 97, LT = 98, LE = 99, NOT = 100, AND = 101, OR = 102, EOR = 103, 
-    MOD = 104, DIV = 105, HAT = 106, PLUS = 107, MINUS = 108, MULTIPLY = 109, 
-    DIVIDE = 110, SHL = 111, SHR = 112, PLUS_E = 113, MINUS_E = 114, MULTIPLY_E = 115, 
-    DIVIDE_E = 116, SHL_E = 117, SHR_E = 118, NEWLINE = 119, TICK = 120, 
-    TILDE = 121, HASH = 122, COLON = 123, COMMA = 124, DOLLAR = 125, LPAREN = 126, 
-    PERCENT = 127, RPAREN = 128, SEMICOLON = 129, UNDERSCORE = 130, COMMENT = 131, 
-    STRINGLITERAL = 132, PROC_NAME = 133, FN_INTEGER = 134, FN_FLOAT = 135, 
-    FN_STRING = 136, VARIABLE_FLOAT = 137, VARIABLE_INTEGER = 138, VARIABLE_STRING = 139, 
-    VARIABLE_TYPE = 140, NAME = 141, HEXNUMBER = 142, BINARYNUMBER = 143, 
-    NUMBER = 144, FLOAT = 145, WS = 146
+    PTRH = 63, CIRCLE = 64, CLS = 65, CLIPON = 66, CLIPOFF = 67, COLOUR = 68, 
+    COLOURBG = 69, FILL = 70, FLIP = 71, SHOWFPS = 72, GRAPHICS = 73, LINE = 74, 
+    RECTANGLE = 75, PLOT = 76, POINT = 77, SHADED = 78, TEXT = 79, TEXTRIGHT = 80, 
+    TEXTCENTRE = 81, TEXTCENTER = 82, LOADTYPEFACE = 83, CREATEFONT = 84, 
+    TIME = 85, PI = 86, SQR = 87, LN = 88, LOG = 89, EXP = 90, ATN = 91, 
+    TAN = 92, COS = 93, SIN = 94, ABS = 95, ACS = 96, ASN = 97, DEG = 98, 
+    RAD = 99, SGN = 100, ASC = 101, LEN = 102, INSTR = 103, VAL = 104, TIMES = 105, 
+    STRS = 106, STRINGS = 107, CHRS = 108, LEFTS = 109, MIDS = 110, RIGHTS = 111, 
+    RND = 112, RND0 = 113, RND1 = 114, EQ = 115, NE = 116, GT = 117, GE = 118, 
+    LT = 119, LE = 120, NOT = 121, AND = 122, OR = 123, EOR = 124, MOD = 125, 
+    DIV = 126, HAT = 127, PLUS = 128, MINUS = 129, MULTIPLY = 130, DIVIDE = 131, 
+    SHL = 132, SHR = 133, PLUS_E = 134, MINUS_E = 135, MULTIPLY_E = 136, 
+    DIVIDE_E = 137, SHL_E = 138, SHR_E = 139, NEWLINE = 140, TICK = 141, 
+    TILDE = 142, HASH = 143, COLON = 144, COMMA = 145, DOLLAR = 146, LPAREN = 147, 
+    PERCENT = 148, RPAREN = 149, SEMICOLON = 150, UNDERSCORE = 151, COMMENT = 152, 
+    STRINGLITERAL = 153, PROC_NAME = 154, FN_INTEGER = 155, FN_FLOAT = 156, 
+    FN_STRING = 157, VARIABLE_FLOAT = 158, VARIABLE_INTEGER = 159, VARIABLE_STRING = 160, 
+    VARIABLE_TYPE = 161, NAME = 162, HEXNUMBER = 163, BINARYNUMBER = 164, 
+    NUMBER = 165, FLOAT = 166, WS = 167
   };
 
   enum {
@@ -1063,6 +1067,29 @@ public:
    
   };
 
+  class  VarDeclTypeVarContext : public VarDeclContext {
+  public:
+    VarDeclTypeVarContext(VarDeclContext *ctx);
+
+    TypeVarContext *typeVar();
+    VarNameContext *varName();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  VarDeclTypeVarArrayedContext : public VarDeclContext {
+  public:
+    VarDeclTypeVarArrayedContext(VarDeclContext *ctx);
+
+    TypeVarContext *typeVar();
+    antlr4::tree::TerminalNode *LPAREN();
+    NumExprContext *numExpr();
+    antlr4::tree::TerminalNode *RPAREN();
+    VarNameContext *varName();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  VarDeclIndContext : public VarDeclContext {
   public:
     VarDeclIndContext(VarDeclContext *ctx);
@@ -1094,7 +1121,6 @@ public:
     VarDeclTypeContext(VarDeclContext *ctx);
 
     TypeVarContext *typeVar();
-    VarNameContext *varName();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -1107,7 +1133,6 @@ public:
     antlr4::tree::TerminalNode *LPAREN();
     NumExprContext *numExpr();
     antlr4::tree::TerminalNode *RPAREN();
-    VarNameContext *varName();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -1125,6 +1150,8 @@ public:
     antlr4::tree::TerminalNode *RPAREN();
     std::vector<antlr4::tree::TerminalNode *> COMMA();
     antlr4::tree::TerminalNode* COMMA(size_t i);
+    TypeVarContext *typeVar();
+    VarNameContext *varName();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;

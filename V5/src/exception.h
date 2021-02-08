@@ -5,6 +5,8 @@
 #include <exception>
 #include <sstream>
 #include <stdexcept>
+#include <iostream>
+#include <fstream>
 
 extern Environment g_env;
 
@@ -22,6 +24,7 @@ public:
         , location(location)
         , filename(filename)
         , line_number(line_number)
+        , show_filename(false)
         , char_position(char_position) {};
 
     virtual const char* what() const throw()
@@ -50,7 +53,7 @@ public:
         g_env.graphics.colour(255, 0, 0);
         switch (location) {
         case ErrorLocation::PARSER:
-            g_env.graphics.print_console("[Parser] ");
+            g_env.graphics.print_console("[Syntax] ");
             break;
         case ErrorLocation::COMPILER:
             g_env.graphics.print_console("[Compiler] ");
@@ -70,7 +73,7 @@ public:
         g_env.graphics.print_console(serror);
         g_env.graphics.colour(128, 128, 128);
         g_env.graphics.print_console(" at ");
-        if (filename.length() > 0) {
+        if (show_filename) {
             g_env.graphics.colour(0, 255, 0);
             g_env.graphics.print_console(filename);
             g_env.graphics.colour(128, 128, 128);
@@ -83,12 +86,29 @@ public:
         g_env.graphics.colour(0, 255, 0);
         g_env.graphics.print_console(std::to_string(char_position));
         g_env.graphics.print_console("\r");
+        if (location == ErrorLocation::COMPILER) {
+            g_env.graphics.colour(0, 255, 255);
+            std::ifstream in(filename);
+            std::string l;
+            for (auto i = 1; i < line_number; i++) {
+                std::getline(in, l);
+            }
+            std::getline(in, l);
+            g_env.graphics.print_console(l);
+            g_env.graphics.print_console("\r");
+            g_env.graphics.colour(0, 255, 0);
+            for (auto i = 0; i < char_position; i++) {
+                g_env.graphics.print_console("-");
+            }
+            g_env.graphics.print_console("^\r");
+        }
         g_env.graphics.current_colour = saved_colour;
     }
 
     ErrorLocation location;
     std::string error;
     std::string filename;
+    bool show_filename;
     UINT32 line_number;
     short char_position;
 };

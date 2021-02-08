@@ -295,6 +295,14 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitVarDeclTypeVar(DARICParser::VarDeclTypeVarContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitVarDeclTypeVarArrayed(DARICParser::VarDeclTypeVarArrayedContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitVarDeclType(DARICParser::VarDeclTypeContext *ctx) override {
     return visitChildren(ctx);
   }

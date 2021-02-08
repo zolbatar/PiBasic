@@ -159,6 +159,10 @@ public:
 
     virtual antlrcpp::Any visitVarDeclArrayed(DARICParser::VarDeclArrayedContext *context) = 0;
 
+    virtual antlrcpp::Any visitVarDeclTypeVar(DARICParser::VarDeclTypeVarContext *context) = 0;
+
+    virtual antlrcpp::Any visitVarDeclTypeVarArrayed(DARICParser::VarDeclTypeVarArrayedContext *context) = 0;
+
     virtual antlrcpp::Any visitVarDeclType(DARICParser::VarDeclTypeContext *context) = 0;
 
     virtual antlrcpp::Any visitVarDeclTypeArrayed(DARICParser::VarDeclTypeArrayedContext *context) = 0;

@@ -303,9 +303,11 @@ protected:
     antlrcpp::Any visitVarDecl(DARICParser::VarDeclContext* context);
     antlrcpp::Any visitVarDeclWithDimension(DARICParser::VarDeclWithDimensionContext* context);
     antlrcpp::Any visitVarDeclInd(DARICParser::VarDeclIndContext* context);
-    antlrcpp::Any visitVarDeclType(DARICParser::VarDeclTypeContext* context);
     antlrcpp::Any visitVarDeclArrayed(DARICParser::VarDeclArrayedContext* context);
+    antlrcpp::Any visitVarDeclType(DARICParser::VarDeclTypeContext* context);
     antlrcpp::Any visitVarDeclTypeArrayed(DARICParser::VarDeclTypeArrayedContext* context);
+    antlrcpp::Any visitVarDeclTypeVar(DARICParser::VarDeclTypeVarContext* context);
+    antlrcpp::Any visitVarDeclTypeVarArrayed(DARICParser::VarDeclTypeVarArrayedContext* context);
 
     /* JustVar */
     antlrcpp::Any visitJustVar(DARICParser::JustVarContext* context);

@@ -39,9 +39,7 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
     set_pos(context->start);
 
     // Regular array?
-    auto num_exprs = context->numExpr().size();
-    bool is_type = num_exprs == 2 && custom_types.count(context->numExpr(1)->getText()) == 1;
-    if (!is_type) {
+    if (context->typeVar() == NULL) {
 
         // Get variable name and type
         auto saved_state = state;
@@ -84,16 +82,18 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
         insert_instruction(Bytecodes::DIM, current_var.type, current_var.id);
     } else {
+        auto varName = context->varName()->getText();
+        if (custom_types.count(varName) == 0) {
+            error("Type '" + varName + "' not found");
+        }
+
         // Get number of entries
         visit(context->numExpr(0));
         ensure_stack_is_integer();
         stack_pop();
 
-        // Get type
-        visit(context->numExpr(1));
-
         // Get variable name and type
-        visit(context->justVar());
+        visit(context->typeVar());
         current_var.type = Type::TYPE_ARRAY;
         if (state == CompilerState::DIM) {
             find_or_create_variable_in_scope(VariableScope::GLOBAL);
@@ -107,7 +107,7 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
         insert_bytecode(Bytecodes::MULTIPLY, Type::INTEGER);
         insert_instruction(Bytecodes::NEW_TYPE, Type::TYPE, current_var.id);
 
-        set_custom_type(context->numExpr(1)->getText());
+        set_custom_type(context->varName()->getText());
     }
     return NULL;
 }

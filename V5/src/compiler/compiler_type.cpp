@@ -40,7 +40,7 @@ antlrcpp::Any Compiler::visitStmtTYPE(DARICParser::StmtTYPEContext* context)
     return visitChildren(context);
 }
 
-antlrcpp::Any Compiler::visitVarDeclType(DARICParser::VarDeclTypeContext* context)
+antlrcpp::Any Compiler::visitVarDeclTypeVar(DARICParser::VarDeclTypeVarContext* context)
 {
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
@@ -50,7 +50,42 @@ antlrcpp::Any Compiler::visitVarDeclType(DARICParser::VarDeclTypeContext* contex
     current_var.type = Type::TYPE;
     find_variable(true, true);
     last_array_dimensions = 0;
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitVarDeclTypeVarArrayed(DARICParser::VarDeclTypeVarArrayedContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    visit(context->numExpr());
+    ensure_stack_is_integer();
+    stack_pop();
+    last_array_dimensions = 1;
+    last_array_num_dimensions = 1;
+
+    // Get field type
+    visit(context->typeVar());
+    auto saved = current_var;
+    current_var.field_name = context->varName()->getText();
+    current_var.name = saved.name;
+    current_var.type = Type::TYPE;
     if (state == CompilerState::NOSTATE) {
+        find_variable(true, true);
+    }
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitVarDeclType(DARICParser::VarDeclTypeContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    visit(context->typeVar());
+    current_var.type = Type::TYPE;
+    if (state == CompilerState::NOSTATE) {
+        find_variable(false, true);
+        last_array_dimensions = 0;
     }
     return NULL;
 }
@@ -60,23 +95,19 @@ antlrcpp::Any Compiler::visitVarDeclTypeArrayed(DARICParser::VarDeclTypeArrayedC
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     set_pos(context->start);
-    visit(context->typeVar());
-    auto saved = current_var;
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
     last_array_dimensions = 1;
+    last_array_num_dimensions = 1;
 
     // Get field type
-    visit(context->varName());
+    auto saved = current_var;
+    visit(context->typeVar());
     current_var.field_name = current_var.name;
     current_var.name = saved.name;
     current_var.type = Type::TYPE_ARRAY;
     find_variable(true, true);
-    last_array_dimensions = 1;
-    last_array_num_dimensions = 1;
-    if (state == CompilerState::NOSTATE) {
-    }
     return NULL;
 }
 

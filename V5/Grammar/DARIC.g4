@@ -152,12 +152,16 @@ varNameType
 varDecl
     : justVar                                               #varDeclInd
     | justVar (LPAREN numExpr (COMMA numExpr)? RPAREN)*     #varDeclArrayed
-    | typeVar varName                                       #varDeclType
-    | typeVar LPAREN numExpr RPAREN varName                 #varDeclTypeArrayed
+    | typeVar varName                                       #varDeclTypeVar
+    | typeVar LPAREN numExpr RPAREN varName                 #varDeclTypeVarArrayed
+    | typeVar                                               #varDeclType
+    | typeVar LPAREN numExpr RPAREN                         #varDeclTypeArrayed
+
     ;
    
 varDeclWithDimension
     : justVar LPAREN numExpr (COMMA numExpr)* RPAREN
+    | typeVar LPAREN numExpr COMMA varName RPAREN
     ;
 
 // Lists
@@ -399,6 +403,28 @@ OPENIN          : O P E N I N ;
 OPENOUT         : O P E N O U T ;
 OPENUP          : O P E N U P ;
 PTRH            : P T R HASH ;
+
+CIRCLE          : C I R C L E ;
+CLS             : C L S ;
+CLIPON          : C L I P O N;
+CLIPOFF         : C L I P O F F ;
+COLOUR          : C O L O U R ;
+COLOURBG        : C O L O U R B G ;
+FILL            : F I L L ;
+FLIP            : F L I P ;
+SHOWFPS         : S H O W F P S ;
+GRAPHICS        : G R A P H I C S ;
+LINE            : L I N E ;
+RECTANGLE       : R E C T A N G L E ;
+PLOT            : P L O T ;
+POINT           : P O I N T ;
+SHADED          : S H A D E D ;
+TEXT            : T E X T ;
+TEXTRIGHT       : T E X T R I G H T ;
+TEXTCENTRE      : T E X T C E N T R E ;
+TEXTCENTER      : T E X T C E N T E R ;
+LOADTYPEFACE    : L O A D T Y P E F A C E ;
+CREATEFONT      : C R E A T E F O N T ;
 
 TIME            : T I M E ;
 PI              : P I ;

@@ -15,27 +15,21 @@ int file_count = 1;
 
 class MyParserErrorListener : public antlr4::BaseErrorListener {
 
-    std::string getSourceLine(size_t line)
-    {
-        std::ifstream in(parsing_filename);
-        std::string l;
-        for (auto i = 0; i < line; i++) {
-            std::getline(in, l);
-        }
-        std::getline(in, l);
-        return l;
-    }
-
     std::string getLineFromStream(std::string stream, size_t start, size_t end)
     {
         // Scan back for start of line
         auto t = ' ';
-        auto index = start;
-        while (t != '\n' && index > 0) {
-            index--;
-            t = stream[index];
+        while (t != '\n' && start > 0) {
+            start--;
+            t = stream[start];
         };
-        return stream.substr(index + 1, end - index);
+
+        // Scan for end of line
+        while (t != '\n' && end <= stream.length()) {
+            end++;
+            t = stream[end];
+        };
+        return stream.substr(start + 1, end - start);
     }
 
     void syntaxError(
@@ -61,7 +55,7 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
             // File, line char etc.
             auto saved_colour = g_env.graphics.current_colour;
             g_env.graphics.colour(255, 0, 0);
-            g_env.graphics.print_console("[Parsing error]");
+            g_env.graphics.print_console("Syntax error");
             g_env.graphics.colour(128, 128, 128);
             g_env.graphics.print_console(" at ");
             if (file_count > 1) {
@@ -81,7 +75,7 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
             // Actual error
             g_env.graphics.colour(0, 255, 255);
             g_env.graphics.print_console(l);
-            g_env.graphics.print_console("\r");
+            g_env.graphics.print_console("...\r");
             g_env.graphics.colour(0, 255, 0);
             for (auto i = 0; i < charPositionInLine; i++) {
                 g_env.graphics.print_console("-");
@@ -119,15 +113,15 @@ void MyParser::parse_and_compile(Compiler* compiler)
     parser.addErrorListener(&errorListener);
     //    parser.addErrorListener(&diagListener);
     parser.setBuildParseTree(true);
-    parser.getInterpreter<atn::ParserATNSimulator>()->setPredictionMode(atn::PredictionMode::SLL);
+    //parser.getInterpreter<atn::ParserATNSimulator>()->setPredictionMode(atn::PredictionMode::SLL);
     //    parser.getInterpreter<atn::ParserATNSimulator>()->setPredictionMode(atn::PredictionMode::LL_EXACT_AMBIG_DETECTION);
     DARICParser::ProgContext* tree = parser.prog();
 
     if (parse_errors) {
         if (file_count > 1) {
-            throw DARICException(ErrorLocation::PARSER, parsing_filename, static_cast<UINT32>(error_line), static_cast<short>(error_position), "Parsing error(s)");
+            throw DARICException(ErrorLocation::PARSER, parsing_filename, static_cast<UINT32>(error_line), static_cast<short>(error_position), "Error(s)");
         } else {
-            throw DARICException(ErrorLocation::PARSER, "", static_cast<UINT32>(error_line), static_cast<short>(error_position), "Parsing error(s)");
+            throw DARICException(ErrorLocation::PARSER, "", static_cast<UINT32>(error_line), static_cast<short>(error_position), "Error(s)");
         }
     }
 
