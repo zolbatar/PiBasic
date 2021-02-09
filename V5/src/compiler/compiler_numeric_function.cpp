@@ -1,5 +1,15 @@
 #include "compiler.h"
 
+antlrcpp::Any Compiler::visitNumExprUnary(DARICParser::NumExprUnaryContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    visit(context->numExpr());
+    insert_bytecode(Bytecodes::UNARY, peek_type());
+    return NULL;
+}
+
 antlrcpp::Any Compiler::visitNumFuncPI(DARICParser::NumFuncPIContext* context)
 {
     if (phase == CompilerPhase::LOOKAHEAD)
@@ -318,5 +328,41 @@ antlrcpp::Any Compiler::visitNumFuncTRUE(DARICParser::NumFuncTRUEContext* contex
     set_pos(context->start);
     insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 1);
     stack_push(Type::INTEGER);
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitNumFuncINT(DARICParser::NumFuncINTContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    visit(context->numExpr());
+    auto type = stack_pop();
+    switch (type) {
+    case Type::INTEGER:
+        break;
+    case Type::FLOAT:
+        insert_bytecode(Bytecodes::CONV_INT, type);
+        break;
+    }
+    stack_push(Type::INTEGER);
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitNumFuncFLOAT(DARICParser::NumFuncFLOATContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    visit(context->numExpr());
+    auto type = stack_pop();
+    switch (type) {
+    case Type::INTEGER:
+        insert_bytecode(Bytecodes::CONV_FLOAT, type);
+        break;
+    case Type::FLOAT:
+        break;
+    }
+    stack_push(Type::FLOAT);
     return NULL;
 }

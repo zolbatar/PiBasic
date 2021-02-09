@@ -115,6 +115,26 @@ void VM::opcode_LOAD()
     }
 }
 
+void VM::opcode_UNARY()
+{
+    switch (bc.type) {
+    case Type::INTEGER: {
+        VM_INT v = stack.pop_int(bc);
+        stack.push_int(bc, -v);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Unmary minus of " << v << " = " << -v << std::endl;
+        break;
+    }
+    case Type::FLOAT: {
+        VM_FLOAT v = stack.pop_float(bc);
+        stack.push_float(bc, -v);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Unmary minus of " << v << " = " << -v << std::endl;
+        break;
+    }
+    }
+}
+
 void VM::opcode_ADD()
 {
     switch (bc.type) {
@@ -1200,43 +1220,6 @@ void VM::opcode_RESTORE()
     data_iterator = data.begin();
     if (!performance_build && runtime_debug) {
         g_env.log << "Restoring DATA" << std::endl;
-    }
-}
-
-void VM::opcode_READ_ARRAY()
-{
-    auto var = variables.get_variable(bc, true);
-    Boxed b = *data_iterator++;
-    VM_INT dimensions = stack.pop_int(bc);
-    if (dimensions == 1) {
-    } else {
-        error("READ not supported yet for 2d arrays");
-    }
-    VM_INT index = stack.pop_int(bc);
-    if (index < 0 || index >= static_cast<VM_INT>(var->value_int_array.size()))
-        error("Invalid array or array index");
-
-    switch (bc.type) {
-    case Type::INTEGER: {
-        var->value_int_array[index] = b.value_int;
-        if (!performance_build && runtime_debug)
-            g_env.log << "Read int vector variable " << var->name << " index " << index << " value " << b.value_int << std::endl;
-        return;
-    }
-    case Type::FLOAT: {
-        var->value_float_array[index] = b.value_float;
-        if (!performance_build && runtime_debug)
-            g_env.log << "Read float vector variable " << var->name << " index " << index << " value " << b.value_int << std::endl;
-        return;
-    }
-    case Type::STRING: {
-        var->value_string_array[index].assign(b.value_string);
-        if (!performance_build && runtime_debug)
-            g_env.log << "Read string vector variable " << var->name << " index " << index << " value " << b.value_int << std::endl;
-        return;
-    }
-    default:
-        opcode_type_error();
     }
 }
 
@@ -2712,7 +2695,7 @@ std::string VM::run()
     g_env.log << "-> Running" << std::endl;
     helper_bytecodes().pc = 0;
     data_iterator = data.begin();
-    stack.clear_stack();
+    stack.clear_stack(bc);
     bool quit = false;
     int poll_count = 0;
     try {
@@ -2806,6 +2789,9 @@ std::string VM::run()
                 break;
             case Bytecodes::DIVIDE:
                 opcode_DIVIDE();
+                break;
+            case Bytecodes::UNARY:
+                opcode_UNARY();
                 break;
             case Bytecodes::ADD:
                 opcode_ADD();
@@ -2926,9 +2912,6 @@ std::string VM::run()
                 /* DATA */
             case Bytecodes::READ:
                 opcode_READ();
-                break;
-            case Bytecodes::READ_ARRAY:
-                opcode_READ_ARRAY();
                 break;
             case Bytecodes::RESTORE:
                 opcode_RESTORE();

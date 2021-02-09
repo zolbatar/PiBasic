@@ -18,19 +18,6 @@ antlrcpp::Any Compiler::visitStrFuncTIMES(DARICParser::StrFuncTIMESContext* cont
     return NULL;
 }
 
-antlrcpp::Any Compiler::visitStrFuncCHRSP(DARICParser::StrFuncCHRSPContext* context)
-{
-    if (phase == CompilerPhase::LOOKAHEAD)
-        return NULL;
-    set_pos(context->start);
-    visit(context->numExpr());
-    ensure_stack_is_integer();
-    stack_pop();
-    insert_bytecode(Bytecodes::CHRS, Type::STRING);
-    stack_push(Type::STRING);
-    return NULL;
-}
-
 antlrcpp::Any Compiler::visitStrFuncCHRS(DARICParser::StrFuncCHRSContext* context)
 {
     if (phase == CompilerPhase::LOOKAHEAD)

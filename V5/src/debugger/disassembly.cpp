@@ -181,10 +181,6 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         ret.opcode = "READ";
         name_for_operand(ret, bc, i);
         break;
-    case Bytecodes::READ_ARRAY:
-        ret.opcode = "READ ARRAY";
-        name_for_operand(ret, bc, i);
-        break;
     case Bytecodes::RESTORE:
         ret.opcode = "RESTORE";
         name_for_operand(ret, bc, i);

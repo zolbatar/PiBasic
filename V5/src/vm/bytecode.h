@@ -45,7 +45,6 @@ enum class Bytecodes {
 
     // Data
     READ, // Request DATA
-    READ_ARRAY, // Request array DATA
     RESTORE, // Reset data pointer
 
     // Conversion
@@ -71,6 +70,7 @@ enum class Bytecodes {
     GOSUB, // Go subroutine
 
     // Maths
+    UNARY, // Unary minus
     ADD, // Add
     DIVIDE, // Divide
     MULTIPLY, // Multiply

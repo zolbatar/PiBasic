@@ -46,7 +46,11 @@ antlrcpp::Any Compiler::visitVarDeclTypeVar(DARICParser::VarDeclTypeVarContext* 
         return NULL;
     set_pos(context->start);
     visit(context->typeVar());
-    current_var.field_name = context->varName()->getText();
+    if (context->varName() != NULL) {
+        current_var.field_name = context->varName()->getText();
+    } else if (context->varNameInteger() != NULL) {
+        current_var.field_name = context->varNameInteger()->getText();
+    }
     current_var.type = Type::TYPE;
     find_variable(true, true);
     last_array_dimensions = 0;
@@ -67,7 +71,11 @@ antlrcpp::Any Compiler::visitVarDeclTypeVarArrayed(DARICParser::VarDeclTypeVarAr
     // Get field type
     visit(context->typeVar());
     auto saved = current_var;
-    current_var.field_name = context->varName()->getText();
+    if (context->varName() != NULL) {
+        current_var.field_name = context->varName()->getText();
+    } else if (context->varNameInteger() != NULL) {
+        current_var.field_name = context->varNameInteger()->getText();
+    }
     current_var.name = saved.name;
     current_var.type = Type::TYPE_ARRAY;
     find_variable(true, true);

@@ -52,7 +52,7 @@ antlrcpp::Any Compiler::visitStmtFORIN(DARICParser::StmtFORINContext* context)
     insert_instruction(Bytecodes::FORIN, current_var.type, current_var.id);
 
     // Process loop content
-    visit(context->bodyStar());
+    visit(context->body());
 
     // And next
     insert_instruction(Bytecodes::NEXTIN, current_var.type, current_var.id);
@@ -182,7 +182,7 @@ antlrcpp::Any Compiler::visitStmtFOR(DARICParser::StmtFORContext* context)
     insert_instruction(Bytecodes::FOR, current_var.type, current_var.id);
 
     // Process body
-    visit(context->bodyStar());
+    visit(context->body());
 
     // And next
     insert_instruction(Bytecodes::NEXT, current_var.type, current_var.id);
@@ -199,9 +199,7 @@ antlrcpp::Any Compiler::visitStmtREPEAT(DARICParser::StmtREPEATContext* context)
     insert_bytecode(Bytecodes::REPEAT, Type::NOTYPE);
 
     // Body
-    for (int i = 0; i < context->body().size(); i++) {
-        visit(context->body(i));
-    }
+    visit(context->body());
 
     // Comparison
     visit(context->expr());
@@ -234,9 +232,7 @@ antlrcpp::Any Compiler::visitStmtWHILE(DARICParser::StmtWHILEContext* context)
     insert_instruction(Bytecodes::JNE, Type::NOTYPE, s.end_pc);
 
     // Body
-    for (int i = 0; i < context->body().size(); i++) {
-        visit(context->body(i));
-    }
+    visit(context->body());
 
     insert_instruction(Bytecodes::JUMP, Type::NOTYPE, start_pc);
 

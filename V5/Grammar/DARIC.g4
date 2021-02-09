@@ -6,50 +6,45 @@ prog
 
 line
     : NEWLINE
-    | linenumber
-    | linenumber? COLON NEWLINE
-    | linenumber? content NEWLINE
+    | linenumber? (COMMENT | REM)? NEWLINE
+    | linenumber? stmt+ (COMMENT | REM)? NEWLINE
     ;
 
 content
-    : stmt (COLON stmt?)*
+    : stmt*
     ;
 
 body
-    : content
-    | line
-    ;
-
-bodyStar
-    : COLON? body*
+    : stmt* | line*
     ;
 
 linenumber
     : NUMBER
     ;
 
+stmtIF
+
 stmt
-    : (COMMENT | REM)                                                                   #stmtREM
+    : COLON                                                                             #stmtCOLON
     | BREAKPOINT                                                                        #stmtBREAKPOINT
-    | CASE expr OF NEWLINE when+ (OTHERWISE bodyStar)? ENDCASE                          #stmtCASE
+    | CASE expr OF NEWLINE when+ (OTHERWISE body)? ENDCASE                              #stmtCASE
     | CHAIN strExpr                                                                     #stmtCHAIN
     | DATA literal (COMMA literal)*                                                     #stmtDATA
     | DIM varDeclWithDimension (COMMA varDeclWithDimension)*                            #stmtDIM
     | END                                                                               #stmtEND
     | RETURN expr?                                                                      #stmtRETURN
-    | DEF fnName LPAREN functionVarList? RPAREN bodyStar ENDFN                          #stmtDEFFN
-    | DEF PROC_NAME LPAREN functionVarList? RPAREN bodyStar ENDPROC                     #stmtDEFPROC
-    | FOR LOCAL? justNumberVar EQ numExpr TO numExpr (STEP numExpr)? bodyStar NEXT      #stmtFOR
-    | FOR LOCAL? justVar IN justVar LPAREN RPAREN bodyStar NEXT                         #stmtFORIN
+    | DEF fnName LPAREN functionVarList? RPAREN body ENDFN                              #stmtDEFFN
+    | DEF PROC_NAME LPAREN functionVarList? RPAREN body ENDPROC                         #stmtDEFPROC
+    | FOR LOCAL? justNumberVar EQ numExpr TO numExpr (STEP numExpr)? body NEXT          #stmtFOR
+    | FOR LOCAL? justVar IN justVar LPAREN RPAREN body NEXT                             #stmtFORIN
     | fnName LPAREN functionParList? RPAREN                                             #stmtCallFN
     | IF expr THEN? t=content (ELSE f=content)?                                         #stmtIF
-    | IF expr THEN? NEWLINE t=bodyStar (ELSE f=bodyStar)? NEWLINE ENDIF                 #stmtIFMultiline
-    | INPUT (strExpr COMMA)? varList                                                    #stmtINPUT
-    | (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)*                         #stmtLET
+    | IF expr THEN? NEWLINE t=line+ (ELSE NEWLINE f=line+)? ENDIF                       #stmtIFMultiline
+    | LET? varDecl EQ expr (COMMA varDecl EQ expr)*                                     #stmtLET
+    | GLOBAL? varDecl EQ expr (COMMA varDecl EQ expr)*                                  #stmtLET
     | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                                    #stmtLOCAL
     | LOCAL DIM varDeclWithDimension (COMMA varDeclWithDimension)*                      #stmtLOCALDIM
     | OSCLI strExpr                                                                     #stmtOSCLI
-    | PRINT printList?                                                                  #stmtPRINT
     | PROC_NAME LPAREN functionParList? RPAREN                                          #stmtCallPROC
     | READ varDecl (COMMA varDecl)*                                                     #stmtREAD
     | RESTORE                                                                           #stmtRESTORE
@@ -57,8 +52,17 @@ stmt
     | TRACEON                                                                           #stmtTRACEON
     | TRACEOFF                                                                          #stmtTRACEOFF
     | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN                               #stmtTYPE
-    | REPEAT body* UNTIL expr                                                           #stmtREPEAT
-    | WHILE expr body* ENDWHILE                                                         #stmtWHILE
+    | REPEAT body UNTIL expr                                                            #stmtREPEAT
+    | WHILE expr body ENDWHILE                                                          #stmtWHILE
+
+    /* Keyboard, mouse and INPUT/PRINT */
+    | INPUT (strExpr COMMA)? varList                                                    #stmtINPUT
+    | PRINT printList?                                                                  #stmtPRINT
+    | MOUSE varNameInteger COMMA varNameInteger COMMA varNameInteger                    #stmtMOUSE
+    | INKEY numExpr                                                                     #stmtINKEY
+    | INKEYS numExpr                                                                    #stmtINKEYS
+    | GET                                                                               #stmtGET
+    | GETS                                                                              #stmtGETS
 
     /* += and its ilk */
     | varDecl MULTIPLY_E numExpr                                                        #stmtOperatorEqual
@@ -74,10 +78,41 @@ stmt
     | PTRH numExpr EQ numExpr                                                           #stmtPTRH
     | CLOSEH numExpr                                                                    #stmtCLOSEH
     | LOCAL? varNameString LPAREN RPAREN EQ LISTFILES LPAREN strExpr RPAREN             #stmtLISTFILES
+
+    /* Graphics */
+    | CLS                                                                               #stmtCLS
+    | COLOUR numExpr                                                                    #stmtCOLOUR
+    | COLOUR numExpr COMMA numExpr COMMA numExpr                                        #stmtCOLOUR 
+    | COLOURBG numExpr                                                                  #stmtCOLOURBG 
+    | COLOURBG numExpr COMMA numExpr COMMA numExpr                                      #stmtCOLOURBG
+    | GRAPHICS                                                                          #stmtGRAPHICS
+    | GRAPHICS numExpr COMMA numExpr                                                    #stmtGRAPHICS
+    | GRAPHICS BANKED                                                                   #stmtGRAPHICS
+    | GRAPHICS BANKED numExpr COMMA numExpr                                             #stmtGRAPHICS
+    | FLIP                                                                              #stmtFLIP    
+    | CIRCLE numExpr COMMA numExpr COMMA numExpr                                        #stmtCIRCLE
+    | CIRCLE FILL numExpr COMMA numExpr COMMA numExpr                                   #stmtCIRCLE
+    | LINE numExpr COMMA numExpr COMMA numExpr COMMA numExpr                            #stmtLINE
+    | RECTANGLE numExpr COMMA numExpr COMMA numExpr COMMA numExpr                       #stmtRECTANGLE
+    | RECTANGLE FILL numExpr COMMA numExpr COMMA numExpr COMMA numExpr                  #stmtRECTANGLE
+    | TRIANGLE      numExpr COMMA numExpr COMMA numExpr COMMA 
+                    numExpr COMMA numExpr COMMA numExpr                                 #stmtTRIANGLE
+    | TRIANGLE FILL     numExpr COMMA numExpr COMMA numExpr 
+                        COMMA numExpr COMMA numExpr COMMA numExpr                       #stmtTRIANGLE
+    | TRIANGLE SHADED   numExpr COMMA numExpr COMMA numExpr COMMA 
+                        numExpr COMMA numExpr COMMA numExpr COMMA 
+                        numExpr COMMA numExpr COMMA numExpr                             #stmtTRIANGLE
+    | PLOT numExpr COMMA numExpr                                                        #stmtPLOT
+    | CLIPON numExpr COMMA numExpr COMMA numExpr COMMA numExpr                          #stmtCLIPON
+    | CLIPOFF                                                                           #stmtCLIPOFF
+    | TEXT numExpr COMMA numExpr COMMA numExpr COMMA numExpr                            #stmtTEXT
+    | TEXTRIGHT numExpr COMMA numExpr COMMA numExpr COMMA strExpr                       #stmtTEXTRIGHT
+    | (TEXTCENTRE|TEXTCENTER) numExpr COMMA numExpr COMMA numExpr COMMA strExpr         #stmtTEXTCENTRE
+    | SHOWFPS                                                                           #stmtSHOWFPS
     ;
 
 when
-    : WHEN expr (COMMA expr)* COLON bodyStar
+    : WHEN expr (COMMA expr)* COLON body
     ;
 
 fnName
@@ -153,7 +188,9 @@ varDecl
     : justVar                                               #varDeclInd
     | justVar (LPAREN numExpr (COMMA numExpr)? RPAREN)*     #varDeclArrayed
     | typeVar varName                                       #varDeclTypeVar
+    | typeVar varNameInteger                                #varDeclTypeVar
     | typeVar LPAREN numExpr RPAREN varName                 #varDeclTypeVarArrayed
+    | typeVar LPAREN numExpr RPAREN varNameInteger          #varDeclTypeVarArrayed
     | typeVar                                               #varDeclType
     | typeVar LPAREN numExpr RPAREN                         #varDeclTypeArrayed
 
@@ -216,7 +253,7 @@ number
     ;
 
 numberInteger
-    :  (PLUS | MINUS)? NUMBER
+    :  NUMBER
     ;
 
 numberHex
@@ -233,14 +270,13 @@ numberFloat
 
 strFunc
     : TIMES                                                     #strFuncTIMES   
-    | CHRS LPAREN numExpr RPAREN                                #strFuncCHRSP
     | CHRS numExpr                                              #strFuncCHRS
     | LEFTS LPAREN strExpr COMMA numExpr RPAREN                 #strFuncLEFTS
     | MIDS LPAREN strExpr COMMA numExpr COMMA numExpr RPAREN    #strFuncMIDS3
     | MIDS LPAREN strExpr COMMA numExpr RPAREN                  #strFuncMIDS2
     | RIGHTS LPAREN strExpr COMMA numExpr RPAREN                #strFuncRIGHTS
-    | STRS LPAREN numExpr RPAREN                                #strFuncSTRS
-    | STRS TILDE LPAREN numExpr RPAREN                          #strFuncSTRSHEX
+    | STRS numExpr                                              #strFuncSTRS
+    | STRS TILDE numExpr                                        #strFuncSTRSHEX
     | STRINGS LPAREN numExpr COMMA strExpr RPAREN               #strFuncSTRINGS
     ;
 
@@ -249,10 +285,11 @@ string
     ;
 
 strExpr
-    : strFunc
+    : LPAREN strExpr RPAREN
+    | strFunc
     | strExpr PLUS strExpr
-    | string
     | strVar
+    | string
     ;
 
 numFunc
@@ -264,20 +301,27 @@ numFunc
     | RND0                                  #numFuncRND0
     | RND1                                  #numFuncRND1
     | RND LPAREN numExpr RPAREN             #numFuncRNDRANGE
-    | LN LPAREN numExpr RPAREN              #numFuncLN
-    | LOG LPAREN numExpr RPAREN             #numFuncLOG
-    | EXP LPAREN numExpr RPAREN             #numFuncEXP
-    | ATN LPAREN numExpr RPAREN             #numFuncATN
-    | TAN LPAREN numExpr RPAREN             #numFuncTAN
-    | COS LPAREN numExpr RPAREN             #numFuncCOS
-    | SIN LPAREN numExpr RPAREN             #numFuncSIN
-    | ABS LPAREN numExpr RPAREN             #numFuncABS
-    | ACS LPAREN numExpr RPAREN             #numFuncACS
-    | ASN LPAREN numExpr RPAREN             #numFuncASN
-    | DEG LPAREN numExpr RPAREN             #numFuncDEG
-    | RAD LPAREN numExpr RPAREN             #numFuncRAD
-    | SQR LPAREN numExpr RPAREN             #numFuncSQR
-    | SGN LPAREN numExpr RPAREN             #numFuncSGN
+    | LN numExpr                            #numFuncLN
+    | LOG numExpr                           #numFuncLOG
+    | EXP numExpr                           #numFuncEXP
+    | ATN numExpr                           #numFuncATN
+    | TAN numExpr                           #numFuncTAN
+    | COS numExpr                           #numFuncCOS
+    | SIN numExpr                           #numFuncSIN
+    | ABS numExpr                           #numFuncABS
+    | ACS numExpr                           #numFuncACS
+    | ASN numExpr                           #numFuncASN
+    | DEG numExpr                           #numFuncDEG
+    | RAD numExpr                           #numFuncRAD
+    | SQR numExpr                           #numFuncSQR
+    | SGN numExpr                           #numFuncSGN
+
+    /* Conversion */
+    | INT numExpr                           #numFuncINT
+    | FLOAT_TOKEN numExpr                   #numFuncFLOAT
+
+    /* Graphics */
+    | POINT LPAREN numExpr COMMA numExpr RPAREN         #numFuncPOINT
 
     /* I/O */
     | BGETH numExpr                         #numFuncBGETH
@@ -288,17 +332,18 @@ numFunc
     | PTRH numExpr                          #numFuncPTR
     
     /* String to number */
-    | ASC LPAREN strExpr RPAREN                                     #numFuncASC
-    | LEN LPAREN strExpr RPAREN                                     #numFuncLEN
+    | ASC strExpr                           #numFuncASC
+    | LEN strExpr                           #numFuncLEN
     | INSTR LPAREN strExpr COMMA strExpr RPAREN                     #numFuncINSTR2
     | INSTR LPAREN strExpr COMMA strExpr COMMA numExpr RPAREN       #numFuncINSTR3
-    | VAL LPAREN strExpr RPAREN                                     #numFuncVAL
+    | VAL strExpr                           #numFuncVAL
     ;
 
 numExpr
-    : numFunc                               #numExprFunc
-    | NOT numExpr                           #numExprNOT
-    | LPAREN numExpr RPAREN                 #numExprNested
+    : MINUS numExpr                         #numExprUnary
+    | notExpr                               #numExprNOT
+    | numFunc                               #numExprFunc
+    | nestedExpr                            #numExprNested
     | <assoc=right> numExpr HAT numExpr     #numExprHat
     | numExpr MULTIPLY numExpr              #numExprMultiply
     | numExpr DIVIDE numExpr                #numExprDivide
@@ -313,8 +358,16 @@ numExpr
     | numExpr AND numExpr                   #numExprAND
     | numExpr OR numExpr                    #numExprOR
     | numExpr EOR numExpr                   #numExprEOR
-    | number                                #numExprNumber
     | numVar                                #numExprVar
+    | number                                #numExprNumber
+    ;
+
+nestedExpr
+    : LPAREN numExpr RPAREN                 
+    ;
+
+notExpr
+    : NOT numExpr
     ;
 
 numColours
@@ -336,129 +389,142 @@ compare
     | LT        #compareLT
     | LE        #compareLE
     ;
-   
+
 // Lexer stuff
-BREAKPOINT      : B R E A K P O I N T ;
-CASE            : C A S E ;
-CHAIN           : C H A I N ;
-DATA            : D A T A ;
-DEF             : D E F ;
-DIM             : D I M ;
-ELSE            : E L S E ;
-END             : E N D ;
-ENDCASE         : E N D C A S E ;
-ENDIF           : E N D I F ;
-ENDFN           : E N D F N ;
-ENDPROC         : E N D P R O C ;
-ENDWHILE        : E N D W H I L E ;
-FALSE           : F A L S E ;
-FOR             : F O R ;
-FN              : F N ;
-IF              : I F ;
-IN              : I N ;
-INPUT           : I N P U T ;
-GLOBAL          : G L O B A L ;
-LOCAL           : L O C A L ;
-LET             : L E T ;
-NEXT            : N E X T ;
-OF              : O F ;
-OSCLI           : O S C L I ;
-OTHERWISE       : O T H E R W I S E ;
-PRINT           : P R I N T ;
-PROC            : P R O C ;
-READ            : R E A D ;
-REM             : R E M ;
-REPEAT          : R E P E A T ;
-RESTORE         : R E S T O R E ;
-RETURN          : R E T U R N ;
-SPC             : S P C  ;
-STEP            : S T E P ;
-SWAP            : S W A P ;
-THEN            : T H E N ;
-TO              : T O ;
-TRACEON         : T R A C E O N ;
-TRACEOFF        : T R A C E O F F ;
-TRUE            : T R U E ;
-TYPE            : T Y P E ;
-UNTIL           : U N T I L ;
-WHEN            : W H E N ;
-WHILE           : W H I L E ;
+BREAKPOINT      : 'BREAKPOINT' | 'breakpoint' | 'Breakpoint';
+CASE            : 'CASE' | 'case' ' | 'Case' ;
+CHAIN           : 'CHAIN' | 'chain' | 'Chain' ;
+DATA            : 'DATA' | 'data' | 'Data' ;
+DEF             : 'DEF' | 'def' | 'Def' ;
+DIM             : 'DIM' | 'dim' | 'Dim' ;
+ELSE            : 'ELSE' | 'else' | 'Else' ;
+END             : 'END' | 'end' | 'End' ;
+ENDCASE         : 'ENDCASE' | 'endcase' | 'EndCase' ;
+ENDIF           : 'ENDIF' | 'endif' | 'EndIf' ;
+ENDFN           : 'ENDFN' | 'endfn' | 'EndFn' ;
+ENDPROC         : 'ENDPROC' | 'endproc' | 'EndProc' ;
+ENDWHILE        : 'ENDWHILE' | 'endwhile' | 'EndWhile' ;
+FALSE           : 'FALSE' | 'false' | 'False' ;
+FOR             : 'FOR' | 'for' | 'For' ;
+FLOAT_TOKEN     : 'FLOAT' | 'float' | 'Float' ;
+FN              : 'FN' | 'fn' | 'Fn' ;
+IF              : 'IF' | 'if' | 'If' ;
+IN              : 'IN' | 'in' | 'In' ;
+INT             : 'INT' | 'int' | 'Int' ;
+INPUT           : 'INPUT' | 'input' | 'Input ;
+GLOBAL          : 'GLOBAL' | 'global' | 'Global' ;
+LOCAL           : 'LOCAL' | 'local' | 'Local' ;
+LET             : 'LET' | 'let' | 'Let' ;
+NEXT            : 'NEXT' | 'next' | 'Next' ;
+OF              : 'OF' | 'of' | 'Of' ;
+OFF             : 'OFF' | 'off' | 'Off' ;
+ON              : 'ON' | 'on' | 'On' ;
+OSCLI           : 'OSCLI' | 'oscli' | 'Oscli' ;
+OTHERWISE       : 'OTHERWISE' | 'otherwise' | 'Otherwise' ;
+PRINT           : 'PRINT' | 'print' | 'Print' ;
+PROC            : 'PROC' | 'proc' | 'Proc' ;
+READ            : 'READ' | 'read' | 'Read' ;
+REM             : 'REM' | 'rem' | 'Rem' ;
+REPEAT          : 'REPEAT' | 'repeat' | 'Repeat' ;
+RESTORE         : 'RESTORE' | 'restore' | 'Restore' ;
+RETURN          : 'RETURN' | 'return' | 'return' ;
+SPC             : 'SPC' | 'spc' | 'Spc'  ;
+STEP            : 'STEP' | 'step' | 'Step' ;
+SWAP            : 'SWAP' | 'swap' | 'Swap' ;
+THEN            : 'THEN' | 'then' | 'Then' ;
+TO              : 'TO' | 'to' | 'To' ;
+TRACE           : 'TRACE' | 'trace' | 'Trace' ;
+TRACEON         : TRACE ON ;
+TRACEOFF        : TRACE OFF;
+TRUE            : 'TRUE' | 'true' | 'True'  ;
+TYPE            : 'TYPE' | 'type' | 'Type' ;
+UNTIL           : 'UNTIL' | 'until' | 'Until' ;
+WHEN            : 'WHEN' | 'when' | 'When' ;
+WHILE           : 'WHILE' | 'while' | 'While' ;
 
-RED             : R E D  ;
-GREEN           : G R E E N  ;
-YELLOW          : Y E L L O W  ;
-BLUE            : B L U E ;
-MAGENTA         : M A G E N T A ;
-CYAN            : C Y A N ;
-WHITE           : W H I T E ;
-BLACK           : B L A C K ;
+MOUSE           : 'MOUSE' | 'mouse' | 'Mouse' ;
+INKEY           : 'INKEY' | 'inkey' | 'Inkey' ;
+INKEYS          : INKEY DOLLAR ;
+GET             : 'GET' | 'get' | 'Get' ;
+GETS            : GET DOLLAR ;
 
-BGETH           : B G E T HASH ;
-BPUTH           : B P U T HASH ;
-CLOSEH          : C L O S E HASH ;
-EOFH            : E O F HASH ;
-GETSH           : G E T DOLLAR HASH ;
-LISTFILES       : L I S T F I L E S ;
-OPENIN          : O P E N I N ;
-OPENOUT         : O P E N O U T ;
-OPENUP          : O P E N U P ;
-PTRH            : P T R HASH ;
+RED             : 'RED' | 'red' | 'Red'  ;
+GREEN           : 'GREEN' | 'green' | 'Green'  ;
+YELLOW          : 'YELLOW' | 'yellow' | 'Yellow'  ;
+BLUE            : 'BLUE' | 'blue' | 'Blue' ;
+MAGENTA         : 'MAGENTA' | 'magenta' | 'Magenta' ;
+CYAN            : 'CYAN' | 'cyan' | 'Cyan' ;
+WHITE           : 'WHITE' | 'white' | 'White' ;
+BLACK           : 'BLACK' | 'black' | 'Black' ;
 
-CIRCLE          : C I R C L E ;
-CLS             : C L S ;
-CLIPON          : C L I P O N;
-CLIPOFF         : C L I P O F F ;
-COLOUR          : C O L O U R ;
-COLOURBG        : C O L O U R B G ;
-FILL            : F I L L ;
-FLIP            : F L I P ;
-SHOWFPS         : S H O W F P S ;
-GRAPHICS        : G R A P H I C S ;
-LINE            : L I N E ;
-RECTANGLE       : R E C T A N G L E ;
-PLOT            : P L O T ;
-POINT           : P O I N T ;
-SHADED          : S H A D E D ;
-TEXT            : T E X T ;
-TEXTRIGHT       : T E X T R I G H T ;
-TEXTCENTRE      : T E X T C E N T R E ;
-TEXTCENTER      : T E X T C E N T E R ;
-LOADTYPEFACE    : L O A D T Y P E F A C E ;
-CREATEFONT      : C R E A T E F O N T ;
+BGETH           : ('BGET' | 'bget' | 'BGet') HASH ;
+BPUTH           : ('BPUT' | 'bput' | 'BPut') HASH ;
+CLOSEH          : ('CLOSE' | 'close' | 'Close') HASH ;
+EOFH            : ('EOF' | 'eof' | 'Eof') HASH ;
+GETSH           : GET DOLLAR HASH ;
+LISTFILES       : 'LISTFILES' | 'listfiles' | 'ListFiles' ;
+OPENIN          : 'OPENIN' | 'openin' | 'OpenIn' ;
+OPENOUT         : 'OPENOUT' | 'openout' | 'openout' ;
+OPENUP          : 'OPENUP' | 'openup' | 'OpenUp' ;
+PTRH            : ('PTR' | 'ptr' | 'Ptr' ) HASH ;
 
-TIME            : T I M E ;
-PI              : P I ;
-SQR             : S Q R ;
-LN              : L N ;
-LOG             : L O G ;
-EXP             : E X P ;
-ATN             : A T N ;
-TAN             : T A N ;
-COS             : C O S ;
-SIN             : S I N ;
-ABS             : A B S ;
-ACS             : A C S ;
-ASN             : A S N ;
-DEG             : D E G ;
-RAD             : R A D ;
-SGN             : S G N ;
+BANKED          : 'BANKED' | 'banked' | 'Banked' ;
+CIRCLE          : 'CIRCLE' | 'circle' | 'Circle' ;
+CLS             : 'CLS' | 'cls' | 'Cls' ;
+CLIPON          : 'CLIPON' | 'clipon' | 'ClipOn ' ;
+CLIPOFF         : 'CLIPOFF' | 'clipoff' | 'ClipOff' ;
+COLOUR          : 'COLOUR' | 'colour' | 'Colour' ;
+COLOURBG        : 'COLOURBG' | 'colourbg' | 'ColourBg' ;
+FILL            : 'FILL' | 'fill' | 'Fill' ;
+FLIP            : 'FLIP' | 'flip' | 'Flip' ;
+SHOWFPS         : 'SHOWFPS' | 'showfps' | 'ShowFPS' ;
+GRAPHICS        : 'GRAPHICS' | 'graphics' | 'Graphics' ;
+LINE            : 'LINE' | 'line' | 'Line' ;
+RECTANGLE       : 'RECTANGLE' | 'rectangle' | 'Rectangle' ;
+PLOT            : 'PLOT' | 'plot' | 'Plot' ;
+POINT           : 'POINT' | 'point' | 'Point' ;
+SHADED          : 'SHADED' | 'shaded' | 'Shaded' ;
+TEXT            : 'TEXT' | 'text' | 'Text' ;
+TEXTRIGHT       : 'TEXTRIGHT' | 'textright' | 'TextRight' ;
+TEXTCENTRE      : 'TEXTCENTRE' | 'textcentre' | 'TextCentre' ;
+TEXTCENTER      : 'TEXTCENTER' | 'textcenter' | 'TextCenter' ;
+TRIANGLE        : 'TRIANGLE' | 'triangle' | 'Triangle' ;
+LOADTYPEFACE    : 'LOADTYPEFACE' | 'loadtypeface' | 'LoadTypeface' ;
+CREATEFONT      : 'CREATEFONT' | 'createfont' | 'CreateFont' ;
 
-ASC             : A S C ;
-LEN             : L E N ;
-INSTR           : I N S T R ;
-VAL             : V A L ;
+TIME            : 'TIME' | 'time' | 'Time' ;
+PI              : 'PI' | 'pi' | 'Pi' ;
+SQR             : 'SQR' | 'sqr' | 'Sqr' ;
+LN              : 'LN' | 'ln' | 'Ln' ;
+LOG             : 'LOG' | 'log' | 'Log' ;
+EXP             : 'EXP' | 'exp' | 'Exp' ;
+ATN             : 'ATN' | 'atn' | 'Atn' ;
+TAN             : 'TAN' | 'tan' | 'Tan' ;
+COS             : 'COS' | 'cos' | 'Cos' ;
+SIN             : 'SIN' | 'sin' | 'Sin' ;
+ABS             : 'ABS' | 'abs' | 'Abs' ;
+ACS             : 'ACS' | 'acs' | 'Acs' ;
+ASN             : 'ASN' | 'asn' | 'Asn' ;
+DEG             : 'DEG' | 'deg' | 'Deg' ;
+RAD             : 'RAD' | 'rad' | 'Rad' ;
+SGN             : 'SGN' | 'sgn' | 'Sgn' ;
 
-TIMES           : T I M E DOLLAR ;
-STRS            : S T R DOLLAR ;
-STRINGS         : S T R I N G DOLLAR ;
-CHRS            : C H R DOLLAR ;
-LEFTS           : L E F T DOLLAR ;
-MIDS            : M I D DOLLAR ;
-RIGHTS          : R I G H T DOLLAR ;
+ASC             : 'ASC' | 'asc' | 'Asc' ;
+LEN             : 'LEN' | 'len' | 'Len' ;
+INSTR           : 'INSTR' | 'instr' | 'Instr' ;
+VAL             : 'VAL' | 'val' | 'Val' ;
 
-RND             : R N D ;
-RND0            : R N D LPAREN '0' RPAREN ;
-RND1            : R N D LPAREN '1' RPAREN ;
+TIMES           : 'TIME' | 'time' | 'Time' DOLLAR ;
+STRS            : 'STR' | 'str' | 'Str' DOLLAR ;
+STRINGS         : 'STRING' | 'string' | 'String' DOLLAR ;
+CHRS            : 'CHR' | 'chr' | 'Chr' DOLLAR ;
+LEFTS           : 'LEFT' | 'left' | 'Left' DOLLAR ;
+MIDS            : 'MID' | 'mid' | 'Mid' DOLLAR ;
+RIGHTS          : 'RIGHT' | 'right' | 'Right' DOLLAR ;
+
+RND             : 'RND' | 'rnd' | 'Rnd' ;
+RND0            : ('RND' | 'rnd' | 'Rnd') LPAREN '0' RPAREN ;
+RND1            : ('RND' | 'rnd' | 'Rnd') LPAREN '1' RPAREN ;
 
 EQ              : '=' ;
 NE              : '<>' ;
@@ -467,13 +533,13 @@ GE              : '>=' ;
 LT              : '<' ;
 LE              : '<=' ;
 
-NOT             : N O T ;
-AND             : A N D ;
-OR              : O R ;
-EOR             : E O R ;
+NOT             : 'NOT' | 'not' | 'Not' ;
+AND             : 'AND' | 'and' | 'And' ;
+OR              : 'OR' | 'or' | 'Or' ;
+EOR             : 'EOR' | 'eor' | 'Eor' ;
 
-MOD             : M O D ;
-DIV             : D I V | '//';
+MOD             : 'MOD' | 'mod' | 'Mod' ;
+DIV             : 'DIV' | 'div' | 'Div' | '//';
 HAT             : '^' ;
 PLUS            : '+' ;
 MINUS           : '-' ;
@@ -516,34 +582,7 @@ BINARYNUMBER    : '%' [0|1]+ ;
 NUMBER          : DIGIT+ ([e|E] NUMBER)* ;
 FLOAT           : DIGIT* '.' DIGIT* ([e|E] [0-9]+ )* ;
 
-fragment A: [Aa];
-fragment B: [Bb];
-fragment C: [Cc];
-fragment D: [Dd];
-fragment E: [Ee];
-fragment F: [Ff];
-fragment G: [Gg];
-fragment H: [Hh];
-fragment I: [Ii];
-fragment J: [Jj];
-fragment K: [Kk];
-fragment L: [Ll];
-fragment M: [Mm];
-fragment N: [Nn];
-fragment O: [Oo];
-fragment P: [Pp];
-fragment Q: [Qq];
-fragment R: [Rr];
-fragment S: [Ss];
-fragment T: [Tt];
-fragment U: [Uu];
-fragment V: [Vv];
-fragment W: [Ww];
-fragment X: [Xx];
-fragment Y: [Yy];
-fragment Z: [Zz];
-
-fragment ALPHA           : [a-zA-Z] ;
-fragment DIGIT           : [0-9] ;
+fragment ALPHA  : [a-zA-Z] ;
+fragment DIGIT  : [0-9] ;
 
 WS              : [ \r\t] + -> channel (HIDDEN) ;

@@ -45,7 +45,7 @@ antlrcpp::Any Compiler::visitStmtDEFFN(DARICParser::StmtDEFFNContext* context)
             insert_instruction(Bytecodes::STORE_PARAMETER, a.type, a.index | LocalVariableFlag);
         }
 
-        visit(context->bodyStar());
+        visit(context->body());
 
         // Do we have any RETURNs? If so, push the values onto the stack
         for (auto it = current_function->parameters.cbegin(); it != current_function->parameters.cend(); ++it) {
@@ -130,7 +130,7 @@ antlrcpp::Any Compiler::visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* contex
             insert_instruction(Bytecodes::STORE_PARAMETER, a.type, a.index | LocalVariableFlag);
         }
 
-        visit(context->bodyStar());
+        visit(context->body());
 
         // Do we have any RETURNs? If so, push the values onto the stack
         for (auto it = current_function->parameters.cbegin(); it != current_function->parameters.cend(); ++it) {

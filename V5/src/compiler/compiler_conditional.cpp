@@ -68,7 +68,7 @@ antlrcpp::Any Compiler::visitWhen(DARICParser::WhenContext* context)
         insert_bytecode(Bytecodes::CASE_S, Type::NOTYPE);
 
         // Code to execute on case match
-        visit(context->bodyStar());
+        visit(context->body());
 
         // Jump to end of CASE
         insert_instruction(Bytecodes::JUMP, Type::NOTYPE, case_end_pc);
@@ -124,7 +124,7 @@ antlrcpp::Any Compiler::visitStmtCASE(DARICParser::StmtCASEContext* context)
         insert_instruction(Bytecodes::CJUMPT, Type::NOTYPE, s_oth.end_pc);
 
         // This is the code to execute on OTHERWISE
-        visit(context->bodyStar());
+        visit(context->body());
 
         // Set the end PC on write
         if (phase == CompilerPhase::SIZE) {

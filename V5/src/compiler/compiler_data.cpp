@@ -33,6 +33,16 @@ antlrcpp::Any Compiler::visitStmtREAD(DARICParser::StmtREADContext* context)
         case Type::FLOAT:
         case Type::STRING:
             break;
+        case Type::INTEGER_ARRAY:
+            saved.type = Type::INTEGER;
+            break;
+        case Type::FLOAT_ARRAY:
+            saved.type = Type::FLOAT;
+            break;
+        case Type::STRING_ARRAY:
+            saved.type = Type::STRING;
+            break;
+            break;
         default:
             error("Unknown type in READ");
         }

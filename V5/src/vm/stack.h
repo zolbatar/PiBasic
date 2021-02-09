@@ -80,15 +80,20 @@ public:
         auto b = stack.top();
         stack.pop();
         if (b.get_type() != Type::STRING) {
-            throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Expected string on stack - this is normally an internal DARIC error");        }
+            throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Expected string on stack - this is normally an internal DARIC error");
+        }
         return b.value_string;
     }
 
-    void clear_stack() {
-        stack.empty();
+    inline void clear_stack(Bytecode& bc)
+    {
+        if (!stack.empty()) {
+            throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Stack clear exception - this is normally an internal DARIC error");
+        }
     }
 
-    size_t get_stack_size() {
+    inline size_t get_stack_size()
+    {
         return stack.size();
     }
 

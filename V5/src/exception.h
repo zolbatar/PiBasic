@@ -90,7 +90,7 @@ public:
             g_env.graphics.colour(0, 255, 255);
             std::ifstream in(filename);
             std::string l;
-            for (auto i = 1; i < line_number; i++) {
+            for (UINT32 i = 1; i < line_number; i++) {
                 std::getline(in, l);
             }
             std::getline(in, l);

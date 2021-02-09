@@ -101,6 +101,7 @@ private:
     void opcode_NEW_TYPE();
 
     // Maths
+    void opcode_UNARY();
     void opcode_ADD();
     void opcode_SUBTRACT();
     void opcode_MULTIPLY();
@@ -163,7 +164,6 @@ private:
 
     // Data
     void opcode_READ();
-    void opcode_READ_ARRAY();
     void opcode_RESTORE();
 
     // Swapping values

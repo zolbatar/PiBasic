@@ -183,6 +183,7 @@
     <ClCompile Include="..\src\compiler\compiler_functions.cpp" />
     <ClCompile Include="..\src\compiler\compiler_graphics.cpp" />
     <ClCompile Include="..\src\compiler\compiler_io.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_keyboardmouse.cpp" />
     <ClCompile Include="..\src\compiler\compiler_literal.cpp" />
     <ClCompile Include="..\src\compiler\compiler_looping.cpp" />
     <ClCompile Include="..\src\compiler\compiler_maths.cpp" />

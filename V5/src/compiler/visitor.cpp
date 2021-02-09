@@ -6,6 +6,12 @@ antlrcpp::Any Compiler::visitProg(DARICParser::ProgContext* context)
     return visitChildren(context);
 }
 
+antlrcpp::Any Compiler::visitStmtCOLON(DARICParser::StmtCOLONContext* context)
+{
+    set_pos(context->start);
+    return visitChildren(context);
+}
+
 antlrcpp::Any Compiler::visitLine(DARICParser::LineContext* context)
 {
     set_pos(context->start);
@@ -20,12 +26,6 @@ antlrcpp::Any Compiler::visitLinenumber(DARICParser::LinenumberContext* context)
 }
 
 antlrcpp::Any Compiler::visitBody(DARICParser::BodyContext* context)
-{
-    set_pos(context->start);
-    return visitChildren(context);
-}
-
-antlrcpp::Any Compiler::visitBodyStar(DARICParser::BodyStarContext* context)
 {
     set_pos(context->start);
     return visitChildren(context);

@@ -1,10 +1,5 @@
-TYPE Coordinate(x,y,z)
-
-DIM B!(5, Coordinate)
-B!(2)x = 234.45
-PRINT B!(2)x
-
-A! = Coordinate
-A!x = 50.0
-A!y = 100.5
-PRINT A!x, A!y
+IF 1 = 1
+	PRINT "Yes"
+ELSE
+	Print "No"
+ENDIF

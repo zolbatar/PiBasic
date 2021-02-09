@@ -147,7 +147,7 @@ FC$=""
 FOR F$ IN FI$()
 FC$=FC$+F$
 NEXT
-PRINT "FOR IN             = ";:IF FC$ = "ABC" THEN ProcPass() ELSE PROCFail()
+PRINT "FOR IN             = ";:IF FC$ = "ABC" THEN PROCPass() ELSE PROCFail()
 PRINT "Case               = ";
 I%=1
 CASE I% OF
