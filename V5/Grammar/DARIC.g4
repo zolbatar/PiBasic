@@ -10,106 +10,163 @@ line
     | linenumber? stmt+ (COMMENT | REM)? NEWLINE
     ;
 
-content
-    : stmt*
-    ;
-
-body
-    : stmt* | line*
-    ;
-
-linenumber
-    : NUMBER
-    ;
-
-stmtIF
+content:            stmt* ;
+body:               stmt* | line* ;
+linenumber:         NUMBER ;
 
 stmt
-    : COLON                                                                             #stmtCOLON
-    | BREAKPOINT                                                                        #stmtBREAKPOINT
-    | CASE expr OF NEWLINE when+ (OTHERWISE body)? ENDCASE                              #stmtCASE
-    | CHAIN strExpr                                                                     #stmtCHAIN
-    | DATA literal (COMMA literal)*                                                     #stmtDATA
-    | DIM varDeclWithDimension (COMMA varDeclWithDimension)*                            #stmtDIM
-    | END                                                                               #stmtEND
-    | RETURN expr?                                                                      #stmtRETURN
-    | DEF fnName LPAREN functionVarList? RPAREN body ENDFN                              #stmtDEFFN
-    | DEF PROC_NAME LPAREN functionVarList? RPAREN body ENDPROC                         #stmtDEFPROC
-    | FOR LOCAL? justNumberVar EQ numExpr TO numExpr (STEP numExpr)? body NEXT          #stmtFOR
-    | FOR LOCAL? justVar IN justVar LPAREN RPAREN body NEXT                             #stmtFORIN
-    | fnName LPAREN functionParList? RPAREN                                             #stmtCallFN
-    | IF expr THEN? t=content (ELSE f=content)?                                         #stmtIF
-    | IF expr THEN? NEWLINE t=line+ (ELSE NEWLINE f=line+)? ENDIF                       #stmtIFMultiline
-    | LET? varDecl EQ expr (COMMA varDecl EQ expr)*                                     #stmtLET
-    | GLOBAL? varDecl EQ expr (COMMA varDecl EQ expr)*                                  #stmtLET
-    | LOCAL varDecl EQ expr (COMMA varDecl EQ expr)*                                    #stmtLOCAL
-    | LOCAL DIM varDeclWithDimension (COMMA varDeclWithDimension)*                      #stmtLOCALDIM
-    | OSCLI strExpr                                                                     #stmtOSCLI
-    | PROC_NAME LPAREN functionParList? RPAREN                                          #stmtCallPROC
-    | READ varDecl (COMMA varDecl)*                                                     #stmtREAD
-    | RESTORE                                                                           #stmtRESTORE
-    | SWAP justVar COMMA justVar                                                        #stmtSWAP
-    | TRACEON                                                                           #stmtTRACEON
-    | TRACEOFF                                                                          #stmtTRACEOFF
-    | TYPE varName LPAREN justVar (COMMA justVar)* RPAREN                               #stmtTYPE
-    | REPEAT body UNTIL expr                                                            #stmtREPEAT
-    | WHILE expr body ENDWHILE                                                          #stmtWHILE
-
-    /* Keyboard, mouse and INPUT/PRINT */
-    | INPUT (strExpr COMMA)? varList                                                    #stmtINPUT
-    | PRINT printList?                                                                  #stmtPRINT
-    | MOUSE varNameInteger COMMA varNameInteger COMMA varNameInteger                    #stmtMOUSE
-    | INKEY numExpr                                                                     #stmtINKEY
-    | INKEYS numExpr                                                                    #stmtINKEYS
-    | GET                                                                               #stmtGET
-    | GETS                                                                              #stmtGETS
-
-    /* += and its ilk */
-    | varDecl MULTIPLY_E numExpr                                                        #stmtOperatorEqual
-    | varDecl DIVIDE_E numExpr                                                          #stmtOperatorEqual
-    | varDecl PLUS_E numExpr                                                            #stmtOperatorEqual
-    | varDecl MINUS_E numExpr                                                           #stmtOperatorEqual
-    | varDecl SHL_E numExpr                                                             #stmtOperatorEqual
-    | varDecl SHR_E numExpr                                                             #stmtOperatorEqual
-
-    /* I/O */
-    | BPUTH numExpr COMMA numExpr                                                       #stmtBPUTH
-    | BGETH numExpr                                                                     #stmtBGETH
-    | PTRH numExpr EQ numExpr                                                           #stmtPTRH
-    | CLOSEH numExpr                                                                    #stmtCLOSEH
-    | LOCAL? varNameString LPAREN RPAREN EQ LISTFILES LPAREN strExpr RPAREN             #stmtLISTFILES
-
-    /* Graphics */
-    | CLS                                                                               #stmtCLS
-    | COLOUR numExpr                                                                    #stmtCOLOUR
-    | COLOUR numExpr COMMA numExpr COMMA numExpr                                        #stmtCOLOUR 
-    | COLOURBG numExpr                                                                  #stmtCOLOURBG 
-    | COLOURBG numExpr COMMA numExpr COMMA numExpr                                      #stmtCOLOURBG
-    | GRAPHICS                                                                          #stmtGRAPHICS
-    | GRAPHICS numExpr COMMA numExpr                                                    #stmtGRAPHICS
-    | GRAPHICS BANKED                                                                   #stmtGRAPHICS
-    | GRAPHICS BANKED numExpr COMMA numExpr                                             #stmtGRAPHICS
-    | FLIP                                                                              #stmtFLIP    
-    | CIRCLE numExpr COMMA numExpr COMMA numExpr                                        #stmtCIRCLE
-    | CIRCLE FILL numExpr COMMA numExpr COMMA numExpr                                   #stmtCIRCLE
-    | LINE numExpr COMMA numExpr COMMA numExpr COMMA numExpr                            #stmtLINE
-    | RECTANGLE numExpr COMMA numExpr COMMA numExpr COMMA numExpr                       #stmtRECTANGLE
-    | RECTANGLE FILL numExpr COMMA numExpr COMMA numExpr COMMA numExpr                  #stmtRECTANGLE
-    | TRIANGLE      numExpr COMMA numExpr COMMA numExpr COMMA 
-                    numExpr COMMA numExpr COMMA numExpr                                 #stmtTRIANGLE
-    | TRIANGLE FILL     numExpr COMMA numExpr COMMA numExpr 
-                        COMMA numExpr COMMA numExpr COMMA numExpr                       #stmtTRIANGLE
-    | TRIANGLE SHADED   numExpr COMMA numExpr COMMA numExpr COMMA 
-                        numExpr COMMA numExpr COMMA numExpr COMMA 
-                        numExpr COMMA numExpr COMMA numExpr                             #stmtTRIANGLE
-    | PLOT numExpr COMMA numExpr                                                        #stmtPLOT
-    | CLIPON numExpr COMMA numExpr COMMA numExpr COMMA numExpr                          #stmtCLIPON
-    | CLIPOFF                                                                           #stmtCLIPOFF
-    | TEXT numExpr COMMA numExpr COMMA numExpr COMMA numExpr                            #stmtTEXT
-    | TEXTRIGHT numExpr COMMA numExpr COMMA numExpr COMMA strExpr                       #stmtTEXTRIGHT
-    | (TEXTCENTRE|TEXTCENTER) numExpr COMMA numExpr COMMA numExpr COMMA strExpr         #stmtTEXTCENTRE
-    | SHOWFPS                                                                           #stmtSHOWFPS
+    : COLON
+    | coreStmt
+    | keyMouseStmt
+    | stmtOperatorEqual
+    | ioStmt
+    | graphicsStmt
     ;
+
+coreStmt
+    : stmtBREAKPOINT
+    | stmtCASE
+    | stmtCHAIN
+    | stmtDATA
+    | stmtDIM
+    | stmtEND
+    | stmtRETURN
+    | stmtDEFFN
+    | stmtDEFPROC
+    | stmtFOR
+    | stmtFORIN
+    | stmtCallFN
+    | stmtIF
+    | stmtIFMultiline
+    | stmtLET
+    | stmtLET
+    | stmtLOCAL
+    | stmtLOCALDIM
+    | stmtOSCLI
+    | stmtCallPROC
+    | stmtREAD
+    | stmtRESTORE
+    | stmtSWAP
+    | stmtTRACEON
+    | stmtTRACEOFF
+    | stmtTYPE
+    | stmtREPEAT
+    | stmtWHILE
+    ;
+
+stmtBREAKPOINT:     BREAKPOINT ;
+stmtCASE:           CASE expr OF NEWLINE when+ (OTHERWISE body)? ENDCASE ; 
+stmtCHAIN:          CHAIN strExpr ;
+stmtDATA:           DATA literal (COMMA literal)* ;
+stmtDIM:            DIM varDeclWithDimension (COMMA varDeclWithDimension)* ;
+stmtEND:            END ;
+stmtRETURN:         RETURN expr? ;
+stmtDEFFN:          DEF fnName LPAREN functionVarList? RPAREN body ENDFN ;
+stmtDEFPROC:        DEF PROC_NAME LPAREN functionVarList? RPAREN body ENDPROC ;
+stmtFOR:            FOR LOCAL? justNumberVar EQ numExpr TO numExpr (STEP numExpr)? body NEXT ;
+stmtFORIN:          FOR LOCAL? justVar IN justVar LPAREN RPAREN body NEXT ;
+stmtCallFN:         fnName LPAREN functionParList? RPAREN ;
+stmtIF:             IF expr THEN? t=content (ELSE f=content)? ;
+stmtIFMultiline:    IF expr THEN? NEWLINE t=line+ (ELSE NEWLINE f=line+)? ENDIF ;
+stmtLET:            (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)* ;
+stmtLOCAL:          LOCAL varDecl EQ expr (COMMA varDecl EQ expr)* ;
+stmtLOCALDIM:       LOCAL DIM varDeclWithDimension (COMMA varDeclWithDimension)* ;
+stmtOSCLI:          OSCLI strExpr ;
+stmtCallPROC:       PROC_NAME LPAREN functionParList? RPAREN ;
+stmtREAD:           READ varDecl (COMMA varDecl)* ;
+stmtRESTORE:        RESTORE ;
+stmtSWAP:           SWAP justVar COMMA justVar ;
+stmtTRACEON:        TRACEON ;
+stmtTRACEOFF:       TRACEOFF ;
+stmtTYPE:           TYPE varName LPAREN justVar (COMMA justVar)* RPAREN ;
+stmtREPEAT:         REPEAT body UNTIL expr ;
+stmtWHILE:          WHILE expr body ENDWHILE ;
+
+keyMouseStmt
+    : stmtINPUT
+    | stmtPRINT
+    | stmtMOUSE
+    | stmtINKEY
+    | stmtINKEYS
+    | stmtGET
+    | stmtGETS
+    ;
+    
+stmtINPUT:      INPUT (strExpr COMMA)? varList ;
+stmtPRINT:      PRINT printList? ;
+stmtMOUSE:      MOUSE varNameInteger COMMA varNameInteger COMMA varNameInteger ;
+stmtINKEY:      INKEY numExpr ;
+stmtINKEYS:     INKEYS numExpr ;
+stmtGET:        GET ;
+stmtGETS:       GETS ;
+
+stmtOperatorEqual
+    : varDecl MULTIPLY_E numExpr
+    | varDecl DIVIDE_E numExpr       
+    | varDecl PLUS_E numExpr     
+    | varDecl MINUS_E numExpr
+    | varDecl SHL_E numExpr
+    | varDecl SHR_E numExpr
+    ;
+
+ioStmt
+    : stmtBPUTH
+    | stmtBGETH
+    | stmtPTRH
+    | stmtCLOSEH
+    | stmtLISTFILES
+    ;
+
+stmtBPUTH:      BPUTH numExpr ;
+stmtBGETH:      BGETH numExpr ;
+stmtPTRH:       PTRH numExpr EQ numExpr ;
+stmtCLOSEH:     CLOSEH numExpr ;
+stmtLISTFILES:  LOCAL? varNameString LPAREN RPAREN EQ LISTFILES LPAREN strExpr RPAREN ;
+
+graphicsStmt
+    : stmtCLS
+    | stmtCOLOUR
+    | stmtCOLOURBG 
+    | stmtGRAPHICS
+    | stmtFLIP    
+    | stmtCIRCLE
+    | stmtLINE
+    | stmtRECTANGLE
+    | stmtTRIANGLE
+    | stmtPLOT
+    | stmtCLIPON
+    | stmtCLIPOFF
+    | stmtTEXT
+    | stmtTEXTRIGHT
+    | stmtTEXTCENTRE
+    | stmtSHOWFPS
+    ;
+    
+stmtCLS:            CLS ;
+stmtCOLOUR:         COLOUR numExpr
+                  | COLOUR numExpr COMMA numExpr COMMA numExpr ;
+stmtCOLOURBG:       COLOURBG numExpr
+                  | COLOURBG numExpr COMMA numExpr COMMA numExpr ; 
+stmtGRAPHICS:       GRAPHICS
+                  | GRAPHICS numExpr COMMA numExpr
+                  | GRAPHICS BANKED
+                  | GRAPHICS BANKED numExpr COMMA numExpr ;
+stmtFLIP:           FLIP ;
+stmtCIRCLE:         CIRCLE      numExpr COMMA numExpr COMMA numExpr
+                  | CIRCLE FILL numExpr COMMA numExpr COMMA numExpr ;
+stmtLINE:           LINE numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtRECTANGLE:      RECTANGLE      numExpr COMMA numExpr COMMA numExpr COMMA numExpr
+                  | RECTANGLE FILL numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtTRIANGLE:       TRIANGLE        numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr
+                  | TRIANGLE FILL   numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr
+                  | TRIANGLE SHADED numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtPLOT:           PLOT numExpr COMMA numExpr ;
+stmtCLIPON:         CLIPON numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtCLIPOFF:        CLIPOFF ;
+stmtTEXT:           TEXT numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtTEXTRIGHT:      TEXTRIGHT numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
+stmtTEXTCENTRE:     (TEXTCENTRE|TEXTCENTER) numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
+stmtSHOWFPS:        SHOWFPS ;
 
 when
     : WHEN expr (COMMA expr)* COLON body
@@ -168,21 +225,10 @@ justNumberVar
     | varNameInteger
     ;
 
-varName
-    : VARIABLE_FLOAT
-    ;
-
-varNameInteger
-    : VARIABLE_INTEGER
-    ;
-
-varNameString
-    : VARIABLE_STRING
-    ;
-
-varNameType
-    : VARIABLE_TYPE
-    ;
+varName:            VARIABLE_FLOAT ;
+varNameInteger:     VARIABLE_INTEGER ;
+varNameString:      VARIABLE_STRING ;
+varNameType:        VARIABLE_TYPE ;
 
 varDecl
     : justVar                                               #varDeclInd
@@ -206,13 +252,8 @@ varList
     : varDecl (COMMA varDecl)*
     ;
 
-functionVarList
-    : RETURN? justVar (COMMA RETURN? justVar)*
-    ;
-
-functionParList
-    : expr (COMMA expr)*
-    ;
+functionVarList:        RETURN? justVar (COMMA RETURN? justVar)* ;
+functionParList:        expr (COMMA expr)* ;
 
 exprList
     : expr (COMMA expr)*
@@ -252,21 +293,10 @@ number
     | numColours
     ;
 
-numberInteger
-    :  NUMBER
-    ;
-
-numberHex
-    :  HEXNUMBER
-    ;
-
-numberBinary
-    :  BINARYNUMBER
-    ;
-
-numberFloat
-    :  (PLUS | MINUS)? FLOAT
-    ;
+numberInteger:      (PLUS | MINUS)? NUMBER ;
+numberHex:          HEXNUMBER ;
+numberBinary:       BINARYNUMBER ;
+numberFloat:        (PLUS | MINUS)? FLOAT ;
 
 strFunc
     : TIMES                                                     #strFuncTIMES   
@@ -392,7 +422,7 @@ compare
 
 // Lexer stuff
 BREAKPOINT      : 'BREAKPOINT' | 'breakpoint' | 'Breakpoint';
-CASE            : 'CASE' | 'case' ' | 'Case' ;
+CASE            : 'CASE' | 'case' | 'Case' ;
 CHAIN           : 'CHAIN' | 'chain' | 'Chain' ;
 DATA            : 'DATA' | 'data' | 'Data' ;
 DEF             : 'DEF' | 'def' | 'Def' ;
@@ -411,7 +441,7 @@ FN              : 'FN' | 'fn' | 'Fn' ;
 IF              : 'IF' | 'if' | 'If' ;
 IN              : 'IN' | 'in' | 'In' ;
 INT             : 'INT' | 'int' | 'Int' ;
-INPUT           : 'INPUT' | 'input' | 'Input ;
+INPUT           : 'INPUT' | 'input' | 'Input' ;
 GLOBAL          : 'GLOBAL' | 'global' | 'Global' ;
 LOCAL           : 'LOCAL' | 'local' | 'Local' ;
 LET             : 'LET' | 'let' | 'Let' ;
@@ -427,7 +457,7 @@ READ            : 'READ' | 'read' | 'Read' ;
 REM             : 'REM' | 'rem' | 'Rem' ;
 REPEAT          : 'REPEAT' | 'repeat' | 'Repeat' ;
 RESTORE         : 'RESTORE' | 'restore' | 'Restore' ;
-RETURN          : 'RETURN' | 'return' | 'return' ;
+RETURN          : 'RETURN' | 'return' | 'Return' ;
 SPC             : 'SPC' | 'spc' | 'Spc'  ;
 STEP            : 'STEP' | 'step' | 'Step' ;
 SWAP            : 'SWAP' | 'swap' | 'Swap' ;
@@ -464,7 +494,7 @@ EOFH            : ('EOF' | 'eof' | 'Eof') HASH ;
 GETSH           : GET DOLLAR HASH ;
 LISTFILES       : 'LISTFILES' | 'listfiles' | 'ListFiles' ;
 OPENIN          : 'OPENIN' | 'openin' | 'OpenIn' ;
-OPENOUT         : 'OPENOUT' | 'openout' | 'openout' ;
+OPENOUT         : 'OPENOUT' | 'openout' | 'Openout' ;
 OPENUP          : 'OPENUP' | 'openup' | 'OpenUp' ;
 PTRH            : ('PTR' | 'ptr' | 'Ptr' ) HASH ;
 
@@ -514,13 +544,13 @@ LEN             : 'LEN' | 'len' | 'Len' ;
 INSTR           : 'INSTR' | 'instr' | 'Instr' ;
 VAL             : 'VAL' | 'val' | 'Val' ;
 
-TIMES           : 'TIME' | 'time' | 'Time' DOLLAR ;
-STRS            : 'STR' | 'str' | 'Str' DOLLAR ;
-STRINGS         : 'STRING' | 'string' | 'String' DOLLAR ;
-CHRS            : 'CHR' | 'chr' | 'Chr' DOLLAR ;
-LEFTS           : 'LEFT' | 'left' | 'Left' DOLLAR ;
-MIDS            : 'MID' | 'mid' | 'Mid' DOLLAR ;
-RIGHTS          : 'RIGHT' | 'right' | 'Right' DOLLAR ;
+TIMES           : ('TIME' | 'time' | 'Time') DOLLAR ;
+STRS            : ('STR' | 'str' | 'Str') DOLLAR ;
+STRINGS         : ('STRING' | 'string' | 'String') DOLLAR ;
+CHRS            : ('CHR' | 'chr' | 'Chr') DOLLAR ;
+LEFTS           : ('LEFT' | 'left' | 'Left') DOLLAR ;
+MIDS            : ('MID' | 'mid' | 'Mid') DOLLAR ;
+RIGHTS          : ('RIGHT' | 'right' | 'Right') DOLLAR ;
 
 RND             : 'RND' | 'rnd' | 'Rnd' ;
 RND0            : ('RND' | 'rnd' | 'Rnd') LPAREN '0' RPAREN ;

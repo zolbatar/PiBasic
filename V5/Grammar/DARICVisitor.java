@@ -40,400 +40,367 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLinenumber(DARICParser.LinenumberContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtCOLON}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStmtCOLON(DARICParser.StmtCOLONContext ctx);
+	T visitStmt(DARICParser.StmtContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtBREAKPOINT}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#coreStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCoreStmt(DARICParser.CoreStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtBREAKPOINT}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtBREAKPOINT(DARICParser.StmtBREAKPOINTContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtCASE}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtCASE}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtCASE(DARICParser.StmtCASEContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtCHAIN}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtCHAIN}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtCHAIN(DARICParser.StmtCHAINContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtDATA}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtDATA}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtDATA(DARICParser.StmtDATAContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtDIM}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtDIM}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtDIM(DARICParser.StmtDIMContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtEND}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtEND}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtEND(DARICParser.StmtENDContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtRETURN}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtRETURN}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtRETURN(DARICParser.StmtRETURNContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtDEFFN}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtDEFFN}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtDEFFN(DARICParser.StmtDEFFNContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtDEFPROC}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtDEFPROC}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtDEFPROC(DARICParser.StmtDEFPROCContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtFOR}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtFOR}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtFOR(DARICParser.StmtFORContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtFORIN}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtFORIN}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtFORIN(DARICParser.StmtFORINContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtCallFN}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtCallFN}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtCallFN(DARICParser.StmtCallFNContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtIF}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtIF}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtIF(DARICParser.StmtIFContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtIFMultiline}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtIFMultiline}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtIFMultiline(DARICParser.StmtIFMultilineContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtLET}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtLET}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtLET(DARICParser.StmtLETContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtLOCAL}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtLOCAL}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtLOCAL(DARICParser.StmtLOCALContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtLOCALDIM}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtLOCALDIM}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtLOCALDIM(DARICParser.StmtLOCALDIMContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtOSCLI}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtOSCLI}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtOSCLI(DARICParser.StmtOSCLIContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtCallPROC}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtCallPROC}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtCallPROC(DARICParser.StmtCallPROCContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtREAD}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtREAD}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtREAD(DARICParser.StmtREADContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtRESTORE}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtRESTORE}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtRESTORE(DARICParser.StmtRESTOREContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtSWAP}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtSWAP}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtSWAP(DARICParser.StmtSWAPContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtTRACEON}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtTRACEON}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtTRACEON(DARICParser.StmtTRACEONContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtTRACEOFF}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtTRACEOFF}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtTRACEOFF(DARICParser.StmtTRACEOFFContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtTYPE}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtTYPE}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtTYPE(DARICParser.StmtTYPEContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtREPEAT}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtREPEAT}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtREPEAT(DARICParser.StmtREPEATContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtWHILE}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtWHILE}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtWHILE(DARICParser.StmtWHILEContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtINPUT}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#keyMouseStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitKeyMouseStmt(DARICParser.KeyMouseStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtINPUT}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtINPUT(DARICParser.StmtINPUTContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtPRINT}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtPRINT}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtPRINT(DARICParser.StmtPRINTContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtMOUSE}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtMOUSE}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtMOUSE(DARICParser.StmtMOUSEContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtINKEY}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtINKEY}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtINKEY(DARICParser.StmtINKEYContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtINKEYS}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtINKEYS}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtINKEYS(DARICParser.StmtINKEYSContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtGET}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtGET}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtGET(DARICParser.StmtGETContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtGETS}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtGETS}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtGETS(DARICParser.StmtGETSContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtOperatorEqual}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtOperatorEqual}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtOperatorEqual(DARICParser.StmtOperatorEqualContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtBPUTH}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#ioStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIoStmt(DARICParser.IoStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtBPUTH}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtBPUTH(DARICParser.StmtBPUTHContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtBGETH}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtBGETH}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtBGETH(DARICParser.StmtBGETHContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtPTRH}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtPTRH}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtPTRH(DARICParser.StmtPTRHContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtCLOSEH}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtCLOSEH}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtCLOSEH(DARICParser.StmtCLOSEHContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtLISTFILES}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtLISTFILES}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtLISTFILES(DARICParser.StmtLISTFILESContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtCLS}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#graphicsStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGraphicsStmt(DARICParser.GraphicsStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtCLS}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtCLS(DARICParser.StmtCLSContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtCOLOUR}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtCOLOUR}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtCOLOUR(DARICParser.StmtCOLOURContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtCOLOURBG}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtCOLOURBG}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtCOLOURBG(DARICParser.StmtCOLOURBGContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtGRAPHICS}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtGRAPHICS}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtGRAPHICS(DARICParser.StmtGRAPHICSContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtFLIP}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtFLIP}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtFLIP(DARICParser.StmtFLIPContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtCIRCLE}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtCIRCLE}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtCIRCLE(DARICParser.StmtCIRCLEContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtLINE}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtLINE}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtLINE(DARICParser.StmtLINEContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtRECTANGLE}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtRECTANGLE}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtRECTANGLE(DARICParser.StmtRECTANGLEContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtTRIANGLE}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtTRIANGLE}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtTRIANGLE(DARICParser.StmtTRIANGLEContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtPLOT}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtPLOT}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtPLOT(DARICParser.StmtPLOTContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtCLIPON}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtCLIPON}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtCLIPON(DARICParser.StmtCLIPONContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtCLIPOFF}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtCLIPOFF}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtCLIPOFF(DARICParser.StmtCLIPOFFContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtTEXT}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtTEXT}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtTEXT(DARICParser.StmtTEXTContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtTEXTRIGHT}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtTEXTRIGHT}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtTEXTRIGHT(DARICParser.StmtTEXTRIGHTContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtTEXTCENTRE}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtTEXTCENTRE}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStmtTEXTCENTRE(DARICParser.StmtTEXTCENTREContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code stmtSHOWFPS}
-	 * labeled alternative in {@link DARICParser#stmt}.
+	 * Visit a parse tree produced by {@link DARICParser#stmtSHOWFPS}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */

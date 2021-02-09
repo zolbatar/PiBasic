@@ -29,7 +29,9 @@ public:
 
     virtual antlrcpp::Any visitLinenumber(DARICParser::LinenumberContext *context) = 0;
 
-    virtual antlrcpp::Any visitStmtCOLON(DARICParser::StmtCOLONContext *context) = 0;
+    virtual antlrcpp::Any visitStmt(DARICParser::StmtContext *context) = 0;
+
+    virtual antlrcpp::Any visitCoreStmt(DARICParser::CoreStmtContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtBREAKPOINT(DARICParser::StmtBREAKPOINTContext *context) = 0;
 
@@ -85,6 +87,8 @@ public:
 
     virtual antlrcpp::Any visitStmtWHILE(DARICParser::StmtWHILEContext *context) = 0;
 
+    virtual antlrcpp::Any visitKeyMouseStmt(DARICParser::KeyMouseStmtContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext *context) = 0;
@@ -101,6 +105,8 @@ public:
 
     virtual antlrcpp::Any visitStmtOperatorEqual(DARICParser::StmtOperatorEqualContext *context) = 0;
 
+    virtual antlrcpp::Any visitIoStmt(DARICParser::IoStmtContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtBPUTH(DARICParser::StmtBPUTHContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtBGETH(DARICParser::StmtBGETHContext *context) = 0;
@@ -110,6 +116,8 @@ public:
     virtual antlrcpp::Any visitStmtCLOSEH(DARICParser::StmtCLOSEHContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtLISTFILES(DARICParser::StmtLISTFILESContext *context) = 0;
+
+    virtual antlrcpp::Any visitGraphicsStmt(DARICParser::GraphicsStmtContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtCLS(DARICParser::StmtCLSContext *context) = 0;
 

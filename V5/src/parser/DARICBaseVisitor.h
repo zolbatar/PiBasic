@@ -35,7 +35,11 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitStmtCOLON(DARICParser::StmtCOLONContext *ctx) override {
+  virtual antlrcpp::Any visitStmt(DARICParser::StmtContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitCoreStmt(DARICParser::CoreStmtContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -147,6 +151,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitKeyMouseStmt(DARICParser::KeyMouseStmtContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -179,6 +187,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitIoStmt(DARICParser::IoStmtContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtBPUTH(DARICParser::StmtBPUTHContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -196,6 +208,10 @@ public:
   }
 
   virtual antlrcpp::Any visitStmtLISTFILES(DARICParser::StmtLISTFILESContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitGraphicsStmt(DARICParser::GraphicsStmtContext *ctx) override {
     return visitChildren(ctx);
   }
 
