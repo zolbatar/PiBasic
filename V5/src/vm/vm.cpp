@@ -1503,7 +1503,6 @@ void VM::opcode_CALL()
     if (!performance_build && runtime_debug)
         g_env.log << "Calling &" << std::hex << std::uppercase << new_pc << std::dec << std::nouppercase << std::endl;
     variables.create_locals_on_call(functions[l], runtime_debug);
-    //assert(call_stack.size() == 0);
     call_stack.push(helper_bytecodes().pc);
     helper_bytecodes().pc = new_pc;
 }
@@ -1544,7 +1543,6 @@ void VM::opcode_RETURN()
         variables.revert_locals_on_return();
     }
     call_stack.pop();
-    //assert(call_stack.size() == 0);
     if (!performance_build && runtime_debug)
         g_env.log << "Returning to &" << std::hex << std::uppercase << new_pc << std::dec << std::nouppercase << std::endl;
     helper_bytecodes().pc = new_pc;

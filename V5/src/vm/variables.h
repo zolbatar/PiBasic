@@ -72,7 +72,7 @@ public:
 
     void revert_locals_on_return()
     {
-        auto locals = locals_stack.top();
+        locals = locals_stack.top();
         locals_stack.pop();
     }
 

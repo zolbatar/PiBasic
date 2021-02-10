@@ -13,7 +13,13 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
         state = CompilerState::ASSIGNMENT;
         visit(context->varDecl(i));
         state = CompilerState::NOSTATE;
-        find_or_create_variable(context->LOCAL() != NULL ? VariableScope::LOCAL : VariableScope::GLOBAL);
+
+        // Is this a forced scope assignment?
+        if (context->LOCAL() != NULL || context->GLOBAL() != NULL || context->LET() != NULL) {
+            find_or_create_variable_in_scope(context->LOCAL() != NULL ? VariableScope::LOCAL : VariableScope::GLOBAL);
+        } else {
+            find_or_create_variable(context->LOCAL() != NULL ? VariableScope::LOCAL : VariableScope::GLOBAL);
+        }
         auto saved = current_var;
 
         // Get value
