@@ -179,7 +179,6 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         // DATA statements
     case Bytecodes::READ:
         ret.opcode = "READ";
-        name_for_operand(ret, bc, i);
         break;
     case Bytecodes::RESTORE:
         ret.opcode = "RESTORE";
@@ -378,6 +377,9 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         ret.opcode = "DIV";
         break;
 
+    case Bytecodes::UNARY:
+        ret.opcode = "UNARY";
+        break;
     case Bytecodes::SQR:
         ret.opcode = "SQR";
         break;
@@ -422,6 +424,9 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         break;
     case Bytecodes::PI:
         ret.opcode = "PI";
+        break;
+    case Bytecodes::POWER:
+        ret.opcode = "^ EXPONENTATION";
         break;
     case Bytecodes::SWAP:
         ret.opcode = "SWAP";
@@ -633,7 +638,7 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         break;
 
     default:
-        std::cout << "Unknown bytecode: " << (int)bc.data << std::endl;
+        std::cout << "Unknown bytecode: " << (int)bc.opcode << std::endl;
         exit(1);
     }
     return ret;

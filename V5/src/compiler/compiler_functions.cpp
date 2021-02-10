@@ -281,7 +281,7 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
     return NULL;
 }
 
-void Compiler::general_call_fnproc()
+void Compiler::general_call_fnproc(bool drop)
 {
     // Find function
     auto func = &(*functions.find(called_fnproc)).second;
@@ -295,8 +295,12 @@ void Compiler::general_call_fnproc()
         insert_instruction(Bytecodes::CALL, Type::NOTYPE, func->pc_start);
     }
 
+    if (drop) {
+        insert_bytecode(Bytecodes::DROP, Type::NOTYPE);
+    }
+
     // Do we have any return parameters? If so, grab from stack and store
-    for (auto it = func->parameters.cbegin(); it != func->parameters.cend(); ++it) {
+    for (auto it = func->parameters.rbegin(); it != func->parameters.rend(); ++it) {
         auto a = *it;
         if (a.return_parameter) {
             current_var.name = a.current_return_variable;
@@ -322,7 +326,7 @@ antlrcpp::Any Compiler::visitStmtCallPROC(DARICParser::StmtCallPROCContext* cont
     }
 
     // Do call
-    general_call_fnproc();
+    general_call_fnproc(false);
 
     return NULL;
 }
@@ -343,11 +347,7 @@ antlrcpp::Any Compiler::visitStmtCallFN(DARICParser::StmtCallFNContext* context)
     }
 
     // Do call
-    general_call_fnproc();
-
-    // We are going to DROP the return in this case as it's called as a statement
-    insert_bytecode(Bytecodes::DROP, Type::NOTYPE);
-
+    general_call_fnproc(true);
     return NULL;
 }
 
@@ -365,7 +365,7 @@ antlrcpp::Any Compiler::visitNumVarFloatFN(DARICParser::NumVarFloatFNContext* co
     visit(context->functionParList());
 
     // Do call
-    general_call_fnproc();
+    general_call_fnproc(false);
 
     // Put type onto stack
     stack_push(Type::FLOAT);
@@ -387,7 +387,7 @@ antlrcpp::Any Compiler::visitNumVarIntegerFN(DARICParser::NumVarIntegerFNContext
     visit(context->functionParList());
 
     // Do call
-    general_call_fnproc();
+    general_call_fnproc(false);
 
     // Put type onto stack
     stack_push(Type::INTEGER);
@@ -409,7 +409,7 @@ antlrcpp::Any Compiler::visitNumVarStringFN(DARICParser::NumVarStringFNContext* 
     visit(context->functionParList());
 
     // Do call
-    general_call_fnproc();
+    general_call_fnproc(false);
 
     // Put type onto stack
     stack_push(Type::STRING);

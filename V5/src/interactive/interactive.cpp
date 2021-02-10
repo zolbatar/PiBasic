@@ -53,6 +53,13 @@ void Interactive::welcome_prompt()
     g_env.graphics.colour(255, 255, 255);
 }
 
+void Interactive::clear (){
+    lines.clear();
+    create_empty_vm();
+    delete compiler;
+    compiler = new Compiler();
+}
+
 void Interactive::run()
 {
     g_env.interactive = true;
@@ -96,10 +103,7 @@ void Interactive::run()
             } else if (upper.compare("QUIT") == 0) {
                 return;
             } else if (upper.compare("NEW") == 0) {
-                lines.clear();
-                create_empty_vm();
-                delete compiler;
-                compiler = new Compiler();
+                clear();
             } else if (upper.compare("LIST") == 0) {
                 for (auto it = lines.begin(); it != lines.end(); it++) {
                     std::stringstream stream;

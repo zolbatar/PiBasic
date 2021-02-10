@@ -1,5 +1,26 @@
-IF 1 = 1
-	PRINT "Yes"
-ELSE
-	Print "No"
-ENDIF
+PROCTestTypes()
+END
+
+REM Check Forward FN/PROC calls
+Type VertexTest(x,y,z,rgb%)
+
+DEF PROCTestTypes()
+	LOCAL A! = VertexTest
+	A!x = 50.0
+ 	A!y = 100.5
+ 	A!rgb% = &FF2080
+	PRINT A!x,A!y,A!rgb%
+ 	PRINT "Load field (float) = ";: IF A!y = 100.5 PROCPass() ELSE PROCFail()
+	PRINT "Load field (int)   = ";: IF A!rgb% = &FF2080 PROCPass() ELSE PROCFail()
+	DIM B!(5, VertexTest)
+ 	B!(4)y = 100.0
+ 	PRINT "Load field (array) = ";: IF B!(4)y = 100.0 PROCPass() ELSE PROCFail()
+ENDPROC
+
+DEF PROCFail()
+	COLOUR RED
+	PRINT  "!! FAILED TEST !!"
+	END
+ENDPROC
+
+DEF PROCPass():COLOUR GREEN:PRINT "PASS":COLOUR WHITE:ENDPROC

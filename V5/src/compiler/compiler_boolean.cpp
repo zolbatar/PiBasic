@@ -11,7 +11,7 @@ antlrcpp::Any Compiler::visitNumExprNOT(DARICParser::NumExprNOTContext* context)
     return NULL;
 }
 
-antlrcpp::Any Compiler::visitNumExprAND(DARICParser::NumExprANDContext* context)
+antlrcpp::Any Compiler::visitNumExprANDOREOR(DARICParser::NumExprANDOREORContext* context)
 {
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
@@ -19,31 +19,13 @@ antlrcpp::Any Compiler::visitNumExprAND(DARICParser::NumExprANDContext* context)
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
-    boolean(Bytecodes::BOOL_AND);
-    return NULL;
-}
-
-antlrcpp::Any Compiler::visitNumExprOR(DARICParser::NumExprORContext* context)
-{
-    if (phase == CompilerPhase::LOOKAHEAD)
-        return NULL;
-    set_pos(context->start);
-    visit(context->numExpr(0));
-    visit(context->numExpr(1));
-    expression_type_conversion(context, false);
-    boolean(Bytecodes::BOOL_OR);
-    return NULL;
-}
-
-antlrcpp::Any Compiler::visitNumExprEOR(DARICParser::NumExprEORContext* context)
-{
-    if (phase == CompilerPhase::LOOKAHEAD)
-        return NULL;
-    set_pos(context->start);
-    visit(context->numExpr(0));
-    visit(context->numExpr(1));
-    expression_type_conversion(context, false);
-    boolean(Bytecodes::BOOL_EOR);
+    if (context->AND() != NULL) {
+        boolean(Bytecodes::BOOL_AND);
+    } else if (context->OR() != NULL) {
+        boolean(Bytecodes::BOOL_OR);
+    } else if (context->EOR() != NULL) {
+        boolean(Bytecodes::BOOL_EOR);
+    }
     return NULL;
 }
 

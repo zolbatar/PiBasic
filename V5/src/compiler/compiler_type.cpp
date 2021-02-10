@@ -143,7 +143,7 @@ antlrcpp::Any Compiler::visitNumVarIntegerField(DARICParser::NumVarIntegerFieldC
     find_variable(true, true);
     if (state == CompilerState::NOSTATE) {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
-        insert_instruction(Bytecodes::LOAD_FIELD_ARRAY, current_var.field_type, current_var.id);
+        insert_instruction(Bytecodes::LOAD_FIELD, current_var.field_type, current_var.id);
         stack_push(current_var.field_type);
     }
     return NULL;
@@ -159,7 +159,7 @@ antlrcpp::Any Compiler::visitNumVarStringField(DARICParser::NumVarStringFieldCon
     find_variable(true, true);
     if (state == CompilerState::NOSTATE) {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
-        insert_instruction(Bytecodes::LOAD_FIELD_ARRAY, current_var.field_type, current_var.id);
+        insert_instruction(Bytecodes::LOAD_FIELD, current_var.field_type, current_var.id);
         stack_push(current_var.field_type);
     }
     return NULL;

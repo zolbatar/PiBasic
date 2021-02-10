@@ -29,7 +29,7 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
             end++;
             t = stream[end];
         };
-        return stream.substr(start + 1, end - start);
+        return stream.substr(start, end - start);
     }
 
     void syntaxError(
@@ -98,7 +98,6 @@ void MyParser::parse_and_compile(Compiler* compiler)
         throw std::runtime_error("File not found\r");
     }
     parsing_filename = filename;
-
     ANTLRInputStream input(stream);
 
     // Tokeniser
@@ -108,12 +107,19 @@ void MyParser::parse_and_compile(Compiler* compiler)
     // Parser
     MyParserErrorListener errorListener;
     DARICParser parser(&tokens);
+    //parser.setErrorHandler(std::make_shared<antlr4::BailErrorStrategy>());
     parser.removeErrorListeners();
     parser.addErrorListener(&errorListener);
     parser.setBuildParseTree(true);
     parser.getInterpreter<atn::ParserATNSimulator>()->setPredictionMode(atn::PredictionMode::SLL);
     //    parser.getInterpreter<atn::ParserATNSimulator>()->setPredictionMode(atn::PredictionMode::LL_EXACT_AMBIG_DETECTION);
     DARICParser::ProgContext* tree = parser.prog();
+    /*    try {
+        tree = parser.prog();
+    } catch (ParseCancellationException& e) {
+        std::cout << std::string(e.what()) << std::endl;
+        return;
+    }*/
 
     if (parse_errors) {
         if (file_count > 1) {

@@ -142,18 +142,6 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStmtLET(DARICParser.StmtLETContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DARICParser#stmtLOCAL}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStmtLOCAL(DARICParser.StmtLOCALContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link DARICParser#stmtLOCALDIM}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStmtLOCALDIM(DARICParser.StmtLOCALDIMContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link DARICParser#stmtOSCLI}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -788,6 +776,13 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStrFuncSTRINGS(DARICParser.StrFuncSTRINGSContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code strFuncINKEYS}
+	 * labeled alternative in {@link DARICParser#strFunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStrFuncINKEYS(DARICParser.StrFuncINKEYSContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link DARICParser#string}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -954,6 +949,20 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumFuncSGN(DARICParser.NumFuncSGNContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code numFuncGET}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumFuncGET(DARICParser.NumFuncGETContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code numFuncINKEY}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumFuncINKEY(DARICParser.NumFuncINKEYContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code numFuncINT}
 	 * labeled alternative in {@link DARICParser#numFunc}.
 	 * @param ctx the parse tree
@@ -1059,6 +1068,13 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumExprNumber(DARICParser.NumExprNumberContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code numExprSHLSHR}
+	 * labeled alternative in {@link DARICParser#numExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumExprSHLSHR(DARICParser.NumExprSHLSHRContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code numExprFunc}
 	 * labeled alternative in {@link DARICParser#numExpr}.
 	 * @param ctx the parse tree
@@ -1066,26 +1082,12 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumExprFunc(DARICParser.NumExprFuncContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code numExprSubtract}
-	 * labeled alternative in {@link DARICParser#numExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumExprSubtract(DARICParser.NumExprSubtractContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code numExprVar}
 	 * labeled alternative in {@link DARICParser#numExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitNumExprVar(DARICParser.NumExprVarContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code numExprEOR}
-	 * labeled alternative in {@link DARICParser#numExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumExprEOR(DARICParser.NumExprEORContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code numExprHat}
 	 * labeled alternative in {@link DARICParser#numExpr}.
@@ -1108,33 +1110,33 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumExprStrRelop(DARICParser.NumExprStrRelopContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code numExprSHR}
-	 * labeled alternative in {@link DARICParser#numExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumExprSHR(DARICParser.NumExprSHRContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code numExprMultiply}
-	 * labeled alternative in {@link DARICParser#numExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumExprMultiply(DARICParser.NumExprMultiplyContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code numExprMOD}
-	 * labeled alternative in {@link DARICParser#numExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumExprMOD(DARICParser.NumExprMODContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code numExprNOT}
 	 * labeled alternative in {@link DARICParser#numExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitNumExprNOT(DARICParser.NumExprNOTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code numExprMultiplyDivide}
+	 * labeled alternative in {@link DARICParser#numExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumExprMultiplyDivide(DARICParser.NumExprMultiplyDivideContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code numExprDIVMOD}
+	 * labeled alternative in {@link DARICParser#numExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumExprDIVMOD(DARICParser.NumExprDIVMODContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code numExprANDOREOR}
+	 * labeled alternative in {@link DARICParser#numExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumExprANDOREOR(DARICParser.NumExprANDOREORContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code numExprNested}
 	 * labeled alternative in {@link DARICParser#numExpr}.
@@ -1143,112 +1145,16 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumExprNested(DARICParser.NumExprNestedContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code numExprSHL}
+	 * Visit a parse tree produced by the {@code numExprAddSubtract}
 	 * labeled alternative in {@link DARICParser#numExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNumExprSHL(DARICParser.NumExprSHLContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code numExprAND}
-	 * labeled alternative in {@link DARICParser#numExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumExprAND(DARICParser.NumExprANDContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code numExprPlus}
-	 * labeled alternative in {@link DARICParser#numExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumExprPlus(DARICParser.NumExprPlusContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code numExprUnary}
-	 * labeled alternative in {@link DARICParser#numExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumExprUnary(DARICParser.NumExprUnaryContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code numExprOR}
-	 * labeled alternative in {@link DARICParser#numExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumExprOR(DARICParser.NumExprORContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code numExprDivide}
-	 * labeled alternative in {@link DARICParser#numExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumExprDivide(DARICParser.NumExprDivideContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code numExprDIV}
-	 * labeled alternative in {@link DARICParser#numExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumExprDIV(DARICParser.NumExprDIVContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link DARICParser#nestedExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNestedExpr(DARICParser.NestedExprContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link DARICParser#notExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNotExpr(DARICParser.NotExprContext ctx);
+	T visitNumExprAddSubtract(DARICParser.NumExprAddSubtractContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link DARICParser#numColours}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitNumColours(DARICParser.NumColoursContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code compareEQ}
-	 * labeled alternative in {@link DARICParser#compare}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCompareEQ(DARICParser.CompareEQContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code compareNE}
-	 * labeled alternative in {@link DARICParser#compare}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCompareNE(DARICParser.CompareNEContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code compareGT}
-	 * labeled alternative in {@link DARICParser#compare}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCompareGT(DARICParser.CompareGTContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code compareGE}
-	 * labeled alternative in {@link DARICParser#compare}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCompareGE(DARICParser.CompareGEContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code compareLT}
-	 * labeled alternative in {@link DARICParser#compare}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCompareLT(DARICParser.CompareLTContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code compareLE}
-	 * labeled alternative in {@link DARICParser#compare}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCompareLE(DARICParser.CompareLEContext ctx);
 }

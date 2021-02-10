@@ -208,10 +208,13 @@ protected:
     antlrcpp::Any visitLiteral(DARICParser::LiteralContext* context);
     antlrcpp::Any visitExprList(DARICParser::ExprListContext* context);
     antlrcpp::Any visitExpr(DARICParser::ExprContext* context);
+    antlrcpp::Any visitCoreStmt(DARICParser::CoreStmtContext* context);
+    antlrcpp::Any visitKeyMouseStmt(DARICParser::KeyMouseStmtContext* context);
+    antlrcpp::Any visitIoStmt(DARICParser::IoStmtContext* context);
+    antlrcpp::Any visitGraphicsStmt(DARICParser::GraphicsStmtContext* context);
 
     /* Statements */
     antlrcpp::Any visitStmt(DARICParser::StmtContext* context);
-    antlrcpp::Any visitStmtCOLON(DARICParser::StmtCOLONContext* context);
     antlrcpp::Any visitStmtBREAKPOINT(DARICParser::StmtBREAKPOINTContext* context);
     antlrcpp::Any visitStmtCASE(DARICParser::StmtCASEContext* context);
     antlrcpp::Any visitWhen(DARICParser::WhenContext* context);
@@ -224,12 +227,9 @@ protected:
     antlrcpp::Any visitStmtIFMultiline(DARICParser::StmtIFMultilineContext* context);
     antlrcpp::Any visitStmtINPUT(DARICParser::StmtINPUTContext* context);
     antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext* context);
-    antlrcpp::Any visitStmtLOCAL(DARICParser::StmtLOCALContext* context);
-    antlrcpp::Any visitStmtLOCALDIM(DARICParser::StmtLOCALDIMContext* context);
     antlrcpp::Any visitStmtOSCLI(DARICParser::StmtOSCLIContext* context);
     antlrcpp::Any visitStmtPRINT(DARICParser::StmtPRINTContext* context);
     antlrcpp::Any visitStmtREPEAT(DARICParser::StmtREPEATContext* context);
-    antlrcpp::Any visitStmtREM(DARICParser::StmtREMContext* context);
     antlrcpp::Any visitStmtSWAP(DARICParser::StmtSWAPContext* context);
     antlrcpp::Any visitStmtTYPE(DARICParser::StmtTYPEContext* context);
     antlrcpp::Any visitStmtTRACEON(DARICParser::StmtTRACEONContext* context);
@@ -242,6 +242,9 @@ protected:
     antlrcpp::Any visitStmtINKEYS(DARICParser::StmtINKEYSContext* context);
     antlrcpp::Any visitStmtGET(DARICParser::StmtGETContext* context);
     antlrcpp::Any visitStmtGETS(DARICParser::StmtGETSContext* context);
+    antlrcpp::Any visitNumFuncGET(DARICParser::NumFuncGETContext* context);
+    antlrcpp::Any visitNumFuncINKEY(DARICParser::NumFuncINKEYContext* context);
+    antlrcpp::Any visitStrFuncINKEYS(DARICParser::StrFuncINKEYSContext* context);
 
     /* Graphics */
     antlrcpp::Any visitNumColours(DARICParser::NumColoursContext* context);
@@ -269,7 +272,7 @@ protected:
     antlrcpp::Any visitStmtRESTORE(DARICParser::StmtRESTOREContext* context);
 
     /* Functions */
-    void general_call_fnproc();
+    void general_call_fnproc(bool drop);
     antlrcpp::Any visitStmtDEFFN(DARICParser::StmtDEFFNContext* context);
     antlrcpp::Any visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* context);
     antlrcpp::Any visitStmtRETURN(DARICParser::StmtRETURNContext* context);
@@ -361,12 +364,6 @@ protected:
     antlrcpp::Any visitPrintListSPC(DARICParser::PrintListSPCContext* context);
     antlrcpp::Any visitPrintListSeparator(DARICParser::PrintListSeparatorContext* context);
 
-    /* Numeric expressions */
-    antlrcpp::Any visitNumExprNumber(DARICParser::NumExprNumberContext* context);
-    antlrcpp::Any visitNumExprVar(DARICParser::NumExprVarContext* context);
-    antlrcpp::Any visitNumExprFunc(DARICParser::NumExprFuncContext* context);
-    antlrcpp::Any visitNumExprNested(DARICParser::NumExprNestedContext* context);
-
     /* Numeric functions */
     antlrcpp::Any visitNumFunc(DARICParser::NumFuncContext* context);
     antlrcpp::Any visitNumFuncPI(DARICParser::NumFuncPIContext* context);
@@ -407,6 +404,11 @@ protected:
     antlrcpp::Any visitNumFuncOPENUP(DARICParser::NumFuncOPENUPContext* context);
     antlrcpp::Any visitNumFuncPTR(DARICParser::NumFuncPTRContext* context);
 
+    antlrcpp::Any visitNumExprNumber(DARICParser::NumExprNumberContext* context);
+    antlrcpp::Any visitNumExprVar(DARICParser::NumExprVarContext* context);
+    antlrcpp::Any visitNumExprFunc(DARICParser::NumExprFuncContext* context);
+    antlrcpp::Any visitNumExprNested(DARICParser::NumExprNestedContext* context);
+
     /* Numeric functions taking string */
     antlrcpp::Any visitNumFuncASC(DARICParser::NumFuncASCContext* context);
     antlrcpp::Any visitNumFuncLEN(DARICParser::NumFuncLENContext* context);
@@ -416,32 +418,18 @@ protected:
 
     /* Numeric maths */
     void expression_type_conversion(DARICParser::NumExprContext* context, bool DIVIDE);
-    antlrcpp::Any visitNumExprUnary(DARICParser::NumExprUnaryContext* context);
     antlrcpp::Any visitNumExprHat(DARICParser::NumExprHatContext* context);
-    antlrcpp::Any visitNumExprMultiply(DARICParser::NumExprMultiplyContext* context);
-    antlrcpp::Any visitNumExprDivide(DARICParser::NumExprDivideContext* context);
-    antlrcpp::Any visitNumExprDIV(DARICParser::NumExprDIVContext* context);
-    antlrcpp::Any visitNumExprMOD(DARICParser::NumExprMODContext* context);
-    antlrcpp::Any visitNumExprPlus(DARICParser::NumExprPlusContext* context);
-    antlrcpp::Any visitNumExprSubtract(DARICParser::NumExprSubtractContext* context);
-    antlrcpp::Any visitNumExprSHL(DARICParser::NumExprSHLContext* context);
-    antlrcpp::Any visitNumExprSHR(DARICParser::NumExprSHRContext* context);
+    antlrcpp::Any visitNumExprMultiplyDivide(DARICParser::NumExprMultiplyDivideContext* context);
+    antlrcpp::Any visitNumExprDIVMOD(DARICParser::NumExprDIVMODContext* context);
+    antlrcpp::Any visitNumExprAddSubtract(DARICParser::NumExprAddSubtractContext* context);
+    antlrcpp::Any visitNumExprSHLSHR(DARICParser::NumExprSHLSHRContext* context);
     antlrcpp::Any visitStmtOperatorEqual(DARICParser::StmtOperatorEqualContext* context);
 
     /* Numeric boolean */
     antlrcpp::Any visitNumExprNOT(DARICParser::NumExprNOTContext* context);
-    antlrcpp::Any visitNumExprAND(DARICParser::NumExprANDContext* context);
-    antlrcpp::Any visitNumExprOR(DARICParser::NumExprORContext* context);
-    antlrcpp::Any visitNumExprEOR(DARICParser::NumExprEORContext* context);
+    antlrcpp::Any visitNumExprANDOREOR(DARICParser::NumExprANDOREORContext* context);
 
     /* Comparisons */
     antlrcpp::Any visitNumExprStrRelop(DARICParser::NumExprStrRelopContext* context);
     antlrcpp::Any visitNumExprNumRelop(DARICParser::NumExprNumRelopContext* context);
-    antlrcpp::Any visitCompare(DARICParser::CompareContext* context);
-    antlrcpp::Any visitCompareEQ(DARICParser::CompareEQContext* context);
-    antlrcpp::Any visitCompareNE(DARICParser::CompareNEContext* context);
-    antlrcpp::Any visitCompareGT(DARICParser::CompareGTContext* context);
-    antlrcpp::Any visitCompareGE(DARICParser::CompareGEContext* context);
-    antlrcpp::Any visitCompareLT(DARICParser::CompareLTContext* context);
-    antlrcpp::Any visitCompareLE(DARICParser::CompareLEContext* context);
 };

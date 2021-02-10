@@ -124,6 +124,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -138,7 +139,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64;C:\Users\d_dud\Development\Antlr4\Debug Static</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64;C:\Users\d_dud\source\repos\antlr4\runtime\Cpp\lib\vs-2019\x64\Debug Static</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;antlr4-runtime.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
@@ -162,8 +163,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64;C:\Users\d_dud\Development\Antlr4\Release Static</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64;C:\Users\d_dud\source\repos\antlr4\runtime\Cpp\lib\vs-2019\x64\Release Static</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;antlr4-runtime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PreBuildEvent>
       <Command>C:\Users\d_dud\source\repos\PiBasic\V5\build-grammar.bat</Command>

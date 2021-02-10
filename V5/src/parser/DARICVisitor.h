@@ -63,10 +63,6 @@ public:
 
     virtual antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext *context) = 0;
 
-    virtual antlrcpp::Any visitStmtLOCAL(DARICParser::StmtLOCALContext *context) = 0;
-
-    virtual antlrcpp::Any visitStmtLOCALDIM(DARICParser::StmtLOCALDIMContext *context) = 0;
-
     virtual antlrcpp::Any visitStmtOSCLI(DARICParser::StmtOSCLIContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtCallPROC(DARICParser::StmtCallPROCContext *context) = 0;
@@ -267,6 +263,8 @@ public:
 
     virtual antlrcpp::Any visitStrFuncSTRINGS(DARICParser::StrFuncSTRINGSContext *context) = 0;
 
+    virtual antlrcpp::Any visitStrFuncINKEYS(DARICParser::StrFuncINKEYSContext *context) = 0;
+
     virtual antlrcpp::Any visitString(DARICParser::StringContext *context) = 0;
 
     virtual antlrcpp::Any visitStrExpr(DARICParser::StrExprContext *context) = 0;
@@ -315,6 +313,10 @@ public:
 
     virtual antlrcpp::Any visitNumFuncSGN(DARICParser::NumFuncSGNContext *context) = 0;
 
+    virtual antlrcpp::Any visitNumFuncGET(DARICParser::NumFuncGETContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncINKEY(DARICParser::NumFuncINKEYContext *context) = 0;
+
     virtual antlrcpp::Any visitNumFuncINT(DARICParser::NumFuncINTContext *context) = 0;
 
     virtual antlrcpp::Any visitNumFuncFLOAT(DARICParser::NumFuncFLOATContext *context) = 0;
@@ -345,13 +347,11 @@ public:
 
     virtual antlrcpp::Any visitNumExprNumber(DARICParser::NumExprNumberContext *context) = 0;
 
+    virtual antlrcpp::Any visitNumExprSHLSHR(DARICParser::NumExprSHLSHRContext *context) = 0;
+
     virtual antlrcpp::Any visitNumExprFunc(DARICParser::NumExprFuncContext *context) = 0;
 
-    virtual antlrcpp::Any visitNumExprSubtract(DARICParser::NumExprSubtractContext *context) = 0;
-
     virtual antlrcpp::Any visitNumExprVar(DARICParser::NumExprVarContext *context) = 0;
-
-    virtual antlrcpp::Any visitNumExprEOR(DARICParser::NumExprEORContext *context) = 0;
 
     virtual antlrcpp::Any visitNumExprHat(DARICParser::NumExprHatContext *context) = 0;
 
@@ -359,47 +359,19 @@ public:
 
     virtual antlrcpp::Any visitNumExprStrRelop(DARICParser::NumExprStrRelopContext *context) = 0;
 
-    virtual antlrcpp::Any visitNumExprSHR(DARICParser::NumExprSHRContext *context) = 0;
-
-    virtual antlrcpp::Any visitNumExprMultiply(DARICParser::NumExprMultiplyContext *context) = 0;
-
-    virtual antlrcpp::Any visitNumExprMOD(DARICParser::NumExprMODContext *context) = 0;
-
     virtual antlrcpp::Any visitNumExprNOT(DARICParser::NumExprNOTContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprMultiplyDivide(DARICParser::NumExprMultiplyDivideContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprDIVMOD(DARICParser::NumExprDIVMODContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumExprANDOREOR(DARICParser::NumExprANDOREORContext *context) = 0;
 
     virtual antlrcpp::Any visitNumExprNested(DARICParser::NumExprNestedContext *context) = 0;
 
-    virtual antlrcpp::Any visitNumExprSHL(DARICParser::NumExprSHLContext *context) = 0;
-
-    virtual antlrcpp::Any visitNumExprAND(DARICParser::NumExprANDContext *context) = 0;
-
-    virtual antlrcpp::Any visitNumExprPlus(DARICParser::NumExprPlusContext *context) = 0;
-
-    virtual antlrcpp::Any visitNumExprUnary(DARICParser::NumExprUnaryContext *context) = 0;
-
-    virtual antlrcpp::Any visitNumExprOR(DARICParser::NumExprORContext *context) = 0;
-
-    virtual antlrcpp::Any visitNumExprDivide(DARICParser::NumExprDivideContext *context) = 0;
-
-    virtual antlrcpp::Any visitNumExprDIV(DARICParser::NumExprDIVContext *context) = 0;
-
-    virtual antlrcpp::Any visitNestedExpr(DARICParser::NestedExprContext *context) = 0;
-
-    virtual antlrcpp::Any visitNotExpr(DARICParser::NotExprContext *context) = 0;
+    virtual antlrcpp::Any visitNumExprAddSubtract(DARICParser::NumExprAddSubtractContext *context) = 0;
 
     virtual antlrcpp::Any visitNumColours(DARICParser::NumColoursContext *context) = 0;
-
-    virtual antlrcpp::Any visitCompareEQ(DARICParser::CompareEQContext *context) = 0;
-
-    virtual antlrcpp::Any visitCompareNE(DARICParser::CompareNEContext *context) = 0;
-
-    virtual antlrcpp::Any visitCompareGT(DARICParser::CompareGTContext *context) = 0;
-
-    virtual antlrcpp::Any visitCompareGE(DARICParser::CompareGEContext *context) = 0;
-
-    virtual antlrcpp::Any visitCompareLT(DARICParser::CompareLTContext *context) = 0;
-
-    virtual antlrcpp::Any visitCompareLE(DARICParser::CompareLEContext *context) = 0;
 
 
 };

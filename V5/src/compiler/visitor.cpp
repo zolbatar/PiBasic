@@ -6,15 +6,11 @@ antlrcpp::Any Compiler::visitProg(DARICParser::ProgContext* context)
     return visitChildren(context);
 }
 
-antlrcpp::Any Compiler::visitStmtCOLON(DARICParser::StmtCOLONContext* context)
-{
-    set_pos(context->start);
-    return visitChildren(context);
-}
-
 antlrcpp::Any Compiler::visitLine(DARICParser::LineContext* context)
 {
+    g_env.graphics.poll();
     set_pos(context->start);
+    assert(stack_size() == 0);
     return visitChildren(context);
 }
 
@@ -67,7 +63,25 @@ antlrcpp::Any Compiler::visitLiteral(DARICParser::LiteralContext* context)
     return visitChildren(context);
 }
 
-antlrcpp::Any Compiler::visitStmtREM(DARICParser::StmtREMContext* context)
+antlrcpp::Any Compiler::visitCoreStmt(DARICParser::CoreStmtContext* context)
+{
+    set_pos(context->start);
+    return visitChildren(context);
+}
+
+antlrcpp::Any Compiler::visitKeyMouseStmt(DARICParser::KeyMouseStmtContext* context)
+{
+    set_pos(context->start);
+    return visitChildren(context);
+}
+
+antlrcpp::Any Compiler::visitIoStmt(DARICParser::IoStmtContext* context)
+{
+    set_pos(context->start);
+    return visitChildren(context);
+}
+
+antlrcpp::Any Compiler::visitGraphicsStmt(DARICParser::GraphicsStmtContext* context)
 {
     set_pos(context->start);
     return visitChildren(context);

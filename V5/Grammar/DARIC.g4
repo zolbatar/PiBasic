@@ -39,9 +39,6 @@ coreStmt
     | stmtIF
     | stmtIFMultiline
     | stmtLET
-    | stmtLET
-    | stmtLOCAL
-    | stmtLOCALDIM
     | stmtOSCLI
     | stmtCallPROC
     | stmtREAD
@@ -58,7 +55,7 @@ stmtBREAKPOINT:     BREAKPOINT ;
 stmtCASE:           CASE expr OF NEWLINE when+ (OTHERWISE body)? ENDCASE ; 
 stmtCHAIN:          CHAIN strExpr ;
 stmtDATA:           DATA literal (COMMA literal)* ;
-stmtDIM:            DIM varDeclWithDimension (COMMA varDeclWithDimension)* ;
+stmtDIM:            LOCAL? DIM varDeclWithDimension (COMMA varDeclWithDimension)* ;
 stmtEND:            END ;
 stmtRETURN:         RETURN expr? ;
 stmtDEFFN:          DEF fnName LPAREN functionVarList? RPAREN body ENDFN ;
@@ -66,11 +63,9 @@ stmtDEFPROC:        DEF PROC_NAME LPAREN functionVarList? RPAREN body ENDPROC ;
 stmtFOR:            FOR LOCAL? justNumberVar EQ numExpr TO numExpr (STEP numExpr)? body NEXT ;
 stmtFORIN:          FOR LOCAL? justVar IN justVar LPAREN RPAREN body NEXT ;
 stmtCallFN:         fnName LPAREN functionParList? RPAREN ;
-stmtIF:             IF expr THEN? t=content (ELSE f=content)? ;
-stmtIFMultiline:    IF expr THEN? NEWLINE t=line+ (ELSE NEWLINE f=line+)? ENDIF ;
-stmtLET:            (LET? | GLOBAL?) varDecl EQ expr (COMMA varDecl EQ expr)* ;
-stmtLOCAL:          LOCAL varDecl EQ expr (COMMA varDecl EQ expr)* ;
-stmtLOCALDIM:       LOCAL DIM varDeclWithDimension (COMMA varDeclWithDimension)* ;
+stmtIF:             IF expr t=content (ELSE f=content)? ;
+stmtIFMultiline:    IF expr THEN NEWLINE t=line+ (ELSE NEWLINE f=line+)? ENDIF ;
+stmtLET:            ((LET | GLOBAL)? | LOCAL) varDecl EQ expr (COMMA varDecl EQ expr)* ;
 stmtOSCLI:          OSCLI strExpr ;
 stmtCallPROC:       PROC_NAME LPAREN functionParList? RPAREN ;
 stmtREAD:           READ varDecl (COMMA varDecl)* ;
@@ -117,7 +112,7 @@ ioStmt
     | stmtLISTFILES
     ;
 
-stmtBPUTH:      BPUTH numExpr ;
+stmtBPUTH:      BPUTH numExpr COMMA numExpr ;
 stmtBGETH:      BGETH numExpr ;
 stmtPTRH:       PTRH numExpr EQ numExpr ;
 stmtCLOSEH:     CLOSEH numExpr ;
@@ -301,6 +296,7 @@ numberFloat:        (PLUS | MINUS)? FLOAT ;
 strFunc
     : TIMES                                                     #strFuncTIMES   
     | CHRS numExpr                                              #strFuncCHRS
+    | CHRS LPAREN numExpr RPAREN                                #strFuncCHRS
     | LEFTS LPAREN strExpr COMMA numExpr RPAREN                 #strFuncLEFTS
     | MIDS LPAREN strExpr COMMA numExpr COMMA numExpr RPAREN    #strFuncMIDS3
     | MIDS LPAREN strExpr COMMA numExpr RPAREN                  #strFuncMIDS2
@@ -308,6 +304,7 @@ strFunc
     | STRS numExpr                                              #strFuncSTRS
     | STRS TILDE numExpr                                        #strFuncSTRSHEX
     | STRINGS LPAREN numExpr COMMA strExpr RPAREN               #strFuncSTRINGS
+    | INKEYS numExpr                                            #strFuncINKEYS
     ;
 
 string
@@ -331,24 +328,28 @@ numFunc
     | RND0                                  #numFuncRND0
     | RND1                                  #numFuncRND1
     | RND LPAREN numExpr RPAREN             #numFuncRNDRANGE
-    | LN numExpr                            #numFuncLN
-    | LOG numExpr                           #numFuncLOG
-    | EXP numExpr                           #numFuncEXP
-    | ATN numExpr                           #numFuncATN
-    | TAN numExpr                           #numFuncTAN
-    | COS numExpr                           #numFuncCOS
-    | SIN numExpr                           #numFuncSIN
-    | ABS numExpr                           #numFuncABS
-    | ACS numExpr                           #numFuncACS
-    | ASN numExpr                           #numFuncASN
-    | DEG numExpr                           #numFuncDEG
-    | RAD numExpr                           #numFuncRAD
-    | SQR numExpr                           #numFuncSQR
-    | SGN numExpr                           #numFuncSGN
+    | LN LPAREN numExpr RPAREN              #numFuncLN
+    | LOG LPAREN numExpr RPAREN             #numFuncLOG
+    | EXP LPAREN numExpr RPAREN             #numFuncEXP
+    | ATN LPAREN numExpr RPAREN             #numFuncATN
+    | TAN LPAREN numExpr RPAREN             #numFuncTAN
+    | COS LPAREN numExpr RPAREN             #numFuncCOS
+    | SIN LPAREN numExpr RPAREN             #numFuncSIN
+    | ABS LPAREN numExpr RPAREN             #numFuncABS
+    | ACS LPAREN numExpr RPAREN             #numFuncACS
+    | ASN LPAREN numExpr RPAREN             #numFuncASN
+    | DEG LPAREN numExpr RPAREN             #numFuncDEG
+    | RAD LPAREN numExpr RPAREN             #numFuncRAD
+    | SQR LPAREN numExpr RPAREN             #numFuncSQR
+    | SGN LPAREN numExpr RPAREN             #numFuncSGN
+
+    /* Keyboard */
+    | GET                                   #numFuncGET
+    | INKEY numExpr                         #numFuncINKEY
 
     /* Conversion */
-    | INT numExpr                           #numFuncINT
-    | FLOAT_TOKEN numExpr                   #numFuncFLOAT
+    | INT LPAREN numExpr RPAREN             #numFuncINT
+    | FLOAT_TOKEN LPAREN numExpr RPAREN     #numFuncFLOAT
 
     /* Graphics */
     | POINT LPAREN numExpr COMMA numExpr RPAREN         #numFuncPOINT
@@ -370,34 +371,19 @@ numFunc
     ;
 
 numExpr
-    : MINUS numExpr                         #numExprUnary
-    | notExpr                               #numExprNOT
-    | numFunc                               #numExprFunc
-    | nestedExpr                            #numExprNested
-    | <assoc=right> numExpr HAT numExpr     #numExprHat
-    | numExpr MULTIPLY numExpr              #numExprMultiply
-    | numExpr DIVIDE numExpr                #numExprDivide
-    | numExpr DIV numExpr                   #numExprDIV
-    | numExpr MOD numExpr                   #numExprMOD
-    | numExpr PLUS numExpr                  #numExprPlus
-    | numExpr MINUS numExpr                 #numExprSubtract
-    | numExpr compare numExpr               #numExprNumRelop
-    | strExpr compare strExpr               #numExprStrRelop
-    | numExpr SHL numExpr                   #numExprSHL
-    | numExpr SHR numExpr                   #numExprSHR
-    | numExpr AND numExpr                   #numExprAND
-    | numExpr OR numExpr                    #numExprOR
-    | numExpr EOR numExpr                   #numExprEOR
-    | numVar                                #numExprVar
+    : numVar                                #numExprVar
     | number                                #numExprNumber
-    ;
-
-nestedExpr
-    : LPAREN numExpr RPAREN                 
-    ;
-
-notExpr
-    : NOT numExpr
+    | LPAREN numExpr RPAREN                 #numExprNested
+    | NOT numExpr                           #numExprNOT
+    | numFunc                               #numExprFunc
+    | <assoc=right> numExpr HAT numExpr     #numExprHat 
+    | numExpr (MULTIPLY|DIVIDE) numExpr     #numExprMultiplyDivide
+    | numExpr (DIV|MOD) numExpr             #numExprDIVMOD
+    | numExpr (PLUS|MINUS) numExpr          #numExprAddSubtract
+    | numExpr (SHL|SHR) numExpr             #numExprSHLSHR
+    | numExpr (EQ|NE|GT|GE|LT|LE) numExpr   #numExprNumRelop
+    | strExpr (EQ|NE|GT|GE|LT|LE) strExpr   #numExprStrRelop
+    | numExpr (AND|OR|EOR) numExpr          #numExprANDOREOR
     ;
 
 numColours
@@ -409,15 +395,6 @@ numColours
     | CYAN
     | WHITE
     | BLACK 
-    ;
-
-compare
-    : EQ        #compareEQ
-    | NE        #compareNE
-    | GT        #compareGT
-    | GE        #compareGE
-    | LT        #compareLT
-    | LE        #compareLE
     ;
 
 // Lexer stuff

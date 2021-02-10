@@ -28,27 +28,27 @@ antlrcpp::Any Compiler::visitStmtREAD(DARICParser::StmtREADContext* context)
         auto saved = current_var;
 
         // Get value
+        auto type = saved.type;
         switch (saved.type) {
         case Type::INTEGER:
         case Type::FLOAT:
         case Type::STRING:
             break;
         case Type::INTEGER_ARRAY:
-            saved.type = Type::INTEGER;
+            type = Type::INTEGER;
             break;
         case Type::FLOAT_ARRAY:
-            saved.type = Type::FLOAT;
+            type = Type::FLOAT;
             break;
         case Type::STRING_ARRAY:
-            saved.type = Type::STRING;
-            break;
+            type = Type::STRING;
             break;
         default:
             error("Unknown type in READ");
         }
-        insert_instruction(Bytecodes::READ, saved.type, saved.id);
+        insert_bytecode(Bytecodes::READ, type);
         assert(stack_size() == 0);
-        save_to_variable(saved.type, saved);
+        save_to_variable(type, saved);
     }
 
     return NULL;

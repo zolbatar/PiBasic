@@ -6,5 +6,6 @@ ECHO Creating JAVA files
 ECHO Compiling
 @javac *.java
 ECHO Testing parser
+@rem CALL grun DARIC prog -diagnostics ..\test.daric
 @CALL grun DARIC prog -SLL -diagnostics ..\test.daric
-@REM CALL grun DARIC prog -SLL -tree ..\test.daric
+@CALL grun DARIC prog -SLL -tree ..\test.daric

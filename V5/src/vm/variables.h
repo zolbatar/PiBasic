@@ -28,13 +28,18 @@ public:
     void add_variable(Boxed b, int index) { variables.at(index) = std::move(b); }
     std::vector<Boxed>& get_locals() { return locals; }
 
-    inline Boxed* get_variable(Bytecode& bc, bool init_check)
+    void error(std::string err, Bytecode& bc)
+    {
+        throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, err);
+    }
+
+    Boxed* get_variable(Bytecode& bc)
     {
         if (bc.is_local_variable()) {
-            assert(bc.local_index() <= locals.size());
-            if (init_check && locals[bc.local_index()].get_type() == Type::NOTYPE) {
-                throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Use of uninitialised variable, is it a LOCAL being used before being defined?");
-            }
+            /*if (!performance_build && bc.local_index() >= locals.size()) {
+                error("Invalid LOCAL variable - this is normally an internal DARIC error", bc);
+            }*/
+            assert(bc.local_index() < locals.size());
             return &locals[bc.local_index()];
         } else {
             assert(bc.global_index() <= variables.size());
@@ -42,20 +47,21 @@ public:
         }
     };
 
-    inline Boxed* get_variable_by_int(Bytecode& bc, int v, bool init_check)
+    Boxed* get_variable_by_int(Bytecode& bc, int v)
     {
         if (v & LocalVariableFlag) {
-            auto l = locals[static_cast<size_t>(v ^ LocalVariableFlag)];
-            if (init_check && l.get_type() == Type::NOTYPE) {
-                throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Use of uninitialised variable, is it a LOCAL being used before being defined?");
-            }
-            return &l;
+            auto index = v ^ LocalVariableFlag;
+            /*if (!performance_build && index >= locals.size()) {
+                error("Invalid LOCAL variable - this is normally an internal DARIC error", bc);
+            }*/
+            assert(index < locals.size());
+            return &locals[static_cast<size_t>(v ^ LocalVariableFlag)];
         } else {
             return &variables[static_cast<size_t>(v)];
         }
     };
 
-    inline Boxed* get_variable_by_int_checkless(int v)
+    Boxed* get_variable_by_int_checkless(int v)
     {
         if (v & LocalVariableFlag) {
             return &locals[static_cast<size_t>(v ^ LocalVariableFlag)];
@@ -64,13 +70,13 @@ public:
         }
     };
 
-    inline void revert_locals_on_return()
+    void revert_locals_on_return()
     {
         auto locals = locals_stack.top();
         locals_stack.pop();
     }
 
-    inline void create_locals_on_call(VMFunction& function, bool debug)
+    void create_locals_on_call(VMFunction& function, bool debug)
     {
         locals_stack.push(std::move(locals));
         assert(locals.size() == 0);

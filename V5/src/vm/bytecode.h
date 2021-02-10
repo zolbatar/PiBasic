@@ -207,7 +207,7 @@ class Bytecode {
 public:
     Bytecodes opcode;
     Type type;
-    UINT32 data;
+    int data;
     UINT32 line_number;
     short char_position;
     short file_number;

@@ -73,25 +73,26 @@ antlrcpp::Any Compiler::visitStmtFOR(DARICParser::StmtFORContext* context)
     } else {
         find_or_create_variable(VariableScope::GLOBAL);
     }
+    auto saved = current_var;
 
     // From value (and store in variable)
     visit(context->numExpr(0));
     switch (stack_pop()) {
     case Type::INTEGER:
-        switch (current_var.type) {
+        switch (saved.type) {
         case Type::INTEGER:
             break;
         case Type::FLOAT:
-            insert_bytecode(Bytecodes::CONV_INT, Type::FLOAT);
+            insert_bytecode(Bytecodes::CONV_FLOAT, Type::INTEGER);
             break;
         default:
             error("Invalid type in FOR loop");
         }
         break;
     case Type::FLOAT:
-        switch (current_var.type) {
+        switch (saved.type) {
         case Type::INTEGER:
-            insert_bytecode(Bytecodes::CONV_FLOAT, Type::INTEGER);
+            insert_bytecode(Bytecodes::CONV_INT, Type::FLOAT);
             break;
         case Type::FLOAT:
             break;
@@ -102,26 +103,26 @@ antlrcpp::Any Compiler::visitStmtFOR(DARICParser::StmtFORContext* context)
     default:
         error("Invalid type in FOR loop");
     }
-    insert_bytecode(Bytecodes::STORE, current_var.type);
+    insert_instruction(Bytecodes::STORE, saved.type, saved.id);
 
     // To value
     visit(context->numExpr(1));
     switch (stack_pop()) {
     case Type::INTEGER:
-        switch (current_var.type) {
+        switch (saved.type) {
         case Type::INTEGER:
             break;
         case Type::FLOAT:
-            insert_bytecode(Bytecodes::CONV_INT, Type::FLOAT);
+            insert_bytecode(Bytecodes::CONV_FLOAT, Type::INTEGER);
             break;
         default:
             error("Invalid type in FOR loop");
         }
         break;
     case Type::FLOAT:
-        switch (current_var.type) {
+        switch (saved.type) {
         case Type::INTEGER:
-            insert_bytecode(Bytecodes::CONV_FLOAT, Type::INTEGER);
+            insert_bytecode(Bytecodes::CONV_INT, Type::FLOAT);
             break;
         case Type::FLOAT:
             break;
@@ -132,28 +133,28 @@ antlrcpp::Any Compiler::visitStmtFOR(DARICParser::StmtFORContext* context)
     default:
         error("Invalid type in FOR loop");
     }
-    insert_instruction(Bytecodes::LOAD, current_var.type, current_var.id);
-    insert_bytecode(Bytecodes::SUBTRACT, current_var.type);
+    insert_instruction(Bytecodes::LOAD, saved.type, saved.id);
+    insert_bytecode(Bytecodes::SUBTRACT, saved.type);
 
     // Step?
     if (context->STEP() != NULL) {
         visit(context->numExpr(2));
         switch (stack_pop()) {
         case Type::INTEGER:
-            switch (current_var.type) {
+            switch (saved.type) {
             case Type::INTEGER:
                 break;
             case Type::FLOAT:
-                insert_bytecode(Bytecodes::CONV_INT, Type::FLOAT);
+                insert_bytecode(Bytecodes::CONV_FLOAT, Type::INTEGER);
                 break;
             default:
                 error("Invalid type in FOR loop");
             }
             break;
         case Type::FLOAT:
-            switch (current_var.type) {
+            switch (saved.type) {
             case Type::INTEGER:
-                insert_bytecode(Bytecodes::CONV_FLOAT, Type::INTEGER);
+                insert_bytecode(Bytecodes::CONV_INT, Type::FLOAT);
                 break;
             case Type::FLOAT:
                 break;
@@ -165,7 +166,7 @@ antlrcpp::Any Compiler::visitStmtFOR(DARICParser::StmtFORContext* context)
             error("Invalid type in FOR loop");
         }
     } else {
-        switch (current_var.type) {
+        switch (saved.type) {
         case Type::INTEGER:
             insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 1);
             break;
@@ -179,13 +180,13 @@ antlrcpp::Any Compiler::visitStmtFOR(DARICParser::StmtFORContext* context)
     insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, vm->helper_bytecodes().pc + 2);
 
     // Actual FOR loop token
-    insert_instruction(Bytecodes::FOR, current_var.type, current_var.id);
+    insert_instruction(Bytecodes::FOR, saved.type, saved.id);
 
     // Process body
     visit(context->body());
 
     // And next
-    insert_instruction(Bytecodes::NEXT, current_var.type, current_var.id);
+    insert_instruction(Bytecodes::NEXT, saved.type, saved.id);
 
     return NULL;
 }

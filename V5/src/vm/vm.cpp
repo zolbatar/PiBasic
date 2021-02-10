@@ -75,7 +75,7 @@ void VM::opcode_FASTCONST_VAR()
 
 void VM::opcode_LOAD()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     switch (bc.type) {
     case Type::INTEGER: {
         stack.push_int(bc, var->value_int);
@@ -326,20 +326,16 @@ void VM::opcode_CONV_FLOAT()
 {
     if (bc.data == 0) {
         // Top stack
-        switch (bc.type) {
-        case Type::INTEGER:
-            VM_INT v1 = stack.pop_int(bc);
-            VM_FLOAT v2 = v1;
-            stack.push_float(bc, v2);
-            if (!performance_build && runtime_debug)
-                g_env.log << "Convert " << v1 << " (int) -> " << v2 << " (float)\n";
-            break;
-        }
+        VM_INT v1 = stack.pop_int(bc);
+        VM_FLOAT v2 = v1;
+        stack.push_float(bc, v2);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Convert " << v1 << " (int) -> " << v2 << " (float)\n";
     } else if (bc.data == 1) {
         // One from top
         auto b = stack.pop_boxed(bc);
         VM_INT v1 = stack.pop_int(bc);
-        VM_FLOAT v2 = v1;
+        VM_FLOAT v2 = static_cast<VM_FLOAT>(v1);
         stack.push_float(bc, v2);
         if (!performance_build && runtime_debug)
             g_env.log << "Convert (2nd) " << v1 << " (int) -> " << v2 << " (float)\n";
@@ -350,16 +346,11 @@ void VM::opcode_CONV_FLOAT()
 void VM::opcode_CONV_INT()
 {
     if (bc.data == 0) {
-        // Top stack
-        switch (bc.type) {
-        case Type::INTEGER:
-            VM_FLOAT v1 = stack.pop_float(bc);
-            VM_INT v2 = static_cast<VM_INT>(floor(v1));
-            stack.push_int(bc, v2);
-            if (!performance_build && runtime_debug)
-                g_env.log << "Convert " << v1 << " (float) -> " << v2 << " (int)\n";
-            break;
-        }
+        VM_FLOAT v1 = stack.pop_float(bc);
+        VM_INT v2 = static_cast<VM_INT>(floor(v1));
+        stack.push_int(bc, v2);
+        if (!performance_build && runtime_debug)
+            g_env.log << "Convert " << v1 << " (float) -> " << v2 << " (int)\n";
     } else if (bc.data == 1) {
         // One from top
         auto b = stack.pop_boxed(bc);
@@ -374,9 +365,9 @@ void VM::opcode_CONV_INT()
 
 void VM::opcode_SWAP()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     VM_INT v = stack.pop_int(bc);
-    auto var2 = variables.get_variable_by_int(bc, v, true);
+    auto var2 = variables.get_variable_by_int(bc, v);
     switch (bc.type) {
     case Type::INTEGER: {
         VM_INT t = var->value_int;
@@ -409,7 +400,7 @@ void VM::opcode_SWAP()
 
 void VM::opcode_STORE()
 {
-    auto var = variables.get_variable(bc, false);
+    auto var = variables.get_variable(bc);
     var->set_type_nodefault(bc.type);
     switch (bc.type) {
     case Type::INTEGER: {
@@ -440,7 +431,7 @@ void VM::opcode_STORE()
 
 void VM::opcode_INPUT()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     VM_INT qmark = stack.pop_int(bc);
     if (qmark) {
         g_env.graphics.print_text(console_font, "?", -1, -1);
@@ -576,7 +567,7 @@ void VM::opcode_PRINT_SPC()
 
 void VM::opcode_LOAD_ARRAY()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     VM_INT dimensions = stack.pop_int(bc);
     VM_INT index;
 
@@ -657,7 +648,7 @@ void VM::opcode_LOAD_ARRAY()
 
 void VM::opcode_STORE_ARRAY()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     VM_INT dimensions = stack.pop_int(bc);
 
     switch (bc.type) {
@@ -737,7 +728,7 @@ void VM::opcode_STORE_ARRAY()
 
 void VM::opcode_LOAD_FIELD()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     VM_INT index = stack.pop_int(bc);
     Boxed* field = &var->fields[index];
     switch (bc.type) {
@@ -766,7 +757,7 @@ void VM::opcode_LOAD_FIELD()
 
 void VM::opcode_STORE_FIELD()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     VM_INT index = stack.pop_int(bc);
     Boxed* field = &var->fields.at(index);
     switch (bc.type) {
@@ -798,7 +789,7 @@ void VM::opcode_STORE_FIELD()
 
 void VM::opcode_LOAD_FIELD_ARRAY()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     VM_INT fields = stack.pop_int(bc);
     VM_INT index = stack.pop_int(bc);
     VM_INT array_index = stack.pop_int(bc);
@@ -832,7 +823,7 @@ void VM::opcode_LOAD_FIELD_ARRAY()
 
 void VM::opcode_STORE_FIELD_ARRAY()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     VM_INT fields = stack.pop_int(bc);
     VM_INT index = stack.pop_int(bc);
     switch (bc.type) {
@@ -879,7 +870,7 @@ void VM::opcode_STORE_FIELD_ARRAY()
 
 void VM::opcode_NEW_TYPE()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     VM_INT num_fields = static_cast<size_t>(stack.pop_int(bc));
     if (num_fields == 0)
         error("DIM TYPE array of 0 size not allowed");
@@ -892,7 +883,7 @@ void VM::opcode_NEW_TYPE()
 
 void VM::opcode_ARRAYSIZE()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     VM_INT dimension = stack.pop_int(bc);
     VM_INT size = 0;
     switch (var->get_type()) {
@@ -915,7 +906,7 @@ void VM::opcode_ARRAYSIZE()
 
 void VM::opcode_DIM()
 {
-    auto var = variables.get_variable(bc, false);
+    auto var = variables.get_variable(bc);
     VM_INT dimensions = stack.pop_int(bc);
     VM_INT size, size1, size2;
     if (dimensions == 1) {
@@ -1044,7 +1035,7 @@ void VM::opcode_ROT()
 
 void VM::opcode_FOR()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     switch (bc.type) {
     case Type::INTEGER: {
         var->value_int_array.resize(3);
@@ -1078,7 +1069,7 @@ void VM::opcode_FOR()
 
 void VM::opcode_NEXT()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     switch (bc.type) {
     case Type::INTEGER: {
         VM_INT step = var->value_int_array[1];
@@ -1114,11 +1105,11 @@ void VM::opcode_NEXT()
 
 void VM::opcode_FORIN()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     var->value_int_array.resize(4);
     VM_INT pc = stack.pop_int(bc);
     VM_INT var_array_index = stack.pop_int(bc);
-    auto variable_array = variables.get_variable_by_int(bc, var_array_index, true);
+    auto variable_array = variables.get_variable_by_int(bc, var_array_index);
     switch (bc.type) {
     case Type::INTEGER: {
         VM_INT iterations = static_cast<VM_INT>(variable_array->value_int_array.size());
@@ -1156,8 +1147,8 @@ void VM::opcode_FORIN()
 
 void VM::opcode_NEXTIN()
 {
-    auto var = variables.get_variable(bc, true);
-    auto variable_array = variables.get_variable_by_int(bc, var->value_int_array[2], false);
+    auto var = variables.get_variable(bc);
+    auto variable_array = variables.get_variable_by_int(bc, var->value_int_array[2]);
     if (var->value_int_array[0] == 0) {
         if (!performance_build && runtime_debug)
             g_env.log << "NEXT IN variable " << var->name << ", complete" << std::endl;
@@ -1190,6 +1181,9 @@ void VM::opcode_NEXTIN()
 
 void VM::opcode_READ()
 {
+    if (data_iterator == data.end()) {
+        error("DATA list is empty");
+    }
     Boxed b = *data_iterator++;
     switch (bc.type) {
     case Type::INTEGER: {
@@ -1575,7 +1569,7 @@ void VM::opcode_GOSUB()
 
 void VM::opcode_UNPACK()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     auto b = stack.pop_boxed(bc);
     switch (bc.type) {
     case Type::INTEGER: {
@@ -2049,7 +2043,7 @@ void VM::opcode_CLOSE()
 
 void VM::opcode_LISTFILES()
 {
-    auto var = variables.get_variable(bc, true);
+    auto var = variables.get_variable(bc);
     VM_STRING v = stack.pop_string(bc);
     std::vector<std::string> files;
 #ifdef RISCOS
@@ -2414,7 +2408,7 @@ void VM::opcode_TEXTCENTRE()
 
 void VM::opcode_CREATEVERTEX()
 {
-    auto b = variables.get_variable(bc, false);
+    auto b = variables.get_variable(bc);
     VM_INT colour = stack.pop_int(bc);
     VM_FLOAT z = stack.pop_float(bc);
     VM_FLOAT y = stack.pop_float(bc);
@@ -2447,7 +2441,7 @@ void VM::opcode_CREATEVERTEX()
 
 void VM::opcode_CREATETRIANGLE()
 {
-    auto b = variables.get_variable(bc, false);
+    auto b = variables.get_variable(bc);
     VM_INT colour = stack.pop_int(bc);
     VM_INT v3 = stack.pop_int(bc);
     VM_INT v2 = stack.pop_int(bc);
@@ -2480,9 +2474,9 @@ void VM::opcode_CREATETRIANGLE()
 
 void VM::opcode_CREATESHAPE()
 {
-    auto variable2 = variables.get_variable(bc, false);
+    auto variable2 = variables.get_variable(bc);
     VM_INT var2 = stack.pop_int(bc);
-    auto variable1 = variables.get_variable_by_int(bc, var2, false);
+    auto variable1 = variables.get_variable_by_int(bc, var2);
 
     // Check
     if (variable1->get_type() != Type::TYPE_ARRAY || variable2->get_type() != Type::TYPE_ARRAY) {
@@ -2674,9 +2668,9 @@ void VM::opcode_MOUSE()
 {
     VM_INT v2 = stack.pop_int(bc);
     VM_INT v3 = stack.pop_int(bc);
-    auto var1 = variables.get_variable(bc, false);
-    auto var2 = variables.get_variable_by_int(bc, v2, false);
-    auto var3 = variables.get_variable_by_int(bc, v3, false);
+    auto var1 = variables.get_variable(bc);
+    auto var2 = variables.get_variable_by_int(bc, v2);
+    auto var3 = variables.get_variable_by_int(bc, v3);
 
     // Check all are correct type
     if (var1->get_type() != Type::INTEGER || var2->get_type() != Type::INTEGER || var3->get_type() != Type::INTEGER) {

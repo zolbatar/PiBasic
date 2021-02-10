@@ -13,44 +13,7 @@ antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
         state = CompilerState::ASSIGNMENT;
         visit(context->varDecl(i));
         state = CompilerState::NOSTATE;
-        find_or_create_variable(VariableScope::GLOBAL);
-        auto saved = current_var;
-
-        // Get value
-        visit(context->expr(i));
-        Type type;
-
-        // Is this a type creation thing?
-        if (current_var.type == Type::TYPE && saved.field_index == -1) {
-            type = Type::TYPE;
-            auto t = current_var.name;
-            current_var = saved;
-            set_custom_type(t);
-        } else {
-            type = stack_pop();
-        }
-        assert(stack_size() == 0);
-
-        save_to_variable(type, saved);
-    }
-
-    state = CompilerState::NOSTATE;
-    return NULL;
-}
-
-antlrcpp::Any Compiler::visitStmtLOCAL(DARICParser::StmtLOCALContext* context)
-{
-    if (phase == CompilerPhase::LOOKAHEAD)
-        return NULL;
-    set_pos(context->start);
-    for (auto i = 0; i < context->varDecl().size(); i++) {
-
-        // Get variable name and type
-        current_var.field_index = -1;
-        state = CompilerState::ASSIGNMENT;
-        visit(context->varDecl(i));
-        state = CompilerState::NOSTATE;
-        find_or_create_variable_in_scope(VariableScope::LOCAL);
+        find_or_create_variable(context->LOCAL() != NULL ? VariableScope::LOCAL : VariableScope::GLOBAL);
         auto saved = current_var;
 
         // Get value

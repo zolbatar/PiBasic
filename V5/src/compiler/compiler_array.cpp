@@ -5,23 +5,7 @@ antlrcpp::Any Compiler::visitStmtDIM(DARICParser::StmtDIMContext* context)
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     set_pos(context->start);
-    state = CompilerState::DIM;
-    for (auto i = 0; i < context->varDeclWithDimension().size(); i++) {
-
-        // Get variable name and type
-        visit(context->varDeclWithDimension(i));
-    }
-    state = CompilerState::NOSTATE;
-
-    return NULL;
-}
-
-antlrcpp::Any Compiler::visitStmtLOCALDIM(DARICParser::StmtLOCALDIMContext* context)
-{
-    if (phase == CompilerPhase::LOOKAHEAD)
-        return NULL;
-    set_pos(context->start);
-    state = CompilerState::LOCALDIM;
+    state = context->LOCAL() != NULL ? CompilerState::LOCALDIM : CompilerState::DIM;
     for (auto i = 0; i < context->varDeclWithDimension().size(); i++) {
 
         // Get variable name and type
@@ -128,6 +112,19 @@ antlrcpp::Any Compiler::visitVarDeclArrayed(DARICParser::VarDeclArrayedContext* 
     }
     state = saved_state;
     visit(context->justVar());
+
+    // Convert to arrayed type
+    switch (current_var.type) {
+    case Type::INTEGER:
+        current_var.type = Type::INTEGER_ARRAY;
+        break;
+    case Type::FLOAT:
+        current_var.type = Type::FLOAT_ARRAY;
+        break;
+    case Type::STRING:
+        current_var.type = Type::STRING_ARRAY;
+        break;
+    }
     return NULL;
 }
 

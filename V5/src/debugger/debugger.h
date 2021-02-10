@@ -69,7 +69,7 @@ private:
                 }
             }
         } else {
-            return g_vm->helper_variables().get_variable(bc, false);
+            return g_vm->helper_variables().get_variable(bc);
         }
         throw std::runtime_error("Unable to find variable");
     }

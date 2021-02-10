@@ -103,14 +103,6 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitStmtLOCAL(DARICParser::StmtLOCALContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitStmtLOCALDIM(DARICParser::StmtLOCALDIMContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual antlrcpp::Any visitStmtOSCLI(DARICParser::StmtOSCLIContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -511,6 +503,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStrFuncINKEYS(DARICParser::StrFuncINKEYSContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitString(DARICParser::StringContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -607,6 +603,14 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitNumFuncGET(DARICParser::NumFuncGETContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumFuncINKEY(DARICParser::NumFuncINKEYContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitNumFuncINT(DARICParser::NumFuncINTContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -667,19 +671,15 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitNumExprSHLSHR(DARICParser::NumExprSHLSHRContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitNumExprFunc(DARICParser::NumExprFuncContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNumExprSubtract(DARICParser::NumExprSubtractContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual antlrcpp::Any visitNumExprVar(DARICParser::NumExprVarContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitNumExprEOR(DARICParser::NumExprEORContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -695,19 +695,19 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNumExprSHR(DARICParser::NumExprSHRContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitNumExprMultiply(DARICParser::NumExprMultiplyContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitNumExprMOD(DARICParser::NumExprMODContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual antlrcpp::Any visitNumExprNOT(DARICParser::NumExprNOTContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumExprMultiplyDivide(DARICParser::NumExprMultiplyDivideContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumExprDIVMOD(DARICParser::NumExprDIVMODContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumExprANDOREOR(DARICParser::NumExprANDOREORContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -715,67 +715,11 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNumExprSHL(DARICParser::NumExprSHLContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitNumExprAND(DARICParser::NumExprANDContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitNumExprPlus(DARICParser::NumExprPlusContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitNumExprUnary(DARICParser::NumExprUnaryContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitNumExprOR(DARICParser::NumExprORContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitNumExprDivide(DARICParser::NumExprDivideContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitNumExprDIV(DARICParser::NumExprDIVContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitNestedExpr(DARICParser::NestedExprContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitNotExpr(DARICParser::NotExprContext *ctx) override {
+  virtual antlrcpp::Any visitNumExprAddSubtract(DARICParser::NumExprAddSubtractContext *ctx) override {
     return visitChildren(ctx);
   }
 
   virtual antlrcpp::Any visitNumColours(DARICParser::NumColoursContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitCompareEQ(DARICParser::CompareEQContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitCompareNE(DARICParser::CompareNEContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitCompareGT(DARICParser::CompareGTContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitCompareGE(DARICParser::CompareGEContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitCompareLT(DARICParser::CompareLTContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitCompareLE(DARICParser::CompareLEContext *ctx) override {
     return visitChildren(ctx);
   }
 

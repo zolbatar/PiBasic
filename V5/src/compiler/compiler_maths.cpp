@@ -52,7 +52,7 @@ antlrcpp::Any Compiler::visitNumExprHat(DARICParser::NumExprHatContext* context)
     return NULL;
 }
 
-antlrcpp::Any Compiler::visitNumExprMultiply(DARICParser::NumExprMultiplyContext* context)
+antlrcpp::Any Compiler::visitNumExprMultiplyDivide(DARICParser::NumExprMultiplyDivideContext* context)
 {
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
@@ -60,25 +60,18 @@ antlrcpp::Any Compiler::visitNumExprMultiply(DARICParser::NumExprMultiplyContext
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
-    insert_bytecode(Bytecodes::MULTIPLY, peek_type());
+    if (context->MULTIPLY() != NULL) {
+        expression_type_conversion(context, false);
+        insert_bytecode(Bytecodes::MULTIPLY, peek_type());
+    } else if (context->DIVIDE() != NULL) {
+        expression_type_conversion(context, true);
+        insert_bytecode(Bytecodes::DIVIDE, peek_type());
+    }
     stack_pop();
     return NULL;
 }
 
-antlrcpp::Any Compiler::visitNumExprDivide(DARICParser::NumExprDivideContext* context)
-{
-    if (phase == CompilerPhase::LOOKAHEAD)
-        return NULL;
-    set_pos(context->start);
-    visit(context->numExpr(0));
-    visit(context->numExpr(1));
-    expression_type_conversion(context, true);
-    insert_bytecode(Bytecodes::DIVIDE, peek_type());
-    stack_pop();
-    return NULL;
-}
-
-antlrcpp::Any Compiler::visitNumExprDIV(DARICParser::NumExprDIVContext* context)
+antlrcpp::Any Compiler::visitNumExprDIVMOD(DARICParser::NumExprDIVMODContext* context)
 {
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
@@ -88,11 +81,19 @@ antlrcpp::Any Compiler::visitNumExprDIV(DARICParser::NumExprDIVContext* context)
     expression_type_conversion(context, false);
     switch (peek_type()) {
     case Type::INTEGER:
-        insert_bytecode(Bytecodes::DIV, peek_type());
+        if (context->DIV() != NULL) {
+            insert_bytecode(Bytecodes::DIV, peek_type());
+        } else if (context->MOD() != NULL) {
+            insert_bytecode(Bytecodes::MOD, peek_type());
+        }
         stack_pop();
         break;
     case Type::FLOAT:
-        insert_bytecode(Bytecodes::DIV, peek_type());
+        if (context->DIV() != NULL) {
+            insert_bytecode(Bytecodes::DIV, peek_type());
+        } else if (context->MOD() != NULL) {
+            insert_bytecode(Bytecodes::MOD, peek_type());
+        }
         stack_pop();
         stack_pop();
         stack_push(Type::INTEGER);
@@ -103,7 +104,7 @@ antlrcpp::Any Compiler::visitNumExprDIV(DARICParser::NumExprDIVContext* context)
     return NULL;
 }
 
-antlrcpp::Any Compiler::visitNumExprMOD(DARICParser::NumExprMODContext* context)
+antlrcpp::Any Compiler::visitNumExprAddSubtract(DARICParser::NumExprAddSubtractContext* context)
 {
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
@@ -111,50 +112,16 @@ antlrcpp::Any Compiler::visitNumExprMOD(DARICParser::NumExprMODContext* context)
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
-    switch (peek_type()) {
-    case Type::INTEGER:
-        insert_bytecode(Bytecodes::MOD, peek_type());
-        stack_pop();
-        break;
-    case Type::FLOAT:
-        insert_bytecode(Bytecodes::MOD, peek_type());
-        stack_pop();
-        stack_pop();
-        stack_push(Type::INTEGER);
-        break;
-    default:
-        error("Unknown type for MOD");
+    if (context->PLUS() != NULL) {
+        insert_bytecode(Bytecodes::ADD, peek_type());
+    } else if (context-> MINUS() != NULL) {
+        insert_bytecode(Bytecodes::SUBTRACT, peek_type());
     }
-    return NULL;
-}
-
-antlrcpp::Any Compiler::visitNumExprPlus(DARICParser::NumExprPlusContext* context)
-{
-    if (phase == CompilerPhase::LOOKAHEAD)
-        return NULL;
-    set_pos(context->start);
-    visit(context->numExpr(0));
-    visit(context->numExpr(1));
-    expression_type_conversion(context, false);
-    insert_bytecode(Bytecodes::ADD, peek_type());
     stack_pop();
     return NULL;
 }
 
-antlrcpp::Any Compiler::visitNumExprSubtract(DARICParser::NumExprSubtractContext* context)
-{
-    if (phase == CompilerPhase::LOOKAHEAD)
-        return NULL;
-    set_pos(context->start);
-    visit(context->numExpr(0));
-    visit(context->numExpr(1));
-    expression_type_conversion(context, false);
-    insert_bytecode(Bytecodes::SUBTRACT, peek_type());
-    stack_pop();
-    return NULL;
-}
-
-antlrcpp::Any Compiler::visitNumExprSHL(DARICParser::NumExprSHLContext* context)
+antlrcpp::Any Compiler::visitNumExprSHLSHR(DARICParser::NumExprSHLSHRContext* context)
 {
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
@@ -163,21 +130,11 @@ antlrcpp::Any Compiler::visitNumExprSHL(DARICParser::NumExprSHLContext* context)
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
     ensure_stack_is_integer();
-    insert_bytecode(Bytecodes::SHL, Type::INTEGER);
-    stack_pop();
-    return NULL;
-}
-
-antlrcpp::Any Compiler::visitNumExprSHR(DARICParser::NumExprSHRContext* context)
-{
-    if (phase == CompilerPhase::LOOKAHEAD)
-        return NULL;
-    set_pos(context->start);
-    visit(context->numExpr(0));
-    visit(context->numExpr(1));
-    expression_type_conversion(context, false);
-    ensure_stack_is_integer();
-    insert_bytecode(Bytecodes::SHR, Type::INTEGER);
+    if (context->SHL() != NULL) {
+        insert_bytecode(Bytecodes::SHL, Type::INTEGER);
+    } else if (context->SHR() != NULL) {
+        insert_bytecode(Bytecodes::SHR, Type::INTEGER);
+    }
     stack_pop();
     return NULL;
 }
@@ -194,10 +151,10 @@ void Compiler::expression_type_conversion(DARICParser::NumExprContext* context, 
             if (type2 == Type::FLOAT && type1 == Type::INTEGER) {
                 insert_instruction(Bytecodes::CONV_FLOAT, Type::INTEGER, 1);
             } else if (type2 == Type::INTEGER && type1 == Type::FLOAT) {
-                insert_instruction(Bytecodes::CONV_FLOAT, Type::NOTYPE, 0);
+                insert_instruction(Bytecodes::CONV_FLOAT, Type::INTEGER, 0);
             } else if (type2 == Type::INTEGER && type1 == Type::INTEGER) {
-                insert_instruction(Bytecodes::CONV_FLOAT, Type::NOTYPE, 0);
-                insert_instruction(Bytecodes::CONV_FLOAT, Type::NOTYPE, 1);
+                insert_instruction(Bytecodes::CONV_FLOAT, Type::INTEGER, 0);
+                insert_instruction(Bytecodes::CONV_FLOAT, Type::INTEGER, 1);
             }
             stack_push(Type::FLOAT);
             stack_push(Type::FLOAT);
