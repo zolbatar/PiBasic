@@ -24,7 +24,7 @@ TYPE MapPoint
 	FIELD y
 ENDTYPE
 
-DEFPROCLoadPolygons()
+DEF PROCLoadPolygons()
 	CLS
 	PRINT "Loading territory polygons..."
 	LOCAL poly$()=LISTFILES("GIS")
@@ -72,7 +72,7 @@ DEFPROCLoadPolygons()
 	UNTIL INKEY(-17) = 1
 ENDPROC
 
-DEFPROCAnimate()
+DEF PROCAnimate()
 	gRound = 0.01
 	FOR LOCAL I%=1 TO 30
 		gRound*=1.25
@@ -81,7 +81,7 @@ DEFPROCAnimate()
 	gRound=100.0
 ENDPROC
 
-DEFPROCRender()
+DEF PROCRender()
 	CLS
 	C%=&FF0000
 	COLOUR C%
@@ -111,7 +111,7 @@ DEFPROCRender()
 	TEXTCENTRE PROP25, w% / 2, LASTPOS, STR$(points%) + "/401667 points"
 ENDPROC
 
-DEFPROCLoadPolygon(filename$, RETURN points%, phase%)
+DEF PROCLoadPolygon(filename$, RETURN points%, phase%)
 	LOCAL f%=OPENIN("GIS/" + filename$)
 	skip=0
 	WHILE NOT EOF#f%

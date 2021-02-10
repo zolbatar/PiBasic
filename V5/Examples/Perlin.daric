@@ -1,4 +1,4 @@
-DEFPROCInitPerlin()
+DEF PROCInitPerlin()
 	DIM hash%(256)
 	FOR LOCAL I%=0 TO 255
 		READ hash%(I%)
@@ -6,20 +6,20 @@ DEFPROCInitPerlin()
 	seed%=0
 ENDPROC
 
-DEFFNNoise2D%(x%, y%)
+DEF FNNoise2D%(x%, y%)
 	LOCAL tmp%=hash%((y% + seed%) MOD 256)
 	RETURN hash%((tmp% + x%) Mod 256)
 ENDFN
 
-DEFFNLinInter(x, y, s)		
+DEF FNLinInter(x, y, s)		
 	RETURN x + s * (y - x) 
 ENDFN	
 
-DEFFNSmoothInter(x, y, s)	
+DEF FNSmoothInter(x, y, s)	
 	RETURN FNLinInter(x, y, s * s * (3 - 2*s)) 
 ENDFN
 
-DEFFNNoise2D(x, y)
+DEF FNNoise2D(x, y)
 	LOCAL x_int% = x
 	LOCAL y_int% = y
 	LOCAL x_frac = x - x_int%
@@ -33,7 +33,7 @@ DEFFNNoise2D(x, y)
 	RETURN FNSmoothInter(low, high, y_frac)
 ENDFN
   
-DEFFNPerlin2D(x, y, freq, depth%)
+DEF FNPerlin2D(x, y, freq, depth%)
 	LOCAL xa=x * freq
 	LOCAL ya=y * freq
 	LOCAL amp=1.0

@@ -1,7 +1,7 @@
 INSTALL "SetupGraphics"
 INSTALL "Terrain"
 
-DEFPROCSky()
+DEF PROCSky()
     level=1.0
     sky%=&002040
     FOR LOCAL y%=0 TO (h% / 2) STEP 4
@@ -14,7 +14,7 @@ DEFPROCSky()
     NEXT
 ENDPROC
 
-DEFPROCSun()
+DEF PROCSun()
     radius = h% / 2
     FOR LOCAL angle=180 TO 270 STEP 0.1
         x=radius * COS(RAD(angle))
@@ -28,7 +28,7 @@ DEFPROCSun()
     NEXT
 ENDPROC
 
-DEFPROCLines()
+DEF PROCLines()
     FOR LOCAL y%=0 TO h%-1 STEP 3
         FOR LOCAL x%=0 TO w%-1
             c%=POINT(x%,y%)
@@ -45,7 +45,7 @@ DEFPROCLines()
     NEXT
 ENDPROC
 
-DEFPROCLinesBlackenLogo()
+DEF PROCLinesBlackenLogo()
     COLOUR BLACK
     FOR LOCAL y%=h%/2-100 TO h%/2+70
         FOR LOCAL x%=0 TO w%-1

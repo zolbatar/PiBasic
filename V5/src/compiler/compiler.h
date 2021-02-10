@@ -247,6 +247,7 @@ protected:
     antlrcpp::Any visitStrFuncINKEYS(DARICParser::StrFuncINKEYSContext* context);
 
     /* Graphics */
+    antlrcpp::Any visitDefaultFonts(DARICParser::NumDefaultFontsContext* context);
     antlrcpp::Any visitNumColours(DARICParser::NumColoursContext* context);
     antlrcpp::Any visitStmtCLS(DARICParser::StmtCLSContext* context);
     antlrcpp::Any visitStmtCOLOUR(DARICParser::StmtCOLOURContext* context);
@@ -266,6 +267,8 @@ protected:
     antlrcpp::Any visitStmtSHOWFPS(DARICParser::StmtSHOWFPSContext* context);
     antlrcpp::Any visitNumFuncPOINT(DARICParser::NumFuncPOINTContext* context);
     antlrcpp::Any visitNumFuncCOLOUR(DARICParser::NumFuncCOLOURContext* context);
+    antlrcpp::Any visitNumFuncCREATEFONT(DARICParser::NumFuncCREATEFONTContext* context);
+    antlrcpp::Any visitNumFuncLOADTYPEFACE(DARICParser::NumFuncLOADTYPEFACEContext* context);
     antlrcpp::Any visitNumFuncSCREENWIDTH(DARICParser::NumFuncSCREENWIDTHContext* context);
     antlrcpp::Any visitNumFuncSCREENHEIGHT(DARICParser::NumFuncSCREENHEIGHTContext* context);
 
@@ -421,6 +424,7 @@ protected:
 
     /* Numeric maths */
     void expression_type_conversion(DARICParser::NumExprContext* context, bool DIVIDE);
+    antlrcpp::Any visitNumExprUnary(DARICParser::NumExprUnaryContext* context);
     antlrcpp::Any visitNumExprHat(DARICParser::NumExprHatContext* context);
     antlrcpp::Any visitNumExprMultiplyDivide(DARICParser::NumExprMultiplyDivideContext* context);
     antlrcpp::Any visitNumExprDIVMOD(DARICParser::NumExprDIVMODContext* context);

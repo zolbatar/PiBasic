@@ -46,9 +46,9 @@ DELETEOBJECT obj%
 INKEY(1000)
 CHAIN "Welcome"
 
-DEFFNLoadOBJFile%(filename$, type$)
-CLS
-FLIP
+DEF FNLoadOBJFile%(filename$, type$)
+    CLS
+    FLIP
     LOCAL number_of_vertices%=0, number_of_faces%=0
 
     PRINT "Loading ";filename$
@@ -114,7 +114,7 @@ FLIP
     RETURN obj%
 ENDFN
 
-DEFPROCProcessOBJLine(line$, RETURN number_of_vertices%, RETURN number_of_faces%)
+DEF PROCProcessOBJLine(line$, RETURN number_of_vertices%, RETURN number_of_faces%)
     LOCAL s1$="",s2$="",s3$="",s4$=""
     IF LEN(line$) < 1 THEN RETURN
     CASE LEFT$(line$, 1) OF
@@ -123,7 +123,7 @@ DEFPROCProcessOBJLine(line$, RETURN number_of_vertices%, RETURN number_of_faces%
     ENDCASE
 ENDPROC
 
-DEFPROCGet3OBJValues(line$, RETURN s1$, RETURN s2$, RETURN s3$)
+DEF PROCGet3OBJValues(line$, RETURN s1$, RETURN s2$, RETURN s3$)
     p1%=INSTR(line$, " ")
     p2%=INSTR(line$, " ", p1% + 1)
     p3%=INSTR(line$, " ", p2% + 1)
@@ -133,7 +133,7 @@ DEFPROCGet3OBJValues(line$, RETURN s1$, RETURN s2$, RETURN s3$)
     s3$=MID$(line$,p3%+1,p4% - p3%)
 ENDPROC
 
-DEFPROCGet4OBJValues(line$, RETURN s1$, RETURN s2$, RETURN s3$, RETURN s4$)
+DEF PROCGet4OBJValues(line$, RETURN s1$, RETURN s2$, RETURN s3$, RETURN s4$)
     p1%=INSTR(line$, " ")
     p2%=INSTR(line$, " ", p1% + 1)
     p3%=INSTR(line$, " ", p2% + 1)
@@ -151,7 +151,7 @@ DEFPROCGet4OBJValues(line$, RETURN s1$, RETURN s2$, RETURN s3$, RETURN s4$)
     ENDIF
 ENDPROC
 
-DEFPROCNormaliseSize(line$, RETURN min, RETURN max)
+DEF PROCNormaliseSize(line$, RETURN min, RETURN max)
     IF LEN(line$) < 1 THEN RETURN
     IF LEFT$(line$, 2) <> "v " THEN RETURN
     s1$="":s2$="":s3$=""
@@ -169,7 +169,7 @@ DEFPROCNormaliseSize(line$, RETURN min, RETURN max)
     IF z > max THEN max = z
 ENDPROC
 
-DEFPROCProcessOBJVertex(line$, RETURN index%, max, colour%)
+DEF PROCProcessOBJVertex(line$, RETURN index%, max, colour%)
     LOCAL s1$="",s2$="",s3$=""
     IF LEN(line$) < 1 THEN RETURN
     IF LEFT$(line$, 2) <> "v " THEN RETURN
@@ -181,7 +181,7 @@ DEFPROCProcessOBJVertex(line$, RETURN index%, max, colour%)
     index% = index% + 1
 ENDPROC
 
-DEFPROCProcessOBJFace(line$, RETURN index%, colour%)
+DEF PROCProcessOBJFace(line$, RETURN index%, colour%)
     LOCAL s1$="",s2$="",s3$="",s4$=""
     IF LEN(line$) < 1 THEN RETURN
     IF LEFT$(line$, 2) <> "f " THEN RETURN

@@ -2,14 +2,14 @@ INSTALL "SetupGraphicsBanked"
 SHOWFPS
 
 REM ** Create a random RGB colour **
-DEFFNRNDCOL%()
+DEF FNRNDCOL%()
 	LOCAL b%=ABS(RND MOD 256)
 	LOCAL g%=ABS(RND MOD 256)
 	LOCAL r%=ABS(RND Mod 256)
 	RETURN (b% << 16) + (g% << 8) + r%
 ENDFN
 
-DEFPROCCreateCube()
+DEF PROCCreateCube()
 	REM ** Build vertices **
 	DIM V!(8, Vertex3D)
 	VERTEX V!(0), -0.5,  0.5,  0.5, FNRNDCOL%()
@@ -32,7 +32,7 @@ DEFPROCCreateCube()
 	cube_shape%=SHAPE V!, F!
 ENDPROC
 
-DEFPROCTwoShapes()
+DEF PROCTwoShapes()
 	PROCCreateCube()
 	cube1%=OBJECT cube_shape%, -20, 0, -150, 0, 300, 0, 25, SOLID
 	cube2%=OBJECT cube_shape%, 20, 0, -150, 0, 300, 0, 25, WIREFRAME

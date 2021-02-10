@@ -1101,6 +1101,20 @@ public class DARICBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitNumFuncLOADTYPEFACE(DARICParser.NumFuncLOADTYPEFACEContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitNumFuncCREATEFONT(DARICParser.NumFuncCREATEFONTContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitNumFuncBGETH(DARICParser.NumFuncBGETHContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -1262,6 +1276,13 @@ public class DARICBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitNumExprUnary(DARICParser.NumExprUnaryContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitNumExprAddSubtract(DARICParser.NumExprAddSubtractContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -1270,4 +1291,11 @@ public class DARICBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitNumColours(DARICParser.NumColoursContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitDefaultFonts(DARICParser.DefaultFontsContext ctx) { return visitChildren(ctx); }
 }

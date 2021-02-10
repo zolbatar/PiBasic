@@ -7,33 +7,33 @@ CLS
 I% = 0, numCalls% = 0, numResources% = 0
 earthRadius = 6367450.0, convertRad = PI / 180.0, convertDeg = 180.0 / PI
 
-DEFPROCAddCall()
+DEF PROCAddCall()
     callId$(numCalls%)=line$(0)
     callX(numCalls%)=Val(line$(1))
     callY(numCalls%)=Val(line$(2))
     numCalls%=numCalls% + 1
 EndProc
 
-DEFPROCAddResource()
+DEF PROCAddResource()
     resourceId$(numResources%)=line$(0)
     resourceX(numResources%)=Val(line$(1))
     resourceY(numResources%)=Val(line$(2))
     numResources%=numResources%+1
 EndProc
 
-DEFPROCAddToList()
+DEF PROCAddToList()
     If I%=3 Then PROCAddCall()
     If I%=2 Then PROCAddResource()
     I%=0
     line$(0)="":line$(1)="":line$(2)="":line$(3)=""
 EndProc
 
-DEFFNatan2(y,x)
+DEF FNatan2(y,x)
     If x > 0.0 Then Return Atn(y/x) Else If y > 0.0 Then Return Atn(y/x) + PI
     Return Atn(y/x) - PI
 EndFn
 
-DEFFNCalcDistance(la1,lo1,la2,lo2)
+DEF FNCalcDistance(la1,lo1,la2,lo2)
     Local startLat=la1 * convertRad
     Local startLon=lo1 * convertRad
     Local endLat=la2 * convertRad
@@ -48,13 +48,13 @@ DEFFNCalcDistance(la1,lo1,la2,lo2)
     Return d
 EndFn
 
-DEFPROCResetUsed()
+DEF PROCResetUsed()
     For A%=0 TO 499
         used%(A%) = 0
     Next
 EndProc
 
-DEFPROCLoad()
+DEF PROCLoad()
     Local T%=Time
     channel%=OpenIn("DATA")
     I%=0
@@ -67,7 +67,7 @@ DEFPROCLoad()
     Print "Imported in ";:Print ((Time-T%)/100.0);:Print " seconds"
 EndProc
 
-DEFPROCGreedy()
+DEF PROCGreedy()
     For LOCAL K%=0 TO 99
         total=0.0
         PROCResetUsed()

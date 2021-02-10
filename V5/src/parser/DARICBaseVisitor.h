@@ -635,6 +635,14 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitNumFuncLOADTYPEFACE(DARICParser::NumFuncLOADTYPEFACEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumFuncCREATEFONT(DARICParser::NumFuncCREATEFONTContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitNumFuncBGETH(DARICParser::NumFuncBGETHContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -727,11 +735,19 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitNumExprUnary(DARICParser::NumExprUnaryContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitNumExprAddSubtract(DARICParser::NumExprAddSubtractContext *ctx) override {
     return visitChildren(ctx);
   }
 
   virtual antlrcpp::Any visitNumColours(DARICParser::NumColoursContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitDefaultFonts(DARICParser::DefaultFontsContext *ctx) override {
     return visitChildren(ctx);
   }
 

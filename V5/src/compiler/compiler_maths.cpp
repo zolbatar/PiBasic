@@ -52,6 +52,16 @@ antlrcpp::Any Compiler::visitNumExprHat(DARICParser::NumExprHatContext* context)
     return NULL;
 }
 
+antlrcpp::Any Compiler::visitNumExprUnary(DARICParser::NumExprUnaryContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    visit(context->numExpr());
+    insert_bytecode(Bytecodes::UNARY, peek_type());
+    return NULL;
+}
+
 antlrcpp::Any Compiler::visitNumExprMultiplyDivide(DARICParser::NumExprMultiplyDivideContext* context)
 {
     if (phase == CompilerPhase::LOOKAHEAD)
@@ -114,7 +124,7 @@ antlrcpp::Any Compiler::visitNumExprAddSubtract(DARICParser::NumExprAddSubtractC
     expression_type_conversion(context, false);
     if (context->PLUS() != NULL) {
         insert_bytecode(Bytecodes::ADD, peek_type());
-    } else if (context-> MINUS() != NULL) {
+    } else if (context->MINUS() != NULL) {
         insert_bytecode(Bytecodes::SUBTRACT, peek_type());
     }
     stack_pop();

@@ -329,6 +329,10 @@ public:
 
     virtual antlrcpp::Any visitNumFuncCOLOUR(DARICParser::NumFuncCOLOURContext *context) = 0;
 
+    virtual antlrcpp::Any visitNumFuncLOADTYPEFACE(DARICParser::NumFuncLOADTYPEFACEContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncCREATEFONT(DARICParser::NumFuncCREATEFONTContext *context) = 0;
+
     virtual antlrcpp::Any visitNumFuncBGETH(DARICParser::NumFuncBGETHContext *context) = 0;
 
     virtual antlrcpp::Any visitNumFuncEOFH(DARICParser::NumFuncEOFHContext *context) = 0;
@@ -375,9 +379,13 @@ public:
 
     virtual antlrcpp::Any visitNumExprNested(DARICParser::NumExprNestedContext *context) = 0;
 
+    virtual antlrcpp::Any visitNumExprUnary(DARICParser::NumExprUnaryContext *context) = 0;
+
     virtual antlrcpp::Any visitNumExprAddSubtract(DARICParser::NumExprAddSubtractContext *context) = 0;
 
     virtual antlrcpp::Any visitNumColours(DARICParser::NumColoursContext *context) = 0;
+
+    virtual antlrcpp::Any visitDefaultFonts(DARICParser::DefaultFontsContext *context) = 0;
 
 
 };

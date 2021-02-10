@@ -22,27 +22,32 @@ public:
     TRUE = 46, TYPE = 47, UNTIL = 48, WHEN = 49, WHILE = 50, MOUSE = 51, 
     INKEY = 52, INKEYS = 53, GET = 54, GETS = 55, RED = 56, GREEN = 57, 
     YELLOW = 58, BLUE = 59, MAGENTA = 60, CYAN = 61, WHITE = 62, BLACK = 63, 
-    BGETH = 64, BPUTH = 65, CLOSEH = 66, EOFH = 67, GETSH = 68, LISTFILES = 69, 
-    OPENIN = 70, OPENOUT = 71, OPENUP = 72, PTRH = 73, BANKED = 74, CIRCLE = 75, 
-    CLS = 76, CLIPON = 77, CLIPOFF = 78, COLOUR = 79, COLOURBG = 80, CREATEFONT = 81, 
-    FILL = 82, FLIP = 83, SHOWFPS = 84, GRAPHICS = 85, LINE = 86, LOADTYPEFACE = 87, 
-    RECTANGLE = 88, PLOT = 89, POINT = 90, SCREENWIDTH = 91, SCREENHEIGHT = 92, 
-    SHADED = 93, TEXT = 94, TEXTRIGHT = 95, TEXTCENTRE = 96, TEXTCENTER = 97, 
-    TRIANGLE = 98, TIME = 99, PI = 100, SQR = 101, LN = 102, LOG = 103, 
-    EXP = 104, ATN = 105, TAN = 106, COS = 107, SIN = 108, ABS = 109, ACS = 110, 
-    ASN = 111, DEG = 112, RAD = 113, SGN = 114, ASC = 115, LEN = 116, INSTR = 117, 
-    VAL = 118, TIMES = 119, STRS = 120, STRINGS = 121, CHRS = 122, LEFTS = 123, 
-    MIDS = 124, RIGHTS = 125, RND = 126, RND0 = 127, RND1 = 128, EQ = 129, 
-    NE = 130, GT = 131, GE = 132, LT = 133, LE = 134, NOT = 135, AND = 136, 
-    OR = 137, EOR = 138, MOD = 139, DIV = 140, HAT = 141, PLUS = 142, MINUS = 143, 
-    MULTIPLY = 144, DIVIDE = 145, SHL = 146, SHR = 147, PLUS_E = 148, MINUS_E = 149, 
-    MULTIPLY_E = 150, DIVIDE_E = 151, SHL_E = 152, SHR_E = 153, NEWLINE = 154, 
-    TICK = 155, TILDE = 156, HASH = 157, COLON = 158, COMMA = 159, DOLLAR = 160, 
-    LPAREN = 161, PERCENT = 162, RPAREN = 163, SEMICOLON = 164, UNDERSCORE = 165, 
-    COMMENT = 166, STRINGLITERAL = 167, PROC_NAME = 168, FN_INTEGER = 169, 
-    FN_FLOAT = 170, FN_STRING = 171, VARIABLE_FLOAT = 172, VARIABLE_INTEGER = 173, 
-    VARIABLE_STRING = 174, VARIABLE_TYPE = 175, NAME = 176, HEXNUMBER = 177, 
-    BINARYNUMBER = 178, NUMBER = 179, FLOAT = 180, WS = 181
+    MONO15 = 64, MONO20 = 65, MONO25 = 66, MONO30 = 67, MONO35 = 68, MONO40 = 69, 
+    MONO50 = 70, MONO75 = 71, MONO100 = 72, PROP15 = 73, PROP20 = 74, PROP25 = 75, 
+    PROP30 = 76, PROP35 = 77, PROP40 = 78, PROP50 = 79, PROP75 = 80, PROP100 = 81, 
+    SERIF15 = 82, SERIF20 = 83, SERIF25 = 84, SERIF30 = 85, SERIF35 = 86, 
+    SERIF40 = 87, SERIF50 = 88, SERIF75 = 89, SERIF100 = 90, BGETH = 91, 
+    BPUTH = 92, CLOSEH = 93, EOFH = 94, GETSH = 95, LISTFILES = 96, OPENIN = 97, 
+    OPENOUT = 98, OPENUP = 99, PTRH = 100, BANKED = 101, CIRCLE = 102, CLS = 103, 
+    CLIPON = 104, CLIPOFF = 105, COLOUR = 106, COLOURBG = 107, CREATEFONT = 108, 
+    FILL = 109, FLIP = 110, SHOWFPS = 111, GRAPHICS = 112, LINE = 113, LOADTYPEFACE = 114, 
+    RECTANGLE = 115, PLOT = 116, POINT = 117, SCREENWIDTH = 118, SCREENHEIGHT = 119, 
+    SHADED = 120, TEXT = 121, TEXTRIGHT = 122, TEXTCENTRE = 123, TEXTCENTER = 124, 
+    TRIANGLE = 125, TIME = 126, PI = 127, SQR = 128, LN = 129, LOG = 130, 
+    EXP = 131, ATN = 132, TAN = 133, COS = 134, SIN = 135, ABS = 136, ACS = 137, 
+    ASN = 138, DEG = 139, RAD = 140, SGN = 141, ASC = 142, LEN = 143, INSTR = 144, 
+    VAL = 145, TIMES = 146, STRS = 147, STRINGS = 148, CHRS = 149, LEFTS = 150, 
+    MIDS = 151, RIGHTS = 152, RND = 153, RND0 = 154, RND1 = 155, EQ = 156, 
+    NE = 157, GT = 158, GE = 159, LT = 160, LE = 161, NOT = 162, AND = 163, 
+    OR = 164, EOR = 165, MOD = 166, DIV = 167, HAT = 168, PLUS = 169, MINUS = 170, 
+    MULTIPLY = 171, DIVIDE = 172, SHL = 173, SHR = 174, PLUS_E = 175, MINUS_E = 176, 
+    MULTIPLY_E = 177, DIVIDE_E = 178, SHL_E = 179, SHR_E = 180, NEWLINE = 181, 
+    TICK = 182, TILDE = 183, HASH = 184, COLON = 185, COMMA = 186, DOLLAR = 187, 
+    LPAREN = 188, PERCENT = 189, RPAREN = 190, SEMICOLON = 191, UNDERSCORE = 192, 
+    COMMENT = 193, STRINGLITERAL = 194, PROC_NAME = 195, FN_INTEGER = 196, 
+    FN_FLOAT = 197, FN_STRING = 198, VARIABLE_FLOAT = 199, VARIABLE_INTEGER = 200, 
+    VARIABLE_STRING = 201, VARIABLE_TYPE = 202, NAME = 203, HEXNUMBER = 204, 
+    BINARYNUMBER = 205, NUMBER = 206, FLOAT = 207, WS = 208
   };
 
   enum {
@@ -71,7 +76,7 @@ public:
     RulePrintList = 86, RuleExpr = 87, RuleNumber = 88, RuleNumberInteger = 89, 
     RuleNumberHex = 90, RuleNumberBinary = 91, RuleNumberFloat = 92, RuleStrFunc = 93, 
     RuleString = 94, RuleStrExpr = 95, RuleNumFunc = 96, RuleNumExpr = 97, 
-    RuleNumColours = 98
+    RuleNumColours = 98, RuleDefaultFonts = 99
   };
 
   explicit DARICParser(antlr4::TokenStream *input);
@@ -182,7 +187,8 @@ public:
   class StrExprContext;
   class NumFuncContext;
   class NumExprContext;
-  class NumColoursContext; 
+  class NumColoursContext;
+  class DefaultFontsContext; 
 
   class  ProgContext : public antlr4::ParserRuleContext {
   public:
@@ -1211,6 +1217,7 @@ public:
     NumExprContext* numExpr(size_t i);
     std::vector<antlr4::tree::TerminalNode *> COMMA();
     antlr4::tree::TerminalNode* COMMA(size_t i);
+    StrExprContext *strExpr();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -2259,6 +2266,18 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  NumFuncCREATEFONTContext : public NumFuncContext {
+  public:
+    NumFuncCREATEFONTContext(NumFuncContext *ctx);
+
+    antlr4::tree::TerminalNode *CREATEFONT();
+    std::vector<NumExprContext *> numExpr();
+    NumExprContext* numExpr(size_t i);
+    antlr4::tree::TerminalNode *COMMA();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  NumFuncRADContext : public NumFuncContext {
   public:
     NumFuncRADContext(NumFuncContext *ctx);
@@ -2643,6 +2662,16 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  NumFuncLOADTYPEFACEContext : public NumFuncContext {
+  public:
+    NumFuncLOADTYPEFACEContext(NumFuncContext *ctx);
+
+    antlr4::tree::TerminalNode *LOADTYPEFACE();
+    StrExprContext *strExpr();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   NumFuncContext* numFunc();
 
   class  NumExprContext : public antlr4::ParserRuleContext {
@@ -2798,6 +2827,16 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  NumExprUnaryContext : public NumExprContext {
+  public:
+    NumExprUnaryContext(NumExprContext *ctx);
+
+    antlr4::tree::TerminalNode *MINUS();
+    NumExprContext *numExpr();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  NumExprAddSubtractContext : public NumExprContext {
   public:
     NumExprAddSubtractContext(NumExprContext *ctx);
@@ -2831,6 +2870,45 @@ public:
   };
 
   NumColoursContext* numColours();
+
+  class  DefaultFontsContext : public antlr4::ParserRuleContext {
+  public:
+    DefaultFontsContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *MONO15();
+    antlr4::tree::TerminalNode *MONO20();
+    antlr4::tree::TerminalNode *MONO25();
+    antlr4::tree::TerminalNode *MONO30();
+    antlr4::tree::TerminalNode *MONO35();
+    antlr4::tree::TerminalNode *MONO40();
+    antlr4::tree::TerminalNode *MONO50();
+    antlr4::tree::TerminalNode *MONO75();
+    antlr4::tree::TerminalNode *MONO100();
+    antlr4::tree::TerminalNode *PROP15();
+    antlr4::tree::TerminalNode *PROP20();
+    antlr4::tree::TerminalNode *PROP25();
+    antlr4::tree::TerminalNode *PROP30();
+    antlr4::tree::TerminalNode *PROP35();
+    antlr4::tree::TerminalNode *PROP40();
+    antlr4::tree::TerminalNode *PROP50();
+    antlr4::tree::TerminalNode *PROP75();
+    antlr4::tree::TerminalNode *PROP100();
+    antlr4::tree::TerminalNode *SERIF15();
+    antlr4::tree::TerminalNode *SERIF20();
+    antlr4::tree::TerminalNode *SERIF25();
+    antlr4::tree::TerminalNode *SERIF30();
+    antlr4::tree::TerminalNode *SERIF35();
+    antlr4::tree::TerminalNode *SERIF40();
+    antlr4::tree::TerminalNode *SERIF50();
+    antlr4::tree::TerminalNode *SERIF75();
+    antlr4::tree::TerminalNode *SERIF100();
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  DefaultFontsContext* defaultFonts();
 
 
   virtual bool sempred(antlr4::RuleContext *_localctx, size_t ruleIndex, size_t predicateIndex) override;

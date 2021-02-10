@@ -1005,6 +1005,20 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumFuncCOLOUR(DARICParser.NumFuncCOLOURContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code numFuncLOADTYPEFACE}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumFuncLOADTYPEFACE(DARICParser.NumFuncLOADTYPEFACEContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code numFuncCREATEFONT}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumFuncCREATEFONT(DARICParser.NumFuncCREATEFONTContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code numFuncBGETH}
 	 * labeled alternative in {@link DARICParser#numFunc}.
 	 * @param ctx the parse tree
@@ -1166,6 +1180,13 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumExprNested(DARICParser.NumExprNestedContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code numExprUnary}
+	 * labeled alternative in {@link DARICParser#numExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumExprUnary(DARICParser.NumExprUnaryContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code numExprAddSubtract}
 	 * labeled alternative in {@link DARICParser#numExpr}.
 	 * @param ctx the parse tree
@@ -1178,4 +1199,10 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNumColours(DARICParser.NumColoursContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#defaultFonts}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDefaultFonts(DARICParser.DefaultFontsContext ctx);
 }

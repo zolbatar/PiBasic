@@ -1,6 +1,6 @@
 INSTALL "Perlin"
 
-DEFPROCCreateTerrain(width%, depth%, scale_x_in, scale_y_in, scale_z_in, grass%, rock%, snow%, rock, snow, flat)
+DEF PROCCreateTerrain(width%, depth%, scale_x_in, scale_y_in, scale_z_in, grass%, rock%, snow%, rock, snow, flat)
 	PRINT "Creating terrain, may take a little while..."
 	LOCAL scale_x = scale_x_in / width%
 	LOCAL scale_y = scale_y_in / width%
@@ -74,7 +74,7 @@ DEFPROCCreateTerrain(width%, depth%, scale_x_in, scale_y_in, scale_z_in, grass%,
 	terrain%=SHAPE V!, F!
 ENDPROC
 
-DEFPROCRotateTerrain()
+DEF PROCRotateTerrain()
 	SHOWFPS
 	PROCInitPerlin()
 	terrainsize%=250

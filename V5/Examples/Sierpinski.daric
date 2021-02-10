@@ -1,4 +1,4 @@
-DEFPROCTriangle(l,x,y,s)
+DEF PROCTriangle(l,x,y,s)
 	PRINT x
 	IF l > 0 
 		TRIANGLE x,y,x+s,y,x,y+s
