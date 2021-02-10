@@ -1314,7 +1314,7 @@ public:
     StmtCREATEVERTEXContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *CREATEVERTEX();
-    TypeVarContext *typeVar();
+    VarNameTypeContext *varNameType();
     antlr4::tree::TerminalNode *LPAREN();
     std::vector<NumExprContext *> numExpr();
     NumExprContext* numExpr(size_t i);
@@ -1334,7 +1334,7 @@ public:
     StmtCREATETRIANGLEContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *CREATETRIANGLE();
-    TypeVarContext *typeVar();
+    VarNameTypeContext *varNameType();
     antlr4::tree::TerminalNode *LPAREN();
     std::vector<NumExprContext *> numExpr();
     NumExprContext* numExpr(size_t i);
@@ -1535,18 +1535,6 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
-  class  NumVarStringFNContext : public NumVarContext {
-  public:
-    NumVarStringFNContext(NumVarContext *ctx);
-
-    antlr4::tree::TerminalNode *FN_STRING();
-    antlr4::tree::TerminalNode *LPAREN();
-    antlr4::tree::TerminalNode *RPAREN();
-    FunctionParListContext *functionParList();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
   class  NumVarIntegerFieldArrayContext : public NumVarContext {
   public:
     NumVarIntegerFieldArrayContext(NumVarContext *ctx);
@@ -1654,6 +1642,18 @@ public:
     virtual size_t getRuleIndex() const override;
 
    
+  };
+
+  class  NumVarStringFNContext : public StrVarContext {
+  public:
+    NumVarStringFNContext(StrVarContext *ctx);
+
+    antlr4::tree::TerminalNode *FN_STRING();
+    antlr4::tree::TerminalNode *LPAREN();
+    antlr4::tree::TerminalNode *RPAREN();
+    FunctionParListContext *functionParList();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
   class  NumVarStringArrayContext : public StrVarContext {
@@ -2445,8 +2445,8 @@ public:
     NumFuncSHAPEContext(NumFuncContext *ctx);
 
     antlr4::tree::TerminalNode *CREATESHAPE();
-    std::vector<TypeVarContext *> typeVar();
-    TypeVarContext* typeVar(size_t i);
+    std::vector<VarNameTypeContext *> varNameType();
+    VarNameTypeContext* varNameType(size_t i);
     antlr4::tree::TerminalNode *COMMA();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;

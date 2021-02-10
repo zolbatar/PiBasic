@@ -1,5 +1,5 @@
-INSTALL "SetupGraphicsBanked"
-SHOWFPS
+REM INSTALL "SetupGraphicsBanked"
+REM SHOWFPS
 
 REM ** Create a random RGB colour **
 DEF FNRNDCOL%()
@@ -53,5 +53,5 @@ DEF PROCTwoShapes()
 ENDPROC
 
 PROCTwoShapes()
-INKEY(1000)
-CHAIN "Welcome"
+REM INKEY(1000)
+REM CHAIN "Welcome"

@@ -29,20 +29,20 @@ DEF PROCCreateCube()
 	colour%=FNRNDCOL%():FACE F!(6), 4, 0, 1, colour%: FACE F!(7), 4, 1, 5, colour%: REM Bottom
 	colour%=FNRNDCOL%():FACE F!(8), 4, 7, 3, colour%: FACE F!(9), 4, 3, 0, colour%: REM Left
 	colour%=FNRNDCOL%():FACE F!(10), 1, 2, 6, colour%:FACE F!(11), 1, 6, 5, colour%:REM Right
-	cube_shape%=SHAPE V!, F!
+	cube_shp%=SHAPE V!, F!
 ENDPROC
 
 DEF PROCTwoShapes()
 	PROCCreateCube()
-	cube1%=OBJECT cube_shape%, -20, 0, -150, 0, 300, 0, 25, SOLID
-	cube2%=OBJECT cube_shape%, 20, 0, -150, 0, 300, 0, 25, WIREFRAME
+	cube1%=OBJECT cube_shp%, -20, 0, -150, 0, 300, 0, 25, SOLID
+	cube2%=OBJECT cube_shp%, 20, 0, -150, 0, 300, 0, 25, WIREFRAME
 	FOR LOCAL I=0 TO 360 STEP 0.25
 		CLS
 		ROTATE cube1%, 0, I, 0
 		ROTATE cube2%, 0, 360 - I, 0
 		RENDER
 		FLIP	
-	    IF INKEY(0) <> -1 
+	    IF INKEY(0) <> -1 THEN
 			DELETEOBJECT cube1%
 			DELETEOBJECT cube2%
 			CHAIN "Welcome"

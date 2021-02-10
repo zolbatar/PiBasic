@@ -70,6 +70,7 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
         if (custom_types.count(varName) == 0) {
             error("Type '" + varName + "' not found");
         }
+        auto t = (*custom_types.find(varName)).second;
 
         // Get number of entries
         visit(context->numExpr(0));
@@ -87,7 +88,7 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
 
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 1);
         insert_bytecode(Bytecodes::ADD, Type::INTEGER);
-        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(t.members.size()));
         insert_bytecode(Bytecodes::MULTIPLY, Type::INTEGER);
         insert_instruction(Bytecodes::NEW_TYPE, Type::TYPE, current_var.id);
 

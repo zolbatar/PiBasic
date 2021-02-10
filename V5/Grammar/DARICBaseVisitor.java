@@ -590,13 +590,6 @@ public class DARICBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitNumVarStringFN(DARICParser.NumVarStringFNContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitNumVarFloat(DARICParser.NumVarFloatContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -647,6 +640,13 @@ public class DARICBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitNumVarStringField(DARICParser.NumVarStringFieldContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitNumVarStringFN(DARICParser.NumVarStringFNContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

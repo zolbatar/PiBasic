@@ -509,13 +509,6 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumVarIntegerFN(DARICParser.NumVarIntegerFNContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code numVarStringFN}
-	 * labeled alternative in {@link DARICParser#numVar}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumVarStringFN(DARICParser.NumVarStringFNContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code numVarFloat}
 	 * labeled alternative in {@link DARICParser#numVar}.
 	 * @param ctx the parse tree
@@ -571,6 +564,13 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNumVarStringField(DARICParser.NumVarStringFieldContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code numVarStringFN}
+	 * labeled alternative in {@link DARICParser#strVar}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumVarStringFN(DARICParser.NumVarStringFNContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link DARICParser#justVar}.
 	 * @param ctx the parse tree

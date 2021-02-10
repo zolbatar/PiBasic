@@ -362,7 +362,9 @@ antlrcpp::Any Compiler::visitNumVarFloatFN(DARICParser::NumVarFloatFNContext* co
     }
 
     // Parameters
-    visit(context->functionParList());
+    if (context->functionParList() != nullptr) {
+        visit(context->functionParList());
+    }
 
     // Do call
     general_call_fnproc(false);
@@ -384,7 +386,9 @@ antlrcpp::Any Compiler::visitNumVarIntegerFN(DARICParser::NumVarIntegerFNContext
     }
 
     // Parameters
-    visit(context->functionParList());
+    if (context->functionParList() != nullptr) {
+        visit(context->functionParList());
+    }
 
     // Do call
     general_call_fnproc(false);
@@ -406,7 +410,9 @@ antlrcpp::Any Compiler::visitNumVarStringFN(DARICParser::NumVarStringFNContext* 
     }
 
     // Parameters
-    visit(context->functionParList());
+    if (context->functionParList() != nullptr) {
+        visit(context->functionParList());
+    }
 
     // Do call
     general_call_fnproc(false);

@@ -4606,8 +4606,8 @@ public class DARICParser extends Parser {
 
 	public static class StmtCREATEVERTEXContext extends ParserRuleContext {
 		public TerminalNode CREATEVERTEX() { return getToken(DARICParser.CREATEVERTEX, 0); }
-		public TypeVarContext typeVar() {
-			return getRuleContext(TypeVarContext.class,0);
+		public VarNameTypeContext varNameType() {
+			return getRuleContext(VarNameTypeContext.class,0);
 		}
 		public TerminalNode LPAREN() { return getToken(DARICParser.LPAREN, 0); }
 		public List<NumExprContext> numExpr() {
@@ -4641,7 +4641,7 @@ public class DARICParser extends Parser {
 			setState(812);
 			match(CREATEVERTEX);
 			setState(813);
-			typeVar();
+			varNameType();
 			setState(814);
 			match(LPAREN);
 			setState(815);
@@ -4679,8 +4679,8 @@ public class DARICParser extends Parser {
 
 	public static class StmtCREATETRIANGLEContext extends ParserRuleContext {
 		public TerminalNode CREATETRIANGLE() { return getToken(DARICParser.CREATETRIANGLE, 0); }
-		public TypeVarContext typeVar() {
-			return getRuleContext(TypeVarContext.class,0);
+		public VarNameTypeContext varNameType() {
+			return getRuleContext(VarNameTypeContext.class,0);
 		}
 		public TerminalNode LPAREN() { return getToken(DARICParser.LPAREN, 0); }
 		public List<NumExprContext> numExpr() {
@@ -4714,7 +4714,7 @@ public class DARICParser extends Parser {
 			setState(826);
 			match(CREATETRIANGLE);
 			setState(827);
-			typeVar();
+			varNameType();
 			setState(828);
 			match(LPAREN);
 			setState(829);
@@ -5308,20 +5308,6 @@ public class DARICParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class NumVarStringFNContext extends NumVarContext {
-		public TerminalNode FN_STRING() { return getToken(DARICParser.FN_STRING, 0); }
-		public TerminalNode LPAREN() { return getToken(DARICParser.LPAREN, 0); }
-		public TerminalNode RPAREN() { return getToken(DARICParser.RPAREN, 0); }
-		public FunctionParListContext functionParList() {
-			return getRuleContext(FunctionParListContext.class,0);
-		}
-		public NumVarStringFNContext(NumVarContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DARICVisitor ) return ((DARICVisitor<? extends T>)visitor).visitNumVarStringFN(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class NumVarIntegerFieldArrayContext extends NumVarContext {
 		public TypeVarContext typeVar() {
 			return getRuleContext(TypeVarContext.class,0);
@@ -5456,9 +5442,9 @@ public class DARICParser extends Parser {
 		enterRule(_localctx, 152, RULE_numVar);
 		int _la;
 		try {
-			setState(947);
+			setState(941);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,56,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,55,_ctx) ) {
 			case 1:
 				_localctx = new NumVarFloatArrayContext(_localctx);
 				enterOuterAlt(_localctx, 1);
@@ -5588,60 +5574,38 @@ public class DARICParser extends Parser {
 				}
 				break;
 			case 7:
-				_localctx = new NumVarStringFNContext(_localctx);
+				_localctx = new NumVarFloatContext(_localctx);
 				enterOuterAlt(_localctx, 7);
 				{
 				setState(933);
-				match(FN_STRING);
-				setState(934);
-				match(LPAREN);
-				setState(936);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << FALSE) | (1L << FLOAT_TOKEN) | (1L << INT) | (1L << TRUE) | (1L << INKEY) | (1L << INKEYS) | (1L << GET) | (1L << RED) | (1L << GREEN) | (1L << YELLOW) | (1L << BLUE) | (1L << MAGENTA) | (1L << CYAN) | (1L << WHITE) | (1L << BLACK))) != 0) || ((((_la - 64)) & ~0x3f) == 0 && ((1L << (_la - 64)) & ((1L << (MONO15 - 64)) | (1L << (MONO20 - 64)) | (1L << (MONO25 - 64)) | (1L << (MONO30 - 64)) | (1L << (MONO35 - 64)) | (1L << (MONO40 - 64)) | (1L << (MONO50 - 64)) | (1L << (MONO75 - 64)) | (1L << (MONO100 - 64)) | (1L << (PROP15 - 64)) | (1L << (PROP20 - 64)) | (1L << (PROP25 - 64)) | (1L << (PROP30 - 64)) | (1L << (PROP35 - 64)) | (1L << (PROP40 - 64)) | (1L << (PROP50 - 64)) | (1L << (PROP75 - 64)) | (1L << (PROP100 - 64)) | (1L << (SERIF15 - 64)) | (1L << (SERIF20 - 64)) | (1L << (SERIF25 - 64)) | (1L << (SERIF30 - 64)) | (1L << (SERIF35 - 64)) | (1L << (SERIF40 - 64)) | (1L << (SERIF50 - 64)) | (1L << (SERIF75 - 64)) | (1L << (SERIF100 - 64)) | (1L << (CREATESHAPE - 64)) | (1L << (CREATEOBJECT - 64)) | (1L << (BGETH - 64)) | (1L << (EOFH - 64)) | (1L << (OPENIN - 64)) | (1L << (OPENOUT - 64)) | (1L << (OPENUP - 64)) | (1L << (PTRH - 64)) | (1L << (COLOUR - 64)) | (1L << (CREATEFONT - 64)) | (1L << (LOADTYPEFACE - 64)))) != 0) || ((((_la - 130)) & ~0x3f) == 0 && ((1L << (_la - 130)) & ((1L << (POINT - 130)) | (1L << (SCREENWIDTH - 130)) | (1L << (SCREENHEIGHT - 130)) | (1L << (TIME - 130)) | (1L << (PI - 130)) | (1L << (SQR - 130)) | (1L << (LN - 130)) | (1L << (LOG - 130)) | (1L << (EXP - 130)) | (1L << (ATN - 130)) | (1L << (TAN - 130)) | (1L << (COS - 130)) | (1L << (SIN - 130)) | (1L << (ABS - 130)) | (1L << (ACS - 130)) | (1L << (ASN - 130)) | (1L << (DEG - 130)) | (1L << (RAD - 130)) | (1L << (SGN - 130)) | (1L << (ASC - 130)) | (1L << (LEN - 130)) | (1L << (INSTR - 130)) | (1L << (VAL - 130)) | (1L << (TIMES - 130)) | (1L << (STRS - 130)) | (1L << (STRINGS - 130)) | (1L << (CHRS - 130)) | (1L << (LEFTS - 130)) | (1L << (MIDS - 130)) | (1L << (RIGHTS - 130)) | (1L << (RND - 130)) | (1L << (RND0 - 130)) | (1L << (RND1 - 130)) | (1L << (NOT - 130)) | (1L << (PLUS - 130)) | (1L << (MINUS - 130)))) != 0) || ((((_la - 200)) & ~0x3f) == 0 && ((1L << (_la - 200)) & ((1L << (LPAREN - 200)) | (1L << (STRINGLITERAL - 200)) | (1L << (FN_INTEGER - 200)) | (1L << (FN_FLOAT - 200)) | (1L << (FN_STRING - 200)) | (1L << (VARIABLE_FLOAT - 200)) | (1L << (VARIABLE_INTEGER - 200)) | (1L << (VARIABLE_STRING - 200)) | (1L << (VARIABLE_TYPE - 200)) | (1L << (HEXNUMBER - 200)) | (1L << (BINARYNUMBER - 200)) | (1L << (NUMBER - 200)) | (1L << (FLOAT - 200)))) != 0)) {
-					{
-					setState(935);
-					functionParList();
-					}
-				}
-
-				setState(938);
-				match(RPAREN);
+				varName();
 				}
 				break;
 			case 8:
-				_localctx = new NumVarFloatContext(_localctx);
+				_localctx = new NumVarIntegerContext(_localctx);
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(939);
-				varName();
-				}
-				break;
-			case 9:
-				_localctx = new NumVarIntegerContext(_localctx);
-				enterOuterAlt(_localctx, 9);
-				{
-				setState(940);
+				setState(934);
 				varNameInteger();
 				}
 				break;
-			case 10:
+			case 9:
 				_localctx = new NumVarFloatFieldContext(_localctx);
-				enterOuterAlt(_localctx, 10);
+				enterOuterAlt(_localctx, 9);
 				{
-				setState(941);
+				setState(935);
 				typeVar();
-				setState(942);
+				setState(936);
 				varName();
 				}
 				break;
-			case 11:
+			case 10:
 				_localctx = new NumVarIntegerFieldContext(_localctx);
-				enterOuterAlt(_localctx, 11);
+				enterOuterAlt(_localctx, 10);
 				{
-				setState(944);
+				setState(938);
 				typeVar();
-				setState(945);
+				setState(939);
 				varNameInteger();
 				}
 				break;
@@ -5667,6 +5631,20 @@ public class DARICParser extends Parser {
 		public StrVarContext() { }
 		public void copyFrom(StrVarContext ctx) {
 			super.copyFrom(ctx);
+		}
+	}
+	public static class NumVarStringFNContext extends StrVarContext {
+		public TerminalNode FN_STRING() { return getToken(DARICParser.FN_STRING, 0); }
+		public TerminalNode LPAREN() { return getToken(DARICParser.LPAREN, 0); }
+		public TerminalNode RPAREN() { return getToken(DARICParser.RPAREN, 0); }
+		public FunctionParListContext functionParList() {
+			return getRuleContext(FunctionParListContext.class,0);
+		}
+		public NumVarStringFNContext(StrVarContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DARICVisitor ) return ((DARICVisitor<? extends T>)visitor).visitNumVarStringFN(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class NumVarStringArrayContext extends StrVarContext {
@@ -5746,25 +5724,25 @@ public class DARICParser extends Parser {
 				_localctx = new NumVarStringArrayContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(949);
+				setState(943);
 				varNameString();
-				setState(950);
+				setState(944);
 				match(LPAREN);
-				setState(951);
+				setState(945);
 				numExpr(0);
-				setState(954);
+				setState(948);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==COMMA) {
 					{
-					setState(952);
+					setState(946);
 					match(COMMA);
-					setState(953);
+					setState(947);
 					numExpr(0);
 					}
 				}
 
-				setState(956);
+				setState(950);
 				match(RPAREN);
 				}
 				break;
@@ -5772,15 +5750,15 @@ public class DARICParser extends Parser {
 				_localctx = new NumVarStringFieldArrayContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(958);
+				setState(952);
 				typeVar();
-				setState(959);
+				setState(953);
 				match(LPAREN);
-				setState(960);
+				setState(954);
 				numExpr(0);
-				setState(961);
+				setState(955);
 				match(RPAREN);
-				setState(962);
+				setState(956);
 				varNameString();
 				}
 				break;
@@ -5788,7 +5766,7 @@ public class DARICParser extends Parser {
 				_localctx = new NumVarStringContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(964);
+				setState(958);
 				varNameString();
 				}
 				break;
@@ -5796,10 +5774,32 @@ public class DARICParser extends Parser {
 				_localctx = new NumVarStringFieldContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(965);
+				setState(959);
 				typeVar();
-				setState(966);
+				setState(960);
 				varNameString();
+				}
+				break;
+			case 5:
+				_localctx = new NumVarStringFNContext(_localctx);
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(962);
+				match(FN_STRING);
+				setState(963);
+				match(LPAREN);
+				setState(965);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << FALSE) | (1L << FLOAT_TOKEN) | (1L << INT) | (1L << TRUE) | (1L << INKEY) | (1L << INKEYS) | (1L << GET) | (1L << RED) | (1L << GREEN) | (1L << YELLOW) | (1L << BLUE) | (1L << MAGENTA) | (1L << CYAN) | (1L << WHITE) | (1L << BLACK))) != 0) || ((((_la - 64)) & ~0x3f) == 0 && ((1L << (_la - 64)) & ((1L << (MONO15 - 64)) | (1L << (MONO20 - 64)) | (1L << (MONO25 - 64)) | (1L << (MONO30 - 64)) | (1L << (MONO35 - 64)) | (1L << (MONO40 - 64)) | (1L << (MONO50 - 64)) | (1L << (MONO75 - 64)) | (1L << (MONO100 - 64)) | (1L << (PROP15 - 64)) | (1L << (PROP20 - 64)) | (1L << (PROP25 - 64)) | (1L << (PROP30 - 64)) | (1L << (PROP35 - 64)) | (1L << (PROP40 - 64)) | (1L << (PROP50 - 64)) | (1L << (PROP75 - 64)) | (1L << (PROP100 - 64)) | (1L << (SERIF15 - 64)) | (1L << (SERIF20 - 64)) | (1L << (SERIF25 - 64)) | (1L << (SERIF30 - 64)) | (1L << (SERIF35 - 64)) | (1L << (SERIF40 - 64)) | (1L << (SERIF50 - 64)) | (1L << (SERIF75 - 64)) | (1L << (SERIF100 - 64)) | (1L << (CREATESHAPE - 64)) | (1L << (CREATEOBJECT - 64)) | (1L << (BGETH - 64)) | (1L << (EOFH - 64)) | (1L << (OPENIN - 64)) | (1L << (OPENOUT - 64)) | (1L << (OPENUP - 64)) | (1L << (PTRH - 64)) | (1L << (COLOUR - 64)) | (1L << (CREATEFONT - 64)) | (1L << (LOADTYPEFACE - 64)))) != 0) || ((((_la - 130)) & ~0x3f) == 0 && ((1L << (_la - 130)) & ((1L << (POINT - 130)) | (1L << (SCREENWIDTH - 130)) | (1L << (SCREENHEIGHT - 130)) | (1L << (TIME - 130)) | (1L << (PI - 130)) | (1L << (SQR - 130)) | (1L << (LN - 130)) | (1L << (LOG - 130)) | (1L << (EXP - 130)) | (1L << (ATN - 130)) | (1L << (TAN - 130)) | (1L << (COS - 130)) | (1L << (SIN - 130)) | (1L << (ABS - 130)) | (1L << (ACS - 130)) | (1L << (ASN - 130)) | (1L << (DEG - 130)) | (1L << (RAD - 130)) | (1L << (SGN - 130)) | (1L << (ASC - 130)) | (1L << (LEN - 130)) | (1L << (INSTR - 130)) | (1L << (VAL - 130)) | (1L << (TIMES - 130)) | (1L << (STRS - 130)) | (1L << (STRINGS - 130)) | (1L << (CHRS - 130)) | (1L << (LEFTS - 130)) | (1L << (MIDS - 130)) | (1L << (RIGHTS - 130)) | (1L << (RND - 130)) | (1L << (RND0 - 130)) | (1L << (RND1 - 130)) | (1L << (NOT - 130)) | (1L << (PLUS - 130)) | (1L << (MINUS - 130)))) != 0) || ((((_la - 200)) & ~0x3f) == 0 && ((1L << (_la - 200)) & ((1L << (LPAREN - 200)) | (1L << (STRINGLITERAL - 200)) | (1L << (FN_INTEGER - 200)) | (1L << (FN_FLOAT - 200)) | (1L << (FN_STRING - 200)) | (1L << (VARIABLE_FLOAT - 200)) | (1L << (VARIABLE_INTEGER - 200)) | (1L << (VARIABLE_STRING - 200)) | (1L << (VARIABLE_TYPE - 200)) | (1L << (HEXNUMBER - 200)) | (1L << (BINARYNUMBER - 200)) | (1L << (NUMBER - 200)) | (1L << (FLOAT - 200)))) != 0)) {
+					{
+					setState(964);
+					functionParList();
+					}
+				}
+
+				setState(967);
+				match(RPAREN);
 				}
 				break;
 			}
@@ -7796,6 +7796,7 @@ public class DARICParser extends Parser {
 				strFunc();
 				}
 				break;
+			case FN_STRING:
 			case VARIABLE_STRING:
 			case VARIABLE_TYPE:
 				{
@@ -7990,11 +7991,11 @@ public class DARICParser extends Parser {
 	}
 	public static class NumFuncSHAPEContext extends NumFuncContext {
 		public TerminalNode CREATESHAPE() { return getToken(DARICParser.CREATESHAPE, 0); }
-		public List<TypeVarContext> typeVar() {
-			return getRuleContexts(TypeVarContext.class);
+		public List<VarNameTypeContext> varNameType() {
+			return getRuleContexts(VarNameTypeContext.class);
 		}
-		public TypeVarContext typeVar(int i) {
-			return getRuleContext(TypeVarContext.class,i);
+		public VarNameTypeContext varNameType(int i) {
+			return getRuleContext(VarNameTypeContext.class,i);
 		}
 		public TerminalNode COMMA() { return getToken(DARICParser.COMMA, 0); }
 		public NumFuncSHAPEContext(NumFuncContext ctx) { copyFrom(ctx); }
@@ -8873,11 +8874,11 @@ public class DARICParser extends Parser {
 				setState(1348);
 				match(CREATESHAPE);
 				setState(1349);
-				typeVar();
+				varNameType();
 				setState(1350);
 				match(COMMA);
 				setState(1351);
-				typeVar();
+				varNameType();
 				}
 				break;
 			case 34:
@@ -9785,9 +9786,9 @@ public class DARICParser extends Parser {
 		"I\u0369\nI\fI\16I\u036c\13I\3I\3I\3I\3J\3J\3K\3K\5K\u0375\nK\3L\3L\3L"+
 		"\5L\u037a\nL\3M\3M\3N\3N\3N\3N\3N\5N\u0383\nN\3N\3N\3N\3N\3N\3N\3N\5N"+
 		"\u038c\nN\3N\3N\3N\3N\3N\3N\3N\3N\3N\3N\3N\3N\3N\3N\3N\3N\3N\5N\u039f"+
-		"\nN\3N\3N\3N\3N\5N\u03a5\nN\3N\3N\3N\3N\5N\u03ab\nN\3N\3N\3N\3N\3N\3N"+
-		"\3N\3N\3N\5N\u03b6\nN\3O\3O\3O\3O\3O\5O\u03bd\nO\3O\3O\3O\3O\3O\3O\3O"+
-		"\3O\3O\3O\3O\3O\5O\u03cb\nO\3P\3P\3P\5P\u03d0\nP\3Q\3Q\5Q\u03d4\nQ\3R"+
+		"\nN\3N\3N\3N\3N\5N\u03a5\nN\3N\3N\3N\3N\3N\3N\3N\3N\3N\5N\u03b0\nN\3O"+
+		"\3O\3O\3O\3O\5O\u03b7\nO\3O\3O\3O\3O\3O\3O\3O\3O\3O\3O\3O\3O\3O\3O\3O"+
+		"\5O\u03c8\nO\3O\5O\u03cb\nO\3P\3P\3P\5P\u03d0\nP\3Q\3Q\5Q\u03d4\nQ\3R"+
 		"\3R\3S\3S\3T\3T\3U\3U\3V\3V\3V\3V\3V\3V\5V\u03e4\nV\3V\3V\7V\u03e8\nV"+
 		"\fV\16V\u03eb\13V\3V\3V\3V\3V\3V\3V\3V\3V\3V\3V\3V\3V\3V\3V\3V\3V\3V\3"+
 		"V\3V\3V\3V\3V\3V\3V\5V\u0405\nV\3W\3W\3W\3W\3W\7W\u040c\nW\fW\16W\u040f"+
@@ -9838,7 +9839,7 @@ public class DARICParser extends Parser {
 		"\2\2\u0082\u032c\3\2\2\2\u0084\u032e\3\2\2\2\u0086\u033c\3\2\2\2\u0088"+
 		"\u034a\3\2\2\2\u008a\u0353\3\2\2\2\u008c\u035c\3\2\2\2\u008e\u0361\3\2"+
 		"\2\2\u0090\u0364\3\2\2\2\u0092\u0370\3\2\2\2\u0094\u0374\3\2\2\2\u0096"+
-		"\u0379\3\2\2\2\u0098\u037b\3\2\2\2\u009a\u03b5\3\2\2\2\u009c\u03ca\3\2"+
+		"\u0379\3\2\2\2\u0098\u037b\3\2\2\2\u009a\u03af\3\2\2\2\u009c\u03ca\3\2"+
 		"\2\2\u009e\u03cf\3\2\2\2\u00a0\u03d3\3\2\2\2\u00a2\u03d5\3\2\2\2\u00a4"+
 		"\u03d7\3\2\2\2\u00a6\u03d9\3\2\2\2\u00a8\u03db\3\2\2\2\u00aa\u0404\3\2"+
 		"\2\2\u00ac\u0419\3\2\2\2\u00ae\u041b\3\2\2\2\u00b0\u0424\3\2\2\2\u00b2"+
@@ -10055,12 +10056,12 @@ public class DARICParser extends Parser {
 		"j\2\u0323\u0324\7\u00c8\2\2\u0324\u0325\5\u00d2j\2\u0325\u0326\7\u00c8"+
 		"\2\2\u0326\u0327\5\u00d2j\2\u0327\u0328\7\u00c8\2\2\u0328\u0329\5\u00ce"+
 		"h\2\u0329\177\3\2\2\2\u032a\u032b\7~\2\2\u032b\u0081\3\2\2\2\u032c\u032d"+
-		"\7]\2\2\u032d\u0083\3\2\2\2\u032e\u032f\7^\2\2\u032f\u0330\5\u0098M\2"+
+		"\7]\2\2\u032d\u0083\3\2\2\2\u032e\u032f\7^\2\2\u032f\u0330\5\u00a8U\2"+
 		"\u0330\u0331\7\u00ca\2\2\u0331\u0332\5\u00d2j\2\u0332\u0333\7\u00cc\2"+
 		"\2\u0333\u0334\7\u00c8\2\2\u0334\u0335\5\u00d2j\2\u0335\u0336\7\u00c8"+
 		"\2\2\u0336\u0337\5\u00d2j\2\u0337\u0338\7\u00c8\2\2\u0338\u0339\5\u00d2"+
 		"j\2\u0339\u033a\7\u00c8\2\2\u033a\u033b\5\u00d2j\2\u033b\u0085\3\2\2\2"+
-		"\u033c\u033d\7_\2\2\u033d\u033e\5\u0098M\2\u033e\u033f\7\u00ca\2\2\u033f"+
+		"\u033c\u033d\7_\2\2\u033d\u033e\5\u00a8U\2\u033e\u033f\7\u00ca\2\2\u033f"+
 		"\u0340\5\u00d2j\2\u0340\u0341\7\u00cc\2\2\u0341\u0342\7\u00c8\2\2\u0342"+
 		"\u0343\5\u00d2j\2\u0343\u0344\7\u00c8\2\2\u0344\u0345\5\u00d2j\2\u0345"+
 		"\u0346\7\u00c8\2\2\u0346\u0347\5\u00d2j\2\u0347\u0348\7\u00c8\2\2\u0348"+
@@ -10084,40 +10085,40 @@ public class DARICParser extends Parser {
 		"U\2\u037c\u0099\3\2\2\2\u037d\u037e\5\u00a2R\2\u037e\u037f\7\u00ca\2\2"+
 		"\u037f\u0382\5\u00d2j\2\u0380\u0381\7\u00c8\2\2\u0381\u0383\5\u00d2j\2"+
 		"\u0382\u0380\3\2\2\2\u0382\u0383\3\2\2\2\u0383\u0384\3\2\2\2\u0384\u0385"+
-		"\7\u00cc\2\2\u0385\u03b6\3\2\2\2\u0386\u0387\5\u00a4S\2\u0387\u0388\7"+
+		"\7\u00cc\2\2\u0385\u03b0\3\2\2\2\u0386\u0387\5\u00a4S\2\u0387\u0388\7"+
 		"\u00ca\2\2\u0388\u038b\5\u00d2j\2\u0389\u038a\7\u00c8\2\2\u038a\u038c"+
 		"\5\u00d2j\2\u038b\u0389\3\2\2\2\u038b\u038c\3\2\2\2\u038c\u038d\3\2\2"+
-		"\2\u038d\u038e\7\u00cc\2\2\u038e\u03b6\3\2\2\2\u038f\u0390\5\u0098M\2"+
+		"\2\u038d\u038e\7\u00cc\2\2\u038e\u03b0\3\2\2\2\u038f\u0390\5\u0098M\2"+
 		"\u0390\u0391\7\u00ca\2\2\u0391\u0392\5\u00d2j\2\u0392\u0393\7\u00cc\2"+
-		"\2\u0393\u0394\5\u00a4S\2\u0394\u03b6\3\2\2\2\u0395\u0396\5\u0098M\2\u0396"+
+		"\2\u0393\u0394\5\u00a4S\2\u0394\u03b0\3\2\2\2\u0395\u0396\5\u0098M\2\u0396"+
 		"\u0397\7\u00ca\2\2\u0397\u0398\5\u00d2j\2\u0398\u0399\7\u00cc\2\2\u0399"+
-		"\u039a\5\u00a2R\2\u039a\u03b6\3\2\2\2\u039b\u039c\7\u00d3\2\2\u039c\u039e"+
+		"\u039a\5\u00a2R\2\u039a\u03b0\3\2\2\2\u039b\u039c\7\u00d3\2\2\u039c\u039e"+
 		"\7\u00ca\2\2\u039d\u039f\5\u00b2Z\2\u039e\u039d\3\2\2\2\u039e\u039f\3"+
-		"\2\2\2\u039f\u03a0\3\2\2\2\u03a0\u03b6\7\u00cc\2\2\u03a1\u03a2\7\u00d2"+
+		"\2\2\2\u039f\u03a0\3\2\2\2\u03a0\u03b0\7\u00cc\2\2\u03a1\u03a2\7\u00d2"+
 		"\2\2\u03a2\u03a4\7\u00ca\2\2\u03a3\u03a5\5\u00b2Z\2\u03a4\u03a3\3\2\2"+
-		"\2\u03a4\u03a5\3\2\2\2\u03a5\u03a6\3\2\2\2\u03a6\u03b6\7\u00cc\2\2\u03a7"+
-		"\u03a8\7\u00d4\2\2\u03a8\u03aa\7\u00ca\2\2\u03a9\u03ab\5\u00b2Z\2\u03aa"+
-		"\u03a9\3\2\2\2\u03aa\u03ab\3\2\2\2\u03ab\u03ac\3\2\2\2\u03ac\u03b6\7\u00cc"+
-		"\2\2\u03ad\u03b6\5\u00a2R\2\u03ae\u03b6\5\u00a4S\2\u03af\u03b0\5\u0098"+
-		"M\2\u03b0\u03b1\5\u00a2R\2\u03b1\u03b6\3\2\2\2\u03b2\u03b3\5\u0098M\2"+
-		"\u03b3\u03b4\5\u00a4S\2\u03b4\u03b6\3\2\2\2\u03b5\u037d\3\2\2\2\u03b5"+
-		"\u0386\3\2\2\2\u03b5\u038f\3\2\2\2\u03b5\u0395\3\2\2\2\u03b5\u039b\3\2"+
-		"\2\2\u03b5\u03a1\3\2\2\2\u03b5\u03a7\3\2\2\2\u03b5\u03ad\3\2\2\2\u03b5"+
-		"\u03ae\3\2\2\2\u03b5\u03af\3\2\2\2\u03b5\u03b2\3\2\2\2\u03b6\u009b\3\2"+
-		"\2\2\u03b7\u03b8\5\u00a6T\2\u03b8\u03b9\7\u00ca\2\2\u03b9\u03bc\5\u00d2"+
-		"j\2\u03ba\u03bb\7\u00c8\2\2\u03bb\u03bd\5\u00d2j\2\u03bc\u03ba\3\2\2\2"+
-		"\u03bc\u03bd\3\2\2\2\u03bd\u03be\3\2\2\2\u03be\u03bf\7\u00cc\2\2\u03bf"+
-		"\u03cb\3\2\2\2\u03c0\u03c1\5\u0098M\2\u03c1\u03c2\7\u00ca\2\2\u03c2\u03c3"+
-		"\5\u00d2j\2\u03c3\u03c4\7\u00cc\2\2\u03c4\u03c5\5\u00a6T\2\u03c5\u03cb"+
-		"\3\2\2\2\u03c6\u03cb\5\u00a6T\2\u03c7\u03c8\5\u0098M\2\u03c8\u03c9\5\u00a6"+
-		"T\2\u03c9\u03cb\3\2\2\2\u03ca\u03b7\3\2\2\2\u03ca\u03c0\3\2\2\2\u03ca"+
-		"\u03c6\3\2\2\2\u03ca\u03c7\3\2\2\2\u03cb\u009d\3\2\2\2\u03cc\u03d0\5\u00a2"+
-		"R\2\u03cd\u03d0\5\u00a4S\2\u03ce\u03d0\5\u00a6T\2\u03cf\u03cc\3\2\2\2"+
-		"\u03cf\u03cd\3\2\2\2\u03cf\u03ce\3\2\2\2\u03d0\u009f\3\2\2\2\u03d1\u03d4"+
-		"\5\u00a2R\2\u03d2\u03d4\5\u00a4S\2\u03d3\u03d1\3\2\2\2\u03d3\u03d2\3\2"+
-		"\2\2\u03d4\u00a1\3\2\2\2\u03d5\u03d6\7\u00d5\2\2\u03d6\u00a3\3\2\2\2\u03d7"+
-		"\u03d8\7\u00d6\2\2\u03d8\u00a5\3\2\2\2\u03d9\u03da\7\u00d7\2\2\u03da\u00a7"+
-		"\3\2\2\2\u03db\u03dc\7\u00d8\2\2\u03dc\u00a9\3\2\2\2\u03dd\u0405\5\u009e"+
+		"\2\u03a4\u03a5\3\2\2\2\u03a5\u03a6\3\2\2\2\u03a6\u03b0\7\u00cc\2\2\u03a7"+
+		"\u03b0\5\u00a2R\2\u03a8\u03b0\5\u00a4S\2\u03a9\u03aa\5\u0098M\2\u03aa"+
+		"\u03ab\5\u00a2R\2\u03ab\u03b0\3\2\2\2\u03ac\u03ad\5\u0098M\2\u03ad\u03ae"+
+		"\5\u00a4S\2\u03ae\u03b0\3\2\2\2\u03af\u037d\3\2\2\2\u03af\u0386\3\2\2"+
+		"\2\u03af\u038f\3\2\2\2\u03af\u0395\3\2\2\2\u03af\u039b\3\2\2\2\u03af\u03a1"+
+		"\3\2\2\2\u03af\u03a7\3\2\2\2\u03af\u03a8\3\2\2\2\u03af\u03a9\3\2\2\2\u03af"+
+		"\u03ac\3\2\2\2\u03b0\u009b\3\2\2\2\u03b1\u03b2\5\u00a6T\2\u03b2\u03b3"+
+		"\7\u00ca\2\2\u03b3\u03b6\5\u00d2j\2\u03b4\u03b5\7\u00c8\2\2\u03b5\u03b7"+
+		"\5\u00d2j\2\u03b6\u03b4\3\2\2\2\u03b6\u03b7\3\2\2\2\u03b7\u03b8\3\2\2"+
+		"\2\u03b8\u03b9\7\u00cc\2\2\u03b9\u03cb\3\2\2\2\u03ba\u03bb\5\u0098M\2"+
+		"\u03bb\u03bc\7\u00ca\2\2\u03bc\u03bd\5\u00d2j\2\u03bd\u03be\7\u00cc\2"+
+		"\2\u03be\u03bf\5\u00a6T\2\u03bf\u03cb\3\2\2\2\u03c0\u03cb\5\u00a6T\2\u03c1"+
+		"\u03c2\5\u0098M\2\u03c2\u03c3\5\u00a6T\2\u03c3\u03cb\3\2\2\2\u03c4\u03c5"+
+		"\7\u00d4\2\2\u03c5\u03c7\7\u00ca\2\2\u03c6\u03c8\5\u00b2Z\2\u03c7\u03c6"+
+		"\3\2\2\2\u03c7\u03c8\3\2\2\2\u03c8\u03c9\3\2\2\2\u03c9\u03cb\7\u00cc\2"+
+		"\2\u03ca\u03b1\3\2\2\2\u03ca\u03ba\3\2\2\2\u03ca\u03c0\3\2\2\2\u03ca\u03c1"+
+		"\3\2\2\2\u03ca\u03c4\3\2\2\2\u03cb\u009d\3\2\2\2\u03cc\u03d0\5\u00a2R"+
+		"\2\u03cd\u03d0\5\u00a4S\2\u03ce\u03d0\5\u00a6T\2\u03cf\u03cc\3\2\2\2\u03cf"+
+		"\u03cd\3\2\2\2\u03cf\u03ce\3\2\2\2\u03d0\u009f\3\2\2\2\u03d1\u03d4\5\u00a2"+
+		"R\2\u03d2\u03d4\5\u00a4S\2\u03d3\u03d1\3\2\2\2\u03d3\u03d2\3\2\2\2\u03d4"+
+		"\u00a1\3\2\2\2\u03d5\u03d6\7\u00d5\2\2\u03d6\u00a3\3\2\2\2\u03d7\u03d8"+
+		"\7\u00d6\2\2\u03d8\u00a5\3\2\2\2\u03d9\u03da\7\u00d7\2\2\u03da\u00a7\3"+
+		"\2\2\2\u03db\u03dc\7\u00d8\2\2\u03dc\u00a9\3\2\2\2\u03dd\u0405\5\u009e"+
 		"P\2\u03de\u03e9\5\u009eP\2\u03df\u03e0\7\u00ca\2\2\u03e0\u03e3\5\u00d2"+
 		"j\2\u03e1\u03e2\7\u00c8\2\2\u03e2\u03e4\5\u00d2j\2\u03e3\u03e1\3\2\2\2"+
 		"\u03e3\u03e4\3\2\2\2\u03e4\u03e5\3\2\2\2\u03e5\u03e6\7\u00cc\2\2\u03e6"+
@@ -10245,8 +10246,8 @@ public class DARICParser extends Parser {
 		"\u053d\5\u00d2j\2\u053d\u053e\7\u00ca\2\2\u053e\u058a\3\2\2\2\u053f\u0540"+
 		"\7\u0081\2\2\u0540\u058a\5\u00ceh\2\u0541\u0542\7{\2\2\u0542\u0543\5\u00d2"+
 		"j\2\u0543\u0544\7\u00c8\2\2\u0544\u0545\5\u00d2j\2\u0545\u058a\3\2\2\2"+
-		"\u0546\u0547\7d\2\2\u0547\u0548\5\u0098M\2\u0548\u0549\7\u00c8\2\2\u0549"+
-		"\u054a\5\u0098M\2\u054a\u058a\3\2\2\2\u054b\u054c\7e\2\2\u054c\u054d\5"+
+		"\u0546\u0547\7d\2\2\u0547\u0548\5\u00a8U\2\u0548\u0549\7\u00c8\2\2\u0549"+
+		"\u054a\5\u00a8U\2\u054a\u058a\3\2\2\2\u054b\u054c\7e\2\2\u054c\u054d\5"+
 		"\u00d2j\2\u054d\u054e\7\u00c8\2\2\u054e\u054f\5\u00d2j\2\u054f\u0550\7"+
 		"\u00c8\2\2\u0550\u0551\5\u00d2j\2\u0551\u0552\7\u00c8\2\2\u0552\u0553"+
 		"\5\u00d2j\2\u0553\u0554\7\u00c8\2\2\u0554\u0555\5\u00d2j\2\u0555\u0556"+
@@ -10302,7 +10303,7 @@ public class DARICParser extends Parser {
 		"\u014a\u014e\u0156\u015d\u0163\u016d\u0175\u017e\u0185\u0192\u019b\u01a4"+
 		"\u01ab\u01ad\u01b2\u01b5\u01c1\u01ca\u01d4\u01ea\u0200\u0206\u020c\u0237"+
 		"\u023e\u0251\u0273\u0280\u028b\u029b\u02ae\u02cc\u02fd\u036a\u0374\u0379"+
-		"\u0382\u038b\u039e\u03a4\u03aa\u03b5\u03bc\u03ca\u03cf\u03d3\u03e3\u03e9"+
+		"\u0382\u038b\u039e\u03a4\u03af\u03b6\u03c7\u03ca\u03cf\u03d3\u03e3\u03e9"+
 		"\u0404\u040d\u0419\u0420\u0424\u0429\u042e\u0436\u043e\u0442\u044c\u0451"+
 		"\u0456\u0459\u045c\u0464\u0468\u046c\u0474\u0477\u0480\u04b8\u04c4\u04cb"+
 		"\u0589\u059b\u05b2\u05b4";

@@ -174,8 +174,8 @@ stmtSHOWFPS:        SHOWFPS ;
 
 /* 3D */
 stmtRENDERFRAME:    RENDERFRAME ;
-stmtCREATEVERTEX:   CREATEVERTEX typeVar LPAREN numExpr RPAREN COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
-stmtCREATETRIANGLE: CREATETRIANGLE typeVar LPAREN numExpr RPAREN COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtCREATEVERTEX:   CREATEVERTEX varNameType LPAREN numExpr RPAREN COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtCREATETRIANGLE: CREATETRIANGLE varNameType LPAREN numExpr RPAREN COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
 stmtTRANSLATE:      TRANSLATE numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
 stmtROTATE:         ROTATE numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
 stmtSCALE:          SCALE numExpr COMMA numExpr ;
@@ -213,7 +213,6 @@ numVar
     | typeVar LPAREN numExpr RPAREN varName                         #numVarFloatFieldArray
     | FN_FLOAT LPAREN functionParList? RPAREN                       #numVarFloatFN
     | FN_INTEGER LPAREN functionParList? RPAREN                     #numVarIntegerFN
-    | FN_STRING LPAREN functionParList? RPAREN                      #numVarStringFN
     | varName                                                       #numVarFloat
     | varNameInteger                                                #numVarInteger
     | typeVar varName                                               #numVarFloatField
@@ -225,6 +224,7 @@ strVar
     | typeVar LPAREN numExpr RPAREN varNameString                   #numVarStringFieldArray
     | varNameString                                                 #numVarString
     | typeVar varNameString                                         #numVarStringField
+    | FN_STRING LPAREN functionParList? RPAREN                      #numVarStringFN
     ;
 
 justVar
@@ -378,7 +378,7 @@ numFunc
     | CREATEFONT numExpr COMMA numExpr                              #numFuncCREATEFONT
 
     /* 3D */
-    | CREATESHAPE typeVar COMMA typeVar                             #numFuncSHAPE
+    | CREATESHAPE varNameType COMMA varNameType                     #numFuncSHAPE
     | CREATEOBJECT  numExpr COMMA numExpr COMMA numExpr COMMA 
                     numExpr COMMA numExpr COMMA numExpr COMMA 
                     numExpr COMMA numExpr COMMA 
