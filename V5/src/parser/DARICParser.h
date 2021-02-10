@@ -24,25 +24,25 @@ public:
     YELLOW = 58, BLUE = 59, MAGENTA = 60, CYAN = 61, WHITE = 62, BLACK = 63, 
     BGETH = 64, BPUTH = 65, CLOSEH = 66, EOFH = 67, GETSH = 68, LISTFILES = 69, 
     OPENIN = 70, OPENOUT = 71, OPENUP = 72, PTRH = 73, BANKED = 74, CIRCLE = 75, 
-    CLS = 76, CLIPON = 77, CLIPOFF = 78, COLOUR = 79, COLOURBG = 80, FILL = 81, 
-    FLIP = 82, SHOWFPS = 83, GRAPHICS = 84, LINE = 85, RECTANGLE = 86, PLOT = 87, 
-    POINT = 88, SHADED = 89, TEXT = 90, TEXTRIGHT = 91, TEXTCENTRE = 92, 
-    TEXTCENTER = 93, TRIANGLE = 94, LOADTYPEFACE = 95, CREATEFONT = 96, 
-    TIME = 97, PI = 98, SQR = 99, LN = 100, LOG = 101, EXP = 102, ATN = 103, 
-    TAN = 104, COS = 105, SIN = 106, ABS = 107, ACS = 108, ASN = 109, DEG = 110, 
-    RAD = 111, SGN = 112, ASC = 113, LEN = 114, INSTR = 115, VAL = 116, 
-    TIMES = 117, STRS = 118, STRINGS = 119, CHRS = 120, LEFTS = 121, MIDS = 122, 
-    RIGHTS = 123, RND = 124, RND0 = 125, RND1 = 126, EQ = 127, NE = 128, 
-    GT = 129, GE = 130, LT = 131, LE = 132, NOT = 133, AND = 134, OR = 135, 
-    EOR = 136, MOD = 137, DIV = 138, HAT = 139, PLUS = 140, MINUS = 141, 
-    MULTIPLY = 142, DIVIDE = 143, SHL = 144, SHR = 145, PLUS_E = 146, MINUS_E = 147, 
-    MULTIPLY_E = 148, DIVIDE_E = 149, SHL_E = 150, SHR_E = 151, NEWLINE = 152, 
-    TICK = 153, TILDE = 154, HASH = 155, COLON = 156, COMMA = 157, DOLLAR = 158, 
-    LPAREN = 159, PERCENT = 160, RPAREN = 161, SEMICOLON = 162, UNDERSCORE = 163, 
-    COMMENT = 164, STRINGLITERAL = 165, PROC_NAME = 166, FN_INTEGER = 167, 
-    FN_FLOAT = 168, FN_STRING = 169, VARIABLE_FLOAT = 170, VARIABLE_INTEGER = 171, 
-    VARIABLE_STRING = 172, VARIABLE_TYPE = 173, NAME = 174, HEXNUMBER = 175, 
-    BINARYNUMBER = 176, NUMBER = 177, FLOAT = 178, WS = 179
+    CLS = 76, CLIPON = 77, CLIPOFF = 78, COLOUR = 79, COLOURBG = 80, CREATEFONT = 81, 
+    FILL = 82, FLIP = 83, SHOWFPS = 84, GRAPHICS = 85, LINE = 86, LOADTYPEFACE = 87, 
+    RECTANGLE = 88, PLOT = 89, POINT = 90, SCREENWIDTH = 91, SCREENHEIGHT = 92, 
+    SHADED = 93, TEXT = 94, TEXTRIGHT = 95, TEXTCENTRE = 96, TEXTCENTER = 97, 
+    TRIANGLE = 98, TIME = 99, PI = 100, SQR = 101, LN = 102, LOG = 103, 
+    EXP = 104, ATN = 105, TAN = 106, COS = 107, SIN = 108, ABS = 109, ACS = 110, 
+    ASN = 111, DEG = 112, RAD = 113, SGN = 114, ASC = 115, LEN = 116, INSTR = 117, 
+    VAL = 118, TIMES = 119, STRS = 120, STRINGS = 121, CHRS = 122, LEFTS = 123, 
+    MIDS = 124, RIGHTS = 125, RND = 126, RND0 = 127, RND1 = 128, EQ = 129, 
+    NE = 130, GT = 131, GE = 132, LT = 133, LE = 134, NOT = 135, AND = 136, 
+    OR = 137, EOR = 138, MOD = 139, DIV = 140, HAT = 141, PLUS = 142, MINUS = 143, 
+    MULTIPLY = 144, DIVIDE = 145, SHL = 146, SHR = 147, PLUS_E = 148, MINUS_E = 149, 
+    MULTIPLY_E = 150, DIVIDE_E = 151, SHL_E = 152, SHR_E = 153, NEWLINE = 154, 
+    TICK = 155, TILDE = 156, HASH = 157, COLON = 158, COMMA = 159, DOLLAR = 160, 
+    LPAREN = 161, PERCENT = 162, RPAREN = 163, SEMICOLON = 164, UNDERSCORE = 165, 
+    COMMENT = 166, STRINGLITERAL = 167, PROC_NAME = 168, FN_INTEGER = 169, 
+    FN_FLOAT = 170, FN_STRING = 171, VARIABLE_FLOAT = 172, VARIABLE_INTEGER = 173, 
+    VARIABLE_STRING = 174, VARIABLE_TYPE = 175, NAME = 176, HEXNUMBER = 177, 
+    BINARYNUMBER = 178, NUMBER = 179, FLOAT = 180, WS = 181
   };
 
   enum {
@@ -2293,6 +2293,15 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  NumFuncSCREENWIDTHContext : public NumFuncContext {
+  public:
+    NumFuncSCREENWIDTHContext(NumFuncContext *ctx);
+
+    antlr4::tree::TerminalNode *SCREENWIDTH();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  NumFuncFLOATContext : public NumFuncContext {
   public:
     NumFuncFLOATContext(NumFuncContext *ctx);
@@ -2450,6 +2459,15 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  NumFuncSCREENHEIGHTContext : public NumFuncContext {
+  public:
+    NumFuncSCREENHEIGHTContext(NumFuncContext *ctx);
+
+    antlr4::tree::TerminalNode *SCREENHEIGHT();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  NumFuncATNContext : public NumFuncContext {
   public:
     NumFuncATNContext(NumFuncContext *ctx);
@@ -2482,6 +2500,21 @@ public:
     antlr4::tree::TerminalNode *LPAREN();
     NumExprContext *numExpr();
     antlr4::tree::TerminalNode *RPAREN();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  NumFuncCOLOURContext : public NumFuncContext {
+  public:
+    NumFuncCOLOURContext(NumFuncContext *ctx);
+
+    antlr4::tree::TerminalNode *COLOUR();
+    std::vector<antlr4::tree::TerminalNode *> LPAREN();
+    antlr4::tree::TerminalNode* LPAREN(size_t i);
+    std::vector<NumExprContext *> numExpr();
+    NumExprContext* numExpr(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };

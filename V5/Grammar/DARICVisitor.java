@@ -977,12 +977,33 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumFuncFLOAT(DARICParser.NumFuncFLOATContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code numFuncSCREENWIDTH}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumFuncSCREENWIDTH(DARICParser.NumFuncSCREENWIDTHContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code numFuncSCREENHEIGHT}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumFuncSCREENHEIGHT(DARICParser.NumFuncSCREENHEIGHTContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code numFuncPOINT}
 	 * labeled alternative in {@link DARICParser#numFunc}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitNumFuncPOINT(DARICParser.NumFuncPOINTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code numFuncCOLOUR}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumFuncCOLOUR(DARICParser.NumFuncCOLOURContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code numFuncBGETH}
 	 * labeled alternative in {@link DARICParser#numFunc}.

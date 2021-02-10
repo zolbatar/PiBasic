@@ -321,7 +321,13 @@ public:
 
     virtual antlrcpp::Any visitNumFuncFLOAT(DARICParser::NumFuncFLOATContext *context) = 0;
 
+    virtual antlrcpp::Any visitNumFuncSCREENWIDTH(DARICParser::NumFuncSCREENWIDTHContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncSCREENHEIGHT(DARICParser::NumFuncSCREENHEIGHTContext *context) = 0;
+
     virtual antlrcpp::Any visitNumFuncPOINT(DARICParser::NumFuncPOINTContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncCOLOUR(DARICParser::NumFuncCOLOURContext *context) = 0;
 
     virtual antlrcpp::Any visitNumFuncBGETH(DARICParser::NumFuncBGETHContext *context) = 0;
 

@@ -336,6 +336,7 @@ void Graphics::hide_cursors()
     _kernel_swi(OS_RemoveCursors, &regs, &regs);
 #endif
 }
+
 void Graphics::show_cursors()
 {
 #ifdef RISCOS
@@ -451,7 +452,7 @@ void Graphics::flip(bool user_specified)
         // We only want to do update at a certain frame rate to avoid unnecessary constant flipping
         auto t = std::chrono::high_resolution_clock::now();
         auto time_span = std::chrono::duration_cast<std::chrono::milliseconds>(t - last_render);
-        if (time_span.count() < 50) {
+        if (time_span.count() < 10) {
             return;
         }
     }

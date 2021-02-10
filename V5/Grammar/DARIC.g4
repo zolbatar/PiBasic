@@ -352,7 +352,10 @@ numFunc
     | FLOAT_TOKEN LPAREN numExpr RPAREN     #numFuncFLOAT
 
     /* Graphics */
-    | POINT LPAREN numExpr COMMA numExpr RPAREN         #numFuncPOINT
+    | SCREENWIDTH                                                   #numFuncSCREENWIDTH
+    | SCREENHEIGHT                                                  #numFuncSCREENHEIGHT
+    | POINT LPAREN numExpr COMMA numExpr RPAREN                     #numFuncPOINT
+    | COLOUR LPAREN numExpr COMMA numExpr COMMA numExpr LPAREN      #numFuncCOLOUR
 
     /* I/O */
     | BGETH numExpr                         #numFuncBGETH
@@ -482,22 +485,24 @@ CLIPON          : 'CLIPON' | 'clipon' | 'ClipOn ' ;
 CLIPOFF         : 'CLIPOFF' | 'clipoff' | 'ClipOff' ;
 COLOUR          : 'COLOUR' | 'colour' | 'Colour' ;
 COLOURBG        : 'COLOURBG' | 'colourbg' | 'ColourBg' ;
+CREATEFONT      : 'CREATEFONT' | 'createfont' | 'CreateFont' ;
 FILL            : 'FILL' | 'fill' | 'Fill' ;
 FLIP            : 'FLIP' | 'flip' | 'Flip' ;
 SHOWFPS         : 'SHOWFPS' | 'showfps' | 'ShowFPS' ;
 GRAPHICS        : 'GRAPHICS' | 'graphics' | 'Graphics' ;
 LINE            : 'LINE' | 'line' | 'Line' ;
+LOADTYPEFACE    : 'LOADTYPEFACE' | 'loadtypeface' | 'LoadTypeface' ;
 RECTANGLE       : 'RECTANGLE' | 'rectangle' | 'Rectangle' ;
 PLOT            : 'PLOT' | 'plot' | 'Plot' ;
 POINT           : 'POINT' | 'point' | 'Point' ;
+SCREENWIDTH     : 'SCREENWIDTH' | 'screenwidth' | 'ScreenWidth' ;
+SCREENHEIGHT    : 'SCREENHEIGHT' | 'screenheight' | 'ScreenHeight' ;
 SHADED          : 'SHADED' | 'shaded' | 'Shaded' ;
 TEXT            : 'TEXT' | 'text' | 'Text' ;
 TEXTRIGHT       : 'TEXTRIGHT' | 'textright' | 'TextRight' ;
 TEXTCENTRE      : 'TEXTCENTRE' | 'textcentre' | 'TextCentre' ;
 TEXTCENTER      : 'TEXTCENTER' | 'textcenter' | 'TextCenter' ;
 TRIANGLE        : 'TRIANGLE' | 'triangle' | 'Triangle' ;
-LOADTYPEFACE    : 'LOADTYPEFACE' | 'loadtypeface' | 'LoadTypeface' ;
-CREATEFONT      : 'CREATEFONT' | 'createfont' | 'CreateFont' ;
 
 TIME            : 'TIME' | 'time' | 'Time' ;
 PI              : 'PI' | 'pi' | 'Pi' ;
