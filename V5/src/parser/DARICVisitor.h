@@ -147,6 +147,20 @@ public:
 
     virtual antlrcpp::Any visitStmtSHOWFPS(DARICParser::StmtSHOWFPSContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtRENDERFRAME(DARICParser::StmtRENDERFRAMEContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtCREATEVERTEX(DARICParser::StmtCREATEVERTEXContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtCREATETRIANGLE(DARICParser::StmtCREATETRIANGLEContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtTRANSLATE(DARICParser::StmtTRANSLATEContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtROTATE(DARICParser::StmtROTATEContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtSCALE(DARICParser::StmtSCALEContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtDELETEOBJECT(DARICParser::StmtDELETEOBJECTContext *context) = 0;
+
     virtual antlrcpp::Any visitWhen(DARICParser::WhenContext *context) = 0;
 
     virtual antlrcpp::Any visitFnName(DARICParser::FnNameContext *context) = 0;
@@ -332,6 +346,10 @@ public:
     virtual antlrcpp::Any visitNumFuncLOADTYPEFACE(DARICParser::NumFuncLOADTYPEFACEContext *context) = 0;
 
     virtual antlrcpp::Any visitNumFuncCREATEFONT(DARICParser::NumFuncCREATEFONTContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncSHAPE(DARICParser::NumFuncSHAPEContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncOBJECT(DARICParser::NumFuncOBJECTContext *context) = 0;
 
     virtual antlrcpp::Any visitNumFuncBGETH(DARICParser::NumFuncBGETHContext *context) = 0;
 

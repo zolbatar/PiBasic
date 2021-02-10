@@ -135,6 +135,15 @@ graphicsStmt
     | stmtTEXTRIGHT
     | stmtTEXTCENTRE
     | stmtSHOWFPS
+
+    /* 3D */
+    | stmtRENDERFRAME
+    | stmtCREATEVERTEX
+    | stmtCREATETRIANGLE
+    | stmtTRANSLATE
+    | stmtROTATE
+    | stmtSCALE
+    | stmtDELETEOBJECT
     ;
     
 stmtCLS:            CLS ;
@@ -162,6 +171,15 @@ stmtTEXT:           TEXT numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
 stmtTEXTRIGHT:      TEXTRIGHT numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
 stmtTEXTCENTRE:     (TEXTCENTRE|TEXTCENTER) numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
 stmtSHOWFPS:        SHOWFPS ;
+
+/* 3D */
+stmtRENDERFRAME:    RENDERFRAME ;
+stmtCREATEVERTEX:   CREATEVERTEX typeVar LPAREN numExpr RPAREN COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtCREATETRIANGLE: CREATETRIANGLE typeVar LPAREN numExpr RPAREN COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtTRANSLATE:      TRANSLATE numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtROTATE:         ROTATE numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtSCALE:          SCALE numExpr COMMA numExpr ;
+stmtDELETEOBJECT:   DELETEOBJECT numExpr ;
 
 when
     : WHEN expr (COMMA expr)* COLON body
@@ -274,7 +292,6 @@ printList
     : printListTick? s1=SEMICOLON? printListItem (printListSeparator printListItem)* s2=SEMICOLON?
     ;
 
-// Expressions and such
 expr
     : numExpr
     | strExpr
@@ -286,6 +303,7 @@ number
     | numberHex
     | numberBinary
     | numColours
+    | defaultFonts
     ;
 
 numberInteger:      (PLUS | MINUS)? NUMBER ;
@@ -358,6 +376,13 @@ numFunc
     | COLOUR LPAREN numExpr COMMA numExpr COMMA numExpr LPAREN      #numFuncCOLOUR
     | LOADTYPEFACE strExpr                                          #numFuncLOADTYPEFACE
     | CREATEFONT numExpr COMMA numExpr                              #numFuncCREATEFONT
+
+    /* 3D */
+    | CREATESHAPE typeVar COMMA typeVar                             #numFuncSHAPE
+    | CREATEOBJECT  numExpr COMMA numExpr COMMA numExpr COMMA 
+                    numExpr COMMA numExpr COMMA numExpr COMMA 
+                    numExpr COMMA numExpr COMMA 
+                    (SOLID | WIREFRAME | SHADED | FILLEDWIREFRAME)  #numFuncOBJECT
 
     /* I/O */
     | BGETH numExpr                         #numFuncBGETH
@@ -518,15 +543,29 @@ PROP40          : 'PROP40' | 'prop40' | 'Prop40' ;
 PROP50          : 'PROP50' | 'prop50' | 'Prop50' ;
 PROP75          : 'PROP75' | 'prop75' | 'Prop75' ;
 PROP100         : 'PROP100' | 'prop100' | 'Prop100' ;
-SERIF15          : 'SERIF15' | 'serif15' | 'Serif15' ;
-SERIF20          : 'SERIF20' | 'serif20' | 'Serif20' ;
-SERIF25          : 'SERIF25' | 'serif25' | 'Serif25' ;
-SERIF30          : 'SERIF30' | 'serif30' | 'Serif30' ;
-SERIF35          : 'SERIF35' | 'serif35' | 'Serif35' ;
-SERIF40          : 'SERIF40' | 'serif40' | 'Serif40' ;
-SERIF50          : 'SERIF50' | 'serif50' | 'Serif50' ;
-SERIF75          : 'SERIF75' | 'serif75' | 'Serif75' ;
-SERIF100         : 'SERIF100' | 'serif100' | 'Serif100' ;
+SERIF15         : 'SERIF15' | 'serif15' | 'Serif15' ;
+SERIF20         : 'SERIF20' | 'serif20' | 'Serif20' ;
+SERIF25         : 'SERIF25' | 'serif25' | 'Serif25' ;
+SERIF30         : 'SERIF30' | 'serif30' | 'Serif30' ;
+SERIF35         : 'SERIF35' | 'serif35' | 'Serif35' ;
+SERIF40         : 'SERIF40' | 'serif40' | 'Serif40' ;
+SERIF50         : 'SERIF50' | 'serif50' | 'Serif50' ;
+SERIF75         : 'SERIF75' | 'serif75' | 'Serif75' ;
+SERIF100        : 'SERIF100' | 'serif100' | 'Serif100' ;
+
+RENDERFRAME     : 'RENDER' | 'render' | 'Render' ;
+CREATEVERTEX    : 'VERTEX' | 'vertex' | 'Vertex' ;
+CREATETRIANGLE  : 'FACE' | 'face' | 'Face' ;
+TRANSLATE       : 'TRANSLATE' | 'translate' | 'Translate' ;
+ROTATE          : 'ROTATE' | 'rotate' | 'Rotate' ;
+SCALE           : 'SCALE' | 'scale' | 'Scale' ;
+DELETEOBJECT    : 'DELETEOBJECT' | 'deleteobject' | 'DeleteObject' ;
+CREATESHAPE     : 'SHAPE' | 'shape' | 'Shape' ;
+CREATEOBJECT    : 'OBJECT' | 'object' | 'Object' ;
+SOLID           : 'SOLID' | 'solid' | 'Solid' ; 
+WIREFRAME       : 'WIREFRAME' | 'wireframe' | 'Wireframe' ;
+SHADED          : 'SHADED' | 'shaded' | 'Shaded' ;
+FILLEDWIREFRAME : 'FILLEDWIREFRAME' | 'filledwireframe' | 'FilledWireframe' ;
 
 BGETH           : ('BGET' | 'bget' | 'BGet') HASH ;
 BPUTH           : ('BPUT' | 'bput' | 'BPut') HASH ;
@@ -558,7 +597,6 @@ PLOT            : 'PLOT' | 'plot' | 'Plot' ;
 POINT           : 'POINT' | 'point' | 'Point' ;
 SCREENWIDTH     : 'SCREENWIDTH' | 'screenwidth' | 'ScreenWidth' ;
 SCREENHEIGHT    : 'SCREENHEIGHT' | 'screenheight' | 'ScreenHeight' ;
-SHADED          : 'SHADED' | 'shaded' | 'Shaded' ;
 TEXT            : 'TEXT' | 'text' | 'Text' ;
 TEXTRIGHT       : 'TEXTRIGHT' | 'textright' | 'TextRight' ;
 TEXTCENTRE      : 'TEXTCENTRE' | 'textcentre' | 'TextCentre' ;
@@ -649,12 +687,12 @@ VARIABLE_FLOAT    : NAME ;
 VARIABLE_INTEGER  : NAME '%' ;
 VARIABLE_STRING   : NAME '$' ;
 VARIABLE_TYPE   : NAME '!' ;
-NAME            : ALPHA  (ALPHA|DIGIT)* ;
 HEXNUMBER       : '&' [0-9A-Fa-f]+ ;
 BINARYNUMBER    : '%' [0|1]+ ;
-NUMBER          : DIGIT+ ([e|E] NUMBER)* ;
+NUMBER          : DIGIT+ ([e|E] DIGIT)* ;
 FLOAT           : DIGIT* '.' DIGIT* ([e|E] [0-9]+ )* ;
 
+fragment NAME   : ALPHA (ALPHA|DIGIT|'_')* ;
 fragment ALPHA  : [a-zA-Z] ;
 fragment DIGIT  : [0-9] ;
 

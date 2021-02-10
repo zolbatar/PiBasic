@@ -273,7 +273,7 @@
     <ClCompile Include="..\src\compiler\compiler_keyboardmouse.cpp">
       <Filter>Source Files\Compiler</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\compiler\compiler_3dgraphics.cpp">
+    <ClCompile Include="..\src\compiler\compiler_graphics3d.cpp">
       <Filter>Source Files\Compiler</Filter>
     </ClCompile>
   </ItemGroup>

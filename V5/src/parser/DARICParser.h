@@ -26,28 +26,32 @@ public:
     MONO50 = 70, MONO75 = 71, MONO100 = 72, PROP15 = 73, PROP20 = 74, PROP25 = 75, 
     PROP30 = 76, PROP35 = 77, PROP40 = 78, PROP50 = 79, PROP75 = 80, PROP100 = 81, 
     SERIF15 = 82, SERIF20 = 83, SERIF25 = 84, SERIF30 = 85, SERIF35 = 86, 
-    SERIF40 = 87, SERIF50 = 88, SERIF75 = 89, SERIF100 = 90, BGETH = 91, 
-    BPUTH = 92, CLOSEH = 93, EOFH = 94, GETSH = 95, LISTFILES = 96, OPENIN = 97, 
-    OPENOUT = 98, OPENUP = 99, PTRH = 100, BANKED = 101, CIRCLE = 102, CLS = 103, 
-    CLIPON = 104, CLIPOFF = 105, COLOUR = 106, COLOURBG = 107, CREATEFONT = 108, 
-    FILL = 109, FLIP = 110, SHOWFPS = 111, GRAPHICS = 112, LINE = 113, LOADTYPEFACE = 114, 
-    RECTANGLE = 115, PLOT = 116, POINT = 117, SCREENWIDTH = 118, SCREENHEIGHT = 119, 
-    SHADED = 120, TEXT = 121, TEXTRIGHT = 122, TEXTCENTRE = 123, TEXTCENTER = 124, 
-    TRIANGLE = 125, TIME = 126, PI = 127, SQR = 128, LN = 129, LOG = 130, 
-    EXP = 131, ATN = 132, TAN = 133, COS = 134, SIN = 135, ABS = 136, ACS = 137, 
-    ASN = 138, DEG = 139, RAD = 140, SGN = 141, ASC = 142, LEN = 143, INSTR = 144, 
-    VAL = 145, TIMES = 146, STRS = 147, STRINGS = 148, CHRS = 149, LEFTS = 150, 
-    MIDS = 151, RIGHTS = 152, RND = 153, RND0 = 154, RND1 = 155, EQ = 156, 
-    NE = 157, GT = 158, GE = 159, LT = 160, LE = 161, NOT = 162, AND = 163, 
-    OR = 164, EOR = 165, MOD = 166, DIV = 167, HAT = 168, PLUS = 169, MINUS = 170, 
-    MULTIPLY = 171, DIVIDE = 172, SHL = 173, SHR = 174, PLUS_E = 175, MINUS_E = 176, 
-    MULTIPLY_E = 177, DIVIDE_E = 178, SHL_E = 179, SHR_E = 180, NEWLINE = 181, 
-    TICK = 182, TILDE = 183, HASH = 184, COLON = 185, COMMA = 186, DOLLAR = 187, 
-    LPAREN = 188, PERCENT = 189, RPAREN = 190, SEMICOLON = 191, UNDERSCORE = 192, 
-    COMMENT = 193, STRINGLITERAL = 194, PROC_NAME = 195, FN_INTEGER = 196, 
-    FN_FLOAT = 197, FN_STRING = 198, VARIABLE_FLOAT = 199, VARIABLE_INTEGER = 200, 
-    VARIABLE_STRING = 201, VARIABLE_TYPE = 202, NAME = 203, HEXNUMBER = 204, 
-    BINARYNUMBER = 205, NUMBER = 206, FLOAT = 207, WS = 208
+    SERIF40 = 87, SERIF50 = 88, SERIF75 = 89, SERIF100 = 90, RENDERFRAME = 91, 
+    CREATEVERTEX = 92, CREATETRIANGLE = 93, TRANSLATE = 94, ROTATE = 95, 
+    SCALE = 96, DELETEOBJECT = 97, CREATESHAPE = 98, CREATEOBJECT = 99, 
+    SOLID = 100, WIREFRAME = 101, SHADED = 102, FILLEDWIREFRAME = 103, BGETH = 104, 
+    BPUTH = 105, CLOSEH = 106, EOFH = 107, GETSH = 108, LISTFILES = 109, 
+    OPENIN = 110, OPENOUT = 111, OPENUP = 112, PTRH = 113, BANKED = 114, 
+    CIRCLE = 115, CLS = 116, CLIPON = 117, CLIPOFF = 118, COLOUR = 119, 
+    COLOURBG = 120, CREATEFONT = 121, FILL = 122, FLIP = 123, SHOWFPS = 124, 
+    GRAPHICS = 125, LINE = 126, LOADTYPEFACE = 127, RECTANGLE = 128, PLOT = 129, 
+    POINT = 130, SCREENWIDTH = 131, SCREENHEIGHT = 132, TEXT = 133, TEXTRIGHT = 134, 
+    TEXTCENTRE = 135, TEXTCENTER = 136, TRIANGLE = 137, TIME = 138, PI = 139, 
+    SQR = 140, LN = 141, LOG = 142, EXP = 143, ATN = 144, TAN = 145, COS = 146, 
+    SIN = 147, ABS = 148, ACS = 149, ASN = 150, DEG = 151, RAD = 152, SGN = 153, 
+    ASC = 154, LEN = 155, INSTR = 156, VAL = 157, TIMES = 158, STRS = 159, 
+    STRINGS = 160, CHRS = 161, LEFTS = 162, MIDS = 163, RIGHTS = 164, RND = 165, 
+    RND0 = 166, RND1 = 167, EQ = 168, NE = 169, GT = 170, GE = 171, LT = 172, 
+    LE = 173, NOT = 174, AND = 175, OR = 176, EOR = 177, MOD = 178, DIV = 179, 
+    HAT = 180, PLUS = 181, MINUS = 182, MULTIPLY = 183, DIVIDE = 184, SHL = 185, 
+    SHR = 186, PLUS_E = 187, MINUS_E = 188, MULTIPLY_E = 189, DIVIDE_E = 190, 
+    SHL_E = 191, SHR_E = 192, NEWLINE = 193, TICK = 194, TILDE = 195, HASH = 196, 
+    COLON = 197, COMMA = 198, DOLLAR = 199, LPAREN = 200, PERCENT = 201, 
+    RPAREN = 202, SEMICOLON = 203, UNDERSCORE = 204, COMMENT = 205, STRINGLITERAL = 206, 
+    PROC_NAME = 207, FN_INTEGER = 208, FN_FLOAT = 209, FN_STRING = 210, 
+    VARIABLE_FLOAT = 211, VARIABLE_INTEGER = 212, VARIABLE_STRING = 213, 
+    VARIABLE_TYPE = 214, HEXNUMBER = 215, BINARYNUMBER = 216, NUMBER = 217, 
+    FLOAT = 218, WS = 219
   };
 
   enum {
@@ -67,16 +71,18 @@ public:
     RuleStmtFLIP = 52, RuleStmtCIRCLE = 53, RuleStmtLINE = 54, RuleStmtRECTANGLE = 55, 
     RuleStmtTRIANGLE = 56, RuleStmtPLOT = 57, RuleStmtCLIPON = 58, RuleStmtCLIPOFF = 59, 
     RuleStmtTEXT = 60, RuleStmtTEXTRIGHT = 61, RuleStmtTEXTCENTRE = 62, 
-    RuleStmtSHOWFPS = 63, RuleWhen = 64, RuleFnName = 65, RuleLiteral = 66, 
-    RuleVar = 67, RuleTypeVar = 68, RuleNumVar = 69, RuleStrVar = 70, RuleJustVar = 71, 
-    RuleJustNumberVar = 72, RuleVarName = 73, RuleVarNameInteger = 74, RuleVarNameString = 75, 
-    RuleVarNameType = 76, RuleVarDecl = 77, RuleVarDeclWithDimension = 78, 
-    RuleVarList = 79, RuleFunctionVarList = 80, RuleFunctionParList = 81, 
-    RuleExprList = 82, RulePrintListItem = 83, RulePrintListTick = 84, RulePrintListSeparator = 85, 
-    RulePrintList = 86, RuleExpr = 87, RuleNumber = 88, RuleNumberInteger = 89, 
-    RuleNumberHex = 90, RuleNumberBinary = 91, RuleNumberFloat = 92, RuleStrFunc = 93, 
-    RuleString = 94, RuleStrExpr = 95, RuleNumFunc = 96, RuleNumExpr = 97, 
-    RuleNumColours = 98, RuleDefaultFonts = 99
+    RuleStmtSHOWFPS = 63, RuleStmtRENDERFRAME = 64, RuleStmtCREATEVERTEX = 65, 
+    RuleStmtCREATETRIANGLE = 66, RuleStmtTRANSLATE = 67, RuleStmtROTATE = 68, 
+    RuleStmtSCALE = 69, RuleStmtDELETEOBJECT = 70, RuleWhen = 71, RuleFnName = 72, 
+    RuleLiteral = 73, RuleVar = 74, RuleTypeVar = 75, RuleNumVar = 76, RuleStrVar = 77, 
+    RuleJustVar = 78, RuleJustNumberVar = 79, RuleVarName = 80, RuleVarNameInteger = 81, 
+    RuleVarNameString = 82, RuleVarNameType = 83, RuleVarDecl = 84, RuleVarDeclWithDimension = 85, 
+    RuleVarList = 86, RuleFunctionVarList = 87, RuleFunctionParList = 88, 
+    RuleExprList = 89, RulePrintListItem = 90, RulePrintListTick = 91, RulePrintListSeparator = 92, 
+    RulePrintList = 93, RuleExpr = 94, RuleNumber = 95, RuleNumberInteger = 96, 
+    RuleNumberHex = 97, RuleNumberBinary = 98, RuleNumberFloat = 99, RuleStrFunc = 100, 
+    RuleString = 101, RuleStrExpr = 102, RuleNumFunc = 103, RuleNumExpr = 104, 
+    RuleNumColours = 105, RuleDefaultFonts = 106
   };
 
   explicit DARICParser(antlr4::TokenStream *input);
@@ -153,6 +159,13 @@ public:
   class StmtTEXTRIGHTContext;
   class StmtTEXTCENTREContext;
   class StmtSHOWFPSContext;
+  class StmtRENDERFRAMEContext;
+  class StmtCREATEVERTEXContext;
+  class StmtCREATETRIANGLEContext;
+  class StmtTRANSLATEContext;
+  class StmtROTATEContext;
+  class StmtSCALEContext;
+  class StmtDELETEOBJECTContext;
   class WhenContext;
   class FnNameContext;
   class LiteralContext;
@@ -1005,6 +1018,13 @@ public:
     StmtTEXTRIGHTContext *stmtTEXTRIGHT();
     StmtTEXTCENTREContext *stmtTEXTCENTRE();
     StmtSHOWFPSContext *stmtSHOWFPS();
+    StmtRENDERFRAMEContext *stmtRENDERFRAME();
+    StmtCREATEVERTEXContext *stmtCREATEVERTEX();
+    StmtCREATETRIANGLEContext *stmtCREATETRIANGLE();
+    StmtTRANSLATEContext *stmtTRANSLATE();
+    StmtROTATEContext *stmtROTATE();
+    StmtSCALEContext *stmtSCALE();
+    StmtDELETEOBJECTContext *stmtDELETEOBJECT();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -1275,6 +1295,123 @@ public:
   };
 
   StmtSHOWFPSContext* stmtSHOWFPS();
+
+  class  StmtRENDERFRAMEContext : public antlr4::ParserRuleContext {
+  public:
+    StmtRENDERFRAMEContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *RENDERFRAME();
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  StmtRENDERFRAMEContext* stmtRENDERFRAME();
+
+  class  StmtCREATEVERTEXContext : public antlr4::ParserRuleContext {
+  public:
+    StmtCREATEVERTEXContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *CREATEVERTEX();
+    TypeVarContext *typeVar();
+    antlr4::tree::TerminalNode *LPAREN();
+    std::vector<NumExprContext *> numExpr();
+    NumExprContext* numExpr(size_t i);
+    antlr4::tree::TerminalNode *RPAREN();
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  StmtCREATEVERTEXContext* stmtCREATEVERTEX();
+
+  class  StmtCREATETRIANGLEContext : public antlr4::ParserRuleContext {
+  public:
+    StmtCREATETRIANGLEContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *CREATETRIANGLE();
+    TypeVarContext *typeVar();
+    antlr4::tree::TerminalNode *LPAREN();
+    std::vector<NumExprContext *> numExpr();
+    NumExprContext* numExpr(size_t i);
+    antlr4::tree::TerminalNode *RPAREN();
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  StmtCREATETRIANGLEContext* stmtCREATETRIANGLE();
+
+  class  StmtTRANSLATEContext : public antlr4::ParserRuleContext {
+  public:
+    StmtTRANSLATEContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *TRANSLATE();
+    std::vector<NumExprContext *> numExpr();
+    NumExprContext* numExpr(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  StmtTRANSLATEContext* stmtTRANSLATE();
+
+  class  StmtROTATEContext : public antlr4::ParserRuleContext {
+  public:
+    StmtROTATEContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *ROTATE();
+    std::vector<NumExprContext *> numExpr();
+    NumExprContext* numExpr(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  StmtROTATEContext* stmtROTATE();
+
+  class  StmtSCALEContext : public antlr4::ParserRuleContext {
+  public:
+    StmtSCALEContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *SCALE();
+    std::vector<NumExprContext *> numExpr();
+    NumExprContext* numExpr(size_t i);
+    antlr4::tree::TerminalNode *COMMA();
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  StmtSCALEContext* stmtSCALE();
+
+  class  StmtDELETEOBJECTContext : public antlr4::ParserRuleContext {
+  public:
+    StmtDELETEOBJECTContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *DELETEOBJECT();
+    NumExprContext *numExpr();
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  StmtDELETEOBJECTContext* stmtDELETEOBJECT();
 
   class  WhenContext : public antlr4::ParserRuleContext {
   public:
@@ -1942,6 +2079,7 @@ public:
     NumberHexContext *numberHex();
     NumberBinaryContext *numberBinary();
     NumColoursContext *numColours();
+    DefaultFontsContext *defaultFonts();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -2298,6 +2436,18 @@ public:
     antlr4::tree::TerminalNode *LPAREN();
     NumExprContext *numExpr();
     antlr4::tree::TerminalNode *RPAREN();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  NumFuncSHAPEContext : public NumFuncContext {
+  public:
+    NumFuncSHAPEContext(NumFuncContext *ctx);
+
+    antlr4::tree::TerminalNode *CREATESHAPE();
+    std::vector<TypeVarContext *> typeVar();
+    TypeVarContext* typeVar(size_t i);
+    antlr4::tree::TerminalNode *COMMA();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -2668,6 +2818,23 @@ public:
 
     antlr4::tree::TerminalNode *LOADTYPEFACE();
     StrExprContext *strExpr();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  NumFuncOBJECTContext : public NumFuncContext {
+  public:
+    NumFuncOBJECTContext(NumFuncContext *ctx);
+
+    antlr4::tree::TerminalNode *CREATEOBJECT();
+    std::vector<NumExprContext *> numExpr();
+    NumExprContext* numExpr(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
+    antlr4::tree::TerminalNode *SOLID();
+    antlr4::tree::TerminalNode *WIREFRAME();
+    antlr4::tree::TerminalNode *SHADED();
+    antlr4::tree::TerminalNode *FILLEDWIREFRAME();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };

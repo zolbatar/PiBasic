@@ -247,7 +247,7 @@ protected:
     antlrcpp::Any visitStrFuncINKEYS(DARICParser::StrFuncINKEYSContext* context);
 
     /* Graphics */
-    antlrcpp::Any visitDefaultFonts(DARICParser::NumDefaultFontsContext* context);
+    antlrcpp::Any visitDefaultFonts(DARICParser::DefaultFontsContext* context);
     antlrcpp::Any visitNumColours(DARICParser::NumColoursContext* context);
     antlrcpp::Any visitStmtCLS(DARICParser::StmtCLSContext* context);
     antlrcpp::Any visitStmtCOLOUR(DARICParser::StmtCOLOURContext* context);
@@ -271,6 +271,17 @@ protected:
     antlrcpp::Any visitNumFuncLOADTYPEFACE(DARICParser::NumFuncLOADTYPEFACEContext* context);
     antlrcpp::Any visitNumFuncSCREENWIDTH(DARICParser::NumFuncSCREENWIDTHContext* context);
     antlrcpp::Any visitNumFuncSCREENHEIGHT(DARICParser::NumFuncSCREENHEIGHTContext* context);
+
+    /* 3D */
+    antlrcpp::Any visitStmtRENDERFRAME(DARICParser::StmtRENDERFRAMEContext* context);
+    antlrcpp::Any visitStmtCREATEVERTEX(DARICParser::StmtCREATEVERTEXContext* context);
+    antlrcpp::Any visitStmtCREATETRIANGLE(DARICParser::StmtCREATETRIANGLEContext* context);
+    antlrcpp::Any visitStmtTRANSLATE(DARICParser::StmtTRANSLATEContext* context);
+    antlrcpp::Any visitStmtROTATE(DARICParser::StmtROTATEContext* context);
+    antlrcpp::Any visitStmtSCALE(DARICParser::StmtSCALEContext* context);
+    antlrcpp::Any visitStmtDELETEOBJECT(DARICParser::StmtDELETEOBJECTContext* context);
+    antlrcpp::Any visitNumFuncSHAPE(DARICParser::NumFuncSHAPEContext* context);
+    antlrcpp::Any visitNumFuncOBJECT(DARICParser::NumFuncOBJECTContext* context);
 
     /* Data */
     antlrcpp::Any visitStmtDATA(DARICParser::StmtDATAContext* context);

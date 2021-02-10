@@ -12,6 +12,7 @@ bool parse_errors = false;
 size_t error_line;
 short error_position;
 int file_count = 1;
+int error_count = 0;
 
 class MyParserErrorListener : public antlr4::BaseErrorListener {
 
@@ -29,7 +30,7 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
             end++;
             t = stream[end];
         };
-        return stream.substr(start, end - start);
+        return stream.substr(start, end - start + (t == '\n' ? 0 : 1));
     }
 
     void syntaxError(
@@ -45,9 +46,13 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
             error_position = charPositionInLine;
             parse_errors = true;
         }
-        if (fail_on_first_error) {
+        error_count++;
+        if (error_count == 5) {
+            throw DARICException(ErrorLocation::PARSER, parsing_filename, static_cast<UINT32>(line), static_cast<short>(charPositionInLine), "Stopping at 5 errors");
+        } else if (fail_on_first_error) {
             throw DARICException(ErrorLocation::PARSER, parsing_filename, static_cast<UINT32>(line), static_cast<short>(charPositionInLine), msg);
         } else {
+            std::cout << msg << std::endl;
             auto s = offendingSymbol->getInputStream();
             auto l = getLineFromStream(s->toString(), offendingSymbol->getStartIndex(), offendingSymbol->getStopIndex());
             replaceAll(l, "\n", "\r");
@@ -92,6 +97,7 @@ void MyParser::parse_and_compile(Compiler* compiler)
 {
     parse_errors = false;
     file_count = 1;
+    error_count = 0;
     std::ifstream stream;
     stream.open(filename);
     if (!stream.is_open()) {

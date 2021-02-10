@@ -145,7 +145,6 @@ void Graphics::open(int width, int height, int mode, std::string& cwd)
         create_font_by_size(index, 50);
         create_font_by_size(index, 75);
         create_font_by_size(index, 100);
-        //fp = std::string(cwd) + "/IBMPlexSans-Regular.ttf";
         fp = std::string(cwd) + "/PTSans-Regular.ttf";
         index = load_font(fp.c_str());
         create_font_by_size(index, 15);
@@ -157,7 +156,7 @@ void Graphics::open(int width, int height, int mode, std::string& cwd)
         create_font_by_size(index, 50);
         create_font_by_size(index, 75);
         create_font_by_size(index, 100);
-        /*        fp = std::string(cwd) + "/PTSerif-Regular.ttf";
+        fp = std::string(cwd) + "/PTSerif-Regular.ttf";
         index = load_font(fp.c_str());
         create_font_by_size(index, 15);
         create_font_by_size(index, 20);
@@ -167,7 +166,7 @@ void Graphics::open(int width, int height, int mode, std::string& cwd)
         create_font_by_size(index, 40);
         create_font_by_size(index, 50);
         create_font_by_size(index, 75);
-        create_font_by_size(index, 100);*/
+        create_font_by_size(index, 100);
     }
 
 #ifdef RISCOS

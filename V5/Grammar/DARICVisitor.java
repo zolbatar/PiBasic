@@ -394,6 +394,48 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStmtSHOWFPS(DARICParser.StmtSHOWFPSContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtRENDERFRAME}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtRENDERFRAME(DARICParser.StmtRENDERFRAMEContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtCREATEVERTEX}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtCREATEVERTEX(DARICParser.StmtCREATEVERTEXContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtCREATETRIANGLE}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtCREATETRIANGLE(DARICParser.StmtCREATETRIANGLEContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtTRANSLATE}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtTRANSLATE(DARICParser.StmtTRANSLATEContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtROTATE}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtROTATE(DARICParser.StmtROTATEContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtSCALE}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtSCALE(DARICParser.StmtSCALEContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtDELETEOBJECT}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtDELETEOBJECT(DARICParser.StmtDELETEOBJECTContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link DARICParser#when}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -1018,6 +1060,20 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNumFuncCREATEFONT(DARICParser.NumFuncCREATEFONTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code numFuncSHAPE}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumFuncSHAPE(DARICParser.NumFuncSHAPEContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code numFuncOBJECT}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumFuncOBJECT(DARICParser.NumFuncOBJECTContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code numFuncBGETH}
 	 * labeled alternative in {@link DARICParser#numFunc}.

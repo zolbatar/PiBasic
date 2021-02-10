@@ -271,6 +271,34 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtRENDERFRAME(DARICParser::StmtRENDERFRAMEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtCREATEVERTEX(DARICParser::StmtCREATEVERTEXContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtCREATETRIANGLE(DARICParser::StmtCREATETRIANGLEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtTRANSLATE(DARICParser::StmtTRANSLATEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtROTATE(DARICParser::StmtROTATEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtSCALE(DARICParser::StmtSCALEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtDELETEOBJECT(DARICParser::StmtDELETEOBJECTContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitWhen(DARICParser::WhenContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -640,6 +668,14 @@ public:
   }
 
   virtual antlrcpp::Any visitNumFuncCREATEFONT(DARICParser::NumFuncCREATEFONTContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumFuncSHAPE(DARICParser::NumFuncSHAPEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumFuncOBJECT(DARICParser::NumFuncOBJECTContext *ctx) override {
     return visitChildren(ctx);
   }
 

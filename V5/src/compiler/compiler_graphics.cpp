@@ -26,7 +26,7 @@ antlrcpp::Any Compiler::visitNumColours(DARICParser::NumColoursContext* context)
     return NULL;
 }
 
-antlrcpp::Any Compiler::visitDefaultFonts(DARICParser::NumDefaultFontsContext* context)
+antlrcpp::Any Compiler::visitDefaultFonts(DARICParser::DefaultFontsContext* context)
 {
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
