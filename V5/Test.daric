@@ -1,5 +1,6 @@
 REM INSTALL "SetupGraphicsBanked"
 REM SHOWFPS
+GRAPHICS BANKED
 
 REM ** Create a random RGB colour **
 DEF FNRNDCOL%()

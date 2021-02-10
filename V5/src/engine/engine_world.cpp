@@ -11,7 +11,7 @@ UINT32 World::create_shape(Boxed* vertices, Boxed* triangles)
     Shape shape;
 
     // Create and add vertices
-    size_t count = vertices->fields.size() / 4;
+    size_t count = (vertices->fields.size() / 4) - 1;
     shape.vertices.reserve(count);
     for (size_t i = 0; i < count; i++) {
         VM_FLOAT x = vertices->fields[i * 4].value_float;
@@ -23,7 +23,7 @@ UINT32 World::create_shape(Boxed* vertices, Boxed* triangles)
     }
 
     // Create and add triangles
-    count = triangles->fields.size() / 4;
+    count = (triangles->fields.size() / 4) - 1;
     shape.triangles.reserve(count);
     for (size_t i = 0; i < count; i++) {
         Triangle v;

@@ -2288,6 +2288,7 @@ void VM::opcode_GRAPHICS()
     if (y == -1)
         y = g_env.graphics.get_screen_height();
     g_env.graphics.open(x, y, mode, g_env.cwd);
+    world.set_screen_size(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height());
     if (!performance_build && runtime_debug)
         g_env.log << "Change screen mode to " << x << " x " << y << std::endl;
 }
@@ -2416,8 +2417,8 @@ void VM::opcode_CREATEVERTEX()
     auto base = static_cast<size_t>(array_index) * 4;
 
     // Valid?
-    if (b->get_type() != Type::TYPE_ARRAY || b->fields.size() < (array_index * 4)) {
-        error("First parameters needs to be a correctly sized TYPE ARRAY");
+    if (b->get_type() != Type::TYPE || b->fields.size() < (array_index * 4)) {
+        error("First parameter needs to be a correctly sized TYPE ARRAY");
     }
 
     // X
@@ -2449,8 +2450,8 @@ void VM::opcode_CREATETRIANGLE()
     auto base = static_cast<size_t>(array_index) * 4;
 
     // Valid?
-    if (b->get_type() != Type::TYPE_ARRAY || b->fields.size() < (array_index * 4)) {
-        error("First parameters needs to be a correctly sized TYPE ARRAY");
+    if (b->get_type() != Type::TYPE || b->fields.size() < (array_index * 4)) {
+        error("First parameter needs to be a correctly sized TYPE ARRAY");
     }
 
     // Vertex 1
@@ -2477,7 +2478,7 @@ void VM::opcode_CREATESHAPE()
     auto variable1 = variables.get_variable_by_int(bc, var2);
 
     // Check
-    if (variable1->get_type() != Type::TYPE_ARRAY || variable2->get_type() != Type::TYPE_ARRAY) {
+    if (variable1->get_type() != Type::TYPE || variable2->get_type() != Type::TYPE) {
         error("Both parameters need to be TYPE ARRAY");
     }
 
@@ -2690,6 +2691,7 @@ std::string VM::run()
     stack.clear_stack(bc);
     bool quit = false;
     int poll_count = 0;
+    world.set_screen_size(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height());
     try {
         while (!quit) {
             if (!performance_build && runtime_debug) {

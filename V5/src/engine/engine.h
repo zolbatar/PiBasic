@@ -151,6 +151,10 @@ public:
     void object_scale(UINT32 index, VM_FLOAT scale);
     void object_delete(UINT32 index);
     void render();
+    void set_screen_size(int screen_width, int screen_height) {
+        state.x_origin = screen_width / 2;
+        state.y_origin = screen_height / 2;
+    }
 
 private:
     std::vector<Shape> shapes;

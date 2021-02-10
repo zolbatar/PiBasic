@@ -16,21 +16,22 @@ antlrcpp::Any Compiler::visitStmtCREATEVERTEX(DARICParser::StmtCREATEVERTEXConte
     set_pos(context->start);
     visit(context->varNameType());
     find_variable(false, true);
+    auto saved = current_var;
     if (current_var.type != Type::TYPE_ARRAY && current_var.custom_type_name != "Vertex3D") {
         error("The first parameter to VERTEX should be a type array of Vertex3D");
     }
     visit(context->numExpr(0));
     ensure_stack_is_integer();
     stack_pop();
-    for (auto i = 1; i < 3; i++) {
+    for (auto i = 1; i < 4; i++) {
         visit(context->numExpr(i));
         ensure_stack_is_float();
         stack_pop();
     }
-    visit(context->numExpr(3));
+    visit(context->numExpr(4));
     ensure_stack_is_integer();
     stack_pop();
-    insert_instruction(Bytecodes::CREATEVERTEX, Type::TYPE_ARRAY, current_var.id);
+    insert_instruction(Bytecodes::CREATEVERTEX, Type::TYPE_ARRAY, saved.id);
     assert(stack_size() == 0);
     return NULL;
 }
@@ -42,6 +43,7 @@ antlrcpp::Any Compiler::visitStmtCREATETRIANGLE(DARICParser::StmtCREATETRIANGLEC
     set_pos(context->start);
     visit(context->varNameType());
     find_variable(false, true);
+    auto saved = current_var;
     if (current_var.type != Type::TYPE_ARRAY && current_var.custom_type_name != "Triangle3D") {
         error("The first parameter to VERTEX should be a type array of Triangle3D");
     }
@@ -50,7 +52,7 @@ antlrcpp::Any Compiler::visitStmtCREATETRIANGLE(DARICParser::StmtCREATETRIANGLEC
         ensure_stack_is_integer();
         stack_pop();
     }
-    insert_instruction(Bytecodes::CREATETRIANGLE, Type::TYPE_ARRAY, current_var.id);
+    insert_instruction(Bytecodes::CREATETRIANGLE, Type::TYPE_ARRAY, saved.id);
     assert(stack_size() == 0);
     return NULL;
 }
