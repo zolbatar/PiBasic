@@ -38,6 +38,7 @@ coreStmt
     | stmtCallFN
     | stmtIF
     | stmtIFMultiline
+    | stmtINSTALL
     | stmtLET
     | stmtOSCLI
     | stmtCallPROC
@@ -58,13 +59,14 @@ stmtDATA:           DATA literal (COMMA literal)* ;
 stmtDIM:            LOCAL? DIM varDeclWithDimension (COMMA varDeclWithDimension)* ;
 stmtEND:            END ;
 stmtRETURN:         RETURN expr? ;
-stmtDEFFN:          DEF fnName LPAREN functionVarList? RPAREN body ENDFN ;
-stmtDEFPROC:        DEF PROC_NAME LPAREN functionVarList? RPAREN body ENDPROC ;
-stmtFOR:            FOR LOCAL? justNumberVar EQ numExpr TO numExpr (STEP numExpr)? body NEXT ;
-stmtFORIN:          FOR LOCAL? justVar IN justVar LPAREN RPAREN body NEXT ;
+stmtDEFFN:          DEF fnName LPAREN functionVarList? RPAREN body linenumber? ENDFN ;
+stmtDEFPROC:        DEF PROC_NAME LPAREN functionVarList? RPAREN body linenumber? ENDPROC ;
+stmtFOR:            FOR LOCAL? justNumberVar EQ numExpr TO numExpr (STEP numExpr)? body linenumber? NEXT ;
+stmtFORIN:          FOR LOCAL? justVar IN justVar LPAREN RPAREN body linenumber? NEXT ;
 stmtCallFN:         fnName LPAREN functionParList? RPAREN ;
 stmtIF:             IF expr t=content (ELSE f=content)? ;
-stmtIFMultiline:    IF expr THEN NEWLINE t=line+ (ELSE NEWLINE f=line+)? ENDIF ;
+stmtIFMultiline:    IF expr THEN NEWLINE t=line+ (ELSE NEWLINE f=line+)? linenumber? ENDIF ;
+stmtINSTALL:        INSTALL strExpr ;
 stmtLET:            ((LET | GLOBAL)? | LOCAL) varDecl EQ expr (COMMA varDecl EQ expr)* ;
 stmtOSCLI:          OSCLI strExpr ;
 stmtCallPROC:       PROC_NAME LPAREN functionParList? RPAREN ;
@@ -90,8 +92,8 @@ keyMouseStmt
 stmtINPUT:      INPUT (strExpr COMMA)? varList ;
 stmtPRINT:      PRINT printList? ;
 stmtMOUSE:      MOUSE varNameInteger COMMA varNameInteger COMMA varNameInteger ;
-stmtINKEY:      INKEY numExpr ;
-stmtINKEYS:     INKEYS numExpr ;
+stmtINKEY:      INKEY LPAREN numExpr RPAREN ;
+stmtINKEYS:     INKEYS LPAREN numExpr RPAREN ;
 stmtGET:        GET ;
 stmtGETS:       GETS ;
 
@@ -313,7 +315,6 @@ numberFloat:        (PLUS | MINUS)? FLOAT ;
 
 strFunc
     : TIMES                                                     #strFuncTIMES   
-    | CHRS numExpr                                              #strFuncCHRS
     | CHRS LPAREN numExpr RPAREN                                #strFuncCHRS
     | LEFTS LPAREN strExpr COMMA numExpr RPAREN                 #strFuncLEFTS
     | MIDS LPAREN strExpr COMMA numExpr COMMA numExpr RPAREN    #strFuncMIDS3
@@ -342,10 +343,10 @@ numFunc
     | FALSE                                 #numFuncFALSE
     | TRUE                                  #numFuncTRUE
     | TIME                                  #numFuncTIME
+    | RND LPAREN numExpr RPAREN             #numFuncRNDRANGE
     | RND                                   #numFuncRND
     | RND0                                  #numFuncRND0
     | RND1                                  #numFuncRND1
-    | RND LPAREN numExpr RPAREN             #numFuncRNDRANGE
     | LN LPAREN numExpr RPAREN              #numFuncLN
     | LOG LPAREN numExpr RPAREN             #numFuncLOG
     | EXP LPAREN numExpr RPAREN             #numFuncEXP
@@ -363,7 +364,7 @@ numFunc
 
     /* Keyboard */
     | GET                                   #numFuncGET
-    | INKEY numExpr                         #numFuncINKEY
+    | INKEY LPAREN numExpr RPAREN           #numFuncINKEY
 
     /* Conversion */
     | INT LPAREN numExpr RPAREN             #numFuncINT
@@ -373,7 +374,7 @@ numFunc
     | SCREENWIDTH                                                   #numFuncSCREENWIDTH
     | SCREENHEIGHT                                                  #numFuncSCREENHEIGHT
     | POINT LPAREN numExpr COMMA numExpr RPAREN                     #numFuncPOINT
-    | COLOUR LPAREN numExpr COMMA numExpr COMMA numExpr LPAREN      #numFuncCOLOUR
+    | COLOUR LPAREN numExpr COMMA numExpr COMMA numExpr RPAREN      #numFuncCOLOUR
     | LOADTYPEFACE strExpr                                          #numFuncLOADTYPEFACE
     | CREATEFONT numExpr COMMA numExpr                              #numFuncCREATEFONT
 
@@ -478,6 +479,7 @@ FLOAT_TOKEN     : 'FLOAT' | 'float' | 'Float' ;
 FN              : 'FN' | 'fn' | 'Fn' ;
 IF              : 'IF' | 'if' | 'If' ;
 IN              : 'IN' | 'in' | 'In' ;
+INSTALL         : 'INSTALL' |  'install' | 'Install' ;
 INT             : 'INT' | 'int' | 'Int' ;
 INPUT           : 'INPUT' | 'input' | 'Input' ;
 GLOBAL          : 'GLOBAL' | 'global' | 'Global' ;
@@ -634,8 +636,8 @@ MIDS            : ('MID' | 'mid' | 'Mid') DOLLAR ;
 RIGHTS          : ('RIGHT' | 'right' | 'Right') DOLLAR ;
 
 RND             : 'RND' | 'rnd' | 'Rnd' ;
-RND0            : ('RND' | 'rnd' | 'Rnd') LPAREN '0' RPAREN ;
-RND1            : ('RND' | 'rnd' | 'Rnd') LPAREN '1' RPAREN ;
+RND0            : RND LPAREN '0' RPAREN ;
+RND1            : RND LPAREN '1' RPAREN ;
 
 EQ              : '=' ;
 NE              : '<>' ;

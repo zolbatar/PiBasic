@@ -77,6 +77,10 @@ private:
     // Case statements
     bool case_flag = false;
 
+    // Array checking
+    VM_INT array_1d_get_index(Boxed* var, VM_INT index);
+    VM_INT array_2d_get_index(Boxed* var, VM_INT index2, VM_INT index1);
+
     // The actual opcodes methods
     void opcode_HALT();
     void opcode_DROP();

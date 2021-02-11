@@ -14,44 +14,44 @@ public:
   enum {
     BREAKPOINT = 1, CASE = 2, CHAIN = 3, DATA = 4, DEF = 5, DIM = 6, ELSE = 7, 
     END = 8, ENDCASE = 9, ENDIF = 10, ENDFN = 11, ENDPROC = 12, ENDWHILE = 13, 
-    FALSE = 14, FOR = 15, FLOAT_TOKEN = 16, FN = 17, IF = 18, IN = 19, INT = 20, 
-    INPUT = 21, GLOBAL = 22, LOCAL = 23, LET = 24, NEXT = 25, OF = 26, OFF = 27, 
-    ON = 28, OSCLI = 29, OTHERWISE = 30, PRINT = 31, PROC = 32, READ = 33, 
-    REM = 34, REPEAT = 35, RESTORE = 36, RETURN = 37, SPC = 38, STEP = 39, 
-    SWAP = 40, THEN = 41, TO = 42, TRACE = 43, TRACEON = 44, TRACEOFF = 45, 
-    TRUE = 46, TYPE = 47, UNTIL = 48, WHEN = 49, WHILE = 50, MOUSE = 51, 
-    INKEY = 52, INKEYS = 53, GET = 54, GETS = 55, RED = 56, GREEN = 57, 
-    YELLOW = 58, BLUE = 59, MAGENTA = 60, CYAN = 61, WHITE = 62, BLACK = 63, 
-    MONO15 = 64, MONO20 = 65, MONO25 = 66, MONO30 = 67, MONO35 = 68, MONO40 = 69, 
-    MONO50 = 70, MONO75 = 71, MONO100 = 72, PROP15 = 73, PROP20 = 74, PROP25 = 75, 
-    PROP30 = 76, PROP35 = 77, PROP40 = 78, PROP50 = 79, PROP75 = 80, PROP100 = 81, 
-    SERIF15 = 82, SERIF20 = 83, SERIF25 = 84, SERIF30 = 85, SERIF35 = 86, 
-    SERIF40 = 87, SERIF50 = 88, SERIF75 = 89, SERIF100 = 90, RENDERFRAME = 91, 
-    CREATEVERTEX = 92, CREATETRIANGLE = 93, TRANSLATE = 94, ROTATE = 95, 
-    SCALE = 96, DELETEOBJECT = 97, CREATESHAPE = 98, CREATEOBJECT = 99, 
-    SOLID = 100, WIREFRAME = 101, SHADED = 102, FILLEDWIREFRAME = 103, BGETH = 104, 
-    BPUTH = 105, CLOSEH = 106, EOFH = 107, GETSH = 108, LISTFILES = 109, 
-    OPENIN = 110, OPENOUT = 111, OPENUP = 112, PTRH = 113, BANKED = 114, 
-    CIRCLE = 115, CLS = 116, CLIPON = 117, CLIPOFF = 118, COLOUR = 119, 
-    COLOURBG = 120, CREATEFONT = 121, FILL = 122, FLIP = 123, SHOWFPS = 124, 
-    GRAPHICS = 125, LINE = 126, LOADTYPEFACE = 127, RECTANGLE = 128, PLOT = 129, 
-    POINT = 130, SCREENWIDTH = 131, SCREENHEIGHT = 132, TEXT = 133, TEXTRIGHT = 134, 
-    TEXTCENTRE = 135, TEXTCENTER = 136, TRIANGLE = 137, TIME = 138, PI = 139, 
-    SQR = 140, LN = 141, LOG = 142, EXP = 143, ATN = 144, TAN = 145, COS = 146, 
-    SIN = 147, ABS = 148, ACS = 149, ASN = 150, DEG = 151, RAD = 152, SGN = 153, 
-    ASC = 154, LEN = 155, INSTR = 156, VAL = 157, TIMES = 158, STRS = 159, 
-    STRINGS = 160, CHRS = 161, LEFTS = 162, MIDS = 163, RIGHTS = 164, RND = 165, 
-    RND0 = 166, RND1 = 167, EQ = 168, NE = 169, GT = 170, GE = 171, LT = 172, 
-    LE = 173, NOT = 174, AND = 175, OR = 176, EOR = 177, MOD = 178, DIV = 179, 
-    HAT = 180, PLUS = 181, MINUS = 182, MULTIPLY = 183, DIVIDE = 184, SHL = 185, 
-    SHR = 186, PLUS_E = 187, MINUS_E = 188, MULTIPLY_E = 189, DIVIDE_E = 190, 
-    SHL_E = 191, SHR_E = 192, NEWLINE = 193, TICK = 194, TILDE = 195, HASH = 196, 
-    COLON = 197, COMMA = 198, DOLLAR = 199, LPAREN = 200, PERCENT = 201, 
-    RPAREN = 202, SEMICOLON = 203, UNDERSCORE = 204, COMMENT = 205, STRINGLITERAL = 206, 
-    PROC_NAME = 207, FN_INTEGER = 208, FN_FLOAT = 209, FN_STRING = 210, 
-    VARIABLE_FLOAT = 211, VARIABLE_INTEGER = 212, VARIABLE_STRING = 213, 
-    VARIABLE_TYPE = 214, HEXNUMBER = 215, BINARYNUMBER = 216, NUMBER = 217, 
-    FLOAT = 218, WS = 219
+    FALSE = 14, FOR = 15, FLOAT_TOKEN = 16, FN = 17, IF = 18, IN = 19, INSTALL = 20, 
+    INT = 21, INPUT = 22, GLOBAL = 23, LOCAL = 24, LET = 25, NEXT = 26, 
+    OF = 27, OFF = 28, ON = 29, OSCLI = 30, OTHERWISE = 31, PRINT = 32, 
+    PROC = 33, READ = 34, REM = 35, REPEAT = 36, RESTORE = 37, RETURN = 38, 
+    SPC = 39, STEP = 40, SWAP = 41, THEN = 42, TO = 43, TRACE = 44, TRACEON = 45, 
+    TRACEOFF = 46, TRUE = 47, TYPE = 48, UNTIL = 49, WHEN = 50, WHILE = 51, 
+    MOUSE = 52, INKEY = 53, INKEYS = 54, GET = 55, GETS = 56, RED = 57, 
+    GREEN = 58, YELLOW = 59, BLUE = 60, MAGENTA = 61, CYAN = 62, WHITE = 63, 
+    BLACK = 64, MONO15 = 65, MONO20 = 66, MONO25 = 67, MONO30 = 68, MONO35 = 69, 
+    MONO40 = 70, MONO50 = 71, MONO75 = 72, MONO100 = 73, PROP15 = 74, PROP20 = 75, 
+    PROP25 = 76, PROP30 = 77, PROP35 = 78, PROP40 = 79, PROP50 = 80, PROP75 = 81, 
+    PROP100 = 82, SERIF15 = 83, SERIF20 = 84, SERIF25 = 85, SERIF30 = 86, 
+    SERIF35 = 87, SERIF40 = 88, SERIF50 = 89, SERIF75 = 90, SERIF100 = 91, 
+    RENDERFRAME = 92, CREATEVERTEX = 93, CREATETRIANGLE = 94, TRANSLATE = 95, 
+    ROTATE = 96, SCALE = 97, DELETEOBJECT = 98, CREATESHAPE = 99, CREATEOBJECT = 100, 
+    SOLID = 101, WIREFRAME = 102, SHADED = 103, FILLEDWIREFRAME = 104, BGETH = 105, 
+    BPUTH = 106, CLOSEH = 107, EOFH = 108, GETSH = 109, LISTFILES = 110, 
+    OPENIN = 111, OPENOUT = 112, OPENUP = 113, PTRH = 114, BANKED = 115, 
+    CIRCLE = 116, CLS = 117, CLIPON = 118, CLIPOFF = 119, COLOUR = 120, 
+    COLOURBG = 121, CREATEFONT = 122, FILL = 123, FLIP = 124, SHOWFPS = 125, 
+    GRAPHICS = 126, LINE = 127, LOADTYPEFACE = 128, RECTANGLE = 129, PLOT = 130, 
+    POINT = 131, SCREENWIDTH = 132, SCREENHEIGHT = 133, TEXT = 134, TEXTRIGHT = 135, 
+    TEXTCENTRE = 136, TEXTCENTER = 137, TRIANGLE = 138, TIME = 139, PI = 140, 
+    SQR = 141, LN = 142, LOG = 143, EXP = 144, ATN = 145, TAN = 146, COS = 147, 
+    SIN = 148, ABS = 149, ACS = 150, ASN = 151, DEG = 152, RAD = 153, SGN = 154, 
+    ASC = 155, LEN = 156, INSTR = 157, VAL = 158, TIMES = 159, STRS = 160, 
+    STRINGS = 161, CHRS = 162, LEFTS = 163, MIDS = 164, RIGHTS = 165, RND = 166, 
+    RND0 = 167, RND1 = 168, EQ = 169, NE = 170, GT = 171, GE = 172, LT = 173, 
+    LE = 174, NOT = 175, AND = 176, OR = 177, EOR = 178, MOD = 179, DIV = 180, 
+    HAT = 181, PLUS = 182, MINUS = 183, MULTIPLY = 184, DIVIDE = 185, SHL = 186, 
+    SHR = 187, PLUS_E = 188, MINUS_E = 189, MULTIPLY_E = 190, DIVIDE_E = 191, 
+    SHL_E = 192, SHR_E = 193, NEWLINE = 194, TICK = 195, TILDE = 196, HASH = 197, 
+    COLON = 198, COMMA = 199, DOLLAR = 200, LPAREN = 201, PERCENT = 202, 
+    RPAREN = 203, SEMICOLON = 204, UNDERSCORE = 205, COMMENT = 206, STRINGLITERAL = 207, 
+    PROC_NAME = 208, FN_INTEGER = 209, FN_FLOAT = 210, FN_STRING = 211, 
+    VARIABLE_FLOAT = 212, VARIABLE_INTEGER = 213, VARIABLE_STRING = 214, 
+    VARIABLE_TYPE = 215, HEXNUMBER = 216, BINARYNUMBER = 217, NUMBER = 218, 
+    FLOAT = 219, WS = 220
   };
 
   enum {
@@ -60,29 +60,29 @@ public:
     RuleStmtCHAIN = 9, RuleStmtDATA = 10, RuleStmtDIM = 11, RuleStmtEND = 12, 
     RuleStmtRETURN = 13, RuleStmtDEFFN = 14, RuleStmtDEFPROC = 15, RuleStmtFOR = 16, 
     RuleStmtFORIN = 17, RuleStmtCallFN = 18, RuleStmtIF = 19, RuleStmtIFMultiline = 20, 
-    RuleStmtLET = 21, RuleStmtOSCLI = 22, RuleStmtCallPROC = 23, RuleStmtREAD = 24, 
-    RuleStmtRESTORE = 25, RuleStmtSWAP = 26, RuleStmtTRACEON = 27, RuleStmtTRACEOFF = 28, 
-    RuleStmtTYPE = 29, RuleStmtREPEAT = 30, RuleStmtWHILE = 31, RuleKeyMouseStmt = 32, 
-    RuleStmtINPUT = 33, RuleStmtPRINT = 34, RuleStmtMOUSE = 35, RuleStmtINKEY = 36, 
-    RuleStmtINKEYS = 37, RuleStmtGET = 38, RuleStmtGETS = 39, RuleStmtOperatorEqual = 40, 
-    RuleIoStmt = 41, RuleStmtBPUTH = 42, RuleStmtBGETH = 43, RuleStmtPTRH = 44, 
-    RuleStmtCLOSEH = 45, RuleStmtLISTFILES = 46, RuleGraphicsStmt = 47, 
-    RuleStmtCLS = 48, RuleStmtCOLOUR = 49, RuleStmtCOLOURBG = 50, RuleStmtGRAPHICS = 51, 
-    RuleStmtFLIP = 52, RuleStmtCIRCLE = 53, RuleStmtLINE = 54, RuleStmtRECTANGLE = 55, 
-    RuleStmtTRIANGLE = 56, RuleStmtPLOT = 57, RuleStmtCLIPON = 58, RuleStmtCLIPOFF = 59, 
-    RuleStmtTEXT = 60, RuleStmtTEXTRIGHT = 61, RuleStmtTEXTCENTRE = 62, 
-    RuleStmtSHOWFPS = 63, RuleStmtRENDERFRAME = 64, RuleStmtCREATEVERTEX = 65, 
-    RuleStmtCREATETRIANGLE = 66, RuleStmtTRANSLATE = 67, RuleStmtROTATE = 68, 
-    RuleStmtSCALE = 69, RuleStmtDELETEOBJECT = 70, RuleWhen = 71, RuleFnName = 72, 
-    RuleLiteral = 73, RuleVar = 74, RuleTypeVar = 75, RuleNumVar = 76, RuleStrVar = 77, 
-    RuleJustVar = 78, RuleJustNumberVar = 79, RuleVarName = 80, RuleVarNameInteger = 81, 
-    RuleVarNameString = 82, RuleVarNameType = 83, RuleVarDecl = 84, RuleVarDeclWithDimension = 85, 
-    RuleVarList = 86, RuleFunctionVarList = 87, RuleFunctionParList = 88, 
-    RuleExprList = 89, RulePrintListItem = 90, RulePrintListTick = 91, RulePrintListSeparator = 92, 
-    RulePrintList = 93, RuleExpr = 94, RuleNumber = 95, RuleNumberInteger = 96, 
-    RuleNumberHex = 97, RuleNumberBinary = 98, RuleNumberFloat = 99, RuleStrFunc = 100, 
-    RuleString = 101, RuleStrExpr = 102, RuleNumFunc = 103, RuleNumExpr = 104, 
-    RuleNumColours = 105, RuleDefaultFonts = 106
+    RuleStmtINSTALL = 21, RuleStmtLET = 22, RuleStmtOSCLI = 23, RuleStmtCallPROC = 24, 
+    RuleStmtREAD = 25, RuleStmtRESTORE = 26, RuleStmtSWAP = 27, RuleStmtTRACEON = 28, 
+    RuleStmtTRACEOFF = 29, RuleStmtTYPE = 30, RuleStmtREPEAT = 31, RuleStmtWHILE = 32, 
+    RuleKeyMouseStmt = 33, RuleStmtINPUT = 34, RuleStmtPRINT = 35, RuleStmtMOUSE = 36, 
+    RuleStmtINKEY = 37, RuleStmtINKEYS = 38, RuleStmtGET = 39, RuleStmtGETS = 40, 
+    RuleStmtOperatorEqual = 41, RuleIoStmt = 42, RuleStmtBPUTH = 43, RuleStmtBGETH = 44, 
+    RuleStmtPTRH = 45, RuleStmtCLOSEH = 46, RuleStmtLISTFILES = 47, RuleGraphicsStmt = 48, 
+    RuleStmtCLS = 49, RuleStmtCOLOUR = 50, RuleStmtCOLOURBG = 51, RuleStmtGRAPHICS = 52, 
+    RuleStmtFLIP = 53, RuleStmtCIRCLE = 54, RuleStmtLINE = 55, RuleStmtRECTANGLE = 56, 
+    RuleStmtTRIANGLE = 57, RuleStmtPLOT = 58, RuleStmtCLIPON = 59, RuleStmtCLIPOFF = 60, 
+    RuleStmtTEXT = 61, RuleStmtTEXTRIGHT = 62, RuleStmtTEXTCENTRE = 63, 
+    RuleStmtSHOWFPS = 64, RuleStmtRENDERFRAME = 65, RuleStmtCREATEVERTEX = 66, 
+    RuleStmtCREATETRIANGLE = 67, RuleStmtTRANSLATE = 68, RuleStmtROTATE = 69, 
+    RuleStmtSCALE = 70, RuleStmtDELETEOBJECT = 71, RuleWhen = 72, RuleFnName = 73, 
+    RuleLiteral = 74, RuleVar = 75, RuleTypeVar = 76, RuleNumVar = 77, RuleStrVar = 78, 
+    RuleJustVar = 79, RuleJustNumberVar = 80, RuleVarName = 81, RuleVarNameInteger = 82, 
+    RuleVarNameString = 83, RuleVarNameType = 84, RuleVarDecl = 85, RuleVarDeclWithDimension = 86, 
+    RuleVarList = 87, RuleFunctionVarList = 88, RuleFunctionParList = 89, 
+    RuleExprList = 90, RulePrintListItem = 91, RulePrintListTick = 92, RulePrintListSeparator = 93, 
+    RulePrintList = 94, RuleExpr = 95, RuleNumber = 96, RuleNumberInteger = 97, 
+    RuleNumberHex = 98, RuleNumberBinary = 99, RuleNumberFloat = 100, RuleStrFunc = 101, 
+    RuleString = 102, RuleStrExpr = 103, RuleNumFunc = 104, RuleNumExpr = 105, 
+    RuleNumColours = 106, RuleDefaultFonts = 107
   };
 
   explicit DARICParser(antlr4::TokenStream *input);
@@ -116,6 +116,7 @@ public:
   class StmtCallFNContext;
   class StmtIFContext;
   class StmtIFMultilineContext;
+  class StmtINSTALLContext;
   class StmtLETContext;
   class StmtOSCLIContext;
   class StmtCallPROCContext;
@@ -315,6 +316,7 @@ public:
     StmtCallFNContext *stmtCallFN();
     StmtIFContext *stmtIF();
     StmtIFMultilineContext *stmtIFMultiline();
+    StmtINSTALLContext *stmtINSTALL();
     StmtLETContext *stmtLET();
     StmtOSCLIContext *stmtOSCLI();
     StmtCallPROCContext *stmtCallPROC();
@@ -455,6 +457,7 @@ public:
     BodyContext *body();
     antlr4::tree::TerminalNode *ENDFN();
     FunctionVarListContext *functionVarList();
+    LinenumberContext *linenumber();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -474,6 +477,7 @@ public:
     BodyContext *body();
     antlr4::tree::TerminalNode *ENDPROC();
     FunctionVarListContext *functionVarList();
+    LinenumberContext *linenumber();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -496,6 +500,7 @@ public:
     antlr4::tree::TerminalNode *NEXT();
     antlr4::tree::TerminalNode *LOCAL();
     antlr4::tree::TerminalNode *STEP();
+    LinenumberContext *linenumber();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -517,6 +522,7 @@ public:
     BodyContext *body();
     antlr4::tree::TerminalNode *NEXT();
     antlr4::tree::TerminalNode *LOCAL();
+    LinenumberContext *linenumber();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -573,6 +579,7 @@ public:
     antlr4::tree::TerminalNode* NEWLINE(size_t i);
     antlr4::tree::TerminalNode *ENDIF();
     antlr4::tree::TerminalNode *ELSE();
+    LinenumberContext *linenumber();
     std::vector<LineContext *> line();
     LineContext* line(size_t i);
 
@@ -582,6 +589,20 @@ public:
   };
 
   StmtIFMultilineContext* stmtIFMultiline();
+
+  class  StmtINSTALLContext : public antlr4::ParserRuleContext {
+  public:
+    StmtINSTALLContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *INSTALL();
+    StrExprContext *strExpr();
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  StmtINSTALLContext* stmtINSTALL();
 
   class  StmtLETContext : public antlr4::ParserRuleContext {
   public:
@@ -831,7 +852,9 @@ public:
     StmtINKEYContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *INKEY();
+    antlr4::tree::TerminalNode *LPAREN();
     NumExprContext *numExpr();
+    antlr4::tree::TerminalNode *RPAREN();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -845,7 +868,9 @@ public:
     StmtINKEYSContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *INKEYS();
+    antlr4::tree::TerminalNode *LPAREN();
     NumExprContext *numExpr();
+    antlr4::tree::TerminalNode *RPAREN();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -2219,8 +2244,8 @@ public:
     StrFuncCHRSContext(StrFuncContext *ctx);
 
     antlr4::tree::TerminalNode *CHRS();
-    NumExprContext *numExpr();
     antlr4::tree::TerminalNode *LPAREN();
+    NumExprContext *numExpr();
     antlr4::tree::TerminalNode *RPAREN();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -2329,15 +2354,6 @@ public:
    
   };
 
-  class  NumFuncRND0Context : public NumFuncContext {
-  public:
-    NumFuncRND0Context(NumFuncContext *ctx);
-
-    antlr4::tree::TerminalNode *RND0();
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
   class  NumFuncRNDRANGEContext : public NumFuncContext {
   public:
     NumFuncRNDRANGEContext(NumFuncContext *ctx);
@@ -2346,6 +2362,15 @@ public:
     antlr4::tree::TerminalNode *LPAREN();
     NumExprContext *numExpr();
     antlr4::tree::TerminalNode *RPAREN();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  NumFuncRND0Context : public NumFuncContext {
+  public:
+    NumFuncRND0Context(NumFuncContext *ctx);
+
+    antlr4::tree::TerminalNode *RND0();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -2561,7 +2586,9 @@ public:
     NumFuncINKEYContext(NumFuncContext *ctx);
 
     antlr4::tree::TerminalNode *INKEY();
+    antlr4::tree::TerminalNode *LPAREN();
     NumExprContext *numExpr();
+    antlr4::tree::TerminalNode *RPAREN();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -2678,12 +2705,12 @@ public:
     NumFuncCOLOURContext(NumFuncContext *ctx);
 
     antlr4::tree::TerminalNode *COLOUR();
-    std::vector<antlr4::tree::TerminalNode *> LPAREN();
-    antlr4::tree::TerminalNode* LPAREN(size_t i);
+    antlr4::tree::TerminalNode *LPAREN();
     std::vector<NumExprContext *> numExpr();
     NumExprContext* numExpr(size_t i);
     std::vector<antlr4::tree::TerminalNode *> COMMA();
     antlr4::tree::TerminalNode* COMMA(size_t i);
+    antlr4::tree::TerminalNode *RPAREN();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };

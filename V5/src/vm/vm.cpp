@@ -294,8 +294,7 @@ void VM::opcode_DIVIDE()
     case Type::INTEGER: {
         VM_INT v2 = stack.pop_int(bc);
         if (v2 == 0) {
-            std::cout << "Divide by zero error\n";
-            exit(1);
+            error("Divide by zero error");
         }
         VM_INT v1 = stack.pop_int(bc);
         VM_INT v3 = v1 / v2;
@@ -307,8 +306,7 @@ void VM::opcode_DIVIDE()
     case Type::FLOAT: {
         VM_FLOAT v2 = stack.pop_float(bc);
         if (v2 == 0.0) {
-            std::cout << "Divide by zero error\n";
-            exit(1);
+            error("Divide by zero error");
         }
         VM_FLOAT v1 = stack.pop_float(bc);
         VM_FLOAT v3 = v1 / v2;
@@ -565,29 +563,38 @@ void VM::opcode_PRINT_SPC()
         g_env.log << "Print " << v1 << " spaces";
 }
 
+VM_INT VM::array_1d_get_index(Boxed* var, VM_INT index)
+{
+    auto size = var->array_definition[0];
+    if (index < 0 || index > size)
+        error("Invalid array or array index");
+    return index;
+}
+
+VM_INT VM::array_2d_get_index(Boxed* var, VM_INT index2, VM_INT index1)
+{
+    auto size = var->array_definition[0] * var->array_definition[1];
+    VM_INT index = index2 * var->array_definition[0] + index1;
+    if (index < 0 || index > size)
+        error("Invalid array or array index");
+    return index;
+}
+
 void VM::opcode_LOAD_ARRAY()
 {
     auto var = variables.get_variable(bc);
     VM_INT dimensions = stack.pop_int(bc);
-    VM_INT index;
 
     switch (bc.type) {
     case Type::INTEGER_ARRAY: {
         if (dimensions == 1) {
-            index = stack.pop_int(bc);
-            if (index < 0 || index >= static_cast<int>(var->value_int_array.size()))
-                error("Invalid array or array index");
+            auto index = array_1d_get_index(var, stack.pop_int(bc));
             VM_INT v = var->value_int_array[index];
             stack.push_int(bc, v);
             if (!performance_build && runtime_debug)
                 g_env.log << "Push variable " << var->name << ", int " << v << " (index " << index << ") onto the stack\n";
         } else {
-            VM_INT index2 = stack.pop_int(bc);
-            VM_INT index1 = stack.pop_int(bc);
-            VM_INT size = var->array_definition[0];
-            int index = index2 * size + index1;
-            if (index < 0 || index >= static_cast<int>(var->value_int_array.size()))
-                error("Invalid array or array index");
+            auto index = array_2d_get_index(var, stack.pop_int(bc), stack.pop_int(bc));
             VM_INT v = var->value_int_array[index];
             stack.push_int(bc, v);
             if (!performance_build && runtime_debug)
@@ -597,20 +604,13 @@ void VM::opcode_LOAD_ARRAY()
     }
     case Type::FLOAT_ARRAY: {
         if (dimensions == 1) {
-            index = stack.pop_int(bc);
-            if (index < 0 || index >= static_cast<int>(var->value_float_array.size()))
-                error("Invalid array or array index");
+            auto index = array_1d_get_index(var, stack.pop_int(bc));
             VM_FLOAT v = var->value_float_array[index];
             stack.push_float(bc, v);
             if (!performance_build && runtime_debug)
                 g_env.log << "Push variable " << var->name << ", float " << v << " (index " << index << ") onto the stack\n";
         } else {
-            VM_INT index2 = stack.pop_int(bc);
-            VM_INT index1 = stack.pop_int(bc);
-            VM_INT size = var->array_definition[0];
-            int index = index2 * size + index1;
-            if (index < 0 || index >= static_cast<int>(var->value_float_array.size()))
-                error("Invalid array or array index");
+            auto index = array_2d_get_index(var, stack.pop_int(bc), stack.pop_int(bc));
             VM_FLOAT v = var->value_float_array[index];
             stack.push_float(bc, v);
             if (!performance_build && runtime_debug)
@@ -620,20 +620,13 @@ void VM::opcode_LOAD_ARRAY()
     }
     case Type::STRING_ARRAY: {
         if (dimensions == 1) {
-            index = stack.pop_int(bc);
-            if (index < 0 || index >= static_cast<int>(var->value_string_array.size()))
-                error("Invalid array or array index");
+            auto index = array_1d_get_index(var, stack.pop_int(bc));
             VM_STRING v = var->value_string_array[index];
             stack.push_string(bc, v);
             if (!performance_build && runtime_debug)
                 g_env.log << "Push variable " << var->name << ", string '" << v << "' (index " << index << ") onto the stack\n";
         } else {
-            VM_INT index2 = stack.pop_int(bc);
-            VM_INT index1 = stack.pop_int(bc);
-            VM_INT size = var->array_definition[0];
-            int index = index2 * size + index1;
-            if (index < 0 || index >= static_cast<int>(var->value_string_array.size()))
-                error("Invalid array or array index");
+            auto index = array_2d_get_index(var, stack.pop_int(bc), stack.pop_int(bc));
             VM_STRING v = var->value_string_array[index];
             stack.push_string(bc, v);
             if (!performance_build && runtime_debug)
@@ -655,20 +648,13 @@ void VM::opcode_STORE_ARRAY()
     case Type::INTEGER_ARRAY: {
         if (dimensions == 1) {
             VM_INT v = stack.pop_int(bc);
-            VM_INT index = stack.pop_int(bc);
-            if (index < 0 || index >= static_cast<int>(var->value_int_array.size()))
-                error("Invalid array or array index");
+            auto index = array_1d_get_index(var, stack.pop_int(bc));
             var->value_int_array[index] = v;
             if (!performance_build && runtime_debug)
                 g_env.log << "Store int array variable " << var->name << " index " << index << " value " << v << std::endl;
         } else {
             VM_INT v = stack.pop_int(bc);
-            VM_INT index2 = stack.pop_int(bc);
-            VM_INT index1 = stack.pop_int(bc);
-            VM_INT size = var->array_definition[0];
-            VM_INT index = index2 * size + index1;
-            if (index < 0 || index >= static_cast<int>(var->value_int_array.size()))
-                error("Invalid array or array index");
+            auto index = array_2d_get_index(var, stack.pop_int(bc), stack.pop_int(bc));
             var->value_int_array[index] = v;
             if (!performance_build && runtime_debug)
                 g_env.log << "Store float array variable " << var->name << " index " << index << " value " << v << std::endl;
@@ -678,20 +664,13 @@ void VM::opcode_STORE_ARRAY()
     case Type::FLOAT_ARRAY: {
         if (dimensions == 1) {
             VM_FLOAT v = stack.pop_float(bc);
-            VM_INT index = stack.pop_int(bc);
-            if (index < 0 || index >= static_cast<int>(var->value_float_array.size()))
-                error("Invalid array or array index");
+            auto index = array_1d_get_index(var, stack.pop_int(bc));
             var->value_float_array[index] = v;
             if (!performance_build && runtime_debug)
                 g_env.log << "Store float array variable " << var->name << " index " << index << " value " << v << std::endl;
         } else {
             VM_FLOAT v = stack.pop_float(bc);
-            VM_INT index2 = stack.pop_int(bc);
-            VM_INT index1 = stack.pop_int(bc);
-            VM_INT size = var->array_definition[0];
-            VM_INT index = index2 * size + index1;
-            if (index < 0 || index >= static_cast<int>(var->value_float_array.size()))
-                error("Invalid array or array index");
+            auto index = array_2d_get_index(var, stack.pop_int(bc), stack.pop_int(bc));
             var->value_float_array[index] = v;
             if (!performance_build && runtime_debug)
                 g_env.log << "Store float array variable " << var->name << " index " << index << " value " << v << std::endl;
@@ -701,20 +680,13 @@ void VM::opcode_STORE_ARRAY()
     case Type::STRING_ARRAY: {
         if (dimensions == 1) {
             VM_STRING v = stack.pop_string(bc);
-            VM_INT index = stack.pop_int(bc);
-            if (index < 0 || index >= static_cast<int>(var->value_string_array.size()))
-                error("Invalid array or array index");
+            auto index = array_1d_get_index(var, stack.pop_int(bc));
             var->value_string_array[index] = v;
             if (!performance_build && runtime_debug)
                 g_env.log << "Store string array variable " << var->name << " index " << index << " value " << v << std::endl;
         } else {
             VM_STRING v = stack.pop_string(bc);
-            VM_INT index2 = stack.pop_int(bc);
-            VM_INT index1 = stack.pop_int(bc);
-            VM_INT size = var->array_definition[0];
-            VM_INT index = index2 * size + index1;
-            if (index < 0 || index >= static_cast<int>(var->value_string_array.size()))
-                error("Invalid array or array index");
+            auto index = array_2d_get_index(var, stack.pop_int(bc), stack.pop_int(bc));
             var->value_string_array[index] = v;
             if (!performance_build && runtime_debug)
                 g_env.log << "Store float array variable " << var->name << " index " << index << " value " << v << std::endl;
@@ -885,17 +857,8 @@ void VM::opcode_ARRAYSIZE()
 {
     auto var = variables.get_variable(bc);
     VM_INT dimension = stack.pop_int(bc);
-    VM_INT size = 0;
+    VM_INT size = var->array_definition[0];
     switch (var->get_type()) {
-    case Type::INTEGER_ARRAY:
-        size = static_cast<VM_INT>(var->value_int_array.size());
-        break;
-    case Type::FLOAT_ARRAY:
-        size = static_cast<VM_INT>(var->value_float_array.size());
-        break;
-    case Type::STRING_ARRAY:
-        size = static_cast<VM_INT>(var->value_string_array.size());
-        break;
     case Type::TYPE_ARRAY:
         error("Size of TYPE arrays not supported");
     }
@@ -2687,6 +2650,7 @@ std::string VM::run()
 {
     g_env.log << "-> Running" << std::endl;
     helper_bytecodes().pc = 0;
+    bc = helper_bytecodes().get_current_bytecode();
     data_iterator = data.begin();
     stack.clear_stack(bc);
     bool quit = false;
@@ -3222,6 +3186,7 @@ std::string VM::run()
     if (stack.get_stack_size() != 0) {
         g_env.graphics.print_console("Stack not empty on END\r");
     }
+    stack.clear_stack(bc);
     return "";
 }
 

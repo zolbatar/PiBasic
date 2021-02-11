@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-const int DEBUGWINDOW = 1;
+const int DEBUGWINDOW = 0;
 
 #ifdef RISCOS
 void Graphics::graphics_shadow_state_on()
@@ -108,8 +108,8 @@ UINT32 Graphics::get_screen_height()
 void Graphics::open(int width, int height, int mode, std::string& cwd)
 {
     if (DEBUGWINDOW) {
-        width = static_cast<int>(width * 0.8);
-        height = static_cast<int>(height * 0.8);
+        width = static_cast<int>(width * 0.9);
+        height = static_cast<int>(height * 0.9);
     }
     showfps = false;
     bool reinit = false;

@@ -136,6 +136,12 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStmtIFMultiline(DARICParser.StmtIFMultilineContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtINSTALL}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtINSTALL(DARICParser.StmtINSTALLContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link DARICParser#stmtLET}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -865,6 +871,13 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumFuncTIME(DARICParser.NumFuncTIMEContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code numFuncRNDRANGE}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumFuncRNDRANGE(DARICParser.NumFuncRNDRANGEContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code numFuncRND}
 	 * labeled alternative in {@link DARICParser#numFunc}.
 	 * @param ctx the parse tree
@@ -885,13 +898,6 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNumFuncRND1(DARICParser.NumFuncRND1Context ctx);
-	/**
-	 * Visit a parse tree produced by the {@code numFuncRNDRANGE}
-	 * labeled alternative in {@link DARICParser#numFunc}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumFuncRNDRANGE(DARICParser.NumFuncRNDRANGEContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code numFuncLN}
 	 * labeled alternative in {@link DARICParser#numFunc}.

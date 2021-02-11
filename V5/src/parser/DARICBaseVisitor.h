@@ -99,6 +99,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtINSTALL(DARICParser::StmtINSTALLContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -559,6 +563,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitNumFuncRNDRANGE(DARICParser::NumFuncRNDRANGEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitNumFuncRND(DARICParser::NumFuncRNDContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -568,10 +576,6 @@ public:
   }
 
   virtual antlrcpp::Any visitNumFuncRND1(DARICParser::NumFuncRND1Context *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitNumFuncRNDRANGE(DARICParser::NumFuncRNDRANGEContext *ctx) override {
     return visitChildren(ctx);
   }
 

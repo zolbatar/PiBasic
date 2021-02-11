@@ -249,7 +249,7 @@ PRINT "Inkey (timeout)    = ";:IF INKEY(10) = -1 PROCPass() ELSE PROCFail()
 PRINT "Inkey (wait)       = ";:IF INKEY(1000) <> -1 PROCPass() ELSE PROCFail()
 
 PRINT
-CHAIN "TesterLineNumbers"
+REM CHAIN "TesterLineNumbers"
 END
 
 REM Check Forward FN/PROC calls

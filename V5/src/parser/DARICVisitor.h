@@ -61,6 +61,8 @@ public:
 
     virtual antlrcpp::Any visitStmtIFMultiline(DARICParser::StmtIFMultilineContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtINSTALL(DARICParser::StmtINSTALLContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtOSCLI(DARICParser::StmtOSCLIContext *context) = 0;
@@ -291,13 +293,13 @@ public:
 
     virtual antlrcpp::Any visitNumFuncTIME(DARICParser::NumFuncTIMEContext *context) = 0;
 
+    virtual antlrcpp::Any visitNumFuncRNDRANGE(DARICParser::NumFuncRNDRANGEContext *context) = 0;
+
     virtual antlrcpp::Any visitNumFuncRND(DARICParser::NumFuncRNDContext *context) = 0;
 
     virtual antlrcpp::Any visitNumFuncRND0(DARICParser::NumFuncRND0Context *context) = 0;
 
     virtual antlrcpp::Any visitNumFuncRND1(DARICParser::NumFuncRND1Context *context) = 0;
-
-    virtual antlrcpp::Any visitNumFuncRNDRANGE(DARICParser::NumFuncRNDRANGEContext *context) = 0;
 
     virtual antlrcpp::Any visitNumFuncLN(DARICParser::NumFuncLNContext *context) = 0;
 

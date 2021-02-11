@@ -31,19 +31,19 @@ public:
         value_string = value;
     }
 
-    void set_integer_array(size_t size)
+    void set_integer_array(VM_INT size)
     {
         type = Type::INTEGER_ARRAY;
         value_int_array.resize(size);
     }
 
-    void set_float_array(size_t size)
+    void set_float_array(VM_INT size)
     {
         type = Type::FLOAT_ARRAY;
         value_float_array.resize(size);
     }
 
-    void set_string_array(size_t size)
+    void set_string_array(VM_INT size)
     {
         type = Type::STRING_ARRAY;
         value_string_array.resize(size);

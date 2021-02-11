@@ -174,7 +174,12 @@ private:
         type_list.pop();
         return var_type;
     }
-    Type peek_type() { return type_list.top(); }
+    Type peek_type() { 
+        if (type_list.empty()) {
+            error("Type stack empty - this is normally an internal DARIC error");
+        }
+        return type_list.top();
+    }
 
     // Arrays
     UINT32 last_array_num_dimensions = 0;
@@ -219,6 +224,7 @@ protected:
     antlrcpp::Any visitStmtCASE(DARICParser::StmtCASEContext* context);
     antlrcpp::Any visitWhen(DARICParser::WhenContext* context);
     antlrcpp::Any visitStmtCHAIN(DARICParser::StmtCHAINContext* context);
+    antlrcpp::Any visitStmtINSTALL(DARICParser::StmtINSTALLContext* context);
     antlrcpp::Any visitStmtDIM(DARICParser::StmtDIMContext* context);
     antlrcpp::Any visitStmtEND(DARICParser::StmtENDContext* context);
     antlrcpp::Any visitStmtFOR(DARICParser::StmtFORContext* context);

@@ -21,7 +21,7 @@ private:
     void run_file(std::string s);
     void run_demo_file(std::string filename);
     void run_all_lines();
-    void load(std::string s);
-    void save(std::string s);
+    void load(std::string filename);
+    void save(std::string filename);
     void clear();
 };

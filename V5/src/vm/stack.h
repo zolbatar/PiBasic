@@ -13,42 +13,42 @@ extern Environment g_env;
 class Stack {
 
 public:
-    inline void drop() { stack.pop(); }
+    void drop() { stack.pop(); }
 
-    inline void push_float(Bytecode& bc, const VM_FLOAT v)
+    void push_float(Bytecode& bc, const VM_FLOAT v)
     {
         Boxed b;
         b.set_float(v);
         stack.push(std::move(b));
     }
 
-    inline void push_int(Bytecode& bc, const VM_INT v)
+    void push_int(Bytecode& bc, const VM_INT v)
     {
         Boxed b;
         b.set_integer(v);
         stack.push(std::move(b));
     }
 
-    inline void push_string(Bytecode& bc, const VM_STRING& v)
+    void push_string(Bytecode& bc, const VM_STRING& v)
     {
         Boxed b;
         b.set_string(v);
         stack.push(std::move(b));
     }
 
-    inline void push_boxed(Bytecode& bc, Boxed b)
+    void push_boxed(Bytecode& bc, Boxed b)
     {
         stack.push(b);
     }
 
-    inline Boxed pop_boxed(Bytecode& bc)
+    Boxed pop_boxed(Bytecode& bc)
     {
         auto a = stack.top();
         stack.pop();
         return a;
     }
 
-    inline VM_FLOAT pop_float(Bytecode& bc)
+    VM_FLOAT pop_float(Bytecode& bc)
     {
         auto b = stack.top();
         stack.pop();
@@ -58,7 +58,7 @@ public:
         return b.value_float;
     }
 
-    inline VM_INT pop_int(Bytecode& bc)
+    VM_INT pop_int(Bytecode& bc)
     {
         auto b = stack.top();
         stack.pop();
@@ -68,14 +68,14 @@ public:
         return b.value_int;
     }
 
-    inline VM_INT pop_int_checkless()
+    VM_INT pop_int_checkless()
     {
         auto b = stack.top();
         stack.pop();
         return b.value_int;
     }
 
-    inline VM_STRING pop_string(Bytecode& bc)
+    VM_STRING pop_string(Bytecode& bc)
     {
         auto b = stack.top();
         stack.pop();
@@ -85,10 +85,10 @@ public:
         return b.value_string;
     }
 
-    inline void clear_stack(Bytecode& bc)
+    void clear_stack(Bytecode& bc)
     {
-        if (!stack.empty()) {
-            throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Stack clear exception - this is normally an internal DARIC error");
+        while (!stack.empty()) { 
+            stack.pop();
         }
     }
 

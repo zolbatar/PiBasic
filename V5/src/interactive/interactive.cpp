@@ -42,18 +42,23 @@ void Interactive::welcome_prompt()
     g_env.graphics.colour(255, 255, 0);
     g_env.graphics.print_console("WELCOME");
     g_env.graphics.colour(255, 255, 255);
-    g_env.graphics.print_console(" for demos & examples, ");
+    g_env.graphics.print_console(" for demos & examples\r");
+    g_env.graphics.colour(255, 255, 0);
+    g_env.graphics.print_console("EXAMPLES");
+    g_env.graphics.colour(255, 255, 255);
+    g_env.graphics.print_console(" to set the current directory to demos & examples\r");
     g_env.graphics.colour(255, 255, 0);
     g_env.graphics.print_console("TEST");
     g_env.graphics.colour(255, 255, 255);
     g_env.graphics.print_console(" to run the test suite\r");
     g_env.graphics.print_console("Commands: ");
     g_env.graphics.colour(255, 255, 0);
-    g_env.graphics.print_console("EXEC LIST LOAD NEW RUN SAVE QUIT\r\r");
+    g_env.graphics.print_console("CHAIN LIST LOAD NEW RUN SAVE QUIT\r\r");
     g_env.graphics.colour(255, 255, 255);
 }
 
-void Interactive::clear (){
+void Interactive::clear()
+{
     lines.clear();
     create_empty_vm();
     delete compiler;
@@ -104,6 +109,8 @@ void Interactive::run()
                 return;
             } else if (upper.compare("NEW") == 0) {
                 clear();
+                g_env.graphics.cls();
+                welcome_prompt();
             } else if (upper.compare("LIST") == 0) {
                 for (auto it = lines.begin(); it != lines.end(); it++) {
                     std::stringstream stream;
@@ -123,14 +130,36 @@ void Interactive::run()
                 }
             } else if (upper.compare("WELCOME") == 0) {
                 run_demo_file("Welcome");
+                lines.clear();
+                create_empty_vm();
+                g_env.graphics.cls();
+                welcome_prompt();
+            } else if (upper.compare("EXAMPLES") == 0) {
+                // Directory for source files
+                std::string path(g_env.cwd);
+                path += "/Examples";
+
+#ifdef WINDOWS
+                _chdir(path.c_str());
+#endif
+#ifdef RISCOS
+                _kernel_swi_regs regs;
+                regs.r[0] = (int)path.c_str();
+                _kernel_swi(DDEUtils_Prefix, &regs, &regs);
+#endif
             } else if (upper.compare("TEST") == 0) {
                 run_demo_file("Tester");
-            } else if (upper.substr(0, 5).compare("EXEC ") == 0) {
-                run_file(s);
+            } else if (upper.substr(0, 6).compare("CHAIN ") == 0) {
+                auto filename = s.substr(6, s.length() - 6);
+                load(filename);
+                run_all_lines();
+                //run_file(s);
             } else if (upper.substr(0, 5).compare("LOAD ") == 0) {
-                load(s);
+                auto filename = s.substr(5, s.length() - 5);
+                load(filename);
             } else if (upper.substr(0, 5).compare("SAVE ") == 0) {
-                save(s);
+                auto filename = s.substr(5, s.length() - 5);
+                save(filename);
             } else {
                 // Is it a line number to add?
                 if (std::isdigit(s[0])) {
@@ -143,9 +172,9 @@ void Interactive::run()
     }
 }
 
-void Interactive::load(std::string s)
+void Interactive::load(std::string filename)
 {
-    auto filename = s.substr(5, s.length() - 5);
+    replaceAll(filename, " ", "");
     replaceAll(filename, "\"", "");
 #ifdef WINDOWS
     filename += ".daric";
@@ -166,9 +195,9 @@ void Interactive::load(std::string s)
     }
 }
 
-void Interactive::save(std::string s)
+void Interactive::save(std::string filename)
 {
-    auto filename = s.substr(5, s.length() - 5);
+    replaceAll(filename, " ", "");
     replaceAll(filename, "\"", "");
 #ifdef WINDOWS
     filename += ".daric";
@@ -332,11 +361,4 @@ void Interactive::run_demo_file(std::string filename)
 
     // Run!
     g_vm->run();
-
-    // Clear it all
-    lines.clear();
-    create_empty_vm();
-
-    g_env.graphics.cls();
-    welcome_prompt();
 }

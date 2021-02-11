@@ -50,17 +50,19 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
         } else {
             find_or_create_variable_in_scope(VariableScope::LOCAL);
         }
-        auto saved_type = current_var.type;
 
         // Number of dimensions
+        auto saved = current_var;
         last_array_num_dimensions = static_cast<UINT32>(context->numExpr().size());
         for (UINT32 i = 0; i < last_array_num_dimensions; i++) {
+            auto saved_state = state;
+            state = CompilerState::NOSTATE;
             visit(context->numExpr(i));
+            state = saved_state;
             ensure_stack_is_integer();
             stack_pop();
         }
-
-        current_var.type = saved_type;
+        current_var = saved;
 
         // Set number of dimensions
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
@@ -73,9 +75,14 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
         auto t = (*custom_types.find(varName)).second;
 
         // Get number of entries
+        auto saved = current_var;
+        auto saved_state = state;
+        state = CompilerState::NOSTATE;
         visit(context->numExpr(0));
+        state = saved_state;
         ensure_stack_is_integer();
         stack_pop();
+        current_var = saved;
 
         // Get variable name and type
         visit(context->typeVar());

@@ -41,8 +41,12 @@ VM_INT Graphics::load_font(const char* filename)
     }
     auto index = font_face_index++;
     if (index == MAXIMUM_FONTS) {
-        std::cout << "Ran out of font slots\n";
-        exit(1);
+        if (!is_open()) {
+            std::cout << "Ran out of font slots\n";
+        } else {
+            print_console("Ran out of font slots\n");
+        }
+        return 0;
     }
 
     // Load and build the actual font, we're never going to release this memory EVER
@@ -56,7 +60,7 @@ VM_INT Graphics::load_font(const char* filename)
         } else {
             print_console("Error opening font file\n");
         }
-        exit(1);
+        return 0;
     }
     fseek(fp, 0L, SEEK_END);
     size_t sz = ftell(fp);
@@ -199,7 +203,6 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
                 auto v = f->bitmap[idx];
                 if (v > 0) {
                     Colour c;
-                    double a = static_cast<double>(v) / 255.0;
 
                     // X/Y
                     auto x = *cursor_x + i + f->ix0 + margin;
@@ -207,7 +210,7 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
 
                     // Get current pixel colour, a little expensive but worth it for quality
                     auto bg = point(x, y);  
-                    Colour bgC((bg & 0xFF0000) << 16, (bg & 0xFF00) << 8, bg & 0xFF);
+                    Colour bgC((bg & 0xFF0000) >> 16, (bg & 0xFF00) >> 8, bg & 0xFF);
 
                     alpha(bgC, saved_colour, c, v);
                     set_colour(c);
