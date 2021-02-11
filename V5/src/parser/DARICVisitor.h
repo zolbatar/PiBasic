@@ -23,6 +23,8 @@ public:
 
     virtual antlrcpp::Any visitLine(DARICParser::LineContext *context) = 0;
 
+    virtual antlrcpp::Any visitLinePlus(DARICParser::LinePlusContext *context) = 0;
+
     virtual antlrcpp::Any visitContent(DARICParser::ContentContext *context) = 0;
 
     virtual antlrcpp::Any visitBody(DARICParser::BodyContext *context) = 0;
@@ -284,6 +286,8 @@ public:
     virtual antlrcpp::Any visitStrFuncSTRINGS(DARICParser::StrFuncSTRINGSContext *context) = 0;
 
     virtual antlrcpp::Any visitStrFuncINKEYS(DARICParser::StrFuncINKEYSContext *context) = 0;
+
+    virtual antlrcpp::Any visitStrFuncGETS(DARICParser::StrFuncGETSContext *context) = 0;
 
     virtual antlrcpp::Any visitString(DARICParser::StringContext *context) = 0;
 

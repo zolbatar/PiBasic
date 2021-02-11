@@ -10,7 +10,12 @@ antlrcpp::Any Compiler::visitLine(DARICParser::LineContext* context)
 {
     g_env.graphics.poll();
     set_pos(context->start);
-    assert(stack_size() == 0);
+    return visitChildren(context);
+}
+
+antlrcpp::Any Compiler::visitLinePlus(DARICParser::LinePlusContext* context)
+{
+    set_pos(context->start);
     return visitChildren(context);
 }
 

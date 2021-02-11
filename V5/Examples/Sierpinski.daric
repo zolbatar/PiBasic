@@ -1,13 +1,12 @@
 DEF PROCTriangle(l,x,y,s)
-	PRINT x
-	IF l > 0 
+	IF l > 0 THEN
 		TRIANGLE x,y,x+s,y,x,y+s
 		LOCAL s2=s/2
-		PRINT s,s2
 		PROCTriangle(l-1,x,y,s2)
 		PROCTriangle(l-1,x+s2,y,s2)
 		PROCTriangle(l-1,x,y+s2,s2)
 	ENDIF
 ENDPROC
 
-PROCTriangle(6,0,0,196)
+CLS
+PROCTriangle(8,0,0,800)

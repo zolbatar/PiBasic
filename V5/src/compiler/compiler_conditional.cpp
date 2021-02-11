@@ -171,17 +171,15 @@ antlrcpp::Any Compiler::visitStmtIF(DARICParser::StmtIFContext* context)
     insert_instruction_notype(Bytecodes::JNE, s.false_pc);
 
     // This is the truth section
-    if (context->t != nullptr) {
-        visit(context->t);
-    }
+    visit(context->content(0));
     insert_instruction_notype(Bytecodes::JUMP, s.end_pc);
 
     // and false section (the else bit)
     if (phase == CompilerPhase::SIZE) {
         s.false_pc = vm->helper_bytecodes().pc;
     }
-    if (context->f != nullptr) {
-        visit(context->f);
+    if (context->content().size() == 2) {
+        visit(context->content(1));
     }
 
     // If this is phase 1, save these PC's to use in phase 2
@@ -219,17 +217,15 @@ antlrcpp::Any Compiler::visitStmtIFMultiline(DARICParser::StmtIFMultilineContext
     insert_instruction_notype(Bytecodes::JNE, s.false_pc);
 
     // This is the truth section
-    if (context->t != nullptr) {
-        visit(context->t);
-    }
+    visit(context->linePlus(0));
     insert_instruction_notype(Bytecodes::JUMP, s.end_pc);
 
     // and false section (the else bit)
     if (phase == CompilerPhase::SIZE) {
         s.false_pc = vm->helper_bytecodes().pc;
     }
-    if (context->f != nullptr) {
-        visit(context->f);
+    if (context->linePlus().size() == 2) {
+        visit(context->linePlus(1));
     }
 
     // If this is phase 1, save these PC's to use in phase 2

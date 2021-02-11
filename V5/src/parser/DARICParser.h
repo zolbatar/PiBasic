@@ -55,35 +55,35 @@ public:
   };
 
   enum {
-    RuleProg = 0, RuleLine = 1, RuleContent = 2, RuleBody = 3, RuleLinenumber = 4, 
-    RuleStmt = 5, RuleCoreStmt = 6, RuleStmtBREAKPOINT = 7, RuleStmtCASE = 8, 
-    RuleStmtCHAIN = 9, RuleStmtDATA = 10, RuleStmtDIM = 11, RuleStmtEND = 12, 
-    RuleStmtRETURN = 13, RuleStmtDEFFN = 14, RuleStmtDEFPROC = 15, RuleStmtFOR = 16, 
-    RuleStmtFORIN = 17, RuleStmtCallFN = 18, RuleStmtIF = 19, RuleStmtIFMultiline = 20, 
-    RuleStmtINSTALL = 21, RuleStmtGOTO = 22, RuleStmtGOSUB = 23, RuleStmtLET = 24, 
-    RuleStmtOSCLI = 25, RuleStmtCallPROC = 26, RuleStmtREAD = 27, RuleStmtRESTORE = 28, 
-    RuleStmtSWAP = 29, RuleStmtTRACEON = 30, RuleStmtTRACEOFF = 31, RuleStmtTYPE = 32, 
-    RuleStmtREPEAT = 33, RuleStmtWHILE = 34, RuleKeyMouseStmt = 35, RuleStmtINPUT = 36, 
-    RuleStmtPRINT = 37, RuleStmtMOUSE = 38, RuleStmtINKEY = 39, RuleStmtINKEYS = 40, 
-    RuleStmtGET = 41, RuleStmtGETS = 42, RuleStmtOperatorEqual = 43, RuleIoStmt = 44, 
-    RuleStmtBPUTH = 45, RuleStmtBGETH = 46, RuleStmtPTRH = 47, RuleStmtCLOSEH = 48, 
-    RuleStmtLISTFILES = 49, RuleGraphicsStmt = 50, RuleStmtCLS = 51, RuleStmtCOLOUR = 52, 
-    RuleStmtCOLOURBG = 53, RuleStmtGRAPHICS = 54, RuleStmtFLIP = 55, RuleStmtCIRCLE = 56, 
-    RuleStmtLINE = 57, RuleStmtRECTANGLE = 58, RuleStmtTRIANGLE = 59, RuleStmtPLOT = 60, 
-    RuleStmtCLIPON = 61, RuleStmtCLIPOFF = 62, RuleStmtTEXT = 63, RuleStmtTEXTRIGHT = 64, 
-    RuleStmtTEXTCENTRE = 65, RuleStmtSHOWFPS = 66, RuleStmtRENDERFRAME = 67, 
-    RuleStmtCREATEVERTEX = 68, RuleStmtCREATETRIANGLE = 69, RuleStmtTRANSLATE = 70, 
-    RuleStmtROTATE = 71, RuleStmtSCALE = 72, RuleStmtDELETEOBJECT = 73, 
-    RuleWhen = 74, RuleFnName = 75, RuleLiteral = 76, RuleVar = 77, RuleTypeVar = 78, 
-    RuleNumVar = 79, RuleStrVar = 80, RuleJustVar = 81, RuleJustNumberVar = 82, 
-    RuleVarName = 83, RuleVarNameInteger = 84, RuleVarNameString = 85, RuleVarNameType = 86, 
-    RuleVarDecl = 87, RuleVarDeclWithDimension = 88, RuleVarList = 89, RuleFunctionVarList = 90, 
-    RuleFunctionParList = 91, RuleExprList = 92, RulePrintListItem = 93, 
-    RulePrintListTick = 94, RulePrintListSeparator = 95, RulePrintList = 96, 
-    RuleExpr = 97, RuleNumber = 98, RuleNumberInteger = 99, RuleNumberHex = 100, 
-    RuleNumberBinary = 101, RuleNumberFloat = 102, RuleStrFunc = 103, RuleString = 104, 
-    RuleStrExpr = 105, RuleNumFunc = 106, RuleNumExpr = 107, RuleNumColours = 108, 
-    RuleDefaultFonts = 109
+    RuleProg = 0, RuleLine = 1, RuleLinePlus = 2, RuleContent = 3, RuleBody = 4, 
+    RuleLinenumber = 5, RuleStmt = 6, RuleCoreStmt = 7, RuleStmtBREAKPOINT = 8, 
+    RuleStmtCASE = 9, RuleStmtCHAIN = 10, RuleStmtDATA = 11, RuleStmtDIM = 12, 
+    RuleStmtEND = 13, RuleStmtRETURN = 14, RuleStmtDEFFN = 15, RuleStmtDEFPROC = 16, 
+    RuleStmtFOR = 17, RuleStmtFORIN = 18, RuleStmtCallFN = 19, RuleStmtIF = 20, 
+    RuleStmtIFMultiline = 21, RuleStmtINSTALL = 22, RuleStmtGOTO = 23, RuleStmtGOSUB = 24, 
+    RuleStmtLET = 25, RuleStmtOSCLI = 26, RuleStmtCallPROC = 27, RuleStmtREAD = 28, 
+    RuleStmtRESTORE = 29, RuleStmtSWAP = 30, RuleStmtTRACEON = 31, RuleStmtTRACEOFF = 32, 
+    RuleStmtTYPE = 33, RuleStmtREPEAT = 34, RuleStmtWHILE = 35, RuleKeyMouseStmt = 36, 
+    RuleStmtINPUT = 37, RuleStmtPRINT = 38, RuleStmtMOUSE = 39, RuleStmtINKEY = 40, 
+    RuleStmtINKEYS = 41, RuleStmtGET = 42, RuleStmtGETS = 43, RuleStmtOperatorEqual = 44, 
+    RuleIoStmt = 45, RuleStmtBPUTH = 46, RuleStmtBGETH = 47, RuleStmtPTRH = 48, 
+    RuleStmtCLOSEH = 49, RuleStmtLISTFILES = 50, RuleGraphicsStmt = 51, 
+    RuleStmtCLS = 52, RuleStmtCOLOUR = 53, RuleStmtCOLOURBG = 54, RuleStmtGRAPHICS = 55, 
+    RuleStmtFLIP = 56, RuleStmtCIRCLE = 57, RuleStmtLINE = 58, RuleStmtRECTANGLE = 59, 
+    RuleStmtTRIANGLE = 60, RuleStmtPLOT = 61, RuleStmtCLIPON = 62, RuleStmtCLIPOFF = 63, 
+    RuleStmtTEXT = 64, RuleStmtTEXTRIGHT = 65, RuleStmtTEXTCENTRE = 66, 
+    RuleStmtSHOWFPS = 67, RuleStmtRENDERFRAME = 68, RuleStmtCREATEVERTEX = 69, 
+    RuleStmtCREATETRIANGLE = 70, RuleStmtTRANSLATE = 71, RuleStmtROTATE = 72, 
+    RuleStmtSCALE = 73, RuleStmtDELETEOBJECT = 74, RuleWhen = 75, RuleFnName = 76, 
+    RuleLiteral = 77, RuleVar = 78, RuleTypeVar = 79, RuleNumVar = 80, RuleStrVar = 81, 
+    RuleJustVar = 82, RuleJustNumberVar = 83, RuleVarName = 84, RuleVarNameInteger = 85, 
+    RuleVarNameString = 86, RuleVarNameType = 87, RuleVarDecl = 88, RuleVarDeclWithDimension = 89, 
+    RuleVarList = 90, RuleFunctionVarList = 91, RuleFunctionParList = 92, 
+    RuleExprList = 93, RulePrintListItem = 94, RulePrintListTick = 95, RulePrintListSeparator = 96, 
+    RulePrintList = 97, RuleExpr = 98, RuleNumber = 99, RuleNumberInteger = 100, 
+    RuleNumberHex = 101, RuleNumberBinary = 102, RuleNumberFloat = 103, 
+    RuleStrFunc = 104, RuleString = 105, RuleStrExpr = 106, RuleNumFunc = 107, 
+    RuleNumExpr = 108, RuleNumColours = 109, RuleDefaultFonts = 110
   };
 
   explicit DARICParser(antlr4::TokenStream *input);
@@ -98,6 +98,7 @@ public:
 
   class ProgContext;
   class LineContext;
+  class LinePlusContext;
   class ContentContext;
   class BodyContext;
   class LinenumberContext;
@@ -239,6 +240,20 @@ public:
   };
 
   LineContext* line();
+
+  class  LinePlusContext : public antlr4::ParserRuleContext {
+  public:
+    LinePlusContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    std::vector<LineContext *> line();
+    LineContext* line(size_t i);
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  LinePlusContext* linePlus();
 
   class  ContentContext : public antlr4::ParserRuleContext {
   public:
@@ -554,8 +569,6 @@ public:
 
   class  StmtIFContext : public antlr4::ParserRuleContext {
   public:
-    DARICParser::ContentContext *t = nullptr;
-    DARICParser::ContentContext *f = nullptr;
     StmtIFContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *IF();
@@ -573,8 +586,6 @@ public:
 
   class  StmtIFMultilineContext : public antlr4::ParserRuleContext {
   public:
-    DARICParser::LineContext *t = nullptr;
-    DARICParser::LineContext *f = nullptr;
     StmtIFMultilineContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *IF();
@@ -582,11 +593,11 @@ public:
     antlr4::tree::TerminalNode *THEN();
     std::vector<antlr4::tree::TerminalNode *> NEWLINE();
     antlr4::tree::TerminalNode* NEWLINE(size_t i);
+    std::vector<LinePlusContext *> linePlus();
+    LinePlusContext* linePlus(size_t i);
     antlr4::tree::TerminalNode *ENDIF();
     antlr4::tree::TerminalNode *ELSE();
     LinenumberContext *linenumber();
-    std::vector<LineContext *> line();
-    LineContext* line(size_t i);
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -2230,6 +2241,15 @@ public:
 
     antlr4::tree::TerminalNode *STRS();
     NumExprContext *numExpr();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StrFuncGETSContext : public StrFuncContext {
+  public:
+    StrFuncGETSContext(StrFuncContext *ctx);
+
+    antlr4::tree::TerminalNode *GETS();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };

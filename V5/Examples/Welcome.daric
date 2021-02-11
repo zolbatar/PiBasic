@@ -19,18 +19,18 @@ PROCLabel("F10", "Debugger & Manual (Core DARIC feature)", ms%+(16*ys%))
 REPEAT
 	A$=GET$
 	CASE A$ OF
-		WHEN "A","a" CHAIN "Graphics"
-		WHEN "B","b" CHAIN "Mandelbrot"
-		WHEN "C","c" CHAIN "Fonts"
-		WHEN "D","d" CHAIN "Cubes"
-		WHEN "E","e" CHAIN "Load3D"
-		WHEN "F","f" CHAIN "TerrainDemo"
-		WHEN "G","g" CHAIN "DARIC"
-		WHEN "H","h" CHAIN "Greedy"
-		WHEN "I","i" CHAIN "WorldInLines"
-		WHEN "J","j" CHAIN "Sierpinski"
-		WHEN "Y","y" CHAIN "Tester"
-		WHEN "Z","z" END
+		WHEN "A","a":CHAIN "Graphics"
+		WHEN "B","b":CHAIN "Mandelbrot"
+		WHEN "C","c":CHAIN "Fonts"
+		WHEN "D","d":CHAIN "Cubes"
+		WHEN "E","e":CHAIN "Load3D"
+		WHEN "F","f":CHAIN "TerrainDemo"
+		WHEN "G","g":CHAIN "DARIC"
+		WHEN "H","h":CHAIN "Greedy"
+		WHEN "I","i":CHAIN "WorldInLines"
+		WHEN "J","j":CHAIN "Sierpinski"
+		WHEN "Y","y":CHAIN "Tester"
+		WHEN "Z","z":END
 	ENDCASE
 	REPEAT UNTIL INKEY(0)=-1
 UNTIL FALSE

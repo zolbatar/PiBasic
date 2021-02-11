@@ -22,6 +22,12 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLine(DARICParser.LineContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link DARICParser#linePlus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLinePlus(DARICParser.LinePlusContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link DARICParser#content}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -842,6 +848,13 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStrFuncINKEYS(DARICParser.StrFuncINKEYSContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code strFuncGETS}
+	 * labeled alternative in {@link DARICParser#strFunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStrFuncGETS(DARICParser.StrFuncGETSContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link DARICParser#string}.
 	 * @param ctx the parse tree

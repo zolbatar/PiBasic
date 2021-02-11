@@ -23,6 +23,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitLinePlus(DARICParser::LinePlusContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitContent(DARICParser::ContentContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -544,6 +548,10 @@ public:
   }
 
   virtual antlrcpp::Any visitStrFuncINKEYS(DARICParser::StrFuncINKEYSContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStrFuncGETS(DARICParser::StrFuncGETSContext *ctx) override {
     return visitChildren(ctx);
   }
 

@@ -9,6 +9,12 @@ line
     | linenumber? (COMMENT | REM)? NEWLINE
     | linenumber? stmt+ (COMMENT | REM)? NEWLINE
     ;
+    
+
+linePlus
+    : line+
+    ;
+   
 
 content:            stmt* ;
 body:               stmt* | line* ;
@@ -66,8 +72,8 @@ stmtDEFPROC:        DEF PROC_NAME LPAREN functionVarList? RPAREN body linenumber
 stmtFOR:            FOR LOCAL? justNumberVar EQ numExpr TO numExpr (STEP numExpr)? body linenumber? NEXT ;
 stmtFORIN:          FOR LOCAL? justVar IN justVar LPAREN RPAREN body linenumber? NEXT ;
 stmtCallFN:         fnName LPAREN functionParList? RPAREN ;
-stmtIF:             IF expr t=content (ELSE f=content)? ;
-stmtIFMultiline:    IF expr THEN NEWLINE t=line+ (ELSE NEWLINE f=line+)? linenumber? ENDIF ;
+stmtIF:             IF expr content (ELSE content)? ;
+stmtIFMultiline:    IF expr THEN NEWLINE linePlus (ELSE NEWLINE linePlus)? linenumber? ENDIF ;
 stmtINSTALL:        INSTALL strExpr ;
 stmtGOTO:           GOTO NUMBER ; 
 stmtGOSUB:          GOSUB NUMBER ;
@@ -328,6 +334,7 @@ strFunc
     | STRS TILDE numExpr                                        #strFuncSTRSHEX
     | STRINGS LPAREN numExpr COMMA strExpr RPAREN               #strFuncSTRINGS
     | INKEYS numExpr                                            #strFuncINKEYS
+    | GETS                                                      #strFuncGETS
     ;
 
 string

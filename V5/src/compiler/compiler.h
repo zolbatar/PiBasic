@@ -212,6 +212,7 @@ private:
 protected:
     antlrcpp::Any visitProg(DARICParser::ProgContext* context);
     antlrcpp::Any visitLine(DARICParser::LineContext* context);
+    antlrcpp::Any visitLinePlus(DARICParser::LinePlusContext* context);
     antlrcpp::Any visitLinenumber(DARICParser::LinenumberContext* context);
     antlrcpp::Any visitBody(DARICParser::BodyContext* context);
     antlrcpp::Any visitContent(DARICParser::ContentContext* context);
@@ -256,6 +257,7 @@ protected:
     antlrcpp::Any visitStmtGET(DARICParser::StmtGETContext* context);
     antlrcpp::Any visitStmtGETS(DARICParser::StmtGETSContext* context);
     antlrcpp::Any visitNumFuncGET(DARICParser::NumFuncGETContext* context);
+    antlrcpp::Any visitStrFuncGETS(DARICParser::StrFuncGETSContext* context);
     antlrcpp::Any visitNumFuncINKEY(DARICParser::NumFuncINKEYContext* context);
     antlrcpp::Any visitStrFuncINKEYS(DARICParser::StrFuncINKEYSContext* context);
 

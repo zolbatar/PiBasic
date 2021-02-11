@@ -1,4 +1,12 @@
-10 GOSUB 100
-20 END
-100 PRINT "Yay"
-110 RETURN
+DEF PROCTriangle(l,x,y,s)
+	IF l > 0 THEN
+		TRIANGLE x,y,x+s,y,x,y+s
+		LOCAL s2=s/2
+		PROCTriangle(l-1,x,y,s2)
+		PROCTriangle(l-1,x+s2,y,s2)
+		PROCTriangle(l-1,x,y+s2,s2)
+	ENDIF
+ENDPROC
+
+CLS
+PROCTriangle(8,0,0,800)

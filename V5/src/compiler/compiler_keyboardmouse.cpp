@@ -61,6 +61,16 @@ antlrcpp::Any Compiler::visitStmtGETS(DARICParser::StmtGETSContext* context)
     return NULL;
 }
 
+antlrcpp::Any Compiler::visitStrFuncGETS(DARICParser::StrFuncGETSContext* context)
+{
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
+    set_pos(context->start);
+    insert_bytecode_notype(Bytecodes::GETS);
+    stack_push(Type::STRING);
+    return NULL;
+}
+
 antlrcpp::Any Compiler::visitNumFuncGET(DARICParser::NumFuncGETContext* context)
 {
     if (phase == CompilerPhase::LOOKAHEAD)

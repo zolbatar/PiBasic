@@ -130,10 +130,10 @@ void Interactive::run()
                 }
             } else if (upper.compare("WELCOME") == 0) {
                 run_demo_file("Welcome");
-                lines.clear();
+/*                lines.clear();
                 create_empty_vm();
                 g_env.graphics.cls();
-                welcome_prompt();
+                welcome_prompt();*/
             } else if (upper.compare("EXAMPLES") == 0) {
                 // Directory for source files
                 std::string path(g_env.cwd);
