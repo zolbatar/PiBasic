@@ -2423,11 +2423,11 @@ void VM::opcode_CREATEVERTEX()
 
     // X
     Boxed* field = &b->fields[static_cast<size_t>(base)];
-    field->set_float(z);
+    field->set_float(x);
 
     // Y
     field = &b->fields[static_cast<size_t>(base + 1)];
-    field->set_float(z);
+    field->set_float(y);
 
     // Z
     field = &b->fields[static_cast<size_t>(base + 2)];
@@ -2701,6 +2701,7 @@ std::string VM::run()
             if (poll_count == 100) {
                 if (g_env.interactive && g_env.graphics.inkey(-113)) {
                     g_env.graphics.print_console("Escape\r");
+                    g_env.graphics.open(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height(), 0, g_env.cwd);
                     return "";
                 }
                 g_env.graphics.poll();

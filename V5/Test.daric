@@ -1,5 +1,5 @@
 REM INSTALL "SetupGraphicsBanked"
-REM SHOWFPS
+SHOWFPS
 GRAPHICS BANKED
 
 REM ** Create a random RGB colour **
@@ -43,16 +43,16 @@ DEF PROCTwoShapes()
 		ROTATE cube2%, 0, 360 - I, 0
 		RENDER
 		FLIP	
-	    IF INKEY(0) <> -1 THEN
-			DELETEOBJECT cube1%
-			DELETEOBJECT cube2%
-			CHAIN "Welcome"
-		ENDIF
+	    REM IF INKEY(0) <> -1 THEN
+			REM DELETEOBJECT cube1%
+			REM DELETEOBJECT cube2%
+			REM CHAIN "Welcome"
+		REM ENDIF
 	NEXT
 	DELETEOBJECT cube1%
 	DELETEOBJECT cube2%
 ENDPROC
 
 PROCTwoShapes()
-REM INKEY(1000)
-REM CHAIN "Welcome"
+INKEY(1000)
+CHAIN "Welcome"
