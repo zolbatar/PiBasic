@@ -26,7 +26,7 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
         };
 
         // Scan for end of line
-        while (t != '\n' && end <= stream.length()) {
+        while (t != '\n' && end < stream.length()) {
             end++;
             t = stream[end];
         };
