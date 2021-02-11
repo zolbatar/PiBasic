@@ -60,6 +60,6 @@ antlrcpp::Any Compiler::visitStmtRESTORE(DARICParser::StmtRESTOREContext* contex
         return NULL;
     }
     set_pos(context->start);
-    insert_bytecode(Bytecodes::RESTORE, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::RESTORE);
     return NULL;
 }

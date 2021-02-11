@@ -64,14 +64,14 @@ antlrcpp::Any Compiler::visitWhen(DARICParser::WhenContext* context)
         insert_bytecode(Bytecodes::CMP_E, case_type);
 
         // We don't know the amount to jump ahead yet
-        insert_instruction(Bytecodes::JNE, Type::NOTYPE, s.end_pc);
-        insert_bytecode(Bytecodes::CASE_S, Type::NOTYPE);
+        insert_instruction_notype(Bytecodes::JNE, s.end_pc);
+        insert_bytecode_notype(Bytecodes::CASE_S);
 
         // Code to execute on case match
         visit(context->body());
 
         // Jump to end of CASE
-        insert_instruction(Bytecodes::JUMP, Type::NOTYPE, case_end_pc);
+        insert_instruction_notype(Bytecodes::JUMP, case_end_pc);
 
         // Set the end PC on write
         if (phase == CompilerPhase::SIZE) {
@@ -98,7 +98,7 @@ antlrcpp::Any Compiler::visitStmtCASE(DARICParser::StmtCASEContext* context)
     }
 
     // Clear case condition
-    insert_bytecode(Bytecodes::CASE_C, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::CASE_C);
 
     // Now parse the condition
     visit(context->expr());
@@ -121,7 +121,7 @@ antlrcpp::Any Compiler::visitStmtCASE(DARICParser::StmtCASEContext* context)
         }
 
         // We don't know the amount to jump ahead yet
-        insert_instruction(Bytecodes::CJUMPT, Type::NOTYPE, s_oth.end_pc);
+        insert_instruction_notype(Bytecodes::CJUMPT, s_oth.end_pc);
 
         // This is the code to execute on OTHERWISE
         visit(context->body());
@@ -140,7 +140,7 @@ antlrcpp::Any Compiler::visitStmtCASE(DARICParser::StmtCASEContext* context)
     }
 
     // Drop expression
-    insert_bytecode(Bytecodes::DROP, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::DROP);
 
     return NULL;
 }
@@ -168,13 +168,13 @@ antlrcpp::Any Compiler::visitStmtIF(DARICParser::StmtIFContext* context)
     stack_pop();
 
     // We don't know the amount to jump ahead yet
-    insert_instruction(Bytecodes::JNE, Type::NOTYPE, s.false_pc);
+    insert_instruction_notype(Bytecodes::JNE, s.false_pc);
 
     // This is the truth section
     if (context->t != nullptr) {
         visit(context->t);
     }
-    insert_instruction(Bytecodes::JUMP, Type::NOTYPE, s.end_pc);
+    insert_instruction_notype(Bytecodes::JUMP, s.end_pc);
 
     // and false section (the else bit)
     if (phase == CompilerPhase::SIZE) {
@@ -216,13 +216,13 @@ antlrcpp::Any Compiler::visitStmtIFMultiline(DARICParser::StmtIFMultilineContext
     stack_pop();
 
     // We don't know the amount to jump ahead yet
-    insert_instruction(Bytecodes::JNE, Type::NOTYPE, s.false_pc);
+    insert_instruction_notype(Bytecodes::JNE, s.false_pc);
 
     // This is the truth section
     if (context->t != nullptr) {
         visit(context->t);
     }
-    insert_instruction(Bytecodes::JUMP, Type::NOTYPE, s.end_pc);
+    insert_instruction_notype(Bytecodes::JUMP, s.end_pc);
 
     // and false section (the else bit)
     if (phase == CompilerPhase::SIZE) {

@@ -35,6 +35,8 @@ coreStmt
     | stmtDEFPROC
     | stmtFOR
     | stmtFORIN
+    | stmtGOTO
+    | stmtGOSUB
     | stmtCallFN
     | stmtIF
     | stmtIFMultiline
@@ -67,6 +69,8 @@ stmtCallFN:         fnName LPAREN functionParList? RPAREN ;
 stmtIF:             IF expr t=content (ELSE f=content)? ;
 stmtIFMultiline:    IF expr THEN NEWLINE t=line+ (ELSE NEWLINE f=line+)? linenumber? ENDIF ;
 stmtINSTALL:        INSTALL strExpr ;
+stmtGOTO:           GOTO NUMBER ; 
+stmtGOSUB:          GOSUB NUMBER ;
 stmtLET:            ((LET | GLOBAL)? | LOCAL) varDecl EQ expr (COMMA varDecl EQ expr)* ;
 stmtOSCLI:          OSCLI strExpr ;
 stmtCallPROC:       PROC_NAME LPAREN functionParList? RPAREN ;
@@ -483,6 +487,8 @@ INSTALL         : 'INSTALL' |  'install' | 'Install' ;
 INT             : 'INT' | 'int' | 'Int' ;
 INPUT           : 'INPUT' | 'input' | 'Input' ;
 GLOBAL          : 'GLOBAL' | 'global' | 'Global' ;
+GOTO            : 'GOTO' | 'goto' | 'Goto' ;
+GOSUB           : 'GOSUB' | 'gosub' | 'Gosub' ;
 LOCAL           : 'LOCAL' | 'local' | 'Local' ;
 LET             : 'LET' | 'let' | 'Let' ;
 NEXT            : 'NEXT' | 'next' | 'Next' ;
@@ -691,7 +697,7 @@ VARIABLE_STRING   : NAME '$' ;
 VARIABLE_TYPE   : NAME '!' ;
 HEXNUMBER       : '&' [0-9A-Fa-f]+ ;
 BINARYNUMBER    : '%' [0|1]+ ;
-NUMBER          : DIGIT+ ([e|E] DIGIT)* ;
+NUMBER          : DIGIT+ ;
 FLOAT           : DIGIT* '.' DIGIT* ([e|E] [0-9]+ )* ;
 
 fragment NAME   : ALPHA (ALPHA|DIGIT|'_')* ;

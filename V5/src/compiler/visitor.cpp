@@ -14,13 +14,6 @@ antlrcpp::Any Compiler::visitLine(DARICParser::LineContext* context)
     return visitChildren(context);
 }
 
-antlrcpp::Any Compiler::visitLinenumber(DARICParser::LinenumberContext* context)
-{
-    set_pos(context->start);
-    line_number = std::stoi(context->NUMBER()->getText());
-    return visitChildren(context);
-}
-
 antlrcpp::Any Compiler::visitBody(DARICParser::BodyContext* context)
 {
     set_pos(context->start);

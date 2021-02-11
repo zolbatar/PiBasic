@@ -19,7 +19,7 @@ antlrcpp::Any Compiler::visitStmtSWAP(DARICParser::StmtSWAPContext* context)
         error("SWAP needs two variables of the same type");
     }
 
-    insert_instruction(Bytecodes::FASTCONST_VAR, current_var.type, current_var.id);
+    insert_instruction_notype(Bytecodes::FASTCONST_VAR, current_var.id);
     insert_instruction(Bytecodes::SWAP, saved.type, saved.id);
     return NULL;
 }

@@ -63,6 +63,10 @@ public:
 
     virtual antlrcpp::Any visitStmtINSTALL(DARICParser::StmtINSTALLContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtGOTO(DARICParser::StmtGOTOContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtGOSUB(DARICParser::StmtGOSUBContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtOSCLI(DARICParser::StmtOSCLIContext *context) = 0;

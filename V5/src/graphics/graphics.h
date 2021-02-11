@@ -26,6 +26,11 @@ const int TOP = 8; // 1000
 
 extern bool debugger_open;
 
+enum class Mode {
+    CLASSIC,
+    BANKED
+};
+
 enum class EventType {
     Text
 };
@@ -92,10 +97,8 @@ public:
         minY = 0;
         maxY = 0;
     }
-    bool is_open()
-    {
-        return opened;
-    }
+    bool is_open() { return opened; }
+    bool is_banked() { return banked; }
     ~Graphics()
     {
         delete bank_cache;
@@ -104,7 +107,7 @@ public:
     void init();
     void delete_fonts();
     void shutdown();
-    void open(int width, int height, int mode, std::string& cwd);
+    void open(int width, int height, Mode mode, std::string& cwd);
     void colour(BYTE r, BYTE g, BYTE b);
     void colour_hex(UINT32 c);
     void set_colour(Colour c);
@@ -222,7 +225,7 @@ private:
 #endif
     bool opened = false;
     bool banked = false;
-    int mode;
+    Mode mode;
     int screen_width, screen_height;
     int minX, maxX, minY, maxY;
     int last_cursor_x = 0, last_cursor_y = 0;

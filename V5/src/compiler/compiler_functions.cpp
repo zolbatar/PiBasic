@@ -27,10 +27,10 @@ antlrcpp::Any Compiler::visitStmtDEFFN(DARICParser::StmtDEFFNContext* context)
 
         // Jump around function
         if (phase != CompilerPhase::COMPILE) {
-            insert_instruction(Bytecodes::JUMP, Type::NOTYPE, 0);
+            insert_instruction_notype(Bytecodes::JUMP, 0);
             current_function->pc_start = vm->helper_bytecodes().pc;
         } else {
-            insert_instruction(Bytecodes::JUMP, Type::NOTYPE, current_function->pc_end);
+            insert_instruction_notype(Bytecodes::JUMP, current_function->pc_end);
         }
 
         // Make parameters locals (and do unpack stuff)
@@ -70,7 +70,7 @@ antlrcpp::Any Compiler::visitStmtDEFFN(DARICParser::StmtDEFFNContext* context)
             break;
         }
 
-        insert_bytecode(Bytecodes::RETURN, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::RETURN);
 
         // Set end PC for jumping/calling purposes
         if (phase != CompilerPhase::COMPILE) {
@@ -112,10 +112,10 @@ antlrcpp::Any Compiler::visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* contex
 
         // Jump around function
         if (phase != CompilerPhase::COMPILE) {
-            insert_instruction(Bytecodes::JUMP, Type::NOTYPE, 0);
+            insert_instruction_notype(Bytecodes::JUMP, 0);
             current_function->pc_start = vm->helper_bytecodes().pc;
         } else {
-            insert_instruction(Bytecodes::JUMP, Type::NOTYPE, current_function->pc_end);
+            insert_instruction_notype(Bytecodes::JUMP, current_function->pc_end);
         }
 
         // Make parameters locals (and do unpack stuff)
@@ -140,7 +140,7 @@ antlrcpp::Any Compiler::visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* contex
             }
         }
 
-        insert_bytecode(Bytecodes::RETURN, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::RETURN);
 
         // Set end PC for jumping/calling purposes
         if (phase != CompilerPhase::COMPILE) {
@@ -184,13 +184,15 @@ antlrcpp::Any Compiler::visitStmtRETURN(DARICParser::StmtRETURNContext* context)
     }
 
     // Do we have any return variables?
-    for (auto it = current_function->parameters.begin(); it != current_function->parameters.end(); ++it) {
-        if ((*it).return_parameter) {
-            insert_instruction(Bytecodes::LOAD, (*it).type, (*it).index | LocalVariableFlag);
+    if (current_function != NULL) {
+        for (auto it = current_function->parameters.begin(); it != current_function->parameters.end(); ++it) {
+            if ((*it).return_parameter) {
+                insert_instruction(Bytecodes::LOAD, (*it).type, (*it).index | LocalVariableFlag);
+            }
         }
     }
 
-    insert_bytecode(Bytecodes::RETURN, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::RETURN);
     return NULL;
 }
 
@@ -248,7 +250,7 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
                 case Type::INTEGER:
                     break;
                 case Type::FLOAT:
-                    insert_bytecode(Bytecodes::CONV_INT, Type::NOTYPE);
+                    insert_bytecode(Bytecodes::CONV_INT, Type::FLOAT);
                     break;
                 case Type::STRING:
                     error("Parameter '" + fp->name + "' for call to '" + called_fnproc + "' is the wrong type");
@@ -257,7 +259,7 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
             case Type::FLOAT:
                 switch (type) {
                 case Type::INTEGER:
-                    insert_bytecode(Bytecodes::CONV_FLOAT, Type::NOTYPE);
+                    insert_bytecode(Bytecodes::CONV_FLOAT, Type::INTEGER);
                     break;
                 case Type::FLOAT:
                     break;
@@ -289,14 +291,14 @@ void Compiler::general_call_fnproc(bool drop)
     // Call
     if (phase != CompilerPhase::COMPILE) {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);
-        insert_instruction(Bytecodes::CALL, Type::NOTYPE, 0);
+        insert_instruction_notype(Bytecodes::CALL, 0);
     } else {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, func->index);
-        insert_instruction(Bytecodes::CALL, Type::NOTYPE, func->pc_start);
+        insert_instruction_notype(Bytecodes::CALL, func->pc_start);
     }
 
     if (drop) {
-        insert_bytecode(Bytecodes::DROP, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::DROP);
     }
 
     // Do we have any return parameters? If so, grab from stack and store

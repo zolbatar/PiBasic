@@ -89,6 +89,9 @@ private:
     UINT32 global_var_index = 0;
     std::map<std::string, Boxed> globals;
 
+    // GOTO/GOSUB
+    std::map<UINT32, UINT32> line_no_to_bytecode;
+
     // Looping
     std::map<UINT32, IfStatement> if_statements;
     Type case_type;
@@ -186,7 +189,9 @@ private:
 
     // Create bytecode
     void insert_instruction(Bytecodes bc, Type type, UINT32 data) { vm->helper_bytecodes().insert_instruction(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, type, data); }
+    void insert_instruction_notype(Bytecodes bc, UINT32 data) { vm->helper_bytecodes().insert_instruction(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, Type::NOTYPE, data); }
     void insert_bytecode(Bytecodes bc, Type type) { vm->helper_bytecodes().insert_bytecode(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, type); }
+    void insert_bytecode_notype(Bytecodes bc) { vm->helper_bytecodes().insert_bytecode(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, Type::NOTYPE); }
 
     // 3D types
     void setup_3d_types();
@@ -241,6 +246,8 @@ protected:
     antlrcpp::Any visitStmtTRACEON(DARICParser::StmtTRACEONContext* context);
     antlrcpp::Any visitStmtTRACEOFF(DARICParser::StmtTRACEOFFContext* context);
     antlrcpp::Any visitStmtWHILE(DARICParser::StmtWHILEContext* context);
+    antlrcpp::Any visitStmtGOTO(DARICParser::StmtGOTOContext* context);
+    antlrcpp::Any visitStmtGOSUB(DARICParser::StmtGOSUBContext* context);
 
     /* Keyboard and mouse */
     antlrcpp::Any visitStmtMOUSE(DARICParser::StmtMOUSEContext* context);

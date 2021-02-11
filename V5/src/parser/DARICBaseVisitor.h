@@ -103,6 +103,14 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtGOTO(DARICParser::StmtGOTOContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtGOSUB(DARICParser::StmtGOSUBContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtLET(DARICParser::StmtLETContext *ctx) override {
     return visitChildren(ctx);
   }

@@ -2250,7 +2250,7 @@ void VM::opcode_GRAPHICS()
         x = g_env.graphics.get_screen_width();
     if (y == -1)
         y = g_env.graphics.get_screen_height();
-    g_env.graphics.open(x, y, mode, g_env.cwd);
+    g_env.graphics.open(x, y, mode == 0 ? Mode::CLASSIC : Mode::BANKED, g_env.cwd);
     world.set_screen_size(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height());
     if (!performance_build && runtime_debug)
         g_env.log << "Change screen mode to " << x << " x " << y << std::endl;
@@ -2664,8 +2664,11 @@ std::string VM::run()
             poll_count++;
             if (poll_count == 100) {
                 if (g_env.interactive && g_env.graphics.inkey(-113)) {
+                    // Are we in BANKED mode?
+                    if (g_env.graphics.is_banked()) {
+                        g_env.graphics.open(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height(), Mode::CLASSIC, g_env.cwd);
+                    }
                     g_env.graphics.print_console("Escape\r");
-                    g_env.graphics.open(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height(), 0, g_env.cwd);
                     return "";
                 }
                 g_env.graphics.poll();

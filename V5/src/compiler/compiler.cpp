@@ -54,7 +54,7 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
     auto time_span = duration_cast<duration<double>>(t2 - t1);
     g_env.log << "Parsing and compilation took " << time_span.count() << " seconds." << std::endl;
 
-    insert_bytecode(Bytecodes::HALT, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::HALT);
 
     // Now we MOVE the variables into the VM class
     vm->helper_variables().set_variables_size(global_var_index);

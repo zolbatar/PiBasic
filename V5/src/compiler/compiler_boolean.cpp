@@ -7,7 +7,7 @@ antlrcpp::Any Compiler::visitNumExprNOT(DARICParser::NumExprNOTContext* context)
     set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_integer();
-    insert_bytecode(Bytecodes::BOOL_NOT, Type::NOTYPE);
+    insert_bytecode(Bytecodes::BOOL_NOT, Type::INTEGER);
     return NULL;
 }
 
@@ -17,8 +17,9 @@ antlrcpp::Any Compiler::visitNumExprANDOREOR(DARICParser::NumExprANDOREORContext
         return NULL;
     set_pos(context->start);
     visit(context->numExpr(0));
+    ensure_stack_is_integer();
     visit(context->numExpr(1));
-    expression_type_conversion(context, false);
+    ensure_stack_is_integer();
     if (context->AND() != NULL) {
         boolean(Bytecodes::BOOL_AND);
     } else if (context->OR() != NULL) {
@@ -33,7 +34,7 @@ void Compiler::boolean(Bytecodes i)
 {
     switch (peek_type()) {
     case Type::INTEGER:
-        insert_bytecode(i, Type::NOTYPE);
+        insert_bytecode(i, Type::INTEGER);
         break;
     default:
         error("Booleans must be integers");

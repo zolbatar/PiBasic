@@ -6,7 +6,7 @@ antlrcpp::Any Compiler::visitStmtCHAIN(DARICParser::StmtCHAINContext* context)
         return NULL;
     visit(context->strExpr());
     stack_pop();
-    insert_bytecode(Bytecodes::CHAIN, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::CHAIN);
     return NULL;
 }
 
@@ -16,6 +16,6 @@ antlrcpp::Any Compiler::visitStmtINSTALL(DARICParser::StmtINSTALLContext* contex
         return NULL;
     visit(context->strExpr());
     stack_pop();
-    //insert_bytecode(Bytecodes::CHAIN, Type::NOTYPE);
+    //insert_bytecode_notype(Bytecodes::CHAIN);
     return NULL;
 }

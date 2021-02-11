@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
         // A file has been clicked typically
     } else {
         // Fire up graphics now
-        g_env.graphics.open(g_env.graphics.get_screen_width(), g_env.graphics.get_screen_height(), 0, g_env.cwd);
+        g_env.graphics.open(g_env.graphics.get_screen_width(), g_env.graphics.get_screen_height(), Mode::CLASSIC, g_env.cwd);
 
         Interactive interactive;
         interactive.run();

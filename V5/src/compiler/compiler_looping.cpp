@@ -13,7 +13,7 @@ antlrcpp::Any Compiler::visitStmtFORIN(DARICParser::StmtFORINContext* context)
     } else {
         find_or_create_variable(VariableScope::GLOBAL);
     }
-    insert_instruction(Bytecodes::FASTCONST_VAR, Type::NOTYPE, current_var.id);
+    insert_instruction_notype(Bytecodes::FASTCONST_VAR, current_var.id);
     auto saved = current_var;
 
     // Get loop variable
@@ -197,7 +197,7 @@ antlrcpp::Any Compiler::visitStmtREPEAT(DARICParser::StmtREPEATContext* context)
         return NULL;
     set_pos(context->start);
 
-    insert_bytecode(Bytecodes::REPEAT, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::REPEAT);
 
     // Body
     visit(context->body());
@@ -206,7 +206,7 @@ antlrcpp::Any Compiler::visitStmtREPEAT(DARICParser::StmtREPEATContext* context)
     visit(context->expr());
     ensure_stack_is_integer();
     stack_pop();
-    insert_bytecode(Bytecodes::JNEREP, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::JNEREP);
 
     return NULL;
 }
@@ -230,12 +230,12 @@ antlrcpp::Any Compiler::visitStmtWHILE(DARICParser::StmtWHILEContext* context)
     stack_pop();
 
     // We don't know the amount to jump ahead yet
-    insert_instruction(Bytecodes::JNE, Type::NOTYPE, s.end_pc);
+    insert_instruction_notype(Bytecodes::JNE, s.end_pc);
 
     // Body
     visit(context->body());
 
-    insert_instruction(Bytecodes::JUMP, Type::NOTYPE, start_pc);
+    insert_instruction_notype(Bytecodes::JUMP, start_pc);
 
     if (phase == CompilerPhase::SIZE) {
         s.end_pc = vm->helper_bytecodes().pc;

@@ -89,7 +89,7 @@ void Compiler::save_to_variable(Type type, VarReference saved)
         }
         switch (type) {
         case Type::FLOAT:
-            insert_bytecode(Bytecodes::CONV_INT, Type::NOTYPE);
+            insert_bytecode(Bytecodes::CONV_INT, Type::FLOAT);
             break;
         case Type::INTEGER:
             break;
@@ -105,7 +105,7 @@ void Compiler::save_to_variable(Type type, VarReference saved)
         }
         switch (type) {
         case Type::INTEGER:
-            insert_bytecode(Bytecodes::CONV_FLOAT, Type::NOTYPE);
+            insert_bytecode(Bytecodes::CONV_FLOAT, Type::INTEGER);
             break;
         case Type::FLOAT:
             break;
@@ -166,7 +166,7 @@ void Compiler::save_to_variable(Type type, VarReference saved)
             case Type::INTEGER:
                 switch (type) {
                 case Type::FLOAT:
-                    insert_bytecode(Bytecodes::CONV_INT, Type::NOTYPE);
+                    insert_bytecode(Bytecodes::CONV_INT, Type::FLOAT);
                     insert_instruction(Bytecodes::STORE_FIELD, Type::INTEGER, saved.id);
                     break;
                 case Type::INTEGER:
@@ -179,7 +179,7 @@ void Compiler::save_to_variable(Type type, VarReference saved)
             case Type::FLOAT:
                 switch (type) {
                 case Type::INTEGER:
-                    insert_bytecode(Bytecodes::CONV_FLOAT, Type::NOTYPE);
+                    insert_bytecode(Bytecodes::CONV_FLOAT, Type::INTEGER);
                     insert_instruction(Bytecodes::STORE_FIELD, Type::FLOAT, saved.id);
                     break;
                 case Type::FLOAT:
@@ -210,7 +210,7 @@ void Compiler::save_to_variable(Type type, VarReference saved)
         case Type::INTEGER:
             switch (type) {
             case Type::FLOAT:
-                insert_bytecode(Bytecodes::CONV_INT, Type::NOTYPE);
+                insert_bytecode(Bytecodes::CONV_INT, Type::FLOAT);
                 insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
                 insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
                 insert_instruction(Bytecodes::STORE_FIELD_ARRAY, Type::INTEGER, saved.id);
@@ -227,7 +227,7 @@ void Compiler::save_to_variable(Type type, VarReference saved)
         case Type::FLOAT:
             switch (type) {
             case Type::INTEGER:
-                insert_bytecode(Bytecodes::CONV_FLOAT, Type::NOTYPE);
+                insert_bytecode(Bytecodes::CONV_FLOAT, Type::INTEGER);
                 insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
                 insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
                 insert_instruction(Bytecodes::STORE_FIELD_ARRAY, Type::FLOAT, saved.id);

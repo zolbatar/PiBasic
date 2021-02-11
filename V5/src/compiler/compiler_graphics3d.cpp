@@ -5,7 +5,7 @@ antlrcpp::Any Compiler::visitStmtRENDERFRAME(DARICParser::StmtRENDERFRAMEContext
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     set_pos(context->start);
-    insert_bytecode(Bytecodes::RENDERFRAME, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::RENDERFRAME);
     return NULL;
 }
 
@@ -31,7 +31,7 @@ antlrcpp::Any Compiler::visitStmtCREATEVERTEX(DARICParser::StmtCREATEVERTEXConte
     visit(context->numExpr(4));
     ensure_stack_is_integer();
     stack_pop();
-    insert_instruction(Bytecodes::CREATEVERTEX, Type::TYPE_ARRAY, saved.id);
+    insert_instruction_notype(Bytecodes::CREATEVERTEX, saved.id);
     assert(stack_size() == 0);
     return NULL;
 }
@@ -52,7 +52,7 @@ antlrcpp::Any Compiler::visitStmtCREATETRIANGLE(DARICParser::StmtCREATETRIANGLEC
         ensure_stack_is_integer();
         stack_pop();
     }
-    insert_instruction(Bytecodes::CREATETRIANGLE, Type::TYPE_ARRAY, saved.id);
+    insert_instruction_notype(Bytecodes::CREATETRIANGLE, saved.id);
     assert(stack_size() == 0);
     return NULL;
 }
@@ -70,7 +70,7 @@ antlrcpp::Any Compiler::visitStmtTRANSLATE(DARICParser::StmtTRANSLATEContext* co
         ensure_stack_is_float();
         stack_pop();
     }
-    insert_instruction(Bytecodes::OBJECTTRANSLATE, Type::TYPE_ARRAY, current_var.id);
+    insert_instruction_notype(Bytecodes::OBJECTTRANSLATE, current_var.id);
     assert(stack_size() == 0);
     return NULL;
 }
@@ -88,7 +88,7 @@ antlrcpp::Any Compiler::visitStmtROTATE(DARICParser::StmtROTATEContext* context)
         ensure_stack_is_float();
         stack_pop();
     }
-    insert_instruction(Bytecodes::OBJECTROTATE, Type::TYPE_ARRAY, current_var.id);
+    insert_instruction_notype(Bytecodes::OBJECTROTATE, current_var.id);
     assert(stack_size() == 0);
     return NULL;
 }
@@ -104,7 +104,7 @@ antlrcpp::Any Compiler::visitStmtSCALE(DARICParser::StmtSCALEContext* context)
     visit(context->numExpr(1));
     ensure_stack_is_float();
     stack_pop();
-    insert_instruction(Bytecodes::OBJECTROTATE, Type::TYPE_ARRAY, current_var.id);
+    insert_instruction_notype(Bytecodes::OBJECTROTATE, current_var.id);
     assert(stack_size() == 0);
     return NULL;
 }
@@ -117,7 +117,7 @@ antlrcpp::Any Compiler::visitStmtDELETEOBJECT(DARICParser::StmtDELETEOBJECTConte
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
-    insert_instruction(Bytecodes::DELETEOBJECT, Type::TYPE_ARRAY, current_var.id);
+    insert_instruction_notype(Bytecodes::DELETEOBJECT, current_var.id);
     assert(stack_size() == 0);
     return NULL;
 }
@@ -132,13 +132,13 @@ antlrcpp::Any Compiler::visitNumFuncSHAPE(DARICParser::NumFuncSHAPEContext* cont
     if (current_var.type != Type::TYPE_ARRAY && current_var.custom_type_name != "Vertex3D") {
         error("The first parameter to SHAPE should be a type array of Vertex3D");
     }
-    insert_instruction(Bytecodes::FASTCONST_VAR, Type::TYPE, current_var.id);
+    insert_instruction_notype(Bytecodes::FASTCONST_VAR, current_var.id);
     visit(context->varNameType(1));
     find_variable(false, true);
     if (current_var.type != Type::TYPE_ARRAY && current_var.custom_type_name != "Triangle3D") {
         error("The second parameter to SHAPE should be a type array of Triangle3D");
     }
-    insert_instruction(Bytecodes::CREATESHAPE, Type::TYPE, current_var.id);
+    insert_instruction_notype(Bytecodes::CREATESHAPE, current_var.id);
     stack_push(Type::INTEGER);
     return NULL;
 }
@@ -168,7 +168,7 @@ antlrcpp::Any Compiler::visitNumFuncOBJECT(DARICParser::NumFuncOBJECTContext* co
         type = 3;
     }
     insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, type);
-    insert_bytecode(Bytecodes::CREATEOBJECT, Type::TYPE);
+    insert_bytecode_notype(Bytecodes::CREATEOBJECT);
     stack_push(Type::INTEGER);
     return NULL;
 }

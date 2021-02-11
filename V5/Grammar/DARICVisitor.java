@@ -142,6 +142,18 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStmtINSTALL(DARICParser.StmtINSTALLContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtGOTO}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtGOTO(DARICParser.StmtGOTOContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtGOSUB}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtGOSUB(DARICParser.StmtGOSUBContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link DARICParser#stmtLET}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

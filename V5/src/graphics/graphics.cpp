@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-const int DEBUGWINDOW = 0;
+const int DEBUGWINDOW = 1;
 
 #ifdef RISCOS
 void Graphics::graphics_shadow_state_on()
@@ -105,7 +105,7 @@ UINT32 Graphics::get_screen_height()
 }
 #endif
 
-void Graphics::open(int width, int height, int mode, std::string& cwd)
+void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 {
     if (DEBUGWINDOW) {
         width = static_cast<int>(width * 0.9);
@@ -124,7 +124,7 @@ void Graphics::open(int width, int height, int mode, std::string& cwd)
 
     // Process mode
     this->mode = mode;
-    banked = mode == 1;
+    banked = mode == Mode::BANKED;
     screen_width = width;
     screen_height = height;
     minX = 0;

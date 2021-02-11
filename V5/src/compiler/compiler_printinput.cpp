@@ -11,7 +11,7 @@ antlrcpp::Any Compiler::visitStmtPRINT(DARICParser::StmtPRINTContext* context)
     if (context->printList() != NULL) {
         visit(context->printList());
     } else {
-        insert_bytecode(Bytecodes::PRINT_NL, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::PRINT_NL);
     }
     return NULL;
 }
@@ -44,7 +44,7 @@ antlrcpp::Any Compiler::visitPrintList(DARICParser::PrintListContext* context)
         }
     }
     if (context->s2 == nullptr) {
-        insert_bytecode(Bytecodes::PRINT_NL, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::PRINT_NL);
     }
     return NULL;
 }
@@ -103,7 +103,7 @@ antlrcpp::Any Compiler::visitPrintListTick(DARICParser::PrintListTickContext* co
     set_pos(context->start);
     auto n = context->TICK().size();
     for (auto i = 0; i < n; i++) {
-        insert_bytecode(Bytecodes::PRINT_NL, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::PRINT_NL);
     }
     print_semicolon_active = false;
     return NULL;
@@ -118,7 +118,7 @@ antlrcpp::Any Compiler::visitPrintListSPCP(DARICParser::PrintListSPCPContext* co
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
-    insert_bytecode(Bytecodes::PRINT_SPC, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::PRINT_SPC);
     return NULL;
 }
 
@@ -131,6 +131,6 @@ antlrcpp::Any Compiler::visitPrintListSPC(DARICParser::PrintListSPCContext* cont
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
-    insert_bytecode(Bytecodes::PRINT_SPC, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::PRINT_SPC);
     return NULL;
 }

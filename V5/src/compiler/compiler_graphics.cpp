@@ -95,7 +95,7 @@ antlrcpp::Any Compiler::visitStmtCLS(DARICParser::StmtCLSContext* context)
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     set_pos(context->start);
-    insert_bytecode(Bytecodes::CLS, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::CLS);
     return NULL;
 }
 
@@ -110,9 +110,9 @@ antlrcpp::Any Compiler::visitStmtCOLOUR(DARICParser::StmtCOLOURContext* context)
         stack_pop();
     }
     if (context->numExpr().size() == 1) {
-        insert_bytecode(Bytecodes::COLOURHEX, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::COLOURHEX);
     } else {
-        insert_bytecode(Bytecodes::COLOURRGB, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::COLOURRGB);
     }
     return NULL;
 }
@@ -128,9 +128,9 @@ antlrcpp::Any Compiler::visitStmtCOLOURBG(DARICParser::StmtCOLOURBGContext* cont
         stack_pop();
     }
     if (context->numExpr().size() == 1) {
-        insert_bytecode(Bytecodes::COLOURBGHEX, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::COLOURBGHEX);
     } else {
-        insert_bytecode(Bytecodes::COLOURBGRGB, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::COLOURBGRGB);
     }
     return NULL;
 }
@@ -160,7 +160,7 @@ antlrcpp::Any Compiler::visitStmtGRAPHICS(DARICParser::StmtGRAPHICSContext* cont
     } else {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);
     }
-    insert_bytecode(Bytecodes::GRAPHICS, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::GRAPHICS);
     return NULL;
 }
 
@@ -169,7 +169,7 @@ antlrcpp::Any Compiler::visitStmtFLIP(DARICParser::StmtFLIPContext* context)
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     set_pos(context->start);
-    insert_bytecode(Bytecodes::FLIP, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::FLIP);
     return NULL;
 }
 
@@ -184,9 +184,9 @@ antlrcpp::Any Compiler::visitStmtCIRCLE(DARICParser::StmtCIRCLEContext* context)
         stack_pop();
     }
     if (context->FILL() != NULL) {
-        insert_bytecode(Bytecodes::CIRCLEFILL, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::CIRCLEFILL);
     } else {
-        insert_bytecode(Bytecodes::CIRCLE, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::CIRCLE);
     }
     return NULL;
 }
@@ -201,7 +201,7 @@ antlrcpp::Any Compiler::visitStmtLINE(DARICParser::StmtLINEContext* context)
         ensure_stack_is_integer();
         stack_pop();
     }
-    insert_bytecode(Bytecodes::LINE, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::LINE);
     return NULL;
 }
 
@@ -216,9 +216,9 @@ antlrcpp::Any Compiler::visitStmtRECTANGLE(DARICParser::StmtRECTANGLEContext* co
         stack_pop();
     }
     if (context->FILL() != NULL) {
-        insert_bytecode(Bytecodes::RECTANGLEFILL, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::RECTANGLEFILL);
     } else {
-        insert_bytecode(Bytecodes::RECTANGLE, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::RECTANGLE);
     }
     return NULL;
 }
@@ -234,11 +234,11 @@ antlrcpp::Any Compiler::visitStmtTRIANGLE(DARICParser::StmtTRIANGLEContext* cont
         stack_pop();
     }
     if (context->FILL() != NULL) {
-        insert_bytecode(Bytecodes::TRIANGLEFILL, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::TRIANGLEFILL);
     } else if (context->SHADED() != NULL) {
-        insert_bytecode(Bytecodes::TRIANGLESHADED, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::TRIANGLESHADED);
     } else {
-        insert_bytecode(Bytecodes::TRIANGLE, Type::NOTYPE);
+        insert_bytecode_notype(Bytecodes::TRIANGLE);
     }
     return NULL;
 }
@@ -253,7 +253,7 @@ antlrcpp::Any Compiler::visitStmtPLOT(DARICParser::StmtPLOTContext* context)
         ensure_stack_is_integer();
         stack_pop();
     }
-    insert_bytecode(Bytecodes::PLOT, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::PLOT);
     return NULL;
 }
 
@@ -267,7 +267,7 @@ antlrcpp::Any Compiler::visitStmtCLIPON(DARICParser::StmtCLIPONContext* context)
         ensure_stack_is_integer();
         stack_pop();
     }
-    insert_bytecode(Bytecodes::CLIP, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::CLIP);
     return NULL;
 }
 
@@ -276,7 +276,7 @@ antlrcpp::Any Compiler::visitStmtCLIPOFF(DARICParser::StmtCLIPOFFContext* contex
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     set_pos(context->start);
-    insert_bytecode(Bytecodes::CLIPOFF, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::CLIPOFF);
     return NULL;
 }
 
@@ -292,7 +292,7 @@ antlrcpp::Any Compiler::visitStmtTEXT(DARICParser::StmtTEXTContext* context)
     }
     visit(context->strExpr());
     stack_pop();
-    insert_bytecode(Bytecodes::TEXT, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::TEXT);
     return NULL;
 }
 
@@ -308,7 +308,7 @@ antlrcpp::Any Compiler::visitStmtTEXTRIGHT(DARICParser::StmtTEXTRIGHTContext* co
     }
     visit(context->strExpr());
     stack_pop();
-    insert_bytecode(Bytecodes::TEXTRIGHT, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::TEXTRIGHT);
     return NULL;
 }
 
@@ -324,7 +324,7 @@ antlrcpp::Any Compiler::visitStmtTEXTCENTRE(DARICParser::StmtTEXTCENTREContext* 
     }
     visit(context->strExpr());
     stack_pop();
-    insert_bytecode(Bytecodes::TEXTCENTRE, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::TEXTCENTRE);
     return NULL;
 }
 
@@ -333,7 +333,7 @@ antlrcpp::Any Compiler::visitStmtSHOWFPS(DARICParser::StmtSHOWFPSContext* contex
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     set_pos(context->start);
-    insert_bytecode(Bytecodes::SHOWFPS, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::SHOWFPS);
     return NULL;
 }
 
@@ -347,7 +347,7 @@ antlrcpp::Any Compiler::visitNumFuncPOINT(DARICParser::NumFuncPOINTContext* cont
         ensure_stack_is_integer();
         stack_pop();
     }
-    insert_bytecode(Bytecodes::POINT, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::POINT);
     stack_push(Type::INTEGER);
     return NULL;
 }
@@ -362,7 +362,7 @@ antlrcpp::Any Compiler::visitNumFuncCOLOUR(DARICParser::NumFuncCOLOURContext* co
         ensure_stack_is_integer();
         stack_pop();
     }
-    insert_bytecode(Bytecodes::COLOUREXPRESSION, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::COLOUREXPRESSION);
     stack_push(Type::INTEGER);
     return NULL;
 }
@@ -372,7 +372,7 @@ antlrcpp::Any Compiler::visitNumFuncSCREENWIDTH(DARICParser::NumFuncSCREENWIDTHC
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     set_pos(context->start);
-    insert_bytecode(Bytecodes::SCREENWIDTH, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::SCREENWIDTH);
     stack_push(Type::INTEGER);
     return NULL;
 }
@@ -382,7 +382,7 @@ antlrcpp::Any Compiler::visitNumFuncSCREENHEIGHT(DARICParser::NumFuncSCREENHEIGH
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     set_pos(context->start);
-    insert_bytecode(Bytecodes::SCREENHEIGHT, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::SCREENHEIGHT);
     stack_push(Type::INTEGER);
     return NULL;
 }
@@ -397,7 +397,7 @@ antlrcpp::Any Compiler::visitNumFuncCREATEFONT(DARICParser::NumFuncCREATEFONTCon
         ensure_stack_is_integer();
         stack_pop();
     }
-    insert_bytecode(Bytecodes::CREATEFONT, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::CREATEFONT);
     stack_push(Type::INTEGER);
     return NULL;
 }
@@ -409,7 +409,7 @@ antlrcpp::Any Compiler::visitNumFuncLOADTYPEFACE(DARICParser::NumFuncLOADTYPEFAC
     set_pos(context->start);
     visit(context->strExpr());
     stack_pop();
-    insert_bytecode(Bytecodes::LOADTYPEFACE, Type::NOTYPE);
+    insert_bytecode_notype(Bytecodes::LOADTYPEFACE);
     stack_push(Type::INTEGER);
     return NULL;
 }
