@@ -1,27 +1,21 @@
 INSTALL "Perlin"
 
-DEF PROCCreateTerrain(width%, depth%, scale_x_in, scale_y_in, scale_z_in, grass%, rock%, snow%, rock, snow, flat)
+DEF PROCCreateTerrain(width%, depth%, scale_x_in, scale_y_in, scale_z_in, grass%, rock%, snow%, rock, snow)
 	PRINT "Creating terrain, may take a little while..."
 	LOCAL scale_x = scale_x_in / width%
 	LOCAL scale_y = scale_y_in / width%
 	LOCAL scale_z = scale_z_in / depth%
 	LOCAL number_of_vertices%=(width% + 1) * (depth% + 1)
 	LOCAL number_of_faces%=width% * depth% * 2
-	DIM V!(number_of_vertices%, Vertex3D)
-	DIM F!(number_of_faces%, Triangle3D)
+	LOCAL DIM V!(number_of_vertices%, Vertex3D)
+	LOCAL DIM F!(number_of_faces%, Triangle3D)
 
 	REM ** Build height map using perlin noise **
-	DIM height(width%, depth%)
+	LOCAL DIM height(width%, depth%)
 	LOCAL max_height=0.0
 	FOR LOCAL z% = 0 TO depth%
 		FOR LOCAL x% = 0 TO width%
 			LOCAL v = FNPerlin2D(x%, z%, 0.12, 5)
-	
-			REM Adjust based on curve
-			If flat = TRUE THEN
-				LOCAL xa=x%-(width%/2)
-			EndIf
-
 			height(x%, z%) = v
 			IF v > max_height max_height = v
 		NEXT
@@ -30,24 +24,34 @@ DEF PROCCreateTerrain(width%, depth%, scale_x_in, scale_y_in, scale_z_in, grass%
 	REM ** Build vertices **
 	LOCAL half_width=(width% * scale_x) / 2.0
 	LOCAL half_depth=(depth% * scale_z) / 2.0
-	DIM height_vertex(number_of_vertices%)
-	LOCAL I%=0
-	FOR LOCAL z% = 0 TO depth%
-		FOR LOCAL x% = 0 TO width%
-			LOCAL h=height(x%, z%)
-			LOCAL colour%=grass%
-			IF h > rock * max_height colour%=rock%
-			IF h > snow * max_height colour%=snow%
-			VERTEX V!(I%), (x% * scale_x) - half_width, -h * scale_y, (z% * scale_z) - half_depth, colour%
-			height_vertex(I%)=h
-			I% = I% + 1
+	REM LOCAL DIM height_vertex(number_of_vertices%)
+	REM LOCAL I%=0
+	FOR z% = 0 TO depth%
+		FOR x% = 0 TO width%
+			REM h=height(x%, z%)
+			REM h=RND(1)
+			REM LOCAL colour%=grass%
+			REM IF h > rock * max_height colour%=rock%
+			REM IF h > snow * max_height colour%=snow%
+			REM VERTEX V!(I%), (x% * scale_x) - half_width, -h * scale_y, (z% * scale_z) - half_depth, colour%
+			REM height_vertex(I%)=h
+			REM I% = I% + 1
 		NEXT
 	NEXT
 
+	
+			PRINT "done"
+	FOR LOCAL z% = 0 TO depth%
+		FOR LOCAL x% = 0 TO width%
+		PRINT height(x%, z%)
+		NEXT
+	NEXT
+	END
+
 	REM ** Build faces **
 	I% = 0
-	FOR LOCAL z% = 0 TO  depth%-1
-		FOR LOCAL x% = 0 TO width%-1 
+	FOR z% = 0 TO  depth%-1
+		FOR x% = 0 TO width%-1 
 			REM Triangle 1
 			LOCAL v1% = (z% * (width% + 1)) + x%
 			LOCAL v2% = v1% + 1
@@ -76,8 +80,8 @@ ENDPROC
 
 DEF PROCRotateTerrain()
 	PROCInitPerlin()
-	terrainsize%=5
-	PROCCreateTerrain(terrainsize%, terrainsize%, 1.0, 1.0, 1.0, &008000, &444444, &EEEEEE, 0.4, 0.7, 0)
+	terrainsize%=8
+	PROCCreateTerrain(terrainsize%, terrainsize%, 1.0, 1.0, 1.0, &008000, &444444, &EEEEEE, 0.4, 0.7)
 	terrain1%=OBJECT terrain%, 0, 0, -300, 330, 0, 0, 250, WIREFRAME
 	GRAPHICS BANKED
 	SHOWFPS

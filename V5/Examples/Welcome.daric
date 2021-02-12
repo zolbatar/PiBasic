@@ -30,7 +30,7 @@ REPEAT
 		WHEN "I","i":CHAIN "WorldInLines"
 		WHEN "J","j":CHAIN "Sierpinski"
 		WHEN "Y","y":CHAIN "Tester"
-		WHEN "Z","z":PRINT "END"
+		WHEN "Z","z":END
 	ENDCASE
 	REPEAT UNTIL INKEY(0)=-1
 UNTIL FALSE

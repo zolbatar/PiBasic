@@ -23,3 +23,13 @@ V5/DARIC/.vs/
 V5/DARIC/Debug/
 V5/DARIC/Release/
 V5/DARIC/obj
+*.dll
+*.obj
+*.log
+*.tlog
+*.idb
+*.pdb
+*.exe
+*.recipe
+*.ilk
+*.dll

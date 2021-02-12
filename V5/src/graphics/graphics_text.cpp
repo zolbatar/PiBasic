@@ -55,12 +55,11 @@ VM_INT Graphics::load_font(const char* filename)
     // Open file and calculate size
     FILE* fp = fopen(filename, "rb");
     if (!fp) {
-        if (!is_open()) {
-            std::cout << "Error opening font file\n";
-        } else {
+        std::cout << "Error opening font file\n";
+        if (is_open()) {
             print_console("Error opening font file\n");
         }
-        return 0;
+        exit(0);
     }
     fseek(fp, 0L, SEEK_END);
     size_t sz = ftell(fp);

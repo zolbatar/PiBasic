@@ -64,7 +64,7 @@ PROCInitPerlin()
 coolfont%    = LOADTYPEFACE "edunline.ttf"
 coolfont200% = CREATEFONT coolfont%, 150
 terrainsize%=70
-PROCCreateTerrain(terrainsize%, terrainsize%, 1.0, 8.0, 1.0, &000060, &000030, &000030, 10.0, 10.0, 0)
+PROCCreateTerrain(terrainsize%, terrainsize%, 1.0, 8.0, 1.0, &000060, &000030, &000030, 10.0, 10.0)
 terrain1%=OBJECT terrain%, 0, 30, -250, 270, 0, 0, 500, FILLEDWIREFRAME
 COLOURBG BLACK
 CLS

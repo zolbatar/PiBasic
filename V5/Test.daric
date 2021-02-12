@@ -1,7 +1,15 @@
-DIM h%(2,2)
-h%(0,0) = 1
-h%(0,1) = 2
-h%(1,0) = 3
-h%(1,1) = 4
+s%=4
+DIM height(s%,s%)
+FOR z% = 0 TO s%
+FOR x% = 0 TO s%
+height(x%, z%) = RND(1)
+NEXT
+NEXT
 
-PRINT h%(0,0),h%(0,1),h%(1,0),h%(1,1)
+FOR z% = 0 TO s%
+FOR x% = 0 TO s%
+PRINT height(x%, z%)
+NEXT
+NEXT
+END
+

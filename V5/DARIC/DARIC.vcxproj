@@ -80,15 +80,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\</OutDir>
-    <IntDir>$(Configuration)\</IntDir>
-    <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
+    <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
+    <OutDir>$(SolutionDir)..\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\</OutDir>
-    <IntDir>$(Configuration)\</IntDir>
     <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
+    <OutDir>$(SolutionDir)..\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -133,18 +131,27 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);WINDOWS;ANTLR4CPP_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\d_dud\Development\SDL2-2.0.14\include;C:\Users\d_dud\source\repos\antlr4\runtime\Cpp\runtime\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(HOMEPATH)\Development\SDL2-2.0.14\include;$(HOMEPATH)\source\repos\antlr4\runtime\Cpp\runtime\src</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64;C:\Users\d_dud\source\repos\antlr4\runtime\Cpp\lib\vs-2019\x64\Debug Static</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(HOMEPATH)\Development\SDL2-2.0.12\lib\x64;$(HOMEPATH)\source\repos\antlr4\runtime\Cpp\runtime\bin\vs-2019\x64\Debug DLL</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;antlr4-runtime.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
     </Link>
     <PreBuildEvent>
-      <Command>C:\Users\d_dud\source\repos\PiBasic\V5\build-grammar.bat</Command>
+      <Command>COPY "$(HOMEPATH)\source\repos\antlr4\runtime\Cpp\runtime\bin\vs-2019\x64\Debug DLL\antlr4-runtime.dll" $(ProjectDir)..</Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -154,7 +161,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);WINDOWS;ANTLR4CPP_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\d_dud\Development\SDL2-2.0.14\include;C:\Users\d_dud\source\repos\antlr4\runtime\Cpp\runtime\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(HOMEPATH)\Development\SDL2-2.0.14\include;$(HOMEPATH)\source\repos\antlr4\runtime\Cpp\runtime\src</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
@@ -163,14 +170,18 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\d_dud\Development\SDL2-2.0.12\lib\x64;C:\Users\d_dud\source\repos\antlr4\runtime\Cpp\lib\vs-2019\x64\Release Static</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(HOMEPATH)\Development\SDL2-2.0.12\lib\x64;$(HOMEPATH)\source\repos\antlr4\runtime\Cpp\runtime\bin\vs-2019\x64\Release DLL;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;antlr4-runtime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>true</Profile>
       <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PreBuildEvent>
-      <Command>C:\Users\d_dud\source\repos\PiBasic\V5\build-grammar.bat</Command>
+      <Command>COPY "$(HOMEPATH)\source\repos\antlr4\runtime\Cpp\runtime\bin\vs-2019\x64\Release DLL\antlr4-runtime.dll" $(ProjectDir)..</Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\compiler\compiler.cpp" />

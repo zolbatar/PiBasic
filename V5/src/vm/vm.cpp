@@ -565,6 +565,9 @@ void VM::opcode_PRINT_SPC()
 
 VM_INT VM::array_1d_get_index(Boxed* var, VM_INT index)
 {
+    if (var->array_definition.size() < 1) {
+        error("Invalid array or array index");
+    }
     auto size = var->array_definition[0];
     if (index < 0 || index > size)
         error("Invalid array or array index");
@@ -573,6 +576,9 @@ VM_INT VM::array_1d_get_index(Boxed* var, VM_INT index)
 
 VM_INT VM::array_2d_get_index(Boxed* var, VM_INT index2, VM_INT index1)
 {
+    if (var->array_definition.size() < 2) {
+        error("Invalid array or array index");
+    }
     auto size = var->array_definition[0] * var->array_definition[1];
     VM_INT index = index2 * var->array_definition[0] + index1;
     if (index < 0 || index > size)
@@ -3199,7 +3205,7 @@ std::string VM::run()
     } catch (const DARICException& ex) {
         ex.pretty_print();
         return "";
-    } catch (const std::runtime_error& ex) {
+    } catch (const std::exception& ex) {
         g_env.graphics.print_console(ex.what());
         return "";
     }
