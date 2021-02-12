@@ -6,27 +6,10 @@
 #include <stdlib.h>
 
 extern bool debugger_open;
+extern std::vector<std::string> concat_file_cache;
 
 void Debugger::debugger_disassembly()
 {
-    // Load all source files
-    std::vector<std::vector<std::string>> line_cache;
-    char line[1024];
-    auto files = g_vm->get_filenames();
-    for (auto it = files.begin(); it != files.end(); ++it) {
-        std::vector<std::string> ll;
-        FILE* fp = fopen((*it).c_str(), "r");
-        while (true) {
-            if (fgets(line, 1024, fp) != NULL) {
-                ll.push_back(std::string(line));
-            } else {
-                fclose(fp);
-                line_cache.push_back(std::move(ll));
-                break;
-            }
-        }
-    }
-
     // Get disassembly
     auto dis = disassemble_entire_file();
 
@@ -40,23 +23,19 @@ void Debugger::debugger_disassembly()
             if (pos >= 0 && pos < g_vm->helper_bytecodes().get_size()) {
                 // Show current file and PC
                 auto cur_bc = g_vm->helper_bytecodes().get_bytecode(pos);
+                auto flp = file_and_line_lookup(cur_bc.line_number);
                 g_env.graphics.colour(128, 128, 128);
                 g_env.graphics.print_text(disassembly_font, "File: ", -1, -1);
                 g_env.graphics.colour(255, 255, 255);
-                g_env.graphics.print_text(disassembly_font, cur_bc.filename(), -1, -1);
+                g_env.graphics.print_text(disassembly_font, flp.filename, -1, -1);
                 g_env.graphics.print_text(disassembly_font, "\r", -1, -1);
                 g_env.graphics.colour(128, 128, 128);
                 g_env.graphics.print_text(disassembly_font, "Line: ", -1, -1);
                 g_env.graphics.colour(255, 255, 255);
-                g_env.graphics.print_text(disassembly_font, std::to_string(cur_bc.line_number), -1, -1);
+                g_env.graphics.print_text(disassembly_font, std::to_string(flp.line), -1, -1);
                 g_env.graphics.print_text(disassembly_font, " ", -1, -1);
                 g_env.graphics.colour(255, 255, 255);
-                auto ff = line_cache[cur_bc.file_number];
-                auto p = cur_bc.line_number - 1;
-                if (p >= ff.size()) {
-                    p = static_cast<int>(ff.size()) - 1;
-                }
-                g_env.graphics.print_text(disassembly_font, ff[p], -1, -1);
+                g_env.graphics.print_text(disassembly_font, concat_file_cache[cur_bc.line_number - 1], -1, -1);
                 g_env.graphics.print_text(disassembly_font, "\r\r", -1, -1);
 
                 // Bytecode output

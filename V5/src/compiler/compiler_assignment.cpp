@@ -3,9 +3,9 @@
 
 antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     for (auto i = 0; i < context->varDecl().size(); i++) {
 
         // Get variable name and type

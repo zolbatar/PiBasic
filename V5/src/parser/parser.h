@@ -9,7 +9,7 @@ class MyParser {
 public:
     MyParser(std::string filename)
         : filename(filename) {};
-    void parse_and_compile(Compiler* compiler);
+    void parse_and_compile(Compiler* compiler, bool interactive);
 
 private:
     std::string filename;

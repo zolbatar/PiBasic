@@ -1,5 +1,3 @@
-w%=SCREENWIDTH,h%=SCREENHEIGHT
-CLS
 INSTALL "SetupGraphics"
 
 DEF FNRandomColour%()

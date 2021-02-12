@@ -23,8 +23,8 @@ For Y%=0 To MAXY%
 		c% = COLS - 1 - Int(IT / (ITERS / (COLS - 1)))
 		Colour c%, c%, c%
 		Plot X%,Y%	
-	    IF INKEY(0) <> -1 CHAIN "Welcome"
 	Next
+	IF INKEY(0) <> -1 CHAIN "Welcome"
 Next
 INKEY(1000)
 CHAIN "Welcome"

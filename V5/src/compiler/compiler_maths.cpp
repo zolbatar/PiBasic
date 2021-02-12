@@ -2,9 +2,9 @@
 
 antlrcpp::Any Compiler::visitStmtOperatorEqual(DARICParser::StmtOperatorEqualContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     state = CompilerState::ASSIGNMENT;
     visit(context->varDecl());
     state = CompilerState::NOSTATE;
@@ -41,9 +41,9 @@ antlrcpp::Any Compiler::visitStmtOperatorEqual(DARICParser::StmtOperatorEqualCon
 
 antlrcpp::Any Compiler::visitNumExprHat(DARICParser::NumExprHatContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -54,9 +54,9 @@ antlrcpp::Any Compiler::visitNumExprHat(DARICParser::NumExprHatContext* context)
 
 antlrcpp::Any Compiler::visitNumExprUnary(DARICParser::NumExprUnaryContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr());
     insert_bytecode(Bytecodes::UNARY, peek_type());
     return NULL;
@@ -64,9 +64,9 @@ antlrcpp::Any Compiler::visitNumExprUnary(DARICParser::NumExprUnaryContext* cont
 
 antlrcpp::Any Compiler::visitNumExprMultiplyDivide(DARICParser::NumExprMultiplyDivideContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -83,9 +83,9 @@ antlrcpp::Any Compiler::visitNumExprMultiplyDivide(DARICParser::NumExprMultiplyD
 
 antlrcpp::Any Compiler::visitNumExprDIVMOD(DARICParser::NumExprDIVMODContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -116,9 +116,9 @@ antlrcpp::Any Compiler::visitNumExprDIVMOD(DARICParser::NumExprDIVMODContext* co
 
 antlrcpp::Any Compiler::visitNumExprAddSubtract(DARICParser::NumExprAddSubtractContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -133,9 +133,9 @@ antlrcpp::Any Compiler::visitNumExprAddSubtract(DARICParser::NumExprAddSubtractC
 
 antlrcpp::Any Compiler::visitNumExprSHLSHR(DARICParser::NumExprSHLSHRContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);

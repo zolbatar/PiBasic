@@ -5,6 +5,7 @@
 #include "../vm/vm.h"
 #include "antlr4-runtime.h"
 #include "custom_types.h"
+#include "file_lookup.h"
 
 enum class CompilerState {
     NOSTATE,
@@ -69,7 +70,6 @@ public:
 private:
     friend class Typelist;
     VM* vm;
-    std::string filename;
     CompilerState state = CompilerState::NOSTATE;
     CompilerPhase phase = CompilerPhase::LOOKAHEAD;
 
@@ -177,7 +177,8 @@ private:
         type_list.pop();
         return var_type;
     }
-    Type peek_type() { 
+    Type peek_type()
+    {
         if (type_list.empty()) {
             error("Type stack empty - this is normally an internal DARIC error");
         }
@@ -188,10 +189,10 @@ private:
     UINT32 last_array_num_dimensions = 0;
 
     // Create bytecode
-    void insert_instruction(Bytecodes bc, Type type, UINT32 data) { vm->helper_bytecodes().insert_instruction(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, type, data); }
-    void insert_instruction_notype(Bytecodes bc, UINT32 data) { vm->helper_bytecodes().insert_instruction(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, Type::NOTYPE, data); }
-    void insert_bytecode(Bytecodes bc, Type type) { vm->helper_bytecodes().insert_bytecode(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, type); }
-    void insert_bytecode_notype(Bytecodes bc) { vm->helper_bytecodes().insert_bytecode(line_number, file_number, char_position, phase == CompilerPhase::COMPILE, bc, Type::NOTYPE); }
+    void insert_instruction(Bytecodes bc, Type type, UINT32 data) { vm->helper_bytecodes().insert_instruction(line_number, char_position, phase == CompilerPhase::COMPILE, bc, type, data); }
+    void insert_instruction_notype(Bytecodes bc, UINT32 data) { vm->helper_bytecodes().insert_instruction(line_number, char_position, phase == CompilerPhase::COMPILE, bc, Type::NOTYPE, data); }
+    void insert_bytecode(Bytecodes bc, Type type) { vm->helper_bytecodes().insert_bytecode(line_number, char_position, phase == CompilerPhase::COMPILE, bc, type); }
+    void insert_bytecode_notype(Bytecodes bc) { vm->helper_bytecodes().insert_bytecode(line_number, char_position, phase == CompilerPhase::COMPILE, bc, Type::NOTYPE); }
 
     // 3D types
     void setup_3d_types();
@@ -206,7 +207,8 @@ private:
     // Error handling
     void error(std::string msg)
     {
-        throw DARICException(ErrorLocation::COMPILER, filename, line_number, char_position, msg);
+        auto flp = file_and_line_lookup(line_number);
+        throw DARICException(ErrorLocation::COMPILER, flp.filename, flp.line, char_position, msg);
     }
 
 protected:
@@ -308,6 +310,7 @@ protected:
     antlrcpp::Any visitStmtDEFFN(DARICParser::StmtDEFFNContext* context);
     antlrcpp::Any visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* context);
     antlrcpp::Any visitStmtRETURN(DARICParser::StmtRETURNContext* context);
+    antlrcpp::Any visitFunctionVar(DARICParser::FunctionVarContext* context);
     antlrcpp::Any visitFunctionVarList(DARICParser::FunctionVarListContext* context);
     antlrcpp::Any visitFunctionParList(DARICParser::FunctionParListContext* context);
     antlrcpp::Any visitFnName(DARICParser::FnNameContext* context);
@@ -335,6 +338,11 @@ protected:
     antlrcpp::Any visitStrVar(DARICParser::StrVarContext* context);
     antlrcpp::Any visitTypeVarType(DARICParser::TypeVarTypeContext* context);
     antlrcpp::Any visitVarList(DARICParser::VarListContext* context);
+
+    antlrcpp::Any visitNumExprNumber(DARICParser::NumExprNumberContext* context);
+    antlrcpp::Any visitNumExprVar(DARICParser::NumExprVarContext* context);
+    antlrcpp::Any visitNumExprFunc(DARICParser::NumExprFuncContext* context);
+    antlrcpp::Any visitNumExprNested(DARICParser::NumExprNestedContext* context);
 
     antlrcpp::Any visitNumVarFloat(DARICParser::NumVarFloatContext* context);
     antlrcpp::Any visitNumVarFloatArray(DARICParser::NumVarFloatArrayContext* context);
@@ -435,11 +443,7 @@ protected:
     antlrcpp::Any visitNumFuncOPENOUT(DARICParser::NumFuncOPENOUTContext* context);
     antlrcpp::Any visitNumFuncOPENUP(DARICParser::NumFuncOPENUPContext* context);
     antlrcpp::Any visitNumFuncPTR(DARICParser::NumFuncPTRContext* context);
-
-    antlrcpp::Any visitNumExprNumber(DARICParser::NumExprNumberContext* context);
-    antlrcpp::Any visitNumExprVar(DARICParser::NumExprVarContext* context);
-    antlrcpp::Any visitNumExprFunc(DARICParser::NumExprFuncContext* context);
-    antlrcpp::Any visitNumExprNested(DARICParser::NumExprNestedContext* context);
+    antlrcpp::Any visitStrFuncGETSH(DARICParser::StrFuncGETSHContext* context);
 
     /* Numeric functions taking string */
     antlrcpp::Any visitNumFuncASC(DARICParser::NumFuncASCContext* context);

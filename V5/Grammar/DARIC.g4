@@ -43,12 +43,12 @@ coreStmt
     | stmtFORIN
     | stmtGOTO
     | stmtGOSUB
-    | stmtCallFN
     | stmtIF
     | stmtIFMultiline
     | stmtINSTALL
     | stmtLET
     | stmtOSCLI
+    | stmtCallFN
     | stmtCallPROC
     | stmtREAD
     | stmtRESTORE
@@ -61,7 +61,7 @@ coreStmt
     ;
 
 stmtBREAKPOINT:     BREAKPOINT ;
-stmtCASE:           CASE expr OF NEWLINE when+ (OTHERWISE body)? ENDCASE ; 
+stmtCASE:           CASE expr OF NEWLINE when+ (OTHERWISE body)? linenumber? ENDCASE ; 
 stmtCHAIN:          CHAIN strExpr ;
 stmtDATA:           DATA literal (COMMA literal)* ;
 stmtDIM:            LOCAL? DIM varDeclWithDimension (COMMA varDeclWithDimension)* ;
@@ -86,7 +86,7 @@ stmtSWAP:           SWAP justVar COMMA justVar ;
 stmtTRACEON:        TRACEON ;
 stmtTRACEOFF:       TRACEOFF ;
 stmtTYPE:           TYPE varName LPAREN justVar (COMMA justVar)* RPAREN ;
-stmtREPEAT:         REPEAT body UNTIL expr ;
+stmtREPEAT:         REPEAT body linenumber? UNTIL expr ;
 stmtWHILE:          WHILE expr body ENDWHILE ;
 
 keyMouseStmt
@@ -126,7 +126,7 @@ ioStmt
 
 stmtBPUTH:      BPUTH numExpr COMMA numExpr ;
 stmtBGETH:      BGETH numExpr ;
-stmtPTRH:       PTRH numExpr EQ numExpr ;
+stmtPTRH:       PTRH LPAREN numExpr RPAREN EQ numExpr ;
 stmtCLOSEH:     CLOSEH numExpr ;
 stmtLISTFILES:  LOCAL? varNameString LPAREN RPAREN EQ LISTFILES LPAREN strExpr RPAREN ;
 
@@ -194,7 +194,7 @@ stmtSCALE:          SCALE numExpr COMMA numExpr ;
 stmtDELETEOBJECT:   DELETEOBJECT numExpr ;
 
 when
-    : WHEN expr (COMMA expr)* COLON body
+    : linenumber? WHEN expr (COMMA expr)* COLON body
     ;
 
 fnName
@@ -277,7 +277,8 @@ varList
     : varDecl (COMMA varDecl)*
     ;
 
-functionVarList:        RETURN? justVar (COMMA RETURN? justVar)* ;
+functionVar:            RETURN? justVar ;
+functionVarList:        functionVar (COMMA functionVar)* ;
 functionParList:        expr (COMMA expr)* ;
 
 exprList
@@ -335,6 +336,7 @@ strFunc
     | STRINGS LPAREN numExpr COMMA strExpr RPAREN               #strFuncSTRINGS
     | INKEYS numExpr                                            #strFuncINKEYS
     | GETS                                                      #strFuncGETS
+    | GETSH numExpr                                             #strFuncGETSH
     ;
 
 string
@@ -394,7 +396,7 @@ numFunc
     | CREATEOBJECT  numExpr COMMA numExpr COMMA numExpr COMMA 
                     numExpr COMMA numExpr COMMA numExpr COMMA 
                     numExpr COMMA numExpr COMMA 
-                    (SOLID | WIREFRAME | SHADED | FILLEDWIREFRAME)  #numFuncOBJECT
+                    (numExpr | SOLID | WIREFRAME | SHADED | FILLEDWIREFRAME)  #numFuncOBJECT
 
     /* I/O */
     | BGETH numExpr                         #numFuncBGETH
@@ -694,10 +696,10 @@ SEMICOLON       : ';' ;
 UNDERSCORE      : '_' ;
 COMMENT         : REM ~ [\r\n]* ;
 STRINGLITERAL   : '"' ~ ["\r\n]* '"' ;
-PROC_NAME         : PROC NAME ;
-FN_INTEGER        : FN NAME '%' ;
-FN_FLOAT          : FN NAME ;
-FN_STRING         : FN NAME '$' ;
+PROC_NAME         : PROC PNAME ;
+FN_INTEGER        : FN PNAME '%' ;
+FN_FLOAT          : FN PNAME ;
+FN_STRING         : FN PNAME '$' ;
 VARIABLE_FLOAT    : NAME ;
 VARIABLE_INTEGER  : NAME '%' ;
 VARIABLE_STRING   : NAME '$' ;
@@ -708,6 +710,7 @@ NUMBER          : DIGIT+ ;
 FLOAT           : DIGIT* '.' DIGIT* ([e|E] [0-9]+ )* ;
 
 fragment NAME   : ALPHA (ALPHA|DIGIT|'_')* ;
+fragment PNAME  : (ALPHA|DIGIT|'_')+ ;
 fragment ALPHA  : [a-zA-Z] ;
 fragment DIGIT  : [0-9] ;
 

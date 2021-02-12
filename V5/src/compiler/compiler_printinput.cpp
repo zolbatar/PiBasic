@@ -2,9 +2,9 @@
 
 antlrcpp::Any Compiler::visitStmtPRINT(DARICParser::StmtPRINTContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     print_semicolon_active = false;
     print_hex = false;
     print_justify = true;
@@ -18,17 +18,17 @@ antlrcpp::Any Compiler::visitStmtPRINT(DARICParser::StmtPRINTContext* context)
 
 antlrcpp::Any Compiler::visitStmtINPUT(DARICParser::StmtINPUTContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     return NULL;
 }
 
 antlrcpp::Any Compiler::visitPrintList(DARICParser::PrintListContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     if (context->printListTick() != NULL) {
         visit(context->printListTick());
     }
@@ -51,9 +51,9 @@ antlrcpp::Any Compiler::visitPrintList(DARICParser::PrintListContext* context)
 
 antlrcpp::Any Compiler::visitPrintListSeparator(DARICParser::PrintListSeparatorContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     if (context->COMMA() != NULL) {
         print_justify = true;
         print_hex = false;
@@ -70,17 +70,17 @@ antlrcpp::Any Compiler::visitPrintListSeparator(DARICParser::PrintListSeparatorC
 
 antlrcpp::Any Compiler::visitPrintListItem(DARICParser::PrintListItemContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     return visitChildren(context);
 }
 
 antlrcpp::Any Compiler::visitPrintListExpr(DARICParser::PrintListExprContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visitChildren(context);
     if (context->TILDE() != NULL) {
         print_hex = true;
@@ -98,9 +98,9 @@ antlrcpp::Any Compiler::visitPrintListExpr(DARICParser::PrintListExprContext* co
 
 antlrcpp::Any Compiler::visitPrintListTick(DARICParser::PrintListTickContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     auto n = context->TICK().size();
     for (auto i = 0; i < n; i++) {
         insert_bytecode_notype(Bytecodes::PRINT_NL);
@@ -111,9 +111,9 @@ antlrcpp::Any Compiler::visitPrintListTick(DARICParser::PrintListTickContext* co
 
 antlrcpp::Any Compiler::visitPrintListSPCP(DARICParser::PrintListSPCPContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     print_semicolon_active = false;
     visit(context->numExpr());
     ensure_stack_is_integer();
@@ -124,9 +124,9 @@ antlrcpp::Any Compiler::visitPrintListSPCP(DARICParser::PrintListSPCPContext* co
 
 antlrcpp::Any Compiler::visitPrintListSPC(DARICParser::PrintListSPCContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     print_semicolon_active = false;
     visit(context->numExpr());
     ensure_stack_is_integer();

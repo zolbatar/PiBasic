@@ -78,12 +78,12 @@ public:
     RuleLiteral = 77, RuleVar = 78, RuleTypeVar = 79, RuleNumVar = 80, RuleStrVar = 81, 
     RuleJustVar = 82, RuleJustNumberVar = 83, RuleVarName = 84, RuleVarNameInteger = 85, 
     RuleVarNameString = 86, RuleVarNameType = 87, RuleVarDecl = 88, RuleVarDeclWithDimension = 89, 
-    RuleVarList = 90, RuleFunctionVarList = 91, RuleFunctionParList = 92, 
-    RuleExprList = 93, RulePrintListItem = 94, RulePrintListTick = 95, RulePrintListSeparator = 96, 
-    RulePrintList = 97, RuleExpr = 98, RuleNumber = 99, RuleNumberInteger = 100, 
-    RuleNumberHex = 101, RuleNumberBinary = 102, RuleNumberFloat = 103, 
-    RuleStrFunc = 104, RuleString = 105, RuleStrExpr = 106, RuleNumFunc = 107, 
-    RuleNumExpr = 108, RuleNumColours = 109, RuleDefaultFonts = 110
+    RuleVarList = 90, RuleFunctionVar = 91, RuleFunctionVarList = 92, RuleFunctionParList = 93, 
+    RuleExprList = 94, RulePrintListItem = 95, RulePrintListTick = 96, RulePrintListSeparator = 97, 
+    RulePrintList = 98, RuleExpr = 99, RuleNumber = 100, RuleNumberInteger = 101, 
+    RuleNumberHex = 102, RuleNumberBinary = 103, RuleNumberFloat = 104, 
+    RuleStrFunc = 105, RuleString = 106, RuleStrExpr = 107, RuleNumFunc = 108, 
+    RuleNumExpr = 109, RuleNumColours = 110, RuleDefaultFonts = 111
   };
 
   explicit DARICParser(antlr4::TokenStream *input);
@@ -187,6 +187,7 @@ public:
   class VarDeclContext;
   class VarDeclWithDimensionContext;
   class VarListContext;
+  class FunctionVarContext;
   class FunctionVarListContext;
   class FunctionParListContext;
   class ExprListContext;
@@ -333,12 +334,12 @@ public:
     StmtFORINContext *stmtFORIN();
     StmtGOTOContext *stmtGOTO();
     StmtGOSUBContext *stmtGOSUB();
-    StmtCallFNContext *stmtCallFN();
     StmtIFContext *stmtIF();
     StmtIFMultilineContext *stmtIFMultiline();
     StmtINSTALLContext *stmtINSTALL();
     StmtLETContext *stmtLET();
     StmtOSCLIContext *stmtOSCLI();
+    StmtCallFNContext *stmtCallFN();
     StmtCallPROCContext *stmtCallPROC();
     StmtREADContext *stmtREAD();
     StmtRESTOREContext *stmtRESTORE();
@@ -382,6 +383,7 @@ public:
     WhenContext* when(size_t i);
     antlr4::tree::TerminalNode *OTHERWISE();
     BodyContext *body();
+    LinenumberContext *linenumber();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -801,6 +803,7 @@ public:
     BodyContext *body();
     antlr4::tree::TerminalNode *UNTIL();
     ExprContext *expr();
+    LinenumberContext *linenumber();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -1021,8 +1024,10 @@ public:
     StmtPTRHContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *PTRH();
+    antlr4::tree::TerminalNode *LPAREN();
     std::vector<NumExprContext *> numExpr();
     NumExprContext* numExpr(size_t i);
+    antlr4::tree::TerminalNode *RPAREN();
     antlr4::tree::TerminalNode *EQ();
 
 
@@ -1491,6 +1496,7 @@ public:
     ExprContext* expr(size_t i);
     antlr4::tree::TerminalNode *COLON();
     BodyContext *body();
+    LinenumberContext *linenumber();
     std::vector<antlr4::tree::TerminalNode *> COMMA();
     antlr4::tree::TerminalNode* COMMA(size_t i);
 
@@ -1978,14 +1984,26 @@ public:
 
   VarListContext* varList();
 
+  class  FunctionVarContext : public antlr4::ParserRuleContext {
+  public:
+    FunctionVarContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    JustVarContext *justVar();
+    antlr4::tree::TerminalNode *RETURN();
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  FunctionVarContext* functionVar();
+
   class  FunctionVarListContext : public antlr4::ParserRuleContext {
   public:
     FunctionVarListContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    std::vector<JustVarContext *> justVar();
-    JustVarContext* justVar(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> RETURN();
-    antlr4::tree::TerminalNode* RETURN(size_t i);
+    std::vector<FunctionVarContext *> functionVar();
+    FunctionVarContext* functionVar(size_t i);
     std::vector<antlr4::tree::TerminalNode *> COMMA();
     antlr4::tree::TerminalNode* COMMA(size_t i);
 
@@ -2355,6 +2373,16 @@ public:
     antlr4::tree::TerminalNode *COMMA();
     StrExprContext *strExpr();
     antlr4::tree::TerminalNode *RPAREN();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StrFuncGETSHContext : public StrFuncContext {
+  public:
+    StrFuncGETSHContext(StrFuncContext *ctx);
+
+    antlr4::tree::TerminalNode *GETSH();
+    NumExprContext *numExpr();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };

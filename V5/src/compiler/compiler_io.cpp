@@ -2,9 +2,9 @@
 
 antlrcpp::Any Compiler::visitStmtBPUTH(DARICParser::StmtBPUTHContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr(0));
     ensure_stack_is_integer();
     stack_pop();
@@ -17,9 +17,9 @@ antlrcpp::Any Compiler::visitStmtBPUTH(DARICParser::StmtBPUTHContext* context)
 
 antlrcpp::Any Compiler::visitStmtBGETH(DARICParser::StmtBGETHContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
@@ -30,9 +30,9 @@ antlrcpp::Any Compiler::visitStmtBGETH(DARICParser::StmtBGETHContext* context)
 
 antlrcpp::Any Compiler::visitStmtPTRH(DARICParser::StmtPTRHContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr(0));
     ensure_stack_is_integer();
     stack_pop();
@@ -45,9 +45,9 @@ antlrcpp::Any Compiler::visitStmtPTRH(DARICParser::StmtPTRHContext* context)
 
 antlrcpp::Any Compiler::visitStmtCLOSEH(DARICParser::StmtCLOSEHContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
@@ -57,9 +57,9 @@ antlrcpp::Any Compiler::visitStmtCLOSEH(DARICParser::StmtCLOSEHContext* context)
 
 antlrcpp::Any Compiler::visitStmtLISTFILES(DARICParser::StmtLISTFILESContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->varNameString());
     if (context->LOCAL() == NULL) {
         find_or_create_variable(VariableScope::GLOBAL);
@@ -75,9 +75,9 @@ antlrcpp::Any Compiler::visitStmtLISTFILES(DARICParser::StmtLISTFILESContext* co
 
 antlrcpp::Any Compiler::visitNumFuncBGETH(DARICParser::NumFuncBGETHContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
@@ -86,11 +86,24 @@ antlrcpp::Any Compiler::visitNumFuncBGETH(DARICParser::NumFuncBGETHContext* cont
     return NULL;
 }
 
-antlrcpp::Any Compiler::visitNumFuncEOFH(DARICParser::NumFuncEOFHContext* context)
+antlrcpp::Any Compiler::visitStrFuncGETSH(DARICParser::StrFuncGETSHContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
+    visit(context->numExpr());
+    ensure_stack_is_integer();
+    stack_pop();
+    insert_bytecode_notype(Bytecodes::GETSH);
+    stack_push(Type::STRING);
+    return NULL;
+}
+
+antlrcpp::Any Compiler::visitNumFuncEOFH(DARICParser::NumFuncEOFHContext* context)
+{
     set_pos(context->start);
+    if (phase == CompilerPhase::LOOKAHEAD)
+        return NULL;
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
@@ -101,9 +114,9 @@ antlrcpp::Any Compiler::visitNumFuncEOFH(DARICParser::NumFuncEOFHContext* contex
 
 antlrcpp::Any Compiler::visitNumFuncOPENIN(DARICParser::NumFuncOPENINContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->strExpr());
     ensure_stack_is_string();
     stack_pop();
@@ -114,9 +127,9 @@ antlrcpp::Any Compiler::visitNumFuncOPENIN(DARICParser::NumFuncOPENINContext* co
 
 antlrcpp::Any Compiler::visitNumFuncOPENOUT(DARICParser::NumFuncOPENOUTContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->strExpr());
     ensure_stack_is_string();
     stack_pop();
@@ -127,9 +140,9 @@ antlrcpp::Any Compiler::visitNumFuncOPENOUT(DARICParser::NumFuncOPENOUTContext* 
 
 antlrcpp::Any Compiler::visitNumFuncOPENUP(DARICParser::NumFuncOPENUPContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->strExpr());
     ensure_stack_is_string();
     stack_pop();
@@ -140,9 +153,9 @@ antlrcpp::Any Compiler::visitNumFuncOPENUP(DARICParser::NumFuncOPENUPContext* co
 
 antlrcpp::Any Compiler::visitNumFuncPTR(DARICParser::NumFuncPTRContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();

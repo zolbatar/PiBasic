@@ -2,9 +2,9 @@
 
 antlrcpp::Any Compiler::visitStmtFORIN(DARICParser::StmtFORINContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
 
     // Get array variable and push onto stack
     visit(context->justVar(1));
@@ -62,9 +62,9 @@ antlrcpp::Any Compiler::visitStmtFORIN(DARICParser::StmtFORINContext* context)
 
 antlrcpp::Any Compiler::visitStmtFOR(DARICParser::StmtFORContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
 
     // Get variable
     visit(context->justNumberVar());
@@ -193,9 +193,9 @@ antlrcpp::Any Compiler::visitStmtFOR(DARICParser::StmtFORContext* context)
 
 antlrcpp::Any Compiler::visitStmtREPEAT(DARICParser::StmtREPEATContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
 
     insert_bytecode_notype(Bytecodes::REPEAT);
 
@@ -213,9 +213,9 @@ antlrcpp::Any Compiler::visitStmtREPEAT(DARICParser::StmtREPEATContext* context)
 
 antlrcpp::Any Compiler::visitStmtWHILE(DARICParser::StmtWHILEContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
 
     UINT32 start_pc = vm->helper_bytecodes().pc;
     IfStatement s;

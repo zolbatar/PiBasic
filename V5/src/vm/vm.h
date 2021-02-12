@@ -18,6 +18,7 @@
 #include <vector>
 
 const int GosubCallFlag = 1 << 31;
+extern LineFileLookup file_and_line_lookup(UINT32 line_number);
 
 class VM {
 public:
@@ -51,11 +52,13 @@ private:
     // Error handling
     void error(std::string err)
     {
-        throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, err);
+        auto flp = file_and_line_lookup(bc.line_number);
+        throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, err);
     }
     void opcode_type_error()
     {
-        throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, "Invalid type for opcode");
+        auto flp = file_and_line_lookup(bc.line_number);
+        throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, "Invalid type for opcode");
     }
 
     std::stack<UINT32> repeats; // Repeat addresses
@@ -103,6 +106,7 @@ private:
     void opcode_LOAD_FIELD_ARRAY();
     void opcode_STORE_FIELD_ARRAY();
     void opcode_NEW_TYPE();
+    void opcode_NEW_TYPE_ARRAY();
 
     // Maths
     void opcode_UNARY();

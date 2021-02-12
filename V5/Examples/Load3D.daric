@@ -1,4 +1,4 @@
-INSTALL "SetupGraphicsBanked"
+INSTALL "SetupGraphics"
 INSTALL "Menus"
 PROCTitle("Select a 3D Model to Load")
 PROCLabel("1", "911 GT2 Rim", ms%+(0*ys%))
@@ -8,10 +8,10 @@ PROCLabel("Q", "Back to Welcome", ms%+(5*ys%))
 FLIP
 A$=GET$
 CASE A$ OF
-	WHEN "1" filename$="911-gt2-rim.obj"
-	WHEN "2" filename$="MaleHead.obj"
-	WHEN "3" filename$="Teapot.obj"
-    WHEN "Q","q" CHAIN "Welcome"
+	WHEN "1":filename$="911-gt2-rim.obj"
+	WHEN "2":filename$="MaleHead.obj"
+	WHEN "3":filename$="Teapot.obj"
+    WHEN "Q","q":CHAIN "Welcome"
     OTHERWISE CHAIN "Welcome"
 ENDCASE
 
@@ -25,19 +25,22 @@ PROCLabel("Q", "Back to Welcome", ms%+(6*ys%))
 FLIP
 B$=GET$
 CASE B$ OF
-	WHEN "1","2","3","4" obj%=FNLoadOBJFile%(filename$,B$)
-    WHEN "Q","q" CHAIN "Welcome"
+	WHEN "1","2","3","4":obj%=FNLoadOBJFile%(filename$,B$)
+    WHEN "Q","q":CHAIN "Welcome"
     OTHERWISE CHAIN "Welcome"
 ENDCASE
 
+GRAPHICS BANKED
+CLS
+FLIP
 SHOWFPS
 FOR I=0 TO 360 STEP 1
 	CLS
 	ROTATE obj%, 0, I, 0
     COLOUR &6060B0
 	RENDER
-	FLIP	
-    IF INKEY(0) <> -1 
+	FLIP
+    IF INKEY(0) <> -1 THEN
         DELETEOBJECT obj%
         CHAIN "Welcome"
     ENDIF
@@ -57,7 +60,7 @@ DEF FNLoadOBJFile%(filename$, type$)
     REM First stage is to parse the file and work out how many vertices and faces we have
     line$=""
     REPEAT
-        line$=GET$#file%
+        line$=GET$# file%
         PROCProcessOBJLine(line$, number_of_vertices%, number_of_faces%)
     UNTIL EOF#file%
     PRINT "Vertices: ";number_of_vertices%;", Faces: ";number_of_faces%
@@ -67,7 +70,7 @@ DEF FNLoadOBJFile%(filename$, type$)
     REM Normalise size to 1
     PRINT "Normalising size to 1.0...";
     line$=""
-    PTR#file%=0
+    PTR#(file%)=0
     min=1000000:max=-1000000
     REPEAT
         line$=GET$#file%
@@ -79,7 +82,7 @@ DEF FNLoadOBJFile%(filename$, type$)
     PRINT "Building vertices..."
     index%=0
     line$=""
-    PTR#file%=0
+    PTR#(file%)=0
     colour%=&404080
     IF type$="4" colour%=&202040
     REPEAT
@@ -91,7 +94,7 @@ DEF FNLoadOBJFile%(filename$, type$)
     PRINT "Building faces..."
     index%=0
     line$=""
-    PTR#file%=0
+    PTR#(file%)=0
     REPEAT
         line$=GET$#file%
         PROCProcessOBJFace(line$, index%, colour%)
@@ -102,24 +105,24 @@ DEF FNLoadOBJFile%(filename$, type$)
 	obj_shape%=SHAPE V!, F!
     sh%=0
     CASE type$ OF
-        WHEN "2" sh%=1
-        WHEN "3" sh%=2
-        WHEN "4" sh%=3
+        WHEN "2":sh%=1
+        WHEN "3":sh%=2
+        WHEN "4":sh%=3
     ENDCASE
     CASE A$ OF
-        WHEN "1" obj%=OBJECT obj_shape%, 0, 0, -150, 0, 0, 0, 40, sh%
-        WHEN "2" obj%=OBJECT obj_shape%, 0, -20, -150, 0, 0, 0, 25, sh%
-        WHEN "3" obj%=OBJECT obj_shape%, 0, 20, -100, 0, 0, 0, 50, sh%
+        WHEN "1":obj%=OBJECT obj_shape%, 0, 0, -150, 0, 0, 0, 40, sh%
+        WHEN "2":obj%=OBJECT obj_shape%, 0, -20, -150, 0, 0, 0, 25, sh%
+        WHEN "3":obj%=OBJECT obj_shape%, 0, 20, -100, 0, 0, 0, 50, sh%
     ENDCASE
     RETURN obj%
 ENDFN
 
 DEF PROCProcessOBJLine(line$, RETURN number_of_vertices%, RETURN number_of_faces%)
     LOCAL s1$="",s2$="",s3$="",s4$=""
-    IF LEN(line$) < 1 THEN RETURN
+    IF LEN(line$) < 1 RETURN
     CASE LEFT$(line$, 1) OF
-        WHEN "v" number_of_vertices%=number_of_vertices%+1
-        WHEN "f" PROCGet4OBJValues(line$, s1$, s2$, s3$, s4$):IF LEN(s4$)=0 THEN number_of_faces%=number_of_faces%+1 ELSE number_of_faces%=number_of_faces%+2
+        WHEN "v":number_of_vertices%=number_of_vertices%+1
+        WHEN "f":PROCGet4OBJValues(line$, s1$, s2$, s3$, s4$):IF LEN(s4$)=0 number_of_faces%=number_of_faces%+1 ELSE number_of_faces%=number_of_faces%+2
     ENDCASE
 ENDPROC
 
@@ -139,7 +142,7 @@ DEF PROCGet4OBJValues(line$, RETURN s1$, RETURN s2$, RETURN s3$, RETURN s4$)
     p3%=INSTR(line$, " ", p2% + 1)
     p4%=INSTR(line$, " ", p3% + 1)
     p5%=LEN(line$)
-    IF p4%=0 THEN p4%=p5%:p5%=0
+    IF p4%=0 p4%=p5%:p5%=0
     s1$=MID$(line$,p1%+1,p2% - p1%-1)
     s2$=MID$(line$,p2%+1,p3% - p2%-1)
     IF p5%=0 THEN 
@@ -152,27 +155,27 @@ DEF PROCGet4OBJValues(line$, RETURN s1$, RETURN s2$, RETURN s3$, RETURN s4$)
 ENDPROC
 
 DEF PROCNormaliseSize(line$, RETURN min, RETURN max)
-    IF LEN(line$) < 1 THEN RETURN
-    IF LEFT$(line$, 2) <> "v " THEN RETURN
+    IF LEN(line$) < 1 RETURN
+    IF LEFT$(line$, 2) <> "v " RETURN
     s1$="":s2$="":s3$=""
     PROCGet3OBJValues(line$, s1$, s2$, s3$)
     x=VAL(s1$)
     y=VAL(s2$)
     z=VAL(s3$)
    
-    IF x < min THEN min = x
-    IF y < min THEN min = y
-    IF z < min THEN min = z
+    IF x < min:min = x
+    IF y < min:min = y
+    IF z < min:min = z
   
-    IF x > max THEN max = x
-    IF y > max THEN max = y
-    IF z > max THEN max = z
+    IF x > max:max = x
+    IF y > max:max = y
+    IF z > max:max = z
 ENDPROC
 
 DEF PROCProcessOBJVertex(line$, RETURN index%, max, colour%)
     LOCAL s1$="",s2$="",s3$=""
-    IF LEN(line$) < 1 THEN RETURN
-    IF LEFT$(line$, 2) <> "v " THEN RETURN
+    IF LEN(line$) < 1 RETURN
+    IF LEFT$(line$, 2) <> "v " RETURN
     PROCGet3OBJValues(line$, s1$, s2$, s3$)
     x=VAL(s1$) / max
     y=VAL(s2$) / max
@@ -183,8 +186,8 @@ ENDPROC
 
 DEF PROCProcessOBJFace(line$, RETURN index%, colour%)
     LOCAL s1$="",s2$="",s3$="",s4$=""
-    IF LEN(line$) < 1 THEN RETURN
-    IF LEFT$(line$, 2) <> "f " THEN RETURN
+    IF LEN(line$) < 1 RETURN
+    IF LEFT$(line$, 2) <> "f " RETURN
     PROCGet4OBJValues(line$, s1$, s2$, s3$, s4$)
     IF LEN(s4$)=0 THEN
         v1%=VAL(s1$)-1
@@ -199,7 +202,6 @@ DEF PROCProcessOBJFace(line$, RETURN index%, colour%)
 	    FACE F!(index%), v1%, v2%, v3%, colour%
         index% = index% + 1
 	    FACE F!(index%), v1%, v3%, v4%, colour%
-
     ENDIF
     index% = index% + 1
 ENDPROC

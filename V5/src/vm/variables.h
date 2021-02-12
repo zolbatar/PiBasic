@@ -30,7 +30,8 @@ public:
 
     void error(std::string err, Bytecode& bc)
     {
-        throw DARICException(ErrorLocation::RUNTIME, bc.filename(), bc.line_number, bc.char_position, err);
+        auto flp = file_and_line_lookup(bc.line_number);
+        throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, err);
     }
 
     Boxed* get_variable(Bytecode& bc)

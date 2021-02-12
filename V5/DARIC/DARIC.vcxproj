@@ -246,6 +246,7 @@
   <ItemGroup>
     <ClInclude Include="..\src\compiler\compiler.h" />
     <ClInclude Include="..\src\compiler\custom_types.h" />
+    <ClInclude Include="..\src\compiler\file_lookup.h" />
     <ClInclude Include="..\src\debugger\debugger.h" />
     <ClInclude Include="..\src\debugger\manual\manual.h" />
     <ClInclude Include="..\src\engine\engine.h" />

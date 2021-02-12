@@ -2,9 +2,9 @@
 
 antlrcpp::Any Compiler::visitTypeVarType(DARICParser::TypeVarTypeContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->varNameType());
     current_var.type = Type::TYPE;
     if (state == CompilerState::NOSTATE) {
@@ -42,9 +42,9 @@ antlrcpp::Any Compiler::visitStmtTYPE(DARICParser::StmtTYPEContext* context)
 
 antlrcpp::Any Compiler::visitVarDeclTypeVar(DARICParser::VarDeclTypeVarContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->typeVar());
     if (context->varName() != NULL) {
         current_var.field_name = context->varName()->getText();
@@ -59,9 +59,9 @@ antlrcpp::Any Compiler::visitVarDeclTypeVar(DARICParser::VarDeclTypeVarContext* 
 
 antlrcpp::Any Compiler::visitVarDeclTypeVarArrayed(DARICParser::VarDeclTypeVarArrayedContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
@@ -84,9 +84,9 @@ antlrcpp::Any Compiler::visitVarDeclTypeVarArrayed(DARICParser::VarDeclTypeVarAr
 
 antlrcpp::Any Compiler::visitVarDeclType(DARICParser::VarDeclTypeContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->typeVar());
     current_var.type = Type::TYPE;
     if (state == CompilerState::NOSTATE) {
@@ -98,9 +98,9 @@ antlrcpp::Any Compiler::visitVarDeclType(DARICParser::VarDeclTypeContext* contex
 
 antlrcpp::Any Compiler::visitVarDeclTypeArrayed(DARICParser::VarDeclTypeArrayedContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_integer();
     stack_pop();
@@ -119,9 +119,9 @@ antlrcpp::Any Compiler::visitVarDeclTypeArrayed(DARICParser::VarDeclTypeArrayedC
 
 antlrcpp::Any Compiler::visitNumVarFloatField(DARICParser::NumVarFloatFieldContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     current_var.name = context->typeVar()->getText();
     current_var.field_name = context->varName()->getText();
     find_variable(true, true);
@@ -135,9 +135,9 @@ antlrcpp::Any Compiler::visitNumVarFloatField(DARICParser::NumVarFloatFieldConte
 
 antlrcpp::Any Compiler::visitNumVarIntegerField(DARICParser::NumVarIntegerFieldContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     current_var.name = context->typeVar()->getText();
     current_var.field_name = context->varNameInteger()->getText();
     find_variable(true, true);
@@ -151,9 +151,9 @@ antlrcpp::Any Compiler::visitNumVarIntegerField(DARICParser::NumVarIntegerFieldC
 
 antlrcpp::Any Compiler::visitNumVarStringField(DARICParser::NumVarStringFieldContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     current_var.name = context->typeVar()->getText();
     current_var.field_name = context->varNameString()->getText();
     find_variable(true, true);
@@ -167,9 +167,9 @@ antlrcpp::Any Compiler::visitNumVarStringField(DARICParser::NumVarStringFieldCon
 
 antlrcpp::Any Compiler::visitNumVarFloatFieldArray(DARICParser::NumVarFloatFieldArrayContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
 
     // Array index
     visit(context->numExpr());
@@ -190,9 +190,9 @@ antlrcpp::Any Compiler::visitNumVarFloatFieldArray(DARICParser::NumVarFloatField
 
 antlrcpp::Any Compiler::visitNumVarIntegerFieldArray(DARICParser::NumVarIntegerFieldArrayContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
 
     // Array index
     visit(context->numExpr());
@@ -213,9 +213,9 @@ antlrcpp::Any Compiler::visitNumVarIntegerFieldArray(DARICParser::NumVarIntegerF
 
 antlrcpp::Any Compiler::visitNumVarStringFieldArray(DARICParser::NumVarStringFieldArrayContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
 
     // Array index
     visit(context->numExpr());

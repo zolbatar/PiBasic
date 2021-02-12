@@ -2,9 +2,9 @@
 
 antlrcpp::Any Compiler::visitWhen(DARICParser::WhenContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
 
     // Loop around all possibilities
     for (int i = 0; i < context->expr().size(); i++) {
@@ -85,9 +85,9 @@ antlrcpp::Any Compiler::visitWhen(DARICParser::WhenContext* context)
 
 antlrcpp::Any Compiler::visitStmtCASE(DARICParser::StmtCASEContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
 
     // Use this to work out the end of the CASE for performance
     UINT32 start_pc = vm->helper_bytecodes().pc;
@@ -147,9 +147,9 @@ antlrcpp::Any Compiler::visitStmtCASE(DARICParser::StmtCASEContext* context)
 
 antlrcpp::Any Compiler::visitStmtIF(DARICParser::StmtIFContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
 
     // Store stuff like PC
     UINT32 start_pc = vm->helper_bytecodes().pc;
@@ -193,9 +193,9 @@ antlrcpp::Any Compiler::visitStmtIF(DARICParser::StmtIFContext* context)
 
 antlrcpp::Any Compiler::visitStmtIFMultiline(DARICParser::StmtIFMultilineContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
 
     // Store stuff like PC
     UINT32 start_pc = vm->helper_bytecodes().pc;

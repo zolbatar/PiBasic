@@ -7,6 +7,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <list>
 
 extern Environment g_env;
 extern VM* g_vm;

@@ -61,9 +61,9 @@ void create_manual_3d()
             new ManualSyntaxComma(),
             new ManualSyntaxNumericExpression(8),
             new ManualSyntaxComma(),
-            new ManualSyntaxOptional("SOLID or SHADED or WIREFRAME or WIREFRAME"),
+            new ManualSyntaxOptional("(0-3) or SOLID or SHADED or WIREFRAME or WIREFRAME"),
         },
-        "This function creates a 3D object and adds to the 3D scene for rendering.\r\r<numeric_expression1> is an integer shape handle previously returned from SHAPE.\r<numeric_expression2>,<numeric_expression3> and <numeric_expression4> are real expressions specifying the x,y,z position of the object in 3D space.\r<numeric_expression5>,<numeric_expression6> and <numeric_expression7> are real expressions specifying the x,y,z rotation of the object in degrees.\r<expression8> is a real expression specifying the scale (i.e. size) of the object.\r\rThe final keyword specifies the rendering type:\r  SOLID is flat filled\r  SHADED is smooth shading\r  WIREFRAME shows the outline in the current foreground colour\r  FILLEDWIREFRAME is flat filled with the outline rendered in the current foreground colour.",
+        "This function creates a 3D object and adds to the 3D scene for rendering.\r\r<numeric_expression1> is an integer shape handle previously returned from SHAPE.\r<numeric_expression2>,<numeric_expression3> and <numeric_expression4> are real expressions specifying the x,y,z position of the object in 3D space.\r<numeric_expression5>,<numeric_expression6> and <numeric_expression7> are real expressions specifying the x,y,z rotation of the object in degrees.\r<expression8> is a real expression specifying the scale (i.e. size) of the object.\r\rThe final keyword specifies the rendering type:\r  A number between 0-3 can be used instead of the names\r  SOLID is flat filled\r  SHADED is smooth shading\r  WIREFRAME shows the outline in the current foreground colour\r  FILLEDWIREFRAME is flat filled with the outline rendered in the current foreground colour.",
         "An integer handle is returned.",
         "obj%=OBJECT shape%,x,y,z,0,90,180,25,SOLID"));
     keywords.push_back(ManualKeyword(

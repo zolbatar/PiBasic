@@ -1,5 +1,6 @@
-INSTALL "SetupGraphicsBanked"
+INSTALL "SetupGraphics"
 INSTALL "Terrain"
+INSTALL "Perlin"
 PROCRotateTerrain()
 INKEY(1000)
 CHAIN "Welcome"

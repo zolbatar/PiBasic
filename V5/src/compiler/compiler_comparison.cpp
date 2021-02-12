@@ -2,9 +2,9 @@
 
 antlrcpp::Any Compiler::visitNumExprNumRelop(DARICParser::NumExprNumRelopContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr(0));
     visit(context->numExpr(1));
     expression_type_conversion(context, false);
@@ -29,9 +29,9 @@ antlrcpp::Any Compiler::visitNumExprNumRelop(DARICParser::NumExprNumRelopContext
 
 antlrcpp::Any Compiler::visitNumExprStrRelop(DARICParser::NumExprStrRelopContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->strExpr(0));
     visit(context->strExpr(1));
     expression_type_conversion(context, false);

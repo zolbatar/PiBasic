@@ -130,7 +130,7 @@ void Interactive::run()
                 }
             } else if (upper.compare("WELCOME") == 0) {
                 run_demo_file("Welcome");
-/*                lines.clear();
+                /*                lines.clear();
                 create_empty_vm();
                 g_env.graphics.cls();
                 welcome_prompt();*/
@@ -193,15 +193,13 @@ void Interactive::load(std::string filename)
             line_number = add_line(line_string, line_number);
         }
     }
+    fclose(fp);
 }
 
 void Interactive::save(std::string filename)
 {
     replaceAll(filename, " ", "");
     replaceAll(filename, "\"", "");
-#ifdef WINDOWS
-    filename += ".daric";
-#endif
     FILE* fp = fopen(filename.c_str(), "w");
     if (fp == NULL) {
         g_env.graphics.print_console("Error saving file\r");
@@ -257,7 +255,7 @@ void Interactive::execute_line(std::string s)
 
     try {
         MyParser parser(temp_filename);
-        parser.parse_and_compile(compiler);
+        parser.parse_and_compile(compiler, true);
     } catch (const DARICException& ex) {
         ex.pretty_print();
         return;
@@ -284,44 +282,55 @@ void Interactive::run_all_lines()
     }
     fclose(fp);
 
-    try {
-        MyParser parser(temp_filename);
-        parser.parse_and_compile(compiler);
-    } catch (const DARICException& ex) {
-        ex.pretty_print();
-        return;
-    } catch (const std::runtime_error& ex) {
-        g_env.graphics.print_console(ex.what());
-        return;
+    auto chain = temp_filename;
+    while (chain.length() > 0) {
+        try {
+            MyParser parser(temp_filename);
+            parser.parse_and_compile(compiler, true);
+        } catch (const DARICException& ex) {
+            ex.pretty_print();
+            return;
+        } catch (const std::runtime_error& ex) {
+            g_env.graphics.print_console(ex.what());
+            return;
+        }
+
+        // Run!
+        chain = g_vm->run();
+
+        // Reset PC
+        g_vm->helper_bytecodes().pc = 0;
     }
-
-    // Run!
-    g_vm->run();
-
-    // Reset PC
-    g_vm->helper_bytecodes().pc = 0;
+    if (g_env.graphics.is_banked()) {
+        g_env.graphics.open(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height(), Mode::CLASSIC, g_env.cwd);
+    }
 }
 
 void Interactive::run_file(std::string s)
 {
     auto filename = s.substr(5, s.length() - 5);
     replaceAll(filename, "\"", "");
-#ifdef WINDOWS
-    filename += ".daric";
-#endif
-    try {
-        MyParser parser(filename);
-        parser.parse_and_compile(compiler);
-    } catch (const DARICException& ex) {
-        ex.pretty_print();
-        return;
-    } catch (const std::runtime_error& ex) {
-        g_env.graphics.print_console(ex.what());
-        return;
-    }
+    while (filename.length() > 0) {
+        try {
+            MyParser parser(filename);
+            parser.parse_and_compile(compiler, false);
+        } catch (const DARICException& ex) {
+            ex.pretty_print();
+            return;
+        } catch (const std::runtime_error& ex) {
+            g_env.graphics.print_console(ex.what());
+            return;
+        }
 
-    // Run!
-    g_vm->run();
+        // Run!
+        filename = g_vm->run();
+
+        // Reset PC
+        g_vm->helper_bytecodes().pc = 0;
+    }
+    if (g_env.graphics.is_banked()) {
+        g_env.graphics.open(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height(), Mode::CLASSIC, g_env.cwd);
+    }
 }
 
 void Interactive::run_demo_file(std::string filename)
@@ -344,21 +353,25 @@ void Interactive::run_demo_file(std::string filename)
     _kernel_swi(DDEUtils_Prefix, &regs, &regs);
 #endif
 
-#ifdef WINDOWS
-    filename += ".daric";
-#endif
+    while (filename.length() > 0) {
+        try {
+            MyParser parser(filename);
+            parser.parse_and_compile(compiler, false);
+        } catch (const DARICException& ex) {
+            ex.pretty_print();
+            return;
+        } catch (const std::runtime_error& ex) {
+            g_env.graphics.print_console(ex.what());
+            return;
+        }
 
-    try {
-        MyParser parser(filename);
-        parser.parse_and_compile(compiler);
-    } catch (const DARICException& ex) {
-        ex.pretty_print();
-        return;
-    } catch (const std::runtime_error& ex) {
-        g_env.graphics.print_console(ex.what());
-        return;
+        // Run!
+        filename = g_vm->run();
+
+        // Reset PC
+        g_vm->helper_bytecodes().pc = 0;
     }
-
-    // Run!
-    g_vm->run();
+    if (g_env.graphics.is_banked()) {
+        g_env.graphics.open(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height(), Mode::CLASSIC, g_env.cwd);
+    }
 }

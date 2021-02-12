@@ -7,6 +7,7 @@
 #include <string.h>
 
 const int DEBUGWINDOW = 1;
+const int FRAMETIME = 50;
 
 #ifdef RISCOS
 void Graphics::graphics_shadow_state_on()
@@ -451,7 +452,7 @@ void Graphics::flip(bool user_specified)
         // We only want to do update at a certain frame rate to avoid unnecessary constant flipping
         auto t = std::chrono::high_resolution_clock::now();
         auto time_span = std::chrono::duration_cast<std::chrono::milliseconds>(t - last_render);
-        if (time_span.count() < 10) {
+        if (time_span.count() < FRAMETIME) {
             return;
         }
     }

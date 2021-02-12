@@ -34,7 +34,7 @@ antlrcpp::Any Compiler::visitStmtDEFFN(DARICParser::StmtDEFFNContext* context)
         }
 
         // Make parameters locals (and do unpack stuff)
-        for (auto it = current_function->parameters.cbegin(); it != current_function->parameters.cend(); ++it) {
+        for (auto it = current_function->parameters.rbegin(); it != current_function->parameters.rend(); ++it) {
             auto a = *it;
             Boxed b;
             b.index = a.index;
@@ -119,7 +119,7 @@ antlrcpp::Any Compiler::visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* contex
         }
 
         // Make parameters locals (and do unpack stuff)
-        for (auto it = current_function->parameters.cbegin(); it != current_function->parameters.cend(); ++it) {
+        for (auto it = current_function->parameters.rbegin(); it != current_function->parameters.rend(); ++it) {
             auto a = *it;
             Boxed b;
             b.index = a.index;
@@ -172,9 +172,9 @@ antlrcpp::Any Compiler::visitFnName(DARICParser::FnNameContext* context)
 
 antlrcpp::Any Compiler::visitStmtRETURN(DARICParser::StmtRETURNContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     if (context->expr() != NULL) {
         visit(context->expr());
         auto type = stack_pop();
@@ -196,19 +196,27 @@ antlrcpp::Any Compiler::visitStmtRETURN(DARICParser::StmtRETURNContext* context)
     return NULL;
 }
 
+antlrcpp::Any Compiler::visitFunctionVar(DARICParser::FunctionVarContext* context)
+{
+    set_pos(context->start);
+    visit(context->justVar());
+    FunctionParameter b;
+    b.index = current_function->parameters.size();
+    b.name = current_var.name;
+    b.type = current_var.type;
+    auto ret = context->RETURN() != NULL;
+    b.return_parameter = ret;
+    current_function->parameters.push_back(std::move(b));
+    return NULL;
+}
+
 antlrcpp::Any Compiler::visitFunctionVarList(DARICParser::FunctionVarListContext* context)
 {
     set_pos(context->start);
 
     // Process parameters
-    for (int i = 0; i < context->justVar().size(); i++) {
-        visit(context->justVar(i));
-        FunctionParameter b;
-        b.index = i;
-        b.name = current_var.name;
-        b.type = current_var.type;
-        b.return_parameter = context->RETURN(i) != NULL;
-        current_function->parameters.push_back(std::move(b));
+    for (int i = 0; i < context->functionVar().size(); i++) {
+        visit(context->functionVar(i));
     }
 
     return NULL;
@@ -225,12 +233,11 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
 
     // Process parameters, go backwards so on the stack in the correct order
     for (int i = 0; i < context->expr().size(); i++) {
-        auto index = context->expr().size() - 1 - i;
-        auto fp = &func->parameters[index];
+        auto fp = &func->parameters[i];
 
         // Is it a return type? If so, it needs to be a variable
         if (fp->return_parameter) {
-            current_var.name = context->expr(index)->getText();
+            current_var.name = context->expr(i)->getText();
             auto f = find_variable(false, false);
             if (!f) {
                 error("Variable '" + current_var.name + "' not found or a valid RETURN");
@@ -238,7 +245,7 @@ antlrcpp::Any Compiler::visitFunctionParList(DARICParser::FunctionParListContext
             fp->current_return_variable = current_var.name;
         }
 
-        visit(context->expr(index));
+        visit(context->expr(i));
 
         // Matching?
         auto type = stack_pop();
@@ -314,9 +321,9 @@ void Compiler::general_call_fnproc(bool drop)
 
 antlrcpp::Any Compiler::visitStmtCallPROC(DARICParser::StmtCallPROCContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     called_fnproc = context->PROC_NAME()->getText();
     if (functions.count(called_fnproc) == 0) {
         error("Function or procedure '" + called_fnproc + "' does not exist");
@@ -335,9 +342,9 @@ antlrcpp::Any Compiler::visitStmtCallPROC(DARICParser::StmtCallPROCContext* cont
 
 antlrcpp::Any Compiler::visitStmtCallFN(DARICParser::StmtCallFNContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     called_fnproc = context->fnName()->getText();
     if (functions.count(called_fnproc) == 0) {
         error("Function or procedure '" + called_fnproc + "' does not exist");
@@ -355,9 +362,9 @@ antlrcpp::Any Compiler::visitStmtCallFN(DARICParser::StmtCallFNContext* context)
 
 antlrcpp::Any Compiler::visitNumVarFloatFN(DARICParser::NumVarFloatFNContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     called_fnproc = context->FN_FLOAT()->getText();
     if (functions.count(called_fnproc) == 0) {
         error("Function or procedure '" + called_fnproc + "' does not exist");
@@ -379,9 +386,9 @@ antlrcpp::Any Compiler::visitNumVarFloatFN(DARICParser::NumVarFloatFNContext* co
 
 antlrcpp::Any Compiler::visitNumVarIntegerFN(DARICParser::NumVarIntegerFNContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     called_fnproc = context->FN_INTEGER()->getText();
     if (functions.count(called_fnproc) == 0) {
         error("Function or procedure '" + called_fnproc + "' does not exist");
@@ -403,9 +410,9 @@ antlrcpp::Any Compiler::visitNumVarIntegerFN(DARICParser::NumVarIntegerFNContext
 
 antlrcpp::Any Compiler::visitNumVarStringFN(DARICParser::NumVarStringFNContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     called_fnproc = context->FN_STRING()->getText();
     if (functions.count(called_fnproc) == 0) {
         error("Function or procedure '" + called_fnproc + "' does not exist");

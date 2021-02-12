@@ -2,9 +2,9 @@
 
 antlrcpp::Any Compiler::visitNumColours(DARICParser::NumColoursContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     if (context->RED() != NULL) {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0xFF0000);
     } else if (context->GREEN() != NULL) {
@@ -28,9 +28,9 @@ antlrcpp::Any Compiler::visitNumColours(DARICParser::NumColoursContext* context)
 
 antlrcpp::Any Compiler::visitDefaultFonts(DARICParser::DefaultFontsContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     if (context->MONO15() != NULL) {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);
     } else if (context->MONO20() != NULL) {
@@ -92,18 +92,18 @@ antlrcpp::Any Compiler::visitDefaultFonts(DARICParser::DefaultFontsContext* cont
 
 antlrcpp::Any Compiler::visitStmtCLS(DARICParser::StmtCLSContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     insert_bytecode_notype(Bytecodes::CLS);
     return NULL;
 }
 
 antlrcpp::Any Compiler::visitStmtCOLOUR(DARICParser::StmtCOLOURContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
         ensure_stack_is_integer();
@@ -119,9 +119,9 @@ antlrcpp::Any Compiler::visitStmtCOLOUR(DARICParser::StmtCOLOURContext* context)
 
 antlrcpp::Any Compiler::visitStmtCOLOURBG(DARICParser::StmtCOLOURBGContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
         ensure_stack_is_integer();
@@ -137,9 +137,9 @@ antlrcpp::Any Compiler::visitStmtCOLOURBG(DARICParser::StmtCOLOURBGContext* cont
 
 antlrcpp::Any Compiler::visitStmtGRAPHICS(DARICParser::StmtGRAPHICSContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
 
     // Dimensions?
     if (context->numExpr().size() == 2) {
@@ -166,18 +166,18 @@ antlrcpp::Any Compiler::visitStmtGRAPHICS(DARICParser::StmtGRAPHICSContext* cont
 
 antlrcpp::Any Compiler::visitStmtFLIP(DARICParser::StmtFLIPContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     insert_bytecode_notype(Bytecodes::FLIP);
     return NULL;
 }
 
 antlrcpp::Any Compiler::visitStmtCIRCLE(DARICParser::StmtCIRCLEContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
         ensure_stack_is_integer();
@@ -193,9 +193,9 @@ antlrcpp::Any Compiler::visitStmtCIRCLE(DARICParser::StmtCIRCLEContext* context)
 
 antlrcpp::Any Compiler::visitStmtLINE(DARICParser::StmtLINEContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
         ensure_stack_is_integer();
@@ -207,9 +207,9 @@ antlrcpp::Any Compiler::visitStmtLINE(DARICParser::StmtLINEContext* context)
 
 antlrcpp::Any Compiler::visitStmtRECTANGLE(DARICParser::StmtRECTANGLEContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
         ensure_stack_is_integer();
@@ -225,9 +225,9 @@ antlrcpp::Any Compiler::visitStmtRECTANGLE(DARICParser::StmtRECTANGLEContext* co
 
 antlrcpp::Any Compiler::visitStmtTRIANGLE(DARICParser::StmtTRIANGLEContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
         ensure_stack_is_integer();
@@ -245,9 +245,9 @@ antlrcpp::Any Compiler::visitStmtTRIANGLE(DARICParser::StmtTRIANGLEContext* cont
 
 antlrcpp::Any Compiler::visitStmtPLOT(DARICParser::StmtPLOTContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
         ensure_stack_is_integer();
@@ -259,9 +259,9 @@ antlrcpp::Any Compiler::visitStmtPLOT(DARICParser::StmtPLOTContext* context)
 
 antlrcpp::Any Compiler::visitStmtCLIPON(DARICParser::StmtCLIPONContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
         ensure_stack_is_integer();
@@ -273,18 +273,18 @@ antlrcpp::Any Compiler::visitStmtCLIPON(DARICParser::StmtCLIPONContext* context)
 
 antlrcpp::Any Compiler::visitStmtCLIPOFF(DARICParser::StmtCLIPOFFContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     insert_bytecode_notype(Bytecodes::CLIPOFF);
     return NULL;
 }
 
 antlrcpp::Any Compiler::visitStmtTEXT(DARICParser::StmtTEXTContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
         ensure_stack_is_integer();
@@ -298,9 +298,9 @@ antlrcpp::Any Compiler::visitStmtTEXT(DARICParser::StmtTEXTContext* context)
 
 antlrcpp::Any Compiler::visitStmtTEXTRIGHT(DARICParser::StmtTEXTRIGHTContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
         ensure_stack_is_integer();
@@ -314,9 +314,9 @@ antlrcpp::Any Compiler::visitStmtTEXTRIGHT(DARICParser::StmtTEXTRIGHTContext* co
 
 antlrcpp::Any Compiler::visitStmtTEXTCENTRE(DARICParser::StmtTEXTCENTREContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
         ensure_stack_is_integer();
@@ -330,18 +330,18 @@ antlrcpp::Any Compiler::visitStmtTEXTCENTRE(DARICParser::StmtTEXTCENTREContext* 
 
 antlrcpp::Any Compiler::visitStmtSHOWFPS(DARICParser::StmtSHOWFPSContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     insert_bytecode_notype(Bytecodes::SHOWFPS);
     return NULL;
 }
 
 antlrcpp::Any Compiler::visitNumFuncPOINT(DARICParser::NumFuncPOINTContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
         ensure_stack_is_integer();
@@ -354,9 +354,9 @@ antlrcpp::Any Compiler::visitNumFuncPOINT(DARICParser::NumFuncPOINTContext* cont
 
 antlrcpp::Any Compiler::visitNumFuncCOLOUR(DARICParser::NumFuncCOLOURContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
         ensure_stack_is_integer();
@@ -369,9 +369,9 @@ antlrcpp::Any Compiler::visitNumFuncCOLOUR(DARICParser::NumFuncCOLOURContext* co
 
 antlrcpp::Any Compiler::visitNumFuncSCREENWIDTH(DARICParser::NumFuncSCREENWIDTHContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     insert_bytecode_notype(Bytecodes::SCREENWIDTH);
     stack_push(Type::INTEGER);
     return NULL;
@@ -379,9 +379,9 @@ antlrcpp::Any Compiler::visitNumFuncSCREENWIDTH(DARICParser::NumFuncSCREENWIDTHC
 
 antlrcpp::Any Compiler::visitNumFuncSCREENHEIGHT(DARICParser::NumFuncSCREENHEIGHTContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     insert_bytecode_notype(Bytecodes::SCREENHEIGHT);
     stack_push(Type::INTEGER);
     return NULL;
@@ -389,9 +389,9 @@ antlrcpp::Any Compiler::visitNumFuncSCREENHEIGHT(DARICParser::NumFuncSCREENHEIGH
 
 antlrcpp::Any Compiler::visitNumFuncCREATEFONT(DARICParser::NumFuncCREATEFONTContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     for (auto i = 0; i < context->numExpr().size(); i++) {
         visit(context->numExpr(i));
         ensure_stack_is_integer();
@@ -404,9 +404,9 @@ antlrcpp::Any Compiler::visitNumFuncCREATEFONT(DARICParser::NumFuncCREATEFONTCon
 
 antlrcpp::Any Compiler::visitNumFuncLOADTYPEFACE(DARICParser::NumFuncLOADTYPEFACEContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->strExpr());
     stack_pop();
     insert_bytecode_notype(Bytecodes::LOADTYPEFACE);

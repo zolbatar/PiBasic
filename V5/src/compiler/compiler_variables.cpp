@@ -2,6 +2,7 @@
 
 antlrcpp::Any Compiler::visitStmtSWAP(DARICParser::StmtSWAPContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
 
@@ -107,9 +108,9 @@ antlrcpp::Any Compiler::visitVarDecl(DARICParser::VarDeclContext* context)
 
 antlrcpp::Any Compiler::visitNumVarFloat(DARICParser::NumVarFloatContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->varName());
     current_var.type = Type::FLOAT;
 
@@ -132,9 +133,9 @@ antlrcpp::Any Compiler::visitNumVarFloat(DARICParser::NumVarFloatContext* contex
 
 antlrcpp::Any Compiler::visitNumVarInteger(DARICParser::NumVarIntegerContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->varNameInteger());
     current_var.type = Type::INTEGER;
     if (state == CompilerState::NOSTATE) {
@@ -147,9 +148,9 @@ antlrcpp::Any Compiler::visitNumVarInteger(DARICParser::NumVarIntegerContext* co
 
 antlrcpp::Any Compiler::visitNumVarString(DARICParser::NumVarStringContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->varNameString());
     current_var.type = Type::STRING;
     if (state != CompilerState::ASSIGNMENT) {
@@ -162,9 +163,9 @@ antlrcpp::Any Compiler::visitNumVarString(DARICParser::NumVarStringContext* cont
 
 antlrcpp::Any Compiler::visitVarDeclInd(DARICParser::VarDeclIndContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     last_array_dimensions = 0;
     return visitChildren(context);
 }

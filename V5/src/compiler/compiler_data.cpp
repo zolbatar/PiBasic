@@ -13,10 +13,10 @@ antlrcpp::Any Compiler::visitStmtDATA(DARICParser::StmtDATAContext* context)
 
 antlrcpp::Any Compiler::visitStmtREAD(DARICParser::StmtREADContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD) {
         return NULL;
     }
-    set_pos(context->start);
 
     for (auto i = 0; i < context->varDecl().size(); i++) {
 

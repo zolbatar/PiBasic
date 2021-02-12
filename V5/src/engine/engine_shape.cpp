@@ -1,5 +1,6 @@
 #include "engine.h"
 #include <math.h>
+#include <iostream>
 
 void Shape::transform(Matrix& matrix)
 {
@@ -46,7 +47,7 @@ void Shape::process(RenderType render_type, WorldState& state, std::vector<Rende
         vertex->sx = state.x_origin + static_cast<int>(round(vertex->world.x * (1000.0 / vertex->world.z)));
         vertex->sy = state.y_origin - static_cast<int>(round(vertex->world.y * (1000.0 / vertex->world.z)));
     }
-
+ 
     // Face normals
     for (auto triangle = triangles.begin(); triangle != triangles.end(); ++triangle) {
         auto v1 = &vertices[triangle->vertex1];

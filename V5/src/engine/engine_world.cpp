@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iomanip>
+#include <iostream>
 
 extern Environment g_env;
 
@@ -86,7 +87,6 @@ void World::render()
     for (auto object = objects.begin(); object != objects.end(); ++object) {
         (*object).second.render(shapes, state, render_list);
     }
-
     // Sort triangles in depth order
     std::sort(render_list.begin(), render_list.end(), [](const RenderTriangle& a, const RenderTriangle& b) { return a.z < b.z; });
 
@@ -105,6 +105,7 @@ void World::render()
             g_env.graphics.line(triangle->sx3, triangle->sy3, triangle->sx1, triangle->sy1);
             break;
         case RenderType::Solid:
+            g_env.graphics.colour(255, 255, 255);
             g_env.graphics.colour(triangle->colour1.r, triangle->colour1.g, triangle->colour1.b);
             g_env.graphics.triangle(triangle->sx1, triangle->sy1, triangle->sx2, triangle->sy2, triangle->sx3, triangle->sy3);
             break;

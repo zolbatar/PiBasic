@@ -2,6 +2,7 @@
 
 antlrcpp::Any Compiler::visitStmtCHAIN(DARICParser::StmtCHAINContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     visit(context->strExpr());
@@ -12,6 +13,7 @@ antlrcpp::Any Compiler::visitStmtCHAIN(DARICParser::StmtCHAINContext* context)
 
 antlrcpp::Any Compiler::visitStmtINSTALL(DARICParser::StmtINSTALLContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     visit(context->strExpr());

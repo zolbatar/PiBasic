@@ -1,14 +1,18 @@
 #pragma once
+#include "compiler/file_lookup.h"
 #include "environment.h"
 #include "libs/string.h"
 #include "types.h"
 #include <exception>
+#include <fstream>
+#include <iostream>
 #include <sstream>
 #include <stdexcept>
-#include <iostream>
-#include <fstream>
 
 extern Environment g_env;
+extern std::vector<ParserFiles> parsed_files;
+
+extern std::map<UINT32, UINT32> line_number_mapping;
 
 enum class ErrorLocation {
     PARSER,
@@ -24,7 +28,7 @@ public:
         , location(location)
         , filename(filename)
         , line_number(line_number)
-        , show_filename(false)
+        , show_filename(parsed_files.size() > 1)
         , char_position(char_position) {};
 
     virtual const char* what() const throw()
@@ -48,6 +52,10 @@ public:
 
     const void pretty_print() const throw()
     {
+        // Are we in BANKED mode?
+        if (g_env.graphics.is_banked()) {
+            g_env.graphics.open(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height(), Mode::CLASSIC, g_env.cwd);
+        }
         auto saved_colour = g_env.graphics.current_colour;
         g_env.graphics.colour(255, 0, 0);
         g_env.graphics.colour(255, 0, 0);
@@ -69,6 +77,13 @@ public:
             serror = error.substr(0, 60) + "..." + error.substr(error.length() - 60, 60);
         }
         replaceAll(serror, "\\n", " ");
+
+        // Do we have line numbers?
+        auto ln = line_number;
+        if (line_number_mapping.count(line_number) != 0) {
+            ln = (*line_number_mapping.find(line_number)).second;
+        }
+
         g_env.graphics.colour(255, 255, 255);
         g_env.graphics.print_console(serror);
         g_env.graphics.colour(128, 128, 128);
@@ -80,7 +95,7 @@ public:
             g_env.graphics.print_console(":");
         }
         g_env.graphics.colour(0, 255, 0);
-        g_env.graphics.print_console(std::to_string(line_number));
+        g_env.graphics.print_console(std::to_string(ln));
         g_env.graphics.colour(128, 128, 128);
         g_env.graphics.print_console(":");
         g_env.graphics.colour(0, 255, 0);

@@ -237,6 +237,8 @@ public:
 
     virtual antlrcpp::Any visitVarList(DARICParser::VarListContext *context) = 0;
 
+    virtual antlrcpp::Any visitFunctionVar(DARICParser::FunctionVarContext *context) = 0;
+
     virtual antlrcpp::Any visitFunctionVarList(DARICParser::FunctionVarListContext *context) = 0;
 
     virtual antlrcpp::Any visitFunctionParList(DARICParser::FunctionParListContext *context) = 0;
@@ -288,6 +290,8 @@ public:
     virtual antlrcpp::Any visitStrFuncINKEYS(DARICParser::StrFuncINKEYSContext *context) = 0;
 
     virtual antlrcpp::Any visitStrFuncGETS(DARICParser::StrFuncGETSContext *context) = 0;
+
+    virtual antlrcpp::Any visitStrFuncGETSH(DARICParser::StrFuncGETSHContext *context) = 0;
 
     virtual antlrcpp::Any visitString(DARICParser::StringContext *context) = 0;
 

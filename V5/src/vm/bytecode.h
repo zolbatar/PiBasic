@@ -35,6 +35,7 @@ enum class Bytecodes {
 
     // Types and fields
     NEW_TYPE, // Do any init needed on a type
+    NEW_TYPE_ARRAY, // Do any init needed on a type array
     LOAD_FIELD, // Load from field
     LOAD_FIELD_ARRAY, // Load from field (array)
     STORE_FIELD, // Store in field
@@ -210,16 +211,10 @@ public:
     int data;
     UINT32 line_number;
     short char_position;
-    short file_number;
 
     inline bool is_local_variable() { return data & LocalVariableFlag; }
     inline UINT32 global_index() { return data; }
     inline UINT32 local_index() { return data ^ LocalVariableFlag; }
-
-    std::string filename()
-    {
-        return g_env.get_filename_by_number(file_number);
-    }
 };
 
 class BytecodeContainer {
@@ -241,7 +236,7 @@ public:
         pc = 0;
     }
 
-    void insert_instruction(UINT32 line_number, short file_number, short char_position, bool write, Bytecodes bytecode, Type type, UINT32 operand)
+    void insert_instruction(UINT32 line_number, short char_position, bool write, Bytecodes bytecode, Type type, UINT32 operand)
     {
         if (write) {
             Bytecode b;
@@ -249,14 +244,13 @@ public:
             b.type = type;
             b.data = operand;
             b.line_number = line_number;
-            b.file_number = file_number;
             b.char_position = char_position;
             code.push_back(std::move(b));
         }
         pc++;
     }
 
-    void insert_bytecode(UINT32 line_number, short file_number, short char_position, bool write, Bytecodes bytecode, Type type)
+    void insert_bytecode(UINT32 line_number, short char_position, bool write, Bytecodes bytecode, Type type)
     {
         if (write) {
             Bytecode b;
@@ -264,7 +258,6 @@ public:
             b.type = type;
             b.data = 0;
             b.line_number = line_number;
-            b.file_number = file_number;
             b.char_position = char_position;
             code.push_back(std::move(b));
         }

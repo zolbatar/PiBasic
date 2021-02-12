@@ -686,6 +686,12 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVarList(DARICParser.VarListContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link DARICParser#functionVar}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionVar(DARICParser.FunctionVarContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link DARICParser#functionVarList}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -855,6 +861,13 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStrFuncGETS(DARICParser.StrFuncGETSContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code strFuncGETSH}
+	 * labeled alternative in {@link DARICParser#strFunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStrFuncGETSH(DARICParser.StrFuncGETSHContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link DARICParser#string}.
 	 * @param ctx the parse tree

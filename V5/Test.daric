@@ -1,12 +1,7 @@
-DEF PROCTriangle(l,x,y,s)
-	IF l > 0 THEN
-		TRIANGLE x,y,x+s,y,x,y+s
-		LOCAL s2=s/2
-		PROCTriangle(l-1,x,y,s2)
-		PROCTriangle(l-1,x+s2,y,s2)
-		PROCTriangle(l-1,x,y+s2,s2)
-	ENDIF
-ENDPROC
+DIM h%(2,2)
+h%(0,0) = 1
+h%(0,1) = 2
+h%(1,0) = 3
+h%(1,1) = 4
 
-CLS
-PROCTriangle(8,0,0,800)
+PRINT h%(0,0),h%(0,1),h%(1,0),h%(1,1)

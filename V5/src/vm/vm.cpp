@@ -853,6 +853,19 @@ void VM::opcode_NEW_TYPE()
         g_env.log << "Initialised type '" << var->name << "' with " << num_fields << " fields" << std::endl;
 }
 
+void VM::opcode_NEW_TYPE_ARRAY()
+{
+    auto var = variables.get_variable(bc);
+    VM_INT num_fields = static_cast<size_t>(stack.pop_int(bc));
+    if (num_fields == 0)
+        error("DIM TYPE array of 0 size not allowed");
+
+    var->set_type_nodefault(Type::TYPE_ARRAY);
+    var->fields.resize(num_fields);
+    if (!performance_build && runtime_debug)
+        g_env.log << "Initialised type '" << var->name << "' with " << num_fields << " fields" << std::endl;
+}
+
 void VM::opcode_ARRAYSIZE()
 {
     auto var = variables.get_variable(bc);
@@ -2380,7 +2393,7 @@ void VM::opcode_CREATEVERTEX()
     auto base = static_cast<size_t>(array_index) * 4;
 
     // Valid?
-    if (b->get_type() != Type::TYPE || b->fields.size() < (array_index * 4)) {
+    if (b->get_type() != Type::TYPE_ARRAY || b->fields.size() < (array_index * 4)) {
         error("First parameter needs to be a correctly sized TYPE ARRAY");
     }
 
@@ -2413,7 +2426,7 @@ void VM::opcode_CREATETRIANGLE()
     auto base = static_cast<size_t>(array_index) * 4;
 
     // Valid?
-    if (b->get_type() != Type::TYPE || b->fields.size() < (array_index * 4)) {
+    if (b->get_type() != Type::TYPE_ARRAY || b->fields.size() < (array_index * 4)) {
         error("First parameter needs to be a correctly sized TYPE ARRAY");
     }
 
@@ -2441,7 +2454,7 @@ void VM::opcode_CREATESHAPE()
     auto variable1 = variables.get_variable_by_int(bc, var2);
 
     // Check
-    if (variable1->get_type() != Type::TYPE || variable2->get_type() != Type::TYPE) {
+    if (variable1->get_type() != Type::TYPE_ARRAY || variable2->get_type() != Type::TYPE_ARRAY) {
         error("Both parameters need to be TYPE ARRAY");
     }
 
@@ -2677,7 +2690,8 @@ std::string VM::run()
             bc = helper_bytecodes().get_current_bytecode();
             helper_bytecodes().next();
             if (!performance_build && runtime_debug) {
-                g_env.log << std::uppercase << "[" << std::setw(4) << bc.file_number << " : " << std::setw(8) << bc.line_number << " : " << std::hex << std::setw(8)
+                auto flp = file_and_line_lookup(bc.line_number);
+                g_env.log << std::uppercase << "[" << std::setw(4) << flp.file_number << " : " << std::setw(8) << flp.line << " : " << std::hex << std::setw(8)
                           << helper_bytecodes().pc - 1 << " : " << std::setw(2) << (int)bc.opcode << "]  " << std::nouppercase << std::dec;
             }
             switch (bc.opcode) {
@@ -2845,6 +2859,9 @@ std::string VM::run()
                 break;
             case Bytecodes::NEW_TYPE:
                 opcode_NEW_TYPE();
+                break;
+            case Bytecodes::NEW_TYPE_ARRAY:
+                opcode_NEW_TYPE_ARRAY();
                 break;
             case Bytecodes::DUP:
                 opcode_DUP();

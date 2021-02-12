@@ -2,9 +2,9 @@
 
 antlrcpp::Any Compiler::visitNumExprNOT(DARICParser::NumExprNOTContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr());
     ensure_stack_is_integer();
     insert_bytecode(Bytecodes::BOOL_NOT, Type::INTEGER);
@@ -13,9 +13,9 @@ antlrcpp::Any Compiler::visitNumExprNOT(DARICParser::NumExprNOTContext* context)
 
 antlrcpp::Any Compiler::visitNumExprANDOREOR(DARICParser::NumExprANDOREORContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     visit(context->numExpr(0));
     ensure_stack_is_integer();
     visit(context->numExpr(1));

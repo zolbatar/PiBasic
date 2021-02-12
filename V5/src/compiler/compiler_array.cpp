@@ -2,9 +2,9 @@
 
 antlrcpp::Any Compiler::visitStmtDIM(DARICParser::StmtDIMContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     state = context->LOCAL() != NULL ? CompilerState::LOCALDIM : CompilerState::DIM;
     for (auto i = 0; i < context->varDeclWithDimension().size(); i++) {
 
@@ -18,9 +18,9 @@ antlrcpp::Any Compiler::visitStmtDIM(DARICParser::StmtDIMContext* context)
 
 antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimensionContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
 
     // Regular array?
     if (context->typeVar() == NULL) {
@@ -97,7 +97,7 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
         insert_bytecode(Bytecodes::ADD, Type::INTEGER);
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(t.members.size()));
         insert_bytecode(Bytecodes::MULTIPLY, Type::INTEGER);
-        insert_instruction(Bytecodes::NEW_TYPE, Type::TYPE, current_var.id);
+        insert_instruction_notype(Bytecodes::NEW_TYPE_ARRAY, current_var.id);
 
         set_custom_type(context->varName()->getText());
     }
@@ -106,9 +106,9 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
 
 antlrcpp::Any Compiler::visitVarDeclArrayed(DARICParser::VarDeclArrayedContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     auto saved_state = state;
     state = CompilerState::NOSTATE;
     last_array_dimensions = 0;
@@ -138,9 +138,9 @@ antlrcpp::Any Compiler::visitVarDeclArrayed(DARICParser::VarDeclArrayedContext* 
 
 antlrcpp::Any Compiler::visitNumVarFloatArray(DARICParser::NumVarFloatArrayContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     auto saved_state = state;
     last_array_dimensions = 0;
     for (auto i = 0; i < context->numExpr().size(); i++) {
@@ -161,9 +161,9 @@ antlrcpp::Any Compiler::visitNumVarFloatArray(DARICParser::NumVarFloatArrayConte
 
 antlrcpp::Any Compiler::visitNumVarIntegerArray(DARICParser::NumVarIntegerArrayContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     auto saved_state = state;
     last_array_dimensions = 0;
     for (auto i = 0; i < context->numExpr().size(); i++) {
@@ -184,9 +184,9 @@ antlrcpp::Any Compiler::visitNumVarIntegerArray(DARICParser::NumVarIntegerArrayC
 
 antlrcpp::Any Compiler::visitNumVarStringArray(DARICParser::NumVarStringArrayContext* context)
 {
+    set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    set_pos(context->start);
     auto saved_state = state;
     last_array_dimensions = 0;
     for (auto i = 0; i < context->numExpr().size(); i++) {

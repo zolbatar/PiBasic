@@ -451,6 +451,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitFunctionVar(DARICParser::FunctionVarContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitFunctionVarList(DARICParser::FunctionVarListContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -552,6 +556,10 @@ public:
   }
 
   virtual antlrcpp::Any visitStrFuncGETS(DARICParser::StrFuncGETSContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStrFuncGETSH(DARICParser::StrFuncGETSHContext *ctx) override {
     return visitChildren(ctx);
   }
 

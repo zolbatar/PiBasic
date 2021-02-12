@@ -10,3 +10,5 @@ ENDPROC
 
 CLS
 PROCTriangle(8,0,0,800)
+INKEY(1000)
+CHAIN "Welcome"
