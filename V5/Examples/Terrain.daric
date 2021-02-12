@@ -25,7 +25,7 @@ DEF PROCCreateTerrain(width%, depth%, scale_x_in, scale_y_in, scale_z_in, grass%
 	LOCAL half_width=(width% * scale_x) / 2.0
 	LOCAL half_depth=(depth% * scale_z) / 2.0
 	REM LOCAL DIM height_vertex(number_of_vertices%)
-	REM LOCAL I%=0
+	LOCAL I%=0
 	FOR z% = 0 TO depth%
 		FOR x% = 0 TO width%
 			REM h=height(x%, z%)

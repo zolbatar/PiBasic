@@ -1,5 +1,6 @@
+DEF PROCtest()
 s%=4
-DIM height(s%,s%)
+LOCAL DIM height(s%,s%)
 FOR z% = 0 TO s%
 FOR x% = 0 TO s%
 height(x%, z%) = RND(1)
@@ -11,5 +12,15 @@ FOR x% = 0 TO s%
 PRINT height(x%, z%)
 NEXT
 NEXT
-END
 
+LOCAL DIM bob(100)
+FOR z% = 0 TO s%
+FOR x% = 0 TO s%
+PRINT height(x%, z%)
+NEXT
+NEXT
+
+ENDPROC
+
+
+PROCtest()

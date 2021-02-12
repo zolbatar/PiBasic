@@ -254,7 +254,10 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         ret.opcode = "RND";
         break;
     case Bytecodes::RNDRANGE:
-        ret.opcode = "RND_RANGE";
+        ret.opcode = "RND RANGE";
+        break;
+    case Bytecodes::RNDREAL:
+        ret.opcode = "RND REAL";
         break;
     case Bytecodes::CLOSE:
         ret.opcode = "CLOSE#";
