@@ -99,3 +99,21 @@ public:
 private:
     Type type = Type::NOTYPE;
 };
+
+class PolyType {
+public:
+    virtual std::string get_name() { return "" } ;
+    virtual std::string get_name() { return "" } ;
+    virtual Type get_type() { return type; }
+
+private:
+    Type type = Type::NOTYPE;
+};
+
+class PolyTypeNamed {
+
+};
+
+class PolyType : public PolyType {
+    VM_INT value_int;
+};

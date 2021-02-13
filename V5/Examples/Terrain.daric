@@ -68,10 +68,14 @@ DEF PROCCreateTerrain(width%, depth%, scale_x_in, scale_y_in, scale_z_in, grass%
 	terrain%=SHAPE V!, F!
 ENDPROC
 
+REM orig time: 1060
 DEF PROCRotateTerrain()
 	PROCInitPerlin()
 	terrainsize%=50
+	T%=TIME
 	PROCCreateTerrain(terrainsize%, terrainsize%, 1.0, 1.5, 1.0, &008000, &444444, &EEEEEE, 0.4, 0.7)
+	PRINT TIME-T%
+	END
 	terrain1%=OBJECT terrain%, 0, 0, -300, 330, 0, 0, 250, SHADED
 	GRAPHICS BANKED
 	SHOWFPS
