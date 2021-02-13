@@ -96,7 +96,6 @@ void Compiler::save_to_variable(Type type, VarReference saved)
         default:
             error("Variable '" + saved.name + "', assigned value is of the wrong type");
         }
-        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
         insert_instruction(Bytecodes::STORE_ARRAY, Type::INTEGER_ARRAY, saved.id);
         break;
     case Type::FLOAT_ARRAY:
@@ -112,7 +111,6 @@ void Compiler::save_to_variable(Type type, VarReference saved)
         default:
             error("Variable '" + saved.name + "', assigned value is of the wrong type");
         }
-        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
         insert_instruction(Bytecodes::STORE_ARRAY, Type::FLOAT_ARRAY, saved.id);
         break;
     case Type::STRING_ARRAY:
@@ -125,7 +123,6 @@ void Compiler::save_to_variable(Type type, VarReference saved)
         default:
             error("Variable '" + saved.name + "', assigned value is of the wrong type");
         }
-        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, last_array_num_dimensions);
         insert_instruction(Bytecodes::STORE_ARRAY, Type::STRING_ARRAY, saved.id);
         break;
     case Type::TYPE:

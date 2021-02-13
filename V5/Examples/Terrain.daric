@@ -24,26 +24,18 @@ DEF PROCCreateTerrain(width%, depth%, scale_x_in, scale_y_in, scale_z_in, grass%
 	REM ** Build vertices **
 	LOCAL half_width=(width% * scale_x) / 2.0
 	LOCAL half_depth=(depth% * scale_z) / 2.0
-	REM LOCAL DIM height_vertex(number_of_vertices%)
+	LOCAL DIM height_vertex(number_of_vertices%)
 	LOCAL I%=0
 	FOR z% = 0 TO depth%
 		FOR x% = 0 TO width%
-			REM h=height(x%, z%)
-			REM h=RND(1)
-			REM LOCAL colour%=grass%
-			REM IF h > rock * max_height colour%=rock%
-			REM IF h > snow * max_height colour%=snow%
-			REM VERTEX V!(I%), (x% * scale_x) - half_width, -h * scale_y, (z% * scale_z) - half_depth, colour%
+			LOCAL h=height(x%, z%)
+			PRINT h
+			LOCAL colour%=grass%
+			IF h > rock * max_height colour%=rock%
+			IF h > snow * max_height colour%=snow%
+			VERTEX V!(I%), (x% * scale_x) - half_width, -h * scale_y, (z% * scale_z) - half_depth, colour%
 			REM height_vertex(I%)=h
-			REM I% = I% + 1
-		NEXT
-	NEXT
-
-	
-			PRINT "done"
-	FOR LOCAL z% = 0 TO depth%
-		FOR LOCAL x% = 0 TO width%
-		PRINT height(x%, z%)
+			I% = I% + 1
 		NEXT
 	NEXT
 	END
@@ -56,7 +48,7 @@ DEF PROCCreateTerrain(width%, depth%, scale_x_in, scale_y_in, scale_z_in, grass%
 			LOCAL v1% = (z% * (width% + 1)) + x%
 			LOCAL v2% = v1% + 1
 			LOCAL v3% = v2% + (width% + 1) - 1
-			h=(height_vertex(v1%) + height_vertex(v2%) + height_vertex(v3%)) / 3
+			REM h=(height_vertex(v1%) + height_vertex(v2%) + height_vertex(v3%)) / 3
 			colour%=grass%
 			IF h > rock * max_height colour%=rock%
 			IF h > snow * max_height colour%=snow%
@@ -67,7 +59,7 @@ DEF PROCCreateTerrain(width%, depth%, scale_x_in, scale_y_in, scale_z_in, grass%
 			v1% = (z% * (width% + 1)) + x% + 1
 			v2% = v1% + (width% + 1)
 			v3% = v2% - 1
-			h=(height_vertex(v1%) + height_vertex(v2%) + height_vertex(v3%)) / 3
+			REM h=(height_vertex(v1%) + height_vertex(v2%) + height_vertex(v3%)) / 3
 			colour%=grass%
 			IF h > rock * max_height colour%=rock%
 			IF h > snow * max_height colour%=snow%
@@ -80,11 +72,14 @@ ENDPROC
 
 DEF PROCRotateTerrain()
 	PROCInitPerlin()
-	terrainsize%=8
-	PROCCreateTerrain(terrainsize%, terrainsize%, 1.0, 1.0, 1.0, &008000, &444444, &EEEEEE, 0.4, 0.7)
-	terrain1%=OBJECT terrain%, 0, 0, -300, 330, 0, 0, 250, WIREFRAME
+	terrainsize%=20
+	PROCCreateTerrain(terrainsize%, terrainsize%, 1.0, 1.5, 1.0, &008000, &444444, &EEEEEE, 0.4, 0.7)
+	terrain1%=OBJECT terrain%, 0, 0, -300, 330, 0, 0, 250, SHADED
 	GRAPHICS BANKED
 	SHOWFPS
+		RENDER
+		FLIP	
+	INKEY(1000)
 	FOR LOCAL I=0 TO 360 STEP 1
 		CLS
 		ROTATE terrain1%, 330, I, 0

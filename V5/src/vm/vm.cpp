@@ -565,9 +565,6 @@ void VM::opcode_PRINT_SPC()
 
 VM_INT VM::array_1d_get_index(Boxed* var, VM_INT index)
 {
-    if (var->array_definition.size() < 1) {
-        error("Invalid array or array index");
-    }
     auto size = var->array_definition[0];
     if (index < 0 || index > size)
         error("Invalid array or array index");
@@ -576,9 +573,6 @@ VM_INT VM::array_1d_get_index(Boxed* var, VM_INT index)
 
 VM_INT VM::array_2d_get_index(Boxed* var, VM_INT index2, VM_INT index1)
 {
-    if (var->array_definition.size() < 2) {
-        error("Invalid array or array index");
-    }
     auto size = var->array_definition[0] * var->array_definition[1];
     VM_INT index = index2 * var->array_definition[0] + index1;
     if (index < 0 || index > size)
@@ -589,7 +583,10 @@ VM_INT VM::array_2d_get_index(Boxed* var, VM_INT index2, VM_INT index1)
 void VM::opcode_LOAD_ARRAY()
 {
     auto var = variables.get_variable(bc);
-    VM_INT dimensions = stack.pop_int(bc);
+    VM_INT dimensions = var->array_definition.size();
+    if (var->array_definition.size() == 0) {
+        error("Invalid array or array index");
+    }
 
     switch (bc.type) {
     case Type::INTEGER_ARRAY: {
@@ -648,7 +645,10 @@ void VM::opcode_LOAD_ARRAY()
 void VM::opcode_STORE_ARRAY()
 {
     auto var = variables.get_variable(bc);
-    VM_INT dimensions = stack.pop_int(bc);
+    VM_INT dimensions = var->array_definition.size();
+    if (var->array_definition.size() == 0) {
+        error("Invalid array or array index");
+    }
 
     switch (bc.type) {
     case Type::INTEGER_ARRAY: {

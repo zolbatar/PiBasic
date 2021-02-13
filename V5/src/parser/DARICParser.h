@@ -383,7 +383,8 @@ public:
     WhenContext* when(size_t i);
     antlr4::tree::TerminalNode *OTHERWISE();
     BodyContext *body();
-    LinenumberContext *linenumber();
+    std::vector<LinenumberContext *> linenumber();
+    LinenumberContext* linenumber(size_t i);
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -599,7 +600,8 @@ public:
     LinePlusContext* linePlus(size_t i);
     antlr4::tree::TerminalNode *ENDIF();
     antlr4::tree::TerminalNode *ELSE();
-    LinenumberContext *linenumber();
+    std::vector<LinenumberContext *> linenumber();
+    LinenumberContext* linenumber(size_t i);
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -820,6 +822,7 @@ public:
     ExprContext *expr();
     BodyContext *body();
     antlr4::tree::TerminalNode *ENDWHILE();
+    LinenumberContext *linenumber();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -2258,7 +2261,9 @@ public:
     StrFuncSTRSContext(StrFuncContext *ctx);
 
     antlr4::tree::TerminalNode *STRS();
+    antlr4::tree::TerminalNode *LPAREN();
     NumExprContext *numExpr();
+    antlr4::tree::TerminalNode *RPAREN();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -2344,7 +2349,9 @@ public:
 
     antlr4::tree::TerminalNode *STRS();
     antlr4::tree::TerminalNode *TILDE();
+    antlr4::tree::TerminalNode *LPAREN();
     NumExprContext *numExpr();
+    antlr4::tree::TerminalNode *RPAREN();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };

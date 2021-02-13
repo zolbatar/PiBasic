@@ -198,7 +198,7 @@ bool Compiler::find_variable(bool field, bool fire_error)
             current_var.field_type = (*field).second.get_type();
             current_var.field_index = (*field).second.index;
         }
-
+        //std::cout << current_var.name << " 3- " << current_var.id << std::endl;
         return true;
     } else if (globals.count(current_var.name) == 1) {
         auto g = globals.find(current_var.name);
@@ -254,6 +254,7 @@ void Compiler::find_or_create_variable_in_scope(VariableScope scope)
             current_var.id = var_id | LocalVariableFlag;
             current_var.custom_type_name = (*g).second.custom_type_name;
             current_var.type = (*g).second.get_type();
+            //std::cout << current_var.name << " 1- " << current_var.id << std::endl;
         } else {
             Boxed var;
             var.set_type_default(current_var.type);
@@ -262,6 +263,7 @@ void Compiler::find_or_create_variable_in_scope(VariableScope scope)
             var.index = current_function->local_var_index++;
             current_function->locals[var.name] = var;
             current_var.id = var.index | LocalVariableFlag;
+            //std::cout << current_var.name << " 1- " << current_var.id << std::endl;
         }
     } else {
         error("Variable '" + current_var.name + "' not found");
@@ -282,6 +284,7 @@ void Compiler::find_or_create_variable(VariableScope scope)
         var.index = global_var_index++;
         globals[var.name] = var;
         current_var.id = var.index;
+        //std::cout << current_var.name << " 2- " << current_var.id << std::endl;
     } else if (inside_function()) {
         Boxed var;
         var.set_type_default(current_var.type);
@@ -290,6 +293,7 @@ void Compiler::find_or_create_variable(VariableScope scope)
         var.index = current_function->local_var_index++;
         current_function->locals[var.name] = var;
         current_var.id = var.index | LocalVariableFlag;
+        //::cout << current_var.name << " 2- " << current_var.id << std::endl;
     } else {
         error("Variable '" + current_var.name + "' not found");
     }

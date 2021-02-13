@@ -118,6 +118,7 @@ void MyParser::parse_and_compile(Compiler* compiler, bool interactive)
     // Setup
     parse_errors = false;
     error_count = 0;
+    line_number_mapping.clear();
 
     // Load source into a concatenated stringstream
     std::stringstream ss;

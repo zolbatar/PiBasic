@@ -61,7 +61,7 @@ coreStmt
     ;
 
 stmtBREAKPOINT:     BREAKPOINT ;
-stmtCASE:           CASE expr OF NEWLINE when+ (OTHERWISE body)? linenumber? ENDCASE ; 
+stmtCASE:           CASE expr OF NEWLINE when+ (linenumber? OTHERWISE body)? linenumber? ENDCASE ; 
 stmtCHAIN:          CHAIN strExpr ;
 stmtDATA:           DATA literal (COMMA literal)* ;
 stmtDIM:            LOCAL? DIM varDeclWithDimension (COMMA varDeclWithDimension)* ;
@@ -73,7 +73,7 @@ stmtFOR:            FOR LOCAL? justNumberVar EQ numExpr TO numExpr (STEP numExpr
 stmtFORIN:          FOR LOCAL? justVar IN justVar LPAREN RPAREN body linenumber? NEXT ;
 stmtCallFN:         fnName LPAREN functionParList? RPAREN ;
 stmtIF:             IF expr content (ELSE content)? ;
-stmtIFMultiline:    IF expr THEN NEWLINE linePlus (ELSE NEWLINE linePlus)? linenumber? ENDIF ;
+stmtIFMultiline:    IF expr THEN NEWLINE linePlus (linenumber? ELSE NEWLINE linePlus)? linenumber? ENDIF ;
 stmtINSTALL:        INSTALL strExpr ;
 stmtGOTO:           GOTO NUMBER ; 
 stmtGOSUB:          GOSUB NUMBER ;
@@ -87,7 +87,7 @@ stmtTRACEON:        TRACEON ;
 stmtTRACEOFF:       TRACEOFF ;
 stmtTYPE:           TYPE varName LPAREN justVar (COMMA justVar)* RPAREN ;
 stmtREPEAT:         REPEAT body linenumber? UNTIL expr ;
-stmtWHILE:          WHILE expr body ENDWHILE ;
+stmtWHILE:          WHILE expr body linenumber? ENDWHILE ;
 
 keyMouseStmt
     : stmtINPUT
@@ -331,8 +331,8 @@ strFunc
     | MIDS LPAREN strExpr COMMA numExpr COMMA numExpr RPAREN    #strFuncMIDS3
     | MIDS LPAREN strExpr COMMA numExpr RPAREN                  #strFuncMIDS2
     | RIGHTS LPAREN strExpr COMMA numExpr RPAREN                #strFuncRIGHTS
-    | STRS numExpr                                              #strFuncSTRS
-    | STRS TILDE numExpr                                        #strFuncSTRSHEX
+    | STRS LPAREN numExpr RPAREN                                #strFuncSTRS
+    | STRS TILDE LPAREN numExpr RPAREN                          #strFuncSTRSHEX
     | STRINGS LPAREN numExpr COMMA strExpr RPAREN               #strFuncSTRINGS
     | INKEYS numExpr                                            #strFuncINKEYS
     | GETS                                                      #strFuncGETS

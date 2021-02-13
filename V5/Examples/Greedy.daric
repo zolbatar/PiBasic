@@ -22,14 +22,14 @@ DEF PROCAddResource()
 EndProc
 
 DEF PROCAddToList()
-    If I%=3 Then PROCAddCall()
-    If I%=2 Then PROCAddResource()
+    If I%=3 PROCAddCall()
+    If I%=2 PROCAddResource()
     I%=0
     line$(0)="":line$(1)="":line$(2)="":line$(3)=""
 EndProc
 
 DEF FNatan2(y,x)
-    If x > 0.0 Then Return Atn(y/x) Else If y > 0.0 Then Return Atn(y/x) + PI
+    If x > 0.0 Return Atn(y/x) Else If y > 0.0 Return Atn(y/x) + PI
     Return Atn(y/x) - PI
 EndFn
 
@@ -60,8 +60,8 @@ DEF PROCLoad()
     I%=0
     Repeat
         a%=BGET# channel%
-        If a%=Asc(",") Then I%=I%+1 Else line$(I%) = line$(I%) + Chr$(a%)
-        If a%=10 Then PROCAddToList()
+        If a%=Asc(",") I%=I%+1 Else line$(I%) = line$(I%) + Chr$(a%)
+        If a%=10 PROCAddToList()
     Until Eof# channel%
     Close# channel%
     Print "Imported in ";:Print ((Time-T%)/100.0);:Print " seconds"
@@ -77,15 +77,15 @@ DEF PROCGreedy()
                 O=100000000.0
                 L%=-1
                 For LOCAL A%=0 TO (numCalls% - 1)
-                    If used%(A%) = 0 
+                    If used%(A%) = 0 THEN
                         D=FNCalcDistance(resourceX(C%),resourceY(C%),callX(A%),callY(A%))
-                        If D < O
+                        If D < O THEN
                             O=D
                             L%=A%
                         EndIf
                     EndIf
                 Next
-                If L% = -1
+                If L% = -1 THEN
                     Print "Not found"
                     End
                 EndIf
