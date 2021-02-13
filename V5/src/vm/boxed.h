@@ -91,7 +91,7 @@ public:
     VM_FLOAT value_float;
     VM_STRING value_string;
     std::vector<Boxed> fields;
-    std::vector<UINT32> array_definition;
+    std::vector<int> array_definition;
     std::vector<VM_INT> value_int_array;
     std::vector<VM_FLOAT> value_float_array;
     std::vector<VM_STRING> value_string_array;

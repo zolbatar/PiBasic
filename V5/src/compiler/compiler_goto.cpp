@@ -1,12 +1,12 @@
 #include "compiler.h"
 
 std::map<UINT32, UINT32> line_number_mapping;
-extern int file_count;
+extern std::vector<ParserFiles> parsed_files;
 
 antlrcpp::Any Compiler::visitLinenumber(DARICParser::LinenumberContext* context)
 {
     set_pos(context->start);
-    if (file_count > 1) {
+    if (parsed_files.size() > 1) {
         error("Line numbers not supported with INSTALL");
     }
     auto line = std::stoi(context->NUMBER()->getText());
@@ -22,7 +22,7 @@ antlrcpp::Any Compiler::visitStmtGOTO(DARICParser::StmtGOTOContext* context)
     set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    if (file_count > 1) {
+    if (parsed_files.size() > 1) {
         error("GOTO not supported with INSTALL");
     }
     line_number = std::stoi(context->NUMBER()->getText());
@@ -41,7 +41,7 @@ antlrcpp::Any Compiler::visitStmtGOSUB(DARICParser::StmtGOSUBContext* context)
     set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    if (file_count > 1) {
+    if (parsed_files.size() > 1) {
         error("GOSUB not supported with INSTALL");
     }
     line_number = std::stoi(context->NUMBER()->getText());

@@ -29,7 +29,6 @@ DEF PROCCreateTerrain(width%, depth%, scale_x_in, scale_y_in, scale_z_in, grass%
 	FOR z% = 0 TO depth%
 		FOR x% = 0 TO width%
 			LOCAL h=height(x%, z%)
-			PRINT h
 			LOCAL colour%=grass%
 			IF h > rock * max_height colour%=rock%
 			IF h > snow * max_height colour%=snow%
@@ -38,7 +37,6 @@ DEF PROCCreateTerrain(width%, depth%, scale_x_in, scale_y_in, scale_z_in, grass%
 			I% = I% + 1
 		NEXT
 	NEXT
-	END
 
 	REM ** Build faces **
 	I% = 0
@@ -72,14 +70,11 @@ ENDPROC
 
 DEF PROCRotateTerrain()
 	PROCInitPerlin()
-	terrainsize%=20
+	terrainsize%=50
 	PROCCreateTerrain(terrainsize%, terrainsize%, 1.0, 1.5, 1.0, &008000, &444444, &EEEEEE, 0.4, 0.7)
 	terrain1%=OBJECT terrain%, 0, 0, -300, 330, 0, 0, 250, SHADED
 	GRAPHICS BANKED
 	SHOWFPS
-		RENDER
-		FLIP	
-	INKEY(1000)
 	FOR LOCAL I=0 TO 360 STEP 1
 		CLS
 		ROTATE terrain1%, 330, I, 0

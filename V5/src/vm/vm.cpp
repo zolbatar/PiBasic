@@ -510,7 +510,7 @@ void VM::opcode_PRINT()
         // Pad?
         if (print_right_justify) {
             auto l = v.length();
-            int d = tab_spacing - l;
+            int d = tab_spacing - static_cast<int>(l);
             while (d < 0) {
                 d += tab_spacing;
             }
@@ -583,7 +583,7 @@ VM_INT VM::array_2d_get_index(Boxed* var, VM_INT index2, VM_INT index1)
 void VM::opcode_LOAD_ARRAY()
 {
     auto var = variables.get_variable(bc);
-    VM_INT dimensions = var->array_definition.size();
+    VM_INT dimensions = static_cast<UINT32>(var->array_definition.size());
     if (var->array_definition.size() == 0) {
         error("Invalid array or array index");
     }
@@ -645,7 +645,7 @@ void VM::opcode_LOAD_ARRAY()
 void VM::opcode_STORE_ARRAY()
 {
     auto var = variables.get_variable(bc);
-    VM_INT dimensions = var->array_definition.size();
+    VM_INT dimensions = static_cast<UINT32>(var->array_definition.size());
     if (var->array_definition.size() == 0) {
         error("Invalid array or array index");
     }
@@ -2708,6 +2708,11 @@ std::string VM::run()
             case Bytecodes::HALT:
                 opcode_HALT();
                 quit = true;
+                break;
+            case Bytecodes::STACKCHECK:
+                if (stack.get_stack_size() > 0) {
+                    error("DEBUG: Stack isn't empty, has " + std::to_string(stack.get_stack_size()) + " items");
+                }
                 break;
             case Bytecodes::TRACEON:
                 runtime_debug = true;

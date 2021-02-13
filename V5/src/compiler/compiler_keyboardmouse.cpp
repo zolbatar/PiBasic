@@ -102,4 +102,5 @@ antlrcpp::Any Compiler::visitStrFuncINKEYS(DARICParser::StrFuncINKEYSContext* co
     stack_pop();
     insert_bytecode_notype(Bytecodes::INKEYS);
     stack_push(Type::STRING);
+    return NULL;
 }

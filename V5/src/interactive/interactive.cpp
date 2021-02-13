@@ -39,6 +39,10 @@ void Interactive::welcome_prompt()
     g_env.graphics.print_console("C");
     g_env.graphics.colour(255, 255, 255);
     g_env.graphics.print_console(" " + g_env.version + ", http://dariclang.com\r\r");
+#ifdef _DEBUG
+    g_env.graphics.colour(255, 0, 0);
+    g_env.graphics.print_console("**DEBUG MODE **\r\r");
+#endif
     g_env.graphics.colour(255, 255, 0);
     g_env.graphics.print_console("WELCOME");
     g_env.graphics.colour(255, 255, 255);

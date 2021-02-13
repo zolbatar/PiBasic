@@ -1,6 +1,5 @@
 #include "compiler.h"
 
-extern int file_count;
 extern std::map<UINT32, UINT32> line_number_mapping;
 
 antlrcpp::Any Compiler::visitStmtCHAIN(DARICParser::StmtCHAINContext* context)

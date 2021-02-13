@@ -33,8 +33,21 @@ antlrcpp::Any Compiler::visitContent(DARICParser::ContentContext* context)
 
 antlrcpp::Any Compiler::visitStmt(DARICParser::StmtContext* context)
 {
+#ifdef _DEBUG
+    bool do_check = stack_check_applied == false;
+    if (do_check) {
+        insert_bytecode_notype(Bytecodes::STACKCHECK);
+        stack_check_applied = true;
+    }
+#endif
     set_pos(context->start);
-    return visitChildren(context);
+    visitChildren(context);
+#ifdef _DEBUG
+    if (do_check) {
+        stack_check_applied = false;
+    }
+#endif
+    return NULL;
 }
 
 antlrcpp::Any Compiler::visitExprList(DARICParser::ExprListContext* context)

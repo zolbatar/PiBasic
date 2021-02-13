@@ -12,7 +12,6 @@ const char local[] = "Local variable";
 std::string Debugger::get_name_for_operand(Bytecode& bc, UINT32 i)
 {
     if (bc.is_local_variable()) {
-
         // Find function id
         for (auto g = g_vm->functions.begin(); g != g_vm->functions.end(); ++g) {
             if (g->pc_start <= i && g->pc_end > i) {

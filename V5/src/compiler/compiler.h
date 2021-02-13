@@ -89,6 +89,9 @@ private:
     UINT32 global_var_index = 0;
     std::map<std::string, Boxed> globals;
 
+    // Debug checking
+    bool stack_check_applied = false;
+
     // GOTO/GOSUB
     std::map<UINT32, UINT32> line_no_to_bytecode;
 

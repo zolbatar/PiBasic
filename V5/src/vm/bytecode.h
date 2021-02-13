@@ -14,6 +14,7 @@ enum class Bytecodes {
     TRACEOFF, // Stop debug tracing
     BREAKPOINT, // Open up debugging
     HALT, // Stop program
+    STACKCHECK, // Stack checking when in debug mode
     CHAIN, // Load next program
 
     // Stack manipulation

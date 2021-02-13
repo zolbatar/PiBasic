@@ -108,7 +108,7 @@ int Debugger::debugger_manual_keyword_section(KeywordCategory category, int* ind
             g_env.graphics.print_text(fixed_font, "\r", -1, -1);
 
             // Are we out of space?
-            if (g_env.graphics.get_cursor_y() > g_env.graphics.get_actual_height() - 100) {
+            if (g_env.graphics.get_cursor_y() > static_cast<int>(g_env.graphics.get_actual_height()) - 100) {
                 column++;
                 g_env.graphics.print_text(fixed_font, "", column * manual_column_width, 50);
             }
