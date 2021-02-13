@@ -33,3 +33,5 @@ V5/DARIC/obj
 *.recipe
 *.ilk
 *.dll
+*.dll
+V5/antlr4-runtime.dll

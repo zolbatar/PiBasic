@@ -13,16 +13,6 @@ public:
     {
         locals = std::vector<Boxed>(0);
     }
-
-/*    void store_chained_variables(Stack& stack)
-    {
-        VM_INT count = stack.pop_int_checkless();
-        for (int i = 0; i < count; i++) {
-            auto v = stack.pop_int_checkless();
-            chained_variables.push_back(std::move(get_variable_by_int(bc, v, false)));
-        }
-    }*/
-    std::vector<Boxed> get_chained_variables() { return chained_variables; }
     std::vector<Boxed>& get_variables() { return variables; }
     void set_variables_size(int size) { variables.resize(size); }
     void add_variable(Boxed b, int index) { variables.at(index) = std::move(b); }

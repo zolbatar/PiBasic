@@ -68,7 +68,7 @@ DEF PROCCreateTerrain(width%, depth%, scale_x_in, scale_y_in, scale_z_in, grass%
 	terrain%=SHAPE V!, F!
 ENDPROC
 
-REM orig time: 1060
+REM orig time: 800 - 787
 DEF PROCRotateTerrain()
 	PROCInitPerlin()
 	terrainsize%=50

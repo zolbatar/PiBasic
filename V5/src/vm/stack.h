@@ -22,21 +22,21 @@ public:
         stack.push(std::move(b));
     }
 
-    void push_int(Bytecode& bc, const VM_INT v)
+    void push_int(const VM_INT v)
     {
         Boxed b;
         b.set_integer(v);
         stack.push(std::move(b));
     }
 
-    void push_string(Bytecode& bc, const VM_STRING& v)
+    void push_string(const VM_STRING& v)
     {
         Boxed b;
         b.set_string(v);
         stack.push(std::move(b));
     }
 
-    void push_boxed(Bytecode& bc, Boxed b)
+    void push_boxed(Boxed b)
     {
         stack.push(b);
     }
