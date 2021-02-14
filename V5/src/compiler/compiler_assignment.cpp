@@ -139,17 +139,17 @@ void Compiler::save_to_variable(Type type, VarReference saved)
                     switch (m.get_type()) {
                     case Type::INTEGER:
                         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);
-                        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, m.index);
+                        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, m.get_index());
                         insert_instruction(Bytecodes::STORE_FIELD, Type::INTEGER, saved.id);
                         break;
                     case Type::FLOAT:
                         insert_instruction(Bytecodes::LOAD, Type::FLOAT, constant_float_create(0.0));
-                        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, m.index);
+                        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, m.get_index());
                         insert_instruction(Bytecodes::STORE_FIELD, Type::FLOAT, saved.id);
                         break;
                     case Type::STRING:
                         insert_instruction(Bytecodes::LOAD, Type::STRING, constant_string_create(""));
-                        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, m.index);
+                        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, m.get_index());
                         insert_instruction(Bytecodes::STORE_FIELD, Type::STRING, saved.id);
                         break;
                     default:

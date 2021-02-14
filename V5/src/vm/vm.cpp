@@ -78,37 +78,37 @@ void VM::opcode_LOAD()
 	auto var = variables.get_variable(bc);
 	switch (bc.type) {
 	case Type::INTEGER: {
-		stack.push_int(var->value_int);
+		stack.push_int(var->get_integer());
 		if (!performance_build && runtime_debug) {
-			if (!var->constant) {
-				g_env.log << "Push variable '" << var->name << "', int " << var->value_int << " onto the stack" << std::endl;
+			if (!var->is_constant()) {
+				g_env.log << "Push variable '" << var->get_name() << "', int " << var->get_integer() << " onto the stack" << std::endl;
 			}
 			else {
-				g_env.log << "Push constant int " << var->value_int << " onto the stack" << std::endl;
+				g_env.log << "Push constant int " << var->get_integer() << " onto the stack" << std::endl;
 			}
 		}
 		return;
 	}
 	case Type::FLOAT: {
-		stack.push_float(var->value_float);
+		stack.push_float(var->get_float());
 		if (!performance_build && runtime_debug) {
-			if (!var->constant) {
-				g_env.log << "Push variable '" << var->name << "', float " << var->value_float << " onto the stack" << std::endl;
+			if (!var->is_constant()) {
+				g_env.log << "Push variable '" << var->get_name() << "', float " << var->get_float() << " onto the stack" << std::endl;
 			}
 			else {
-				g_env.log << "Push constant float " << var->value_float << " onto the stack" << std::endl;
+				g_env.log << "Push constant float " << var->get_float() << " onto the stack" << std::endl;
 			}
 		}
 		return;
 	}
 	case Type::STRING: {
-		stack.push_string(var->value_string);
+		stack.push_string(var->get_string());
 		if (!performance_build && runtime_debug) {
-			if (!var->constant) {
-				g_env.log << "Push variable '" << var->name << "', string '" << var->value_string << "' onto the stack" << std::endl;
+			if (!var->is_constant()) {
+				g_env.log << "Push variable '" << var->get_name() << "', string '" << var->get_string() << "' onto the stack" << std::endl;
 			}
 			else {
-				g_env.log << "Push constant string '" << var->value_string << "' onto the stack" << std::endl;
+				g_env.log << "Push constant string '" << var->get_string() << "' onto the stack" << std::endl;
 			}
 		}
 		return;
@@ -335,13 +335,13 @@ void VM::opcode_CONV_FLOAT()
 			g_env.log << "Convert " << v1 << " (int) -> " << v2 << " (float)\n";
 	}
 	else if (bc.data == 1) {
-		stack.save_top_item();
+		auto b = stack.pop_boxed();
 		VM_INT v1 = stack.pop_int(bc);
 		VM_FLOAT v2 = static_cast<VM_FLOAT>(v1);
 		stack.push_float(v2);
 		if (!performance_build && runtime_debug)
 			g_env.log << "Convert (2nd) " << v1 << " (int) -> " << v2 << " (float)\n";
-		stack.restore_top_item();
+		stack.push_boxed(b);
 	}
 }
 
@@ -355,13 +355,13 @@ void VM::opcode_CONV_INT()
 			g_env.log << "Convert " << v1 << " (float) -> " << v2 << " (int)\n";
 	}
 	else if (bc.data == 1) {
-		stack.save_top_item();
+		auto b = stack.pop_boxed();
 		VM_FLOAT v1 = stack.pop_float(bc);
 		VM_INT v2 = static_cast<VM_INT>(floor(v1));
 		stack.push_int(v2);
 		if (!performance_build && runtime_debug)
 			g_env.log << "Convert (2nd) " << v1 << " (float) -> " << v2 << " (int)\n";
-		stack.restore_top_item();
+		stack.push_boxed(b);
 	}
 }
 
@@ -372,27 +372,27 @@ void VM::opcode_SWAP()
 	auto var2 = variables.get_variable_by_int(bc, v);
 	switch (bc.type) {
 	case Type::INTEGER: {
-		VM_INT t = var->value_int;
-		var->value_int = var2->value_int;
-		var2->value_int = t;
+		VM_INT t = var->get_integer();
+		var->set_integer(var2->get_integer());
+		var2->set_integer(t);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Swap " << var->name << " and " << var2->name << std::endl;
+			g_env.log << "Swap " << var->get_name() << " and " << var2->get_name() << std::endl;
 		return;
 	}
 	case Type::FLOAT: {
-		VM_FLOAT t = var->value_float;
-		var->value_float = var2->value_float;
-		var2->value_float = t;
+		VM_FLOAT t = var->get_float();
+		var->set_float(var2->get_float());
+		var2->set_float(t);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Swap " << var->name << " and " << var2->name << std::endl;
+			g_env.log << "Swap " << var->get_name() << " and " << var2->get_name() << std::endl;
 		return;
 	}
 	case Type::STRING: {
-		VM_STRING t = var->value_string;
-		var->value_string = var2->value_string;
-		var2->value_string = t;
+		VM_STRING t = var->get_string();
+		var->set_string(var2->get_string());
+		var2->set_string(t);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Swap " << var->name << " and " << var2->name << std::endl;
+			g_env.log << "Swap " << var->get_name() << " and " << var2->get_name() << std::endl;
 		return;
 	}
 	default:
@@ -407,23 +407,23 @@ void VM::opcode_STORE()
 	switch (bc.type) {
 	case Type::INTEGER: {
 		VM_INT v = stack.pop_int(bc);
-		var->value_int = v;
+		var->set_integer(v);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Store integer " << v << " in " << var->name << std::endl;
+			g_env.log << "Store integer " << v << " in " << var->get_name() << std::endl;
 		return;
 	}
 	case Type::FLOAT: {
 		VM_FLOAT v = stack.pop_float(bc);
-		var->value_float = v;
+		var->set_float(v);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Store float " << v << " in " << var->name << std::endl;
+			g_env.log << "Store float " << v << " in " << var->get_name() << std::endl;
 		return;
 	}
 	case Type::STRING: {
 		VM_STRING v = stack.pop_string(bc);
-		var->value_string = v;
+		var->set_string(v);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Store string '" << v << "' in " << var->name << std::endl;
+			g_env.log << "Store string '" << v << "' in " << var->get_name() << std::endl;
 		return;
 	}
 	default:
@@ -442,22 +442,22 @@ void VM::opcode_INPUT()
 	switch (bc.type) {
 	case Type::INTEGER: {
 		int v = std::stoi(s);
-		var->value_int = v;
+		var->set_integer(v);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Inputted and stored integer " << var->value_int << " in " << var->name << std::endl;
+			g_env.log << "Inputted and stored integer " << var->get_integer() << " in " << var->get_name() << std::endl;
 		return;
 	}
 	case Type::FLOAT: {
 		double v = std::stod(s);
-		var->value_float = v;
+		var->set_float(v);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Inputted and stored float " << var->value_float << " in " << var->name << std::endl;
+			g_env.log << "Inputted and stored float " << var->get_float() << " in " << var->get_name() << std::endl;
 		return;
 	}
 	case Type::STRING: {
-		var->value_string = s;
+		var->set_string(s);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Inputted and stored string " << var->value_string << " in " << var->name << std::endl;
+			g_env.log << "Inputted and stored string " << var->get_string() << " in " << var->get_name() << std::endl;
 		return;
 	}
 	default:
@@ -572,7 +572,7 @@ void VM::opcode_PRINT_SPC()
 
 VM_INT VM::array_1d_get_index(Boxed* var, VM_INT index)
 {
-	auto size = var->array_definition[0];
+	auto size = var->get_array_dimension(0);
 	if (index < 0 || index > size)
 		error("Invalid array or array index");
 	return index;
@@ -580,8 +580,8 @@ VM_INT VM::array_1d_get_index(Boxed* var, VM_INT index)
 
 VM_INT VM::array_2d_get_index(Boxed* var, VM_INT index2, VM_INT index1)
 {
-	auto size = var->array_definition[0] * var->array_definition[1];
-	VM_INT index = index2 * var->array_definition[0] + index1;
+	auto size = var->get_array_dimension(0) * var->get_array_dimension(1);
+	VM_INT index = index2 * var->get_array_dimension(0) + index1;
 	if (index < 0 || index > size)
 		error("Invalid array or array index");
 	return index;
@@ -590,8 +590,8 @@ VM_INT VM::array_2d_get_index(Boxed* var, VM_INT index2, VM_INT index1)
 void VM::opcode_LOAD_ARRAY()
 {
 	auto var = variables.get_variable(bc);
-	VM_INT dimensions = static_cast<UINT32>(var->array_definition.size());
-	if (var->array_definition.size() == 0) {
+	VM_INT dimensions = var->get_array_dimensions();
+	if (dimensions == 0) {
 		error("Invalid array or array index");
 	}
 
@@ -599,51 +599,51 @@ void VM::opcode_LOAD_ARRAY()
 	case Type::INTEGER_ARRAY: {
 		if (dimensions == 1) {
 			auto index = array_1d_get_index(var, stack.pop_int(bc));
-			VM_INT v = var->value_int_array[index];
+			VM_INT v = var->get_integer_array_item(index);
 			stack.push_int(v);
 			if (!performance_build && runtime_debug)
-				g_env.log << "Push variable " << var->name << ", int " << v << " (index " << index << ") onto the stack\n";
+				g_env.log << "Push variable " << var->get_name() << ", int " << v << " (index " << index << ") onto the stack\n";
 		}
 		else {
 			auto index = array_2d_get_index(var, stack.pop_int(bc), stack.pop_int(bc));
-			VM_INT v = var->value_int_array[index];
+			VM_INT v = var->get_integer_array_item(index);
 			stack.push_int(v);
 			if (!performance_build && runtime_debug)
-				g_env.log << "Push variable " << var->name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+				g_env.log << "Push variable " << var->get_name() << ", string '" << v << "' (index " << index << ") onto the stack\n";
 		}
 		return;
 	}
 	case Type::FLOAT_ARRAY: {
 		if (dimensions == 1) {
 			auto index = array_1d_get_index(var, stack.pop_int(bc));
-			VM_FLOAT v = var->value_float_array[index];
+			VM_FLOAT v = var->get_float_array_item(index);
 			stack.push_float(v);
 			if (!performance_build && runtime_debug)
-				g_env.log << "Push variable " << var->name << ", float " << v << " (index " << index << ") onto the stack\n";
+				g_env.log << "Push variable " << var->get_name() << ", float " << v << " (index " << index << ") onto the stack\n";
 		}
 		else {
 			auto index = array_2d_get_index(var, stack.pop_int(bc), stack.pop_int(bc));
-			VM_FLOAT v = var->value_float_array[index];
+			VM_FLOAT v = var->get_float_array_item(index);
 			stack.push_float(v);
 			if (!performance_build && runtime_debug)
-				g_env.log << "Push variable " << var->name << ", float '" << v << "' (index " << index << ") onto the stack\n";
+				g_env.log << "Push variable " << var->get_name() << ", float '" << v << "' (index " << index << ") onto the stack\n";
 		}
 		return;
 	}
 	case Type::STRING_ARRAY: {
 		if (dimensions == 1) {
 			auto index = array_1d_get_index(var, stack.pop_int(bc));
-			VM_STRING v = var->value_string_array[index];
+			VM_STRING v = var->get_string_array_item(index);
 			stack.push_string(v);
 			if (!performance_build && runtime_debug)
-				g_env.log << "Push variable " << var->name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+				g_env.log << "Push variable " << var->get_name() << ", string '" << v << "' (index " << index << ") onto the stack\n";
 		}
 		else {
 			auto index = array_2d_get_index(var, stack.pop_int(bc), stack.pop_int(bc));
-			VM_STRING v = var->value_string_array[index];
+			VM_STRING v = var->get_string_array_item(index);
 			stack.push_string(v);
 			if (!performance_build && runtime_debug)
-				g_env.log << "Push variable " << var->name << ", string '" << v << "' (index " << index << ") onto the stack\n";
+				g_env.log << "Push variable " << var->get_name() << ", string '" << v << "' (index " << index << ") onto the stack\n";
 		}
 		return;
 	}
@@ -655,8 +655,8 @@ void VM::opcode_LOAD_ARRAY()
 void VM::opcode_STORE_ARRAY()
 {
 	auto var = variables.get_variable(bc);
-	VM_INT dimensions = static_cast<UINT32>(var->array_definition.size());
-	if (var->array_definition.size() == 0) {
+	VM_INT dimensions = var->get_array_dimensions();
+	if (dimensions == 0) {
 		error("Invalid array or array index");
 	}
 
@@ -665,16 +665,16 @@ void VM::opcode_STORE_ARRAY()
 		if (dimensions == 1) {
 			VM_INT v = stack.pop_int(bc);
 			auto index = array_1d_get_index(var, stack.pop_int(bc));
-			var->value_int_array[index] = v;
+			var->set_integer_array_item(index, v);
 			if (!performance_build && runtime_debug)
-				g_env.log << "Store int array variable " << var->name << " index " << index << " value " << v << std::endl;
+				g_env.log << "Store int array variable " << var->get_name() << " index " << index << " value " << v << std::endl;
 		}
 		else {
 			VM_INT v = stack.pop_int(bc);
 			auto index = array_2d_get_index(var, stack.pop_int(bc), stack.pop_int(bc));
-			var->value_int_array[index] = v;
+			var->set_integer_array_item(index, v);
 			if (!performance_build && runtime_debug)
-				g_env.log << "Store float array variable " << var->name << " index " << index << " value " << v << std::endl;
+				g_env.log << "Store float array variable " << var->get_name() << " index " << index << " value " << v << std::endl;
 		}
 		return;
 	}
@@ -682,16 +682,16 @@ void VM::opcode_STORE_ARRAY()
 		if (dimensions == 1) {
 			VM_FLOAT v = stack.pop_float(bc);
 			auto index = array_1d_get_index(var, stack.pop_int(bc));
-			var->value_float_array[index] = v;
+			var->set_float_array_item(index, v);
 			if (!performance_build && runtime_debug)
-				g_env.log << "Store float array variable " << var->name << " index " << index << " value " << v << std::endl;
+				g_env.log << "Store float array variable " << var->get_name() << " index " << index << " value " << v << std::endl;
 		}
 		else {
 			VM_FLOAT v = stack.pop_float(bc);
 			auto index = array_2d_get_index(var, stack.pop_int(bc), stack.pop_int(bc));
-			var->value_float_array[index] = v;
+			var->set_float_array_item(index, v);
 			if (!performance_build && runtime_debug)
-				g_env.log << "Store float array variable " << var->name << " index " << index << " value " << v << std::endl;
+				g_env.log << "Store float array variable " << var->get_name() << " index " << index << " value " << v << std::endl;
 		}
 		return;
 	}
@@ -699,16 +699,16 @@ void VM::opcode_STORE_ARRAY()
 		if (dimensions == 1) {
 			VM_STRING v = stack.pop_string(bc);
 			auto index = array_1d_get_index(var, stack.pop_int(bc));
-			var->value_string_array[index] = v;
+			var->set_string_array_item(index, v);
 			if (!performance_build && runtime_debug)
-				g_env.log << "Store string array variable " << var->name << " index " << index << " value " << v << std::endl;
+				g_env.log << "Store string array variable " << var->get_name() << " index " << index << " value " << v << std::endl;
 		}
 		else {
 			VM_STRING v = stack.pop_string(bc);
 			auto index = array_2d_get_index(var, stack.pop_int(bc), stack.pop_int(bc));
-			var->value_string_array[index] = v;
+			var->set_string_array_item(index, v);
 			if (!performance_build && runtime_debug)
-				g_env.log << "Store float array variable " << var->name << " index " << index << " value " << v << std::endl;
+				g_env.log << "Store float array variable " << var->get_name() << " index " << index << " value " << v << std::endl;
 		}
 		return;
 	}
@@ -721,24 +721,24 @@ void VM::opcode_LOAD_FIELD()
 {
 	auto var = variables.get_variable(bc);
 	VM_INT index = stack.pop_int(bc);
-	Boxed* field = &var->fields[index];
+	auto field = &var->get_field(index);
 	switch (bc.type) {
 	case Type::INTEGER: {
-		stack.push_int(field->value_int);
+		stack.push_int(field->get_integer());
 		if (!performance_build && runtime_debug)
-			g_env.log << "Load field variable " << var->name << " index " << index << " value " << field->value_int << std::endl;
+			g_env.log << "Load field variable " << var->get_name() << " index " << index << " value " << field->get_integer() << std::endl;
 		return;
 	}
 	case Type::FLOAT: {
-		stack.push_float(field->value_float);
+		stack.push_float(field->get_float());
 		if (!performance_build && runtime_debug)
-			g_env.log << "Load field variable " << var->name << " index " << index << " value " << field->value_float << std::endl;
+			g_env.log << "Load field variable " << var->get_name() << " index " << index << " value " << field->get_float() << std::endl;
 		return;
 	}
 	case Type::STRING: {
-		stack.push_string(field->value_string);
+		stack.push_string(field->get_string());
 		if (!performance_build && runtime_debug)
-			g_env.log << "Load field variable " << var->name << " index " << index << " value " << field->value_string << std::endl;
+			g_env.log << "Load field variable " << var->get_name() << " index " << index << " value " << field->get_string() << std::endl;
 		return;
 	}
 	default:
@@ -750,27 +750,27 @@ void VM::opcode_STORE_FIELD()
 {
 	auto var = variables.get_variable(bc);
 	VM_INT index = stack.pop_int(bc);
-	Boxed* field = &var->fields.at(index);
+	auto field = var->get_field(index);
 	switch (bc.type) {
 	case Type::INTEGER: {
 		VM_INT v = stack.pop_int(bc);
-		field->value_int = v;
+		field.set_integer(v);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Store field variable " << var->name << " index " << index << " value " << v << std::endl;
+			g_env.log << "Store field variable " << var->get_name() << " index " << index << " value " << v << std::endl;
 		return;
 	}
 	case Type::FLOAT: {
 		VM_FLOAT v = stack.pop_float(bc);
-		field->value_float = v;
+		field.set_float(v);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Store field variable " << var->name << " index " << index << " value " << v << std::endl;
+			g_env.log << "Store field variable " << var->get_name() << " index " << index << " value " << v << std::endl;
 		return;
 	}
 	case Type::STRING: {
 		VM_STRING v = stack.pop_string(bc);
-		field->value_string.assign(v);
+		field.set_string(v);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Store field variable " << var->name << " index " << index << " value '" << v << "'" << std::endl;
+			g_env.log << "Store field variable " << var->get_name() << " index " << index << " value '" << v << "'" << std::endl;
 		return;
 	}
 	default:
@@ -785,26 +785,26 @@ void VM::opcode_LOAD_FIELD_ARRAY()
 	VM_INT index = stack.pop_int(bc);
 	VM_INT array_index = stack.pop_int(bc);
 	auto real_index = array_index * fields + index;
-	if (real_index < 0 || real_index >= static_cast<int>(var->fields.size()))
+	if (real_index < 0 || real_index >= static_cast<int>(var->get_fields_count()))
 		error("Invalid array or array index");
-	Boxed* field = &var->fields[static_cast<size_t>(real_index)];
+	auto field = var->get_field(real_index);
 	switch (bc.type) {
 	case Type::INTEGER: {
-		stack.push_int(field->value_int);
+		stack.push_int(field.get_integer());
 		if (!performance_build && runtime_debug)
-			g_env.log << "Load field variable " << var->name << " index " << index << " value " << field->value_int << std::endl;
+			g_env.log << "Load field variable " << var->get_name() << " index " << index << " value " << field.get_integer() << std::endl;
 		return;
 	}
 	case Type::FLOAT: {
-		stack.push_float(field->value_float);
+		stack.push_float(field.get_float());
 		if (!performance_build && runtime_debug)
-			g_env.log << "Load field variable " << var->name << " index " << index << " value " << field->value_float << std::endl;
+			g_env.log << "Load field variable " << var->get_name() << " index " << index << " value " << field.get_float() << std::endl;
 		return;
 	}
 	case Type::STRING: {
-		stack.push_string(field->value_string);
+		stack.push_string(field.get_string());
 		if (!performance_build && runtime_debug)
-			g_env.log << "Load field variable " << var->name << " index " << index << " value '" << field->value_string << "'" << std::endl;
+			g_env.log << "Load field variable " << var->get_name() << " index " << index << " value '" << field.get_string() << "'" << std::endl;
 		return;
 	}
 	default:
@@ -822,36 +822,36 @@ void VM::opcode_STORE_FIELD_ARRAY()
 		VM_INT v = stack.pop_int(bc);
 		VM_INT array_index = stack.pop_int(bc);
 		auto real_index = array_index * fields + index;
-		if (real_index < 0 || real_index >= static_cast<int>(var->fields.size()))
+		if (real_index < 0 || real_index >= static_cast<int>(var->get_fields_count()))
 			error("Invalid array or array index");
-		Boxed* field = &var->fields[static_cast<size_t>(real_index)];
-		field->value_int = v;
+		auto field = var->get_field(real_index);
+		field.set_integer(v);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Store field variable " << var->name << " index " << index << " value " << v << std::endl;
+			g_env.log << "Store field variable " << var->get_name() << " index " << index << " value " << v << std::endl;
 		return;
 	}
 	case Type::FLOAT: {
 		VM_FLOAT v = stack.pop_float(bc);
 		VM_INT array_index = stack.pop_int(bc);
 		auto real_index = array_index * fields + index;
-		if (real_index < 0 || real_index >= static_cast<int>(var->fields.size()))
+		if (real_index < 0 || real_index >= static_cast<int>(var->get_fields_count()))
 			error("Invalid array or array index");
-		Boxed* field = &var->fields[static_cast<size_t>(real_index)];
-		field->value_float = v;
+		auto field = var->get_field(real_index);
+		field.set_float(v);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Store field variable " << var->name << " index " << index << " value " << v << std::endl;
+			g_env.log << "Store field variable " << var->get_name() << " index " << index << " value " << v << std::endl;
 		return;
 	}
 	case Type::STRING: {
 		VM_STRING v = stack.pop_string(bc);
 		VM_INT array_index = stack.pop_int(bc);
 		auto real_index = array_index * fields + index;
-		if (real_index < 0 || real_index >= static_cast<int>(var->fields.size()))
+		if (real_index < 0 || real_index >= static_cast<int>(var->get_fields_count()))
 			error("Invalid array or array index");
-		Boxed* field = &var->fields[static_cast<size_t>(real_index)];
-		field->value_string.assign(v);
+		auto field = var->get_field(real_index);
+		field.set_string(v);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Store field variable " << var->name << " index " << index << " value '" << v << "'" << std::endl;
+			g_env.log << "Store field variable " << var->get_name() << " index " << index << " value '" << v << "'" << std::endl;
 		return;
 	}
 	default:
@@ -867,9 +867,9 @@ void VM::opcode_NEW_TYPE()
 		error("DIM TYPE array of 0 size not allowed");
 
 	var->set_type_nodefault(Type::TYPE);
-	var->fields.resize(num_fields);
+	var->set_fields_count(num_fields);
 	if (!performance_build && runtime_debug)
-		g_env.log << "Initialised type '" << var->name << "' with " << num_fields << " fields" << std::endl;
+		g_env.log << "Initialised type '" << var->get_name() << "' with " << num_fields << " fields" << std::endl;
 }
 
 void VM::opcode_NEW_TYPE_ARRAY()
@@ -880,23 +880,23 @@ void VM::opcode_NEW_TYPE_ARRAY()
 		error("DIM TYPE array of 0 size not allowed");
 
 	var->set_type_nodefault(Type::TYPE_ARRAY);
-	var->fields.resize(num_fields);
+	var->set_fields_count(num_fields);
 	if (!performance_build && runtime_debug)
-		g_env.log << "Initialised type '" << var->name << "' with " << num_fields << " fields" << std::endl;
+		g_env.log << "Initialised type '" << var->get_name() << "' with " << num_fields << " fields" << std::endl;
 }
 
 void VM::opcode_ARRAYSIZE()
 {
 	auto var = variables.get_variable(bc);
 	VM_INT dimension = stack.pop_int(bc);
-	VM_INT size = var->array_definition[0];
+	VM_INT size = var->get_array_dimension(0);
 	switch (var->get_type()) {
 	case Type::TYPE_ARRAY:
 		error("Size of TYPE arrays not supported");
 	}
 	stack.push_int(size);
 	if (!performance_build && runtime_debug)
-		g_env.log << "Size of array requested for variable'" << var->name << "' result=" << size << std::endl;
+		g_env.log << "Size of array requested for variable'" << var->get_name() << "' result=" << size << std::endl;
 }
 
 void VM::opcode_DIM()
@@ -909,20 +909,17 @@ void VM::opcode_DIM()
 		if (size == 1)
 			error("DIM array of 0 size not allowed");
 		var->set_type_nodefault(bc.type);
-		var->array_definition.resize(1);
-		var->array_definition[0] = size;
+		var->set_1d_dimensions(size);
 	}
 	else {
-		var->fields.clear();
+		var->clear_fields();
 		size2 = stack.pop_int(bc) + 1;
 		if (size2 == 1)
 			error("DIM array of 0 size not allowed");
 		size1 = stack.pop_int(bc) + 1;
 		if (size1 == 1)
 			error("DIM array of 0 size not allowed");
-		var->array_definition.resize(2);
-		var->array_definition[0] = size1;
-		var->array_definition[1] = size2;
+		var->set_2d_dimensions(size1, size2);
 	}
 
 	switch (bc.type) {
@@ -958,11 +955,11 @@ void VM::opcode_DIM()
 	}
 	if (dimensions == 1) {
 		if (!performance_build && runtime_debug)
-			g_env.log << "Dimension variable " << var->name << " with size " << size << std::endl;
+			g_env.log << "Dimension variable " << var->get_name() << " with size " << size << std::endl;
 	}
 	else {
 		if (!performance_build && runtime_debug)
-			g_env.log << "Dimension variable " << var->name << " with size " << size1 << "x" << size2 << std::endl;
+			g_env.log << "Dimension variable " << var->get_name() << " with size " << size1 << "x" << size2 << std::endl;
 	}
 }
 
@@ -1038,28 +1035,28 @@ void VM::opcode_FOR()
 	auto var = variables.get_variable(bc);
 	switch (bc.type) {
 	case Type::INTEGER: {
-		var->value_int_array.resize(3);
+		var->set_integer_array_size(3);
 		VM_INT pc = stack.pop_int(bc);
 		VM_INT step = stack.pop_int(bc);
 		VM_INT iterations = stack.pop_int(bc);
-		var->value_int_array[0] = iterations / step;
-		var->value_int_array[1] = step;
-		var->value_int_array[2] = pc;
+		var->set_integer_array_item(0, iterations / step);
+		var->set_integer_array_item(1, step);
+		var->set_integer_array_item(2, pc);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Initialising FOR loop for variable '" << var->name << "', " << var->value_int_array[0] << " iterations" << std::endl;
+			g_env.log << "Initialising FOR loop for variable '" << var->get_name() << "', " << var->get_string_array_item(0) << " iterations" << std::endl;
 		return;
 	}
 	case Type::FLOAT: {
-		var->value_int_array.resize(2);
-		var->value_float_array.resize(1);
+		var->set_integer_array_size(2);
+		var->set_float_array_size(1);
 		VM_INT pc = stack.pop_int(bc);
 		VM_FLOAT step = stack.pop_float(bc);
 		VM_FLOAT iterations = stack.pop_float(bc);
-		var->value_int_array[0] = static_cast<int>(iterations / step);
-		var->value_float_array[0] = step;
-		var->value_int_array[1] = pc;
+		var->set_integer_array_item(0, static_cast<int>(iterations / step));
+		var->set_float_array_item(0, step);
+		var->set_integer_array_item(1, pc);
 		if (!performance_build && runtime_debug)
-			g_env.log << "Initialising FOR loop for variable '" << var->name << "', " << var->value_int_array[0] << " iterations" << std::endl;
+			g_env.log << "Initialising FOR loop for variable '" << var->get_name() << "', " << var->get_string_array_item(0) << " iterations" << std::endl;
 		return;
 	}
 	default:
@@ -1072,27 +1069,27 @@ void VM::opcode_NEXT()
 	auto var = variables.get_variable(bc);
 	switch (bc.type) {
 	case Type::INTEGER: {
-		VM_INT step = var->value_int_array[1];
-		var->value_int += step;
-		var->value_int_array[0]--; // iterations - 1
-		if (var->value_int_array[0] >= 0) {
-			helper_bytecodes().pc = var->value_int_array[2];
+		VM_INT step = var->get_integer_array_item(1);
+		var->set_integer(var->get_integer() + step);
+		var->set_integer_array_item(0, var->get_integer_array_item(0) - 1);
+		if (var->get_integer_array_item(0) >= 0) {
+			helper_bytecodes().pc = var->get_integer_array_item(2);
 		}
 		if (!performance_build && runtime_debug)
-			g_env.log << "NEXT integer variable " << var->name << ", step " << step << ", iterations left " << (var->value_int_array[0] + 1)
-			<< ", loop PC is 0x" << std::hex << var->value_int_array[2] << std::dec << std::endl;
+			g_env.log << "NEXT integer variable " << var->get_name() << ", step " << step << ", iterations left " << (var->get_integer_array_item(0) + 1)
+			<< ", loop PC is 0x" << std::hex << var->get_integer_array_item(2) << std::dec << std::endl;
 		return;
 	}
 	case Type::FLOAT: {
-		VM_FLOAT step = var->value_float_array[0];
-		var->value_float += step;
-		var->value_int_array[0]--; // iterations - 1
-		if (var->value_int_array[0] >= 0) {
-			helper_bytecodes().pc = var->value_int_array[1];
+		VM_FLOAT step = var->get_float_array_item(1);
+		var->set_float(var->get_float() + step);
+		var->set_integer_array_item(0, var->get_integer_array_item(0) - 1);
+		if (var->get_integer_array_item(0) >= 0) {
+			helper_bytecodes().pc = var->get_integer_array_item(1);
 		}
 		if (!performance_build && runtime_debug)
-			g_env.log << "NEXT float variable " << var->name << ", step " << step << ", iterations left " << (var->value_int_array[0] + 1)
-			<< ", loop PC is 0x" << std::hex << var->value_int_array[1] << std::dec << std::endl;
+			g_env.log << "NEXT float variable " << var->get_name() << ", step " << step << ", iterations left " << (var->get_integer_array_item(0) + 1)
+			<< ", loop PC is 0x" << std::hex << var->get_integer_array_item(1) << std::dec << std::endl;
 		return;
 	}
 	case Type::STRING: {
@@ -1106,78 +1103,81 @@ void VM::opcode_NEXT()
 void VM::opcode_FORIN()
 {
 	auto var = variables.get_variable(bc);
-	var->value_int_array.resize(4);
+	var->set_integer_array_size(4);
 	VM_INT pc = stack.pop_int(bc);
 	VM_INT var_array_index = stack.pop_int(bc);
 	auto variable_array = variables.get_variable_by_int(bc, var_array_index);
 	switch (bc.type) {
 	case Type::INTEGER: {
-		VM_INT iterations = static_cast<VM_INT>(variable_array->value_int_array.size());
-		var->value_int_array[0] = iterations - 1;
-		var->value_int_array[1] = pc;
-		var->value_int_array[2] = var_array_index;
-		var->value_int_array[3] = 1;
-		var->value_int = variable_array->value_int_array[0];
+		VM_INT iterations = static_cast<VM_INT>(variable_array->get_integer_array_size());
+		var->set_integer_array_item(0, iterations - 1);
+		var->set_integer_array_item(1, pc);
+		var->set_integer_array_item(2, var_array_index);
+		var->set_integer_array_item(3, 1);
+		var->set_integer(variable_array->get_integer_array_item(0));
 		break;
 	}
 	case Type::FLOAT: {
-		VM_INT iterations = static_cast<VM_INT>(variable_array->value_float_array.size());
-		var->value_int_array[0] = iterations - 1;
-		var->value_int_array[1] = pc;
-		var->value_int_array[2] = var_array_index;
-		var->value_int_array[3] = 1;
-		var->value_float = variable_array->value_float_array[0];
+		VM_INT iterations = static_cast<VM_INT>(variable_array->get_float_array_size());
+		var->set_integer_array_item(0, iterations - 1);
+		var->set_integer_array_item(1, pc);
+		var->set_integer_array_item(2, var_array_index);
+		var->set_integer_array_item(3, 1);
+		var->set_float(variable_array->get_float_array_item(0));
 		break;
 	}
 	case Type::STRING: {
-		VM_INT iterations = static_cast<VM_INT>(variable_array->value_string_array.size());
-		var->value_int_array[0] = iterations - 1;
-		var->value_int_array[1] = pc;
-		var->value_int_array[2] = var_array_index;
-		var->value_int_array[3] = 1;
-		var->value_string = variable_array->value_string_array[0];
+		VM_INT iterations = static_cast<VM_INT>(variable_array->get_string_array_size());
+		var->set_integer_array_item(0, iterations - 1);
+		var->set_integer_array_item(1, pc);
+		var->set_integer_array_item(2, var_array_index);
+		var->set_integer_array_item(3, 1);
+		var->set_string(variable_array->get_string_array_item(0));
 		break;
 	}
 	default:
 		opcode_type_error();
 	}
 	if (!performance_build && runtime_debug)
-		g_env.log << "Initialising FOR IN loop for variable '" << var->name << "', " << var->value_int_array[0] << " iterations" << std::endl;
+		g_env.log << "Initialising FOR IN loop for variable '" << var->get_name() << "', " << var->get_string_array_item(0) << " iterations" << std::endl;
 }
 
 void VM::opcode_NEXTIN()
 {
 	auto var = variables.get_variable(bc);
-	auto variable_array = variables.get_variable_by_int(bc, var->value_int_array[2]);
-	if (var->value_int_array[0] == 0) {
+	auto variable_array = variables.get_variable_by_int(bc, var->get_integer_array_item(2));
+	if (var->get_integer_array_item(0) == 0) {
 		if (!performance_build && runtime_debug)
-			g_env.log << "NEXT IN variable " << var->name << ", complete" << std::endl;
+			g_env.log << "NEXT IN variable " << var->get_name() << ", complete" << std::endl;
 		return;
 	}
 	else {
-		var->value_int_array[0]--;
+		var->set_integer_array_item(0, var->get_integer_array_item(0) - 1);
 	}
 
 	switch (bc.type) {
 	case Type::INTEGER: {
-		var->value_int = variable_array->value_int_array[var->value_int_array[3]++];
+		auto i = variable_array->inc_integer_array_item(3);
+		var->set_integer(variable_array->get_integer_array_item(i));
 		break;
 	}
 	case Type::FLOAT: {
-		var->value_float = variable_array->value_float_array[var->value_int_array[3]++];
+		auto i = variable_array->inc_integer_array_item(3);
+		var->set_float(variable_array->get_float_array_item(i));
 		break;
 	}
 	case Type::STRING: {
-		var->value_string = variable_array->value_string_array[var->value_int_array[3]++];
+		auto i = variable_array->inc_integer_array_item(3);
+		var->set_string(variable_array->get_string_array_item(i));
 		break;
 	}
 	default:
 		opcode_type_error();
 	}
-	helper_bytecodes().pc = var->value_int_array[1];
+	helper_bytecodes().pc = var->get_integer_array_item(1);
 	if (!performance_build && runtime_debug)
-		g_env.log << "NEXT IN variable " << var->name << ", iterations left " << (var->value_int_array[0] + 1)
-		<< ", loop PC is 0x" << std::hex << var->value_int_array[1] << std::dec << std::endl;
+		g_env.log << "NEXT IN variable " << var->get_name() << ", iterations left " << (var->get_integer_array_item(0) + 1)
+		<< ", loop PC is 0x" << std::hex << var->get_integer_array_item(1) << std::dec << std::endl;
 }
 
 void VM::opcode_READ()
@@ -1188,21 +1188,21 @@ void VM::opcode_READ()
 	Boxed b = *data_iterator++;
 	switch (bc.type) {
 	case Type::INTEGER: {
-		stack.push_int(b.value_int);
+		stack.push_int(b.get_integer());
 		if (!performance_build && runtime_debug)
-			g_env.log << "Read integer " << b.value_int << std::endl;
+			g_env.log << "Read integer " << b.get_integer() << std::endl;
 		return;
 	}
 	case Type::FLOAT: {
-		stack.push_float(b.value_float);
+		stack.push_float(b.get_float());
 		if (!performance_build && runtime_debug)
-			g_env.log << "Read float " << b.value_float << std::endl;
+			g_env.log << "Read float " << b.get_float() << std::endl;
 		return;
 	}
 	case Type::STRING: {
-		stack.push_string(b.value_string);
+		stack.push_string(b.get_string());
 		if (!performance_build && runtime_debug)
-			g_env.log << "Read string " << b.value_string << std::endl;
+			g_env.log << "Read string " << b.get_string() << std::endl;
 		return;
 	}
 	default:
@@ -1572,47 +1572,48 @@ void VM::opcode_GOSUB()
 void VM::opcode_UNPACK()
 {
 	auto var = variables.get_variable(bc);
+	auto b = stack.pop_boxed();
 	switch (bc.type) {
 	case Type::INTEGER: {
-		switch (stack.peek_top_item()) {
+		switch (b.get_type()) {
 		case Type::INTEGER:
-			var->value_int = stack.pop_int(bc);
+			var->set_integer(b.get_integer());
 			break;
 		case Type::FLOAT:
-			var->value_int = static_cast<VM_INT>(stack.pop_float(bc));
+			var->set_integer(static_cast<VM_INT>(b.get_float()));
 			break;
 		default:
 			error("Unsupported unpack casting");
 		}
 		if (!performance_build && runtime_debug)
-			g_env.log << "Stored parameter int value of " << var->value_int << " intp variable " << var->name << std::endl;
+			g_env.log << "Stored parameter int value of " << var->get_integer() << " intp variable " << var->get_name() << std::endl;
 		return;
 	}
 	case Type::FLOAT: {
-		switch (stack.peek_top_item()) {
+		switch (b.get_type()) {
 		case Type::FLOAT:
-			var->value_float = stack.pop_float(bc);
+			var->set_float(b.get_float());
 			break;
 		case Type::INTEGER:
-			var->value_float = static_cast<VM_FLOAT>(stack.pop_int(bc));
+			var->set_float(static_cast<VM_FLOAT>(b.get_integer()));
 			break;
 		default:
 			error("Unsupported unpack casting");
 		}
 		if (!performance_build && runtime_debug)
-			g_env.log << "Stored parameter float value of " << var->value_float << " into variable " << var->name << std::endl;
+			g_env.log << "Stored parameter float value of " << var->get_float() << " into variable " << var->get_name() << std::endl;
 		return;
 	}
 	case Type::STRING: {
-		switch (stack.peek_top_item()) {
+		switch (b.get_type()) {
 		case Type::STRING:
-			var->value_string.assign(stack.pop_string(bc));
+			var->set_string(b.get_string());
 			break;
 		default:
 			error("Unsupported unpack casting");
 		}
 		if (!performance_build && runtime_debug)
-			g_env.log << "Stored parameter string value of '" << var->value_int << " into variable " << var->name << "'" << std::endl;
+			g_env.log << "Stored parameter string value of '" << var->get_integer() << " into variable " << var->get_name() << "'" << std::endl;
 		return;
 	}
 	default:
@@ -2091,14 +2092,14 @@ void VM::opcode_LISTFILES()
 	// Dim destination array
 	auto size = files.size() + 1;
 	var->set_type_default(Type::STRING_ARRAY);
-	var->value_string_array.resize(size);
+	var->set_string_array_size(size);
 	if (!performance_build && runtime_debug)
-		g_env.log << "Dimension string variable " << var->name << " with size " << size << std::endl;
-	var->value_string_array.clear();
+		g_env.log << "Dimension string variable " << var->get_name() << " with size " << size << std::endl;
 
 	// And copy values over
+	int i = 0;
 	for (auto it = files.begin(); it != files.end(); ++it) {
-		var->value_string_array.push_back(*it);
+		var->set_string_array_item(i++, *it);
 	}
 }
 
@@ -2429,25 +2430,26 @@ void VM::opcode_CREATEVERTEX()
 	auto base = static_cast<size_t>(array_index) * 4;
 
 	// Valid?
-	if (b->get_type() != Type::TYPE_ARRAY || b->fields.size() < (array_index * 4)) {
+	if (b->get_type() != Type::TYPE_ARRAY || b->get_fields_count() < (array_index * 4)) {
 		error("First parameter needs to be a correctly sized TYPE ARRAY");
 	}
 
 	// X
-	Boxed* field = &b->fields[static_cast<size_t>(base)];
-	field->set_float(x);
+
+	auto field = b->get_field(base);
+	field.set_float(x);
 
 	// Y
-	field = &b->fields[static_cast<size_t>(base + 1)];
-	field->set_float(y);
+	field = b->get_field(base + 1);
+	field.set_float(y);
 
 	// Z
-	field = &b->fields[static_cast<size_t>(base + 2)];
-	field->set_float(z);
+	field = b->get_field(base + 2);
+	field.set_float(z);
 
 	// colour
-	field = &b->fields[static_cast<size_t>(base + 3)];
-	field->set_integer(colour);
+	field = b->get_field(base + 3);
+	field.set_integer(colour);
 }
 
 void VM::opcode_CREATETRIANGLE()
@@ -2462,25 +2464,25 @@ void VM::opcode_CREATETRIANGLE()
 	auto base = static_cast<size_t>(array_index) * 4;
 
 	// Valid?
-	if (b->get_type() != Type::TYPE_ARRAY || b->fields.size() < (array_index * 4)) {
+	if (b->get_type() != Type::TYPE_ARRAY || b->get_fields_count() < (array_index * 4)) {
 		error("First parameter needs to be a correctly sized TYPE ARRAY");
 	}
 
 	// Vertex 1
-	Boxed* field = &b->fields[static_cast<size_t>(base)];
-	field->set_integer(v1);
+	auto field = b->get_field(base);
+	field.set_integer(v1);
 
 	// Vertex 2
-	field = &b->fields[static_cast<size_t>(base + 1)];
-	field->set_integer(v2);
+	field = b->get_field(base + 1);
+	field.set_integer(v2);
 
 	// Vertex 3
-	field = &b->fields[static_cast<size_t>(base + 2)];
-	field->set_integer(v3);
+	field = b->get_field(base + 2);
+	field.set_integer(v3);
 
 	// colour
-	field = &b->fields[static_cast<size_t>(base + 3)];
-	field->set_integer(colour);
+	field = b->get_field(base + 3);
+	field.set_integer(colour);
 }
 
 void VM::opcode_CREATESHAPE()
@@ -2690,9 +2692,9 @@ void VM::opcode_MOUSE()
 
 	VM_INT x, y, state;
 	g_env.graphics.mouse(x, y, state);
-	var1->value_int = x;
-	var2->value_int = y;
-	var3->value_int = state;
+	var1->set_integer(x);
+	var2->set_integer(y);
+	var3->set_integer(state);
 }
 
 std::string VM::run()

@@ -20,13 +20,13 @@ void Debugger::debugger_variables()
             // Count number of ACTUAL local and variables (not just constants)
             std::vector<Boxed*> dis_globals;
             for (auto it = g_vm->helper_variables().get_variables().begin(); it != g_vm->helper_variables().get_variables().end(); ++it) {
-                if (!(*it).constant) {
+                if (!(*it).is_constant()) {
                     dis_globals.push_back(&(*it));
                 }
             }
             std::vector<Boxed*> dis_locals;
             for (auto it = g_vm->helper_variables().get_locals().begin(); it != g_vm->helper_variables().get_locals().end(); ++it) {
-                if (!(*it).constant) {
+                if (!(*it).is_constant()) {
                     dis_locals.push_back(&(*it));
                 }
             }
@@ -108,8 +108,8 @@ void Debugger::debugger_variables()
 
                     // Name
                     g_env.graphics.colour(0, 0, 255);
-                    g_env.graphics.print_text(disassembly_font, v->name, -1, -1);
-                    int a = 25 - static_cast<int>(v->name.length());
+                    g_env.graphics.print_text(disassembly_font, v->get_name(), -1, -1);
+                    int a = 25 - static_cast<int>(v->get_name().length());
                     for (int i = 0; i < a; i++) {
                         g_env.graphics.print_text(disassembly_font, " ", -1, -1);
                     }
@@ -118,22 +118,22 @@ void Debugger::debugger_variables()
                     g_env.graphics.colour(255, 255, 255);
                     switch (v->get_type()) {
                     case Type::INTEGER:
-                        g_env.graphics.print_text(disassembly_font, std::to_string(v->value_int), -1, -1);
+                        g_env.graphics.print_text(disassembly_font, std::to_string(v->get_integer()), -1, -1);
                         break;
                     case Type::FLOAT:
-                        g_env.graphics.print_text(disassembly_font, std::to_string(v->value_float), -1, -1);
+                        g_env.graphics.print_text(disassembly_font, std::to_string(v->get_float()), -1, -1);
                         break;
                     case Type::STRING:
-                        g_env.graphics.print_text(disassembly_font, v->value_string, -1, -1);
+                        g_env.graphics.print_text(disassembly_font, v->get_string(), -1, -1);
                         break;
                     case Type::INTEGER_ARRAY:
-                        g_env.graphics.print_text(disassembly_font, std::to_string(v->value_int_array.size()) + " entries", -1, -1);
+                        g_env.graphics.print_text(disassembly_font, std::to_string(v->get_integer_array_size()) + " entries", -1, -1);
                         break;
                     case Type::FLOAT_ARRAY:
-                        g_env.graphics.print_text(disassembly_font, std::to_string(v->value_float_array.size()) + " entries", -1, -1);
+                        g_env.graphics.print_text(disassembly_font, std::to_string(v->get_float_array_size()) + " entries", -1, -1);
                         break;
                     case Type::STRING_ARRAY:
-                        g_env.graphics.print_text(disassembly_font, std::to_string(v->value_string_array.size()) + " entries", -1, -1);
+                        g_env.graphics.print_text(disassembly_font, std::to_string(v->get_string_array_size()) + " entries", -1, -1);
                         break;
                     case Type::TYPE:
                         g_env.graphics.print_text(disassembly_font, "** TYPE VALUE **", -1, -1);

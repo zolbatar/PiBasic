@@ -15,7 +15,7 @@ class Stack {
 public:
     void drop() { stack.pop(); }
 
-    void push_float(Bytecode& bc, const VM_FLOAT v)
+    void push_float(const VM_FLOAT v)
     {
         Boxed b;
         b.set_float(v);
@@ -41,7 +41,7 @@ public:
         stack.push(b);
     }
 
-    Boxed pop_boxed(Bytecode& bc)
+    Boxed pop_boxed()
     {
         auto a = stack.top();
         stack.pop();
@@ -56,7 +56,7 @@ public:
             auto flp = file_and_line_lookup(bc.line_number);
             throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, "Expected float on stack - this is normally an internal DARIC error");
         }
-        return b.value_float;
+        return b.get_float();
     }
 
     VM_INT pop_int(Bytecode& bc)
@@ -67,14 +67,14 @@ public:
             auto flp = file_and_line_lookup(bc.line_number);
             throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, "Expected integer on stack - this is normally an internal DARIC error");
         }
-        return b.value_int;
+        return b.get_integer();
     }
 
     VM_INT pop_int_checkless()
     {
         auto b = stack.top();
         stack.pop();
-        return b.value_int;
+        return b.get_integer();
     }
 
     VM_STRING pop_string(Bytecode& bc)
@@ -85,7 +85,7 @@ public:
             auto flp = file_and_line_lookup(bc.line_number);
             throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, "Expected string on stack - this is normally an internal DARIC error");
         }
-        return b.value_string;
+        return b.get_string();
     }
 
     void clear_stack(Bytecode& bc)

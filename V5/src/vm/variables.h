@@ -75,7 +75,7 @@ public:
             for (UINT32 i = 0; i < function.locals_count; i++) {
                 // Move names for runtime log purposes
                 Boxed b;
-                b.name = function.locals[i].name;
+                b.set_name(function.locals[i].get_name());
                 b.set_type_nodefault(function.locals[i].get_type());
                 locals.push_back(std::move(b));
             }

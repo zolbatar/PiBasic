@@ -59,14 +59,14 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
     vm->helper_variables().set_variables_size(global_var_index);
     for (auto g = globals.begin(); g != globals.end(); ++g) {
         auto glob = (*g).second;
-        if (vm->helper_variables().get_variable_by_int_checkless(glob.index)->get_type() == Type::NOTYPE) {
-            vm->helper_variables().add_variable((*g).second, glob.index);
+        if (vm->helper_variables().get_variable_by_int_checkless(glob.get_index())->get_type() == Type::NOTYPE) {
+            vm->helper_variables().add_variable((*g).second, glob.get_index());
         }
     }
     for (auto g = constants.begin(); g != constants.end(); ++g) {
         auto glob = (*g);
-        if (vm->helper_variables().get_variable_by_int_checkless(glob.index)->get_type() == Type::NOTYPE) {
-            vm->helper_variables().add_variable(glob, glob.index);
+        if (vm->helper_variables().get_variable_by_int_checkless(glob.get_index())->get_type() == Type::NOTYPE) {
+            vm->helper_variables().add_variable(glob, glob.get_index());
         }
     }
 
@@ -86,7 +86,7 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
         for (auto l = func.locals.begin(); l != func.locals.end(); ++l) {
             auto ll = (*l).second;
             Boxed b2;
-            b2.name = ll.name;
+            b2.set_name(ll.get_name());
             b2.set_type_nodefault(ll.get_type());
             b.locals.push_back(std::move(b2));
         }

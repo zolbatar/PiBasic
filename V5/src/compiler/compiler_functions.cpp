@@ -37,8 +37,8 @@ antlrcpp::Any Compiler::visitStmtDEFFN(DARICParser::StmtDEFFNContext* context)
         for (auto it = current_function->parameters.rbegin(); it != current_function->parameters.rend(); ++it) {
             auto a = *it;
             Boxed b;
-            b.index = a.index;
-            b.name = a.name;
+            b.set_index(a.index);
+            b.set_name(a.name);
             b.set_type_nodefault(a.type);
             current_function->locals.insert(std::pair<std::string, Boxed>(a.name, std::move(b)));
             current_function->local_var_index++;
@@ -122,8 +122,8 @@ antlrcpp::Any Compiler::visitStmtDEFPROC(DARICParser::StmtDEFPROCContext* contex
         for (auto it = current_function->parameters.rbegin(); it != current_function->parameters.rend(); ++it) {
             auto a = *it;
             Boxed b;
-            b.index = a.index;
-            b.name = a.name;
+            b.set_index(a.index);
+            b.set_name(a.name);
             b.set_type_nodefault(a.type);
             current_function->locals.insert(std::pair<std::string, Boxed>(a.name, std::move(b)));
             current_function->local_var_index++;
