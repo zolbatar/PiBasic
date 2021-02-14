@@ -721,7 +721,7 @@ void VM::opcode_LOAD_FIELD()
 {
 	auto var = variables.get_variable(bc);
 	VM_INT index = stack.pop_int(bc);
-	auto field = &var->get_field(index);
+	auto field = var->get_field(index);
 	switch (bc.type) {
 	case Type::INTEGER: {
 		stack.push_int(field->get_integer());
@@ -754,21 +754,21 @@ void VM::opcode_STORE_FIELD()
 	switch (bc.type) {
 	case Type::INTEGER: {
 		VM_INT v = stack.pop_int(bc);
-		field.set_integer(v);
+		field->set_integer(v);
 		if (!performance_build && runtime_debug)
 			g_env.log << "Store field variable " << var->get_name() << " index " << index << " value " << v << std::endl;
 		return;
 	}
 	case Type::FLOAT: {
 		VM_FLOAT v = stack.pop_float(bc);
-		field.set_float(v);
+		field->set_float(v);
 		if (!performance_build && runtime_debug)
 			g_env.log << "Store field variable " << var->get_name() << " index " << index << " value " << v << std::endl;
 		return;
 	}
 	case Type::STRING: {
 		VM_STRING v = stack.pop_string(bc);
-		field.set_string(v);
+		field->set_string(v);
 		if (!performance_build && runtime_debug)
 			g_env.log << "Store field variable " << var->get_name() << " index " << index << " value '" << v << "'" << std::endl;
 		return;
@@ -790,21 +790,21 @@ void VM::opcode_LOAD_FIELD_ARRAY()
 	auto field = var->get_field(real_index);
 	switch (bc.type) {
 	case Type::INTEGER: {
-		stack.push_int(field.get_integer());
+		stack.push_int(field->get_integer());
 		if (!performance_build && runtime_debug)
-			g_env.log << "Load field variable " << var->get_name() << " index " << index << " value " << field.get_integer() << std::endl;
+			g_env.log << "Load field variable " << var->get_name() << " index " << index << " value " << field->get_integer() << std::endl;
 		return;
 	}
 	case Type::FLOAT: {
-		stack.push_float(field.get_float());
+		stack.push_float(field->get_float());
 		if (!performance_build && runtime_debug)
-			g_env.log << "Load field variable " << var->get_name() << " index " << index << " value " << field.get_float() << std::endl;
+			g_env.log << "Load field variable " << var->get_name() << " index " << index << " value " << field->get_float() << std::endl;
 		return;
 	}
 	case Type::STRING: {
-		stack.push_string(field.get_string());
+		stack.push_string(field->get_string());
 		if (!performance_build && runtime_debug)
-			g_env.log << "Load field variable " << var->get_name() << " index " << index << " value '" << field.get_string() << "'" << std::endl;
+			g_env.log << "Load field variable " << var->get_name() << " index " << index << " value '" << field->get_string() << "'" << std::endl;
 		return;
 	}
 	default:
@@ -825,7 +825,7 @@ void VM::opcode_STORE_FIELD_ARRAY()
 		if (real_index < 0 || real_index >= static_cast<int>(var->get_fields_count()))
 			error("Invalid array or array index");
 		auto field = var->get_field(real_index);
-		field.set_integer(v);
+		field->set_integer(v);
 		if (!performance_build && runtime_debug)
 			g_env.log << "Store field variable " << var->get_name() << " index " << index << " value " << v << std::endl;
 		return;
@@ -837,7 +837,7 @@ void VM::opcode_STORE_FIELD_ARRAY()
 		if (real_index < 0 || real_index >= static_cast<int>(var->get_fields_count()))
 			error("Invalid array or array index");
 		auto field = var->get_field(real_index);
-		field.set_float(v);
+		field->set_float(v);
 		if (!performance_build && runtime_debug)
 			g_env.log << "Store field variable " << var->get_name() << " index " << index << " value " << v << std::endl;
 		return;
@@ -849,7 +849,7 @@ void VM::opcode_STORE_FIELD_ARRAY()
 		if (real_index < 0 || real_index >= static_cast<int>(var->get_fields_count()))
 			error("Invalid array or array index");
 		auto field = var->get_field(real_index);
-		field.set_string(v);
+		field->set_string(v);
 		if (!performance_build && runtime_debug)
 			g_env.log << "Store field variable " << var->get_name() << " index " << index << " value '" << v << "'" << std::endl;
 		return;
@@ -1071,7 +1071,7 @@ void VM::opcode_NEXT()
 	case Type::INTEGER: {
 		VM_INT step = var->get_integer_array_item(1);
 		var->set_integer(var->get_integer() + step);
-		var->set_integer_array_item(0, var->get_integer_array_item(0) - 1);
+		var->dec_integer_array_item(0);
 		if (var->get_integer_array_item(0) >= 0) {
 			helper_bytecodes().pc = var->get_integer_array_item(2);
 		}
@@ -1081,9 +1081,9 @@ void VM::opcode_NEXT()
 		return;
 	}
 	case Type::FLOAT: {
-		VM_FLOAT step = var->get_float_array_item(1);
+		VM_FLOAT step = var->get_float_array_item(0);
 		var->set_float(var->get_float() + step);
-		var->set_integer_array_item(0, var->get_integer_array_item(0) - 1);
+		var->dec_integer_array_item(0);
 		if (var->get_integer_array_item(0) >= 0) {
 			helper_bytecodes().pc = var->get_integer_array_item(1);
 		}
@@ -1152,22 +1152,22 @@ void VM::opcode_NEXTIN()
 		return;
 	}
 	else {
-		var->set_integer_array_item(0, var->get_integer_array_item(0) - 1);
+		var->dec_integer_array_item(0);
 	}
 
 	switch (bc.type) {
 	case Type::INTEGER: {
-		auto i = variable_array->inc_integer_array_item(3);
+		auto i = var->inc_integer_array_item(3);
 		var->set_integer(variable_array->get_integer_array_item(i));
 		break;
 	}
 	case Type::FLOAT: {
-		auto i = variable_array->inc_integer_array_item(3);
+		auto i = var->inc_integer_array_item(3);
 		var->set_float(variable_array->get_float_array_item(i));
 		break;
 	}
 	case Type::STRING: {
-		auto i = variable_array->inc_integer_array_item(3);
+		auto i = var->inc_integer_array_item(3);
 		var->set_string(variable_array->get_string_array_item(i));
 		break;
 	}
@@ -2437,19 +2437,19 @@ void VM::opcode_CREATEVERTEX()
 	// X
 
 	auto field = b->get_field(base);
-	field.set_float(x);
+	field->set_float(x);
 
 	// Y
 	field = b->get_field(base + 1);
-	field.set_float(y);
+	field->set_float(y);
 
 	// Z
 	field = b->get_field(base + 2);
-	field.set_float(z);
+	field->set_float(z);
 
 	// colour
 	field = b->get_field(base + 3);
-	field.set_integer(colour);
+	field->set_integer(colour);
 }
 
 void VM::opcode_CREATETRIANGLE()
@@ -2470,19 +2470,19 @@ void VM::opcode_CREATETRIANGLE()
 
 	// Vertex 1
 	auto field = b->get_field(base);
-	field.set_integer(v1);
+	field->set_integer(v1);
 
 	// Vertex 2
 	field = b->get_field(base + 1);
-	field.set_integer(v2);
+	field->set_integer(v2);
 
 	// Vertex 3
 	field = b->get_field(base + 2);
-	field.set_integer(v3);
+	field->set_integer(v3);
 
 	// colour
 	field = b->get_field(base + 3);
-	field.set_integer(colour);
+	field->set_integer(colour);
 }
 
 void VM::opcode_CREATESHAPE()

@@ -86,7 +86,7 @@ public:
 	VM_INT get_array_dimension(size_t i) { return array_definition[i]; }
 	void set_1d_dimensions(VM_INT v) { array_definition.resize(1); array_definition[0] = v; }
 	void set_2d_dimensions(VM_INT v1, VM_INT v2) { array_definition.resize(2); array_definition[0] = v1; array_definition[1] = v2; }
-	bool set_is_constant() { constant = true; }
+	void set_is_constant() { constant = true; }
 	bool is_constant() { return constant; }
 
 	/* Custom types */
@@ -95,9 +95,9 @@ public:
 
 	/* Fields */
 	VM_INT get_fields_count() { return static_cast<VM_INT>(fields.size()); }
-	VM_INT set_fields_count(size_t v) { fields.resize(v); }
+	void set_fields_count(size_t v) { fields.resize(v); }
 	void clear_fields() { fields.clear(); }
-	Boxed& get_field(size_t i) { return fields[i]; }
+	Boxed* get_field(size_t i) { return &fields[i]; }
 
 	/* Name */
 	std::string get_name() { return name; }
@@ -114,26 +114,27 @@ public:
 
 	/* Int Array */
 	std::vector<VM_INT> get_integer_array() { return value_int_array; }
-	VM_INT get_integer_array_item(size_t v) { return value_int_array[v]; }
-	VM_INT inc_integer_array_item(size_t v) { return value_int_array[v]++; }
+	VM_INT get_integer_array_item(size_t index) { return value_int_array[index]; }
+	VM_INT inc_integer_array_item(size_t index) { return value_int_array[index]++; }
+	VM_INT dec_integer_array_item(size_t index) { return value_int_array[index]--; }
 	void set_integer_array_item(size_t index, VM_INT v) { value_int_array[index] = v; }
 	size_t get_integer_array_size() { return value_int_array.size(); }
-	void set_integer_array_size(size_t v) { value_int_array.resize(v); }
+	void set_integer_array_size(size_t size) { value_int_array.resize(size); }
 
 	/* Float array*/
 	std::vector<VM_FLOAT> get_float_array() { return value_float_array; }
-	VM_FLOAT get_float_array_item(size_t v) { return value_float_array[v]; }
+	VM_FLOAT get_float_array_item(size_t index) { return value_float_array[index]; }
 	void set_float_array_item(size_t index, VM_FLOAT v) { value_float_array[index] = v; }
-	VM_FLOAT inc_float_array_item(size_t v) { return value_float_array[v]++; }
+	VM_FLOAT inc_float_array_item(size_t index) { return value_float_array[index]++; }
 	size_t get_float_array_size() { return value_float_array.size(); }
-	void set_float_array_size(size_t v) { value_float_array.resize(v); }
+	void set_float_array_size(size_t size) { value_float_array.resize(size); }
 
 	/* String array */
 	std::vector<VM_STRING> get_string_array() { return value_string_array; }
-	VM_STRING get_string_array_item(size_t v) { return value_string_array[v]; }
+	VM_STRING get_string_array_item(size_t index) { return value_string_array[index]; }
 	void set_string_array_item(size_t index, VM_STRING v) { value_string_array[index] = v; }
 	size_t get_string_array_size() { return value_string_array.size(); }
-	void set_string_array_size(size_t v) { value_string_array.resize(v); }
+	void set_string_array_size(size_t size) { value_string_array.resize(size); }
 
 	/* Index */
 	UINT32 get_index() { return index; }
@@ -156,14 +157,3 @@ private:
 private:
 	Type type = Type::NOTYPE;
 };
-
-/*class PolyType {
-public:
-	virtual Type get_type() { return Type::NOTYPE; }
-
-private:
-};
-
-class PolyType : public PolyType {
-	VM_INT value_int;
-};*/

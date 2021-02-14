@@ -208,7 +208,7 @@ PRINT "Hex                = ";:IF &40 = 64 PROCPass() ELSE PROCFail()
 PRINT "Binary             = ";:IF %100 = 4 PROCPass() ELSE PROCFail()
 PRINT
 
-PRINT "::PRINT & Input::"
+PRINT "::PRINT & INPUT::"
 PRINT "Multi-PRINT ,      = ";:PRINT 10,151.2,"Test"
 PRINT "Multi-PRINT ;      = ";:PRINT 10;151.2;"Test"
 PRINT "Multi-PRINT end ;  = ";:PRINT 10;151.2;"Test";:PRINT

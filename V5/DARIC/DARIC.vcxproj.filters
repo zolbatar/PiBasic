@@ -362,6 +362,9 @@
     <ClInclude Include="..\src\compiler\file_lookup.h">
       <Filter>Header Files\Compiler</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\vm\stackh.h">
+      <Filter>Header Files\VM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Grammar\DARIC.g4">
