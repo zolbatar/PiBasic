@@ -1,6 +1,6 @@
-gCentreX = 0.0, gCentreY = 0.0, gScale = 3.0, pointSkip=1, gRound=100.0
 INSTALL "SetupGraphics"
 INSTALL "Menus"
+gCentreX = 0.0, gCentreY = 0.0, gScale = 3.0, pointSkip=1, gRound=100.0
 
 CLS
 PROCTitle("'World in Lines' - Choose point skipping")
@@ -11,24 +11,21 @@ PROCLabel("4", "Render every 25th point (fastest)", ms%+(3*ys%))
 PROCLabel("Q", "Back to Welcome", ms%+(5*ys%))
 A$=GET$
 CASE A$ OF
-	WHEN "1" pointSkip=1
-	WHEN "2" pointSkip=4
-	WHEN "3" pointSkip=10
-	WHEN "4" pointSkip=25
+	WHEN "1":pointSkip=1
+	WHEN "2":pointSkip=4
+	WHEN "3":pointSkip=10
+	WHEN "4":pointSkip=25
 ENDCASE
 PROCLoadPolygons()
 CHAIN "Welcome"
 
-TYPE MapPoint
-	FIELD x
-	FIELD y
-ENDTYPE
+TYPE MapPoint(x,y)
 
 DEF PROCLoadPolygons()
 	CLS
 	PRINT "Loading territory polygons..."
 	LOCAL poly$()=LISTFILES("GIS")
-	PRINT DIM(poly$(),1); " files"
+	PRINT LEN(poly$()); " files"
 	PRINT "Sizing";
 	points%=0
 	FOR LOCAL p$ IN poly$()
@@ -50,10 +47,10 @@ DEF PROCLoadPolygons()
 	dragging%=0
 	render%=1
 	REPEAT
-		IF render%=1 THEN PROCRender():render%=0
+		IF render%=1 PROCRender():render%=0
 		MOUSE x%,y%,buttons%
-		IF buttons% AND 4
-			IF NOT dragging%
+		IF buttons% AND 4 THEN
+			IF NOT dragging% THEN
 				MOUSE last_x%,last_y%,buttons%
 				dragging%=1
 			ELSE
@@ -61,7 +58,7 @@ DEF PROCLoadPolygons()
 				gCentreX+=dx%:gCentreY+=dy%
 				last_x%=x%:last_y%=y%
 				render%=1
-			END IF
+			ENDIF
 		ELSE
 			dragging%=0
 		ENDIF
@@ -118,12 +115,12 @@ DEF PROCLoadPolygon(filename$, RETURN points%, phase%)
 		s$=GET$#f%
 		IF LEN(s$) > 0 THEN
 			IF s$ = "---" THEN
-				IF phase%=1 THEN p!(points%)x = 0.0: p!(points%)y = 0.0
+				IF phase%=1 p!(points%)x = 0.0: p!(points%)y = 0.0
 				points%+=1
 				skip=0
 			ELSE
-				skip+=1
-				IF skip = pointSkip
+				skip=skip+1
+				IF skip = pointSkip THEN
 					IF phase%=1 THEN
 						LOCAL p1%=INSTR(s$, ",")
 						LOCAL p2%=LEN(s$)

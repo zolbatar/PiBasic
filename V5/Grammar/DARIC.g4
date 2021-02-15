@@ -429,6 +429,7 @@ numExpr
     | numExpr (EQ|NE|GT|GE|LT|LE) numExpr   #numExprNumRelop
     | strExpr (EQ|NE|GT|GE|LT|LE) strExpr   #numExprStrRelop
     | numExpr (AND|OR|EOR) numExpr          #numExprANDOREOR
+    | LEN LPAREN justVar LPAREN RPAREN RPAREN   #numFuncArraySize
     ;
 
 numColours

@@ -767,6 +767,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitNumFuncArraySize(DARICParser::NumFuncArraySizeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitNumExprHat(DARICParser::NumExprHatContext *ctx) override {
     return visitChildren(ctx);
   }

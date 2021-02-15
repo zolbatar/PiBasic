@@ -1224,6 +1224,13 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumExprVar(DARICParser.NumExprVarContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code numFuncArraySize}
+	 * labeled alternative in {@link DARICParser#numExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumFuncArraySize(DARICParser.NumFuncArraySizeContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code numExprHat}
 	 * labeled alternative in {@link DARICParser#numExpr}.
 	 * @param ctx the parse tree

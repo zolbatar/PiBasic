@@ -888,7 +888,9 @@ void VM::opcode_NEW_TYPE_ARRAY()
 void VM::opcode_ARRAYSIZE()
 {
 	auto var = variables.get_variable(bc);
-	VM_INT dimension = stack.pop_int(bc);
+	if (var->get_array_dimensions() != 1) {
+		error("LEN of array needs 1 dimensional array");
+	}
 	VM_INT size = var->get_array_dimension(0);
 	switch (var->get_type()) {
 	case Type::TYPE_ARRAY:
@@ -2092,6 +2094,7 @@ void VM::opcode_LISTFILES()
 	auto size = files.size() + 1;
 	var->set_type_default(Type::STRING_ARRAY);
 	var->set_string_array_size(size);
+	var->set_1d_dimensions(size);
 	if (!performance_build && runtime_debug)
 		g_env.log << "Dimension string variable " << var->get_name() << " with size " << size << std::endl;
 

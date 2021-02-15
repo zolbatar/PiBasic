@@ -61,6 +61,7 @@ antlrcpp::Any Compiler::visitStmtLISTFILES(DARICParser::StmtLISTFILESContext* co
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
     visit(context->varNameString());
+    current_var.type = Type::STRING_ARRAY;
     if (context->LOCAL() == NULL) {
         find_or_create_variable(VariableScope::GLOBAL);
     } else {

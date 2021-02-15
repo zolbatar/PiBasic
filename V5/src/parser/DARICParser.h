@@ -3008,6 +3008,20 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  NumFuncArraySizeContext : public NumExprContext {
+  public:
+    NumFuncArraySizeContext(NumExprContext *ctx);
+
+    antlr4::tree::TerminalNode *LEN();
+    std::vector<antlr4::tree::TerminalNode *> LPAREN();
+    antlr4::tree::TerminalNode* LPAREN(size_t i);
+    JustVarContext *justVar();
+    std::vector<antlr4::tree::TerminalNode *> RPAREN();
+    antlr4::tree::TerminalNode* RPAREN(size_t i);
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  NumExprHatContext : public NumExprContext {
   public:
     NumExprHatContext(NumExprContext *ctx);

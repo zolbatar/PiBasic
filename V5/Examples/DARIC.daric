@@ -73,8 +73,8 @@ PROCSky()
 PROCSun()
 PROCLines()
 COLOUR &004080
-REM ROTATE terrain1%, 355, 0, 0
-REM RENDER
+ROTATE terrain1%, 355, 0, 0
+RENDER
 PROCLinesBlackenLogo()
 COLOUR WHITE:TEXTCENTRE coolfont200%, w%/2-250, h%/2-100, "D"
 COLOUR WHITE:TEXTCENTRE coolfont200%, w%/2-125, h%/2-100, "A"

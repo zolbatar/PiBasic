@@ -395,6 +395,8 @@ public:
 
     virtual antlrcpp::Any visitNumExprVar(DARICParser::NumExprVarContext *context) = 0;
 
+    virtual antlrcpp::Any visitNumFuncArraySize(DARICParser::NumFuncArraySizeContext *context) = 0;
+
     virtual antlrcpp::Any visitNumExprHat(DARICParser::NumExprHatContext *context) = 0;
 
     virtual antlrcpp::Any visitNumExprNumRelop(DARICParser::NumExprNumRelopContext *context) = 0;

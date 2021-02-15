@@ -278,7 +278,6 @@
     <ClInclude Include="..\src\vm\bytecode.h" />
     <ClInclude Include="..\src\vm\performance.h" />
     <ClInclude Include="..\src\vm\stack.h" />
-    <ClInclude Include="..\src\vm\stackh.h" />
     <ClInclude Include="..\src\vm\type.h" />
     <ClInclude Include="..\src\vm\variables.h" />
     <ClInclude Include="..\src\vm\vm.h" />
@@ -298,7 +297,6 @@
     <None Include="..\Examples\Menus.daric" />
     <None Include="..\Examples\Perlin.daric" />
     <None Include="..\Examples\SetupGraphics.daric" />
-    <None Include="..\Examples\SetupGraphicsBanked.daric" />
     <None Include="..\Examples\Sierpinski.daric" />
     <None Include="..\Examples\Start.daric" />
     <None Include="..\Examples\Terrain.daric" />

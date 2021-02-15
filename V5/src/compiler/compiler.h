@@ -433,7 +433,8 @@ protected:
     antlrcpp::Any visitNumFuncTRUE(DARICParser::NumFuncTRUEContext* context);
     antlrcpp::Any visitNumFuncINT(DARICParser::NumFuncINTContext* context);
     antlrcpp::Any visitNumFuncFLOAT(DARICParser::NumFuncFLOATContext* context);
-
+    antlrcpp::Any visitNumFuncArraySize(DARICParser::NumFuncArraySizeContext* context);
+    
     /* I/O */
     antlrcpp::Any visitStmtBPUTH(DARICParser::StmtBPUTHContext* context);
     antlrcpp::Any visitStmtBGETH(DARICParser::StmtBGETHContext* context);

@@ -62,7 +62,10 @@ antlrcpp::Any Compiler::visitVarDeclTypeVarArrayed(DARICParser::VarDeclTypeVarAr
     set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
+    auto saved_state = state;
+    state = CompilerState::NOSTATE;
     visit(context->numExpr());
+    state = saved_state;
     ensure_stack_is_integer();
     stack_pop();
     last_array_dimensions = 1;

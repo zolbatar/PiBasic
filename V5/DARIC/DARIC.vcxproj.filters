@@ -362,9 +362,6 @@
     <ClInclude Include="..\src\compiler\file_lookup.h">
       <Filter>Header Files\Compiler</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\vm\stackh.h">
-      <Filter>Header Files\VM</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Grammar\DARIC.g4">
@@ -416,9 +413,6 @@
       <Filter>Resource Files\Examples</Filter>
     </None>
     <None Include="..\Examples\SetupGraphics.daric">
-      <Filter>Resource Files\Examples</Filter>
-    </None>
-    <None Include="..\Examples\SetupGraphicsBanked.daric">
       <Filter>Resource Files\Examples</Filter>
     </None>
     <None Include="..\Examples\Sierpinski.daric">
