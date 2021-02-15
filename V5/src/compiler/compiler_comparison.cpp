@@ -7,7 +7,7 @@ antlrcpp::Any Compiler::visitNumExprNumRelop(DARICParser::NumExprNumRelopContext
         return NULL;
     visit(context->numExpr(0));
     visit(context->numExpr(1));
-    expression_type_conversion(context, false);
+    expression_type_conversion(false);
     if (context->EQ() != NULL) {
         insert_bytecode(Bytecodes::CMP_E, peek_type());
     } else if (context->NE() != NULL) {
@@ -34,7 +34,7 @@ antlrcpp::Any Compiler::visitNumExprStrRelop(DARICParser::NumExprStrRelopContext
         return NULL;
     visit(context->strExpr(0));
     visit(context->strExpr(1));
-    expression_type_conversion(context, false);
+    expression_type_conversion(false);
     if (context->EQ() != NULL) {
         insert_bytecode(Bytecodes::CMP_E, peek_type());
     } else if (context->NE() != NULL) {

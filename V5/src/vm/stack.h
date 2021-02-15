@@ -50,6 +50,10 @@ public:
 
     VM_FLOAT pop_float(Bytecode& bc)
     {
+        if (!performance_build && stack.empty()) {
+            auto flp = file_and_line_lookup(bc.line_number);
+            throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, "Empty stack and expected float on stack - this is normally an internal DARIC error");
+        }
         auto b = stack.top();
         stack.pop();
         if (b.get_type() != Type::FLOAT) {
@@ -61,6 +65,10 @@ public:
 
     VM_INT pop_int(Bytecode& bc)
     {
+        if (!performance_build && stack.empty()) {
+            auto flp = file_and_line_lookup(bc.line_number);
+            throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, "Empty stack and expected integer on stack - this is normally an internal DARIC error");
+        }
         auto b = stack.top();
         stack.pop();
         if (b.get_type() != Type::INTEGER) {
@@ -79,6 +87,10 @@ public:
 
     VM_STRING pop_string(Bytecode& bc)
     {
+        if (!performance_build && stack.empty()) {
+            auto flp = file_and_line_lookup(bc.line_number);
+            throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, "Empty stack and expected string on stack - this is normally an internal DARIC error");
+        }
         auto b = stack.top();
         stack.pop();
         if (b.get_type() != Type::STRING) {

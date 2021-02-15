@@ -2697,8 +2697,8 @@ void VM::opcode_GETS()
 
 void VM::opcode_MOUSE()
 {
-	VM_INT v2 = stack.pop_int(bc);
 	VM_INT v3 = stack.pop_int(bc);
+	VM_INT v2 = stack.pop_int(bc);
 	auto var1 = variables.get_variable(bc);
 	auto var2 = variables.get_variable_by_int(bc, v2);
 	auto var3 = variables.get_variable_by_int(bc, v3);
@@ -2709,7 +2709,7 @@ void VM::opcode_MOUSE()
 	}
 
 	VM_INT x, y, state;
-	g_env.graphics.mouse(x, y, state);
+	g_env.graphics.mouse(&x, &y, &state);
 	var1->set_integer(x);
 	var2->set_integer(y);
 	var3->set_integer(state);
@@ -2730,8 +2730,10 @@ std::string VM::run()
 			if (!performance_build && runtime_debug) {
 				g_env.process_log();
 			}
+
 			poll_count++;
-			if (poll_count == 100) {
+			if (poll_count % 64 == 0) {
+				g_env.graphics.poll();
 				if (g_env.interactive && g_env.graphics.inkey(-113)) {
 					// Are we in BANKED mode?
 					if (g_env.graphics.is_banked()) {
@@ -2740,9 +2742,8 @@ std::string VM::run()
 					g_env.graphics.print_console("Escape\r");
 					return "";
 				}
-				g_env.graphics.poll();
-				poll_count = 0;
 			}
+
 			bc = helper_bytecodes().get_current_bytecode();
 			helper_bytecodes().next();
 			if (!performance_build && runtime_debug) {

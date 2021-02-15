@@ -457,7 +457,7 @@ protected:
     antlrcpp::Any visitNumFuncVAL(DARICParser::NumFuncVALContext* context);
 
     /* Numeric maths */
-    void expression_type_conversion(DARICParser::NumExprContext* context, bool DIVIDE);
+    void expression_type_conversion(bool DIVIDE);
     antlrcpp::Any visitNumExprUnary(DARICParser::NumExprUnaryContext* context);
     antlrcpp::Any visitNumExprHat(DARICParser::NumExprHatContext* context);
     antlrcpp::Any visitNumExprMultiplyDivide(DARICParser::NumExprMultiplyDivideContext* context);

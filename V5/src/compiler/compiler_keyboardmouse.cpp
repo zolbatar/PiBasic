@@ -7,13 +7,14 @@ antlrcpp::Any Compiler::visitStmtMOUSE(DARICParser::StmtMOUSEContext* context)
         return NULL;
     visit(context->varNameInteger(0));
     find_variable(false, true);
-    insert_instruction_notype(Bytecodes::FASTCONST_VAR, current_var.id);
+    auto saved = current_var;
     visit(context->varNameInteger(1));
     find_variable(false, true);
     insert_instruction_notype(Bytecodes::FASTCONST_VAR, current_var.id);
     visit(context->varNameInteger(2));
     find_variable(false, true);
     insert_instruction_notype(Bytecodes::FASTCONST_VAR, current_var.id);
+    insert_instruction_notype(Bytecodes::MOUSE, saved.id);
     return NULL;
 }
 
