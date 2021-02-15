@@ -99,7 +99,7 @@ keyMouseStmt
     | stmtGETS
     ;
     
-stmtINPUT:      INPUT (strExpr COMMA)? varList ;
+stmtINPUT:      INPUT LOCAL? (strExpr COMMA?)? justVar (COMMA justVar)* ;
 stmtPRINT:      PRINT printList? ;
 stmtMOUSE:      MOUSE varNameInteger COMMA varNameInteger COMMA varNameInteger ;
 stmtINKEY:      INKEY LPAREN numExpr RPAREN ;

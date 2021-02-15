@@ -21,6 +21,29 @@ antlrcpp::Any Compiler::visitStmtINPUT(DARICParser::StmtINPUTContext* context)
     set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
+
+    // Do we have some text to display?
+    if (context->strExpr() != NULL) {
+        visit(context->strExpr());
+        stack_pop();
+        insert_bytecode(Bytecodes::PRINT, Type::STRING);
+
+    }
+
+    // Question mark?
+    bool q_mark = true;
+    if (context->COMMA().size() < context->varDecl().size()) {
+        q_mark = false;
+    }
+
+    // Process all vars
+    for (auto i = 0; i < context->varDecl().size(); i++) {
+        visit(context->varDecl(i));
+        find_or_create_variable(context->LOCAL() != NULL ? VariableScope::LOCAL : VariableScope::GLOBAL);
+        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, q_mark);
+        insert_instruction(Bytecodes::INPUT, current_var.type, current_var.id);
+    }
+
     return NULL;
 }
 

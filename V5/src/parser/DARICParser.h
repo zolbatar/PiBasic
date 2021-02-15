@@ -855,9 +855,12 @@ public:
     StmtINPUTContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *INPUT();
-    VarListContext *varList();
+    std::vector<VarDeclContext *> varDecl();
+    VarDeclContext* varDecl(size_t i);
+    antlr4::tree::TerminalNode *LOCAL();
     StrExprContext *strExpr();
-    antlr4::tree::TerminalNode *COMMA();
+    std::vector<antlr4::tree::TerminalNode *> COMMA();
+    antlr4::tree::TerminalNode* COMMA(size_t i);
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
