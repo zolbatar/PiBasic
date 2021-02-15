@@ -184,7 +184,6 @@ antlrcpp::Any Compiler::visitNumVarFloatFieldArray(DARICParser::NumVarFloatField
     find_variable(true, true);
     if (state == CompilerState::NOSTATE) {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
-        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
         insert_instruction(Bytecodes::LOAD_FIELD_ARRAY, current_var.field_type, current_var.id);
         stack_push(current_var.field_type);
     }
@@ -207,7 +206,6 @@ antlrcpp::Any Compiler::visitNumVarIntegerFieldArray(DARICParser::NumVarIntegerF
     find_variable(true, true);
     if (state == CompilerState::NOSTATE) {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
-        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
         insert_instruction(Bytecodes::LOAD_FIELD_ARRAY, current_var.field_type, current_var.id);
         stack_push(current_var.field_type);
     }
@@ -230,7 +228,6 @@ antlrcpp::Any Compiler::visitNumVarStringFieldArray(DARICParser::NumVarStringFie
     find_variable(true, true);
     if (state == CompilerState::NOSTATE) {
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
-        insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
         insert_instruction(Bytecodes::LOAD_FIELD_ARRAY, current_var.field_type, current_var.id);
         stack_push(current_var.field_type);
     }

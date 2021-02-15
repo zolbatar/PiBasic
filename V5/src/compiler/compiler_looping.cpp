@@ -8,11 +8,7 @@ antlrcpp::Any Compiler::visitStmtFORIN(DARICParser::StmtFORINContext* context)
 
     // Get array variable and push onto stack
     visit(context->justVar(1));
-    if (context->LOCAL() != NULL) {
-        find_or_create_variable(VariableScope::LOCAL);
-    } else {
-        find_or_create_variable(VariableScope::GLOBAL);
-    }
+    find_variable(false, true);
     insert_instruction_notype(Bytecodes::FASTCONST_VAR, current_var.id);
     auto saved = current_var;
 
@@ -50,12 +46,13 @@ antlrcpp::Any Compiler::visitStmtFORIN(DARICParser::StmtFORINContext* context)
 
     // Actual FOR loop token
     insert_instruction(Bytecodes::FORIN, current_var.type, current_var.id);
+    saved = current_var;
 
     // Process loop content
     visit(context->body());
 
     // And next
-    insert_instruction(Bytecodes::NEXTIN, current_var.type, current_var.id);
+    insert_instruction(Bytecodes::NEXTIN, saved.type, saved.id);
 
     return NULL;
 }

@@ -23,9 +23,9 @@ TYPE MapPoint(x,y)
 
 DEF PROCLoadPolygons()
 	CLS
-	PRINT "Loading territory polygons..."
+	PRINT "Loading territory polygons...";
 	LOCAL poly$()=LISTFILES("GIS")
-	PRINT LEN(poly$()); " files"
+	PRINT ;LEN(poly$()); " files"
 	PRINT "Sizing";
 	points%=0
 	FOR LOCAL p$ IN poly$()
@@ -103,8 +103,8 @@ DEF PROCRender()
 		ENDIF
 	NEXT
 	COLOUR YELLOW
-	TEXTCENTRE PROP25, w% / 2, 0, "Press left mouse button to drag\r"
-	TEXTCENTRE PROP25, w% / 2, -1, "z - Zoom In, x - Zoom Out, p - Animate, q - Quit\r"
+	TEXTCENTRE PROP25, w% / 2, 0, "Press left mouse button to drag"+CHR$(13)
+	TEXTCENTRE PROP25, w% / 2, -1, "z - Zoom In, x - Zoom Out, p - Animate, q - Quit"+CHR$(13)
 	TEXTCENTRE PROP25, w% / 2, -1, STR$(points%) + "/401667 points"
 ENDPROC
 

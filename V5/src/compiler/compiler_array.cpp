@@ -101,6 +101,7 @@ antlrcpp::Any Compiler::visitVarDeclWithDimension(DARICParser::VarDeclWithDimens
 		insert_bytecode(Bytecodes::ADD, Type::INTEGER);
 		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(t.members.size()));
 		insert_bytecode(Bytecodes::MULTIPLY, Type::INTEGER);
+		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(t.members.size()));
 		insert_instruction_notype(Bytecodes::NEW_TYPE_ARRAY, current_var.id);
 
 		set_custom_type(context->varName()->getText());
@@ -211,6 +212,7 @@ antlrcpp::Any Compiler::visitNumFuncArraySize(DARICParser::NumFuncArraySizeConte
 	if (phase == CompilerPhase::LOOKAHEAD)
 		return NULL;
 	visit(context->justVar());
+	find_variable(false, true);
 	insert_instruction(Bytecodes::ARRAYSIZE, current_var.type, current_var.id);
 	stack_push(Type::INTEGER);
 	return NULL;

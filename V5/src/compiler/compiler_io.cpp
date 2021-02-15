@@ -67,10 +67,11 @@ antlrcpp::Any Compiler::visitStmtLISTFILES(DARICParser::StmtLISTFILESContext* co
     } else {
         find_or_create_variable(VariableScope::LOCAL);
     }
+    auto saved = current_var;
     visit(context->strExpr());
     ensure_stack_is_string();
     stack_pop();
-    insert_instruction_notype(Bytecodes::LISTFILES, current_var.id);
+    insert_instruction_notype(Bytecodes::LISTFILES, saved.id);
     return NULL;
 }
 

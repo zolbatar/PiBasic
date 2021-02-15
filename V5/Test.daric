@@ -1,4 +1,4 @@
-TYPE MapPoint(x,y)
-points%=0
-DIM p!(10, MapPoint)
-p!(points%)x = 0.0: p!(points%)y = 0.0
+i%=0
+PRINT i%
+i%+=1
+PRINT i%

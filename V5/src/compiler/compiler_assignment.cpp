@@ -209,12 +209,10 @@ void Compiler::save_to_variable(Type type, VarReference saved)
             case Type::FLOAT:
                 insert_bytecode(Bytecodes::CONV_INT, Type::FLOAT);
                 insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
-                insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
                 insert_instruction(Bytecodes::STORE_FIELD_ARRAY, Type::INTEGER, saved.id);
                 break;
             case Type::INTEGER:
                 insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
-                insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
                 insert_instruction(Bytecodes::STORE_FIELD_ARRAY, Type::INTEGER, saved.id);
                 break;
             default:
@@ -226,12 +224,10 @@ void Compiler::save_to_variable(Type type, VarReference saved)
             case Type::INTEGER:
                 insert_bytecode(Bytecodes::CONV_FLOAT, Type::INTEGER);
                 insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
-                insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
                 insert_instruction(Bytecodes::STORE_FIELD_ARRAY, Type::FLOAT, saved.id);
                 break;
             case Type::FLOAT:
                 insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
-                insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
                 insert_instruction(Bytecodes::STORE_FIELD_ARRAY, Type::FLOAT, saved.id);
                 break;
             default:
@@ -243,7 +239,6 @@ void Compiler::save_to_variable(Type type, VarReference saved)
             switch (type) {
             case Type::STRING:
                 insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, current_var.field_index);
-                insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(last_type_num_dimensions));
                 insert_instruction(Bytecodes::STORE_FIELD_ARRAY, Type::STRING, saved.id);
                 break;
             default:

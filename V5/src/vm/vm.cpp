@@ -781,11 +781,11 @@ void VM::opcode_STORE_FIELD()
 void VM::opcode_LOAD_FIELD_ARRAY()
 {
 	auto var = variables.get_variable(bc);
-	VM_INT fields = stack.pop_int(bc);
+	VM_INT fields = var->get_array_dimension(0);
 	VM_INT index = stack.pop_int(bc);
 	VM_INT array_index = stack.pop_int(bc);
-	auto real_index = array_index * fields + index;
-	if (real_index < 0 || real_index >= static_cast<int>(var->get_fields_count()))
+	VM_INT real_index = (array_index * fields) + index;
+	if (real_index < 0 || real_index >= var->get_fields_count())
 		error("Invalid array or array index");
 	auto field = var->get_field(real_index);
 	switch (bc.type) {
@@ -815,14 +815,14 @@ void VM::opcode_LOAD_FIELD_ARRAY()
 void VM::opcode_STORE_FIELD_ARRAY()
 {
 	auto var = variables.get_variable(bc);
-	VM_INT fields = stack.pop_int(bc);
+	VM_INT fields = var->get_array_dimension(0);
 	VM_INT index = stack.pop_int(bc);
 	switch (bc.type) {
 	case Type::INTEGER: {
 		VM_INT v = stack.pop_int(bc);
 		VM_INT array_index = stack.pop_int(bc);
-		auto real_index = array_index * fields + index;
-		if (real_index < 0 || real_index >= static_cast<int>(var->get_fields_count()))
+		VM_INT real_index = (array_index * fields) + index;
+		if (real_index < 0 || real_index >= var->get_fields_count())
 			error("Invalid array or array index");
 		auto field = var->get_field(real_index);
 		field->set_integer(v);
@@ -833,8 +833,8 @@ void VM::opcode_STORE_FIELD_ARRAY()
 	case Type::FLOAT: {
 		VM_FLOAT v = stack.pop_float(bc);
 		VM_INT array_index = stack.pop_int(bc);
-		auto real_index = array_index * fields + index;
-		if (real_index < 0 || real_index >= static_cast<int>(var->get_fields_count()))
+		VM_INT real_index = (array_index * fields) + index;
+		if (real_index < 0 || real_index >= var->get_fields_count())
 			error("Invalid array or array index");
 		auto field = var->get_field(real_index);
 		field->set_float(v);
@@ -845,8 +845,8 @@ void VM::opcode_STORE_FIELD_ARRAY()
 	case Type::STRING: {
 		VM_STRING v = stack.pop_string(bc);
 		VM_INT array_index = stack.pop_int(bc);
-		auto real_index = array_index * fields + index;
-		if (real_index < 0 || real_index >= static_cast<int>(var->get_fields_count()))
+		VM_INT real_index = (array_index * fields) + index;
+		if (real_index < 0 || real_index >= var->get_fields_count())
 			error("Invalid array or array index");
 		auto field = var->get_field(real_index);
 		field->set_string(v);
@@ -875,6 +875,7 @@ void VM::opcode_NEW_TYPE()
 void VM::opcode_NEW_TYPE_ARRAY()
 {
 	auto var = variables.get_variable(bc);
+	var->set_1d_dimensions(stack.pop_int(bc));
 	VM_INT num_fields = static_cast<size_t>(stack.pop_int(bc));
 	if (num_fields == 0)
 		error("DIM TYPE array of 0 size not allowed");
@@ -1923,8 +1924,7 @@ void VM::opcode_OPENIN()
 	VM_STRING filename = stack.pop_string(bc);
 	FILE* file = fopen(filename.c_str(), "rb");
 	if (!file) {
-		g_env.graphics.print_console("File '" + filename + "' not opened.\n  ");
-		stack.push_int(0);
+		error("File '" + filename + "' not opened");
 	}
 	else {
 		VM_INT r = channel_index++;
@@ -1940,8 +1940,7 @@ void VM::opcode_OPENOUT()
 	VM_STRING filename = stack.pop_string(bc);
 	FILE* file = fopen(filename.c_str(), "wb");
 	if (!file) {
-		g_env.graphics.print_console("File '" + filename + "' not created.\n");
-		stack.push_int(0);
+		error("File '" + filename + "' not created");
 	}
 	else {
 		VM_INT r = channel_index++;
@@ -1957,8 +1956,7 @@ void VM::opcode_OPENUP()
 	VM_STRING filename = stack.pop_string(bc);
 	FILE* file = fopen(filename.c_str(), "ab");
 	if (!file) {
-		g_env.graphics.print_console("File '" + filename + "' not opened for appending.\n");
-		stack.push_int(0);
+		error("File '" + filename + "' not opened for appending");
 	}
 	else {
 		VM_INT r = channel_index++;
@@ -1972,6 +1970,9 @@ void VM::opcode_OPENUP()
 void VM::opcode_BGET()
 {
 	VM_INT channel = stack.pop_int(bc);
+	if (channels.count(channel) == 0) {
+		error("Unknown channel #" + std::to_string(channel));
+	}
 	auto g = channels.find(channel);
 	char b = fgetc((*g).second);
 	stack.push_int(static_cast<VM_INT>(b));
@@ -1982,6 +1983,9 @@ void VM::opcode_BGET()
 void VM::opcode_EOFH()
 {
 	VM_INT channel = stack.pop_int(bc);
+	if (channels.count(channel) == 0) {
+		error("Unknown channel #" + std::to_string(channel));
+	}
 	auto g = channels.find(channel);
 	VM_INT eof = feof((*g).second);
 	stack.push_int(eof);
@@ -1993,6 +1997,9 @@ void VM::opcode_BPUT()
 {
 	VM_INT byte = stack.pop_int(bc);
 	VM_INT channel = stack.pop_int(bc);
+	if (channels.count(channel) == 0) {
+		error("Unknown channel #" + std::to_string(channel));
+	}
 	auto g = channels.find(channel);
 	fputc(byte, (*g).second);
 	if (!performance_build && runtime_debug)
@@ -2003,6 +2010,9 @@ void VM::opcode_PTR()
 {
 	VM_INT channel = stack.pop_int(bc);
 	auto g = channels.find(channel);
+	if (channels.count(channel) == 0) {
+		error("Unknown channel #" + std::to_string(channel));
+	}
 	auto pos = ftell((*g).second);
 	stack.push_int(pos);
 	if (!performance_build && runtime_debug)
@@ -2013,6 +2023,9 @@ void VM::opcode_PTRA()
 {
 	VM_INT position = stack.pop_int(bc);
 	VM_INT channel = stack.pop_int(bc);
+	if (channels.count(channel) == 0) {
+		error("Unknown channel #" + std::to_string(channel));
+	}
 	auto g = channels.find(channel);
 	fseek((*g).second, position, SEEK_SET);
 	if (!performance_build && runtime_debug)
@@ -2023,6 +2036,9 @@ void VM::opcode_GETSH()
 {
 	VM_INT channel = stack.pop_int(bc);
 	auto g = channels.find(channel);
+	if (channels.count(channel) == 0) {
+		error("Unknown channel #" + std::to_string(channel));
+	}
 	auto ch = (*g).second;
 	VM_STRING out = "";
 	while (!feof(ch)) {
@@ -2043,7 +2059,7 @@ void VM::opcode_CLOSE()
 {
 	VM_INT r = stack.pop_int(bc);
 	if (channels.count(r) == 0) {
-		g_env.graphics.print_console("Unknown channel #" + std::to_string(r) + "\n");
+		error("Unknown channel #" + std::to_string(r));
 	}
 	auto g = channels.find(r);
 	fclose((*g).second);
@@ -2091,7 +2107,7 @@ void VM::opcode_LISTFILES()
 #endif
 
 	// Dim destination array
-	auto size = files.size() + 1;
+	auto size = files.size();
 	var->set_type_default(Type::STRING_ARRAY);
 	var->set_string_array_size(size);
 	var->set_1d_dimensions(size);
