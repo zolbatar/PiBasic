@@ -61,6 +61,24 @@ void create_manual_2d()
         "The graphics screen is cleared to the currently selected background colour. The cursor position is reset to the top left.",
         "CLS"));
     keywords.push_back(ManualKeyword(
+        "CURSORON",
+        "CURSORON",
+        KeywordCategory::GRAPHICS_2D,
+        "Statement enabling the text cursor.",
+        {},
+        "",
+        "The text cursor is displayed at the current text position. Not shown in BANKED mode.",
+        "CURSORON"));
+    keywords.push_back(ManualKeyword(
+        "CURSOROFF",
+        "CURSOROFF",
+        KeywordCategory::GRAPHICS_2D,
+        "Statement disabling the text cursor.",
+        {},
+        "",
+        "The text cursor is disabled.",
+        "CURSOROFF"));
+    keywords.push_back(ManualKeyword(
         "COLOUR",
         "COLOUR (RGB)",
         KeywordCategory::GRAPHICS_2D,

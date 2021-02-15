@@ -129,6 +129,10 @@ public:
 
     virtual antlrcpp::Any visitStmtCOLOURBG(DARICParser::StmtCOLOURBGContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtCURSORON(DARICParser::StmtCURSORONContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtCURSOROFF(DARICParser::StmtCURSOROFFContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtGRAPHICS(DARICParser::StmtGRAPHICSContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtFLIP(DARICParser::StmtFLIPContext *context) = 0;

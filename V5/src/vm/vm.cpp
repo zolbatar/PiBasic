@@ -2255,6 +2255,18 @@ void VM::opcode_CLS()
 		g_env.log << "Clear text screen" << std::endl;
 }
 
+void VM::opcode_CURSORON() {
+	g_env.graphics.cursor_on();
+	if (!performance_build && runtime_debug)
+		g_env.log << "Text cursor on" << std::endl;
+}
+
+void VM::opcode_CURSOROFF() {
+	g_env.graphics.cursor_off();
+	if (!performance_build && runtime_debug)
+		g_env.log << "Text cursor off" << std::endl;
+}
+
 void VM::opcode_COLOURRGB()
 {
 	VM_INT b = stack.pop_int(bc);
@@ -3013,6 +3025,12 @@ std::string VM::run()
 				/* 2D Graphics */
 			case Bytecodes::CLS:
 				opcode_CLS();
+				break;
+			case Bytecodes::CURSORON:
+				opcode_CURSORON();
+				break;
+			case Bytecodes::CURSOROFF:
+				opcode_CURSOROFF();
 				break;
 			case Bytecodes::COLOURRGB:
 				opcode_COLOURRGB();

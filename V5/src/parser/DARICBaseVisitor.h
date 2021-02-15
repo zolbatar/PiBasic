@@ -235,6 +235,14 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtCURSORON(DARICParser::StmtCURSORONContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtCURSOROFF(DARICParser::StmtCURSOROFFContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtGRAPHICS(DARICParser::StmtGRAPHICSContext *ctx) override {
     return visitChildren(ctx);
   }

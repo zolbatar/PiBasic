@@ -32,13 +32,13 @@ antlrcpp::Any Compiler::visitStmtINPUT(DARICParser::StmtINPUTContext* context)
 
     // Question mark?
     bool q_mark = true;
-    if (context->COMMA().size() < context->varDecl().size()) {
+    if (context->COMMA().size() < context->justVar().size()) {
         q_mark = false;
     }
 
     // Process all vars
-    for (auto i = 0; i < context->varDecl().size(); i++) {
-        visit(context->varDecl(i));
+    for (auto i = 0; i < context->justVar().size(); i++) {
+        visit(context->justVar(i));
         find_or_create_variable(context->LOCAL() != NULL ? VariableScope::LOCAL : VariableScope::GLOBAL);
         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, q_mark);
         insert_instruction(Bytecodes::INPUT, current_var.type, current_var.id);

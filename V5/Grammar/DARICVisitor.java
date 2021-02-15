@@ -340,6 +340,18 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStmtCOLOURBG(DARICParser.StmtCOLOURBGContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtCURSORON}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtCURSORON(DARICParser.StmtCURSORONContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtCURSOROFF}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtCURSOROFF(DARICParser.StmtCURSOROFFContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link DARICParser#stmtGRAPHICS}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

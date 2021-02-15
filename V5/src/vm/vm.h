@@ -227,6 +227,8 @@ private:
     void opcode_MOUSE();
 
     void opcode_CLS();
+    void opcode_CURSORON();
+    void opcode_CURSOROFF();
     void opcode_COLOURRGB();
     void opcode_COLOURHEX();
     void opcode_COLOURBGRGB();

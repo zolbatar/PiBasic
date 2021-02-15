@@ -270,6 +270,9 @@ void Graphics::set_margin(int margin)
 
 void Graphics::print_text(int index_ff, VM_STRING text, int cursor_x, int cursor_y)
 {
+    if (cursor_enabled && blink_state) {
+        undraw_cursor();
+    }
     if (cursor_x == -1)
         cursor_x = last_cursor_x;
     if (cursor_y == -1)
@@ -280,6 +283,9 @@ void Graphics::print_text(int index_ff, VM_STRING text, int cursor_x, int cursor
     }
     last_cursor_x = cursor_x;
     last_cursor_y = cursor_y;
+    if (cursor_enabled && blink_state) {
+        draw_cursor();
+    }
     if (!banked)
         flip(false);
 }

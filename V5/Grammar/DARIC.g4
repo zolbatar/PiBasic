@@ -134,6 +134,8 @@ graphicsStmt
     : stmtCLS
     | stmtCOLOUR
     | stmtCOLOURBG 
+    | stmtCURSORON
+    | stmtCURSOROFF
     | stmtGRAPHICS
     | stmtFLIP    
     | stmtCIRCLE
@@ -163,6 +165,8 @@ stmtCOLOUR:         COLOUR numExpr
                   | COLOUR numExpr COMMA numExpr COMMA numExpr ;
 stmtCOLOURBG:       COLOURBG numExpr
                   | COLOURBG numExpr COMMA numExpr COMMA numExpr ; 
+stmtCURSORON:       CURSORON ; 
+stmtCURSOROFF:      CURSOROFF ;
 stmtGRAPHICS:       GRAPHICS
                   | GRAPHICS numExpr COMMA numExpr
                   | GRAPHICS BANKED
@@ -604,6 +608,8 @@ CLIPOFF         : 'CLIPOFF' | 'clipoff' | 'ClipOff' ;
 COLOUR          : 'COLOUR' | 'colour' | 'Colour' ;
 COLOURBG        : 'COLOURBG' | 'colourbg' | 'ColourBg' ;
 CREATEFONT      : 'CREATEFONT' | 'createfont' | 'CreateFont' ;
+CURSORON        : 'CURSORON' | 'cursoron' | 'CursorOn' ;
+CURSOROFF       : 'CURSOROFF' | 'cursoroff' | 'CursorOff' ;
 FILL            : 'FILL' | 'fill' | 'Fill' ;
 FLIP            : 'FLIP' | 'flip' | 'Flip' ;
 SHOWFPS         : 'SHOWFPS' | 'showfps' | 'ShowFPS' ;

@@ -272,6 +272,8 @@ protected:
     antlrcpp::Any visitStmtCLS(DARICParser::StmtCLSContext* context);
     antlrcpp::Any visitStmtCOLOUR(DARICParser::StmtCOLOURContext* context);
     antlrcpp::Any visitStmtCOLOURBG(DARICParser::StmtCOLOURBGContext* context);
+    antlrcpp::Any visitStmtCURSORON(DARICParser::StmtCURSORONContext* context);
+    antlrcpp::Any visitStmtCURSOROFF(DARICParser::StmtCURSOROFFContext* context);
     antlrcpp::Any visitStmtGRAPHICS(DARICParser::StmtGRAPHICSContext* context);
     antlrcpp::Any visitStmtFLIP(DARICParser::StmtFLIPContext* context);
     antlrcpp::Any visitStmtCIRCLE(DARICParser::StmtCIRCLEContext* context);

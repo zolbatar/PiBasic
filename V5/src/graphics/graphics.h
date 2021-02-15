@@ -83,6 +83,8 @@ struct Font {
 	int sc_width;
 };
 
+const int CURSOR_BLINK_TIME = 250;
+
 class Graphics {
 public:
 	Graphics()
@@ -164,6 +166,12 @@ public:
 	void print_text_right(int index_ff, VM_STRING text, int cursor_x, int cursor_y);
 	int string_width(int index_ff, VM_STRING text);
 	void set_margin(int margin);
+	void cursor_on() {
+		cursor_enabled = true; last_cursor_blink = std::chrono::high_resolution_clock::now();
+	}
+	void cursor_off() { cursor_enabled = false; }
+	void draw_cursor();
+	void undraw_cursor();
 #ifdef RISCOS
 	void graphics_shadow_state_on();
 	void graphics_shadow_state_off();
@@ -205,6 +213,9 @@ private:
 	std::string fps_text = "0 FPS";
 	VM_INT fps_clock = get_clock();
 	std::array<bool, 256> key_pressed;
+	std::chrono::high_resolution_clock::time_point last_cursor_blink;
+	bool cursor_enabled = false;
+	bool blink_state = false;
 
 	// Fast line lookup
 	std::vector<UINT32> line_address;

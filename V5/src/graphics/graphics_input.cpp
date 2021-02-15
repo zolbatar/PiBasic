@@ -3,6 +3,7 @@
 #include "../debugger/debugger.h"
 #include "graphics.h"
 #include <iostream>
+#include <chrono>
 
 extern Environment g_env;
 
@@ -61,6 +62,42 @@ void Graphics::poll()
 		}
 	}
 #endif
+
+	// Cursor blink?
+	if (cursor_enabled) {
+		auto t = std::chrono::high_resolution_clock::now();
+		auto time_span = std::chrono::duration_cast<std::chrono::milliseconds>(t - last_cursor_blink);
+		if (time_span.count() > CURSOR_BLINK_TIME) {
+			last_cursor_blink = t;
+
+			// Blink on or off?
+			if (!blink_state) {
+				draw_cursor();
+			}
+			else {
+				undraw_cursor();
+			}
+			blink_state = !blink_state;
+		}
+	}
+}
+
+void Graphics::draw_cursor() {
+	if (!is_banked()) {
+		auto font_row_height = (*font_heights.find(console_font)).second;
+		auto saved_colour = g_env.graphics.current_colour;
+		current_colour = Colour(255, 255, 255);
+		rectangle(get_cursor_x(), get_cursor_y(), get_cursor_x(), get_cursor_y() + font_row_height);
+		g_env.graphics.current_colour = saved_colour;
+	}
+}
+
+void Graphics::undraw_cursor() {
+	auto font_row_height = (*font_heights.find(console_font)).second;
+	auto saved_colour = g_env.graphics.current_colour;
+	current_colour = current_bg_colour;
+	rectangle(get_cursor_x(), get_cursor_y(), get_cursor_x(), get_cursor_y() + font_row_height);
+	g_env.graphics.current_colour = saved_colour;
 }
 
 VM_STRING Graphics::input()
@@ -182,7 +219,7 @@ VM_STRING Graphics::gets()
 			poll();
 			if (g_env.interactive && g_env.graphics.inkey(-113)) {
 				return "";
-			}
+}
 		}
 		auto s = key_events.front();
 		key_events.pop();
@@ -223,7 +260,7 @@ VM_INT Graphics::inkey(VM_INT timeout_or_keycode)
 		do {
 			if (g_env.interactive && g_env.graphics.inkey(-113)) {
 				return -1;
-			}
+		}
 
 			// Scan
 			while (!key_events.empty()) { // Scan until we find a keydown
@@ -237,10 +274,10 @@ VM_INT Graphics::inkey(VM_INT timeout_or_keycode)
 
 			// If nothing, poll
 			poll();
-		} while (get_clock() - clock < timeout_or_keycode);
-		return -1;
+	} while (get_clock() - clock < timeout_or_keycode);
+	return -1;
 #endif
-	}
+}
 }
 
 VM_STRING Graphics::inkeys(VM_INT timeout_or_keycode)
