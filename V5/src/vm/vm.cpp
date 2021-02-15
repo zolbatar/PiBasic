@@ -912,7 +912,6 @@ void VM::opcode_DIM()
 		var->set_1d_dimensions(size);
 	}
 	else {
-		var->clear_fields();
 		size2 = stack.pop_int(bc) + 1;
 		if (size2 == 1)
 			error("DIM array of 0 size not allowed");
