@@ -2290,7 +2290,7 @@ void VM::opcode_COLOURBGRGB()
 	VM_INT b = stack.pop_int(bc);
 	VM_INT g = stack.pop_int(bc);
 	VM_INT r = stack.pop_int(bc);
-	g_env.graphics.colour(r, g, b);
+	g_env.graphics.colour_bg(r, g, b);
 	if (!performance_build && runtime_debug)
 		g_env.log << "Set RGB graphics background colour to " << r << "," << g << "," << b << std::endl;
 }
@@ -2298,7 +2298,7 @@ void VM::opcode_COLOURBGRGB()
 void VM::opcode_COLOURBGHEX()
 {
 	VM_INT c = stack.pop_int(bc);
-	g_env.graphics.colour_hex(c);
+	g_env.graphics.colour_bg_hex(c);
 	if (!performance_build && runtime_debug)
 		g_env.log << "Set HEX graphics background colour to " << std::hex << c << std::dec << std::endl;
 }

@@ -13,8 +13,8 @@ PROCLabel("G", "'DARIC Landscape'", ms%+(6*ys%))
 PROCLabel("H", "Travelling Salesman Benchmark", ms%+(7*ys%))
 PROCLabel("I", "World in Lines", ms%+(8*ys%))
 PROCLabel("J", "Sierpinski Triangles", ms%+(9*ys%))
+PROCLabel("K", "'Fake Windows'", ms%+(10*ys%))
 PROCLabel("Z", "Quit", ms%+(12*ys%))
-PROCLabel("F10", "Debugger & Manual (Core DARIC feature)", ms%+(16*ys%))
 REPEAT
 	A$=GET$
 	CASE A$ OF
@@ -28,6 +28,7 @@ REPEAT
 		WHEN "H","h":CHAIN "Greedy"
 		WHEN "I","i":CHAIN "WorldInLines"
 		WHEN "J","j":CHAIN "Sierpinski"
+		WHEN "K","k":CHAIN "FakeWindows"
 		WHEN "Z","z":END
 	ENDCASE
 	REPEAT UNTIL INKEY(0)=-1

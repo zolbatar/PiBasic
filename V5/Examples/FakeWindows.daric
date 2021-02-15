@@ -1,0 +1,38 @@
+INSTALL "SetupGraphics"
+INSTALL "Terrain"
+INSTALL "Perlin"
+
+PROCInitPerlin():terrainsize%=250:PROCCreateTerrain(terrainsize%, terrainsize%, 1.0, 15.0, 1.0, &008000, &444444, &EEEEEE, 0.4, 0.7)
+terrain1%=OBJECT terrain%, 0, 0, -300, 330, 0, 0, 250, SHADED
+
+GRAPHICS BANKED
+COLOURBG &101010
+CLS
+
+segw%=w%*0.05
+segh%=h%*0.05
+
+FOR I=0 TO 360 STEP 1
+	CLIPOFF: REM Pane 1	
+	COLOUR &804040:RECTANGLE FILL segw%*1,segh%*1,segw%*11,segh%*11
+	COLOUR BLACK:RECTANGLE FILL segw%*1+2,segh%*1+2,segw%*11-2,segh%*11-2:CLIPON segw%*1+2,segh%*1+2,segw%*11-2,segh%*11-2
+	FOR I%=0 TO w%*12 STEP 8:COLOUR RND(128),RND(128),RND(128):LINE 0,0,I%,h%-1:NEXT
+
+	CLIPOFF: REM Pane 2
+	COLOUR &408040:RECTANGLE FILL segw%*4,segh%*4,segw%*14,segh%*14
+	COLOUR BLACK:RECTANGLE FILL segw%*4+2,segh%*4+2,segw%*14-2,segh%*14-2:CLIPON segw%*4+2,segh%*4+2,segw%*14-2,segh%*14-2
+	ROTATE terrain1%, 330, I, 0
+	RENDER
+
+	CLIPOFF: REM Pane 3
+	CLIPOFF
+	COLOUR &404080:RECTANGLE FILL segw%*7,segh%*7,segw%*17,segh%*17
+	COLOUR BLACK:RECTANGLE FILL segw%*7+2,segh%*7+2,segw%*17-2,segh%*17-2:CLIPON segw%*7+2,segh%*7+2,segw%*17-2,segh%*17-2
+	FOR I%=0 TO segw%:COLOUR RND(128),RND(128),RND(128):CIRCLE FILL I%*75+segw%*7+2,segh%*12+(100*SIN(I%/3)),75:NEXT
+
+	CLIPOFF
+	FLIP
+	IF INKEY(-99) DELETEOBJECT terrain1%:CHAIN "Welcome"
+NEXT
+DELETEOBJECT terrain1%
+CHAIN "Welcome"

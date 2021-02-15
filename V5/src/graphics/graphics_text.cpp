@@ -247,6 +247,9 @@ void Graphics::cursor_back(int index_ff)
 
 void Graphics::delete_character(int index_ff)
 {
+    if (cursor_enabled && blink_state) {
+        undraw_cursor();
+    }
     Font* f = get_glyph(0, index_ff, ' ', 0);
     last_cursor_x -= f->sc_width;
     auto font_row_height = (*font_heights.find(index_ff)).second;
@@ -259,6 +262,9 @@ void Graphics::delete_character(int index_ff)
     colour(current_bg_colour.r, current_bg_colour.g, current_bg_colour.b);
     rectangle(last_cursor_x + margin, last_cursor_y, last_cursor_x + f->sc_width + margin, last_cursor_y + font_row_height);
     colour(saved_colour.r, saved_colour.g, saved_colour.b);
+    if (cursor_enabled && blink_state) {
+        draw_cursor();
+    }
     if (!banked)
         flip(false);
 }

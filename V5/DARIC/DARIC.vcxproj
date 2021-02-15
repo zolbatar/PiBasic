@@ -284,6 +284,7 @@
     <ClInclude Include="..\src\vm\vm_function.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Examples\FakeWindows.daric" />
     <None Include="..\Test.daric" />
     <None Include="..\build-grammar.bat" />
     <None Include="..\Examples\Cubes.daric" />

@@ -445,5 +445,8 @@
     <None Include="..\Test.daric">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\Examples\FakeWindows.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
   </ItemGroup>
 </Project>

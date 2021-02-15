@@ -1,5 +1,4 @@
 INSTALL "SetupGraphicsBanked"
-SHOWFPS
 
 REM ** Create a random RGB colour **
 DEF FNRNDCOL%()
@@ -33,6 +32,7 @@ DEF PROCCreateCube()
 ENDPROC
 
 DEF PROCTwoShapes()
+	SHOWFPS
 	PROCCreateCube()
 	cube1%=OBJECT cube_shp%, -20, 0, -150, 0, 300, 0, 25, SOLID
 	cube2%=OBJECT cube_shp%, 20, 0, -150, 0, 300, 0, 25, WIREFRAME
