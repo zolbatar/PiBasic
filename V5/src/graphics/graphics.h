@@ -170,6 +170,7 @@ public:
 		cursor_enabled = true; last_cursor_blink = std::chrono::high_resolution_clock::now();
 	}
 	void cursor_off() { cursor_enabled = false; }
+	bool is_cursor_enabled() { return cursor_enabled; }
 	void draw_cursor();
 	void undraw_cursor();
 #ifdef RISCOS

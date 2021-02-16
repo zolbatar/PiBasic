@@ -129,15 +129,15 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);WINDOWS;ANTLR4CPP_STATIC</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);WINDOWS;ANTLR4CPP_STATIC;ASMJIT_EMBED</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(HOMEPATH)\Development\SDL2-2.0.14\include;$(HOMEPATH)\source\repos\antlr4\runtime\Cpp\runtime\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(HOMEPATH)\Development\SDL2-2.0.14\include;$(HOMEPATH)\source\repos\antlr4\runtime\Cpp\runtime\src;$(HOMEPATH)\Development</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(HOMEPATH)\Development\SDL2-2.0.12\lib\x64;$(HOMEPATH)\source\repos\antlr4\runtime\Cpp\runtime\bin\vs-2019\x64\Debug DLL</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(HOMEPATH)\Development\SDL2-2.0.12\lib\x64;$(HOMEPATH)\source\repos\antlr4\runtime\Cpp\runtime\bin\vs-2019\x64\Debug DLL;$(HOMEPATH)\Development\luajit-2.0\src</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;antlr4-runtime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
     </Link>
@@ -159,9 +159,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);WINDOWS;ANTLR4CPP_STATIC</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);WINDOWS;ANTLR4CPP_STATIC;ASMJIT_EMBED</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(HOMEPATH)\Development\SDL2-2.0.14\include;$(HOMEPATH)\source\repos\antlr4\runtime\Cpp\runtime\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(HOMEPATH)\Development\SDL2-2.0.14\include;$(HOMEPATH)\source\repos\antlr4\runtime\Cpp\runtime\src;$(HOMEPATH)\Development</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
@@ -170,7 +170,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(HOMEPATH)\Development\SDL2-2.0.12\lib\x64;$(HOMEPATH)\source\repos\antlr4\runtime\Cpp\runtime\bin\vs-2019\x64\Release DLL;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(HOMEPATH)\Development\SDL2-2.0.12\lib\x64;$(HOMEPATH)\source\repos\antlr4\runtime\Cpp\runtime\bin\vs-2019\x64\Release DLL;$(HOMEPATH)\Development\luajit-2.0\src;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;antlr4-runtime.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>true</Profile>
       <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
@@ -184,7 +184,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\compiler\compiler.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_core.cpp" />
     <ClCompile Include="..\src\compiler\compiler_goto.cpp" />
     <ClCompile Include="..\src\compiler\compiler_graphics3d.cpp" />
     <ClCompile Include="..\src\compiler\compiler_array.cpp" />
@@ -244,8 +244,57 @@
     <ClCompile Include="..\src\graphics\graphics_text.cpp" />
     <ClCompile Include="..\src\graphics\graphics_triangle.cpp" />
     <ClCompile Include="..\src\interactive\interactive.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\archtraits.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\assembler.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\builder.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\codeholder.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\codewriter.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\compiler.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\constpool.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\cpuinfo.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\emithelper.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\emitter.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\emitterutils.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\environment.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\errorhandler.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\formatter.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\func.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\funcargscontext.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\globals.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\inst.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\jitallocator.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\jitruntime.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\logger.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\operand.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\osutils.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\ralocal.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\rapass.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\rastack.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\string.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\support.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\target.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\type.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\virtmem.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\zone.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\zonehash.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\zonelist.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\zonestack.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\zonetree.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\core\zonevector.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\x86\x86assembler.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\x86\x86builder.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\x86\x86compiler.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\x86\x86emithelper.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\x86\x86features.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\x86\x86formatter.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\x86\x86func.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\x86\x86instapi.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\x86\x86instdb.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\x86\x86operand.cpp" />
+    <ClCompile Include="..\src\jit\asmjit\x86\x86rapass.cpp" />
+    <ClCompile Include="..\src\jit\jit.cpp" />
     <ClCompile Include="..\src\libs\clock.cpp" />
-    <ClCompile Include="..\src\libs\string.cpp" />
+    <ClCompile Include="..\src\libs\daric_string.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\parser\DARICBaseVisitor.cpp" />
     <ClCompile Include="..\src\parser\DARICLexer.cpp" />
@@ -266,6 +315,9 @@
     <ClInclude Include="..\src\graphics\graphics.h" />
     <ClInclude Include="..\src\graphics\stb_truetype.h" />
     <ClInclude Include="..\src\interactive\interactive.h" />
+    <ClInclude Include="..\src\jit\asmjit\core.h" />
+    <ClInclude Include="..\src\jit\asmjit\x86.h" />
+    <ClInclude Include="..\src\jit\jit.h" />
     <ClInclude Include="..\src\libs\clock.h" />
     <ClInclude Include="..\src\libs\string.h" />
     <ClInclude Include="..\src\parser\DARICBaseVisitor.h" />
@@ -312,6 +364,9 @@
     <None Include="..\src\parser\DARIC.tokens" />
     <None Include="..\src\parser\DARICLexer.interp" />
     <None Include="..\src\parser\DARICLexer.tokens" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\src\jit\asmjit.natvis" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

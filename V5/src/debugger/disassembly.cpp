@@ -61,7 +61,7 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         ret.type = "INTEGER";
         break;
     case Type::FLOAT:
-        ret.type = "FLOAT";
+        ret.type = "REAL";
         break;
     case Type::STRING:
         ret.type = "STRING";
@@ -73,7 +73,7 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         ret.type = "INTEGER ARRAY";
         break;
     case Type::FLOAT_ARRAY:
-        ret.type = "FLOAT ARRAY";
+        ret.type = "REAL ARRAY";
         break;
     case Type::STRING_ARRAY:
         ret.type = "STRING ARRAY";
@@ -293,7 +293,7 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         break;
 
     case Bytecodes::CONV_FLOAT:
-        ret.opcode = "CONV FLOAT";
+        ret.opcode = "CONV REAL";
         ret.operand = std::to_string(bc.data);
         break;
     case Bytecodes::CONV_INT:
@@ -637,6 +637,12 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         break;
     case Bytecodes::MOUSE:
         ret.opcode = "MOUSE";
+        break;
+    case Bytecodes::CURSOROFF:
+        ret.opcode = "CURSOR OFF";
+        break;
+    case Bytecodes::CURSORON:
+        ret.opcode = "CURSOR ON";
         break;
 
     default:

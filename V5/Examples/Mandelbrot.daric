@@ -1,4 +1,5 @@
 INSTALL "SetupGraphics"
+REM 5198
 T%=Time
 ITERS = 16, XRANGE = -2.5, YRANGE = -1.5
 COLS = 256, MAXX% = w%, MAXY% = h%
@@ -26,5 +27,7 @@ For Y%=0 To MAXY%
 	Next
 	IF INKEY(0) <> -1 CHAIN "Welcome"
 Next
+COLOUR BLUE
+TEXT PROP40,0,0,STR$(TIME-T%) + " centiseconds"
 INKEY(1000)
 CHAIN "Welcome"

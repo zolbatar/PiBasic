@@ -70,13 +70,25 @@
     <Filter Include="Resource Files\Examples">
       <UniqueIdentifier>{a3a64f7d-ce98-494a-849e-4c1446884d46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\JIT">
+      <UniqueIdentifier>{41156421-30af-44e1-8917-8b34d4aed57c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\JIT">
+      <UniqueIdentifier>{5b51f5e2-d484-4230-a4f3-5a04956202f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\JIT\Asmjit">
+      <UniqueIdentifier>{9c4a4684-afab-453b-a74f-23f60852047f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\JIT\Asmjit\core">
+      <UniqueIdentifier>{92fb2395-c6d4-4346-bfb4-83f15947c05d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\JIT\Asmjit\x86">
+      <UniqueIdentifier>{e5e14105-578b-4b92-9e42-7011fb704e65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\libs\string.cpp">
-      <Filter>Source Files\Libraries</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\graphics.cpp">
       <Filter>Source Files\Graphics</Filter>
@@ -137,9 +149,6 @@
     </ClCompile>
     <ClCompile Include="..\src\parser\DARICVisitor.cpp">
       <Filter>Source Files\Parser</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\compiler\compiler.cpp">
-      <Filter>Source Files\Compiler</Filter>
     </ClCompile>
     <ClCompile Include="..\src\compiler\compiler_assignment.cpp">
       <Filter>Source Files\Compiler</Filter>
@@ -279,6 +288,159 @@
     <ClCompile Include="..\src\compiler\compiler_goto.cpp">
       <Filter>Source Files\Compiler</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\jit\jit.cpp">
+      <Filter>Source Files\JIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\archtraits.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\assembler.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\builder.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\codeholder.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\codewriter.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\compiler.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\constpool.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\cpuinfo.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\emithelper.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\emitter.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\emitterutils.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\environment.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\errorhandler.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\formatter.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\func.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\funcargscontext.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\globals.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\inst.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\jitallocator.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\jitruntime.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\logger.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\operand.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\osutils.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\ralocal.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\rapass.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\rastack.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\string.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\support.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\target.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\type.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\virtmem.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\zone.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\zonehash.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\zonelist.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\zonestack.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\zonetree.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\core\zonevector.cpp">
+      <Filter>Source Files\JIT\Asmjit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\x86\x86assembler.cpp">
+      <Filter>Source Files\JIT\Asmjit\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\x86\x86builder.cpp">
+      <Filter>Source Files\JIT\Asmjit\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\x86\x86compiler.cpp">
+      <Filter>Source Files\JIT\Asmjit\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\x86\x86emithelper.cpp">
+      <Filter>Source Files\JIT\Asmjit\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\x86\x86features.cpp">
+      <Filter>Source Files\JIT\Asmjit\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\x86\x86formatter.cpp">
+      <Filter>Source Files\JIT\Asmjit\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\x86\x86func.cpp">
+      <Filter>Source Files\JIT\Asmjit\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\x86\x86instapi.cpp">
+      <Filter>Source Files\JIT\Asmjit\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\x86\x86instdb.cpp">
+      <Filter>Source Files\JIT\Asmjit\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\x86\x86operand.cpp">
+      <Filter>Source Files\JIT\Asmjit\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\jit\asmjit\x86\x86rapass.cpp">
+      <Filter>Source Files\JIT\Asmjit\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\compiler\compiler_core.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\libs\daric_string.cpp">
+      <Filter>Source Files\Libraries</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">
@@ -361,6 +523,15 @@
     </ClInclude>
     <ClInclude Include="..\src\compiler\file_lookup.h">
       <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\jit\asmjit\core.h">
+      <Filter>Header Files\JIT</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\jit\asmjit\x86.h">
+      <Filter>Header Files\JIT</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\jit\jit.h">
+      <Filter>Header Files\JIT</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -448,5 +619,10 @@
     <None Include="..\Examples\FakeWindows.daric">
       <Filter>Resource Files\Examples</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\src\jit\asmjit.natvis">
+      <Filter>Source Files\JIT</Filter>
+    </Natvis>
   </ItemGroup>
 </Project>

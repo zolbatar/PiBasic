@@ -29,7 +29,7 @@ void create_manual_maths()
             new ManualSyntaxNumericExpression(1),
             new ManualSyntaxParensClose(),
         },
-        "Real or integer between -1 and 1 inclusive.",
+        "Any numeric between -1 and 1 inclusive.",
         "Real in the range 0 TO PI radians.",
         "ang=ACS(0.5)"));
     keywords.push_back(ManualKeyword(
@@ -42,7 +42,7 @@ void create_manual_maths()
             new ManualSyntaxNumericExpression(1),
             new ManualSyntaxParensClose(),
         },
-        "Real or integer between -1 and 1 inclusive.",
+        "Any numeric between -1 and 1 inclusive.",
         "Real in the range -PI/2 TO PI/2 radians.",
         "ang=ASN(0.5)"));
     keywords.push_back(ManualKeyword(
@@ -107,8 +107,8 @@ void create_manual_maths()
         "",
         ""));
     keywords.push_back(ManualKeyword(
-        "FLOAT",
-        "FLOAT",
+        "REAL",
+        "REAL",
         KeywordCategory::MATHS_AND_NUMBERS,
         "",
         {},

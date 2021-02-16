@@ -2,7 +2,7 @@
 #include "../debugger.h"
 
 const int fixed_font = 0;
-const int manual_font = 9;
+const int manual_font = 10;
 const int manual_column_width = 250;
 extern Environment g_env;
 

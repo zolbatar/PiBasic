@@ -84,7 +84,7 @@ void Debugger::debugger_variables()
                         g_env.graphics.print_text(disassembly_font, "INTEGER       ", -1, -1);
                         break;
                     case Type::FLOAT:
-                        g_env.graphics.print_text(disassembly_font, "FLOAT         ", -1, -1);
+                        g_env.graphics.print_text(disassembly_font, "REAL          ", -1, -1);
                         break;
                     case Type::STRING:
                         g_env.graphics.print_text(disassembly_font, "STRING        ", -1, -1);
@@ -93,7 +93,7 @@ void Debugger::debugger_variables()
                         g_env.graphics.print_text(disassembly_font, "INTEGER ARRAY ", -1, -1);
                         break;
                     case Type::FLOAT_ARRAY:
-                        g_env.graphics.print_text(disassembly_font, "FLOAT ARRAY   ", -1, -1);
+                        g_env.graphics.print_text(disassembly_font, "READ ARRAY    ", -1, -1);
                         break;
                     case Type::STRING_ARRAY:
                         g_env.graphics.print_text(disassembly_font, "STRING ARRAY  ", -1, -1);

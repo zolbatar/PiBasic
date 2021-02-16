@@ -1,4 +1,2 @@
-i%=0
-b=10
-i%+=b
-PRINT i%,b
+i%=100000
+PRINT i%

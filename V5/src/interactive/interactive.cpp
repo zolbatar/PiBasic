@@ -5,6 +5,7 @@
 #include "../libs/string.h"
 #include "../parser/parser.h"
 #include "../vm/vm.h"
+#include "../jit/jit.h"
 #include <iomanip>
 #include <iostream>
 #include <memory>
@@ -41,8 +42,12 @@ void Interactive::welcome_prompt()
 	g_env.graphics.print_console(" " + g_env.version + ", http://dariclang.com\r\r");
 #ifdef _DEBUG
 	g_env.graphics.colour(255, 0, 0);
-	g_env.graphics.print_console("**DEBUG MODE **\r\r");
+	g_env.graphics.print_console("**DEBUG MODE **\r");
 #endif
+	if (jit) {
+		g_env.graphics.colour(255, 0, 0);
+		g_env.graphics.print_console("**NATIVE COMPILER ENABLED **\r");
+	}
 	g_env.graphics.colour(255, 255, 0);
 	g_env.graphics.print_console("WELCOME");
 	g_env.graphics.colour(255, 255, 255);
@@ -57,7 +62,7 @@ void Interactive::welcome_prompt()
 	g_env.graphics.print_console(" to run the test suite\r");
 	g_env.graphics.print_console("Commands: ");
 	g_env.graphics.colour(255, 255, 0);
-	g_env.graphics.print_console("CHAIN LIST LOAD NEW RUN SAVE QUIT\r\r");
+	g_env.graphics.print_console("CHAIN LIST LOAD NATIVE NEW RUN SAVE QUIT\r\r");
 	g_env.graphics.colour(255, 255, 255);
 	g_env.graphics.cursor_on();
 }
@@ -110,6 +115,12 @@ void Interactive::run()
 			// Is this one of the standard tokens?
 			if (upper.compare("RUN") == 0) {
 				run_all_lines();
+			}
+			else if (upper.compare("NATIVE") == 0) {
+				if (!jit) {
+					jit = true;
+					g_env.graphics.print_console("Native compiler enabled\r");
+				}
 			}
 			else if (upper.compare("QUIT") == 0) {
 				return;
@@ -316,7 +327,16 @@ void Interactive::run_all_lines()
 		}
 
 		// Run!
-		chain = g_vm->run();
+		if (!jit) {
+			chain = g_vm->run();
+		}
+		else {
+			chain = "";
+			JIT jit;
+			if (!jit.compiler()) {
+				g_env.graphics.print_console("Native compile failed\r");
+			}
+		}
 
 		// Reset PC
 		g_vm->helper_bytecodes().pc = 0;

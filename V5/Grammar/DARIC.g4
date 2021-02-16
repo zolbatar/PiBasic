@@ -493,7 +493,7 @@ ENDPROC         : 'ENDPROC' | 'endproc' | 'EndProc' ;
 ENDWHILE        : 'ENDWHILE' | 'endwhile' | 'EndWhile' ;
 FALSE           : 'FALSE' | 'false' | 'False' ;
 FOR             : 'FOR' | 'for' | 'For' ;
-FLOAT_TOKEN     : 'FLOAT' | 'float' | 'Float' ;
+FLOAT_TOKEN     : 'REAL' | 'real' | 'Real' ;
 FN              : 'FN' | 'fn' | 'Fn' ;
 IF              : 'IF' | 'if' | 'If' ;
 IN              : 'IN' | 'in' | 'In' ;

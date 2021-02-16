@@ -12,6 +12,7 @@ Debugger::Debugger()
     if (debugger_open)
         return;
     debugger_open = true;
+    auto saved_cursor_state = g_env.graphics.is_cursor_enabled();
 
     // Was this breakpoint triggered?
     bool breakpoint = false;
@@ -31,6 +32,7 @@ Debugger::Debugger()
     auto x = g_env.graphics.get_cursor_x();
     auto y = g_env.graphics.get_cursor_y();
     auto saved_colour = g_env.graphics.current_colour;
+    g_env.graphics.cursor_off();
 
     debugger_options(-1, 0);
     while (true) {
@@ -64,6 +66,9 @@ Debugger::Debugger()
             g_env.graphics.current_colour = saved_colour;
 
             debugger_open = false;
+            if (saved_cursor_state) {
+                g_env.graphics.cursor_on();
+            }
             return;
         } else if (g_env.graphics.inkey(-117)) {
             // F5

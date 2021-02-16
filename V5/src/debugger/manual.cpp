@@ -56,10 +56,10 @@ int Debugger::debugger_manual_keyword_section(KeywordCategory category, int* ind
         g_env.graphics.print_text(manual_font, "File I/O\r", -1, -1);
         break;
     case KeywordCategory::GRAPHICS_2D:
-        g_env.graphics.print_text(manual_font, "2D g_graphics\r", -1, -1);
+        g_env.graphics.print_text(manual_font, "2D Graphics\r", -1, -1);
         break;
     case KeywordCategory::GRAPHICS_3D:
-        g_env.graphics.print_text(manual_font, "3D g_graphics\r", -1, -1);
+        g_env.graphics.print_text(manual_font, "3D Graphics\r", -1, -1);
         break;
     case KeywordCategory::CONDITIONAL_LOOPING:
         g_env.graphics.print_text(manual_font, "Conditional & Looping\r", -1, -1);
@@ -245,7 +245,7 @@ void Debugger::debugger_manual_keyword(std::string keyword)
 
     // Keyword
     g_env.graphics.colour(255, 255, 255);
-    g_env.graphics.print_text(fixed_font + 2, kw->keywordLong + " ", -1, -1);
+    g_env.graphics.print_text(fixed_font + 4, kw->keywordLong + " ", -1, -1);
 
     // Category
     g_env.graphics.colour(255, 80, 0);
@@ -257,10 +257,10 @@ void Debugger::debugger_manual_keyword(std::string keyword)
         g_env.graphics.print_text(manual_font + 2, "(Maths & Numbers)\r\r", -1, -1);
         break;
     case KeywordCategory::GRAPHICS_2D:
-        g_env.graphics.print_text(manual_font + 2, "(2D g_graphics)\r\r", -1, -1);
+        g_env.graphics.print_text(manual_font + 2, "(2D Graphics)\r\r", -1, -1);
         break;
     case KeywordCategory::GRAPHICS_3D:
-        g_env.graphics.print_text(manual_font + 2, "(3D g_graphics)\r\r", -1, -1);
+        g_env.graphics.print_text(manual_font + 2, "(3D Graphics)\r\r", -1, -1);
         break;
     case KeywordCategory::OPERATORS:
         g_env.graphics.print_text(manual_font + 2, "(Operators)\r\r", -1, -1);

@@ -155,7 +155,7 @@ antlrcpp::Any Compiler::visitNumFuncABS(DARICParser::NumFuncABSContext* context)
         break;
     default:
         error("ABS must have a numeric value");
-    }
+    }   
     return NULL;
 }
 
