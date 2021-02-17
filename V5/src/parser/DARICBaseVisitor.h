@@ -295,6 +295,22 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtRENDERTOSPRITE(DARICParser::StmtRENDERTOSPRITEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtRENDERTOSCREEN(DARICParser::StmtRENDERTOSCREENContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtDRAWSPRITE(DARICParser::StmtDRAWSPRITEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStmtDELETESPRITE(DARICParser::StmtDELETESPRITEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtRENDERFRAME(DARICParser::StmtRENDERFRAMEContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -704,6 +720,10 @@ public:
   }
 
   virtual antlrcpp::Any visitNumFuncCREATEFONT(DARICParser::NumFuncCREATEFONTContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNumFuncCREATESPRITE(DARICParser::NumFuncCREATESPRITEContext *ctx) override {
     return visitChildren(ctx);
   }
 

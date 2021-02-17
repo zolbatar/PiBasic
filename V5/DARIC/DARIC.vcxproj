@@ -207,6 +207,7 @@
     <ClCompile Include="..\src\compiler\compiler_numeric_function.cpp" />
     <ClCompile Include="..\src\compiler\compiler_printinput.cpp" />
     <ClCompile Include="..\src\compiler\compiler_riscos.cpp" />
+    <ClCompile Include="..\src\compiler\compiler_sprites.cpp" />
     <ClCompile Include="..\src\compiler\compiler_string_expression.cpp" />
     <ClCompile Include="..\src\compiler\compiler_string_function.cpp" />
     <ClCompile Include="..\src\compiler\compiler_token.cpp" />

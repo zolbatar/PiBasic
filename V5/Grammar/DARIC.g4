@@ -150,6 +150,12 @@ graphicsStmt
     | stmtTEXTCENTRE
     | stmtSHOWFPS
 
+    /* Sprites */
+    | stmtRENDERTOSPRITE
+    | stmtRENDERTOSCREEN
+    | stmtDRAWSPRITE
+    | stmtDELETESPRITE
+
     /* 3D */
     | stmtRENDERFRAME
     | stmtCREATEVERTEX
@@ -187,6 +193,12 @@ stmtTEXT:           TEXT numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
 stmtTEXTRIGHT:      TEXTRIGHT numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
 stmtTEXTCENTRE:     (TEXTCENTRE|TEXTCENTER) numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
 stmtSHOWFPS:        SHOWFPS ;
+
+/* Sprites */
+stmtRENDERTOSPRITE: RENDERTOSPRITE numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtRENDERTOSCREEN: RENDERTOSCREEN ;
+stmtDRAWSPRITE:     DRAWSPRITE numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtDELETESPRITE:   DELETESPRITE numExpr ;
 
 /* 3D */
 stmtRENDERFRAME:    RENDERFRAME ;
@@ -394,6 +406,7 @@ numFunc
     | COLOUR LPAREN numExpr COMMA numExpr COMMA numExpr RPAREN      #numFuncCOLOUR
     | LOADTYPEFACE strExpr                                          #numFuncLOADTYPEFACE
     | CREATEFONT numExpr COMMA numExpr                              #numFuncCREATEFONT
+    | CREATESPRITE LPAREN numExpr COMMA numExpr COMMA numExpr RPAREN #numFuncCREATESPRITE
 
     /* 3D */
     | CREATESHAPE varNameType COMMA varNameType                     #numFuncSHAPE
@@ -626,6 +639,12 @@ TEXTRIGHT       : 'TEXTRIGHT' | 'textright' | 'TextRight' ;
 TEXTCENTRE      : 'TEXTCENTRE' | 'textcentre' | 'TextCentre' ;
 TEXTCENTER      : 'TEXTCENTER' | 'textcenter' | 'TextCenter' ;
 TRIANGLE        : 'TRIANGLE' | 'triangle' | 'Triangle' ;
+
+DRAWSPRITE      : 'DRAWSPRITE' | 'drawsprite' | 'DrawSprite' ;
+DELETESPRITE    : 'DELETESPRITE' | 'deletesprite' | 'DeleteSprite' ;
+CREATESPRITE    : 'CREATESPRITE' | 'createsprite' | 'CreateSprite' ;
+RENDERTOSPRITE  : 'RENDERTOSPRITE' | 'rendertosprite' | 'RenderToSprite' ;
+RENDERTOSCREEN  : 'RENDERTOSCREEN' | 'rendertoscreen' | 'RenderToScreen' ;
 
 TIME            : 'TIME' | 'time' | 'Time' ;
 PI              : 'PI' | 'pi' | 'Pi' ;

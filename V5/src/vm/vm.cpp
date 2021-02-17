@@ -65,6 +65,20 @@ void VM::opcode_FASTCONST()
 	}
 }
 
+void VM::opcode_FASTCONST_AS_FLOAT() {
+	switch (bc.type) {
+	case Type::INTEGER: {
+		stack.push_float(static_cast<VM_FLOAT>(bc.data));
+		if (!performance_build && runtime_debug) {
+			g_env.log << "Push constant int " << bc.data << " as float onto the stack" << std::endl;
+		}
+		return;
+	}
+	default:
+		opcode_type_error();
+	}
+}
+
 void VM::opcode_FASTCONST_VAR()
 {
 	stack.push_int(bc.data);
@@ -115,6 +129,19 @@ void VM::opcode_LOAD()
 	}
 	default:
 		opcode_type_error();
+	}
+}
+
+void VM::opcode_LOAD_AS_FLOAT() {
+	auto var = variables.get_variable(bc);
+	stack.push_float(static_cast<VM_FLOAT>(var->get_integer()));
+	if (!performance_build && runtime_debug) {
+		if (!var->is_constant()) {
+			g_env.log << "Push variable '" << var->get_name() << "', int " << var->get_integer() << " as float onto the stack" << std::endl;
+		}
+		else {
+			g_env.log << "Push constant int " << var->get_integer() << " as float onto the stack" << std::endl;
+		}
 	}
 }
 
@@ -2798,8 +2825,14 @@ std::string VM::run()
 			case Bytecodes::FASTCONST:
 				opcode_FASTCONST();
 				break;
+			case Bytecodes::FASTCONST_AS_FLOAT:
+				opcode_FASTCONST_AS_FLOAT();
+				break;
 			case Bytecodes::LOAD:
 				opcode_LOAD();
+				break;
+			case Bytecodes::LOAD_AS_FLOAT:
+				opcode_LOAD_AS_FLOAT();
 				break;
 			case Bytecodes::STORE:
 				opcode_STORE();

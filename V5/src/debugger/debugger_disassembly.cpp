@@ -30,10 +30,11 @@ void Debugger::debugger_disassembly()
                 g_env.graphics.print_text(disassembly_font, flp.filename, -1, -1);
                 g_env.graphics.print_text(disassembly_font, "\r", -1, -1);
                 g_env.graphics.colour(128, 128, 128);
-                g_env.graphics.print_text(disassembly_font, "Line: ", -1, -1);
+                g_env.graphics.print_text(disassembly_font, "Line (", -1, -1);
                 g_env.graphics.colour(255, 255, 255);
                 g_env.graphics.print_text(disassembly_font, std::to_string(flp.line), -1, -1);
-                g_env.graphics.print_text(disassembly_font, " ", -1, -1);
+                g_env.graphics.colour(128, 128, 128);
+                g_env.graphics.print_text(disassembly_font, "): ", -1, -1);
                 g_env.graphics.colour(255, 255, 255);
                 g_env.graphics.print_text(disassembly_font, concat_file_cache[cur_bc.line_number - 1], -1, -1);
                 g_env.graphics.print_text(disassembly_font, "\r\r", -1, -1);

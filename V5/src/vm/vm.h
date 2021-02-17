@@ -88,10 +88,12 @@ private:
     void opcode_HALT();
     void opcode_DROP();
     void opcode_FASTCONST();
+    void opcode_FASTCONST_AS_FLOAT();
     void opcode_FASTCONST_VAR();
 
     // Loading and storing
     void opcode_LOAD();
+    void opcode_LOAD_AS_FLOAT();
     void opcode_STORE();
 
     // Arrays

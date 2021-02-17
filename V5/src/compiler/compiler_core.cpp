@@ -5,9 +5,10 @@
 void Compiler::reset()
 {
     type_list.empty();
-    vm->helper_bytecodes().clear();
     line_number = 0;
     char_position = 0;
+    vm->helper_bytecodes().clear();
+    vm->helper_bytecodes().pc = 0;
 }
 
 Compiler::Compiler()
@@ -25,19 +26,15 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
     if_statements.clear();
     functions.clear();
 
-    // Parse
+    // Lookahead, figure out function definitions and types
     auto t1 = high_resolution_clock::now();
     phase = CompilerPhase::LOOKAHEAD;
     auto daric = visitProg(tree);
-
-    // Lookahead, figure out function definitions and types
-    assert(vm->helper_bytecodes().get_size() == 0);
     assert(stack_size() == 0);
     reset();
 
     // Size, figure out sizing for jumps etc.
     t1 = high_resolution_clock::now();
-    vm->helper_bytecodes().pc = 0;
     phase = CompilerPhase::SIZE;
     daric = visitProg(tree);
     assert(stack_size() == 0);
@@ -45,7 +42,6 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
 
     // Compile! Build the VM
     t1 = high_resolution_clock::now();
-    vm->helper_bytecodes().pc = 0;
     phase = CompilerPhase::COMPILE;
     daric = visitProg(tree);
     assert(stack_size() == 0);

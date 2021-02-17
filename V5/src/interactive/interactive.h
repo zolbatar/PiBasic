@@ -14,7 +14,7 @@ public:
 private:
     std::map<UINT32, std::string> lines;
     Compiler *compiler = new Compiler();
-    bool jit = true;
+    bool jit = false;
 
     void welcome_prompt();
     UINT32 add_line(std::string s, UINT32 auto_line);

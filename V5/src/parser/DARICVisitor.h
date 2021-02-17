@@ -159,6 +159,14 @@ public:
 
     virtual antlrcpp::Any visitStmtSHOWFPS(DARICParser::StmtSHOWFPSContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtRENDERTOSPRITE(DARICParser::StmtRENDERTOSPRITEContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtRENDERTOSCREEN(DARICParser::StmtRENDERTOSCREENContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtDRAWSPRITE(DARICParser::StmtDRAWSPRITEContext *context) = 0;
+
+    virtual antlrcpp::Any visitStmtDELETESPRITE(DARICParser::StmtDELETESPRITEContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtRENDERFRAME(DARICParser::StmtRENDERFRAMEContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtCREATEVERTEX(DARICParser::StmtCREATEVERTEXContext *context) = 0;
@@ -364,6 +372,8 @@ public:
     virtual antlrcpp::Any visitNumFuncLOADTYPEFACE(DARICParser::NumFuncLOADTYPEFACEContext *context) = 0;
 
     virtual antlrcpp::Any visitNumFuncCREATEFONT(DARICParser::NumFuncCREATEFONTContext *context) = 0;
+
+    virtual antlrcpp::Any visitNumFuncCREATESPRITE(DARICParser::NumFuncCREATESPRITEContext *context) = 0;
 
     virtual antlrcpp::Any visitNumFuncSHAPE(DARICParser::NumFuncSHAPEContext *context) = 0;
 

@@ -24,8 +24,10 @@ enum class Bytecodes {
 
 	// Load/store
 	FASTCONST, // Fast constant push
+	FASTCONST_AS_FLOAT, // Fast constant push integer as float in one step
 	FASTCONST_VAR, // Fast int constant push (points to variable)
 	LOAD, // Load variable
+	LOAD_AS_FLOAT, // Load integer variable as float value in one step
 	STORE, // Store variable
 
 	// Arrays
@@ -241,32 +243,53 @@ public:
 
 	void insert_instruction(UINT32 line_number, short char_position, bool write, Bytecodes bytecode, Type type, UINT32 operand)
 	{
-		if (write) {
-			Bytecode b;
-			b.opcode = bytecode;
-			b.type = type;
-			b.data = operand;
-			b.line_number = line_number;
-			b.char_position = char_position;
-			code.push_back(std::move(b));
-		}
+		// Can we do any useful peephole optimisations based on the last bytecode?
+		switch (bytecode) {
+		case Bytecodes::CONV_FLOAT:
+			switch (last_bytecode.opcode) {
+				// Very common, load integer const and convert to float
+			case Bytecodes::FASTCONST:
+				last_bytecode.opcode = Bytecodes::FASTCONST_AS_FLOAT;
+				code.back().opcode = Bytecodes::FASTCONST_AS_FLOAT;
+				return;
+
+				// Very common, load integer and convert to float
+			case Bytecodes::LOAD:
+				if (last_bytecode.type == Type::INTEGER) {
+					last_bytecode.opcode = Bytecodes::LOAD_AS_FLOAT;
+					code.back().opcode = Bytecodes::LOAD_AS_FLOAT;
+					return;
+				}
+				break;
+			}
+			break;
+		};
+
+		Bytecode b;
+		b.opcode = bytecode;
+		b.type = type;
+		b.data = operand;
+		b.line_number = line_number;
+		b.char_position = char_position;
+		last_bytecode = b;
+		code.push_back(std::move(b));
 		pc++;
 	}
 
 	void insert_bytecode(UINT32 line_number, short char_position, bool write, Bytecodes bytecode, Type type)
 	{
-		if (write) {
-			Bytecode b;
-			b.opcode = bytecode;
-			b.type = type;
-			b.data = 0;
-			b.line_number = line_number;
-			b.char_position = char_position;
-			code.push_back(std::move(b));
-		}
+		Bytecode b;
+		b.opcode = bytecode;
+		b.type = type;
+		b.data = 0;
+		b.line_number = line_number;
+		b.char_position = char_position;
+		last_bytecode = b;
+		code.push_back(std::move(b));
 		pc++;
 	}
 
 private:
 	std::vector<Bytecode> code; // Instructions, which are opcode and optional data
+	Bytecode last_bytecode;
 };

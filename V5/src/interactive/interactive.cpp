@@ -139,6 +139,7 @@ void Interactive::run()
 				welcome_prompt();
 			}
 			else if (upper.compare("LIST") == 0) {
+				auto saved_colour = g_env.graphics.current_colour;
 				for (auto it = lines.begin(); it != lines.end(); it++) {
 					std::stringstream stream;
 					g_env.graphics.colour(180, 180, 0);
@@ -155,6 +156,7 @@ void Interactive::run()
 						}
 					}
 				}
+				g_env.graphics.current_colour = saved_colour;
 			}
 			else if (upper.compare("WELCOME") == 0) {
 				run_demo_file("Welcome");

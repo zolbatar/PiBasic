@@ -430,6 +430,30 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStmtSHOWFPS(DARICParser.StmtSHOWFPSContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtRENDERTOSPRITE}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtRENDERTOSPRITE(DARICParser.StmtRENDERTOSPRITEContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtRENDERTOSCREEN}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtRENDERTOSCREEN(DARICParser.StmtRENDERTOSCREENContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtDRAWSPRITE}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtDRAWSPRITE(DARICParser.StmtDRAWSPRITEContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtDELETESPRITE}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtDELETESPRITE(DARICParser.StmtDELETESPRITEContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link DARICParser#stmtRENDERFRAME}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -1116,6 +1140,13 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNumFuncCREATEFONT(DARICParser.NumFuncCREATEFONTContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code numFuncCREATESPRITE}
+	 * labeled alternative in {@link DARICParser#numFunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumFuncCREATESPRITE(DARICParser.NumFuncCREATESPRITEContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code numFuncSHAPE}
 	 * labeled alternative in {@link DARICParser#numFunc}.

@@ -294,6 +294,13 @@ protected:
     antlrcpp::Any visitNumFuncSCREENWIDTH(DARICParser::NumFuncSCREENWIDTHContext* context);
     antlrcpp::Any visitNumFuncSCREENHEIGHT(DARICParser::NumFuncSCREENHEIGHTContext* context);
 
+    /* Sprites */
+    antlrcpp::Any visitStmtRENDERTOSPRITE(DARICParser::StmtRENDERTOSPRITEContext* context);
+    antlrcpp::Any visitStmtRENDERTOSPRITE(DARICParser::StmtRENDERTOSPRITEContext* context);
+    antlrcpp::Any visitStmtDRAWSPRITE(DARICParser::StmtDRAWSPRITEContext* context);
+    antlrcpp::Any visitStmtDELETESPRITE(DARICParser::StmtDELETESPRITEContext* context);
+    antlrcpp::Any visitNumCREATESPRITE(DARICParser::NumCREATESPRITEContext* context);
+
     /* 3D */
     antlrcpp::Any visitStmtRENDERFRAME(DARICParser::StmtRENDERFRAMEContext* context);
     antlrcpp::Any visitStmtCREATEVERTEX(DARICParser::StmtCREATEVERTEXContext* context);

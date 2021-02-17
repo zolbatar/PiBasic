@@ -113,8 +113,16 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         ret.opcode = "CONST";
         ret.operand = std::to_string(bc.data);
         break;
+    case Bytecodes::FASTCONST_AS_FLOAT:
+        ret.opcode = "CONST AS FLOAT";
+        ret.operand = std::to_string(bc.data);
+        break;
     case Bytecodes::FASTCONST_VAR:
         ret.opcode = "VARIABLE";
+        name_for_operand(ret, bc, i);
+        break;
+    case Bytecodes::LOAD_AS_FLOAT:
+        ret.opcode = "LOAD AS FLOAT";
         name_for_operand(ret, bc, i);
         break;
     case Bytecodes::LOAD:
