@@ -9,7 +9,7 @@ const int StackSize = 256;
 struct JITContext {
 	// Stacks
 	asmjit::x86::Mem stack_integer;
-	asmjit::x86::Mem stack_integer_with_idx;
+//	asmjit::x86::Mem stack_integer_with_idx;
 	asmjit::x86::Gp p_i;
 
 	// Registers

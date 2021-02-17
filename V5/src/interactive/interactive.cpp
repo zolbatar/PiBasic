@@ -5,7 +5,9 @@
 #include "../libs/string.h"
 #include "../parser/parser.h"
 #include "../vm/vm.h"
+#ifdef WINDOWS
 #include "../jit/jit.h"
+#endif
 #include <iomanip>
 #include <iostream>
 #include <memory>
@@ -62,7 +64,11 @@ void Interactive::welcome_prompt()
 	g_env.graphics.print_console(" to run the test suite\r");
 	g_env.graphics.print_console("Commands: ");
 	g_env.graphics.colour(255, 255, 0);
+#ifdef WINDOWS
 	g_env.graphics.print_console("CHAIN LIST LOAD NATIVE NEW RUN SAVE QUIT\r\r");
+#else
+	g_env.graphics.print_console("CHAIN LIST LOAD NEW RUN SAVE QUIT\r\r");
+#endif
 	g_env.graphics.colour(255, 255, 255);
 	g_env.graphics.cursor_on();
 }
@@ -116,12 +122,14 @@ void Interactive::run()
 			if (upper.compare("RUN") == 0) {
 				run_all_lines();
 			}
+#ifdef WINDOWS
 			else if (upper.compare("NATIVE") == 0) {
 				if (!jit) {
 					jit = true;
 					g_env.graphics.print_console("Native compiler enabled\r");
 				}
 			}
+#endif	
 			else if (upper.compare("QUIT") == 0) {
 				return;
 			}

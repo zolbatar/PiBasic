@@ -9,7 +9,7 @@ bool JIT::compiler() {
 	// Runtime specialized for JIT code execution.
 	asmjit::JitRuntime rt;
 	asmjit::FileLogger logger(stdout);
-	logger.addFlags(asmjit::FormatOptions::kFlagMachineCode | asmjit::FormatOptions::kFlagHexOffsets);
+	logger.addFlags(asmjit::FormatOptions::kFlagMachineCode | asmjit::FormatOptions::kFlagHexOffsets | asmjit::FormatOptions::kFlagHexImms);
 
 	// Holds code and relocation information.
 	asmjit::CodeHolder code;
@@ -25,30 +25,30 @@ bool JIT::compiler() {
 	JITContext jc;
 
 	// This is a parent function, basically the overall JIT context
-	cc.addFunc(asmjit::FuncSignatureT<void>());
+	cc.addFunc(asmjit::FuncSignatureT<void>(asmjit::CallConv::kIdHost));
 
 	// Create some registers
-	jc.gp0 = cc.newGpd();			// Create a 32-bit general purpose register.
-	jc.gp1 = cc.newGpd();			// Create a 32-bit general purpose register.
-	jc.fp0 = cc.newXmm();			// Create a 128bit SIMD register
-	jc.fp1 = cc.newXmm();			// Create a 128bit SIMD register
+	jc.gp0 = cc.newInt32();			// Create a 32-bit general purpose register.
+	jc.gp1 = cc.newInt32();			// Create a 32-bit general purpose register.
+	jc.fp0 = cc.newXmmSd();			// Create a 64-bit double precision register
+	jc.fp1 = cc.newXmmSd();			// Create a 64-bit double precision register
 
 	// Stacks
 	assert(sizeof(VM_INT) == 4);
 	jc.p_i = cc.newIntPtr();
 	jc.stack_integer = cc.newStack(StackSize * 4, 8);
 	jc.stack_integer.setSize(4);
-	jc.stack_integer_with_idx = jc.stack_integer.clone();
-	jc.stack_integer_with_idx.setIndex(jc.p_i, 0);
+	//	jc.stack_integer_with_idx = jc.stack_integer.clone();
+	jc.stack_integer.setIndex(jc.p_i, 0);
 	cc.xor_(jc.p_i, jc.p_i);
 
-//	cc.call()
-//	asmjit::InvokeNode in = cc.newCall(0, )
-//	cc.call()
+	//	cc.call()
+	//	asmjit::InvokeNode in = cc.newCall(0, )
+	//	cc.call()
 
-	// Create and populate constant pools
+		// Create and populate constant pools
 
-	// Now process the actual bytecodes
+		// Now process the actual bytecodes
 	if (!process_bytecodes(&cc, &jc)) return false;
 
 	// End func now, and assemble
@@ -84,10 +84,25 @@ bool JIT::compiler() {
 	return true;
 }
 
+void stack_push_int(const VM_INT v)
+{
+	g_vm->helper_stack().push_int(v);
+}
+
+void stack_push_float(const VM_FLOAT v)
+{
+	g_vm->helper_stack().push_float(v);
+}
+
+double aa = 123.45;
+
 bool JIT::process_bytecodes(asmjit::x86::Compiler* cc, JITContext* jc) {
+	asmjit::InvokeNode* node;
+	auto stack = g_vm->helper_stack();
+
 	auto code = g_vm->helper_bytecodes().get_code();
 	for (auto it = code.begin(); it != code.end(); ++it) {
-		const auto& bc = (*it);
+		auto bc = (*it);
 
 		switch (bc.opcode) {
 		case Bytecodes::HALT:
@@ -100,16 +115,29 @@ bool JIT::process_bytecodes(asmjit::x86::Compiler* cc, JITContext* jc) {
 
 			// Literals
 		case Bytecodes::FASTCONST:
-			cc->mov(jc->gp0, asmjit::Imm(bc.data));
-			cc->mov(jc->stack_integer_with_idx, jc->gp0.r32());
-			cc->inc(jc->p_i);
+			cc->invoke(&node, asmjit::imm((void*)stack_push_int), asmjit::FuncSignatureT<void, VM_INT>(asmjit::CallConv::kIdHost));
+			node->setArg(0, asmjit::Imm(bc.data));
 			break;
 
 			// Variables
-		case Bytecodes::LOAD:
+		case Bytecodes::LOAD: {
+			auto var = g_vm->helper_variables().get_variable(bc);
 			switch (bc.type) {
+			case Type::INTEGER:
+				cc->mov(jc->gp0, asmjit::Imm(var->get_integer()));
+				cc->invoke(&node, asmjit::imm((void*)stack_push_int), asmjit::FuncSignatureT<void, VM_INT>(asmjit::CallConv::kIdHost));
+				node->setArg(0, jc->gp0);
+				break;
+			case Type::FLOAT:
+				//cc->mov(jc->gp0, asmjit::x86::ptr(aa));
+				cc->movsd(jc->fp0, asmjit::x86::Mem(aa));
+				//				cc->movd(jc->fp0, asmjit::Imm(var->get_float()));
+				cc->invoke(&node, asmjit::imm((void*)stack_push_float), asmjit::FuncSignatureT<void, VM_FLOAT>(asmjit::CallConv::kIdHost));
+				node->setArg(0, jc->fp0);
+				break;
 			}
 			break;
+		}
 		case Bytecodes::STORE:
 			switch (bc.type) {
 			}

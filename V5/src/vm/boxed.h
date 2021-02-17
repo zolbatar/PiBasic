@@ -118,6 +118,7 @@ public:
 
 	/* Float */
 	VM_FLOAT get_float() { return value_float; }
+	VM_FLOAT* get_float_addr() { return &value_float; }
 
 	/* String */
 	VM_STRING get_string() { return value_string; }

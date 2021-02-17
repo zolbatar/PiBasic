@@ -89,6 +89,9 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
     case Bytecodes::NOP:
         ret.opcode = "NOP";
         break;
+    case Bytecodes::STACKCHECK:
+        ret.opcode = "STACK CHECK";
+        break;
     case Bytecodes::HALT:
         ret.opcode = "HALT";
         break;

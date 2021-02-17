@@ -20,6 +20,7 @@ public:
         Boxed b;
         b.set_float(v);
         stack.push(std::move(b));
+        std::cout << "float: " << v << "\n";
     }
 
     void push_int(const VM_INT v)
@@ -27,6 +28,7 @@ public:
         Boxed b;
         b.set_integer(v);
         stack.push(std::move(b));
+        std::cout << "int: " << v << "\n";
     }
 
     void push_string(const VM_STRING& v)
