@@ -182,7 +182,7 @@ public:
 	// Sprites
 	VM_INT create_sprite(VM_INT w, VM_INT h, VM_INT banks);
 	void delete_sprite(VM_INT handle);
-	void render_to_sprite(VM_INT handle, VM_INT bank, VM_INT offset_x, VM_INT offset_y);
+	bool render_to_sprite(VM_INT handle, VM_INT bank, VM_INT offset_x, VM_INT offset_y);
 	void render_to_screen();
 	bool draw_sprite(VM_INT handle, VM_INT bank, VM_INT x, VM_INT y);
 #ifdef RISCOS
@@ -230,6 +230,9 @@ private:
 	bool cursor_enabled = false;
 	bool blink_state = false;
 	std::map<VM_INT, Sprite> sprites;
+	size_t bank_width, bank_height;
+	size_t bank_x1, bank_y1, bank_x2, bank_y2;
+	std::vector<Colour>* render_bank = nullptr;
 
 	// Fast line lookup
 	std::vector<UINT32> line_address;

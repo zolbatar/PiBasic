@@ -1,17 +1,27 @@
-w%=SCREENWIDTH,h%=SCREENHEIGHT,wq%=w%/4,hq%=h%/4
-CLS
-tiles%=CREATESPRITE(wq%,hq%,16)
-I%=0
-REM FOR Y%=0 TO 3
-REM 	FOR X%=0 TO 3
-REM 		RENDERTOSPRITE tiles%,I%,wq%*X%,hq%*Y%:PROCTriangle()
-REM 		I%+=1
-REM 	NEXT
-REM NEXT
-REM RENDERTOSCREEN
-REM CLS
-DRAWSPRITE tiles%,0,50,50
-REM INKEY(1000)
-DELETESPRITE tiles%
+w%=SCREENWIDTH,h%=SCREENHEIGHT,sw%=50,sh%=50,sprites%=30
+GRAPHICS BANKED
+CURSOROFF
+c%=CREATESPRITE(sw%,sh%,1)
+RENDERTOSPRITE c%,0,0,0:PROCCircle():RENDERTOSCREEN
+DIM sx%(sprites%),sy%(sprites%),sdx%(sprites%),sdy%(sprites%)
+FOR I%=0 TO sprites%-1:sx%(I%)=RND(w%):sy%(I%)=RND(h%):sdx%(I%)=1:sdy%(I%)=1:NEXT
+REPEAT
+    CLS
+    FOR I%=0 TO sprites%-1
+        DRAWSPRITE c%,0,sx%(I%),sy%(I%)
 
-DEF PROCTriangle():TRIANGLE SHADED w%/2,25,&FF0000,w%-25,h%-25,&FF00,25,h%-25,&FF:ENDPROC
+        REM Move
+        sx%(I%)=sx%(I%)+sdx%(I%)
+        sy%(I%)=sy%(I%)+sdy%(I%)
+
+        REM Check whether at edge
+        IF sx%(I%)<0 sdx%(I%)=1
+        IF sx%(I%)>w%-sw%-1 sdx%(I%)=-1
+        IF sy%(I%)<0 sdy%(I%)=1
+        IF sy%(I%)>h%-sh%-1 sdy%(I%)=-1
+    NEXT
+    FLIP
+    IF INKEY(-1):DELETESPRITE c%:CURSORON:END
+UNTIL FALSE
+
+DEF PROCCircle():COLOUR BLUE:CIRCLE FILL sw%/2,sw%/2,sw%/2-5:ENDPROC

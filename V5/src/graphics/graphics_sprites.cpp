@@ -17,12 +17,31 @@ void Graphics::delete_sprite(VM_INT handle) {
 	sprites.erase(handle);
 }
 
-void Graphics::render_to_sprite(VM_INT handle, VM_INT bank, VM_INT offset_x, VM_INT offset_y) {
+bool Graphics::render_to_sprite(VM_INT handle, VM_INT bank, VM_INT offset_x, VM_INT offset_y) {
+	auto sprite = sprites.find(handle);
 
+	// Does sprite exist?
+	if (sprite == sprites.end()) {
+		return false;
+	}
+	auto s = &((*sprite).second);
+
+	// Does bank exist?
+	if (bank >= s->banks.size()) {
+		return false;
+	}
+	render_bank = &s->banks[bank];
+	bank_x1 = offset_x;
+	bank_y1 = offset_y;
+	bank_x2 = s->width + offset_x - 1;
+	bank_y2 = s->height + offset_y - 1;
+	bank_width = s->width;
+	bank_height = s->height;
+	return true;
 }
 
 void Graphics::render_to_screen() {
-
+	render_bank = nullptr;
 }
 
 bool Graphics::draw_sprite(VM_INT handle, VM_INT bank, VM_INT sx, VM_INT sy) {
