@@ -444,6 +444,9 @@
     <ClCompile Include="..\src\compiler\compiler_sprites.cpp">
       <Filter>Source Files\Compiler</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\graphics\graphics_sprites.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">

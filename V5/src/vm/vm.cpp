@@ -2480,6 +2480,7 @@ void VM::opcode_CREATESPRITE() {
 	VM_INT h = stack.pop_int(bc);
 	VM_INT w = stack.pop_int(bc);
 	VM_INT handle = g_env.graphics.create_sprite(w, h, banks);
+	stack.push_int(handle);
 	if (!performance_build && runtime_debug)
 		g_env.log << "Creating sprite of " << w << "x" << h << " of " << banks << "banks" << std::endl;
 }
@@ -2510,7 +2511,10 @@ void VM::opcode_DRAWSPRITE() {
 	VM_INT x = stack.pop_int(bc);
 	VM_INT bank = stack.pop_int(bc);
 	VM_INT handle = stack.pop_int(bc);
-	g_env.graphics.render_to_sprite(handle, bank, x, y);
+	auto r = g_env.graphics.draw_sprite(handle, bank, x, y);
+	if (!r) {
+		error("Sprite " + std::to_string(handle) + ", error drawing");
+	}
 	if (!performance_build && runtime_debug)
 		g_env.log << "Render to sprite " << handle << ":" << bank << " offset " << x << "," << y << std::endl;
 }

@@ -66,6 +66,11 @@ public:
 	}
 };
 
+struct Sprite {
+	size_t width, height;
+	std::vector<std::vector<Colour>> banks;
+};
+
 struct Event {
 	EventType type;
 	int key_code;
@@ -179,7 +184,7 @@ public:
 	void delete_sprite(VM_INT handle);
 	void render_to_sprite(VM_INT handle, VM_INT bank, VM_INT offset_x, VM_INT offset_y);
 	void render_to_screen();
-	void draw_sprite(VM_INT handle, VM_INT bank, VM_INT offset_x, VM_INT offset_y);
+	bool draw_sprite(VM_INT handle, VM_INT bank, VM_INT x, VM_INT y);
 #ifdef RISCOS
 	void graphics_shadow_state_on();
 	void graphics_shadow_state_off();
@@ -224,6 +229,7 @@ private:
 	std::chrono::high_resolution_clock::time_point last_cursor_blink;
 	bool cursor_enabled = false;
 	bool blink_state = false;
+	std::map<VM_INT, Sprite> sprites;
 
 	// Fast line lookup
 	std::vector<UINT32> line_address;

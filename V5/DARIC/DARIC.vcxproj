@@ -242,6 +242,7 @@
     <ClCompile Include="..\src\graphics\graphics_circle.cpp" />
     <ClCompile Include="..\src\graphics\graphics_clippedline.cpp" />
     <ClCompile Include="..\src\graphics\graphics_input.cpp" />
+    <ClCompile Include="..\src\graphics\graphics_sprites.cpp" />
     <ClCompile Include="..\src\graphics\graphics_text.cpp" />
     <ClCompile Include="..\src\graphics\graphics_triangle.cpp" />
     <ClCompile Include="..\src\interactive\interactive.cpp" />
