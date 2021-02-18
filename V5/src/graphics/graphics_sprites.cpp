@@ -78,6 +78,8 @@ bool Graphics::draw_sprite(VM_INT handle, VM_INT bank, VM_INT sx, VM_INT sy) {
 	int width = s.width - clip_left - clip_right;
 	int height = s.height - clip_top - clip_bottom;
 
+	auto saved_raster = raster_mode;
+	raster_mode = RasterMode::BLEND;
 	if (width > 0 && height > 0) {
 		for (size_t y = clip_top; y < s.height - clip_bottom; y++) {
 			size_t src_offset = (y * s.width) + clip_left;
@@ -86,6 +88,7 @@ bool Graphics::draw_sprite(VM_INT handle, VM_INT bank, VM_INT sx, VM_INT sy) {
 			blit_fast(count, &b, src_offset, &pixels[dest_offset]);
 		}
 	}
+	raster_mode = saved_raster;
 
 #ifdef RISCOS
 #else
@@ -98,7 +101,34 @@ VM_INT Graphics::create_sprite_from_image(std::string filename) {
 	std::vector<unsigned char> image; //the raw pixels
 	UINT32 width, height;
 	UINT32 error = lodepng::decode(image, width, height, filename);
-	if (error) std::cout << "decoder error " << error << ": " << lodepng_error_text(error) << std::endl;
+	if (error) {
+		std::cout << "decoder error " << error << ": " << lodepng_error_text(error) << std::endl;
+		exit(0);
+	}
+
+	// Create sprite
+	Sprite s;
+	s.width = width;
+	s.height = height;
+	std::vector<Colour> bank(s.width * s.height);
+
+	// Populate with data
+	auto size = image.size() / 4;
+	if (size != (width * height)) {
+		std::cout << "Size mismatch on PNG load" << std::endl;
+		exit(0);
+	}
+	for (auto i = 0; i < size; i++) {
+		size_t index = i * 4;
+		Colour c = Colour(image[index], image[index + 1], image[index + 2]);
+		bank[i] = c;
+	}
+	s.banks.push_back(std::move(bank));
+
+	// And save and return
+	auto index = sprites.size();
+	sprites.insert(std::make_pair<VM_INT, Sprite>(static_cast<VM_INT>(index), std::move(s)));
+	return static_cast<VM_INT>(index);
 
 	//the pixels are now in the vector "image", 4 bytes per pixel, ordered RGBARGBA..., use it as texture, draw it, ...
 	return 0;

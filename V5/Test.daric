@@ -1,17 +1,16 @@
-w%=SCREENWIDTH,h%=SCREENHEIGHT,sw%=50,sh%=50,sprites%=100
+w%=SCREENWIDTH,h%=SCREENHEIGHT,sw%=128,sh%=128,sprites%=20
 T%=TIME
 GRAPHICS BANKED
 CURSOROFF
-c%=CREATESPRITE(sw%,sh%,1)
 bg%=LOADSPRITE("Background.png")
-DRAWTOSPRITE c%,0,0,0:PROCCircle():DRAWTOSCREEN
+drone%=LOADSPRITE("MOTHERSHIP.png")
 DIM sx%(sprites%),sy%(sprites%),sdx%(sprites%),sdy%(sprites%)
 FOR I%=0 TO sprites%-1:sx%(I%)=RND(w%):sy%(I%)=RND(h%):sdx%(I%)=1:sdy%(I%)=1:NEXT
 REM CLIPON 200,200,w%-200,h%-200
 FOR loop%=0 TO 1000
-    CLS
+    DRAWSPRITE bg%,0,0,0
     FOR I%=0 TO sprites%-1
-        DRAWSPRITE c%,0,sx%(I%),sy%(I%)
+        DRAWSPRITE drone%,0,sx%(I%),sy%(I%)
 
         REM Move
         sx%(I%)=sx%(I%)+sdx%(I%)
@@ -28,5 +27,5 @@ NEXT
 CLIPOFF
 GRAPHICS
 PRINT TIME-T%
-DELETESPRITE c%:CURSORON
-DEF PROCCircle():COLOUR BLUE:CIRCLE FILL sw%/2,sw%/2,sw%/2-5:ENDPROC
+DELETESPRITE drone%:DELETESPRITE bg%
+CURSORON

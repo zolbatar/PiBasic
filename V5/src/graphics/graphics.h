@@ -38,7 +38,8 @@ enum class EventType {
 const int console_font = 1;
 
 enum class RasterMode {
-	BLIT
+	BLIT,
+	BLEND
 };
 
 class Colour {

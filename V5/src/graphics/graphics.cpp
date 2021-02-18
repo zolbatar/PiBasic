@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-const int DEBUGWINDOW = 1;
+const int DEBUGWINDOW = 0;
 const int FRAMETIME = 50;
 
 #ifdef RISCOS
@@ -422,6 +422,13 @@ void Graphics::blit_fast(size_t count, std::vector<Colour>* source, size_t sourc
 		case RasterMode::BLIT:
 			dest[c] = (*source)[source_index + c].get_hex();
 			break;
+		case RasterMode::BLEND: {
+			auto col = (*source)[source_index + c].get_hex();
+			if (col != 0) {
+				dest[c] = col;
+			}
+			break;
+		}
 		}
 	}
 }
