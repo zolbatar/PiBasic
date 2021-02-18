@@ -209,6 +209,8 @@ public:
 	bool render_to_sprite(VM_INT handle, VM_INT bank, VM_INT offset_x, VM_INT offset_y);
 	void render_to_screen();
 	bool draw_sprite(VM_INT handle, VM_INT bank, VM_INT x, VM_INT y);
+	VM_INT create_sprite_from_image(std::string filename);
+
 #ifdef RISCOS
 	void graphics_shadow_state_on();
 	void graphics_shadow_state_off();

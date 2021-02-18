@@ -1,4 +1,6 @@
 #include "graphics.h"
+#include "lodepng.h"
+#include <iostream>
 
 VM_INT Graphics::create_sprite(VM_INT w, VM_INT h, VM_INT banks) {
 	Sprite s;
@@ -90,4 +92,14 @@ bool Graphics::draw_sprite(VM_INT handle, VM_INT bank, VM_INT sx, VM_INT sy) {
 	SDL_UnlockSurface(screen);
 #endif
 	return true;
+}
+
+VM_INT Graphics::create_sprite_from_image(std::string filename) {
+	std::vector<unsigned char> image; //the raw pixels
+	UINT32 width, height;
+	UINT32 error = lodepng::decode(image, width, height, filename);
+	if (error) std::cout << "decoder error " << error << ": " << lodepng_error_text(error) << std::endl;
+
+	//the pixels are now in the vector "image", 4 bytes per pixel, ordered RGBARGBA..., use it as texture, draw it, ...
+	return 0;
 }

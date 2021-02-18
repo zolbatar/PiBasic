@@ -375,6 +375,8 @@ public:
 
     virtual antlrcpp::Any visitNumFuncCREATESPRITE(DARICParser::NumFuncCREATESPRITEContext *context) = 0;
 
+    virtual antlrcpp::Any visitNumFuncLOADSPRITE(DARICParser::NumFuncLOADSPRITEContext *context) = 0;
+
     virtual antlrcpp::Any visitNumFuncSHAPE(DARICParser::NumFuncSHAPEContext *context) = 0;
 
     virtual antlrcpp::Any visitNumFuncOBJECT(DARICParser::NumFuncOBJECTContext *context) = 0;

@@ -172,6 +172,7 @@ enum class Bytecodes {
 	TEXTCENTRE, // Render text (centred)
 
 	// Sprites
+	LOADSPRITE, // Load a sprite
 	CREATESPRITE, // Build a sprites with 1 or more banks
 	DELETESPRITE, // Delete sprite
 	RENDERTOSPRITE, // Make all render operations draw to the sprite

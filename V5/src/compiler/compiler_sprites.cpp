@@ -35,6 +35,18 @@ antlrcpp::Any Compiler::visitNumFuncCREATESPRITE(DARICParser::NumFuncCREATESPRIT
 	return NULL;
 }
 
+antlrcpp::Any Compiler::visitNumFuncLOADSPRITE(DARICParser::NumFuncLOADSPRITEContext* context) {
+	set_pos(context->start);
+	if (phase == CompilerPhase::LOOKAHEAD)
+		return NULL;
+	visit(context->strExpr());
+	ensure_stack_is_string();
+	stack_pop();
+	insert_bytecode_notype(Bytecodes::LOADSPRITE);
+	stack_push(Type::INTEGER);
+	return NULL;
+}
+
 antlrcpp::Any Compiler::visitStmtDRAWSPRITE(DARICParser::StmtDRAWSPRITEContext* context) {
 	set_pos(context->start);
 	if (phase == CompilerPhase::LOOKAHEAD)
@@ -54,4 +66,3 @@ antlrcpp::Any Compiler::visitStmtDELETESPRITE(DARICParser::StmtDELETESPRITEConte
 		return NULL;
 	return NULL;
 }
-

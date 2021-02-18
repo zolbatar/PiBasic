@@ -406,7 +406,10 @@ numFunc
     | COLOUR LPAREN numExpr COMMA numExpr COMMA numExpr RPAREN      #numFuncCOLOUR
     | LOADTYPEFACE strExpr                                          #numFuncLOADTYPEFACE
     | CREATEFONT numExpr COMMA numExpr                              #numFuncCREATEFONT
-    | CREATESPRITE LPAREN numExpr COMMA numExpr COMMA numExpr RPAREN #numFuncCREATESPRITE
+
+    /* Sprites */
+    | CREATESPRITE LPAREN numExpr COMMA numExpr COMMA numExpr RPAREN    #numFuncCREATESPRITE
+    | LOADSPRITE LPAREN strExpr RPAREN                                  #numFuncLOADSPRITE
 
     /* 3D */
     | CREATESHAPE varNameType COMMA varNameType                     #numFuncSHAPE
@@ -640,6 +643,7 @@ TEXTCENTRE      : 'TEXTCENTRE' | 'textcentre' | 'TextCentre' ;
 TEXTCENTER      : 'TEXTCENTER' | 'textcenter' | 'TextCenter' ;
 TRIANGLE        : 'TRIANGLE' | 'triangle' | 'Triangle' ;
 
+LOADSPRITE      : 'LOADSPRITE' | 'loadsprite' | 'LoadSprite' ;
 DRAWSPRITE      : 'DRAWSPRITE' | 'drawsprite' | 'DrawSprite' ;
 DELETESPRITE    : 'DELETESPRITE' | 'deletesprite' | 'DeleteSprite' ;
 CREATESPRITE    : 'CREATESPRITE' | 'createsprite' | 'CreateSprite' ;

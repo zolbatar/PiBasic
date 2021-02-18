@@ -447,6 +447,9 @@
     <ClCompile Include="..\src\graphics\graphics_sprites.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\graphics\lodepng.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">
@@ -538,6 +541,9 @@
     </ClInclude>
     <ClInclude Include="..\src\jit\jit.h">
       <Filter>Header Files\JIT</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\lodepng.h">
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

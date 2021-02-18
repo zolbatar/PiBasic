@@ -1,12 +1,9 @@
-REM 475
-REM 341
-REM 290
-REM 236
 w%=SCREENWIDTH,h%=SCREENHEIGHT,sw%=50,sh%=50,sprites%=100
 T%=TIME
 GRAPHICS BANKED
 CURSOROFF
 c%=CREATESPRITE(sw%,sh%,1)
+bg%=LOADSPRITE("Background.png")
 DRAWTOSPRITE c%,0,0,0:PROCCircle():DRAWTOSCREEN
 DIM sx%(sprites%),sy%(sprites%),sdx%(sprites%),sdy%(sprites%)
 FOR I%=0 TO sprites%-1:sx%(I%)=RND(w%):sy%(I%)=RND(h%):sdx%(I%)=1:sdy%(I%)=1:NEXT

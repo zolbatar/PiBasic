@@ -727,6 +727,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitNumFuncLOADSPRITE(DARICParser::NumFuncLOADSPRITEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitNumFuncSHAPE(DARICParser::NumFuncSHAPEContext *ctx) override {
     return visitChildren(ctx);
   }

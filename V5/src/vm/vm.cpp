@@ -2475,6 +2475,14 @@ void VM::opcode_TEXTCENTRE()
 		g_env.log << "Showing text '" << text << "', font ID " << index << " at " << x << "," << y << std::endl;
 }
 
+void VM::opcode_LOADSPRITE() {
+	VM_STRING filename = stack.pop_string(bc);
+	VM_INT handle = g_env.graphics.create_sprite_from_image(filename);
+	stack.push_int(handle);
+	if (!performance_build && runtime_debug)
+		g_env.log << "Loaded sprite at '" << filename << "', handle is " << handle << std::endl;
+}
+
 void VM::opcode_CREATESPRITE() {
 	VM_INT banks = stack.pop_int(bc);
 	VM_INT h = stack.pop_int(bc);
@@ -2482,7 +2490,7 @@ void VM::opcode_CREATESPRITE() {
 	VM_INT handle = g_env.graphics.create_sprite(w, h, banks);
 	stack.push_int(handle);
 	if (!performance_build && runtime_debug)
-		g_env.log << "Creating sprite of " << w << "x" << h << " of " << banks << "banks" << std::endl;
+		g_env.log << "Creating sprite of " << w << "x" << h << " of " << banks << "banks, handle is " << handle << std::endl;
 }
 
 void VM::opcode_DELETESPRITE() {
@@ -3191,6 +3199,9 @@ std::string VM::run()
 				opcode_TEXTCENTRE();
 				break;
 
+			case Bytecodes::LOADSPRITE:
+				opcode_LOADSPRITE();
+				break;
 			case Bytecodes::CREATESPRITE:
 				opcode_CREATESPRITE();
 				break;

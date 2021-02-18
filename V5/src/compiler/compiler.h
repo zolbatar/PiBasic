@@ -300,7 +300,8 @@ protected:
     antlrcpp::Any visitStmtDRAWSPRITE(DARICParser::StmtDRAWSPRITEContext* context);
     antlrcpp::Any visitStmtDELETESPRITE(DARICParser::StmtDELETESPRITEContext* context);
     antlrcpp::Any visitNumFuncCREATESPRITE(DARICParser::NumFuncCREATESPRITEContext* context);
-
+    antlrcpp::Any visitNumFuncLOADSPRITE(DARICParser::NumFuncLOADSPRITEContext* context);
+    
     /* 3D */
     antlrcpp::Any visitStmtRENDERFRAME(DARICParser::StmtRENDERFRAMEContext* context);
     antlrcpp::Any visitStmtCREATEVERTEX(DARICParser::StmtCREATEVERTEXContext* context);

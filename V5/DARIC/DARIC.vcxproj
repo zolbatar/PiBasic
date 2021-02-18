@@ -245,6 +245,7 @@
     <ClCompile Include="..\src\graphics\graphics_sprites.cpp" />
     <ClCompile Include="..\src\graphics\graphics_text.cpp" />
     <ClCompile Include="..\src\graphics\graphics_triangle.cpp" />
+    <ClCompile Include="..\src\graphics\lodepng.cpp" />
     <ClCompile Include="..\src\interactive\interactive.cpp" />
     <ClCompile Include="..\src\jit\asmjit\core\archtraits.cpp" />
     <ClCompile Include="..\src\jit\asmjit\core\assembler.cpp" />
@@ -315,6 +316,7 @@
     <ClInclude Include="..\src\environment.h" />
     <ClInclude Include="..\src\exception.h" />
     <ClInclude Include="..\src\graphics\graphics.h" />
+    <ClInclude Include="..\src\graphics\lodepng.h" />
     <ClInclude Include="..\src\graphics\stb_truetype.h" />
     <ClInclude Include="..\src\interactive\interactive.h" />
     <ClInclude Include="..\src\jit\asmjit\core.h" />

@@ -260,6 +260,7 @@ private:
     void opcode_TEXTCENTRE();
 
     /* Sprites */   
+    void opcode_LOADSPRITE();
     void opcode_CREATESPRITE();
     void opcode_DELETESPRITE();
     void opcode_RENDERTOSPRITE();
