@@ -173,6 +173,13 @@ public:
 	bool is_cursor_enabled() { return cursor_enabled; }
 	void draw_cursor();
 	void undraw_cursor();
+
+	// Sprites
+	VM_INT create_sprite(VM_INT w, VM_INT h, VM_INT banks);
+	void delete_sprite(VM_INT handle);
+	void render_to_sprite(VM_INT handle, VM_INT bank, VM_INT offset_x, VM_INT offset_y);
+	void render_to_screen();
+	void draw_sprite(VM_INT handle, VM_INT bank, VM_INT offset_x, VM_INT offset_y);
 #ifdef RISCOS
 	void graphics_shadow_state_on();
 	void graphics_shadow_state_off();

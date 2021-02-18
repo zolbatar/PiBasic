@@ -2475,6 +2475,46 @@ void VM::opcode_TEXTCENTRE()
 		g_env.log << "Showing text '" << text << "', font ID " << index << " at " << x << "," << y << std::endl;
 }
 
+void VM::opcode_CREATESPRITE() {
+	VM_INT banks = stack.pop_int(bc);
+	VM_INT h = stack.pop_int(bc);
+	VM_INT w = stack.pop_int(bc);
+	VM_INT handle = g_env.graphics.create_sprite(w, h, banks);
+	if (!performance_build && runtime_debug)
+		g_env.log << "Creating sprite of " << w << "x" << h << " of " << banks << "banks" << std::endl;
+}
+
+void VM::opcode_DELETESPRITE() {
+	VM_INT handle = stack.pop_int(bc);
+	g_env.graphics.delete_sprite(handle);
+	if (!performance_build && runtime_debug)
+		g_env.log << "Deleting sprite " << handle << std::endl;
+}
+
+void VM::opcode_RENDERTOSPRITE() {
+	VM_INT y = stack.pop_int(bc);
+	VM_INT x = stack.pop_int(bc);
+	VM_INT bank = stack.pop_int(bc);
+	VM_INT handle = stack.pop_int(bc);
+	g_env.graphics.render_to_sprite(handle, bank, x, y);
+	if (!performance_build && runtime_debug)
+		g_env.log << "Render to sprite " << handle << ":" << bank << " offset " << x << "," << y << std::endl;
+}
+
+void VM::opcode_RENDERTOSCREEN() {
+	g_env.graphics.render_to_screen();
+}
+
+void VM::opcode_DRAWSPRITE() {
+	VM_INT y = stack.pop_int(bc);
+	VM_INT x = stack.pop_int(bc);
+	VM_INT bank = stack.pop_int(bc);
+	VM_INT handle = stack.pop_int(bc);
+	g_env.graphics.render_to_sprite(handle, bank, x, y);
+	if (!performance_build && runtime_debug)
+		g_env.log << "Render to sprite " << handle << ":" << bank << " offset " << x << "," << y << std::endl;
+}
+
 void VM::opcode_CREATEVERTEX()
 {
 	auto b = variables.get_variable(bc);
@@ -3146,6 +3186,23 @@ std::string VM::run()
 			case Bytecodes::TEXTCENTRE:
 				opcode_TEXTCENTRE();
 				break;
+
+			case Bytecodes::CREATESPRITE:
+				opcode_CREATESPRITE();
+				break;
+			case Bytecodes::DELETESPRITE:
+				opcode_DELETESPRITE();
+				break;
+			case Bytecodes::RENDERTOSPRITE:
+				opcode_RENDERTOSPRITE();
+				break;
+			case Bytecodes::RENDERTOSCREEN:
+				opcode_RENDERTOSCREEN();
+				break;
+			case Bytecodes::DRAWSPRITE:
+				opcode_DRAWSPRITE();
+				break;
+
 
 				/* 3d Graphics */
 			case Bytecodes::CREATEVERTEX:

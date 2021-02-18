@@ -296,10 +296,10 @@ protected:
 
     /* Sprites */
     antlrcpp::Any visitStmtRENDERTOSPRITE(DARICParser::StmtRENDERTOSPRITEContext* context);
-    antlrcpp::Any visitStmtRENDERTOSPRITE(DARICParser::StmtRENDERTOSPRITEContext* context);
+    antlrcpp::Any visitStmtRENDERTOSCREEN(DARICParser::StmtRENDERTOSCREENContext* context);
     antlrcpp::Any visitStmtDRAWSPRITE(DARICParser::StmtDRAWSPRITEContext* context);
     antlrcpp::Any visitStmtDELETESPRITE(DARICParser::StmtDELETESPRITEContext* context);
-    antlrcpp::Any visitNumCREATESPRITE(DARICParser::NumCREATESPRITEContext* context);
+    antlrcpp::Any visitNumFuncCREATESPRITE(DARICParser::NumFuncCREATESPRITEContext* context);
 
     /* 3D */
     antlrcpp::Any visitStmtRENDERFRAME(DARICParser::StmtRENDERFRAMEContext* context);

@@ -259,6 +259,13 @@ private:
     void opcode_TEXTRIGHT();
     void opcode_TEXTCENTRE();
 
+    /* Sprites */   
+    void opcode_CREATESPRITE();
+    void opcode_DELETESPRITE();
+    void opcode_RENDERTOSPRITE();
+    void opcode_RENDERTOSCREEN();
+    void opcode_DRAWSPRITE();
+
     void opcode_CREATEVERTEX();
     void opcode_CREATETRIANGLE();
     void opcode_CREATESHAPE();

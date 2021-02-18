@@ -171,6 +171,13 @@ enum class Bytecodes {
 	TEXTRIGHT, // Render text (right aligned)
 	TEXTCENTRE, // Render text (centred)
 
+	// Sprites
+	CREATESPRITE, // Build a sprites with 1 or more banks
+	DELETESPRITE, // Delete sprite
+	RENDERTOSPRITE, // Make all render operations draw to the sprite
+	RENDERTOSCREEN, // All drawing goes to screen as normal
+	DRAWSPRITE, // Actually write the sprite to screen
+
 	// 3D Graphics
 	CREATEVERTEX, // Create a vertex in the 3d engine
 	CREATETRIANGLE, // Create a triangle in the 3d engine
