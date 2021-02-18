@@ -94,23 +94,23 @@ void World::render()
     for (auto triangle = render_list.begin(); triangle != render_list.end(); ++triangle) {
         switch (triangle->render_type) {
         case RenderType::Baycentric:
-            g_env.graphics.gouraud_triangle_with_colour(triangle->sx1, triangle->sy1, triangle->sx3, triangle->sy3, triangle->sx2, triangle->sy2, triangle->colour1.r,
-                triangle->colour1.g, triangle->colour1.b, triangle->colour3.r, triangle->colour3.g, triangle->colour3.b,
-                triangle->colour2.r, triangle->colour2.g, triangle->colour2.b);
+            g_env.graphics.gouraud_triangle_with_colour(triangle->sx1, triangle->sy1, triangle->sx3, triangle->sy3, triangle->sx2, triangle->sy2, triangle->colour1.get_r(),
+                triangle->colour1.get_g(), triangle->colour1.get_b(), triangle->colour3.get_r(), triangle->colour3.get_g(), triangle->colour3.get_b(),
+                triangle->colour2.get_r(), triangle->colour2.get_g(), triangle->colour2.get_b());
             break;
         case RenderType::Wireframe:
-            g_env.graphics.colour(triangle->colour1.r, triangle->colour1.g, triangle->colour1.b);
+            g_env.graphics.colour(triangle->colour1.get_r(), triangle->colour1.get_g(), triangle->colour1.get_b());
             g_env.graphics.line(triangle->sx1, triangle->sy1, triangle->sx2, triangle->sy2);
             g_env.graphics.line(triangle->sx2, triangle->sy2, triangle->sx3, triangle->sy3);
             g_env.graphics.line(triangle->sx3, triangle->sy3, triangle->sx1, triangle->sy1);
             break;
         case RenderType::Solid:
             g_env.graphics.colour(255, 255, 255);
-            g_env.graphics.colour(triangle->colour1.r, triangle->colour1.g, triangle->colour1.b);
+            g_env.graphics.colour(triangle->colour1.get_r(), triangle->colour1.get_g(), triangle->colour1.get_b());
             g_env.graphics.triangle(triangle->sx1, triangle->sy1, triangle->sx2, triangle->sy2, triangle->sx3, triangle->sy3);
             break;
         case RenderType::FILLEDWIREFRAME:
-            g_env.graphics.colour(triangle->colour1.r, triangle->colour1.g, triangle->colour1.b);
+            g_env.graphics.colour(triangle->colour1.get_r(), triangle->colour1.get_g(), triangle->colour1.get_b());
             g_env.graphics.triangle(triangle->sx1, triangle->sy1, triangle->sx2, triangle->sy2, triangle->sx3, triangle->sy3);
             g_env.graphics.set_colour(saved_colour);
             g_env.graphics.line(triangle->sx1, triangle->sy1, triangle->sx2, triangle->sy2);

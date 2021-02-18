@@ -37,8 +37,8 @@ public:
     FLIP = 128, SHOWFPS = 129, GRAPHICS = 130, LINE = 131, LOADTYPEFACE = 132, 
     RECTANGLE = 133, PLOT = 134, POINT = 135, SCREENWIDTH = 136, SCREENHEIGHT = 137, 
     TEXT = 138, TEXTRIGHT = 139, TEXTCENTRE = 140, TEXTCENTER = 141, TRIANGLE = 142, 
-    DRAWSPRITE = 143, DELETESPRITE = 144, CREATESPRITE = 145, RENDERTOSPRITE = 146, 
-    RENDERTOSCREEN = 147, TIME = 148, PI = 149, SQR = 150, LN = 151, LOG = 152, 
+    DRAWSPRITE = 143, DELETESPRITE = 144, CREATESPRITE = 145, DRAWTOSPRITE = 146, 
+    DRAWTOSCREEN = 147, TIME = 148, PI = 149, SQR = 150, LN = 151, LOG = 152, 
     EXP = 153, ATN = 154, TAN = 155, COS = 156, SIN = 157, ABS = 158, ACS = 159, 
     ASN = 160, DEG = 161, RAD = 162, SGN = 163, ASC = 164, LEN = 165, INSTR = 166, 
     VAL = 167, TIMES = 168, STRS = 169, STRINGS = 170, CHRS = 171, LEFTS = 172, 
@@ -1421,7 +1421,7 @@ public:
   public:
     StmtRENDERTOSPRITEContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *RENDERTOSPRITE();
+    antlr4::tree::TerminalNode *DRAWTOSPRITE();
     std::vector<NumExprContext *> numExpr();
     NumExprContext* numExpr(size_t i);
     std::vector<antlr4::tree::TerminalNode *> COMMA();
@@ -1438,7 +1438,7 @@ public:
   public:
     StmtRENDERTOSCREENContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *RENDERTOSCREEN();
+    antlr4::tree::TerminalNode *DRAWTOSCREEN();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;

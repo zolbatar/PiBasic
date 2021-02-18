@@ -10,7 +10,7 @@ VM_INT Graphics::create_sprite(VM_INT w, VM_INT h, VM_INT banks) {
 	}
 	auto index = sprites.size();
 	sprites.insert(std::make_pair<VM_INT, Sprite>(static_cast<VM_INT>(index), std::move(s)));
-	return index;
+	return static_cast<VM_INT>(index);
 }
 
 void Graphics::delete_sprite(VM_INT handle) {
@@ -60,13 +60,34 @@ bool Graphics::draw_sprite(VM_INT handle, VM_INT bank, VM_INT sx, VM_INT sy) {
 	auto b = s.banks[bank];
 
 	// Render!!
-	auto saved_colour = current_colour;
-	for (size_t y = 0; y < s.height; y++) {
-		for (size_t x = 0; x < s.width; x++) {
-			current_colour = b[y * s.width + x];
-			plot(x + sx, y + sy);
+#ifdef RISCOS
+	UINT32* pixels = get_bank_address();
+#else
+	SDL_LockSurface(screen);
+	UINT32* pixels = (UINT32*)screen->pixels;
+#endif
+
+	// Work out how much to clip 
+	size_t clip_left = sx < minX ? minX - sx : 0;
+	size_t clip_right = (sx + s.width) > maxX ? (sx + s.width) - maxX : 0;
+	size_t clip_top = sy < minY ? minY - sy : 0;
+	size_t clip_bottom = (sy + s.height) > maxY ? (sy + s.height) - maxY : 0;
+
+	int width = s.width - clip_left - clip_right;
+	int height = s.height - clip_top - clip_bottom;
+
+	if (width > 0 && height > 0) {
+		for (size_t y = clip_top; y < s.height - clip_bottom; y++) {
+			size_t src_offset = (y * s.width) + clip_left;
+			size_t dest_offset = line_address[y + sy] + clip_left + sx;
+			size_t count = s.width - clip_right - clip_left;
+			blit_fast(count, &b, src_offset, &pixels[dest_offset]);
 		}
 	}
-	current_colour = saved_colour;
+
+#ifdef RISCOS
+#else
+	SDL_UnlockSurface(screen);
+#endif
 	return true;
 }

@@ -145,8 +145,8 @@ DARICParser::ProgContext* DARICParser::prog() {
       | (1ULL << (DARICParser::TRIANGLE - 94))
       | (1ULL << (DARICParser::DRAWSPRITE - 94))
       | (1ULL << (DARICParser::DELETESPRITE - 94))
-      | (1ULL << (DARICParser::RENDERTOSPRITE - 94))
-      | (1ULL << (DARICParser::RENDERTOSCREEN - 94)))) != 0) || ((((_la - 203) & ~ 0x3fULL) == 0) &&
+      | (1ULL << (DARICParser::DRAWTOSPRITE - 94))
+      | (1ULL << (DARICParser::DRAWTOSCREEN - 94)))) != 0) || ((((_la - 203) & ~ 0x3fULL) == 0) &&
       ((1ULL << (_la - 203)) & ((1ULL << (DARICParser::NEWLINE - 203))
       | (1ULL << (DARICParser::COLON - 203))
       | (1ULL << (DARICParser::COMMENT - 203))
@@ -358,8 +358,8 @@ DARICParser::LineContext* DARICParser::line() {
         | (1ULL << (DARICParser::TRIANGLE - 94))
         | (1ULL << (DARICParser::DRAWSPRITE - 94))
         | (1ULL << (DARICParser::DELETESPRITE - 94))
-        | (1ULL << (DARICParser::RENDERTOSPRITE - 94))
-        | (1ULL << (DARICParser::RENDERTOSCREEN - 94)))) != 0) || ((((_la - 207) & ~ 0x3fULL) == 0) &&
+        | (1ULL << (DARICParser::DRAWTOSPRITE - 94))
+        | (1ULL << (DARICParser::DRAWTOSCREEN - 94)))) != 0) || ((((_la - 207) & ~ 0x3fULL) == 0) &&
         ((1ULL << (_la - 207)) & ((1ULL << (DARICParser::COLON - 207))
         | (1ULL << (DARICParser::PROC_NAME - 207))
         | (1ULL << (DARICParser::FN_INTEGER - 207))
@@ -659,8 +659,8 @@ DARICParser::BodyContext* DARICParser::body() {
         | (1ULL << (DARICParser::TRIANGLE - 94))
         | (1ULL << (DARICParser::DRAWSPRITE - 94))
         | (1ULL << (DARICParser::DELETESPRITE - 94))
-        | (1ULL << (DARICParser::RENDERTOSPRITE - 94))
-        | (1ULL << (DARICParser::RENDERTOSCREEN - 94)))) != 0) || ((((_la - 207) & ~ 0x3fULL) == 0) &&
+        | (1ULL << (DARICParser::DRAWTOSPRITE - 94))
+        | (1ULL << (DARICParser::DRAWTOSCREEN - 94)))) != 0) || ((((_la - 207) & ~ 0x3fULL) == 0) &&
         ((1ULL << (_la - 207)) & ((1ULL << (DARICParser::COLON - 207))
         | (1ULL << (DARICParser::PROC_NAME - 207))
         | (1ULL << (DARICParser::FN_INTEGER - 207))
@@ -5227,14 +5227,14 @@ DARICParser::GraphicsStmtContext* DARICParser::graphicsStmt() {
         break;
       }
 
-      case DARICParser::RENDERTOSPRITE: {
+      case DARICParser::DRAWTOSPRITE: {
         enterOuterAlt(_localctx, 19);
         setState(697);
         stmtRENDERTOSPRITE();
         break;
       }
 
-      case DARICParser::RENDERTOSCREEN: {
+      case DARICParser::DRAWTOSCREEN: {
         enterOuterAlt(_localctx, 20);
         setState(698);
         stmtRENDERTOSCREEN();
@@ -6809,8 +6809,8 @@ DARICParser::StmtRENDERTOSPRITEContext::StmtRENDERTOSPRITEContext(ParserRuleCont
   : ParserRuleContext(parent, invokingState) {
 }
 
-tree::TerminalNode* DARICParser::StmtRENDERTOSPRITEContext::RENDERTOSPRITE() {
-  return getToken(DARICParser::RENDERTOSPRITE, 0);
+tree::TerminalNode* DARICParser::StmtRENDERTOSPRITEContext::DRAWTOSPRITE() {
+  return getToken(DARICParser::DRAWTOSPRITE, 0);
 }
 
 std::vector<DARICParser::NumExprContext *> DARICParser::StmtRENDERTOSPRITEContext::numExpr() {
@@ -6856,7 +6856,7 @@ DARICParser::StmtRENDERTOSPRITEContext* DARICParser::stmtRENDERTOSPRITE() {
   try {
     enterOuterAlt(_localctx, 1);
     setState(897);
-    match(DARICParser::RENDERTOSPRITE);
+    match(DARICParser::DRAWTOSPRITE);
     setState(898);
     numExpr(0);
     setState(899);
@@ -6888,8 +6888,8 @@ DARICParser::StmtRENDERTOSCREENContext::StmtRENDERTOSCREENContext(ParserRuleCont
   : ParserRuleContext(parent, invokingState) {
 }
 
-tree::TerminalNode* DARICParser::StmtRENDERTOSCREENContext::RENDERTOSCREEN() {
-  return getToken(DARICParser::RENDERTOSCREEN, 0);
+tree::TerminalNode* DARICParser::StmtRENDERTOSCREENContext::DRAWTOSCREEN() {
+  return getToken(DARICParser::DRAWTOSCREEN, 0);
 }
 
 
@@ -6919,7 +6919,7 @@ DARICParser::StmtRENDERTOSCREENContext* DARICParser::stmtRENDERTOSCREEN() {
   try {
     enterOuterAlt(_localctx, 1);
     setState(906);
-    match(DARICParser::RENDERTOSCREEN);
+    match(DARICParser::DRAWTOSCREEN);
    
   }
   catch (RecognitionException &e) {
@@ -14848,7 +14848,7 @@ std::vector<std::string> DARICParser::_symbolicNames = {
   "COLOURBG", "CREATEFONT", "CURSORON", "CURSOROFF", "FILL", "FLIP", "SHOWFPS", 
   "GRAPHICS", "LINE", "LOADTYPEFACE", "RECTANGLE", "PLOT", "POINT", "SCREENWIDTH", 
   "SCREENHEIGHT", "TEXT", "TEXTRIGHT", "TEXTCENTRE", "TEXTCENTER", "TRIANGLE", 
-  "DRAWSPRITE", "DELETESPRITE", "CREATESPRITE", "RENDERTOSPRITE", "RENDERTOSCREEN", 
+  "DRAWSPRITE", "DELETESPRITE", "CREATESPRITE", "DRAWTOSPRITE", "DRAWTOSCREEN", 
   "TIME", "PI", "SQR", "LN", "LOG", "EXP", "ATN", "TAN", "COS", "SIN", "ABS", 
   "ACS", "ASN", "DEG", "RAD", "SGN", "ASC", "LEN", "INSTR", "VAL", "TIMES", 
   "STRS", "STRINGS", "CHRS", "LEFTS", "MIDS", "RIGHTS", "RND", "RND0", "RND1", 

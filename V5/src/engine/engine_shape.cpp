@@ -95,24 +95,22 @@ int Shape::shoelace(Vertex& v1, Vertex& v2, Vertex& v3)
 void Shape::make_colour(Colour* original, Colour* result, VM_FLOAT directional_ratio, VM_FLOAT distance, WorldState& state)
 {
     if (directional_ratio < 0) {
-        result->r = 0;
-        result->g = 0;
-        result->b = 0;
+        result->set_rgb(0, 0, 0);
         return;
     }
-    UINT32 r = original->r;
-    UINT32 g = original->g;
-    UINT32 b = original->b;
+    UINT32 r = original->get_r();
+    UINT32 g = original->get_g();
+    UINT32 b = original->get_b();
 
     // Set ambient
-    UINT32 ro = static_cast<UINT32>(r * (state.ambient.colour.r / 255.0));
-    UINT32 go = static_cast<UINT32>(g * (state.ambient.colour.g / 255.0));
-    UINT32 bo = static_cast<UINT32>(b * (state.ambient.colour.b / 255.0));
+    UINT32 ro = static_cast<UINT32>(r * (state.ambient.colour.get_r() / 255.0));
+    UINT32 go = static_cast<UINT32>(g * (state.ambient.colour.get_g() / 255.0));
+    UINT32 bo = static_cast<UINT32>(b * (state.ambient.colour.get_b() / 255.0));
 
     // Mix in directional
-    ro += static_cast<UINT32>((state.directional.colour.r / 255.0) * directional_ratio * r);
-    go += static_cast<UINT32>((state.directional.colour.g / 255.0) * directional_ratio * g);
-    bo += static_cast<UINT32>((state.directional.colour.b / 255.0) * directional_ratio * b);
+    ro += static_cast<UINT32>((state.directional.colour.get_r() / 255.0) * directional_ratio * r);
+    go += static_cast<UINT32>((state.directional.colour.get_g() / 255.0) * directional_ratio * g);
+    bo += static_cast<UINT32>((state.directional.colour.get_b() / 255.0) * directional_ratio * b);
 
     // Make sure we don't max out
     if (ro > 255)
@@ -122,7 +120,5 @@ void Shape::make_colour(Colour* original, Colour* result, VM_FLOAT directional_r
     if (bo > 255)
         bo = 255;
 
-    result->r = static_cast<BYTE>(ro);
-    result->g = static_cast<BYTE>(go);
-    result->b = static_cast<BYTE>(bo);
+    result->set_rgb(static_cast<BYTE>(ro), static_cast<BYTE>(go), static_cast<BYTE>(bo));
 }

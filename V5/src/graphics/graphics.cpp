@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-const int DEBUGWINDOW = 0;
+const int DEBUGWINDOW = 1;
 const int FRAMETIME = 50;
 
 #ifdef RISCOS
@@ -92,7 +92,12 @@ UINT32 Graphics::get_screen_width()
 		SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
 		return 1;
 	}
-	return dm.w;
+	if (DEBUGWINDOW) {
+		return dm.w * 0.75;
+	}
+	else {
+		return dm.w;
+	}
 }
 
 UINT32 Graphics::get_screen_height()
@@ -102,16 +107,21 @@ UINT32 Graphics::get_screen_height()
 		SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
 		return 1;
 	}
-	return dm.h;
+	if (DEBUGWINDOW) {
+		return dm.h * 0.75;
+	}
+	else {
+		return dm.h;
+	}
 }
 #endif
 
 void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 {
-	if (DEBUGWINDOW) {
-		width = static_cast<int>(width * 0.9);
-		height = static_cast<int>(height * 0.9);
-	}
+	/*	if (DEBUGWINDOW) {
+			width = static_cast<int>(width * 0.9);
+			height = static_cast<int>(height * 0.9);
+		}*/
 	showfps = false;
 	bool reinit = false;
 	bool initial = !is_open();
@@ -349,30 +359,24 @@ void Graphics::show_cursors()
 
 void Graphics::alpha(Colour bg, Colour fg, Colour& out, BYTE a)
 {
-	out.r = ((fg.r * a) >> 8) + ((bg.r * (255 - a)) >> 8);
-	out.g = ((fg.g * a) >> 8) + ((bg.g * (255 - a)) >> 8);
-	out.b = ((fg.b * a) >> 8) + ((bg.b * (255 - a)) >> 8);
+	out.set_rgb(((fg.get_r() * a) >> 8) + ((bg.get_r() * (255 - a)) >> 8),
+		((fg.get_g() * a) >> 8) + ((bg.get_g() * (255 - a)) >> 8),
+		((fg.get_b() * a) >> 8) + ((bg.get_b() * (255 - a)) >> 8));
 }
 
 void Graphics::colour(BYTE r, BYTE g, BYTE b)
 {
-	current_colour.r = r;
-	current_colour.g = g;
-	current_colour.b = b;
+	current_colour.set_rgb(r, g, b);
 }
 
 void Graphics::colour_bg(int r, int g, int b)
 {
-	current_bg_colour.r = r;
-	current_bg_colour.g = g;
-	current_bg_colour.b = b;
+	current_bg_colour.set_rgb(r, g, b);
 }
 
 void Graphics::colour_hex(UINT32 c)
 {
-	current_colour.r = (c & 0xFF0000) >> 16;
-	current_colour.g = (c & 0xFF00) >> 8;
-	current_colour.b = (c & 0xFF);
+	current_colour.set_rgb((c & 0xFF0000) >> 16, (c & 0xFF00) >> 8, (c & 0xFF));
 }
 
 void Graphics::set_colour(Colour c)
@@ -382,9 +386,7 @@ void Graphics::set_colour(Colour c)
 
 void Graphics::colour_bg_hex(UINT32 c)
 {
-	current_bg_colour.r = (c & 0xFF0000) >> 16;
-	current_bg_colour.g = (c & 0xFF00) >> 8;
-	current_bg_colour.b = (c & 0xFF);
+	current_bg_colour.set_rgb((c & 0xFF0000) >> 16, (c & 0xFF00) >> 8, (c & 0xFF));
 }
 
 void Graphics::plot(int x, int y)
@@ -408,9 +410,19 @@ void Graphics::plot(int x, int y)
 		SDL_LockSurface(screen);
 		auto pixels = (UINT32*)screen->pixels;
 		int offset = line_address[y] + x;
-		pixels[offset] = current_colour.get_as_hex();
+		pixels[offset] = current_colour.get_hex();
 		SDL_UnlockSurface(screen);
 #endif
+	}
+}
+
+void Graphics::blit_fast(size_t count, std::vector<Colour>* source, size_t source_index, UINT32* dest) {
+	for (auto c = 0; c < count; c++) {
+		switch (raster_mode) {
+		case RasterMode::BLIT:
+			dest[c] = (*source)[source_index + c].get_hex();
+			break;
+		}
 	}
 }
 
@@ -445,7 +457,7 @@ void Graphics::cls()
 	auto addr = get_bank_address();
 	memset((void*)addr, bg, size);
 #else
-	SDL_FillRect(screen, 0, current_bg_colour.get_as_hex());
+	SDL_FillRect(screen, 0, current_bg_colour.get_hex());
 #endif
 	if (!banked)
 		flip(false);

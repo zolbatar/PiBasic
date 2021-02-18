@@ -37,8 +37,8 @@ public class DARICParser extends Parser {
 		CURSORON=125, CURSOROFF=126, FILL=127, FLIP=128, SHOWFPS=129, GRAPHICS=130, 
 		LINE=131, LOADTYPEFACE=132, RECTANGLE=133, PLOT=134, POINT=135, SCREENWIDTH=136, 
 		SCREENHEIGHT=137, TEXT=138, TEXTRIGHT=139, TEXTCENTRE=140, TEXTCENTER=141, 
-		TRIANGLE=142, DRAWSPRITE=143, DELETESPRITE=144, CREATESPRITE=145, RENDERTOSPRITE=146, 
-		RENDERTOSCREEN=147, TIME=148, PI=149, SQR=150, LN=151, LOG=152, EXP=153, 
+		TRIANGLE=142, DRAWSPRITE=143, DELETESPRITE=144, CREATESPRITE=145, DRAWTOSPRITE=146, 
+		DRAWTOSCREEN=147, TIME=148, PI=149, SQR=150, LN=151, LOG=152, EXP=153, 
 		ATN=154, TAN=155, COS=156, SIN=157, ABS=158, ACS=159, ASN=160, DEG=161, 
 		RAD=162, SGN=163, ASC=164, LEN=165, INSTR=166, VAL=167, TIMES=168, STRS=169, 
 		STRINGS=170, CHRS=171, LEFTS=172, MIDS=173, RIGHTS=174, RND=175, RND0=176, 
@@ -156,7 +156,7 @@ public class DARICParser extends Parser {
 			"COLOURBG", "CREATEFONT", "CURSORON", "CURSOROFF", "FILL", "FLIP", "SHOWFPS", 
 			"GRAPHICS", "LINE", "LOADTYPEFACE", "RECTANGLE", "PLOT", "POINT", "SCREENWIDTH", 
 			"SCREENHEIGHT", "TEXT", "TEXTRIGHT", "TEXTCENTRE", "TEXTCENTER", "TRIANGLE", 
-			"DRAWSPRITE", "DELETESPRITE", "CREATESPRITE", "RENDERTOSPRITE", "RENDERTOSCREEN", 
+			"DRAWSPRITE", "DELETESPRITE", "CREATESPRITE", "DRAWTOSPRITE", "DRAWTOSCREEN", 
 			"TIME", "PI", "SQR", "LN", "LOG", "EXP", "ATN", "TAN", "COS", "SIN", 
 			"ABS", "ACS", "ASN", "DEG", "RAD", "SGN", "ASC", "LEN", "INSTR", "VAL", 
 			"TIMES", "STRS", "STRINGS", "CHRS", "LEFTS", "MIDS", "RIGHTS", "RND", 
@@ -250,7 +250,7 @@ public class DARICParser extends Parser {
 			setState(239);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BREAKPOINT) | (1L << CASE) | (1L << CHAIN) | (1L << DATA) | (1L << DEF) | (1L << DIM) | (1L << END) | (1L << FOR) | (1L << IF) | (1L << INSTALL) | (1L << INPUT) | (1L << GLOBAL) | (1L << GOTO) | (1L << GOSUB) | (1L << LOCAL) | (1L << LET) | (1L << OSCLI) | (1L << PRINT) | (1L << READ) | (1L << REM) | (1L << REPEAT) | (1L << RESTORE) | (1L << RETURN) | (1L << SWAP) | (1L << TRACEON) | (1L << TRACEOFF) | (1L << TYPE) | (1L << WHILE) | (1L << MOUSE) | (1L << INKEY) | (1L << INKEYS) | (1L << GET) | (1L << GETS))) != 0) || ((((_la - 94)) & ~0x3f) == 0 && ((1L << (_la - 94)) & ((1L << (RENDERFRAME - 94)) | (1L << (CREATEVERTEX - 94)) | (1L << (CREATETRIANGLE - 94)) | (1L << (TRANSLATE - 94)) | (1L << (ROTATE - 94)) | (1L << (SCALE - 94)) | (1L << (DELETEOBJECT - 94)) | (1L << (BGETH - 94)) | (1L << (BPUTH - 94)) | (1L << (CLOSEH - 94)) | (1L << (PTRH - 94)) | (1L << (CIRCLE - 94)) | (1L << (CLS - 94)) | (1L << (CLIPON - 94)) | (1L << (CLIPOFF - 94)) | (1L << (COLOUR - 94)) | (1L << (COLOURBG - 94)) | (1L << (CURSORON - 94)) | (1L << (CURSOROFF - 94)) | (1L << (FLIP - 94)) | (1L << (SHOWFPS - 94)) | (1L << (GRAPHICS - 94)) | (1L << (LINE - 94)) | (1L << (RECTANGLE - 94)) | (1L << (PLOT - 94)) | (1L << (TEXT - 94)) | (1L << (TEXTRIGHT - 94)) | (1L << (TEXTCENTRE - 94)) | (1L << (TEXTCENTER - 94)) | (1L << (TRIANGLE - 94)) | (1L << (DRAWSPRITE - 94)) | (1L << (DELETESPRITE - 94)) | (1L << (RENDERTOSPRITE - 94)) | (1L << (RENDERTOSCREEN - 94)))) != 0) || ((((_la - 203)) & ~0x3f) == 0 && ((1L << (_la - 203)) & ((1L << (NEWLINE - 203)) | (1L << (COLON - 203)) | (1L << (COMMENT - 203)) | (1L << (PROC_NAME - 203)) | (1L << (FN_INTEGER - 203)) | (1L << (FN_FLOAT - 203)) | (1L << (FN_STRING - 203)) | (1L << (VARIABLE_FLOAT - 203)) | (1L << (VARIABLE_INTEGER - 203)) | (1L << (VARIABLE_STRING - 203)) | (1L << (VARIABLE_TYPE - 203)) | (1L << (NUMBER - 203)))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BREAKPOINT) | (1L << CASE) | (1L << CHAIN) | (1L << DATA) | (1L << DEF) | (1L << DIM) | (1L << END) | (1L << FOR) | (1L << IF) | (1L << INSTALL) | (1L << INPUT) | (1L << GLOBAL) | (1L << GOTO) | (1L << GOSUB) | (1L << LOCAL) | (1L << LET) | (1L << OSCLI) | (1L << PRINT) | (1L << READ) | (1L << REM) | (1L << REPEAT) | (1L << RESTORE) | (1L << RETURN) | (1L << SWAP) | (1L << TRACEON) | (1L << TRACEOFF) | (1L << TYPE) | (1L << WHILE) | (1L << MOUSE) | (1L << INKEY) | (1L << INKEYS) | (1L << GET) | (1L << GETS))) != 0) || ((((_la - 94)) & ~0x3f) == 0 && ((1L << (_la - 94)) & ((1L << (RENDERFRAME - 94)) | (1L << (CREATEVERTEX - 94)) | (1L << (CREATETRIANGLE - 94)) | (1L << (TRANSLATE - 94)) | (1L << (ROTATE - 94)) | (1L << (SCALE - 94)) | (1L << (DELETEOBJECT - 94)) | (1L << (BGETH - 94)) | (1L << (BPUTH - 94)) | (1L << (CLOSEH - 94)) | (1L << (PTRH - 94)) | (1L << (CIRCLE - 94)) | (1L << (CLS - 94)) | (1L << (CLIPON - 94)) | (1L << (CLIPOFF - 94)) | (1L << (COLOUR - 94)) | (1L << (COLOURBG - 94)) | (1L << (CURSORON - 94)) | (1L << (CURSOROFF - 94)) | (1L << (FLIP - 94)) | (1L << (SHOWFPS - 94)) | (1L << (GRAPHICS - 94)) | (1L << (LINE - 94)) | (1L << (RECTANGLE - 94)) | (1L << (PLOT - 94)) | (1L << (TEXT - 94)) | (1L << (TEXTRIGHT - 94)) | (1L << (TEXTCENTRE - 94)) | (1L << (TEXTCENTER - 94)) | (1L << (TRIANGLE - 94)) | (1L << (DRAWSPRITE - 94)) | (1L << (DELETESPRITE - 94)) | (1L << (DRAWTOSPRITE - 94)) | (1L << (DRAWTOSCREEN - 94)))) != 0) || ((((_la - 203)) & ~0x3f) == 0 && ((1L << (_la - 203)) & ((1L << (NEWLINE - 203)) | (1L << (COLON - 203)) | (1L << (COMMENT - 203)) | (1L << (PROC_NAME - 203)) | (1L << (FN_INTEGER - 203)) | (1L << (FN_FLOAT - 203)) | (1L << (FN_STRING - 203)) | (1L << (VARIABLE_FLOAT - 203)) | (1L << (VARIABLE_INTEGER - 203)) | (1L << (VARIABLE_STRING - 203)) | (1L << (VARIABLE_TYPE - 203)) | (1L << (NUMBER - 203)))) != 0)) {
 				{
 				{
 				setState(236);
@@ -376,7 +376,7 @@ public class DARICParser extends Parser {
 					setState(258); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
-				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BREAKPOINT) | (1L << CASE) | (1L << CHAIN) | (1L << DATA) | (1L << DEF) | (1L << DIM) | (1L << END) | (1L << FOR) | (1L << IF) | (1L << INSTALL) | (1L << INPUT) | (1L << GLOBAL) | (1L << GOTO) | (1L << GOSUB) | (1L << LOCAL) | (1L << LET) | (1L << OSCLI) | (1L << PRINT) | (1L << READ) | (1L << REPEAT) | (1L << RESTORE) | (1L << RETURN) | (1L << SWAP) | (1L << TRACEON) | (1L << TRACEOFF) | (1L << TYPE) | (1L << WHILE) | (1L << MOUSE) | (1L << INKEY) | (1L << INKEYS) | (1L << GET) | (1L << GETS))) != 0) || ((((_la - 94)) & ~0x3f) == 0 && ((1L << (_la - 94)) & ((1L << (RENDERFRAME - 94)) | (1L << (CREATEVERTEX - 94)) | (1L << (CREATETRIANGLE - 94)) | (1L << (TRANSLATE - 94)) | (1L << (ROTATE - 94)) | (1L << (SCALE - 94)) | (1L << (DELETEOBJECT - 94)) | (1L << (BGETH - 94)) | (1L << (BPUTH - 94)) | (1L << (CLOSEH - 94)) | (1L << (PTRH - 94)) | (1L << (CIRCLE - 94)) | (1L << (CLS - 94)) | (1L << (CLIPON - 94)) | (1L << (CLIPOFF - 94)) | (1L << (COLOUR - 94)) | (1L << (COLOURBG - 94)) | (1L << (CURSORON - 94)) | (1L << (CURSOROFF - 94)) | (1L << (FLIP - 94)) | (1L << (SHOWFPS - 94)) | (1L << (GRAPHICS - 94)) | (1L << (LINE - 94)) | (1L << (RECTANGLE - 94)) | (1L << (PLOT - 94)) | (1L << (TEXT - 94)) | (1L << (TEXTRIGHT - 94)) | (1L << (TEXTCENTRE - 94)) | (1L << (TEXTCENTER - 94)) | (1L << (TRIANGLE - 94)) | (1L << (DRAWSPRITE - 94)) | (1L << (DELETESPRITE - 94)) | (1L << (RENDERTOSPRITE - 94)) | (1L << (RENDERTOSCREEN - 94)))) != 0) || ((((_la - 207)) & ~0x3f) == 0 && ((1L << (_la - 207)) & ((1L << (COLON - 207)) | (1L << (PROC_NAME - 207)) | (1L << (FN_INTEGER - 207)) | (1L << (FN_FLOAT - 207)) | (1L << (FN_STRING - 207)) | (1L << (VARIABLE_FLOAT - 207)) | (1L << (VARIABLE_INTEGER - 207)) | (1L << (VARIABLE_STRING - 207)) | (1L << (VARIABLE_TYPE - 207)))) != 0) );
+				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BREAKPOINT) | (1L << CASE) | (1L << CHAIN) | (1L << DATA) | (1L << DEF) | (1L << DIM) | (1L << END) | (1L << FOR) | (1L << IF) | (1L << INSTALL) | (1L << INPUT) | (1L << GLOBAL) | (1L << GOTO) | (1L << GOSUB) | (1L << LOCAL) | (1L << LET) | (1L << OSCLI) | (1L << PRINT) | (1L << READ) | (1L << REPEAT) | (1L << RESTORE) | (1L << RETURN) | (1L << SWAP) | (1L << TRACEON) | (1L << TRACEOFF) | (1L << TYPE) | (1L << WHILE) | (1L << MOUSE) | (1L << INKEY) | (1L << INKEYS) | (1L << GET) | (1L << GETS))) != 0) || ((((_la - 94)) & ~0x3f) == 0 && ((1L << (_la - 94)) & ((1L << (RENDERFRAME - 94)) | (1L << (CREATEVERTEX - 94)) | (1L << (CREATETRIANGLE - 94)) | (1L << (TRANSLATE - 94)) | (1L << (ROTATE - 94)) | (1L << (SCALE - 94)) | (1L << (DELETEOBJECT - 94)) | (1L << (BGETH - 94)) | (1L << (BPUTH - 94)) | (1L << (CLOSEH - 94)) | (1L << (PTRH - 94)) | (1L << (CIRCLE - 94)) | (1L << (CLS - 94)) | (1L << (CLIPON - 94)) | (1L << (CLIPOFF - 94)) | (1L << (COLOUR - 94)) | (1L << (COLOURBG - 94)) | (1L << (CURSORON - 94)) | (1L << (CURSOROFF - 94)) | (1L << (FLIP - 94)) | (1L << (SHOWFPS - 94)) | (1L << (GRAPHICS - 94)) | (1L << (LINE - 94)) | (1L << (RECTANGLE - 94)) | (1L << (PLOT - 94)) | (1L << (TEXT - 94)) | (1L << (TEXTRIGHT - 94)) | (1L << (TEXTCENTRE - 94)) | (1L << (TEXTCENTER - 94)) | (1L << (TRIANGLE - 94)) | (1L << (DRAWSPRITE - 94)) | (1L << (DELETESPRITE - 94)) | (1L << (DRAWTOSPRITE - 94)) | (1L << (DRAWTOSCREEN - 94)))) != 0) || ((((_la - 207)) & ~0x3f) == 0 && ((1L << (_la - 207)) & ((1L << (COLON - 207)) | (1L << (PROC_NAME - 207)) | (1L << (FN_INTEGER - 207)) | (1L << (FN_FLOAT - 207)) | (1L << (FN_STRING - 207)) | (1L << (VARIABLE_FLOAT - 207)) | (1L << (VARIABLE_INTEGER - 207)) | (1L << (VARIABLE_STRING - 207)) | (1L << (VARIABLE_TYPE - 207)))) != 0) );
 				setState(261);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -563,7 +563,7 @@ public class DARICParser extends Parser {
 				setState(281);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BREAKPOINT) | (1L << CASE) | (1L << CHAIN) | (1L << DATA) | (1L << DEF) | (1L << DIM) | (1L << END) | (1L << FOR) | (1L << IF) | (1L << INSTALL) | (1L << INPUT) | (1L << GLOBAL) | (1L << GOTO) | (1L << GOSUB) | (1L << LOCAL) | (1L << LET) | (1L << OSCLI) | (1L << PRINT) | (1L << READ) | (1L << REPEAT) | (1L << RESTORE) | (1L << RETURN) | (1L << SWAP) | (1L << TRACEON) | (1L << TRACEOFF) | (1L << TYPE) | (1L << WHILE) | (1L << MOUSE) | (1L << INKEY) | (1L << INKEYS) | (1L << GET) | (1L << GETS))) != 0) || ((((_la - 94)) & ~0x3f) == 0 && ((1L << (_la - 94)) & ((1L << (RENDERFRAME - 94)) | (1L << (CREATEVERTEX - 94)) | (1L << (CREATETRIANGLE - 94)) | (1L << (TRANSLATE - 94)) | (1L << (ROTATE - 94)) | (1L << (SCALE - 94)) | (1L << (DELETEOBJECT - 94)) | (1L << (BGETH - 94)) | (1L << (BPUTH - 94)) | (1L << (CLOSEH - 94)) | (1L << (PTRH - 94)) | (1L << (CIRCLE - 94)) | (1L << (CLS - 94)) | (1L << (CLIPON - 94)) | (1L << (CLIPOFF - 94)) | (1L << (COLOUR - 94)) | (1L << (COLOURBG - 94)) | (1L << (CURSORON - 94)) | (1L << (CURSOROFF - 94)) | (1L << (FLIP - 94)) | (1L << (SHOWFPS - 94)) | (1L << (GRAPHICS - 94)) | (1L << (LINE - 94)) | (1L << (RECTANGLE - 94)) | (1L << (PLOT - 94)) | (1L << (TEXT - 94)) | (1L << (TEXTRIGHT - 94)) | (1L << (TEXTCENTRE - 94)) | (1L << (TEXTCENTER - 94)) | (1L << (TRIANGLE - 94)) | (1L << (DRAWSPRITE - 94)) | (1L << (DELETESPRITE - 94)) | (1L << (RENDERTOSPRITE - 94)) | (1L << (RENDERTOSCREEN - 94)))) != 0) || ((((_la - 207)) & ~0x3f) == 0 && ((1L << (_la - 207)) & ((1L << (COLON - 207)) | (1L << (PROC_NAME - 207)) | (1L << (FN_INTEGER - 207)) | (1L << (FN_FLOAT - 207)) | (1L << (FN_STRING - 207)) | (1L << (VARIABLE_FLOAT - 207)) | (1L << (VARIABLE_INTEGER - 207)) | (1L << (VARIABLE_STRING - 207)) | (1L << (VARIABLE_TYPE - 207)))) != 0)) {
+				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BREAKPOINT) | (1L << CASE) | (1L << CHAIN) | (1L << DATA) | (1L << DEF) | (1L << DIM) | (1L << END) | (1L << FOR) | (1L << IF) | (1L << INSTALL) | (1L << INPUT) | (1L << GLOBAL) | (1L << GOTO) | (1L << GOSUB) | (1L << LOCAL) | (1L << LET) | (1L << OSCLI) | (1L << PRINT) | (1L << READ) | (1L << REPEAT) | (1L << RESTORE) | (1L << RETURN) | (1L << SWAP) | (1L << TRACEON) | (1L << TRACEOFF) | (1L << TYPE) | (1L << WHILE) | (1L << MOUSE) | (1L << INKEY) | (1L << INKEYS) | (1L << GET) | (1L << GETS))) != 0) || ((((_la - 94)) & ~0x3f) == 0 && ((1L << (_la - 94)) & ((1L << (RENDERFRAME - 94)) | (1L << (CREATEVERTEX - 94)) | (1L << (CREATETRIANGLE - 94)) | (1L << (TRANSLATE - 94)) | (1L << (ROTATE - 94)) | (1L << (SCALE - 94)) | (1L << (DELETEOBJECT - 94)) | (1L << (BGETH - 94)) | (1L << (BPUTH - 94)) | (1L << (CLOSEH - 94)) | (1L << (PTRH - 94)) | (1L << (CIRCLE - 94)) | (1L << (CLS - 94)) | (1L << (CLIPON - 94)) | (1L << (CLIPOFF - 94)) | (1L << (COLOUR - 94)) | (1L << (COLOURBG - 94)) | (1L << (CURSORON - 94)) | (1L << (CURSOROFF - 94)) | (1L << (FLIP - 94)) | (1L << (SHOWFPS - 94)) | (1L << (GRAPHICS - 94)) | (1L << (LINE - 94)) | (1L << (RECTANGLE - 94)) | (1L << (PLOT - 94)) | (1L << (TEXT - 94)) | (1L << (TEXTRIGHT - 94)) | (1L << (TEXTCENTRE - 94)) | (1L << (TEXTCENTER - 94)) | (1L << (TRIANGLE - 94)) | (1L << (DRAWSPRITE - 94)) | (1L << (DELETESPRITE - 94)) | (1L << (DRAWTOSPRITE - 94)) | (1L << (DRAWTOSCREEN - 94)))) != 0) || ((((_la - 207)) & ~0x3f) == 0 && ((1L << (_la - 207)) & ((1L << (COLON - 207)) | (1L << (PROC_NAME - 207)) | (1L << (FN_INTEGER - 207)) | (1L << (FN_FLOAT - 207)) | (1L << (FN_STRING - 207)) | (1L << (VARIABLE_FLOAT - 207)) | (1L << (VARIABLE_INTEGER - 207)) | (1L << (VARIABLE_STRING - 207)) | (1L << (VARIABLE_TYPE - 207)))) != 0)) {
 					{
 					{
 					setState(278);
@@ -3892,14 +3892,14 @@ public class DARICParser extends Parser {
 				stmtSHOWFPS();
 				}
 				break;
-			case RENDERTOSPRITE:
+			case DRAWTOSPRITE:
 				enterOuterAlt(_localctx, 19);
 				{
 				setState(697);
 				stmtRENDERTOSPRITE();
 				}
 				break;
-			case RENDERTOSCREEN:
+			case DRAWTOSCREEN:
 				enterOuterAlt(_localctx, 20);
 				{
 				setState(698);
@@ -5084,7 +5084,7 @@ public class DARICParser extends Parser {
 	}
 
 	public static class StmtRENDERTOSPRITEContext extends ParserRuleContext {
-		public TerminalNode RENDERTOSPRITE() { return getToken(DARICParser.RENDERTOSPRITE, 0); }
+		public TerminalNode DRAWTOSPRITE() { return getToken(DARICParser.DRAWTOSPRITE, 0); }
 		public List<NumExprContext> numExpr() {
 			return getRuleContexts(NumExprContext.class);
 		}
@@ -5113,7 +5113,7 @@ public class DARICParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(897);
-			match(RENDERTOSPRITE);
+			match(DRAWTOSPRITE);
 			setState(898);
 			numExpr(0);
 			setState(899);
@@ -5142,7 +5142,7 @@ public class DARICParser extends Parser {
 	}
 
 	public static class StmtRENDERTOSCREENContext extends ParserRuleContext {
-		public TerminalNode RENDERTOSCREEN() { return getToken(DARICParser.RENDERTOSCREEN, 0); }
+		public TerminalNode DRAWTOSCREEN() { return getToken(DARICParser.DRAWTOSCREEN, 0); }
 		public StmtRENDERTOSCREENContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -5161,7 +5161,7 @@ public class DARICParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(906);
-			match(RENDERTOSCREEN);
+			match(DRAWTOSCREEN);
 			}
 		}
 		catch (RecognitionException re) {

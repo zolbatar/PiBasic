@@ -195,8 +195,8 @@ stmtTEXTCENTRE:     (TEXTCENTRE|TEXTCENTER) numExpr COMMA numExpr COMMA numExpr 
 stmtSHOWFPS:        SHOWFPS ;
 
 /* Sprites */
-stmtRENDERTOSPRITE: RENDERTOSPRITE numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
-stmtRENDERTOSCREEN: RENDERTOSCREEN ;
+stmtRENDERTOSPRITE: DRAWTOSPRITE numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtRENDERTOSCREEN: DRAWTOSCREEN ;
 stmtDRAWSPRITE:     DRAWSPRITE numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
 stmtDELETESPRITE:   DELETESPRITE numExpr ;
 
@@ -643,8 +643,8 @@ TRIANGLE        : 'TRIANGLE' | 'triangle' | 'Triangle' ;
 DRAWSPRITE      : 'DRAWSPRITE' | 'drawsprite' | 'DrawSprite' ;
 DELETESPRITE    : 'DELETESPRITE' | 'deletesprite' | 'DeleteSprite' ;
 CREATESPRITE    : 'CREATESPRITE' | 'createsprite' | 'CreateSprite' ;
-RENDERTOSPRITE  : 'RENDERTOSPRITE' | 'rendertosprite' | 'RenderToSprite' ;
-RENDERTOSCREEN  : 'RENDERTOSCREEN' | 'rendertoscreen' | 'RenderToScreen' ;
+DRAWTOSPRITE    : 'DRAWTOSPRITE' | 'drawtosprite' | 'DrawToSprite' ;
+DRAWTOSCREEN    : 'DRAWTOSCREEN' | 'drawtoscreen' | 'DrawToScreen' ;
 
 TIME            : 'TIME' | 'time' | 'Time' ;
 PI              : 'PI' | 'pi' | 'Pi' ;

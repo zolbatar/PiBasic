@@ -171,7 +171,7 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
             memset((void*)&addr[offset], bg, screen_width * 4);
         }
 #else
-        UINT32 bg_hex = current_bg_colour.get_as_hex();
+        UINT32 bg_hex = current_bg_colour.get_hex();
         SDL_LockSurface(screen);
         auto pixels = (UINT32*)screen->pixels;
         auto offset = (screen->pitch * font_row_height) / 4;
@@ -259,9 +259,9 @@ void Graphics::delete_character(int index_ff)
         last_cursor_y -= font_row_height;
     }
     auto saved_colour = current_colour;
-    colour(current_bg_colour.r, current_bg_colour.g, current_bg_colour.b);
+    colour(current_bg_colour.get_r(), current_bg_colour.get_g(), current_bg_colour.get_b());
     rectangle(last_cursor_x + margin, last_cursor_y, last_cursor_x + f->sc_width + margin, last_cursor_y + font_row_height);
-    colour(saved_colour.r, saved_colour.g, saved_colour.b);
+    colour(saved_colour.get_r(), saved_colour.get_g(), saved_colour.get_b());
     if (cursor_enabled && blink_state) {
         draw_cursor();
     }

@@ -37,6 +37,10 @@ enum class EventType {
 
 const int console_font = 1;
 
+enum class RasterMode {
+	BLIT
+};
+
 class Colour {
 public:
 	Colour()
@@ -44,24 +48,43 @@ public:
 		r = 0;
 		g = 0;
 		b = 0;
+		encode_hex();
 	};
 	Colour(const Colour& c)
 		: r(c.r)
 		, g(c.g)
-		, b(c.b) {};
+		, b(c.b) {
+		encode_hex();
+	};
 	Colour(BYTE r, BYTE g, BYTE b)
 		: r(r)
 		, g(g)
-		, b(b) {};
+		, b(b) {
+		encode_hex();
+	};
+	UINT32 get_hex() { 
+		return encoded_hex; 
+	}
+	void set_rgb(BYTE r, BYTE g, BYTE b) {
+		this->r = r;
+		this->g = g;
+		this->b = b;
+		encode_hex();
+	}
+	BYTE get_r() { return r; }
+	BYTE get_g() { return g; }
+	BYTE get_b() { return b; }
+private:
 	BYTE r;
 	BYTE g;
 	BYTE b;
-	UINT32 get_as_hex()
-	{
+	UINT32 encoded_hex;
+
+	void encode_hex() {
 #ifdef RISCOS
-		return (b << 16) + (g << 8) + r;
+		encoded_hex = (b << 16) + (g << 8) + r;
 #else
-		return (r << 16) + (g << 8) + b;
+		encoded_hex = (r << 16) + (g << 8) + b;
 #endif
 	}
 };
@@ -122,6 +145,7 @@ public:
 	void colour_bg_hex(UINT32 c);
 	void cls();
 	void plot(int x, int y);
+	void blit_fast(size_t count, std::vector<Colour>* source, size_t source_index, UINT32 *dest);
 	VM_INT point(int x, int y);
 	void flip(bool user_specified);
 	void poll();
@@ -233,9 +257,10 @@ private:
 	size_t bank_width, bank_height;
 	size_t bank_x1, bank_y1, bank_x2, bank_y2;
 	std::vector<Colour>* render_bank = nullptr;
+	RasterMode raster_mode = RasterMode::BLIT;
 
 	// Fast line lookup
-	std::vector<UINT32> line_address;
+	std::vector<size_t> line_address;
 #ifndef RISCOS
 	SDL_Window* window = NULL;
 	SDL_Surface* screen;
