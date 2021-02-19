@@ -1,13 +1,15 @@
+
 w%=SCREENWIDTH,h%=SCREENHEIGHT,sw%=128,sh%=128,sprites%=20
-T%=TIME
 GRAPHICS BANKED
 CURSOROFF
 bg%=LOADSPRITE("Background.png")
 drone%=LOADSPRITE("MOTHERSHIP.png")
 DIM sx%(sprites%),sy%(sprites%),sdx%(sprites%),sdy%(sprites%)
-FOR I%=0 TO sprites%-1:sx%(I%)=RND(w%):sy%(I%)=RND(h%):sdx%(I%)=1:sdy%(I%)=1:NEXT
-REM CLIPON 200,200,w%-200,h%-200
-FOR loop%=0 TO 1000
+FOR I%=0 TO sprites%-1:sx%(I%)=RND(w%):sy%(I%)=RND(h%):sdx%(I%)=2:sdy%(I%)=2:NEXT
+FOR loop%=0 TO 800
+    CLS 
+    b%=loop%/2
+    CLIPON b%,b%,w%-b%,h%-b%
     DRAWSPRITE bg%,0,0,0
     FOR I%=0 TO sprites%-1
         DRAWSPRITE drone%,0,sx%(I%),sy%(I%)
@@ -17,15 +19,16 @@ FOR loop%=0 TO 1000
         sy%(I%)=sy%(I%)+sdy%(I%)
 
         REM Check whether at edge
-        IF sx%(I%)<0 sdx%(I%)=1
-        IF sx%(I%)>w%-sw%-1 sdx%(I%)=-1
-        IF sy%(I%)<0 sdy%(I%)=1
-        IF sy%(I%)>h%-sh%-1 sdy%(I%)=-1
+        IF sx%(I%)<b% sdx%(I%)=2
+        IF sx%(I%)>w%-sw%-1-b% sdx%(I%)=-2
+        IF sy%(I%)<b% sdy%(I%)=2
+        IF sy%(I%)>h%-sh%-1-b% sdy%(I%)=-2
     NEXT
     FLIP
 NEXT
 CLIPOFF
 GRAPHICS
-PRINT TIME-T%
 DELETESPRITE drone%:DELETESPRITE bg%
 CURSORON
+
+

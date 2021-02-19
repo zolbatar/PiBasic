@@ -1,4 +1,5 @@
-INSTALL "SetupGraphicsBanked"
+INSTALL "SetupGraphics"
+GRAPHICS BANKED
 
 REM ** Create a random RGB colour **
 DEF FNRNDCOL%()
