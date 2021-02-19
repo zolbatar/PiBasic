@@ -1,5 +1,5 @@
 INSTALL "SetupGraphics"
-REM 5198
+REM 2622
 T%=Time
 ITERS = 16, XRANGE = -2.5, YRANGE = -1.5
 COLS = 256, MAXX% = w%, MAXY% = h%
