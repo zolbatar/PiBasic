@@ -65,7 +65,7 @@ void Interactive::welcome_prompt()
 	g_env.graphics.print_console("Commands: ");
 	g_env.graphics.colour(255, 255, 0);
 #ifdef WINDOWS
-	g_env.graphics.print_console("CHAIN LIST LOAD NATIVE NEW RUN SAVE QUIT\r\r");
+	g_env.graphics.print_console("CHAIN LIST LOAD NEW RUN SAVE QUIT\r\r");
 #else
 	g_env.graphics.print_console("CHAIN LIST LOAD NEW RUN SAVE QUIT\r\r");
 #endif
@@ -122,14 +122,14 @@ void Interactive::run()
 			if (upper.compare("RUN") == 0) {
 				run_all_lines();
 			}
-#ifdef WINDOWS
+/*#ifdef WINDOWS
 			else if (upper.compare("NATIVE") == 0) {
 				if (!jit) {
 					jit = true;
 					g_env.graphics.print_console("Native compiler enabled\r");
 				}
 			}
-#endif	
+#endif	*/
 			else if (upper.compare("QUIT") == 0) {
 				return;
 			}

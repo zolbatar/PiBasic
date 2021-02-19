@@ -13,9 +13,11 @@ public:
 
 private:
     std::map<UINT32, std::string> lines;
+//    std::map<std::string, std::set<std::string>> help_items;
     Compiler *compiler = new Compiler();
     bool jit = false;
 
+    //void load_help();
     void welcome_prompt();
     UINT32 add_line(std::string s, UINT32 auto_line);
     void execute_line(std::string s);

@@ -246,6 +246,7 @@
     <ClCompile Include="..\src\graphics\graphics_text.cpp" />
     <ClCompile Include="..\src\graphics\graphics_triangle.cpp" />
     <ClCompile Include="..\src\graphics\lodepng.cpp" />
+    <ClCompile Include="..\src\interactive\help.cpp" />
     <ClCompile Include="..\src\interactive\interactive.cpp" />
     <ClCompile Include="..\src\jit\asmjit\core\archtraits.cpp" />
     <ClCompile Include="..\src\jit\asmjit\core\assembler.cpp" />
@@ -323,6 +324,7 @@
     <ClInclude Include="..\src\jit\asmjit\x86.h" />
     <ClInclude Include="..\src\jit\jit.h" />
     <ClInclude Include="..\src\libs\clock.h" />
+    <ClInclude Include="..\src\libs\json.hpp" />
     <ClInclude Include="..\src\libs\string.h" />
     <ClInclude Include="..\src\parser\DARICBaseVisitor.h" />
     <ClInclude Include="..\src\parser\DARICLexer.h" />
@@ -371,6 +373,9 @@
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="..\src\jit\asmjit.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\ManualPages\2D Graphics_Circle.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

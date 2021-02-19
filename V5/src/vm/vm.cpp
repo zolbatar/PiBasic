@@ -2101,6 +2101,7 @@ void VM::opcode_LISTFILES()
 	VM_STRING v = stack.pop_string(bc);
 	std::vector<std::string> files;
 #ifdef RISCOS
+	// ALL THIS IS TOTALLY UNTESTED
 	_kernel_swi_regs regs;
 	int i = 0;
 	do {

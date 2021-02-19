@@ -85,6 +85,9 @@
     <Filter Include="Source Files\JIT\Asmjit\x86">
       <UniqueIdentifier>{e5e14105-578b-4b92-9e42-7011fb704e65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\ManualPages">
+      <UniqueIdentifier>{e10a31da-3110-49b9-ae5e-9c871145c2f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -450,6 +453,9 @@
     <ClCompile Include="..\src\graphics\lodepng.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\interactive\help.cpp">
+      <Filter>Source Files\Interactive</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">
@@ -545,6 +551,9 @@
     <ClInclude Include="..\src\graphics\lodepng.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\libs\json.hpp">
+      <Filter>Source Files\Libraries</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Grammar\DARIC.g4">
@@ -636,5 +645,10 @@
     <Natvis Include="..\src\jit\asmjit.natvis">
       <Filter>Source Files\JIT</Filter>
     </Natvis>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\ManualPages\2D Graphics_Circle.json">
+      <Filter>Resource Files\ManualPages</Filter>
+    </Text>
   </ItemGroup>
 </Project>
