@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-const int DEBUGWINDOW = 0;
+const int DEBUGWINDOW = 1;
 const int FRAMETIME = 50;
 
 #ifdef RISCOS
