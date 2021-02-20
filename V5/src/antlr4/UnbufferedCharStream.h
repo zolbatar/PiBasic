@@ -18,7 +18,9 @@ namespace antlr4 {
     /// The name or source of this char stream.
     std::string name;
 
+  #ifdef WINDOWS
     UnbufferedCharStream(std::wistream &input);
+    #endif
 
     virtual void consume() override;
     virtual size_t LA(ssize_t i) override;
@@ -93,7 +95,9 @@ namespace antlr4 {
     /// </summary>
     size_t _currentCharIndex;
 
+  #ifdef WINDOWS
     std::wistream &_input;
+    #endif
 
     /// <summary>
     /// Make sure we have 'want' elements from current position <seealso cref="#p p"/>.

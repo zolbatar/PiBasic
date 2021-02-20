@@ -1,3 +1,4 @@
+#define _GLIBCXX_USE_C99 1
 #define _CRT_SECURE_NO_WARNINGS
 #include "debugger.h"
 #include <iomanip>

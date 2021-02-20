@@ -17,7 +17,6 @@ namespace antlr4 {
   public:
     InputMismatchException(Parser *recognizer);
     InputMismatchException(InputMismatchException const&) = default;
-    ~InputMismatchException();
     InputMismatchException& operator=(InputMismatchException const&) = default;
   };
 

@@ -344,10 +344,12 @@ void Interactive::run_all_lines()
 		}
 		else {
 			chain = "";
+#ifdef WINDOWS
 			JIT jit;
 			if (!jit.compiler()) {
 				g_env.graphics.print_console("Native compile failed\r");
 			}
+#endif
 		}
 
 		// Reset PC

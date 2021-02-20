@@ -1,6 +1,7 @@
 #include "graphics.h"
 #include "lodepng.h"
 #include <iostream>
+#include <stdlib.h>
 
 VM_INT Graphics::create_sprite(VM_INT w, VM_INT h, VM_INT banks) {
 	Sprite s;

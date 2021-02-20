@@ -235,7 +235,6 @@ public:
 	UINT32 pc = 0; // Program counter
 
 	std::vector<Bytecode>& get_code() { return code; }
-	void set_code(std::vector<Bytecode>& new_code) { }
 	Bytecode& get_bytecode(size_t i) { return code[i]; }
 	Bytecode& get_current_bytecode() { return code[pc]; }
 	Bytecode& get_previous_bytecode() { return code[pc - 1]; }
@@ -249,7 +248,7 @@ public:
 		pc = 0;
 	}
 
-	void insert_instruction(UINT32 line_number, short char_position, bool write, Bytecodes bytecode, Type type, UINT32 operand)
+	void insert_instruction(UINT32 line_number, short char_position, Bytecodes bytecode, Type type, UINT32 operand)
 	{
 		// Can we do any useful peephole optimisations based on the last bytecode?
 		switch (bytecode) {
@@ -284,7 +283,7 @@ public:
 		pc++;
 	}
 
-	void insert_bytecode(UINT32 line_number, short char_position, bool write, Bytecodes bytecode, Type type)
+	void insert_bytecode(UINT32 line_number, short char_position, Bytecodes bytecode, Type type)
 	{
 		Bytecode b;
 		b.opcode = bytecode;

@@ -4,14 +4,12 @@
  */
 
 #pragma once
-
 #include "Recognizer.h"
 #include "tree/ParseTreeListener.h"
 #include "tree/ParseTree.h"
 #include "TokenStream.h"
 #include "TokenSource.h"
 #include "misc/Interval.h"
-
 namespace antlr4 {
 
   /// This is all the parsing support code essentially; most of it is error recovery stuff.

@@ -2813,7 +2813,7 @@ std::string VM::run()
 	helper_bytecodes().pc = 0;
 	bc = helper_bytecodes().get_current_bytecode();
 	data_iterator = data.begin();
-	stack.clear_stack(bc);
+	stack.clear_stack();
 	bool quit = false;
 	int poll_count = 0;
 	world.set_screen_size(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height());
@@ -3394,7 +3394,7 @@ std::string VM::run()
 	if (stack.get_stack_size() != 0) {
 		g_env.graphics.print_console("Stack not empty on END\r");
 	}
-	stack.clear_stack(bc);
+	stack.clear_stack();
 	return "";
 }
 

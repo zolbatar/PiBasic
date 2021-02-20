@@ -4,6 +4,7 @@
 #include "../vm/vm.h"
 #include "debugger.h"
 #include <stdlib.h>
+#include <string>
 
 extern bool debugger_open;
 extern std::vector<std::string> concat_file_cache;

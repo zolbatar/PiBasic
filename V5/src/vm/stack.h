@@ -102,7 +102,7 @@ public:
         return b.get_string();
     }
 
-    void clear_stack(Bytecode& bc)
+    void clear_stack()
     {
         while (!stack.empty()) { 
             stack.pop();

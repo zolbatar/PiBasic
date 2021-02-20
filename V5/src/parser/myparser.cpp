@@ -4,6 +4,7 @@
 #include "../environment.h"
 #include <iostream>
 #include <set>
+#include <exception>
 
 extern Environment g_env;
 extern VM* g_vm;

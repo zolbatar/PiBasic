@@ -27,9 +27,9 @@ public:
     Boxed* get_variable(Bytecode& bc)
     {
         if (bc.is_local_variable()) {
-            /*if (!performance_build && bc.local_index() >= locals.size()) {
+            if (!performance_build && bc.local_index() >= locals.size()) {
                 error("Invalid LOCAL variable - this is normally an internal DARIC error", bc);
-            }*/
+            }
             assert(bc.local_index() < locals.size());
             return &locals[bc.local_index()];
         } else {
@@ -41,10 +41,10 @@ public:
     Boxed* get_variable_by_int(Bytecode& bc, int v)
     {
         if (v & LocalVariableFlag) {
-            auto index = v ^ LocalVariableFlag;
-            /*if (!performance_build && index >= locals.size()) {
+            size_t index = v ^ LocalVariableFlag;
+            if (!performance_build && index >= locals.size()) {
                 error("Invalid LOCAL variable - this is normally an internal DARIC error", bc);
-            }*/
+            }
             assert(index < locals.size());
             return &locals[static_cast<size_t>(v ^ LocalVariableFlag)];
         } else {

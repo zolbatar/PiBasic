@@ -405,7 +405,7 @@ void Graphics::plot(int x, int y)
 #ifdef RISCOS
 		UINT32* addr = get_bank_address();
 		int offset = line_address[y] + x;
-		addr[offset] = current_colour.get_as_hex();
+		addr[offset] = current_colour.get_hex();
 #else
 		SDL_LockSurface(screen);
 		auto pixels = (UINT32*)screen->pixels;
@@ -460,7 +460,7 @@ VM_INT Graphics::point(int x, int y)
 void Graphics::cls()
 {
 #ifdef RISCOS
-	auto bg = current_bg_colour.get_as_hex();
+	auto bg = current_bg_colour.get_hex();
 	auto addr = get_bank_address();
 	memset((void*)addr, bg, size);
 #else

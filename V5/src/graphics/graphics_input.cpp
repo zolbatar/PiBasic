@@ -134,9 +134,9 @@ void Graphics::mouse(VM_INT* x, VM_INT* y, VM_INT* state)
 #ifdef RISCOS
 	_kernel_swi_regs regs;
 	_kernel_swi(OS_Mouse, &regs, &regs);
-	x = regs.r[0] / eigen_x / 2;
-	y = screen_height - (regs.r[1] / eigen_y / 2);
-	state = regs.r[2];
+	*x = regs.r[0] / eigen_x / 2;
+	*y = screen_height - (regs.r[1] / eigen_y / 2);
+	*state = regs.r[2];
 #else
 	int xl, yl;
 	auto statel = SDL_GetMouseState(&xl, &yl);
@@ -164,17 +164,19 @@ void Graphics::RISCOS_debugger_key_check()
 		do {
 			v = _kernel_osbyte(121, 30 | 0x80, 0) & 0xFF;
 		} while (v == 0xff);
-		auto saved_colour = current_colour;
+/*		auto saved_colour = current_colour;
 		auto saved_bg_colour = current_bg_colour;
 		int saved_margin = margin;
 		int saved_x = last_cursor_x;
-		int saved_y = last_cursor_y;
-		current_vm->run_debugger();
-		last_cursor_x = saved_x;
+		int saved_y = last_cursor_y;*/
+		if (!debugger_open && !g_env.debugger_requested) {
+			g_env.debugger_requested = true;
+		}
+/*		last_cursor_x = saved_x;
 		last_cursor_y = saved_y;
 		margin = saved_margin;
 		current_colour = saved_colour;
-		current_bg_colour = saved_bg_colour;
+		current_bg_colour = saved_bg_colour;*/
 
 		// Wait until not pressed
 		do {

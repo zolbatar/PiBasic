@@ -1,4 +1,5 @@
 #pragma once
+#define _GLIBCXX_USE_C99 1
 #include "../exception.h"
 #include "../parser/DARICParser.h"
 #include "../parser/DARICVisitor.h"
@@ -192,10 +193,10 @@ private:
     UINT32 last_array_num_dimensions = 0;
 
     // Create bytecode
-    void insert_instruction(Bytecodes bc, Type type, UINT32 data) { vm->helper_bytecodes().insert_instruction(line_number, char_position, phase == CompilerPhase::COMPILE, bc, type, data); }
-    void insert_instruction_notype(Bytecodes bc, UINT32 data) { vm->helper_bytecodes().insert_instruction(line_number, char_position, phase == CompilerPhase::COMPILE, bc, Type::NOTYPE, data); }
-    void insert_bytecode(Bytecodes bc, Type type) { vm->helper_bytecodes().insert_bytecode(line_number, char_position, phase == CompilerPhase::COMPILE, bc, type); }
-    void insert_bytecode_notype(Bytecodes bc) { vm->helper_bytecodes().insert_bytecode(line_number, char_position, phase == CompilerPhase::COMPILE, bc, Type::NOTYPE); }
+    void insert_instruction(Bytecodes bc, Type type, UINT32 data) { vm->helper_bytecodes().insert_instruction(line_number, char_position, bc, type, data); }
+    void insert_instruction_notype(Bytecodes bc, UINT32 data) { vm->helper_bytecodes().insert_instruction(line_number, char_position, bc, Type::NOTYPE, data); }
+    void insert_bytecode(Bytecodes bc, Type type) { vm->helper_bytecodes().insert_bytecode(line_number, char_position, bc, type); }
+    void insert_bytecode_notype(Bytecodes bc) { vm->helper_bytecodes().insert_bytecode(line_number, char_position, bc, Type::NOTYPE); }
 
     // 3D types
     void setup_3d_types();

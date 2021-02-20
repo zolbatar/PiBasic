@@ -35,6 +35,9 @@
 #include <bitset>
 #include <condition_variable>
 #include <functional>
+#ifdef RISCOS
+#include "bits/exception_ptr.h"
+#endif
 
 #ifndef USE_UTF8_INSTEAD_OF_CODECVT
   #include <codecvt>

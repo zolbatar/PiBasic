@@ -1,4 +1,5 @@
 #pragma once
+#define _GLIBCXX_USE_C99 1
 #include "../compiler/compiler.h"
 #include "../graphics/graphics.h"
 #include "../vm/boxed.h"

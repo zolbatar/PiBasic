@@ -156,7 +156,7 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
     while (*cursor_y + font_row_height >= screen_height) {
 #ifdef RISCOS
         auto addr = get_bank_address();
-        auto bg = current_bg_colour.get_as_hex();
+        auto bg = current_bg_colour.get_hex();
 
         // Move each row at a time (this works either full screen or windowed)
         for (int y = 0; y < screen_height - font_row_height; y++) {
