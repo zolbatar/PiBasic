@@ -5,7 +5,25 @@ BIN=daric
 BUILD_DIR=./buildriscos
 
 # List of all .cpp source files.
-CPP = $(wildcard src/*.cpp) $(wildcard src/compiler/*.cpp) $(wildcard src/engine/*.cpp) $(wildcard src/graphics/*.cpp) $(wildcard src/optimiser/*.cpp) $(wildcard src/parser/*.cpp) $(wildcard src/vm/*.cpp) $(wildcard src/vm/manual/*.cpp)
+CPP =	$(wildcard src/*.cpp) \
+		$(wildcard src/compiler/*.cpp) \
+		$(wildcard src/debugger/*.cpp) \
+		$(wildcard src/engine/*.cpp) \
+		$(wildcard src/graphics/*.cpp) \
+		$(wildcard src/interactive/*.cpp) \
+		$(wildcard src/libs/*.cpp) \
+		$(wildcard src/parser/*.cpp) \
+		$(wildcard src/vm/*.cpp) \
+		$(wildcard src/vm/debugger/manual/*.cpp) \
+		$(wildcard src/antlr4/*.cpp) \
+		$(wildcard src/antlr4/atn/*.cpp) \
+		$(wildcard src/antlr4/dfa/*.cpp) \
+		$(wildcard src/antlr4/misc/*.cpp) \
+		$(wildcard src/antlr4/support/*.cpp) \
+		$(wildcard src/antlr4/atn/*.cpp) \
+		$(wildcard src/antlr4/tree/*.cpp) \
+		$(wildcard src/antlr4/tree/pattern/*.cpp) \
+		$(wildcard src/antlr4/tree/xpath/*.cpp) \
 
 # All .o files go to build dir.
 OBJ = $(CPP:%.cpp=$(BUILD_DIR)/%.o)
