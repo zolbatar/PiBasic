@@ -35,3 +35,4 @@ V5/DARIC/obj
 *.dll
 *.dll
 V5/antlr4-runtime.dll
+V5/DARICInstaller/Release/DARICInstaller.msi

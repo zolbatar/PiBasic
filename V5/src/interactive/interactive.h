@@ -9,22 +9,20 @@
 
 class Interactive {
 public:
-    void run();
+	void run();
 
 private:
-    std::map<UINT32, std::string> lines;
-//    std::map<std::string, std::set<std::string>> help_items;
-    Compiler *compiler = new Compiler();
-    bool jit = false;
+	std::map<UINT32, std::string> lines;
+	Compiler* compiler = new Compiler();
+	bool jit = false;
 
-    //void load_help();
-    void welcome_prompt();
-    UINT32 add_line(std::string s, UINT32 auto_line);
-    void execute_line(std::string s);
-    void run_file(std::string s);
-    void run_demo_file(std::string filename);
-    void run_all_lines();
-    void load(std::string filename);
-    void save(std::string filename);
-    void clear();
+	void welcome_prompt();
+	UINT32 add_line(std::string s, UINT32 auto_line);
+	void execute_line(std::string s);
+	void run_file(std::string s);
+	void run_demo_file(std::string filename);
+	void run_all_lines();
+	void load(std::string filename);
+	void save(std::string filename);
+	void clear();
 };

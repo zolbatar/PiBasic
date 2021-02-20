@@ -29,3 +29,21 @@ GRAPHICS
 PRINT TIME-T%
 DELETESPRITE drone%:DELETESPRITE bg%
 CURSORON
+
+
+
+TYPE Spaceship(id%, x%, y%, health%, mx%, my%)
+
+DIM entities!(20, Spaceship)
+entities!(0)x% = 100
+
+DEF Spaceship!PROCCollision(coll_x%, coll_y%, collision_id%)
+    PRINT "You hit: ";collision_id%
+ENDPROC
+
+DEF Spaceship!PROCAnimate(ticks%)
+    x%=x%+mx%
+ENDPROC
+
+
+

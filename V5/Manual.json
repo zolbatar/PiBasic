@@ -1,0 +1,16 @@
+{
+  "categories": [
+    "2D Graphics"
+  ],
+  "keywords": {
+    "CIRCLE": {
+      "long": "CIRCLE/circle/Circle",
+      "category": "2D Graphics",
+      "description": "Statement generating an outline or filled circle.",
+      "syntax": "[FILL] <num:1>,<num:2>,<num:3>",
+      "arguments": "<numeric_expression1> and <numeric_expression2> are the x,y coordinates of the centre of the circle. <numeric_expression3> is the radius in pixels.",
+      "result": "If FILL is specified then it will be a filled circle, otherwise just the outline.",
+      "example": "CIRCLE FILL 100,100,r%"
+    }
+  }
+}

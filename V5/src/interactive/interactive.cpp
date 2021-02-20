@@ -3,7 +3,7 @@
 #include "../environment.h"
 #include "../exception.h"
 #include "../libs/string.h"
-#include "../parser/parser.h"
+#include "../parser/myparser.h"
 #include "../vm/vm.h"
 #ifdef WINDOWS
 #include "../jit/jit.h"
@@ -27,6 +27,7 @@ const int buffer_size = 1024;
 std::string temp_filename;
 extern Environment g_env;
 extern VM* g_vm;
+extern void load_help();
 
 void Interactive::welcome_prompt()
 {
@@ -84,6 +85,7 @@ void Interactive::clear()
 void Interactive::run()
 {
 	g_env.interactive = true;
+	load_help();
 
 	// Create new "empty" VM so debugger works
 	create_empty_vm();
@@ -122,14 +124,14 @@ void Interactive::run()
 			if (upper.compare("RUN") == 0) {
 				run_all_lines();
 			}
-/*#ifdef WINDOWS
-			else if (upper.compare("NATIVE") == 0) {
-				if (!jit) {
-					jit = true;
-					g_env.graphics.print_console("Native compiler enabled\r");
-				}
-			}
-#endif	*/
+			/*#ifdef WINDOWS
+						else if (upper.compare("NATIVE") == 0) {
+							if (!jit) {
+								jit = true;
+								g_env.graphics.print_console("Native compiler enabled\r");
+							}
+						}
+			#endif	*/
 			else if (upper.compare("QUIT") == 0) {
 				return;
 			}
