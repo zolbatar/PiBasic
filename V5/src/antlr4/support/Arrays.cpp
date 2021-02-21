@@ -12,20 +12,20 @@ using namespace antlrcpp;
 
 std::string Arrays::listToString(const std::vector<std::string> &list, const std::string &separator)
 {
-  std::string ss;
+  std::stringstream ss;
   bool firstEntry = true;
 
-  ss += '[';
+  ss << '[';
   for (const auto &entry : list) {
-    ss += entry;
+    ss << entry;
     if (firstEntry) {
-      ss += separator;
+      ss << separator;
       firstEntry = false;
     }
   }
 
-  ss += ']';
-  return ss;
+  ss << ']';
+  return ss.str();
 }
 
 template <>

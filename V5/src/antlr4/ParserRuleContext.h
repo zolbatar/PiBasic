@@ -4,7 +4,6 @@
  */
 
 #pragma once
-#include <exception>
 
 #include "RuleContext.h"
 #include "support/CPPUtils.h"

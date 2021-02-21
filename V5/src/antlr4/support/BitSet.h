@@ -22,7 +22,6 @@ namespace antlrcpp {
     }
 
     // Prints a list of every index for which the bitset contains a bit in true.
-    #ifdef WINDOWS
     friend std::wostream& operator << (std::wostream& os, const BitSet& obj)
     {
       os << "{";
@@ -40,7 +39,6 @@ namespace antlrcpp {
       os << "}";
       return os;
     }
-    #endif
 
     static std::string subStringRepresentation(const std::vector<BitSet>::iterator &begin,
                                                 const std::vector<BitSet>::iterator &end) {
@@ -57,21 +55,21 @@ namespace antlrcpp {
     }
 
     std::string toString(){
-      std::string stream;
-      stream += "{";
+      std::stringstream stream;
+      stream << "{";
       bool valueAdded = false;
       for (size_t i = 0; i < size(); ++i){
         if (test(i)){
           if (valueAdded) {
-            stream += ", ";
+            stream << ", ";
           }
-          stream += i;
+          stream << i;
           valueAdded = true;
         }
       }
 
-      stream += "}";
-      return stream;
+      stream << "}";
+      return stream.str();
     }
 
   };

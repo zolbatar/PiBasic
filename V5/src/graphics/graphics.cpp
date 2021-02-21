@@ -5,7 +5,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef _DEBUG
 const int DEBUGWINDOW = 1;
+#else
+const int DEBUGWINDOW = 0;
+#endif
 const int FRAMETIME = 50;
 
 #ifdef RISCOS
@@ -117,10 +121,6 @@ UINT32 Graphics::get_screen_height()
 
 void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 {
-	/*	if (DEBUGWINDOW) {
-			width = static_cast<int>(width * 0.9);
-			height = static_cast<int>(height * 0.9);
-		}*/
 	showfps = false;
 	bool reinit = false;
 	bool initial = !is_open();
@@ -191,7 +191,7 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 		}
 
 		// Enable shadow mode
-		std::string mode_string_c =  "X" +std::to_string(width) + " Y" + std::to_string(height)+ " C16M";
+		std::string mode_string_c = "X" + std::to_string(width) + " Y" + std::to_string(height) + " C16M";
 		regs.r[0] = 15;
 		const char* s = mode_string_c.c_str();
 		regs.r[1] = (int)s;
@@ -265,15 +265,26 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 	if (reinit || initial) {
 		int params = SDL_WINDOW_ALLOW_HIGHDPI;
 		if (!DEBUGWINDOW) {
+#ifdef _DEBUG
 			params |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+#else
+			params |= SDL_WINDOW_FULLSCREEN;
+#endif
 		}
-		//params |= SDL_WINDOW_FULLSCREEN;
 
 		window = SDL_CreateWindow("DARIC", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, params);
 		if (!window) {
 			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
 			exit(1);
 		}
+
+		// Get real resolution
+/*		int real_w, real_h;
+		SDL_GL_GetDrawableSize(window, &real_w, &real_h);
+		std::cout << real_w << std::endl;
+		std::cout << real_h << std::endl;
+		exit(0);*/
+
 		screen = SDL_GetWindowSurface(window);
 		SDL_StopTextInput();
 

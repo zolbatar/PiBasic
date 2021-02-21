@@ -73,6 +73,7 @@ namespace pattern {
     class CannotInvokeStartRule : public RuntimeException {
     public:
       CannotInvokeStartRule(const RuntimeException &e);
+      ~CannotInvokeStartRule();
     };
 
     // Fixes https://github.com/antlr/antlr4/issues/413
@@ -81,6 +82,7 @@ namespace pattern {
     public:
       StartRuleDoesNotConsumeFullPattern() = default;
       StartRuleDoesNotConsumeFullPattern(StartRuleDoesNotConsumeFullPattern const&) = default;
+      ~StartRuleDoesNotConsumeFullPattern();
 
       StartRuleDoesNotConsumeFullPattern& operator=(StartRuleDoesNotConsumeFullPattern const&) = default;
     };

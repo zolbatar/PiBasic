@@ -246,15 +246,15 @@ std::string UnbufferedTokenStream::getText(const misc::Interval &interval)
   size_t a = start - bufferStartIndex;
   size_t b = stop - bufferStartIndex;
 
-  std::string ss;
+  std::stringstream ss;
   for (size_t i = a; i <= b; i++) {
     Token *t = _tokens[i].get();
     if (i > 0)
-      ss += ", ";
-    ss += t->getText();
+      ss << ", ";
+    ss << t->getText();
   }
 
-  return ss;
+  return ss.str();
 }
 
 size_t UnbufferedTokenStream::getBufferStartIndex() const

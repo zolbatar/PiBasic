@@ -181,9 +181,9 @@ bool Guid::operator!=(const Guid &other) const
 
 const std::string Guid::toString() const
 {
-  std::string os;
-  os += std::to_string(*this);
-  return os;
+  std::stringstream os;
+  os << *this;
+  return os.str();
 }
 
 // This is the linux friendly implementation, but it could work on other

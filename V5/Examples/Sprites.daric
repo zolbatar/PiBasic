@@ -1,0 +1,36 @@
+		//params |= SDL_WINDOW_FULLSCREEN;
+		TRACEON
+w%=SCREENWIDTH,h%=SCREENHEIGHT,sw%=128,sh%=128,sprites%=20
+T%=TIME
+GRAPHICS BANKED
+CURSOROFF
+bg%=LOADSPRITE("Background.png")
+drone%=LOADSPRITE("BATTLESHIP-TOP.png")
+DIM sx%(sprites%),sy%(sprites%),sdx%(sprites%),sdy%(sprites%)
+FOR I%=0 TO sprites%-1:sx%(I%)=RND(w%):sy%(I%)=RND(h%):sdx%(I%)=1:sdy%(I%)=1:NEXT
+REM CLIPON 200,200,w%-200,h%-200
+END
+FOR loop%=0 TO 1000
+    DRAWSPRITE bg%,0,0,0
+    FOR I%=0 TO sprites%-1
+        DRAWSPRITE drone%,0,sx%(I%),sy%(I%)
+
+        REM Move
+        sx%(I%)=sx%(I%)+sdx%(I%)
+        sy%(I%)=sy%(I%)+sdy%(I%)
+
+        REM Check whether at edge
+        IF sx%(I%)<0 sdx%(I%)=1
+        IF sx%(I%)>w%-sw%-1 sdx%(I%)=-1
+        IF sy%(I%)<0 sdy%(I%)=1
+        IF sy%(I%)>h%-sh%-1 sdy%(I%)=-1
+    NEXT
+    FLIP
+NEXT
+CLIPOFF
+GRAPHICS
+PRINT TIME-T%
+DELETESPRITE drone%:DELETESPRITE bg%
+CURSORON
+
+

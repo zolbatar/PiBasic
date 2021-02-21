@@ -14,3 +14,5 @@ InputMismatchException::InputMismatchException(Parser *recognizer)
                          recognizer->getCurrentToken()) {
 }
 
+InputMismatchException::~InputMismatchException() {
+}

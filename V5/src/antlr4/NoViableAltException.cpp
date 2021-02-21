@@ -34,6 +34,9 @@ NoViableAltException::NoViableAltException(Parser *recognizer, TokenStream *inpu
     _deadEndConfigs(buildConfigsRef(deadEndConfigs, deleteConfigs)), _startToken(startToken) {
 }
 
+NoViableAltException::~NoViableAltException() {
+}
+
 Token* NoViableAltException::getStartToken() const {
   return _startToken;
 }

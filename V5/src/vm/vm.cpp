@@ -19,6 +19,7 @@
 #include "swis.h"
 #endif
 #include <fstream>
+#include <sstream>
 #include <functional>
 #include <iomanip>
 #include <iostream>

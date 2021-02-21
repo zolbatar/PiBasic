@@ -25,20 +25,20 @@ std::string DFASerializer::toString() const {
     return "";
   }
 
-  std::string ss;
+  std::stringstream ss;
   std::vector<DFAState *> states = _dfa->getStates();
   for (auto *s : states) {
     for (size_t i = 0; i < s->edges.size(); i++) {
       DFAState *t = s->edges[i];
       if (t != nullptr && t->stateNumber != INT32_MAX) {
-        ss += getStateString(s);
+        ss << getStateString(s);
         std::string label = getEdgeLabel(i);
-        ss += "-" + label + "->" + getStateString(t) + "\n";
+        ss << "-" << label << "->" << getStateString(t) << "\n";
       }
     }
   }
 
-  return ss;
+  return ss.str();
 }
 
 std::string DFASerializer::getEdgeLabel(size_t i) const {

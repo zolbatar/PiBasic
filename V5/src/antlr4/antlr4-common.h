@@ -35,9 +35,6 @@
 #include <bitset>
 #include <condition_variable>
 #include <functional>
-#ifdef RISCOS
-#include "bits/exception_ptr.h"
-#endif
 
 #ifndef USE_UTF8_INSTEAD_OF_CODECVT
   #include <codecvt>
@@ -74,7 +71,7 @@
     typedef std::u32string UTF32String;
   #endif
 
-#ifdef ANTLR4CPP_EXPORTS
+  #ifdef ANTLR4CPP_EXPORTS
     #define ANTLR4CPP_PUBLIC __declspec(dllexport)
   #else
     #ifdef ANTLR4CPP_STATIC

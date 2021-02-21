@@ -1609,6 +1609,9 @@
     <None Include="..\Manual.json">
       <Filter>Resource Files\ManualPages</Filter>
     </None>
+    <None Include="..\Examples\Sprites.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="..\src\jit\asmjit.natvis">

@@ -23,3 +23,42 @@ const char* IOException::what() const NOEXCEPT {
   return _message.c_str();
 }
 
+//------------------ IllegalStateException -----------------------------------------------------------------------------
+
+IllegalStateException::~IllegalStateException() {
+}
+
+//------------------ IllegalArgumentException --------------------------------------------------------------------------
+
+IllegalArgumentException::~IllegalArgumentException() {
+}
+
+//------------------ NullPointerException ------------------------------------------------------------------------------
+
+NullPointerException::~NullPointerException() {
+}
+
+//------------------ IndexOutOfBoundsException -------------------------------------------------------------------------
+
+IndexOutOfBoundsException::~IndexOutOfBoundsException() {
+}
+
+//------------------ UnsupportedOperationException ---------------------------------------------------------------------
+
+UnsupportedOperationException::~UnsupportedOperationException() {
+}
+
+//------------------ EmptyStackException -------------------------------------------------------------------------------
+
+EmptyStackException::~EmptyStackException() {
+}
+
+//------------------ CancellationException -----------------------------------------------------------------------------
+
+CancellationException::~CancellationException() {
+}
+
+//------------------ ParseCancellationException ------------------------------------------------------------------------
+
+ParseCancellationException::~ParseCancellationException() {
+}

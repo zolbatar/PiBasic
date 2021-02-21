@@ -383,8 +383,8 @@ std::string PredictionContext::toDOTString(const Ref<PredictionContext> &context
     return "";
   }
 
-  std::string ss;
-  ss += "digraph G {\n" + "rankdir=LR;\n";
+  std::stringstream ss;
+  ss << "digraph G {\n" << "rankdir=LR;\n";
 
   std::vector<Ref<PredictionContext>> nodes = getAllContextNodes(context);
   std::sort(nodes.begin(), nodes.end(), [](const Ref<PredictionContext> &o1, const Ref<PredictionContext> &o2) {
@@ -394,30 +394,30 @@ std::string PredictionContext::toDOTString(const Ref<PredictionContext> &context
   for (auto current : nodes) {
     if (is<SingletonPredictionContext>(current)) {
       std::string s = std::to_string(current->id);
-      ss += "  s" + s;
+      ss << "  s" << s;
       std::string returnState = std::to_string(current->getReturnState(0));
       if (is<EmptyPredictionContext>(current)) {
         returnState = "$";
       }
-      ss += " [label=\"" + returnState + "\"];\n";
+      ss << " [label=\"" << returnState << "\"];\n";
       continue;
     }
     Ref<ArrayPredictionContext> arr = std::static_pointer_cast<ArrayPredictionContext>(current);
-    ss += "  s" + arr->id + " [shape=box, label=\"" + "[";
+    ss << "  s" << arr->id << " [shape=box, label=\"" << "[";
     bool first = true;
     for (auto inv : arr->returnStates) {
       if (!first) {
-       ss + ", ";
+       ss << ", ";
       }
       if (inv == EMPTY_RETURN_STATE) {
-        ss += "$";
+        ss << "$";
       } else {
-        ss += inv;
+        ss << inv;
       }
       first = false;
     }
-    ss += "]";
-    ss += "\"];\n";
+    ss << "]";
+    ss << "\"];\n";
   }
 
   for (auto current : nodes) {
@@ -428,17 +428,17 @@ std::string PredictionContext::toDOTString(const Ref<PredictionContext> &context
       if (!current->getParent(i)) {
         continue;
       }
-      ss += "  s" + current->id + "->" + "s" + current->getParent(i)->id;
+      ss << "  s" << current->id << "->" << "s" << current->getParent(i)->id;
       if (current->size() > 1) {
-        ss += " [label=\"parent[" + std::to_string(i) + "]\"];\n";
+        ss << " [label=\"parent[" << i << "]\"];\n";
       } else {
-        ss += ";\n";
+        ss << ";\n";
       }
     }
   }
 
-  ss += "}\n";
-  return ss;
+  ss << "}\n";
+  return ss.str();
 }
 
 // The "visited" map is just a temporary structure to control the retrieval process (which is recursive).

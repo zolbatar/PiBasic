@@ -89,23 +89,23 @@ std::string ATNConfig::toString() {
 }
 
 std::string ATNConfig::toString(bool showAlt) {
-  std::string ss;
-  ss += "(";
+  std::stringstream ss;
+  ss << "(";
 
-  ss += state->toString();
+  ss << state->toString();
   if (showAlt) {
-    ss += "," + alt;
+    ss << "," << alt;
   }
   if (context) {
-    ss += ",[" + context->toString() + "]";
+    ss << ",[" << context->toString() << "]";
   }
   if (semanticContext != nullptr && semanticContext != SemanticContext::NONE) {
-    ss += "," + semanticContext.get();
+    ss << "," << semanticContext.get();
   }
   if (getOuterContextDepth() > 0) {
-    ss += ",up=" + getOuterContextDepth();
+    ss << ",up=" << getOuterContextDepth();
   }
-  ss += ')';
+  ss << ')';
 
-  return ss;
+  return ss.str();
 }

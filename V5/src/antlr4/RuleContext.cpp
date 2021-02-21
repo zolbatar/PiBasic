@@ -50,14 +50,14 @@ std::string RuleContext::getText() {
     return "";
   }
 
-  std::string ss;
+  std::stringstream ss;
   for (size_t i = 0; i < children.size(); i++) {
     ParseTree *tree = children[i];
     if (tree != nullptr)
-      ss += tree->getText();
+      ss << tree->getText();
   }
 
-  return ss;
+  return ss.str();
 }
 
 size_t RuleContext::getRuleIndex() const {
@@ -94,33 +94,33 @@ std::string RuleContext::toString(const std::vector<std::string> &ruleNames) {
 
 
 std::string RuleContext::toString(const std::vector<std::string> &ruleNames, RuleContext *stop) {
-  std::string ss;
+  std::stringstream ss;
 
   RuleContext *currentParent = this;
-  ss = "[";
+  ss << "[";
   while (currentParent != stop) {
     if (ruleNames.empty()) {
       if (!currentParent->isEmpty()) {
-        ss += currentParent->invokingState;
+        ss << currentParent->invokingState;
       }
     } else {
       size_t ruleIndex = currentParent->getRuleIndex();
 
       std::string ruleName = (ruleIndex < ruleNames.size()) ? ruleNames[ruleIndex] : std::to_string(ruleIndex);
-      ss += ruleName;
+      ss << ruleName;
     }
 
     if (currentParent->parent == nullptr) // No parent anymore.
       break;
     currentParent = static_cast<RuleContext *>(currentParent->parent);
     if (!ruleNames.empty() || !currentParent->isEmpty()) {
-      ss += " ";
+      ss << " ";
     }
   }
 
-  ss += "]";
+  ss << "]";
 
-  return ss;
+  return ss.str();
 }
 
 std::string RuleContext::toString() {
