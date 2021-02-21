@@ -1,9 +1,10 @@
+#define _GLIBCXX_USE_C99 1
 #include "../environment.h"
 #include "engine.h"
 #include <algorithm>
-#include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <string>
 
 extern Environment g_env;
 
@@ -136,9 +137,8 @@ void World::render()
 void World::object_translate(UINT32 index, VM_FLOAT x, VM_FLOAT y, VM_FLOAT z)
 {
     if (objects.count(index) == 0) {
-        std::stringstream s;
-        s << "Can't find 3D object: " << index << std::endl;
-        throw std::runtime_error(s.str());
+        std::string s = "Can't find 3D object: " + std::to_string(index) +"\n";
+        throw std::runtime_error(s);
     }
     auto object = &(*objects.find(index)).second;
     object->position.x = x;
@@ -149,9 +149,8 @@ void World::object_translate(UINT32 index, VM_FLOAT x, VM_FLOAT y, VM_FLOAT z)
 void World::object_rotate(UINT32 index, VM_FLOAT x, VM_FLOAT y, VM_FLOAT z)
 {
     if (objects.count(index) == 0) {
-        std::stringstream s;
-        s << "Can't find 3D object: " << index << std::endl;
-        throw std::runtime_error(s.str());
+        std::string s = "Can't find 3D object: " + std::to_string(index) + "\n";
+        throw std::runtime_error(s);
     }
     auto object = &(*objects.find(index)).second;
     object->rotation.x = x;
@@ -162,9 +161,8 @@ void World::object_rotate(UINT32 index, VM_FLOAT x, VM_FLOAT y, VM_FLOAT z)
 void World::object_delete(UINT32 index)
 {
     if (objects.count(index) == 0) {
-        std::stringstream s;
-        s << "Can't find 3D object: " << index << std::endl;
-        throw std::runtime_error(s.str());
+        std::string s = "Can't find 3D object: " + std::to_string(index) + "\n";
+        throw std::runtime_error(s);
     }
     auto object = objects.find(index);
     objects.erase(object);
@@ -173,9 +171,8 @@ void World::object_delete(UINT32 index)
 void World::object_scale(UINT32 index, VM_FLOAT scale)
 {
     if (objects.count(index) == 0) {
-        std::stringstream s;
-        s << "Can't find 3D object: " << index << std::endl;
-        throw std::runtime_error(s.str());
+        std::string s = "Can't find 3D object: " + std::to_string(index) + "\n";
+        throw std::runtime_error(s);
     }
     auto object = &(*objects.find(index)).second;
     object->scale = scale;

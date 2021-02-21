@@ -1,5 +1,4 @@
 #include "compiler.h"
-#include <sstream>
 
 antlrcpp::Any Compiler::visitStmtLET(DARICParser::StmtLETContext* context)
 {

@@ -252,24 +252,24 @@ void Lexer::notifyListeners(const LexerNoViableAltException & /*e*/) {
 }
 
 std::string Lexer::getErrorDisplay(const std::string &s) {
-  std::stringstream ss;
+  std::string ss;
   for (auto c : s) {
     switch (c) {
     case '\n':
-      ss << "\\n";
+      ss = "\\n";
       break;
     case '\t':
-      ss << "\\t";
+      ss = "\\t";
       break;
     case '\r':
-      ss << "\\r";
+      ss = "\\r";
       break;
     default:
-      ss << c;
+      ss = c;
       break;
     }
   }
-  return ss.str();
+  return ss;
 }
 
 void Lexer::recover(RecognitionException * /*re*/) {

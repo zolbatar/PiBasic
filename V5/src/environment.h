@@ -1,7 +1,6 @@
 #pragma once
 #include "graphics/graphics.h"
 #include <memory>
-#include <sstream>
 #include <string>
 
 class Environment {

@@ -2,7 +2,6 @@
 #include "graphics.h"
 #include <iomanip>
 #include <iostream>
-#include <sstream>
 #include <stdlib.h>
 #include <string.h>
 
@@ -192,10 +191,9 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 		}
 
 		// Enable shadow mode
-		std::ostringstream mode_string_c;
-		mode_string_c << "X" << width << " Y" << height << " C16M";
+		std::string mode_string_c =  "X" +std::to_string(width) + " Y" + std::to_string(height)+ " C16M";
 		regs.r[0] = 15;
-		const char* s = mode_string_c.str().c_str();
+		const char* s = mode_string_c.c_str();
 		regs.r[1] = (int)s;
 		_kernel_swi(OS_ScreenMode, &regs, &regs);
 		hide_cursors();
@@ -499,9 +497,7 @@ void Graphics::flip(bool user_specified)
 			double fps = 1.0 / (static_cast<double>(total_time) / 1000.0);
 
 			// Create FPS text
-			std::ostringstream fps_string;
-			fps_string << std::setprecision(4) << fps << " FPS";
-			fps_text = fps_string.str();
+			fps_text = std::to_string(fps) + " FPS";
 
 			fps_clock = t;
 		}

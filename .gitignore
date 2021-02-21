@@ -1,4 +1,5 @@
 *.o
+*.d
 *.iobj
 *.ipdb
 *.class

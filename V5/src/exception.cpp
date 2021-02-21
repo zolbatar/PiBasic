@@ -1,6 +1,25 @@
 #define _GLIBCXX_USE_C99 1
 #include "exception.h"
 
+const char* DARICException::what() const throw()
+    {
+        std::string s;
+        switch (location) {
+        case ErrorLocation::PARSER:
+            s = "Parser";
+            break;
+        case ErrorLocation::COMPILER:
+            s = "Compiler";
+            break;
+        case ErrorLocation::RUNTIME:
+            s = "Runtime";
+            break;
+        }
+        s += "[" + error + "] at '" + filename + "':" + std::to_string(line_number) + ":" + std::to_string(char_position)+ "\r";
+        return s.c_str();
+    }
+    
+
 #ifdef RISCOS 
 void DARICException::pretty_print() const throw()
 #else

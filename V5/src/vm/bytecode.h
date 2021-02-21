@@ -3,7 +3,6 @@
 #include "../types.h"
 #include "boxed.h"
 #include <map>
-#include <sstream>
 
 extern Environment g_env;
 const int LocalVariableFlag = 1 << 31;

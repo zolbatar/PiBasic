@@ -6,7 +6,6 @@
 #include <exception>
 #include <fstream>
 #include <iostream>
-#include <sstream>
 #include <stdlib.h>
 #include <string>
 
@@ -32,28 +31,11 @@ public:
         , error(error)
         , show_filename(parsed_files.size() > 1) {};
 
-    virtual const char* what() const throw()
-    {
-        std::stringstream s;
-        switch (location) {
-        case ErrorLocation::PARSER:
-            s << "Parser";
-            break;
-        case ErrorLocation::COMPILER:
-            s << "Compiler";
-            break;
-        case ErrorLocation::RUNTIME:
-            s << "Runtime";
-            break;
-        }
-        std::string serror = error;
-        s << "[" << error << "] at '" << filename << "':" << line_number << ":" << char_position << "\r";
-        return s.str().c_str();
-    }
-    
 #ifdef RISCOS 
+    const virtual char* what() const throw();
     void pretty_print() const throw();
 #else
+    virtual const char* what() const throw();
     const void pretty_print() const throw();
 #endif
     ErrorLocation location;

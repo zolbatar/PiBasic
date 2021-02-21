@@ -5,7 +5,6 @@
 #include "bytecode.h"
 #include "performance.h"
 #include <iostream>
-#include <sstream>
 #include <stack>
 
 extern Environment g_env;
