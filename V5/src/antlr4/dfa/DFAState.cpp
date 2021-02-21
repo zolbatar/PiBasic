@@ -74,22 +74,22 @@ bool DFAState::operator == (const DFAState &o) const {
 }
 
 std::string DFAState::toString() {
-  std::stringstream ss;
-  ss << stateNumber;
+  std::string ss;
+  ss += stateNumber;
   if (configs) {
-    ss << ":" << configs->toString();
+    ss += ":" + configs->toString();
   }
   if (isAcceptState) {
-    ss << " => ";
+    ss += " => ";
     if (!predicates.empty()) {
       for (size_t i = 0; i < predicates.size(); i++) {
-        ss << predicates[i]->toString();
+        ss += predicates[i]->toString();
       }
     } else {
-      ss << prediction;
+      ss += prediction;
     }
   }
-  return ss.str();
+  return ss;
 }
 
 void DFAState::InitializeInstanceFields() {

@@ -57,21 +57,21 @@ namespace antlrcpp {
     }
 
     std::string toString(){
-      std::stringstream stream;
-      stream << "{";
+      std::string stream;
+      stream += "{";
       bool valueAdded = false;
       for (size_t i = 0; i < size(); ++i){
         if (test(i)){
           if (valueAdded) {
-            stream << ", ";
+            stream += ", ";
           }
-          stream << i;
+          stream += i;
           valueAdded = true;
         }
       }
 
-      stream << "}";
-      return stream.str();
+      stream += "}";
+      return stream;
     }
 
   };

@@ -374,15 +374,15 @@ std::string BufferedTokenStream::getText(const misc::Interval &interval) {
     stop = _tokens.size() - 1;
   }
 
-  std::stringstream ss;
+  std::string ss;
   for (size_t i = start; i <= stop; i++) {
     Token *t = _tokens[i].get();
     if (t->getType() == Token::EOF) {
       break;
     }
-    ss << t->getText();
+    ss += t->getText();
   }
-  return ss.str();
+  return ss;
 }
 
 std::string BufferedTokenStream::getText(RuleContext *ctx) {

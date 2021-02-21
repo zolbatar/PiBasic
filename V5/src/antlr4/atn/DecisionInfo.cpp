@@ -14,12 +14,12 @@ DecisionInfo::DecisionInfo(size_t decision) : decision(decision) {
 }
 
 std::string DecisionInfo::toString() const {
-  std::stringstream ss;
+  std::string ss;
 
-  ss << "{decision=" << decision << ", contextSensitivities=" << contextSensitivities.size() << ", errors=";
-  ss << errors.size() << ", ambiguities=" << ambiguities.size() << ", SLL_lookahead=" << SLL_TotalLook;
-  ss << ", SLL_ATNTransitions=" << SLL_ATNTransitions << ", SLL_DFATransitions=" << SLL_DFATransitions;
-  ss << ", LL_Fallback=" << LL_Fallback << ", LL_lookahead=" << LL_TotalLook << ", LL_ATNTransitions=" << LL_ATNTransitions << '}';
+  ss += "{decision=" + decision + ", contextSensitivities=" + std::to_string(contextSensitivities.size()) + ", errors=";
+  ss += std::to_string(errors.size()) + ", ambiguities=" + std::to_string(ambiguities.size()) + ", SLL_lookahead=" + SLL_TotalLook;
+  ss += ", SLL_ATNTransitions=" + SLL_ATNTransitions + ", SLL_DFATransitions=" + SLL_DFATransitions;
+  ss += ", LL_Fallback=" + LL_Fallback + ", LL_lookahead=" + LL_TotalLook + ", LL_ATNTransitions=" + LL_ATNTransitions << '}';
 
-  return ss.str();
+  return ss;
 }

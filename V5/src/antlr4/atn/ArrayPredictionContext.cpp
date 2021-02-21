@@ -60,23 +60,23 @@ std::string ArrayPredictionContext::toString() const {
     return "[]";
   }
 
-  std::stringstream ss;
-  ss << "[";
+  std::string ss;
+  ss += "[";
   for (size_t i = 0; i < returnStates.size(); i++) {
     if (i > 0) {
-      ss << ", ";
+      ss += ", ";
     }
     if (returnStates[i] == EMPTY_RETURN_STATE) {
-      ss << "$";
+      ss += "$";
       continue;
     }
-    ss << returnStates[i];
+    ss += returnStates[i];
     if (parents[i] != nullptr) {
-      ss << " " << parents[i]->toString();
+      ss += " " << parents[i]->toString();
     } else {
-      ss << "nul";
+      ss += "nul";
     }
   }
-  ss << "]";
-  return ss.str();
+  ss += "]";
+  return ss;
 }

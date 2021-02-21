@@ -157,7 +157,7 @@ std::string CommonToken::toString() const {
 }
 
 std::string CommonToken::toString(Recognizer *r) const {
-  std::stringstream ss;
+  std::string ss;
 
   std::string channelStr;
   if (_channel > 0) {
@@ -176,11 +176,11 @@ std::string CommonToken::toString(Recognizer *r) const {
   if (r != nullptr)
     typeString = r->getVocabulary().getDisplayName(_type);
 
-  ss << "[@" << symbolToNumeric(getTokenIndex()) << "," << symbolToNumeric(_start) << ":" << symbolToNumeric(_stop)
-    << "='" << txt << "',<" << typeString << ">" << channelStr << "," << _line << ":"
-    << getCharPositionInLine() << "]";
+  ss += "[@" + symbolToNumeric(getTokenIndex()) + "," + symbolToNumeric(_start) + ":" << symbolToNumeric(_stop)
+    + "='" + txt + "',<" + typeString + ">" + channelStr + "," + _line + ":"
+    + getCharPositionInLine() + "]";
 
-  return ss.str();
+  return ss;
 }
 
 void CommonToken::InitializeInstanceFields() {

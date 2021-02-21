@@ -342,10 +342,10 @@ std::string IntervalSet::toString(bool elemAreChar) const {
     return "{}";
   }
 
-  std::stringstream ss;
+  std::string ss;
   size_t effectiveSize = size();
   if (effectiveSize > 1) {
-    ss << "{";
+    ss += "{";
   }
 
   bool firstEntry = true;
@@ -358,25 +358,25 @@ std::string IntervalSet::toString(bool elemAreChar) const {
     ssize_t b = interval.b;
     if (a == b) {
       if (a == -1) {
-        ss << "<EOF>";
+        ss += "<EOF>";
       } else if (elemAreChar) {
-        ss << "'" << static_cast<char>(a) << "'";
+        ss += "'" + static_cast<char>(a) + "'";
       } else {
-        ss << a;
+        ss += a;
       }
     } else {
       if (elemAreChar) {
-        ss << "'" << static_cast<char>(a) << "'..'" << static_cast<char>(b) << "'";
+        ss += "'" + static_cast<char>(a) + "'..'" + static_cast<char>(b) + "'";
       } else {
-        ss << a << ".." << b;
+        ss += a + ".." + b;
       }
     }
   }
   if (effectiveSize > 1) {
-    ss << "}";
+    ss += "}";
   }
 
-  return ss.str();
+  return ss;
 }
 
 std::string IntervalSet::toString(const std::vector<std::string> &tokenNames) const {
@@ -388,36 +388,36 @@ std::string IntervalSet::toString(const dfa::Vocabulary &vocabulary) const {
     return "{}";
   }
 
-  std::stringstream ss;
+  std::string ss;
   size_t effectiveSize = size();
   if (effectiveSize > 1) {
-    ss << "{";
+    ss += "{";
   }
 
   bool firstEntry = true;
   for (const auto &interval : _intervals) {
     if (!firstEntry)
-      ss << ", ";
+      ss += ", ";
     firstEntry = false;
 
     ssize_t a = interval.a;
     ssize_t b = interval.b;
     if (a == b) {
-      ss << elementName(vocabulary, a);
+      ss += elementName(vocabulary, a);
     } else {
       for (ssize_t i = a; i <= b; i++) {
         if (i > a) {
-          ss << ", ";
+          ss += ", ";
         }
-        ss << elementName(vocabulary, i);
+        ss += elementName(vocabulary, i);
       }
     }
   }
   if (effectiveSize > 1) {
-    ss << "}";
+    ss += "}";
   }
 
-  return ss.str();
+  return ss;
 }
 
 std::string IntervalSet::elementName(const std::vector<std::string> &tokenNames, ssize_t a) const {
