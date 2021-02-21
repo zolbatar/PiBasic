@@ -15,9 +15,10 @@ int main(int argc, char* argv[])
     g_env.cwd = path.substr(0, path.find_last_of("\\/"));
 
     // Set up logfile
-    g_env.log << "Debug Output\n";
-    g_env.log << "------------\n";
-    g_env.log << "[File :     Line :       PC : Op]  Description\n\n";
+    g_env.log("Debug Output");
+    g_env.log("------------");
+    g_env.log("[File :     Line :       PC : Op]  Description");
+    g_env.log("");
 
     // Output some useful into
     std::cout << "Program Directory: " << g_env.cwd << std::endl;

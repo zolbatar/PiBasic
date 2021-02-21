@@ -385,6 +385,7 @@
     <ClCompile Include="..\src\engine\engine_object.cpp" />
     <ClCompile Include="..\src\engine\engine_shape.cpp" />
     <ClCompile Include="..\src\engine\engine_world.cpp" />
+    <ClCompile Include="..\src\exception.cpp" />
     <ClCompile Include="..\src\graphics\graphics.cpp" />
     <ClCompile Include="..\src\graphics\graphics_barycentric.cpp" />
     <ClCompile Include="..\src\graphics\graphics_circle.cpp" />

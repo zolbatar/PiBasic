@@ -47,7 +47,7 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
     assert(stack_size() == 0);
     auto t2 = high_resolution_clock::now();
     auto time_span = duration_cast<duration<double>>(t2 - t1);
-    g_env.log << "Parsing and compilation took " << time_span.count() << " seconds." << std::endl;
+    g_env.log("Parsing and compilation took " + std::to_string(time_span.count()) + " seconds.");
 
     insert_bytecode_notype(Bytecodes::HALT);
 

@@ -1,3 +1,4 @@
+TRACEON
 w%=SCREENWIDTH,h%=SCREENHEIGHT,sw%=128,sh%=128,sprites%=20
 T%=TIME
 GRAPHICS BANKED
@@ -7,6 +8,7 @@ drone%=LOADSPRITE("BATTLESHIP-TOP.png")
 DIM sx%(sprites%),sy%(sprites%),sdx%(sprites%),sdy%(sprites%)
 FOR I%=0 TO sprites%-1:sx%(I%)=RND(w%):sy%(I%)=RND(h%):sdx%(I%)=1:sdy%(I%)=1:NEXT
 REM CLIPON 200,200,w%-200,h%-200
+END
 FOR loop%=0 TO 1000
     DRAWSPRITE bg%,0,0,0
     FOR I%=0 TO sprites%-1
@@ -29,21 +31,5 @@ GRAPHICS
 PRINT TIME-T%
 DELETESPRITE drone%:DELETESPRITE bg%
 CURSORON
-
-
-
-TYPE Spaceship(id%, x%, y%, health%, mx%, my%)
-
-DIM entities!(20, Spaceship)
-entities!(0)x% = 100
-
-DEF Spaceship!PROCCollision(coll_x%, coll_y%, collision_id%)
-    PRINT "You hit: ";collision_id%
-ENDPROC
-
-DEF Spaceship!PROCAnimate(ticks%)
-    x%=x%+mx%
-ENDPROC
-
 
 
