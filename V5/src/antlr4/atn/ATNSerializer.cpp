@@ -369,7 +369,7 @@ std::vector<size_t> ATNSerializer::serialize() {
 
 //------------------------------------------------------------------------------------------------------------
 
-std::string ATNSerializer::decode(const std::wstring &inpdata) {
+std::string ATNSerializer::decode(const std::string &inpdata) {
   if (inpdata.size() < 10)
     throw IllegalArgumentException("Not enough data to decode");
 
@@ -584,11 +584,11 @@ std::string ATNSerializer::getTokenName(size_t t) {
   return std::to_string(t);
 }
 
-std::wstring ATNSerializer::getSerializedAsString(ATN *atn) {
+std::string ATNSerializer::getSerializedAsString(ATN *atn) {
   std::vector<size_t> data = getSerialized(atn);
-  std::wstring result;
+  std::string result;
   for (size_t entry : data)
-    result.push_back((wchar_t)entry);
+    result.push_back((char)entry);
 
   return result;
 }
@@ -598,7 +598,7 @@ std::vector<size_t> ATNSerializer::getSerialized(ATN *atn) {
 }
 
 std::string ATNSerializer::getDecoded(ATN *atn, std::vector<std::string> &tokenNames) {
-  std::wstring serialized = getSerializedAsString(atn);
+  std::string serialized = getSerializedAsString(atn);
   return ATNSerializer(atn, tokenNames).decode(serialized);
 }
 

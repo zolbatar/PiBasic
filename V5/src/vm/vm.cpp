@@ -2103,14 +2103,14 @@ void VM::opcode_LISTFILES()
 #ifdef RISCOS
 	// ALL THIS IS TOTALLY UNTESTED
 	_kernel_swi_regs regs;
-	int i = 0;
+	int j = 0;
 	do {
 		char buf[256];
 		regs.r[0] = 9;
 		regs.r[1] = (int)v.c_str();
 		regs.r[2] = (int)&buf;
 		regs.r[3] = 1;
-		regs.r[4] = i++;
+		regs.r[4] = j++;
 		regs.r[5] = 256;
 		regs.r[6] = 0;
 		_kernel_swi(OS_GBPB, &regs, &regs);

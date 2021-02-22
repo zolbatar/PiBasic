@@ -1,8 +1,8 @@
 CXX=~/gccsdk/cross/bin/arm-riscos-gnueabihf-g++
-CXX_FLAGS=-D RISCOS -D USE_UTF8_INSTEAD_OF_CODECVT -I$$GCCSDK_INSTALL_ENV/include -mcpu=strongarm -Wall -Wno-reorder -Wno-switch -Wextra -std=c++11 -ffast-math -Isrc/antlr4 -g -O3
+CXX_FLAGS=-D RISCOS -D USE_UTF8_INSTEAD_OF_CODECVT -I$$GCCSDK_INSTALL_ENV/include -march=armv6zk -mcpu=arm1176jzf-s -mfpu=vfp -mfloat-abi=softfp -Wall -Wno-reorder -Wno-switch -Wextra -std=c++11 -ffast-math -Isrc/antlr4 -g -O3
 LIBS=-lm -L$$GCCSDK_INSTALL_ENV/lib
-BIN=daric
-BUILD_DIR=./buildriscos
+BIN=daricvfp
+BUILD_DIR=./buildriscosvfp
 
 # List of all .cpp source files.
 CPP =	$(wildcard src/*.cpp) \

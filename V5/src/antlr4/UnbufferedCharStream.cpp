@@ -13,7 +13,7 @@ using namespace antlrcpp;
 using namespace antlr4;
 using namespace antlr4::misc;
 
-UnbufferedCharStream::UnbufferedCharStream(std::wistream &input) : _input(input) {
+UnbufferedCharStream::UnbufferedCharStream(std::istream &input) : _input(input) {
   InitializeInstanceFields();
 
   // The vector's size is what used to be n in Java code.
@@ -74,7 +74,7 @@ size_t UnbufferedCharStream::fill(size_t n) {
 }
 
 char32_t UnbufferedCharStream::nextChar()  {
-  wchar_t result = 0;
+  char result = 0;
   _input >> result;
   return result;
 }

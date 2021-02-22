@@ -22,7 +22,7 @@ namespace antlrcpp {
     }
 
     // Prints a list of every index for which the bitset contains a bit in true.
-    friend std::wostream& operator << (std::wostream& os, const BitSet& obj)
+    friend std::ostream& operator << (std::ostream& os, const BitSet& obj)
     {
       os << "{";
       size_t total = obj.count();

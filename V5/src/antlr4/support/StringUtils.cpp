@@ -19,6 +19,7 @@ void replaceAll(std::string& str, std::string const& from, std::string const& to
   }
 }
 
+#ifdef WINDOWS
 std::string ws2s(std::wstring const& wstr) {
 #ifndef USE_UTF8_INSTEAD_OF_CODECVT
   std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
@@ -27,10 +28,11 @@ std::string ws2s(std::wstring const& wstr) {
   std::string narrow;
   utf8::utf32to8(wstr.begin(), wstr.end(), std::back_inserter(narrow));
 #endif
-
   return narrow;
 }
+#endif
 
+#ifdef WINDOWS
 std::wstring s2ws(const std::string &str) {
 #ifndef USE_UTF8_INSTEAD_OF_CODECVT
   std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
@@ -39,8 +41,8 @@ std::wstring s2ws(const std::string &str) {
   std::wstring wide;
   utf8::utf8to32(str.begin(), str.end(), std::back_inserter(wide));
 #endif
-
   return wide;
 }
+#endif
 
 } // namespace antrlcpp
