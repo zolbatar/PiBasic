@@ -148,7 +148,7 @@ void Interpreter::load(std::string s)
     char line[1024];
     FILE* fp = fopen(filename.c_str(), "r");
     if (fp == NULL) {
-        g_graphics->print_console("Error loading file\r");
+        g_graphics->print_console("Error loading program\r");
         return;
     }
     UINT32 line_number = 10;
@@ -169,7 +169,7 @@ void Interpreter::save(std::string s)
 #endif
     FILE* fp = fopen(filename.c_str(), "w");
     if (fp == NULL) {
-        g_graphics->print_console("Error saving file\r");
+        g_graphics->print_console("Error saving program\r");
         return;
     }
     for (auto it = lines.begin(); it != lines.end(); it++) {

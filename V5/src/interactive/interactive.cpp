@@ -171,8 +171,8 @@ void Interactive::run()
 			else if (upper.compare("EXAMPLES") == 0) {
 				// Directory for source files
 				std::string path(g_env.cwd);
-				path += "/Examples";
 
+				path += "/Examples";
 #ifdef WINDOWS
 				_chdir(path.c_str());
 #endif
@@ -181,6 +181,8 @@ void Interactive::run()
 				regs.r[0] = (int)path.c_str();
 				_kernel_swi(DDEUtils_Prefix, &regs, &regs);
 #endif
+				g_env.graphics.print_console("Set directory to '" + path + "'\r");
+				g_env.cwd = path;
 			}
 			else if (upper.compare("TEST") == 0) {
 				run_demo_file("Tester");
@@ -223,7 +225,7 @@ void Interactive::load(std::string filename)
 	char line[1024];
 	FILE* fp = fopen(filename.c_str(), "r");
 	if (fp == NULL) {
-		g_env.graphics.print_console("Error loading file\r");
+		g_env.graphics.print_console("Error loading program '" + filename + "'. Directory is " + g_env.cwd + "\r");
 		return;
 	}
 	UINT32 line_number = 10;
@@ -242,7 +244,7 @@ void Interactive::save(std::string filename)
 	replaceAll(filename, "\"", "");
 	FILE* fp = fopen(filename.c_str(), "w");
 	if (fp == NULL) {
-		g_env.graphics.print_console("Error saving file\r");
+		g_env.graphics.print_console("Error loading program '" + filename + "'. Directory is " + g_env.cwd + "\r");
 		return;
 	}
 	for (auto it = lines.begin(); it != lines.end(); it++) {
@@ -396,10 +398,6 @@ void Interactive::run_demo_file(std::string filename)
 	// Directory for source files
 	std::string path(g_env.cwd);
 	path += "/Examples";
-
-	// DEBUGDEBUG
-	g_env.graphics.print_console("Opening folder:");
-	g_env.graphics.print_console(path);
 
 #ifdef WINDOWS
 	// Set current directory
