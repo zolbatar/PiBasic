@@ -68,6 +68,7 @@ int main(int argc, char *argv[])
         g_env.graphics.open(g_env.graphics.get_screen_width(), g_env.graphics.get_screen_height(), Mode::CLASSIC, g_env.cwd);
 
         Compiler *compiler = new Compiler();
+        create_empty_vm();
         try
         {
             MyParser parser(filename);

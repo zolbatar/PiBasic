@@ -220,9 +220,7 @@ void MyParser::parse_and_compile(Compiler* compiler, bool interactive)
     parser.addErrorListener(&errorListener);
     parser.setBuildParseTree(true);
     parser.getInterpreter<atn::ParserATNSimulator>()->setPredictionMode(atn::PredictionMode::SLL);
-    g_env.graphics.print_console("A1:");
     DARICParser::ProgContext* tree = parser.prog();
-    g_env.graphics.print_console("A2:");
 
     if (parse_errors) {
         auto fl = file_and_line_lookup(static_cast<UINT32>(error_line));
@@ -235,6 +233,5 @@ void MyParser::parse_and_compile(Compiler* compiler, bool interactive)
 
     // Add to files list
     g_vm->add_filename(filename);
-
     compiler->compile(g_vm, tree, filename);
 }
