@@ -35,7 +35,7 @@ enum class EventType {
 	Text
 };
 
-const int console_font = 1;
+const int console_font = 2;
 
 enum class RasterMode {
 	BLIT,

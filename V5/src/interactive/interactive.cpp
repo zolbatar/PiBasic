@@ -104,6 +104,8 @@ void Interactive::run()
 	auto uRetVal = GetTempFileName(buffer, TEXT("DARIC"), 0, temp_file);
 	temp_filename = ws2s(std::wstring(temp_file));
 	std::transform(temp_filename.begin(), temp_filename.end(), temp_filename.begin(), ::tolower);
+#else
+	temp_filename = "DARICtemp";
 #endif
 
 	while (true) {
@@ -291,6 +293,10 @@ void Interactive::execute_line(std::string s)
 	fwrite("\n", 1, 1, fp);
 	fclose(fp);
 
+	// DEBUGDEBUG
+	g_env.graphics.print_console("execute line:");
+	g_env.graphics.print_console(temp_filename);
+
 	try {
 		MyParser parser(temp_filename);
 		parser.parse_and_compile(compiler, true);
@@ -321,6 +327,10 @@ void Interactive::run_all_lines()
 		fwrite(s.c_str(), s.length(), 1, fp);
 	}
 	fclose(fp);
+
+	// DEBUGDEBUG
+	g_env.graphics.print_console("Run all lines:");
+	g_env.graphics.print_console(temp_filename);
 
 	auto chain = temp_filename;
 	while (chain.length() > 0) {
@@ -363,6 +373,11 @@ void Interactive::run_file(std::string s)
 {
 	auto filename = s.substr(5, s.length() - 5);
 	replaceAll(filename, "\"", "");
+
+	// DEBUGDEBUG
+	g_env.graphics.print_console("Run file:");
+	g_env.graphics.print_console(filename);
+
 	while (filename.length() > 0) {
 		try {
 			MyParser parser(filename);
@@ -393,6 +408,10 @@ void Interactive::run_demo_file(std::string filename)
 	// Directory for source files
 	std::string path(g_env.cwd);
 	path += "/Examples";
+
+	// DEBUGDEBUG
+	g_env.graphics.print_console("Opening folder:");
+	g_env.graphics.print_console(path);
 
 #ifdef WINDOWS
 	// Set current directory
