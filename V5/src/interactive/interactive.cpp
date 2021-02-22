@@ -293,10 +293,6 @@ void Interactive::execute_line(std::string s)
 	fwrite("\n", 1, 1, fp);
 	fclose(fp);
 
-	// DEBUGDEBUG
-	g_env.graphics.print_console("execute line:");
-	g_env.graphics.print_console(temp_filename);
-
 	try {
 		MyParser parser(temp_filename);
 		parser.parse_and_compile(compiler, true);
@@ -327,10 +323,6 @@ void Interactive::run_all_lines()
 		fwrite(s.c_str(), s.length(), 1, fp);
 	}
 	fclose(fp);
-
-	// DEBUGDEBUG
-	g_env.graphics.print_console("Run all lines:");
-	g_env.graphics.print_console(temp_filename);
 
 	auto chain = temp_filename;
 	while (chain.length() > 0) {
@@ -373,10 +365,6 @@ void Interactive::run_file(std::string s)
 {
 	auto filename = s.substr(5, s.length() - 5);
 	replaceAll(filename, "\"", "");
-
-	// DEBUGDEBUG
-	g_env.graphics.print_console("Run file:");
-	g_env.graphics.print_console(filename);
 
 	while (filename.length() > 0) {
 		try {

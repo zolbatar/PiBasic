@@ -60,18 +60,22 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
         const std::string& msg,
         std::exception_ptr e) override
     {
+        g_env.graphics.print_console("33\r");
         if (!parse_errors) {
             error_line = line;
             error_position = static_cast<short>(charPositionInLine);
             parse_errors = true;
         }
         error_count++;
+        g_env.graphics.print_console("44\r");
         auto fl = file_and_line_lookup(static_cast<UINT32>(line));
+        g_env.graphics.print_console("55\r");
         if (error_count == 5) {
             throw DARICException(ErrorLocation::PARSER, fl.filename, static_cast<UINT32>(fl.line), static_cast<short>(charPositionInLine), "Stopping at 5 errors");
         } else if (fail_on_first_error) {
             throw DARICException(ErrorLocation::PARSER, fl.filename, static_cast<UINT32>(fl.line), static_cast<short>(charPositionInLine), msg);
         } else {
+            g_env.graphics.print_console("66\r");
             std::cout << msg << std::endl;
             auto s = offendingSymbol->getInputStream();
             auto l = getLineFromStream(s->toString(), offendingSymbol->getStartIndex(), offendingSymbol->getStopIndex());
@@ -216,7 +220,9 @@ void MyParser::parse_and_compile(Compiler* compiler, bool interactive)
     parser.addErrorListener(&errorListener);
     parser.setBuildParseTree(true);
     parser.getInterpreter<atn::ParserATNSimulator>()->setPredictionMode(atn::PredictionMode::SLL);
+    g_env.graphics.print_console("11\r");
     DARICParser::ProgContext* tree = parser.prog();
+    g_env.graphics.print_console("22\r");
 
     if (parse_errors) {
         auto fl = file_and_line_lookup(static_cast<UINT32>(error_line));
