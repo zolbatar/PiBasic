@@ -5,7 +5,7 @@
 
 class Environment {
 public:
-	std::string version = "21.02.18";
+	std::string version = __DATE__;
 	std::string cwd; // Program directory
 	std::vector<std::string> log_list; // Runtime log
 	std::string sol;

@@ -197,8 +197,7 @@ stmtSHOWFPS:        SHOWFPS ;
 /* Sprites */
 stmtRENDERTOSPRITE: DRAWTOSPRITE numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
 stmtRENDERTOSCREEN: DRAWTOSCREEN ;
-stmtDRAWSPRITE:     DRAWSPRITE numExpr COMMA numExpr COMMA numExpr COMMA numExpr 
-                  | DRAWSPRITE 
+stmtDRAWSPRITE:     DRAWSPRITE numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
 stmtDELETESPRITE:   DELETESPRITE numExpr ;
 
 /* 3D */
@@ -523,6 +522,7 @@ GOSUB           : 'GOSUB' | 'gosub' | 'Gosub' ;
 LOCAL           : 'LOCAL' | 'local' | 'Local' ;
 LET             : 'LET' | 'let' | 'Let' ;
 NEXT            : 'NEXT' | 'next' | 'Next' ;
+NEW             : 'NEW' | 'new' | 'New' ;
 OF              : 'OF' | 'of' | 'Of' ;
 OFF             : 'OFF' | 'off' | 'Off' ;
 ON              : 'ON' | 'on' | 'On' ;

@@ -32,6 +32,7 @@ int main(int argc, char* argv[])
         // A file has been clicked typically
     } else {
         // Fire up graphics now
+        std::cout << "Screen resolution: " << g_env.graphics.get_screen_width() << "x" << g_env.graphics.get_screen_height() << std::endl;
         g_env.graphics.open(g_env.graphics.get_screen_width(), g_env.graphics.get_screen_height(), Mode::CLASSIC, g_env.cwd);
 
         Interactive interactive;

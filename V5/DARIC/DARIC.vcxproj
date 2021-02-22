@@ -648,8 +648,10 @@
     <ClInclude Include="..\src\vm\vm_function.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\DaricOO\Mandelbrot.daricoo" />
     <None Include="..\Examples\FakeWindows.daric" />
     <None Include="..\Examples\Sprites.daric" />
+    <None Include="..\Examples\StructuredTypes.daric" />
     <None Include="..\Manual.json" />
     <None Include="..\Test.daric" />
     <None Include="..\build-grammar.bat" />

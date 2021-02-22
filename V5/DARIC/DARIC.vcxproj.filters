@@ -136,6 +136,9 @@
     <Filter Include="Header Files\Antlr4\tree\xpath">
       <UniqueIdentifier>{a9118f50-85e3-408c-8233-28a5abf69d94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\DaricOO">
+      <UniqueIdentifier>{26f5f491-7d06-48c8-9320-2188333198dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -1611,6 +1614,12 @@
     </None>
     <None Include="..\Examples\Sprites.daric">
       <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\Examples\StructuredTypes.daric">
+      <Filter>Resource Files\Examples</Filter>
+    </None>
+    <None Include="..\DaricOO\Mandelbrot.daricoo">
+      <Filter>Resource Files\DaricOO</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

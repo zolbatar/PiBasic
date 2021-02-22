@@ -1,0 +1,5 @@
+Type Vehicle(name$)
+
+Type Car() extends Vehicle
+
+Local v!=Vehicle
