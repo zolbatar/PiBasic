@@ -235,3 +235,4 @@ void MyParser::parse_and_compile(Compiler* compiler, bool interactive)
     g_vm->add_filename(filename);
     compiler->compile(g_vm, tree, filename);
 }
+    

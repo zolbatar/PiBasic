@@ -9,14 +9,14 @@ extern Environment g_env;
 
 void Graphics::poll()
 {
-#ifdef RISCOS
-#else
 	flip(false);
-	SDL_Event event;
 	if (g_env.debugger_requested) {
 		g_env.debugger_requested = false;
 		Debugger();
 	}
+#ifdef RISCOS
+#else
+	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 		case SDL_QUIT:
@@ -64,6 +64,7 @@ void Graphics::poll()
 #endif
 
 	// Cursor blink?
+	#ifdef WINDOWS
 	if (cursor_enabled) {
 		auto t = std::chrono::high_resolution_clock::now();
 		auto time_span = std::chrono::duration_cast<std::chrono::milliseconds>(t - last_cursor_blink);
@@ -80,6 +81,7 @@ void Graphics::poll()
 			blink_state = !blink_state;
 		}
 	}
+	#endif
 }
 
 void Graphics::draw_cursor() {
@@ -160,23 +162,16 @@ void Graphics::RISCOS_debugger_key_check()
 	// Debugger?
 	int v = _kernel_osbyte(121, 30 | 0x80, 0) & 0xFF;
 	if (v == 0xff) {
+		print_console("Pressed");
 		// Wait until not pressed
 		do {
 			v = _kernel_osbyte(121, 30 | 0x80, 0) & 0xFF;
 		} while (v == 0xff);
-/*		auto saved_colour = current_colour;
-		auto saved_bg_colour = current_bg_colour;
-		int saved_margin = margin;
-		int saved_x = last_cursor_x;
-		int saved_y = last_cursor_y;*/
+
+		print_console("Debugger requested");
 		if (!debugger_open && !g_env.debugger_requested) {
 			g_env.debugger_requested = true;
 		}
-/*		last_cursor_x = saved_x;
-		last_cursor_y = saved_y;
-		margin = saved_margin;
-		current_colour = saved_colour;
-		current_bg_colour = saved_bg_colour;*/
 
 		// Wait until not pressed
 		do {

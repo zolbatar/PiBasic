@@ -255,7 +255,7 @@ private:
 	std::array<bool, 256> key_pressed;
 	std::chrono::high_resolution_clock::time_point last_cursor_blink;
 	bool cursor_enabled = false;
-	bool blink_state = false;
+	bool blink_state = true;
 	std::map<VM_INT, Sprite> sprites;
 	size_t bank_width, bank_height;
 	size_t bank_x1, bank_y1, bank_x2, bank_y2;
