@@ -33,24 +33,24 @@ LineFileLookup file_and_line_lookup(UINT32 line_number)
     return flp;
 }
 
+std::string getLineFromStream(std::string stream, size_t start, size_t end)
+{
+    // Scan back for start of line
+    auto t = ' ';
+    while (t != '\n' && start > 0) {
+        start--;
+        t = stream[start];
+    };
+
+    // Scan for end of line
+    while (t != '\n' && end < stream.length()) {
+        end++;
+        t = stream[end];
+    };
+    return stream.substr(start, end - start + (t == '\n' ? 0 : 1));
+}
+
 class MyParserErrorListener : public antlr4::BaseErrorListener {
-
-    std::string getLineFromStream(std::string stream, size_t start, size_t end)
-    {
-        // Scan back for start of line
-        auto t = ' ';
-        while (t != '\n' && start > 0) {
-            start--;
-            t = stream[start];
-        };
-
-        // Scan for end of line
-        while (t != '\n' && end < stream.length()) {
-            end++;
-            t = stream[end];
-        };
-        return stream.substr(start, end - start + (t == '\n' ? 0 : 1));
-    }
 
     void syntaxError(
         antlr4::Recognizer* recognizer,
@@ -106,7 +106,7 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
             g_env.graphics.print_console(l);
             g_env.graphics.print_console("...\r");
             g_env.graphics.colour(0, 255, 0);
-            for (auto i = 0; i < charPositionInLine; i++) {
+            for (size_t i = 0; i < charPositionInLine; i++) {
                 g_env.graphics.print_console("-");
             }
             g_env.graphics.print_console("^\r\r");
@@ -218,19 +218,35 @@ void MyParser::parse_and_compile(Compiler* compiler, bool interactive)
     DARICParser parser(&tokens);
     parser.removeErrorListeners();
     parser.addErrorListener(&errorListener);
+    g_env.graphics.print_console("11\r");
     parser.setBuildParseTree(true);
     parser.getInterpreter<atn::ParserATNSimulator>()->setPredictionMode(atn::PredictionMode::SLL);
-    DARICParser::ProgContext* tree = parser.prog();
+    g_env.graphics.print_console("22\r");
+    DARICParser::ProgContext* tree;
+    try {
+        throw "dfjskdhfkjdh";
+        //tree = parser.prog();
+    }
+    catch (...)
+    {
+    g_env.graphics.print_console("error\r");
+    exit(0);
+    }
+    g_env.graphics.print_console("33\r");
 
     if (parse_errors) {
+    g_env.graphics.print_console("33aa\r");
         auto fl = file_and_line_lookup(static_cast<UINT32>(error_line));
         if (parsed_files.size() > 1) {
+    g_env.graphics.print_console("33bb\r");
             throw DARICException(ErrorLocation::PARSER, fl.filename, static_cast<UINT32>(fl.line), static_cast<short>(error_position), "Error(s)");
         } else {
+    g_env.graphics.print_console("33cc\r");
             throw DARICException(ErrorLocation::PARSER, "", static_cast<UINT32>(fl.line), static_cast<short>(error_position), "Error(s)");
         }
     }
 
+    g_env.graphics.print_console("44\r");
     // Add to files list
     g_vm->add_filename(filename);
     compiler->compile(g_vm, tree, filename);

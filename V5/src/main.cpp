@@ -12,6 +12,7 @@ extern VM *g_vm;
 
 int main(int argc, char *argv[])
 {
+    exit(0);
     using namespace std::chrono;
     std::cout << "DARIC " << g_env.version << ", https://dariclang.com" << std::endl;
 
@@ -96,9 +97,9 @@ int main(int argc, char *argv[])
     }
     else
     {
-    // Disable escape on RISC OS
+        // Disable escape on RISC OS
 #ifdef RISCOS
-    _kernel_osbyte(200, 1, 1);
+        _kernel_osbyte(200, 1, 1);
 #endif
 
         // Fire up graphics now
@@ -110,16 +111,15 @@ int main(int argc, char *argv[])
 #ifdef RISCOS
         _kernel_osbyte(200, 0, 1);
 #endif
-
     }
 
     // Shutdown
     g_env.graphics.shutdown();
 
 #ifdef RISCOS
-	_kernel_swi_regs regs;
-	regs.r[0] = 0;
-	_kernel_swi(DDEUtils_Prefix, &regs, &regs);
+    _kernel_swi_regs regs;
+    regs.r[0] = 0;
+    _kernel_swi(DDEUtils_Prefix, &regs, &regs);
 #endif
 
     return 0;
