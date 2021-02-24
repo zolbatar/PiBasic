@@ -218,35 +218,19 @@ void MyParser::parse_and_compile(Compiler* compiler, bool interactive)
     DARICParser parser(&tokens);
     parser.removeErrorListeners();
     parser.addErrorListener(&errorListener);
-    g_env.graphics.print_console("11\r");
     parser.setBuildParseTree(true);
     parser.getInterpreter<atn::ParserATNSimulator>()->setPredictionMode(atn::PredictionMode::SLL);
-    g_env.graphics.print_console("22\r");
-    DARICParser::ProgContext* tree;
-    try {
-        throw "dfjskdhfkjdh";
-        //tree = parser.prog();
-    }
-    catch (...)
-    {
-    g_env.graphics.print_console("error\r");
-    exit(0);
-    }
-    g_env.graphics.print_console("33\r");
+    DARICParser::ProgContext* tree = parser.prog();
 
     if (parse_errors) {
-    g_env.graphics.print_console("33aa\r");
         auto fl = file_and_line_lookup(static_cast<UINT32>(error_line));
         if (parsed_files.size() > 1) {
-    g_env.graphics.print_console("33bb\r");
             throw DARICException(ErrorLocation::PARSER, fl.filename, static_cast<UINT32>(fl.line), static_cast<short>(error_position), "Error(s)");
         } else {
-    g_env.graphics.print_console("33cc\r");
             throw DARICException(ErrorLocation::PARSER, "", static_cast<UINT32>(fl.line), static_cast<short>(error_position), "Error(s)");
         }
     }
 
-    g_env.graphics.print_console("44\r");
     // Add to files list
     g_vm->add_filename(filename);
     compiler->compile(g_vm, tree, filename);

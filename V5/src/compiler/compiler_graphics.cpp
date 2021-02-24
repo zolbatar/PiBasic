@@ -38,86 +38,14 @@ antlrcpp::Any Compiler::visitDefaultFonts(DARICParser::DefaultFontsContext* cont
 	set_pos(context->start);
 	if (phase == CompilerPhase::LOOKAHEAD)
 		return NULL;
-	if (context->MONO15() != NULL) {
+	if (context->MONO() != NULL) {
 		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);
 	}
-	else if (context->MONO20() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 1);
+	else if (context->PROP() != NULL) {
+		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);
 	}
-	else if (context->MONO25() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 2);
-	}
-	else if (context->MONO30() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 3);
-	}
-	else if (context->MONO35() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 4);
-	}
-	else if (context->MONO40() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 5);
-	}
-	else if (context->MONO50() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 6);
-	}
-	else if (context->MONO75() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 7);
-	}
-	else if (context->MONO100() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 8);
-	}
-	else if (context->PROP15() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 9);
-	}
-	else if (context->PROP20() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 10);
-	}
-	else if (context->PROP25() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 11);
-	}
-	else if (context->PROP30() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 12);
-	}
-	else if (context->PROP35() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 13);
-	}
-	else if (context->PROP40() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 14);
-	}
-	else if (context->PROP50() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 15);
-	}
-	else if (context->PROP75() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 16);
-	}
-	else if (context->PROP100() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 17);
-	}
-	else if (context->SERIF15() != NULL) {
+	else if (context->SERIF() != NULL) {
 		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 18);
-	}
-	else if (context->SERIF20() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 19);
-	}
-	else if (context->SERIF25() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 20);
-	}
-	else if (context->SERIF30() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 21);
-	}
-	else if (context->SERIF35() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 22);
-	}
-	else if (context->SERIF40() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 23);
-	}
-	else if (context->SERIF50() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 24);
-	}
-	else if (context->SERIF75() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 25);
-	}
-	else if (context->SERIF100() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 26);
 	}
 	stack_push(Type::INTEGER);
 	return NULL;
@@ -440,21 +368,6 @@ antlrcpp::Any Compiler::visitNumFuncSCREENHEIGHT(DARICParser::NumFuncSCREENHEIGH
 	if (phase == CompilerPhase::LOOKAHEAD)
 		return NULL;
 	insert_bytecode_notype(Bytecodes::SCREENHEIGHT);
-	stack_push(Type::INTEGER);
-	return NULL;
-}
-
-antlrcpp::Any Compiler::visitNumFuncCREATEFONT(DARICParser::NumFuncCREATEFONTContext* context)
-{
-	set_pos(context->start);
-	if (phase == CompilerPhase::LOOKAHEAD)
-		return NULL;
-	for (auto i = 0; i < context->numExpr().size(); i++) {
-		visit(context->numExpr(i));
-		ensure_stack_is_integer();
-		stack_pop();
-	}
-	insert_bytecode_notype(Bytecodes::CREATEFONT);
 	stack_push(Type::INTEGER);
 	return NULL;
 }

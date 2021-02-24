@@ -405,7 +405,6 @@ numFunc
     | POINT LPAREN numExpr COMMA numExpr RPAREN                     #numFuncPOINT
     | COLOUR LPAREN numExpr COMMA numExpr COMMA numExpr RPAREN      #numFuncCOLOUR
     | LOADTYPEFACE strExpr                                          #numFuncLOADTYPEFACE
-    | CREATEFONT numExpr COMMA numExpr                              #numFuncCREATEFONT
 
     /* Sprites */
     | CREATESPRITE LPAREN numExpr COMMA numExpr COMMA numExpr RPAREN    #numFuncCREATESPRITE
@@ -464,33 +463,9 @@ numColours
     ;
 
 defaultFonts
-    : MONO15
-    | MONO20
-    | MONO25
-    | MONO30
-    | MONO35
-    | MONO40
-    | MONO50
-    | MONO75
-    | MONO100
-    | PROP15
-    | PROP20
-    | PROP25
-    | PROP30
-    | PROP35
-    | PROP40
-    | PROP50
-    | PROP75
-    | PROP100
-    | SERIF15
-    | SERIF20
-    | SERIF25
-    | SERIF30
-    | SERIF35
-    | SERIF40
-    | SERIF50
-    | SERIF75
-    | SERIF100
+    : MONO
+    | PROP
+    | SERIF
     ;
 
 // Lexer stuff
@@ -564,33 +539,9 @@ CYAN            : 'CYAN' | 'cyan' | 'Cyan' ;
 WHITE           : 'WHITE' | 'white' | 'White' ;
 BLACK           : 'BLACK' | 'black' | 'Black' ;
 
-MONO15          : 'MONO15' | 'mono15' | 'Mono15' ;
-MONO20          : 'MONO20' | 'mono20' | 'Mono20' ;
-MONO25          : 'MONO25' | 'mono25' | 'Mono25' ;
-MONO30          : 'MONO30' | 'mono30' | 'Mono30' ;
-MONO35          : 'MONO35' | 'mono35' | 'Mono35' ;
-MONO40          : 'MONO40' | 'mono40' | 'Mono40' ;
-MONO50          : 'MONO50' | 'mono50' | 'Mono50' ;
-MONO75          : 'MONO75' | 'mono75' | 'Mono75' ;
-MONO100         : 'MONO100' | 'mono100' | 'Mono100' ;
-PROP15          : 'PROP15' | 'prop15' | 'Prop15' ;
-PROP20          : 'PROP20' | 'prop20' | 'Prop20' ;
-PROP25          : 'PROP25' | 'prop25' | 'Prop25' ;
-PROP30          : 'PROP30' | 'prop30' | 'Prop30' ;
-PROP35          : 'PROP35' | 'prop35' | 'Prop35' ;
-PROP40          : 'PROP40' | 'prop40' | 'Prop40' ;
-PROP50          : 'PROP50' | 'prop50' | 'Prop50' ;
-PROP75          : 'PROP75' | 'prop75' | 'Prop75' ;
-PROP100         : 'PROP100' | 'prop100' | 'Prop100' ;
-SERIF15         : 'SERIF15' | 'serif15' | 'Serif15' ;
-SERIF20         : 'SERIF20' | 'serif20' | 'Serif20' ;
-SERIF25         : 'SERIF25' | 'serif25' | 'Serif25' ;
-SERIF30         : 'SERIF30' | 'serif30' | 'Serif30' ;
-SERIF35         : 'SERIF35' | 'serif35' | 'Serif35' ;
-SERIF40         : 'SERIF40' | 'serif40' | 'Serif40' ;
-SERIF50         : 'SERIF50' | 'serif50' | 'Serif50' ;
-SERIF75         : 'SERIF75' | 'serif75' | 'Serif75' ;
-SERIF100        : 'SERIF100' | 'serif100' | 'Serif100' ;
+MONO            : 'MONO' | 'mono' | 'Mono' ;
+PROP            : 'PROP' | 'prop' | 'Prop' ;
+SERIF           : 'SERIF' | 'serif' | 'Serif' ;
 
 RENDERFRAME     : 'RENDER' | 'render' | 'Render' ;
 CREATEVERTEX    : 'VERTEX' | 'vertex' | 'Vertex' ;
@@ -624,7 +575,6 @@ CLIPON          : 'CLIPON' | 'clipon' | 'ClipOn ' ;
 CLIPOFF         : 'CLIPOFF' | 'clipoff' | 'ClipOff' ;
 COLOUR          : 'COLOUR' | 'colour' | 'Colour' ;
 COLOURBG        : 'COLOURBG' | 'colourbg' | 'ColourBg' ;
-CREATEFONT      : 'CREATEFONT' | 'createfont' | 'CreateFont' ;
 CURSORON        : 'CURSORON' | 'cursoron' | 'CursorOn' ;
 CURSOROFF       : 'CURSOROFF' | 'cursoroff' | 'CursorOff' ;
 FILL            : 'FILL' | 'fill' | 'Fill' ;

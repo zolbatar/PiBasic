@@ -331,10 +331,12 @@ void create_manual_2d()
             new ManualSyntaxNumericExpression(3),
             new ManualSyntaxComma(),
             new ManualSyntaxStringExpression(4),
+            new ManualSyntaxComma(),
+            new ManualSyntaxStringExpression(5),
         },
-        "The first expression is a font index, either one of the built-in ones:\r  PROP15/PROP20/PROP25/PROP30/PROP40/PROP50/PROP75/PROP100 - for proportional sans-serif fonts, or\n  SERIF15/SERIF20/SERIF25/SERIF30/SERIF40/SERIF50/SERIF75/SERIF100 - for proportional serif fonts, or\r  MONO15/MONO20/MONO25/MONO30/MONO40/MONO50/MONO75/MONO100 - for monospaced fonts, or\r  a handle from CREATEFONT.\r\rThe next two expressions are the x and y positions (both integers). -1 for either uses last cursor.\r\rThe final <expression4> is a string expression for the text to display.",
+        "The first expression is a typeface index, either one of the built-in ones:\r  PROP - for proportional sans-serif fonts, or\n  SERIF - for proportional serif fonts, or\r  MONO - for monospaced fonts, or\r  a handle from LOADTYPEFACE.\rThe next expression is the font size.\n\rThe next two expressions are the x and y positions (both integers). -1 for either uses last cursor.\r\rThe final <expression5> is a string expression for the text to display.",
         "The text is rendered as requested to the back buffer.",
-        "TEXT PROP20,100,200,msg$"));
+        "TEXT PROP,20,100,200,msg$"));
     keywords.push_back(ManualKeyword(
         "TEXTCENTRE/TEXTCENTER",
         "TEXTCENTRE/TEXTCENTER",
@@ -349,10 +351,12 @@ void create_manual_2d()
             new ManualSyntaxNumericExpression(3),
             new ManualSyntaxComma(),
             new ManualSyntaxStringExpression(4),
+            new ManualSyntaxComma(),
+            new ManualSyntaxStringExpression(5),
         },
         "The first expression is a font index, either one of the built-in ones:\r  PROP10/PROP15/PROP20/PROP25/PROP30/PROP40/PROP50/PROP75/PROP100 - for proportional fonts, or\r  MONO10/MONO15/MONO20/MONO25/MONO30/MONO40/MONO50/MONO75/MONO100 - for monospaced fonts, or\r  a handle from CREATEFONT.\r\rThe next two expressions are the x and y positions (both integers). -1 for either uses last cursor.\r\rThe final <expression4> is a string expression for the text to display.",
         "The text is rendered as requested to the back buffer. The centre point is the x co-ordinate.",
-        "TEXTCENTRE MONO15,SCREENWIDTH/2,200,\"Hello!\""));
+        "TEXTCENTRE MONO,15,SCREENWIDTH/2,200,\"Hello!\""));
     keywords.push_back(ManualKeyword(
         "TEXTRIGHT",
         "TEXTRIGHT",
@@ -367,10 +371,12 @@ void create_manual_2d()
             new ManualSyntaxNumericExpression(3),
             new ManualSyntaxComma(),
             new ManualSyntaxStringExpression(4),
+            new ManualSyntaxComma(),
+            new ManualSyntaxStringExpression(5),
         },
         "The first expression is a font index, either one of the built-in ones:\r  PROP10/PROP15/PROP20/PROP25/PROP30/PROP40/PROP50/PROP75/PROP100 - for proportional fonts, or\r  MONO10/MONO15/MONO20/MONO25/MONO30/MONO40/MONO50/MONO75/MONO100 - for monospaced fonts, or\r  a handle from CREATEFONT.\r\rThe next two expressions are the x and y positions (both integers). -1 for either uses last cursor.\r\rThe final <expression4> is a string expression for the text to display.",
         "The text is rendered as requested to the back buffer. The x co-ordinate is the right hand position of the text.",
-        "TEXTRIGHT PROP50,SCREENWIDTH,0,a$"));
+        "TEXTRIGHT PROP,50,SCREENWIDTH,0,a$"));
     keywords.push_back(ManualKeyword(
         "TRIANGLE",
         "TRIANGLE [FILL]",

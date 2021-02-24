@@ -165,7 +165,6 @@ enum class Bytecodes {
 	SCREENWIDTH, // Get screen width
 	SCREENHEIGHT, // Get screen height
 	LOADTYPEFACE, // Load typeface
-	CREATEFONT, // Create font of specific size
 	TEXT, // Render text
 	TEXTRIGHT, // Render text (right aligned)
 	TEXTCENTRE, // Render text (centred)

@@ -289,7 +289,6 @@ protected:
     antlrcpp::Any visitStmtSHOWFPS(DARICParser::StmtSHOWFPSContext* context);
     antlrcpp::Any visitNumFuncPOINT(DARICParser::NumFuncPOINTContext* context);
     antlrcpp::Any visitNumFuncCOLOUR(DARICParser::NumFuncCOLOURContext* context);
-    antlrcpp::Any visitNumFuncCREATEFONT(DARICParser::NumFuncCREATEFONTContext* context);
     antlrcpp::Any visitNumFuncLOADTYPEFACE(DARICParser::NumFuncLOADTYPEFACEContext* context);
     antlrcpp::Any visitNumFuncSCREENWIDTH(DARICParser::NumFuncSCREENWIDTHContext* context);
     antlrcpp::Any visitNumFuncSCREENHEIGHT(DARICParser::NumFuncSCREENHEIGHTContext* context);
