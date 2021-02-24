@@ -23,12 +23,12 @@ enum class ErrorLocation {
 class DARICException : public std::runtime_error {
 public:
     DARICException(ErrorLocation location, std::string filename, UINT32 line_number, short char_position, std::string error)
-        : location(location)
+        : std::runtime_error(error)
+        , location(location)
+        , error(error)
         , filename(filename)
         , line_number(line_number)
         , char_position(char_position)
-        , std::runtime_error(error)
-        , error(error)
         , show_filename(parsed_files.size() > 1) { };
 
 #ifdef RISCOS 
@@ -41,7 +41,7 @@ public:
     ErrorLocation location;
     std::string error;
     std::string filename;
-    bool show_filename;
     UINT32 line_number;
     short char_position;
+    bool show_filename;
 };

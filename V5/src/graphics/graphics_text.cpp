@@ -1,7 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define STBTT_STATIC
 #define STB_TRUETYPE_IMPLEMENTATION
-#define _GLIBCXX_USE_C99 1
 #include "graphics.h"
 #include "stb_truetype.h"
 #include <iostream>

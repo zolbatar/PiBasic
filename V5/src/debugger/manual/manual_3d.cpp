@@ -1,4 +1,3 @@
-#define _GLIBCXX_USE_C99 1
 #include "../debugger.h"
 #include "manual.h"
 

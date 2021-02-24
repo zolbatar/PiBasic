@@ -1,5 +1,5 @@
 CXX=~/gccsdk/cross/bin/arm-riscos-gnueabihf-g++
-CXX_FLAGS=-D RISCOS -I$$GCCSDK_INSTALL_ENV/include -march=armv4t -Wall -Wno-reorder -Wno-switch -Wextra -std=c++17 -Isrc/antlr4 -O3
+CXX_FLAGS=-D RISCOS -D -DUSE_UTF8_INSTEAD_OF_CODECVT -I$$GCCSDK_INSTALL_ENV/include -march=armv4t -Wall -Wno-reorder -Wno-switch -Wextra -std=c++11 -Isrc/antlr4 -O3
 LIBS=-lm -L$$GCCSDK_INSTALL_ENV/lib
 BIN=daric
 BUILD_DIR=./buildriscos

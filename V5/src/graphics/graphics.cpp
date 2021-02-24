@@ -1,4 +1,3 @@
-#define _GLIBCXX_USE_C99 1
 #include "graphics.h"
 #include <iomanip>
 #include <iostream>

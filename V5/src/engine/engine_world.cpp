@@ -1,4 +1,3 @@
-#define _GLIBCXX_USE_C99 1
 #include "../environment.h"
 #include "engine.h"
 #include <algorithm>

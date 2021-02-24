@@ -1,5 +1,4 @@
 #pragma once
-#define _GLIBCXX_USE_C99 1
 #include "../exception.h"
 #include "../parser/DARICParser.h"
 #include "../parser/DARICVisitor.h"

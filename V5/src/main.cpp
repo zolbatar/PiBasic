@@ -12,8 +12,6 @@ extern VM *g_vm;
 
 int main(int argc, char *argv[])
 {
-    std::wstring bob;
-
     using namespace std::chrono;
     std::cout << "DARIC " << g_env.version << ", https://dariclang.com" << std::endl;
 

@@ -1,5 +1,4 @@
 #pragma warning(disable : 4996) //_CRT_SECURE_NO_WARNINGS
-#define _GLIBCXX_USE_C99 1
 #ifdef RISCOS
 #elif __unix__
 #else
