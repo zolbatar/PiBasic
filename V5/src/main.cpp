@@ -5,12 +5,15 @@
 #include <memory>
 #include <chrono>
 #include <iostream>
+#include <string>
 
 Environment g_env;
 extern VM *g_vm;
 
 int main(int argc, char *argv[])
 {
+    std::wstring bob;
+
     using namespace std::chrono;
     std::cout << "DARIC " << g_env.version << ", https://dariclang.com" << std::endl;
 
@@ -90,12 +93,21 @@ int main(int argc, char *argv[])
     }
     else
     {
+    // Disable escape on RISC OS
+#ifdef RISCOS
+    _kernel_osbyte(200, 1, 1);
+#endif
+
         // Fire up graphics now
         std::cout << "Screen resolution: " << g_env.graphics.get_screen_width() << "x" << g_env.graphics.get_screen_height() << std::endl;
         g_env.graphics.open(g_env.graphics.get_screen_width(), g_env.graphics.get_screen_height(), Mode::CLASSIC, g_env.cwd);
 
         Interactive interactive;
         interactive.run();
+#ifdef RISCOS
+        _kernel_osbyte(200, 0, 1);
+#endif
+
     }
 
     // Shutdown

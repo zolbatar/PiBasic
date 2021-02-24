@@ -162,21 +162,21 @@ void Graphics::RISCOS_debugger_key_check()
 	// Debugger?
 	int v = _kernel_osbyte(121, 30 | 0x80, 0) & 0xFF;
 	if (v == 0xff) {
-		print_console("Pressed");
-		// Wait until not pressed
-		do {
-			v = _kernel_osbyte(121, 30 | 0x80, 0) & 0xFF;
-		} while (v == 0xff);
-
-		print_console("Debugger requested");
-		if (!debugger_open && !g_env.debugger_requested) {
-			g_env.debugger_requested = true;
-		}
 
 		// Wait until not pressed
 		do {
 			v = _kernel_osbyte(121, 30 | 0x80, 0) & 0xFF;
 		} while (v == 0xff);
+		_kernel_swi_regs regs;
+		_kernel_swi(OS_ReadC, &regs, &regs);
+
+		Debugger();
+
+		// Wait until not pressed
+		do {
+			v = _kernel_osbyte(121, 30 | 0x80, 0) & 0xFF;
+		} while (v == 0xff);
+		_kernel_swi(OS_ReadC, &regs, &regs);
 	}
 #endif
 }

@@ -1,5 +1,7 @@
 CXX=~/gccsdk/cross/bin/arm-riscos-gnueabihf-g++
-CXX_FLAGS=-D RISCOS -D USE_UTF8_INSTEAD_OF_CODECVT -I$$GCCSDK_INSTALL_ENV/include -mfpu=vfpv2 -mfloat-abi=softfp -Wall -Wno-reorder -Wno-switch -Wextra -std=c++11 -ffast-math -Isrc/antlr4 -O3
+#-march=armv6+fp -mfloat-abi=hard
+#-mfpu=vfpv2 -mfloat-abi=softfp
+CXX_FLAGS=-D RISCOS -I$$GCCSDK_INSTALL_ENV/include -march=armv6+fp -mfloat-abi=hard -Wall -Wno-reorder -Wno-switch -Wextra -std=c++17 -Isrc/antlr4 -O3
 LIBS=-lm -L$$GCCSDK_INSTALL_ENV/lib
 BIN=daricvfp
 BUILD_DIR=./buildriscosvfp

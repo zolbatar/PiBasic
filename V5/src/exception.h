@@ -29,10 +29,10 @@ public:
         , char_position(char_position)
         , std::runtime_error(error)
         , error(error)
-        , show_filename(parsed_files.size() > 1) {};
+        , show_filename(parsed_files.size() > 1) { };
 
 #ifdef RISCOS 
-    const virtual char* what() const throw();
+    virtual const char* what() const throw();
     void pretty_print() const throw();
 #else
     virtual const char* what() const throw();
