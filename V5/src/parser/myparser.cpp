@@ -60,7 +60,7 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
         const std::string& msg,
         std::exception_ptr e) override
     {
-        g_env.graphics.print_console("33\r");
+        g_env.graphics.print_console("33\n");
         if (!parse_errors) {
             error_line = line;
             error_position = static_cast<short>(charPositionInLine);

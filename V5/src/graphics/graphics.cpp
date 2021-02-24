@@ -143,7 +143,7 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 
 	// Load standard fonts
 	if (!reinit) {
-		std::string fp = cwd + "/PTMono-Regular.ttf";
+		std::string fp = cwd + "/RobotoMono-Regular.ttf";
 		int index = load_font(fp.c_str());
 		create_font_by_size(index, 15);
 		create_font_by_size(index, 20);
@@ -154,7 +154,7 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 		create_font_by_size(index, 50);
 		create_font_by_size(index, 75);
 		create_font_by_size(index, 100);
-		fp = std::string(cwd) + "/PTSans-Regular.ttf";
+		fp = std::string(cwd) + "/Roboto-Regular.ttf";
 		index = load_font(fp.c_str());
 		create_font_by_size(index, 15);
 		create_font_by_size(index, 20);
@@ -165,7 +165,7 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 		create_font_by_size(index, 50);
 		create_font_by_size(index, 75);
 		create_font_by_size(index, 100);
-		fp = std::string(cwd) + "/PTSerif-Regular.ttf";
+		fp = std::string(cwd) + "/RobotoSlab-Regular.ttf";
 		index = load_font(fp.c_str());
 		create_font_by_size(index, 15);
 		create_font_by_size(index, 20);

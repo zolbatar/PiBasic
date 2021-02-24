@@ -191,6 +191,10 @@ void Graphics::print_character(int index_ff, char c, int* cursor_x, int* cursor_
         *cursor_y += font_row_height;
         *cursor_x = 0;
         return;
+    case '\n':
+        *cursor_y += font_row_height;
+        *cursor_x = 0;
+        return;
     }
     Font* f = get_glyph(0, index_ff, c, 0);
     if (f->bitmap != NULL) {
