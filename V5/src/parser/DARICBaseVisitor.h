@@ -719,10 +719,6 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNumFuncCREATEFONT(DARICParser::NumFuncCREATEFONTContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual antlrcpp::Any visitNumFuncCREATESPRITE(DARICParser::NumFuncCREATESPRITEContext *ctx) override {
     return visitChildren(ctx);
   }

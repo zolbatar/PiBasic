@@ -371,8 +371,6 @@ public:
 
     virtual antlrcpp::Any visitNumFuncLOADTYPEFACE(DARICParser::NumFuncLOADTYPEFACEContext *context) = 0;
 
-    virtual antlrcpp::Any visitNumFuncCREATEFONT(DARICParser::NumFuncCREATEFONTContext *context) = 0;
-
     virtual antlrcpp::Any visitNumFuncCREATESPRITE(DARICParser::NumFuncCREATESPRITEContext *context) = 0;
 
     virtual antlrcpp::Any visitNumFuncLOADSPRITE(DARICParser::NumFuncLOADSPRITEContext *context) = 0;

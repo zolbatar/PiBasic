@@ -1134,13 +1134,6 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumFuncLOADTYPEFACE(DARICParser.NumFuncLOADTYPEFACEContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code numFuncCREATEFONT}
-	 * labeled alternative in {@link DARICParser#numFunc}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumFuncCREATEFONT(DARICParser.NumFuncCREATEFONTContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code numFuncCREATESPRITE}
 	 * labeled alternative in {@link DARICParser#numFunc}.
 	 * @param ctx the parse tree
