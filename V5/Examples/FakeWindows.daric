@@ -6,13 +6,13 @@ PROCInitPerlin():terrainsize%=250:PROCCreateTerrain(terrainsize%, terrainsize%, 
 terrain1%=OBJECT terrain%, 0, 0, -300, 330, 0, 0, 250, SHADED
 
 GRAPHICS BANKED
-COLOURBG &101010
-CLS
-
 segw%=w%*0.05
 segh%=h%*0.05
 
 FOR I=0 TO 360 STEP 1
+	COLOURBG &101010
+	CLS
+
 	CLIPOFF: REM Pane 1	
 	COLOUR &804040:RECTANGLE FILL segw%*1,segh%*1,segw%*11,segh%*11
 	COLOUR BLACK:RECTANGLE FILL segw%*1+2,segh%*1+2,segw%*11-2,segh%*11-2:CLIPON segw%*1+2,segh%*1+2,segw%*11-2,segh%*11-2

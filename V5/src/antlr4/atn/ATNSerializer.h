@@ -42,11 +42,11 @@ namespace atn {
     /// </summary>
     virtual std::vector<size_t> serialize();
 
-    virtual std::string decode(const std::string& data);
+    virtual std::string decode(const std::wstring& data);
     virtual std::string getTokenName(size_t t);
 
     /// Used by Java target to encode short/int array as chars in string.
-    static std::string getSerializedAsString(ATN *atn);
+    static std::wstring getSerializedAsString(ATN *atn);
     static std::vector<size_t> getSerialized(ATN *atn);
 
     static std::string getDecoded(ATN *atn, std::vector<std::string> &tokenNames);

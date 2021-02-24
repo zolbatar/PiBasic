@@ -17,6 +17,11 @@ int main(int argc, char *argv[])
     using namespace std::chrono;
     std::cout << "DARIC " << g_env.version << ", https://dariclang.com" << std::endl;
 
+    // Disable escape on RISC OS
+#ifdef RISCOS
+    _kernel_osbyte(229, 1, 0);
+#endif
+
     // Get program directory
     std::string path(argv[0]);
     g_env.cwd = path.substr(0, path.find_last_of("\\/"));

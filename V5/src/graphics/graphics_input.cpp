@@ -162,7 +162,6 @@ void Graphics::RISCOS_debugger_key_check()
 	// Debugger?
 	int v = _kernel_osbyte(121, 30 | 0x80, 0) & 0xFF;
 	if (v == 0xff) {
-
 		// Wait until not pressed
 		do {
 			v = _kernel_osbyte(121, 30 | 0x80, 0) & 0xFF;
