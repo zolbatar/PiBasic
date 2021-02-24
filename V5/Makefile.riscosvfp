@@ -3,7 +3,7 @@ CXX=~/gccsdk/cross/bin/arm-riscos-gnueabihf-g++
 # _GLIBCXX_USE_C99 _GLIBCXX_USE_C99_WCHAR
 #-mfpu=vfpv2 -mfloat-abi=softfp -Wno-reorder 
 #DUSE_UTF8_INSTEAD_OF_CODECVT
-CXX_FLAGS=-DRISCOS -DANTLR4CPP_STATIC -I$$GCCSDK_INSTALL_ENV/include -march=armv6+fp -mfloat-abi=hard -Wall -Wno-switch -Wextra -std=c++11 -Isrc/antlr4 -Os
+CXX_FLAGS=-DRISCOS -DANTLR4CPP_STATIC -DUSE_UTF8_INSTEAD_OF_CODECVT -I$$GCCSDK_INSTALL_ENV/include -march=armv6+fp -mfloat-abi=hard -Wall -Wno-attributes -Wno-switch -Wextra -std=c++11 -Isrc/antlr4 -Os
 LIBS=-lm -L$$GCCSDK_INSTALL_ENV/lib
 BIN=daricvfp
 BUILD_DIR=./buildriscosvfp

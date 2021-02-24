@@ -7,18 +7,7 @@
 
 namespace antlrcpp {
 
-void replaceAll(std::string& str, std::string const& from, std::string const& to)
-{
-  if (from.empty())
-    return;
-
-  size_t start_pos = 0;
-  while ((start_pos = str.find(from, start_pos)) != std::string::npos) {
-    str.replace(start_pos, from.length(), to);
-    start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'.
-  }
-}
-
+#ifdef _MSC_VER
 std::string ws2s(std::wstring const& wstr) {
 #ifndef USE_UTF8_INSTEAD_OF_CODECVT
   std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
@@ -42,5 +31,19 @@ std::wstring s2ws(const std::string &str) {
 
   return wide;
 }
+#endif
+
+void replaceAll(std::string& str, std::string const& from, std::string const& to)
+{
+  if (from.empty())
+    return;
+
+  size_t start_pos = 0;
+  while ((start_pos = str.find(from, start_pos)) != std::string::npos) {
+    str.replace(start_pos, from.length(), to);
+    start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'.
+  }
+}
 
 } // namespace antrlcpp
+

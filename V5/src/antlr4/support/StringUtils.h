@@ -10,7 +10,7 @@
 #ifdef USE_UTF8_INSTEAD_OF_CODECVT
 #include "utf8.h"
 #endif
-
+ 
 namespace antlrcpp {
 
   // For all conversions utf8 <-> utf32.
@@ -68,9 +68,14 @@ namespace antlrcpp {
     #endif
   }
 
-  void replaceAll(std::string &str, std::string const& from, std::string const& to);
 
   // string <-> wstring conversion (UTF-16), e.g. for use with Window's wide APIs.
+#ifdef _MSC_VER
   ANTLR4CPP_PUBLIC std::string ws2s(std::wstring const& wstr);
   ANTLR4CPP_PUBLIC std::wstring s2ws(std::string const& str);
+#endif
+
+  void replaceAll(std::string &str, std::string const& from, std::string const& to);
 }
+
+

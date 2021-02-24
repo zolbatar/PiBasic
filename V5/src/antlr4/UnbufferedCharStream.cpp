@@ -13,7 +13,11 @@ using namespace antlrcpp;
 using namespace antlr4;
 using namespace antlr4::misc;
 
+#ifndef RISCOS
 UnbufferedCharStream::UnbufferedCharStream(std::wistream &input) : _input(input) {
+#else
+UnbufferedCharStream::UnbufferedCharStream(std::istream &input) : _input(input) {
+#endif
   InitializeInstanceFields();
 
   // The vector's size is what used to be n in Java code.
@@ -74,7 +78,11 @@ size_t UnbufferedCharStream::fill(size_t n) {
 }
 
 char32_t UnbufferedCharStream::nextChar()  {
+#ifndef RISCOS
   wchar_t result = 0;
+#else
+  char result = 0;
+#endif
   _input >> result;
   return result;
 }
@@ -101,9 +109,11 @@ size_t UnbufferedCharStream::LA(ssize_t i) {
     return EOF;
   }
 
+#ifndef RISCOS
   if (_data[static_cast<size_t>(index)] == 0xFFFF) {
     return EOF;
   }
+#endif
 
   return _data[static_cast<size_t>(index)];
 }
@@ -195,7 +205,11 @@ std::string UnbufferedCharStream::getText(const misc::Interval &interval) {
   }
   // convert from absolute to local index
   size_t i = interval.a - bufferStartIndex;
+#ifndef RISCOS
   return utf32_to_utf8(_data.substr(i, interval.length()));
+#else
+  return _data.substr(i, interval.length());
+#endif
 }
 
 size_t UnbufferedCharStream::getBufferStartIndex() const {

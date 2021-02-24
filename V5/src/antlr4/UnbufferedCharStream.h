@@ -18,7 +18,11 @@ namespace antlr4 {
     /// The name or source of this char stream.
     std::string name;
 
+#ifndef RISCOS
     UnbufferedCharStream(std::wistream &input);
+#else
+    UnbufferedCharStream(std::istream &input);
+#endif
 
     virtual void consume() override;
     virtual size_t LA(ssize_t i) override;
@@ -55,6 +59,9 @@ namespace antlr4 {
 #if defined(_MSC_VER) && _MSC_VER == 1900
     i32string _data; // Custom type for VS 2015.
     typedef __int32 storage_type;
+#elif RISCOS
+    std::string _data;
+    typedef char storage_type;
 #else
     std::u32string _data;
     typedef char32_t storage_type;
@@ -93,7 +100,11 @@ namespace antlr4 {
     /// </summary>
     size_t _currentCharIndex;
 
+#ifndef RISCOS
     std::wistream &_input;
+#else
+    std::istream &_input;
+#endif
 
     /// <summary>
     /// Make sure we have 'want' elements from current position <seealso cref="#p p"/>.
