@@ -11,7 +11,7 @@ Debugger::Debugger()
     if (debugger_open)
         return;
     debugger_open = true;
-    auto saved_cursor_state = g_env.graphics.is_cursor_enabled();
+    auto saved_cursor_state = g_env.text.is_cursor_enabled();
 
     // Was this breakpoint triggered?
     bool breakpoint = false;
@@ -28,10 +28,10 @@ Debugger::Debugger()
 
     // Save the current screen
     g_env.graphics.cache();
-    auto x = g_env.graphics.get_cursor_x();
-    auto y = g_env.graphics.get_cursor_y();
+    auto x = g_env.text.get_cursor_x();
+    auto y = g_env.text.get_cursor_y();
     auto saved_colour = g_env.graphics.current_colour;
-    g_env.graphics.cursor_off();
+    g_env.text.cursor_off();
 
     debugger_options(-1, 0);
     while (true) {
@@ -60,13 +60,13 @@ Debugger::Debugger()
                 g_env.graphics.poll();
             }
 
-            g_env.graphics.set_cursor_x(x);
-            g_env.graphics.set_cursor_y(y);
+            g_env.text.set_cursor_x(x);
+            g_env.text.set_cursor_y(y);
             g_env.graphics.current_colour = saved_colour;
 
             debugger_open = false;
             if (saved_cursor_state) {
-                g_env.graphics.cursor_on();
+                g_env.text.cursor_on();
             }
             return;
         } else if (g_env.input.inkey(-117)) {
@@ -93,7 +93,7 @@ void Debugger::debugger_options(int selected, int open_mode)
         g_env.graphics.colour(10, 10, 10);
         g_env.graphics.rectangle(0, g_env.graphics.get_actual_height() - height - 1, g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height() - 1);
     }
-    g_env.graphics.print_text(console_font, console_font_size,"", 0, g_env.graphics.get_actual_height() - debugger_height + 3 - height);
+    g_env.text.print_text(console_font, console_font_size,"", 0, g_env.graphics.get_actual_height() - debugger_height + 3 - height);
     debugger_prompt("F1", "Disassembly", selected == 0);
     debugger_prompt("F2", "Variables", selected == 1);
     debugger_prompt("F3", "Trace Log", selected == 2);
@@ -110,13 +110,13 @@ void Debugger::debugger_prompt(std::string key, std::string function, bool activ
     } else {
         g_env.graphics.colour(160, 160, 0);
     }
-    g_env.graphics.print_text(menu_font, menu_font_size,key, -1, -1);
-    g_env.graphics.print_text(menu_font, menu_font_size," ", -1, -1);
+    g_env.text.print_text(menu_font, menu_font_size,key, -1, -1);
+    g_env.text.print_text(menu_font, menu_font_size," ", -1, -1);
     if (active) {
         g_env.graphics.colour(255, 255, 255);
     } else {
         g_env.graphics.colour(160, 160, 160);
     }
-    g_env.graphics.print_text(menu_font, menu_font_size,function, -1, -1);
-    g_env.graphics.print_text(menu_font, menu_font_size,"    ", -1, -1);
+    g_env.text.print_text(menu_font, menu_font_size,function, -1, -1);
+    g_env.text.print_text(menu_font, menu_font_size,"    ", -1, -1);
 }

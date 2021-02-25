@@ -77,8 +77,17 @@ int main(int argc, char *argv[])
         create_empty_vm();
         try
         {
-            MyParser parser(filename);
-            parser.parse_and_compile(compiler, false);
+            // Load into a stringstream
+            std::stringstream ss;
+            std::ifstream stream;
+            stream.open(filename);
+            if (!stream.is_open()) {
+                throw std::runtime_error("File '" + filename + "'not found\n");
+            }
+            ss << stream.rdbuf();
+            stream.close();
+            MyParser parser;
+            parser.parse_and_compile(compiler, false, &ss, filename);
         }
         catch (const DARICException &ex)
         {
@@ -87,7 +96,7 @@ int main(int argc, char *argv[])
         }
         catch (const std::runtime_error &ex)
         {
-            g_env.graphics.print_console(ex.what());
+            g_env.text.print_console(ex.what());
             return 1;
         }
 

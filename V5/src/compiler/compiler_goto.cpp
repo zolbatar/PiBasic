@@ -6,9 +6,6 @@ extern std::vector<ParserFiles> parsed_files;
 antlrcpp::Any Compiler::visitLinenumber(DARICParser::LinenumberContext* context)
 {
 	set_pos(context->start);
-	if (parsed_files.size() > 1) {
-		error("Line numbers not supported with INSTALL");
-	}
 	auto line = std::stoi(context->NUMBER()->getText());
 	line_number_mapping.insert(std::make_pair(line_number, line));
 	if (phase == CompilerPhase::SIZE) {

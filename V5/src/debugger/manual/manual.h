@@ -22,7 +22,7 @@ class ManualSyntaxDelete : virtual public ManualSyntax {
 public:
     void render() override
     {
-        g_env.graphics.cursor_back(fixed_font, fixed_font_size);
+        g_env.text.cursor_back(fixed_font, fixed_font_size);
     }
 };
 
@@ -31,7 +31,7 @@ public:
     void render() override
     {
         g_env.graphics.colour(255, 255, 255);
-        g_env.graphics.print_text(fixed_font, fixed_font_size, ",", -1, -1);
+        g_env.text.print_text(fixed_font, fixed_font_size, ",", -1, -1);
     }
 };
 
@@ -40,7 +40,7 @@ public:
     void render() override
     {
         g_env.graphics.colour(255, 255, 255);
-        g_env.graphics.print_text(fixed_font, fixed_font_size, " ", -1, -1);
+        g_env.text.print_text(fixed_font, fixed_font_size, " ", -1, -1);
     }
 };
 
@@ -49,7 +49,7 @@ public:
     void render() override
     {
         g_env.graphics.colour(255, 255, 255);
-        g_env.graphics.print_text(fixed_font, fixed_font_size, "(", -1, -1);
+        g_env.text.print_text(fixed_font, fixed_font_size, "(", -1, -1);
     }
 };
 
@@ -60,7 +60,7 @@ public:
     void render() override
     {
         g_env.graphics.colour(100, 100, 255);
-        g_env.graphics.print_text(fixed_font, fixed_font_size, "<expression" + std::to_string(sequence) + ">", -1, -1);
+        g_env.text.print_text(fixed_font, fixed_font_size, "<expression" + std::to_string(sequence) + ">", -1, -1);
     }
 
 private:
@@ -74,7 +74,7 @@ public:
     void render() override
     {
         g_env.graphics.colour(100, 100, 255);
-        g_env.graphics.print_text(fixed_font, fixed_font_size, "<numeric_expression" + std::to_string(sequence) + ">", -1, -1);
+        g_env.text.print_text(fixed_font, fixed_font_size, "<numeric_expression" + std::to_string(sequence) + ">", -1, -1);
     }
 
 private:
@@ -88,7 +88,7 @@ public:
     void render() override
     {
         g_env.graphics.colour(100, 100, 255);
-        g_env.graphics.print_text(fixed_font, fixed_font_size, "<string_expression" + std::to_string(sequence) + ">", -1, -1);
+        g_env.text.print_text(fixed_font, fixed_font_size, "<string_expression" + std::to_string(sequence) + ">", -1, -1);
     }
 
 private:
@@ -102,7 +102,7 @@ public:
     void render() override
     {
         g_env.graphics.colour(100, 100, 255);
-        g_env.graphics.print_text(fixed_font, fixed_font_size, "<variable" + std::to_string(sequence) + ">", -1, -1);
+        g_env.text.print_text(fixed_font, fixed_font_size, "<variable" + std::to_string(sequence) + ">", -1, -1);
     }
 
 private:
@@ -116,7 +116,7 @@ public:
     void render() override
     {
         g_env.graphics.colour(100, 100, 255);
-        g_env.graphics.print_text(fixed_font, fixed_font_size, "<numeric_variable" + std::to_string(sequence) + ">", -1, -1);
+        g_env.text.print_text(fixed_font, fixed_font_size, "<numeric_variable" + std::to_string(sequence) + ">", -1, -1);
     }
 
 private:
@@ -128,7 +128,7 @@ public:
     void render() override
     {
         g_env.graphics.colour(255, 255, 255);
-        g_env.graphics.print_text(fixed_font, fixed_font_size, ")", -1, -1);
+        g_env.text.print_text(fixed_font, fixed_font_size, ")", -1, -1);
     }
 };
 
@@ -139,7 +139,7 @@ public:
     void render() override
     {
         g_env.graphics.colour(255, 255, 0);
-        g_env.graphics.print_text(fixed_font, fixed_font_size, "[" + text + "]", -1, -1);
+        g_env.text.print_text(fixed_font, fixed_font_size, "[" + text + "]", -1, -1);
     }
 
 private:
@@ -153,7 +153,7 @@ public:
     void render() override
     {
         g_env.graphics.colour(100, 100, 255);
-        g_env.graphics.print_text(fixed_font, fixed_font_size, text, -1, -1);
+        g_env.text.print_text(fixed_font, fixed_font_size, text, -1, -1);
     }
 
 private:

@@ -53,13 +53,13 @@ public:
     {
         if (!performance_build && stack.empty()) {
             auto flp = file_and_line_lookup(bc.line_number);
-            throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, "Empty stack and expected float on stack - this is normally an internal DARIC error");
+            throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.line_number, bc.char_position, "Empty stack and expected float on stack - this is normally an internal DARIC error");
         }
         auto b = stack.top();
         stack.pop();
         if (b.get_type() != Type::FLOAT) {
             auto flp = file_and_line_lookup(bc.line_number);
-            throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, "Expected float on stack - this is normally an internal DARIC error");
+            throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.line_number, bc.char_position, "Expected float on stack - this is normally an internal DARIC error");
         }
         return b.get_float();
     }
@@ -68,13 +68,13 @@ public:
     {
         if (!performance_build && stack.empty()) {
             auto flp = file_and_line_lookup(bc.line_number);
-            throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, "Empty stack and expected integer on stack - this is normally an internal DARIC error");
+            throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.line_number, bc.char_position, "Empty stack and expected integer on stack - this is normally an internal DARIC error");
         }
         auto b = stack.top();
         stack.pop();
         if (b.get_type() != Type::INTEGER) {
             auto flp = file_and_line_lookup(bc.line_number);
-            throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, "Expected integer on stack - this is normally an internal DARIC error");
+            throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.line_number, bc.char_position, "Expected integer on stack - this is normally an internal DARIC error");
         }
         return b.get_integer();
     }
@@ -90,13 +90,13 @@ public:
     {
         if (!performance_build && stack.empty()) {
             auto flp = file_and_line_lookup(bc.line_number);
-            throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, "Empty stack and expected string on stack - this is normally an internal DARIC error");
+            throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.line_number, bc.char_position, "Empty stack and expected string on stack - this is normally an internal DARIC error");
         }
         auto b = stack.top();
         stack.pop();
         if (b.get_type() != Type::STRING) {
             auto flp = file_and_line_lookup(bc.line_number);
-            throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, "Expected string on stack - this is normally an internal DARIC error");
+            throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.line_number, bc.char_position, "Expected string on stack - this is normally an internal DARIC error");
         }
         return b.get_string();
     }

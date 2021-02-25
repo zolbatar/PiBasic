@@ -457,6 +457,7 @@
     <ClCompile Include="..\src\parser\DARICParser.cpp" />
     <ClCompile Include="..\src\parser\DARICVisitor.cpp" />
     <ClCompile Include="..\src\parser\myparser.cpp" />
+    <ClCompile Include="..\src\text\Text.cpp" />
     <ClCompile Include="..\src\vm\vm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -644,6 +645,7 @@
     <ClInclude Include="..\src\parser\DARICParser.h" />
     <ClInclude Include="..\src\parser\DARICVisitor.h" />
     <ClInclude Include="..\src\parser\myparser.h" />
+    <ClInclude Include="..\src\text\text.h" />
     <ClInclude Include="..\src\types.h" />
     <ClInclude Include="..\src\vm\boxed.h" />
     <ClInclude Include="..\src\vm\bytecode.h" />

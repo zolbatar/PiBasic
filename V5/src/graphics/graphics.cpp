@@ -231,7 +231,7 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 		if (bank_cache != nullptr)
 			delete bank_cache;
 		bank_cache = new UINT32[size];
-}
+	}
 #else
 	if (reinit || initial) {
 		int params = SDL_WINDOW_ALLOW_HIGHDPI;
@@ -321,22 +321,6 @@ void Graphics::restore()
 #endif
 }
 
-void Graphics::hide_cursors()
-{
-#ifdef RISCOS
-	_kernel_swi_regs regs;
-	_kernel_swi(OS_RemoveCursors, &regs, &regs);
-#endif
-}
-
-void Graphics::show_cursors()
-{
-#ifdef RISCOS
-	_kernel_swi_regs regs;
-	_kernel_swi(OS_RestoreCursors, &regs, &regs);
-#endif
-}
-
 void Graphics::alpha(Colour bg, Colour fg, Colour& out, BYTE a)
 {
 	out.set_rgb(((fg.get_r() * a) >> 8) + ((bg.get_r() * (255 - a)) >> 8),
@@ -380,8 +364,7 @@ void Graphics::cls()
 #endif
 	if (!banked)
 		flip(false);
-	last_cursor_x = 0;
-	last_cursor_y = 0;
+	g_env.text.cls();
 }
 
 void Graphics::flip(bool user_specified)
@@ -417,7 +400,7 @@ void Graphics::flip(bool user_specified)
 		}
 		auto saved_colour = current_colour;
 		colour_hex(0xFFFFFF);
-		print_text_right(0, 20, fps_text, screen_width - 1, 0);
+		g_env.text.print_text_right(0, 20, fps_text, screen_width - 1, 0);
 		current_colour = saved_colour;
 	}
 #ifdef RISCOS
@@ -478,26 +461,6 @@ void Graphics::clipoff()
 	maxY = screen_height - 1;
 }
 
-void Graphics::draw_cursor() {
-	if (!is_banked()) {
-		auto font_row_height = g_env.fonts.get_font_height(console_font, console_font_size);
-		auto saved_colour = g_env.graphics.current_colour;
-		current_colour = Colour(255, 255, 255);
-		auto f = g_env.fonts.get_glyph_x(console_font, console_font_size, ' ');
-		rectangle(get_cursor_x(), get_cursor_y(), get_cursor_x() + f->sc_width, get_cursor_y() + font_row_height);
-		g_env.graphics.current_colour = saved_colour;
-	}
-}
-
-void Graphics::undraw_cursor() {
-	auto font_row_height = g_env.fonts.get_font_height(console_font, console_font_size);
-	auto saved_colour = g_env.graphics.current_colour;
-	current_colour = current_bg_colour;
-	auto f = g_env.fonts.get_glyph_x(console_font, console_font_size, ' ');
-	rectangle(get_cursor_x(), get_cursor_y(), get_cursor_x() + f->sc_width, get_cursor_y() + font_row_height);
-	g_env.graphics.current_colour = saved_colour;
-}
-
 void Graphics::poll()
 {
 	flip(false);
@@ -506,25 +469,38 @@ void Graphics::poll()
 		Debugger();
 	}
 	g_env.input.poll();
+	g_env.text.poll();
+}
 
-	// Cursor blink?
-#ifdef WINDOWS
-	if (cursor_enabled) {
-		auto t = std::chrono::high_resolution_clock::now();
-		auto time_span = std::chrono::duration_cast<std::chrono::milliseconds>(t - last_cursor_blink);
-		if (time_span.count() > CURSOR_BLINK_TIME) {
-			last_cursor_blink = t;
+void Graphics::scroll(VM_INT font_row_height) {
+#ifdef RISCOS
+	auto addr = get_bank_address();
+	auto bg = current_bg_colour.get_hex();
 
-			// Blink on or off?
-			if (!blink_state) {
-				draw_cursor();
-			}
-			else {
-				undraw_cursor();
-			}
-			blink_state = !blink_state;
-		}
+	// Move each row at a time (this works either full screen or windowed)
+	for (int y = 0; y < screen_height - font_row_height; y++) {
+		UINT32 offset1 = line_address[y];
+		UINT32 offset2 = line_address[y + font_row_height];
+		memcpy((void*)&addr[offset1], (void*)&addr[offset2], screen_width * 4);
 	}
+
+	// And clear to BG
+	for (int y = screen_height - font_row_height; y < screen_height; y++) {
+		UINT32 offset = line_address[y];
+		memset((void*)&addr[offset], bg, screen_width * 4);
+	}
+#else
+	UINT32 bg_hex = current_bg_colour.get_hex();
+	SDL_LockSurface(screen);
+	auto pixels = (UINT32*)screen->pixels;
+	auto offset = (screen->pitch * font_row_height) / 4;
+	auto size = (screen->pitch * (screen_height - font_row_height)) / 4;
+	for (int i = 0; i < size; i++) {
+		pixels[i] = pixels[i + offset];
+	}
+	for (int i = 0; i < offset; i++) {
+		pixels[size + i] = bg_hex;
+	}
+	SDL_UnlockSurface(screen);
 #endif
-	}
-
+}

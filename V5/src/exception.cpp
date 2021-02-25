@@ -36,13 +36,13 @@ const void DARICException::pretty_print() const throw()
 	switch (location)
 	{
 	case ErrorLocation::PARSER:
-		g_env.graphics.print_console("[Syntax] ");
+		g_env.text.print_console("[Syntax] ");
 		break;
 	case ErrorLocation::COMPILER:
-		g_env.graphics.print_console("[Compiler] ");
+		g_env.text.print_console("[Compiler] ");
 		break;
 	case ErrorLocation::RUNTIME:
-		g_env.graphics.print_console("[Runtime] ");
+		g_env.text.print_console("[Runtime] ");
 		break;
 	}
 	g_env.log("[" + error + "] at '" + filename + "':" + std::to_string(line_number) + ":" + std::to_string(char_position));
@@ -62,41 +62,34 @@ const void DARICException::pretty_print() const throw()
 	}
 
 	g_env.graphics.colour(255, 255, 255);
-	g_env.graphics.print_console(serror);
+	g_env.text.print_console(serror);
 	g_env.graphics.colour(128, 128, 128);
-	g_env.graphics.print_console(" at ");
+	g_env.text.print_console(" at ");
 	if (show_filename)
 	{
 		g_env.graphics.colour(0, 255, 0);
-		g_env.graphics.print_console(filename);
+		g_env.text.print_console(filename);
 		g_env.graphics.colour(128, 128, 128);
-		g_env.graphics.print_console(":");
+		g_env.text.print_console(":");
 	}
 	g_env.graphics.colour(0, 255, 0);
-	g_env.graphics.print_console(std::to_string(ln));
+	g_env.text.print_console(std::to_string(ln));
 	g_env.graphics.colour(128, 128, 128);
-	g_env.graphics.print_console(":");
+	g_env.text.print_console(":");
 	g_env.graphics.colour(0, 255, 0);
-	g_env.graphics.print_console(std::to_string(char_position));
-	g_env.graphics.print_console("\r");
+	g_env.text.print_console(std::to_string(char_position));
+	g_env.text.print_console("\r");
 	if (location == ErrorLocation::COMPILER)
 	{
 		g_env.graphics.colour(0, 255, 255);
-		std::ifstream in(filename);
-		std::string l;
-		for (UINT32 i = 1; i < line_number; i++)
-		{
-			std::getline(in, l);
-		}
-		std::getline(in, l);
-		g_env.graphics.print_console(l);
-		g_env.graphics.print_console("\r");
+		g_env.text.print_console(source[raw_line_number]);
+		g_env.text.print_console("\r");
 		g_env.graphics.colour(0, 255, 0);
 		for (auto i = 0; i < char_position; i++)
 		{
-			g_env.graphics.print_console("-");
+			g_env.text.print_console("-");
 		}
-		g_env.graphics.print_console("^\r");
+		g_env.text.print_console("^\r");
 	}
 	g_env.graphics.current_colour = saved_colour;
 }

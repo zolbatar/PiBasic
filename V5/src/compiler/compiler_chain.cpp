@@ -18,8 +18,8 @@ antlrcpp::Any Compiler::visitStmtINSTALL(DARICParser::StmtINSTALLContext* contex
     set_pos(context->start);
     if (phase == CompilerPhase::LOOKAHEAD)
         return NULL;
-    if (line_number_mapping.size() > 0) {
+/*    if (line_number_mapping.size() > 0) {
         error("Line numbers not supported with INSTALL");
-    }
+    }*/
     return NULL;
 }

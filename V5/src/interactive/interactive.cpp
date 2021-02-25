@@ -23,54 +23,56 @@
 #endif
 
 const int buffer_size = 1024;
-std::string temp_filename;
 extern Environment g_env;
 extern VM* g_vm;
 extern void load_help();
 
 void Interactive::welcome_prompt()
 {
+	g_env.graphics.current_bg_colour = Colour(20, 20, 20);
+	g_env.graphics.cls();
+	g_env.text.set_margin(50);
 	g_env.graphics.colour(255, 0, 0);
-	g_env.graphics.print_console("D");
+	g_env.text.print_console("D");
 	g_env.graphics.colour(255, 255, 0);
-	g_env.graphics.print_console("A");
+	g_env.text.print_console("A");
 	g_env.graphics.colour(0, 255, 0);
-	g_env.graphics.print_console("R");
+	g_env.text.print_console("R");
 	g_env.graphics.colour(0, 255, 255);
-	g_env.graphics.print_console("I");
+	g_env.text.print_console("I");
 	g_env.graphics.colour(0, 0, 255);
-	g_env.graphics.print_console("C");
+	g_env.text.print_console("C");
 	g_env.graphics.colour(255, 255, 255);
-	g_env.graphics.print_console(" " + g_env.version + ", http://dariclang.com\r\r");
+	g_env.text.print_console(" " + g_env.version + ", http://dariclang.com\r\r");
 #ifdef _DEBUG
 	g_env.graphics.colour(255, 0, 0);
-	g_env.graphics.print_console("**DEBUG MODE **\r");
+	g_env.text.print_console("**DEBUG MODE **\r");
 #endif
 	if (jit) {
 		g_env.graphics.colour(255, 0, 0);
-		g_env.graphics.print_console("**NATIVE COMPILER ENABLED **\r");
+		g_env.text.print_console("**NATIVE COMPILER ENABLED **\r");
 	}
 	g_env.graphics.colour(255, 255, 0);
-	g_env.graphics.print_console("WELCOME");
+	g_env.text.print_console("WELCOME");
 	g_env.graphics.colour(255, 255, 255);
-	g_env.graphics.print_console(" for 'demos & examples'\r");
+	g_env.text.print_console(" for 'demos & examples'\r");
 	g_env.graphics.colour(255, 255, 0);
-	g_env.graphics.print_console("EXAMPLES");
+	g_env.text.print_console("EXAMPLES");
 	g_env.graphics.colour(255, 255, 255);
-	g_env.graphics.print_console(" to set the current directory to 'demos & examples'\r");
+	g_env.text.print_console(" to set the current directory to 'demos & examples'\r");
 	g_env.graphics.colour(255, 255, 0);
-	g_env.graphics.print_console("TEST");
+	g_env.text.print_console("TEST");
 	g_env.graphics.colour(255, 255, 255);
-	g_env.graphics.print_console(" to run the test suite\r");
-	g_env.graphics.print_console("Commands: ");
+	g_env.text.print_console(" to run the test suite\r");
+	g_env.text.print_console("Commands: ");
 	g_env.graphics.colour(255, 255, 0);
 #ifdef WINDOWS
-	g_env.graphics.print_console("CHAIN LIST LOAD NEW RUN SAVE QUIT\r\r");
+	g_env.text.print_console("CHAIN LIST LOAD NEW RUN SAVE QUIT\r\r");
 #else
-	g_env.graphics.print_console("CHAIN LIST LOAD NEW RUN SAVE QUIT\r\r");
+	g_env.text.print_console("CHAIN LIST LOAD NEW RUN SAVE QUIT\r\r");
 #endif
 	g_env.graphics.colour(255, 255, 255);
-	g_env.graphics.cursor_on();
+	g_env.text.cursor_on();
 }
 
 void Interactive::clear()
@@ -90,29 +92,12 @@ void Interactive::run()
 	create_empty_vm();
 
 	welcome_prompt();
-#ifdef WINDOWS
-	// Calc temp path for saving intermediate files
-	wchar_t buffer[buffer_size];
-	auto ret = GetTempPath(buffer_size, buffer);
-	if (ret == 0) {
-		std::cout << "Error getting temporary path\n";
-		exit(1);
-	}
-
-	// Temp file name
-	wchar_t temp_file[buffer_size];
-	auto uRetVal = GetTempFileName(buffer, TEXT("DARIC"), 0, temp_file);
-	temp_filename = ws2s(std::wstring(temp_file));
-	std::transform(temp_filename.begin(), temp_filename.end(), temp_filename.begin(), ::tolower);
-#else
-	temp_filename = "DARICtemp";
-#endif
 
 	while (true) {
 		g_env.graphics.poll();
 
 		// Take each line in time and process it
-		g_env.graphics.print_console("> ");
+		g_env.text.print_console("> ");
 		auto s = g_env.input.input();
 
 		// Trim spaces
@@ -129,7 +114,7 @@ void Interactive::run()
 						else if (upper.compare("NATIVE") == 0) {
 							if (!jit) {
 								jit = true;
-								g_env.graphics.print_console("Native compiler enabled\r");
+								g_env.text.print_console("Native compiler enabled\r");
 							}
 						}
 			#endif	*/
@@ -147,11 +132,11 @@ void Interactive::run()
 					std::stringstream stream;
 					g_env.graphics.colour(180, 180, 0);
 					stream << std::setw(5) << (*it).first << " ";
-					g_env.graphics.print_console(stream.str());
+					g_env.text.print_console(stream.str());
 					stream.str("");
 					g_env.graphics.colour(255, 255, 255);
 					stream << (*it).second << "\r";
-					g_env.graphics.print_console(stream.str());
+					g_env.text.print_console(stream.str());
 					g_env.graphics.poll();
 					if (g_env.input.inkey(-4)) {
 						while (g_env.input.inkey(-4)) {
@@ -181,7 +166,7 @@ void Interactive::run()
 				regs.r[0] = (int)path.c_str();
 				_kernel_swi(DDEUtils_Prefix, &regs, &regs);
 #endif
-				g_env.graphics.print_console("Set directory to '" + path + "'\r");
+				g_env.text.print_console("Set directory to '" + path + "'\r");
 				g_env.cwd = path;
 			}
 			else if (upper.compare("TEST") == 0) {
@@ -225,7 +210,7 @@ void Interactive::load(std::string filename)
 	char line[1024];
 	FILE* fp = fopen(filename.c_str(), "r");
 	if (fp == NULL) {
-		g_env.graphics.print_console("Error loading program '" + filename + "'. Directory is " + g_env.cwd + "\r");
+		g_env.text.print_console("Error loading program '" + filename + "'. Directory is " + g_env.cwd + "\r");
 		return;
 	}
 	UINT32 line_number = 10;
@@ -244,7 +229,7 @@ void Interactive::save(std::string filename)
 	replaceAll(filename, "\"", "");
 	FILE* fp = fopen(filename.c_str(), "w");
 	if (fp == NULL) {
-		g_env.graphics.print_console("Error loading program '" + filename + "'. Directory is " + g_env.cwd + "\r");
+		g_env.text.print_console("Error loading program '" + filename + "'. Directory is " + g_env.cwd + "\r");
 		return;
 	}
 	for (auto it = lines.begin(); it != lines.end(); it++) {
@@ -290,21 +275,19 @@ UINT32 Interactive::add_line(std::string s, UINT32 auto_line)
 
 void Interactive::execute_line(std::string s)
 {
-	FILE* fp = fopen(temp_filename.c_str(), "w");
-	fwrite(s.c_str(), s.length(), 1, fp);
-	fwrite("\n", 1, 1, fp);
-	fclose(fp);
-
+	std::stringstream ss;
+	ss << s;
+	ss.seekg(0);
 	try {
-		MyParser parser(temp_filename);
-		parser.parse_and_compile(compiler, true);
+		MyParser parser;
+		parser.parse_and_compile(compiler, true, &ss, "");
 	}
 	catch (const DARICException& ex) {
 		ex.pretty_print();
 		return;
 	}
 	catch (const std::runtime_error& ex) {
-		g_env.graphics.print_console(ex.what());
+		g_env.text.print_console(ex.what());
 		return;
 	}
 
@@ -317,27 +300,22 @@ void Interactive::execute_line(std::string s)
 
 void Interactive::run_all_lines()
 {
-	FILE* fp = fopen(temp_filename.c_str(), "w");
+	std::stringstream ss;
 	for (auto it = lines.begin(); it != lines.end(); it++) {
-		std::stringstream stream;
-		stream << (*it).first << " " << (*it).second << std::endl;
-		auto s = stream.str();
-		fwrite(s.c_str(), s.length(), 1, fp);
+		ss << it->first << " " << it->second << std::endl;
 	}
-	fclose(fp);
-
-	auto chain = temp_filename;
+	std::string chain = "<filename>";
 	while (chain.length() > 0) {
 		try {
-			MyParser parser(temp_filename);
-			parser.parse_and_compile(compiler, true);
+			MyParser parser;
+			parser.parse_and_compile(compiler, true, &ss, "");
 		}
 		catch (const DARICException& ex) {
 			ex.pretty_print();
 			return;
 		}
 		catch (const std::runtime_error& ex) {
-			g_env.graphics.print_console(ex.what());
+			g_env.text.print_console(ex.what());
 			return;
 		}
 
@@ -350,7 +328,7 @@ void Interactive::run_all_lines()
 #ifdef WINDOWS
 			JIT jit;
 			if (!jit.compiler()) {
-				g_env.graphics.print_console("Native compile failed\r");
+				g_env.text.print_console("Native compile failed\r");
 			}
 #endif
 		}
@@ -368,17 +346,30 @@ void Interactive::run_file(std::string s)
 	auto filename = s.substr(5, s.length() - 5);
 	replaceAll(filename, "\"", "");
 
+	// Load into a stringstream
+	std::stringstream ss;
+	std::ifstream stream;
+#ifdef WINDOWS
+	filename += ".daric";
+#endif
+	stream.open(filename);
+	if (!stream.is_open()) {
+		throw std::runtime_error("File '" + filename + "'not found\n");
+	}
+	ss << stream.rdbuf();
+	stream.close();
+
 	while (filename.length() > 0) {
 		try {
-			MyParser parser(filename);
-			parser.parse_and_compile(compiler, false);
+			MyParser parser;
+			parser.parse_and_compile(compiler, false, &ss, filename);
 		}
 		catch (const DARICException& ex) {
 			ex.pretty_print();
 			return;
 		}
 		catch (const std::runtime_error& ex) {
-			g_env.graphics.print_console(ex.what());
+			g_env.text.print_console(ex.what());
 			return;
 		}
 
@@ -413,17 +404,30 @@ void Interactive::run_demo_file(std::string filename)
 	_kernel_swi(DDEUtils_Prefix, &regs, &regs);
 #endif
 
+	// Load into a stringstream
+	std::stringstream ss;
+	std::ifstream stream;
+#ifdef WINDOWS
+	filename += ".daric";
+#endif
+	stream.open(filename);
+	if (!stream.is_open()) {
+		throw std::runtime_error("File '" + filename + "'not found\n");
+	}
+	ss << stream.rdbuf();
+	stream.close();
+
 	while (filename.length() > 0) {
 		try {
-			MyParser parser(filename);
-			parser.parse_and_compile(compiler, false);
+			MyParser parser;
+			parser.parse_and_compile(compiler, false, &ss, filename);
 		}
 		catch (const DARICException& ex) {
 			ex.pretty_print();
 			return;
 		}
 		catch (const std::runtime_error& ex) {
-			g_env.graphics.print_console(ex.what());
+			g_env.text.print_console(ex.what());
 			return;
 		}
 

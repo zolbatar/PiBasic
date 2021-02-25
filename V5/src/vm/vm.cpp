@@ -462,7 +462,7 @@ void VM::opcode_INPUT()
 	auto var = variables.get_variable(bc);
 	VM_INT qmark = stack.pop_int(bc);
 	if (qmark) {
-		g_env.graphics.print_text(console_font, console_font_size, "?", -1, -1);
+		g_env.text.print_text(console_font, console_font_size, "?", -1, -1);
 	}
 	auto s = g_env.input.input();
 	switch (bc.type) {
@@ -515,7 +515,7 @@ void VM::opcode_PRINT()
 			stream << v1;
 		}
 		VM_STRING v(stream.str());
-		g_env.graphics.print_console(v);
+		g_env.text.print_console(v);
 		if (!performance_build && runtime_debug)
 			g_env.log(std::to_string(v1));
 		return;
@@ -553,7 +553,7 @@ void VM::opcode_PRINT()
 			v = v2 + v;
 		}
 
-		g_env.graphics.print_console(v);
+		g_env.text.print_console(v);
 		if (!performance_build && runtime_debug)
 			g_env.log("");
 		return;
@@ -562,7 +562,7 @@ void VM::opcode_PRINT()
 		VM_STRING v = stack.pop_string(bc);
 		if (!performance_build && runtime_debug)
 			g_env.log("Print string: '");
-		g_env.graphics.print_console(v);
+		g_env.text.print_console(v);
 		if (!performance_build && runtime_debug)
 			g_env.log("'");
 		return;
@@ -580,7 +580,7 @@ void VM::opcode_PRINT_NL()
 		g_env.log("");
 	}
 	else {
-		g_env.graphics.print_console("\r");
+		g_env.text.print_console("\r");
 	}
 }
 
@@ -591,7 +591,7 @@ void VM::opcode_PRINT_SPC()
 	for (int i = 0; i < v1; i++) {
 		v2 += " ";
 	}
-	g_env.graphics.print_text(console_font, console_font_size, v2, -1, -1);
+	g_env.text.print_text(console_font, console_font_size, v2, -1, -1);
 	if (!performance_build && runtime_debug)
 		g_env.log("Print " + std::to_string(v1) + " spaces");
 }
@@ -2283,13 +2283,13 @@ void VM::opcode_CLS()
 }
 
 void VM::opcode_CURSORON() {
-	g_env.graphics.cursor_on();
+	g_env.text.cursor_on();
 	if (!performance_build && runtime_debug)
 		g_env.log("Text cursor on");
 }
 
 void VM::opcode_CURSOROFF() {
-	g_env.graphics.cursor_off();
+	g_env.text.cursor_off();
 	if (!performance_build && runtime_debug)
 		g_env.log("Text cursor off");
 }
@@ -2439,7 +2439,7 @@ void VM::opcode_TEXT()
 	VM_INT x = stack.pop_int(bc);
 	VM_INT size = stack.pop_int(bc);
 	VM_INT index = stack.pop_int(bc);
-	g_env.graphics.print_text(index, size, text, x, y);
+	g_env.text.print_text(index, size, text, x, y);
 	if (!performance_build && runtime_debug)
 		g_env.log("Showing text '" + text + "', font ID " + std::to_string(index) + " at " + std::to_string(x) + "," + std::to_string(y));
 }
@@ -2451,7 +2451,7 @@ void VM::opcode_TEXTRIGHT()
 	VM_INT x = stack.pop_int(bc);
 	VM_INT size = stack.pop_int(bc);
 	VM_INT index = stack.pop_int(bc);
-	g_env.graphics.print_text_right(index, size, text, x, y);
+	g_env.text.print_text_right(index, size, text, x, y);
 	if (!performance_build && runtime_debug)
 		g_env.log("Showing text '" + text + "', font ID " + std::to_string(index) + " at " + std::to_string(x) + "," + std::to_string(y));
 }
@@ -2463,7 +2463,7 @@ void VM::opcode_TEXTCENTRE()
 	VM_INT x = stack.pop_int(bc);
 	VM_INT size = stack.pop_int(bc);
 	VM_INT index = stack.pop_int(bc);
-	g_env.graphics.print_text_centre(index, size, text, x, y);
+	g_env.text.print_text_centre(index, size, text, x, y);
 	if (!performance_build && runtime_debug)
 		g_env.log("Showing text '" + text + "', font ID " + std::to_string(index) + " at " + std::to_string(x) + "," + std::to_string(y));
 }
@@ -2829,7 +2829,7 @@ std::string VM::run()
 					if (g_env.graphics.is_banked()) {
 						g_env.graphics.open(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height(), Mode::CLASSIC, g_env.cwd);
 					}
-					g_env.graphics.print_console("Escape\r");
+					g_env.text.print_console("Escape\r");
 					return "";
 				}
 			}
@@ -3385,11 +3385,11 @@ std::string VM::run()
 		return "";
 	}
 	catch (const std::exception& ex) {
-		g_env.graphics.print_console(ex.what());
+		g_env.text.print_console(ex.what());
 		return "";
 	}
 	if (stack.get_stack_size() != 0) {
-		g_env.graphics.print_console("Stack not empty on END\r");
+		g_env.text.print_console("Stack not empty on END\r");
 	}
 	stack.clear_stack();
 	return "";

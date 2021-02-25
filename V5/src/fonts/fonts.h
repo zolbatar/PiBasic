@@ -34,5 +34,3 @@ private:
 	VM_INT build_type_size_index(VM_INT typeface, VM_INT size) { return (typeface << 16) + (size << 8); }
 	VM_INT build_type_size_char_index(VM_INT typeface, VM_INT size, char ascii) { return (typeface << 16) + (size << 8) + ascii; }
 };
-
-const int CURSOR_BLINK_TIME = 250;

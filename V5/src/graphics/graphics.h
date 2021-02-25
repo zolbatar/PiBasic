@@ -92,35 +92,11 @@ public:
 	void show_fps() { showfps = true; }
 	void cache();
 	void restore();
+	void scroll(VM_INT font_row_height);
 	UINT32 get_screen_width();
 	UINT32 get_screen_height();
 	UINT32 get_actual_width() { return screen_width; }
 	UINT32 get_actual_height() { return screen_height; }
-	void hide_cursors();
-	void show_cursors();
-
-	// Text stuff
-	void scroll(VM_INT font_row_height, int* cursor_x, int* cursor_y);
-	int get_cursor_x() { return last_cursor_x; }
-	int get_cursor_y() { return last_cursor_y; }
-	void set_cursor_x(int x) { last_cursor_x = x; }
-	void set_cursor_y(int y) { last_cursor_y = y; }
-	void cursor_back(int typeface, int size);
-	void delete_character(int typeface, int size);
-	void print_character(int typeface, int size, char c, int* cursor_x, int* cursor_y);
-	void print_console(VM_STRING text);
-	void print_text(int typeface, int size, VM_STRING text, int cursor_x, int cursor_y);
-	void print_text_centre(int typeface, int size, VM_STRING text, int cursor_x, int cursor_y);
-	void print_text_right(int typeface, int size, VM_STRING text, int cursor_x, int cursor_y);
-	int string_width(int typeface, int size, VM_STRING text);
-	void set_margin(int margin);
-	void cursor_on() {
-		cursor_enabled = true; last_cursor_blink = std::chrono::high_resolution_clock::now();
-	}
-	void cursor_off() { cursor_enabled = false; }
-	bool is_cursor_enabled() { return cursor_enabled; }
-	void draw_cursor();
-	void undraw_cursor();
 
 	// Sprites
 	VM_INT create_sprite(VM_INT w, VM_INT h, VM_INT banks);
@@ -156,17 +132,12 @@ public:
 
 	Colour current_colour = Colour(255, 255, 255);
 	Colour current_bg_colour = Colour(0, 0, 0);
-
 private:
 	std::chrono::high_resolution_clock::time_point last_render;
 	bool showfps = false;
 	int fps_count = 0;
-	int margin = 0;
 	std::string fps_text = "0 FPS";
 	VM_INT fps_clock = get_clock();
-	std::chrono::high_resolution_clock::time_point last_cursor_blink;
-	bool cursor_enabled = false;
-	bool blink_state = true;
 	std::map<VM_INT, Sprite> sprites;
 	size_t bank_width, bank_height;
 	size_t bank_x1, bank_y1, bank_x2, bank_y2;
@@ -195,5 +166,4 @@ private:
 	Mode mode;
 	int screen_width, screen_height;
 	int minX, maxX, minY, maxY;
-	int last_cursor_x = 0, last_cursor_y = 0;
 };

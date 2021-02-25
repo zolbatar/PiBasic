@@ -14,7 +14,7 @@ void Debugger::debugger_variables()
     while (true) {
         if (rerender) {
             debugger_options(1, 1);
-            g_env.graphics.print_text(disassembly_font, disassembly_font_size, "\r\r", -1, -1);
+            g_env.text.print_text(disassembly_font, disassembly_font_size, "\r\r", -1, -1);
 
             // Count number of ACTUAL local and variables (not just constants)
             std::vector<Boxed*> dis_globals;
@@ -32,14 +32,14 @@ void Debugger::debugger_variables()
 
             // Show number of variables
             g_env.graphics.colour(128, 128, 128);
-            g_env.graphics.print_text(disassembly_font, disassembly_font_size, "Globals : ", -1, -1);
+            g_env.text.print_text(disassembly_font, disassembly_font_size, "Globals : ", -1, -1);
             g_env.graphics.colour(255, 255, 255);
-            g_env.graphics.print_text(disassembly_font, disassembly_font_size, std::to_string(dis_globals.size()), -1, -1);
+            g_env.text.print_text(disassembly_font, disassembly_font_size, std::to_string(dis_globals.size()), -1, -1);
             g_env.graphics.colour(128, 128, 128);
-            g_env.graphics.print_text(disassembly_font, disassembly_font_size, ", Locals: ", -1, -1);
+            g_env.text.print_text(disassembly_font, disassembly_font_size, ", Locals: ", -1, -1);
             g_env.graphics.colour(255, 255, 255);
-            g_env.graphics.print_text(disassembly_font, disassembly_font_size, std::to_string(dis_locals.size()), -1, -1);
-            g_env.graphics.print_text(disassembly_font, disassembly_font_size, "\r\r", -1, -1);
+            g_env.text.print_text(disassembly_font, disassembly_font_size, std::to_string(dis_locals.size()), -1, -1);
+            g_env.text.print_text(disassembly_font, disassembly_font_size, "\r\r", -1, -1);
 
             // How many to skip
             int skip = (selected / debugger_lines) * debugger_lines;
@@ -67,82 +67,82 @@ void Debugger::debugger_variables()
                 if (v != nullptr && skip <= 0) {
                     if (index == selected) {
                         g_env.graphics.colour(255, 255, 0);
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, "-> ", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, "-> ", -1, -1);
                     } else {
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, "   ", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, "   ", -1, -1);
                     }
 
                     // G or L
                     g_env.graphics.colour(255, 0, 0);
-                    g_env.graphics.print_text(disassembly_font, disassembly_font_size, on_local ? "L " : "G ", -1, -1);
+                    g_env.text.print_text(disassembly_font, disassembly_font_size, on_local ? "L " : "G ", -1, -1);
 
                     // Type
                     g_env.graphics.colour(0, 255, 0);
                     switch (v->get_type()) {
                     case Type::INTEGER:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, "INTEGER       ", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, "INTEGER       ", -1, -1);
                         break;
                     case Type::FLOAT:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, "REAL          ", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, "REAL          ", -1, -1);
                         break;
                     case Type::STRING:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, "STRING        ", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, "STRING        ", -1, -1);
                         break;
                     case Type::INTEGER_ARRAY:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, "INTEGER ARRAY ", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, "INTEGER ARRAY ", -1, -1);
                         break;
                     case Type::FLOAT_ARRAY:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, "READ ARRAY    ", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, "READ ARRAY    ", -1, -1);
                         break;
                     case Type::STRING_ARRAY:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, "STRING ARRAY  ", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, "STRING ARRAY  ", -1, -1);
                         break;
                     case Type::TYPE:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, "TYPE          ", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, "TYPE          ", -1, -1);
                         break;
                     case Type::TYPE_ARRAY:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, "TYPE ARRAY    ", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, "TYPE ARRAY    ", -1, -1);
                         break;
                     }
 
                     // Name
                     g_env.graphics.colour(0, 0, 255);
-                    g_env.graphics.print_text(disassembly_font, disassembly_font_size, v->get_name(), -1, -1);
+                    g_env.text.print_text(disassembly_font, disassembly_font_size, v->get_name(), -1, -1);
                     int a = 25 - static_cast<int>(v->get_name().length());
                     for (int i = 0; i < a; i++) {
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, " ", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, " ", -1, -1);
                     }
 
                     // Value
                     g_env.graphics.colour(255, 255, 255);
                     switch (v->get_type()) {
                     case Type::INTEGER:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, std::to_string(v->get_integer()), -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, std::to_string(v->get_integer()), -1, -1);
                         break;
                     case Type::FLOAT:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, std::to_string(v->get_float()), -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, std::to_string(v->get_float()), -1, -1);
                         break;
                     case Type::STRING:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, v->get_string(), -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, v->get_string(), -1, -1);
                         break;
                     case Type::INTEGER_ARRAY:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, std::to_string(v->get_integer_array_size()) + " entries", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, std::to_string(v->get_integer_array_size()) + " entries", -1, -1);
                         break;
                     case Type::FLOAT_ARRAY:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, std::to_string(v->get_float_array_size()) + " entries", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, std::to_string(v->get_float_array_size()) + " entries", -1, -1);
                         break;
                     case Type::STRING_ARRAY:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, std::to_string(v->get_string_array_size()) + " entries", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, std::to_string(v->get_string_array_size()) + " entries", -1, -1);
                         break;
                     case Type::TYPE:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, "** TYPE VALUE **", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, "** TYPE VALUE **", -1, -1);
                         break;
                     case Type::TYPE_ARRAY:
-                        g_env.graphics.print_text(disassembly_font, disassembly_font_size, "** TYPE ARRAY **", -1, -1);
+                        g_env.text.print_text(disassembly_font, disassembly_font_size, "** TYPE ARRAY **", -1, -1);
                         break;
                     }
 
-                    g_env.graphics.print_text(disassembly_font, disassembly_font_size, "\r", -1, -1);
+                    g_env.text.print_text(disassembly_font, disassembly_font_size, "\r", -1, -1);
                     shown++;
                 }
                 index++;

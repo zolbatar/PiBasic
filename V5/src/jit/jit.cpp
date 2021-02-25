@@ -61,10 +61,10 @@ bool JIT::compiler() {
 	if (err) {
 		switch (err) {
 		case asmjit::kErrorNoCodeGenerated:
-			g_env.graphics.print_console("Native compile error: No code generated\r");
+			g_env.text.print_console("Native compile error: No code generated\r");
 			break;
 		default:
-			g_env.graphics.print_console("Native compile error: " + std::to_string(err) + "\r");
+			g_env.text.print_console("Native compile error: " + std::to_string(err) + "\r");
 			break;
 		}
 		return false;
@@ -75,7 +75,7 @@ bool JIT::compiler() {
 		fn();
 	}
 	catch (const std::exception& ex) {
-		g_env.graphics.print_console(ex.what());
+		g_env.text.print_console(ex.what());
 		return false;
 	}
 
@@ -152,7 +152,7 @@ bool JIT::process_bytecodes(asmjit::x86::Compiler* cc, JITContext* jc) {
 			break;
 
 		default:
-			g_env.graphics.print_console("Native compiler: Unknown bytecode\r");
+			g_env.text.print_console("Native compiler: Unknown bytecode\r");
 			return false;
 		}
 	}

@@ -35,10 +35,6 @@ public:
     BytecodeContainer& helper_bytecodes() { return bc_container; }
     Stack& helper_stack() { return stack; }
 
-    // Files
-    std::vector<std::string> get_filenames() { return files; }
-    void add_filename(std::string filename) { files.push_back(filename); }
-
 private:
     Variables variables;
     Stack stack;
@@ -53,12 +49,12 @@ private:
     void error(std::string err)
     {
         auto flp = file_and_line_lookup(bc.line_number);
-        throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, err);
+        throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.line_number, bc.char_position, err);
     }
     void opcode_type_error()
     {
         auto flp = file_and_line_lookup(bc.line_number);
-        throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, "Invalid type for opcode");
+        throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.line_number, bc.char_position, "Invalid type for opcode");
     }
 
     std::stack<UINT32> repeats; // Repeat addresses

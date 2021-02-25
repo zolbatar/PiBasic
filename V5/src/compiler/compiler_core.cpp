@@ -17,7 +17,7 @@ Compiler::Compiler()
     setup_3d_types();
 }
 
-void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filename)
+void Compiler::compile(VM* vm, DARICParser::ProgContext* tree)
 {
     using namespace std::chrono;
 

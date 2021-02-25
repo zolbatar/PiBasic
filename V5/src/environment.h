@@ -2,6 +2,7 @@
 #include "graphics/graphics.h"
 #include "fonts/fonts.h"
 #include "input/input.h"
+#include "text/text.h"
 #include <memory>
 #include <string>
 
@@ -14,6 +15,7 @@ public:
 	Graphics graphics;
 	Fonts fonts;
 	Input input;
+	Text text;
 	bool debugger_requested = false;
 	bool interactive;
 

@@ -68,19 +68,19 @@ VM_STRING Input::input()
 			switch (c) {
 			case 8:
 				if (out.length() >= 1) {
-					g_env.graphics.delete_character(console_font, console_font_size);
+					g_env.text.delete_character(console_font, console_font_size);
 					out.pop_back();
 				}
 				break;
 			case 13:
-				g_env.graphics.print_text(console_font, console_font_size, "\r", -1, -1);
+				g_env.text.print_text(console_font, console_font_size, "\r", -1, -1);
 				return out;
 			}
 		}
 		else {
 			auto t = VM_STRING(1, cc);
 			out += t;
-			g_env.graphics.print_text(console_font, console_font_size, t, -1, -1);
+			g_env.text.print_text(console_font, console_font_size, t, -1, -1);
 		}
 	}
 }

@@ -21,7 +21,7 @@ public:
     void error(std::string err, Bytecode& bc)
     {
         auto flp = file_and_line_lookup(bc.line_number);
-        throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.char_position, err);
+        throw DARICException(ErrorLocation::RUNTIME, flp.filename, flp.line, bc.line_number, bc.char_position, err);
     }
 
     Boxed* get_variable(Bytecode& bc)

@@ -65,7 +65,7 @@ public:
 class Compiler : public DARICVisitor {
 public:
     Compiler();
-    void compile(VM* vm, DARICParser::ProgContext* tree, std::string filename);
+    void compile(VM* vm, DARICParser::ProgContext* tree);
 
 private:
     friend class Typelist;
@@ -211,7 +211,7 @@ private:
     void error(std::string msg)
     {
         auto flp = file_and_line_lookup(line_number);
-        throw DARICException(ErrorLocation::COMPILER, flp.filename, flp.line, char_position, msg);
+        throw DARICException(ErrorLocation::COMPILER, flp.filename, flp.line, line_number, char_position, msg);
     }
 
 protected:
