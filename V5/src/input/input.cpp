@@ -1,19 +1,13 @@
 #include "../environment.h"
 #include "../libs/clock.h"
 #include "../debugger/debugger.h"
-#include "graphics.h"
+#include "input.h"
 #include <iostream>
 #include <chrono>
 
 extern Environment g_env;
 
-void Graphics::poll()
-{
-	flip(false);
-	if (g_env.debugger_requested) {
-		g_env.debugger_requested = false;
-		Debugger();
-	}
+void Input::poll() {
 #ifdef RISCOS
 #else
 	SDL_Event event;
@@ -62,49 +56,9 @@ void Graphics::poll()
 		}
 	}
 #endif
-
-	// Cursor blink?
-#ifdef WINDOWS
-	if (cursor_enabled) {
-		auto t = std::chrono::high_resolution_clock::now();
-		auto time_span = std::chrono::duration_cast<std::chrono::milliseconds>(t - last_cursor_blink);
-		if (time_span.count() > CURSOR_BLINK_TIME) {
-			last_cursor_blink = t;
-
-			// Blink on or off?
-			if (!blink_state) {
-				draw_cursor();
-			}
-			else {
-				undraw_cursor();
-			}
-			blink_state = !blink_state;
-		}
-	}
-#endif
 }
 
-void Graphics::draw_cursor() {
-	if (!is_banked()) {
-		auto font_row_height = fonts.get_font_height(console_font, console_font_size);
-		auto saved_colour = g_env.graphics.current_colour;
-		current_colour = Colour(255, 255, 255);
-		auto f = fonts.get_glyph_x(console_font, console_font_size, ' ');
-		rectangle(get_cursor_x(), get_cursor_y(), get_cursor_x() + f->sc_width, get_cursor_y() + font_row_height);
-		g_env.graphics.current_colour = saved_colour;
-	}
-}
-
-void Graphics::undraw_cursor() {
-	auto font_row_height = fonts.get_font_height(console_font, console_font_size);
-	auto saved_colour = g_env.graphics.current_colour;
-	current_colour = current_bg_colour;
-	auto f = fonts.get_glyph_x(console_font, console_font_size, ' ');
-	rectangle(get_cursor_x(), get_cursor_y(), get_cursor_x() + f->sc_width, get_cursor_y() + font_row_height);
-	g_env.graphics.current_colour = saved_colour;
-}
-
-VM_STRING Graphics::input()
+VM_STRING Input::input()
 {
 	VM_STRING out;
 	while (true) {
@@ -114,24 +68,24 @@ VM_STRING Graphics::input()
 			switch (c) {
 			case 8:
 				if (out.length() >= 1) {
-					delete_character(console_font, console_font_size);
+					g_env.graphics.delete_character(console_font, console_font_size);
 					out.pop_back();
 				}
 				break;
 			case 13:
-				print_text(console_font, console_font_size, "\r", -1, -1);
+				g_env.graphics.print_text(console_font, console_font_size, "\r", -1, -1);
 				return out;
 			}
 		}
 		else {
 			auto t = VM_STRING(1, cc);
 			out += t;
-			print_text(console_font, console_font_size, t, -1, -1);
+			g_env.graphics.print_text(console_font, console_font_size, t, -1, -1);
 		}
 	}
 }
 
-void Graphics::mouse(VM_INT* x, VM_INT* y, VM_INT* state)
+void Input::mouse(VM_INT* x, VM_INT* y, VM_INT* state)
 {
 #ifdef RISCOS
 	_kernel_swi_regs regs;
@@ -154,7 +108,7 @@ void Graphics::mouse(VM_INT* x, VM_INT* y, VM_INT* state)
 #endif
 }
 
-void Graphics::RISCOS_debugger_key_check()
+void Input::RISCOS_debugger_key_check()
 {
 #ifdef RISCOS
 	if (debugger_open)
@@ -180,7 +134,7 @@ void Graphics::RISCOS_debugger_key_check()
 #endif
 }
 
-VM_INT Graphics::get()
+VM_INT Input::get()
 {
 #ifdef RISCOS
 	_kernel_swi_regs regs;
@@ -191,7 +145,7 @@ VM_INT Graphics::get()
 	SDL_StartTextInput();
 	while (1) {
 		while (key_events.empty()) {
-			poll();
+			g_env.graphics.poll();
 		}
 		auto s = key_events.front();
 		key_events.pop();
@@ -203,7 +157,7 @@ VM_INT Graphics::get()
 #endif
 }
 
-VM_STRING Graphics::gets()
+VM_STRING Input::gets()
 {
 #ifdef RISCOS
 	_kernel_swi_regs regs;
@@ -214,8 +168,8 @@ VM_STRING Graphics::gets()
 	SDL_StartTextInput();
 	while (1) {
 		while (key_events.empty()) {
-			poll();
-			if (g_env.interactive && g_env.graphics.inkey(-113)) {
+			g_env.graphics.poll();
+			if (g_env.interactive && inkey(-113)) {
 				return "";
 			}
 		}
@@ -229,7 +183,7 @@ VM_STRING Graphics::gets()
 #endif
 }
 
-VM_INT Graphics::inkey(VM_INT timeout_or_keycode)
+VM_INT Input::inkey(VM_INT timeout_or_keycode)
 {
 	if (timeout_or_keycode <= -1) {
 #ifdef RISCOS
@@ -256,7 +210,7 @@ VM_INT Graphics::inkey(VM_INT timeout_or_keycode)
 		SDL_StartTextInput();
 		VM_INT clock = get_clock();
 		do {
-			if (g_env.interactive && g_env.graphics.inkey(-113)) {
+			if (g_env.interactive && inkey(-113)) {
 				return -1;
 			}
 
@@ -271,21 +225,21 @@ VM_INT Graphics::inkey(VM_INT timeout_or_keycode)
 			}
 
 			// If nothing, poll
-			poll();
+			g_env.graphics.poll();
 		} while (get_clock() - clock < timeout_or_keycode);
 		return -1;
 #endif
 	}
 }
 
-VM_STRING Graphics::inkeys(VM_INT timeout_or_keycode)
+VM_STRING Input::inkeys(VM_INT timeout_or_keycode)
 {
 	auto c = inkey(timeout_or_keycode);
 	return VM_STRING(1, static_cast<char>(c));
 }
 
 #ifndef RISCOS
-int Graphics::key_riscos_translate(SDL_Keysym key)
+int Input::key_riscos_translate(SDL_Keysym key)
 {
 	switch (key.scancode) {
 		// Top row

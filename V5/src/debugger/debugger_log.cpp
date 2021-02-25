@@ -10,7 +10,7 @@ void Debugger::debugger_log()
             debugger_options(2, 1);
             g_env.graphics.print_text(disassembly_font, disassembly_font_size, "\r\r", -1, -1);
 
-            int chars = g_env.graphics.helper_fonts().max_horz_chars(disassembly_font, disassembly_font_size, g_env.graphics.get_screen_width());
+            int chars = g_env.fonts.max_horz_chars(disassembly_font, disassembly_font_size, g_env.graphics.get_screen_width());
             for (UINT32 i = 0; i < log_lines; i++) {
                 auto index = i + pos;
                 if (index < g_env.log_list.size()) {
@@ -29,21 +29,21 @@ void Debugger::debugger_log()
         }
 
         g_env.graphics.poll();
-        if (g_env.graphics.inkey(-17)) {
+        if (g_env.input.inkey(-17)) {
             exit(0);
-        } else if (g_env.graphics.inkey(-64)) {
-            while (g_env.graphics.inkey(-64))
+        } else if (g_env.input.inkey(-64)) {
+            while (g_env.input.inkey(-64))
                 g_env.graphics.poll();
             if (pos >= log_lines) {
                 pos -= log_lines;
             }
             rerender = true;
-        } else if (g_env.graphics.inkey(-79)) {
-            while (g_env.graphics.inkey(-79))
+        } else if (g_env.input.inkey(-79)) {
+            while (g_env.input.inkey(-79))
                 g_env.graphics.poll();
             pos += log_lines;
             rerender = true;
-        } else if (g_env.graphics.inkey(-114) || g_env.graphics.inkey(-115) || g_env.graphics.inkey(-31) || g_env.graphics.inkey(-120)) {
+        } else if (g_env.input.inkey(-114) || g_env.input.inkey(-115) || g_env.input.inkey(-31) || g_env.input.inkey(-120)) {
             return;
         }
     }

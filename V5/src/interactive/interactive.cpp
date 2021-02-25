@@ -113,7 +113,7 @@ void Interactive::run()
 
 		// Take each line in time and process it
 		g_env.graphics.print_console("> ");
-		auto s = g_env.graphics.input();
+		auto s = g_env.input.input();
 
 		// Trim spaces
 		trim(s);
@@ -153,8 +153,8 @@ void Interactive::run()
 					stream << (*it).second << "\r";
 					g_env.graphics.print_console(stream.str());
 					g_env.graphics.poll();
-					if (g_env.graphics.inkey(-4)) {
-						while (g_env.graphics.inkey(-4)) {
+					if (g_env.input.inkey(-4)) {
+						while (g_env.input.inkey(-4)) {
 							g_env.graphics.poll();
 						}
 					}

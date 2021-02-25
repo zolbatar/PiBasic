@@ -15,7 +15,6 @@
 #include <memory>
 #include <queue>
 #include <vector>
-#include "fonts.h"
 #include "colour.h"
 #include "sprite.h"
 
@@ -93,16 +92,6 @@ public:
 	void show_fps() { showfps = true; }
 	void cache();
 	void restore();
-#ifndef RISCOS
-	int key_riscos_translate(SDL_Keysym key);
-#endif
-	void RISCOS_debugger_key_check();
-	VM_STRING input();
-	VM_INT inkey(VM_INT timeout_or_keycode);
-	VM_STRING inkeys(VM_INT timeout_or_keycode);
-	VM_INT get();
-	VM_STRING gets();
-	void mouse(VM_INT* x, VM_INT* y, VM_INT* state);
 	UINT32 get_screen_width();
 	UINT32 get_screen_height();
 	UINT32 get_actual_width() { return screen_width; }
@@ -111,7 +100,6 @@ public:
 	void show_cursors();
 
 	// Text stuff
-	Fonts& helper_fonts() { return fonts; }
 	void scroll(VM_INT font_row_height, int* cursor_x, int* cursor_y);
 	int get_cursor_x() { return last_cursor_x; }
 	int get_cursor_y() { return last_cursor_y; }
@@ -171,15 +159,11 @@ public:
 
 private:
 	std::chrono::high_resolution_clock::time_point last_render;
-	std::queue<Event> key_events;
-	std::queue<Event> mouse_events;
-	Fonts fonts;
 	bool showfps = false;
 	int fps_count = 0;
 	int margin = 0;
 	std::string fps_text = "0 FPS";
 	VM_INT fps_clock = get_clock();
-	std::array<bool, 256> key_pressed;
 	std::chrono::high_resolution_clock::time_point last_cursor_blink;
 	bool cursor_enabled = false;
 	bool blink_state = true;

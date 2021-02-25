@@ -21,7 +21,7 @@ Debugger::Debugger()
 
     // Wait until not pressed
     if (!breakpoint) {
-        while (g_env.graphics.inkey(-31)) {
+        while (g_env.input.inkey(-31)) {
             g_env.graphics.poll();
         }
     }
@@ -36,27 +36,27 @@ Debugger::Debugger()
     debugger_options(-1, 0);
     while (true) {
         g_env.graphics.poll();
-        if (g_env.graphics.inkey(-17)) {
+        if (g_env.input.inkey(-17)) {
             exit(0);
-        } else if (breakpoint || g_env.graphics.inkey(-114)) {
+        } else if (breakpoint || g_env.input.inkey(-114)) {
             breakpoint = false;
             // F1
             debugger_disassembly();
-        } else if (g_env.graphics.inkey(-115)) {
+        } else if (g_env.input.inkey(-115)) {
             // F2
             debugger_variables();
-        } else if (g_env.graphics.inkey(-116)) {
+        } else if (g_env.input.inkey(-116)) {
             // F3
             debugger_log();
-        } else if (g_env.graphics.inkey(-120)) {
+        } else if (g_env.input.inkey(-120)) {
             // F9
             debugger_manual();
-        } else if (g_env.graphics.inkey(-31)) {
+        } else if (g_env.input.inkey(-31)) {
             // F10
             g_env.graphics.restore();
 
             // Wait until not pressed
-            while (g_env.graphics.inkey(-31)) {
+            while (g_env.input.inkey(-31)) {
                 g_env.graphics.poll();
             }
 
@@ -69,7 +69,7 @@ Debugger::Debugger()
                 g_env.graphics.cursor_on();
             }
             return;
-        } else if (g_env.graphics.inkey(-117)) {
+        } else if (g_env.input.inkey(-117)) {
             // F5
         }
     }

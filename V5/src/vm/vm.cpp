@@ -464,7 +464,7 @@ void VM::opcode_INPUT()
 	if (qmark) {
 		g_env.graphics.print_text(console_font, console_font_size, "?", -1, -1);
 	}
-	auto s = g_env.graphics.input();
+	auto s = g_env.input.input();
 	switch (bc.type) {
 	case Type::INTEGER: {
 		int v = std::stoi(s);
@@ -2426,7 +2426,7 @@ void VM::opcode_SCREENHEIGHT()
 void VM::opcode_LOADTYPEFACE()
 {
 	VM_STRING v = stack.pop_string(bc);
-	VM_INT id = g_env.graphics.helper_fonts().load_typeface(v.c_str());
+	VM_INT id = g_env.fonts.load_typeface(v.c_str());
 	stack.push_int(id);
 	if (!performance_build && runtime_debug)
 		g_env.log("Loaded typeface '" + v + "', returned ID is " + std::to_string(id));
@@ -2762,26 +2762,26 @@ void VM::opcode_TRIANGLESHADED()
 void VM::opcode_INKEY()
 {
 	VM_INT timeout = stack.pop_int(bc);
-	VM_INT v = g_env.graphics.inkey(timeout);
+	VM_INT v = g_env.input.inkey(timeout);
 	stack.push_int(v);
 }
 
 void VM::opcode_INKEYS()
 {
 	VM_INT timeout = stack.pop_int(bc);
-	VM_STRING v = g_env.graphics.inkeys(timeout);
+	VM_STRING v = g_env.input.inkeys(timeout);
 	stack.push_string(v);
 }
 
 void VM::opcode_GET()
 {
-	VM_INT v = g_env.graphics.get();
+	VM_INT v = g_env.input.get();
 	stack.push_int(v);
 }
 
 void VM::opcode_GETS()
 {
-	VM_STRING v = g_env.graphics.gets();
+	VM_STRING v = g_env.input.gets();
 	stack.push_string(v);
 }
 
@@ -2799,7 +2799,7 @@ void VM::opcode_MOUSE()
 	}
 
 	VM_INT x, y, state;
-	g_env.graphics.mouse(&x, &y, &state);
+	g_env.input.mouse(&x, &y, &state);
 	var1->set_integer(x);
 	var2->set_integer(y);
 	var3->set_integer(state);
@@ -2824,7 +2824,7 @@ std::string VM::run()
 			poll_count++;
 			if (poll_count % 64 == 0) {
 				g_env.graphics.poll();
-				if (g_env.interactive && g_env.graphics.inkey(-113)) {
+				if (g_env.interactive && g_env.input.inkey(-113)) {
 					// Are we in BANKED mode?
 					if (g_env.graphics.is_banked()) {
 						g_env.graphics.open(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height(), Mode::CLASSIC, g_env.cwd);

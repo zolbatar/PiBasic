@@ -1,5 +1,7 @@
 #pragma once
 #include "graphics/graphics.h"
+#include "fonts/fonts.h"
+#include "input/input.h"
 #include <memory>
 #include <string>
 
@@ -10,6 +12,8 @@ public:
 	std::vector<std::string> log_list; // Runtime log
 	std::string sol;
 	Graphics graphics;
+	Fonts fonts;
+	Input input;
 	bool debugger_requested = false;
 	bool interactive;
 

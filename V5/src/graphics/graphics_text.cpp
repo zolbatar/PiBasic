@@ -1,9 +1,12 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "graphics.h"
+#include "../environment.h"
 #include <iostream>
 #include <map>
 #include <stdio.h>
 #include <stdlib.h>
+
+extern Environment g_env;
 
 void Graphics::scroll(VM_INT font_row_height, int* cursor_x, int* cursor_y) {
 #ifdef RISCOS
@@ -42,7 +45,7 @@ void Graphics::scroll(VM_INT font_row_height, int* cursor_x, int* cursor_y) {
 
 void Graphics::print_character(int typeface, int size, char c, int* cursor_x, int* cursor_y)
 {
-	auto font_row_height = fonts.get_font_height(typeface, size);
+	auto font_row_height = g_env.fonts.get_font_height(typeface, size);
 
 	// End of page, need to scroll?
 	while (*cursor_y + font_row_height >= screen_height) {
@@ -59,7 +62,7 @@ void Graphics::print_character(int typeface, int size, char c, int* cursor_x, in
 		*cursor_x = 0;
 		return;
 	}
-	auto f = fonts.get_glyph_x(typeface, size, c);
+	auto f = g_env.fonts.get_glyph_x(typeface, size, c);
 	if (f->bitmap != NULL) {
 		auto saved_colour = current_colour;
 		for (int j = 0; j < f->height; ++j) {
@@ -101,8 +104,8 @@ void Graphics::print_console(VM_STRING text)
 
 void Graphics::cursor_back(int typeface, int size)
 {
-	auto f = fonts.get_glyph_x(typeface, size, ' ');
-	auto font_row_height = fonts.get_font_height(console_font, console_font_size);
+	auto f = g_env.fonts.get_glyph_x(typeface, size, ' ');
+	auto font_row_height = g_env.fonts.get_font_height(console_font, console_font_size);
 	last_cursor_x -= f->sc_width;
 	if (last_cursor_x < 0) {
 		auto max_chars = (screen_width - (margin * 2)) / f->sc_width;
@@ -116,9 +119,9 @@ void Graphics::delete_character(int typeface, int size)
 	if (cursor_enabled && blink_state) {
 		undraw_cursor();
 	}
-	auto f = fonts.get_glyph_x(typeface, size, ' ');
+	auto f = g_env.fonts.get_glyph_x(typeface, size, ' ');
 	last_cursor_x -= f->sc_width;
-	auto font_row_height = fonts.get_font_height(console_font, console_font_size);
+	auto font_row_height = g_env.fonts.get_font_height(console_font, console_font_size);
 	if (last_cursor_x < 0) {
 		auto max_chars = (screen_width - (margin * 2)) / f->sc_width;
 		last_cursor_x = (max_chars - 1) * f->sc_width;
@@ -196,7 +199,7 @@ int Graphics::string_width(int typeface, int size, VM_STRING text)
 	int w = 0;
 	for (auto it = text.begin(); it != text.end(); ++it) {
 		auto ch = (*it);
-		auto f = fonts.get_glyph_x(typeface, size, ch);
+		auto f = g_env.fonts.get_glyph_x(typeface, size, ch);
 		w += f->sc_width;
 	}
 	return w;

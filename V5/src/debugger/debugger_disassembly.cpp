@@ -86,38 +86,38 @@ void Debugger::debugger_disassembly()
 		}
 
 		g_env.graphics.poll();
-		if (g_env.graphics.inkey(-17)) {
+		if (g_env.input.inkey(-17)) {
 			exit(0);
 		}
-		else if (g_env.graphics.inkey(-58)) {
-			while (g_env.graphics.inkey(-58))
+		else if (g_env.input.inkey(-58)) {
+			while (g_env.input.inkey(-58))
 				g_env.graphics.poll();
 			if (pos > 0) {
 				pos--;
 			}
 			rerender = true;
 		}
-		else if (g_env.graphics.inkey(-42)) {
-			while (g_env.graphics.inkey(-42))
+		else if (g_env.input.inkey(-42)) {
+			while (g_env.input.inkey(-42))
 				g_env.graphics.poll();
 			pos++;
 			rerender = true;
 		}
-		else if (g_env.graphics.inkey(-64)) {
-			while (g_env.graphics.inkey(-64))
+		else if (g_env.input.inkey(-64)) {
+			while (g_env.input.inkey(-64))
 				g_env.graphics.poll();
 			if (pos >= debugger_lines) {
 				pos -= debugger_lines;
 			}
 			rerender = true;
 		}
-		else if (g_env.graphics.inkey(-79)) {
-			while (g_env.graphics.inkey(-79))
+		else if (g_env.input.inkey(-79)) {
+			while (g_env.input.inkey(-79))
 				g_env.graphics.poll();
 			pos += debugger_lines;
 			rerender = true;
 		}
-		else if (g_env.graphics.inkey(-115) || g_env.graphics.inkey(-116) || g_env.graphics.inkey(-31) || g_env.graphics.inkey(-120)) {
+		else if (g_env.input.inkey(-115) || g_env.input.inkey(-116) || g_env.input.inkey(-31) || g_env.input.inkey(-120)) {
 			return;
 		}
 		if (pos > g_vm->helper_bytecodes().get_size()) {

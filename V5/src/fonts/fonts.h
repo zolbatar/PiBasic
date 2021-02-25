@@ -7,7 +7,7 @@
 #include <map>
 
 const int console_font = 0;
-const int console_font_size = 20;
+const int console_font_size = 25;
 
 struct Glyph {
 	int width;

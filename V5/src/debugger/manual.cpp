@@ -187,23 +187,23 @@ void Debugger::debugger_manual()
 		}
 
 		g_env.graphics.poll();
-		if (g_env.graphics.inkey(-17)) {
+		if (g_env.input.inkey(-17)) {
 			exit(0);
 		}
-		else if (g_env.graphics.inkey(-58)) {
-			while (g_env.graphics.inkey(-58))
+		else if (g_env.input.inkey(-58)) {
+			while (g_env.input.inkey(-58))
 				g_env.graphics.poll();
 			selected--;
 			updated = true;
 		}
-		else if (g_env.graphics.inkey(-42)) {
-			while (g_env.graphics.inkey(-42))
+		else if (g_env.input.inkey(-42)) {
+			while (g_env.input.inkey(-42))
 				g_env.graphics.poll();
 			selected++;
 			updated = true;
 		}
-		else if (g_env.graphics.inkey(-64)) {
-			while (g_env.graphics.inkey(-64))
+		else if (g_env.input.inkey(-64)) {
+			while (g_env.input.inkey(-64))
 				g_env.graphics.poll();
 			if (selected_section > 0) {
 				selected_section--;
@@ -211,8 +211,8 @@ void Debugger::debugger_manual()
 				updated = true;
 			}
 		}
-		else if (g_env.graphics.inkey(-79)) {
-			while (g_env.graphics.inkey(-79))
+		else if (g_env.input.inkey(-79)) {
+			while (g_env.input.inkey(-79))
 				g_env.graphics.poll();
 			if (selected_section < (max_sections - 2)) {
 				selected_section++;
@@ -220,12 +220,12 @@ void Debugger::debugger_manual()
 				updated = true;
 			}
 		}
-		else if (g_env.graphics.inkey(-74)) {
+		else if (g_env.input.inkey(-74)) {
 			// RETURN
 			debugger_manual_keyword(selected_keyword);
 			updated = true;
 		}
-		else if (g_env.graphics.inkey(-114) || g_env.graphics.inkey(-115) || g_env.graphics.inkey(-116) || g_env.graphics.inkey(-31)) {
+		else if (g_env.input.inkey(-114) || g_env.input.inkey(-115) || g_env.input.inkey(-116) || g_env.input.inkey(-31)) {
 			g_env.graphics.restore();
 			return;
 		}
@@ -346,10 +346,10 @@ void Debugger::debugger_manual_keyword(std::string keyword)
 	while (true) {
 		g_env.graphics.poll();
 		g_env.graphics.set_margin(0);
-		if (g_env.graphics.inkey(-17)) {
+		if (g_env.input.inkey(-17)) {
 			exit(0);
 		}
-		else if (g_env.graphics.inkey(-99) || g_env.graphics.inkey(-114) || g_env.graphics.inkey(-115) || g_env.graphics.inkey(-31)) {
+		else if (g_env.input.inkey(-99) || g_env.input.inkey(-114) || g_env.input.inkey(-115) || g_env.input.inkey(-31)) {
 			return;
 		}
 	}

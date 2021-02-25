@@ -139,6 +139,18 @@
     <Filter Include="Resource Files\DaricOO">
       <UniqueIdentifier>{26f5f491-7d06-48c8-9320-2188333198dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{50f727bb-03ac-47bb-9b4f-8a66455946b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{7cb80ed6-c43d-4ce3-9e2f-f0ca63bbf51a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Fonts">
+      <UniqueIdentifier>{55433651-c5df-4ca3-a6a5-d1f80447776a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Fonts">
+      <UniqueIdentifier>{89ee2038-c822-41f9-ba3a-90eb7a6d60d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -154,9 +166,6 @@
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\graphics_clippedline.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\graphics\graphics_input.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\graphics_text.cpp">
@@ -954,11 +963,14 @@
     <ClCompile Include="..\src\exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\graphics\graphics_fonts.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\graphics\graphics_pixel.cpp">
       <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\input\input.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\fonts\fonts.cpp">
+      <Filter>Source Files\Fonts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -967,9 +979,6 @@
     </ClInclude>
     <ClInclude Include="..\src\libs\string.h">
       <Filter>Header Files\Libraries</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\graphics\stb_truetype.h">
-      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\graphics.h">
       <Filter>Header Files\Graphics</Filter>
@@ -1529,14 +1538,20 @@
     <ClInclude Include="..\src\parser\myparser.h">
       <Filter>Header Files\Parser</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\graphics\fonts.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\graphics\colour.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\sprite.h">
       <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\input\input.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\fonts\fonts.h">
+      <Filter>Header Files\Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\fonts\stb_truetype.h">
+      <Filter>Header Files\Fonts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
