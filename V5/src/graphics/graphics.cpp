@@ -62,7 +62,6 @@ void Graphics::init()
 		std::cout << "SDL initialization failed. SDL Error: " << SDL_GetError() << std::endl;
 	}
 #endif
-	init_text();
 }
 
 void Graphics::shutdown()
@@ -144,38 +143,11 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 	// Load standard fonts
 	if (!reinit) {
 		std::string fp = cwd + "/RobotoMono-Regular.ttf";
-		int index = load_font(fp.c_str());
-		create_font_by_size(index, 15);
-		create_font_by_size(index, 20);
-		create_font_by_size(index, 25);
-		create_font_by_size(index, 30);
-		create_font_by_size(index, 35);
-		create_font_by_size(index, 40);
-		create_font_by_size(index, 50);
-		create_font_by_size(index, 75);
-		create_font_by_size(index, 100);
+		fonts.load_typeface(fp.c_str());
 		fp = std::string(cwd) + "/Roboto-Regular.ttf";
-		index = load_font(fp.c_str());
-		create_font_by_size(index, 15);
-		create_font_by_size(index, 20);
-		create_font_by_size(index, 25);
-		create_font_by_size(index, 30);
-		create_font_by_size(index, 35);
-		create_font_by_size(index, 40);
-		create_font_by_size(index, 50);
-		create_font_by_size(index, 75);
-		create_font_by_size(index, 100);
+		fonts.load_typeface(fp.c_str());
 		fp = std::string(cwd) + "/RobotoSlab-Regular.ttf";
-		index = load_font(fp.c_str());
-		create_font_by_size(index, 15);
-		create_font_by_size(index, 20);
-		create_font_by_size(index, 25);
-		create_font_by_size(index, 30);
-		create_font_by_size(index, 35);
-		create_font_by_size(index, 40);
-		create_font_by_size(index, 50);
-		create_font_by_size(index, 75);
-		create_font_by_size(index, 100);
+		fonts.load_typeface(fp.c_str());
 	}
 
 #ifdef RISCOS
@@ -397,74 +369,6 @@ void Graphics::colour_bg_hex(UINT32 c)
 	current_bg_colour.set_rgb((c & 0xFF0000) >> 16, (c & 0xFF00) >> 8, (c & 0xFF));
 }
 
-void Graphics::plot(int x, int y)
-{
-	if (render_bank != nullptr) {
-		if (x < bank_x1 || x > bank_x2 || y < bank_y1 || y > bank_y2)
-			return;
-		auto yb = y - bank_y1;
-		auto xb = x - bank_x1;
-		auto loc = (yb * bank_width) + xb;
-		(*render_bank)[loc] = current_colour;
-	}
-	else {
-		if (x < minX || x > maxX || y < minY || y > maxY)
-			return;
-#ifdef RISCOS
-		UINT32* addr = get_bank_address();
-		int offset = line_address[y] + x;
-		addr[offset] = current_colour.get_hex();
-#else
-		SDL_LockSurface(screen);
-		auto pixels = (UINT32*)screen->pixels;
-		int offset = line_address[y] + x;
-		pixels[offset] = current_colour.get_hex();
-		SDL_UnlockSurface(screen);
-#endif
-	}
-}
-
-void Graphics::blit_fast(size_t count, std::vector<Colour>* source, size_t source_index, UINT32* dest) {
-	for (auto c = 0; c < count; c++) {
-		switch (raster_mode) {
-		case RasterMode::BLIT:
-			dest[c] = (*source)[source_index + c].get_hex();
-			break;
-		case RasterMode::BLEND: {
-			auto col = (*source)[source_index + c].get_hex();
-			if (col != 0) {
-				dest[c] = col;
-			}
-			break;
-		}
-		}
-	}
-}
-
-VM_INT Graphics::point(int x, int y)
-{
-	if (x < minX || x > maxX || y < minY || y > maxY)
-		return 0;
-#ifdef RISCOS
-	UINT32* addr = get_bank_address();
-	int offset = line_address[y] + x;
-
-	// Convert to RGB
-	auto v = addr[offset];
-	auto b = (v & 0xFF0000) >> 16;
-	auto g = (v & 0x00FF00) >> 8;
-	auto r = (v & 0x0000FF);
-	return (r << 16) + (g << 8) + b;
-#else
-	SDL_LockSurface(screen);
-	auto pixels = (UINT32*)screen->pixels;
-	int offset = line_address[y] + x;
-	VM_INT v = pixels[offset];
-	SDL_UnlockSurface(screen);
-	return v;
-#endif
-}
-
 void Graphics::cls()
 {
 #ifdef RISCOS
@@ -513,7 +417,7 @@ void Graphics::flip(bool user_specified)
 		}
 		auto saved_colour = current_colour;
 		colour_hex(0xFFFFFF);
-		print_text_right(4, fps_text, screen_width - 1, 0);
+		print_text_right(0, 20, fps_text, screen_width - 1, 0);
 		current_colour = saved_colour;
 	}
 #ifdef RISCOS

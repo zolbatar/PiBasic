@@ -462,7 +462,7 @@ void VM::opcode_INPUT()
 	auto var = variables.get_variable(bc);
 	VM_INT qmark = stack.pop_int(bc);
 	if (qmark) {
-		g_env.graphics.print_text(console_font, "?", -1, -1);
+		g_env.graphics.print_text(console_font, console_font_size, "?", -1, -1);
 	}
 	auto s = g_env.graphics.input();
 	switch (bc.type) {
@@ -591,7 +591,7 @@ void VM::opcode_PRINT_SPC()
 	for (int i = 0; i < v1; i++) {
 		v2 += " ";
 	}
-	g_env.graphics.print_text(0, v2, -1, -1);
+	g_env.graphics.print_text(console_font, console_font_size, v2, -1, -1);
 	if (!performance_build && runtime_debug)
 		g_env.log("Print " + std::to_string(v1) + " spaces");
 }
@@ -1954,7 +1954,7 @@ void VM::opcode_OPENIN()
 	}
 	else {
 		VM_INT r = channel_index++;
-		channels.insert(std::pair<VM_INT, FILE*>(r, file));
+		channels.insert(std::make_pair(r, file));
 		stack.push_int(r);
 		if (!performance_build && runtime_debug)
 			g_env.log("Open file for input '" + filename + "', channel# is " + std::to_string(r));
@@ -1970,7 +1970,7 @@ void VM::opcode_OPENOUT()
 	}
 	else {
 		VM_INT r = channel_index++;
-		channels.insert(std::pair<VM_INT, FILE*>(r, file));
+		channels.insert(std::make_pair(r, file));
 		stack.push_int(r);
 		if (!performance_build && runtime_debug)
 			g_env.log("Open file out '" + filename + "', channel# is " + std::to_string(r));
@@ -1986,7 +1986,7 @@ void VM::opcode_OPENUP()
 	}
 	else {
 		VM_INT r = channel_index++;
-		channels.insert(std::pair<VM_INT, FILE*>(r, file));
+		channels.insert(std::make_pair(r, file));
 		stack.push_int(r);
 		if (!performance_build && runtime_debug)
 			g_env.log("Open file for update '" + filename + "', channel# is " + std::to_string(r));
@@ -2000,7 +2000,7 @@ void VM::opcode_BGET()
 		error("Unknown channel #" + std::to_string(channel));
 	}
 	auto g = channels.find(channel);
-	char b = fgetc((*g).second);
+	char b = fgetc(g->second);
 	stack.push_int(static_cast<VM_INT>(b));
 	if (!performance_build && runtime_debug)
 		g_env.log("Read byte " + std::to_string(b) + " from channel# " + std::to_string(channel));
@@ -2013,7 +2013,7 @@ void VM::opcode_EOFH()
 		error("Unknown channel #" + std::to_string(channel));
 	}
 	auto g = channels.find(channel);
-	VM_INT eof = feof((*g).second);
+	VM_INT eof = feof(g->second);
 	stack.push_int(eof);
 	if (!performance_build && runtime_debug)
 		g_env.log("Eof check " + std::to_string(eof) + " on channel# " + std::to_string(channel));
@@ -2027,7 +2027,7 @@ void VM::opcode_BPUT()
 		error("Unknown channel #" + std::to_string(channel));
 	}
 	auto g = channels.find(channel);
-	fputc(byte, (*g).second);
+	fputc(byte, g->second);
 	if (!performance_build && runtime_debug)
 		g_env.log("Write byte " + std::to_string(byte) + " to channel#" + std::to_string(channel));
 }
@@ -2039,7 +2039,7 @@ void VM::opcode_PTR()
 	if (channels.count(channel) == 0) {
 		error("Unknown channel #" + std::to_string(channel));
 	}
-	auto pos = ftell((*g).second);
+	auto pos = ftell(g->second);
 	stack.push_int(pos);
 	if (!performance_build && runtime_debug)
 		g_env.log("Fetch position " + std::to_string(pos) + " of channel# " + std::to_string(channel));
@@ -2053,7 +2053,7 @@ void VM::opcode_PTRA()
 		error("Unknown channel #" + std::to_string(channel));
 	}
 	auto g = channels.find(channel);
-	fseek((*g).second, position, SEEK_SET);
+	fseek(g->second, position, SEEK_SET);
 	if (!performance_build && runtime_debug)
 		g_env.log("Set position " + std::to_string(position) + " of channel# " + std::to_string(channel));
 }
@@ -2065,7 +2065,7 @@ void VM::opcode_GETSH()
 	if (channels.count(channel) == 0) {
 		error("Unknown channel #" + std::to_string(channel));
 	}
-	auto ch = (*g).second;
+	auto ch = g->second;
 	VM_STRING out = "";
 	while (!feof(ch)) {
 		char b = fgetc(ch);
@@ -2088,7 +2088,7 @@ void VM::opcode_CLOSE()
 		error("Unknown channel #" + std::to_string(r));
 	}
 	auto g = channels.find(r);
-	fclose((*g).second);
+	fclose(g->second);
 	channels.erase(r);
 	if (!performance_build && runtime_debug)
 		g_env.log("Close file channel# is" + std::to_string(r));
@@ -2426,20 +2426,10 @@ void VM::opcode_SCREENHEIGHT()
 void VM::opcode_LOADTYPEFACE()
 {
 	VM_STRING v = stack.pop_string(bc);
-	VM_INT id = g_env.graphics.load_font(v.c_str());
+	VM_INT id = g_env.graphics.helper_fonts().load_typeface(v.c_str());
 	stack.push_int(id);
 	if (!performance_build && runtime_debug)
 		g_env.log("Loaded typeface '" + v + "', returned ID is " + std::to_string(id));
-}
-
-void VM::opcode_CREATEFONT()
-{
-	VM_INT size = stack.pop_int(bc);
-	VM_INT index = stack.pop_int(bc);
-	VM_INT id = g_env.graphics.create_font_by_size(index, size);
-	stack.push_int(id);
-	if (!performance_build && runtime_debug)
-		g_env.log("Create font " + std::to_string(index) + "/" + std::to_string(index) + ", returned ID is " + std::to_string(id));
 }
 
 void VM::opcode_TEXT()
@@ -2447,8 +2437,9 @@ void VM::opcode_TEXT()
 	VM_STRING text = stack.pop_string(bc);
 	VM_INT y = stack.pop_int(bc);
 	VM_INT x = stack.pop_int(bc);
+	VM_INT size = stack.pop_int(bc);
 	VM_INT index = stack.pop_int(bc);
-	g_env.graphics.print_text(index, text, x, y);
+	g_env.graphics.print_text(index, size, text, x, y);
 	if (!performance_build && runtime_debug)
 		g_env.log("Showing text '" + text + "', font ID " + std::to_string(index) + " at " + std::to_string(x) + "," + std::to_string(y));
 }
@@ -2458,8 +2449,9 @@ void VM::opcode_TEXTRIGHT()
 	VM_STRING text = stack.pop_string(bc);
 	VM_INT y = stack.pop_int(bc);
 	VM_INT x = stack.pop_int(bc);
+	VM_INT size = stack.pop_int(bc);
 	VM_INT index = stack.pop_int(bc);
-	g_env.graphics.print_text_right(index, text, x, y);
+	g_env.graphics.print_text_right(index, size, text, x, y);
 	if (!performance_build && runtime_debug)
 		g_env.log("Showing text '" + text + "', font ID " + std::to_string(index) + " at " + std::to_string(x) + "," + std::to_string(y));
 }
@@ -2469,8 +2461,9 @@ void VM::opcode_TEXTCENTRE()
 	VM_STRING text = stack.pop_string(bc);
 	VM_INT y = stack.pop_int(bc);
 	VM_INT x = stack.pop_int(bc);
+	VM_INT size = stack.pop_int(bc);
 	VM_INT index = stack.pop_int(bc);
-	g_env.graphics.print_text_centre(index, text, x, y);
+	g_env.graphics.print_text_centre(index, size, text, x, y);
 	if (!performance_build && runtime_debug)
 		g_env.log("Showing text '" + text + "', font ID " + std::to_string(index) + " at " + std::to_string(x) + "," + std::to_string(y));
 }
@@ -3190,9 +3183,6 @@ std::string VM::run()
 				break;
 			case Bytecodes::SCREENHEIGHT:
 				opcode_SCREENHEIGHT();
-				break;
-			case Bytecodes::CREATEFONT:
-				opcode_CREATEFONT();
 				break;
 			case Bytecodes::LOADTYPEFACE:
 				opcode_LOADTYPEFACE();

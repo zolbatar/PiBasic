@@ -16,7 +16,7 @@ std::string Debugger::get_name_for_operand(Bytecode& bc, UINT32 i)
         for (auto g = g_vm->functions.begin(); g != g_vm->functions.end(); ++g) {
             if (g->pc_start <= i && g->pc_end > i) {
                 auto id = bc.data ^ LocalVariableFlag;
-                return "Local variable: " + (*g).locals[id].get_name() + " (" + std::to_string(id) + ")";
+                return "Local variable: " + g->locals[id].get_name() + " (" + std::to_string(id) + ")";
             }
         }
     } else {
@@ -579,10 +579,6 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
     case Bytecodes::TEXTCENTRE:
         ret.opcode = "2D";
         ret.operand = "TEXT CENTRE";
-        break;
-    case Bytecodes::CREATEFONT:
-        ret.opcode = "2D";
-        ret.operand = "CREATE FONT";
         break;
     case Bytecodes::LOADTYPEFACE:
         ret.opcode = "2D";

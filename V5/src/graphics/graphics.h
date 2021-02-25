@@ -15,6 +15,9 @@
 #include <memory>
 #include <queue>
 #include <vector>
+#include "fonts.h"
+#include "colour.h"
+#include "sprite.h"
 
 typedef int OutCode;
 
@@ -35,64 +38,9 @@ enum class EventType {
 	Text
 };
 
-const int console_font = 2;
-
 enum class RasterMode {
 	BLIT,
 	BLEND
-};
-
-class Colour {
-public:
-	Colour()
-	{
-		r = 0;
-		g = 0;
-		b = 0;
-		encode_hex();
-	};
-	Colour(const Colour& c)
-		: r(c.r)
-		, g(c.g)
-		, b(c.b) {
-		encode_hex();
-	};
-	Colour(BYTE r, BYTE g, BYTE b)
-		: r(r)
-		, g(g)
-		, b(b) {
-		encode_hex();
-	};
-	UINT32 get_hex() { 
-		return encoded_hex; 
-	}
-	void set_rgb(BYTE r, BYTE g, BYTE b) {
-		this->r = r;
-		this->g = g;
-		this->b = b;
-		encode_hex();
-	}
-	BYTE get_r() { return r; }
-	BYTE get_g() { return g; }
-	BYTE get_b() { return b; }
-private:
-	BYTE r;
-	BYTE g;
-	BYTE b;
-	UINT32 encoded_hex;
-
-	void encode_hex() {
-#ifdef RISCOS
-		encoded_hex = (b << 16) + (g << 8) + r;
-#else
-		encoded_hex = (r << 16) + (g << 8) + b;
-#endif
-	}
-};
-
-struct Sprite {
-	size_t width, height;
-	std::vector<std::vector<Colour>> banks;
 };
 
 struct Event {
@@ -100,19 +48,6 @@ struct Event {
 	int key_code;
 	char ascii;
 };
-
-struct Font {
-	int width;
-	int height;
-	float scale;
-	int baseline;
-	unsigned char* bitmap;
-	int ix0, iy0, ix1, iy1;
-	int advance, lsb;
-	int sc_width;
-};
-
-const int CURSOR_BLINK_TIME = 250;
 
 class Graphics {
 public:
@@ -133,10 +68,8 @@ public:
 	~Graphics()
 	{
 		delete bank_cache;
-		delete_fonts();
 	}
 	void init();
-	void delete_fonts();
 	void shutdown();
 	void open(int width, int height, Mode mode, std::string& cwd);
 	void colour(BYTE r, BYTE g, BYTE b);
@@ -146,7 +79,7 @@ public:
 	void colour_bg_hex(UINT32 c);
 	void cls();
 	void plot(int x, int y);
-	void blit_fast(size_t count, std::vector<Colour>* source, size_t source_index, UINT32 *dest);
+	void blit_fast(size_t count, std::vector<Colour>* source, size_t source_index, UINT32* dest);
 	VM_INT point(int x, int y);
 	void flip(bool user_specified);
 	void poll();
@@ -178,23 +111,20 @@ public:
 	void show_cursors();
 
 	// Text stuff
-	void init_text();
-	VM_INT load_font(const char* filename);
-	VM_INT create_font_by_size(int index, int font_size);
-	Font* get_glyph(VM_INT index, VM_INT index_ff, BYTE ascii, VM_INT font_size);
+	Fonts& helper_fonts() { return fonts; }
+	void scroll(VM_INT font_row_height, int* cursor_x, int* cursor_y);
 	int get_cursor_x() { return last_cursor_x; }
 	int get_cursor_y() { return last_cursor_y; }
 	void set_cursor_x(int x) { last_cursor_x = x; }
 	void set_cursor_y(int y) { last_cursor_y = y; }
-	void cursor_back(int index_ff);
-	void delete_character(int index_ff);
-	void print_character(int index_ff, char c, int* cursor_x, int* cursor_y);
+	void cursor_back(int typeface, int size);
+	void delete_character(int typeface, int size);
+	void print_character(int typeface, int size, char c, int* cursor_x, int* cursor_y);
 	void print_console(VM_STRING text);
-	int max_horz_chars(int index_ff);
-	void print_text(int index_ff, VM_STRING text, int cursor_x, int cursor_y);
-	void print_text_centre(int index_ff, VM_STRING text, int cursor_x, int cursor_y);
-	void print_text_right(int index_ff, VM_STRING text, int cursor_x, int cursor_y);
-	int string_width(int index_ff, VM_STRING text);
+	void print_text(int typeface, int size, VM_STRING text, int cursor_x, int cursor_y);
+	void print_text_centre(int typeface, int size, VM_STRING text, int cursor_x, int cursor_y);
+	void print_text_right(int typeface, int size, VM_STRING text, int cursor_x, int cursor_y);
+	int string_width(int typeface, int size, VM_STRING text);
 	void set_margin(int margin);
 	void cursor_on() {
 		cursor_enabled = true; last_cursor_blink = std::chrono::high_resolution_clock::now();
@@ -243,10 +173,7 @@ private:
 	std::chrono::high_resolution_clock::time_point last_render;
 	std::queue<Event> key_events;
 	std::queue<Event> mouse_events;
-	std::map<VM_INT, Font> font_glyphs;
-	std::map<VM_INT, VM_INT> font_heights;
-	int font_face_index = 0;
-	int font_index = 0;
+	Fonts fonts;
 	bool showfps = false;
 	int fps_count = 0;
 	int margin = 0;

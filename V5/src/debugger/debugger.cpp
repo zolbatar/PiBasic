@@ -93,7 +93,7 @@ void Debugger::debugger_options(int selected, int open_mode)
         g_env.graphics.colour(10, 10, 10);
         g_env.graphics.rectangle(0, g_env.graphics.get_actual_height() - height - 1, g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height() - 1);
     }
-    g_env.graphics.print_text(console_font, "", 0, g_env.graphics.get_actual_height() - debugger_height + 3 - height);
+    g_env.graphics.print_text(console_font, console_font_size,"", 0, g_env.graphics.get_actual_height() - debugger_height + 3 - height);
     debugger_prompt("F1", "Disassembly", selected == 0);
     debugger_prompt("F2", "Variables", selected == 1);
     debugger_prompt("F3", "Trace Log", selected == 2);
@@ -110,13 +110,13 @@ void Debugger::debugger_prompt(std::string key, std::string function, bool activ
     } else {
         g_env.graphics.colour(160, 160, 0);
     }
-    g_env.graphics.print_text(menu_font, key, -1, -1);
-    g_env.graphics.print_text(menu_font, " ", -1, -1);
+    g_env.graphics.print_text(menu_font, menu_font_size,key, -1, -1);
+    g_env.graphics.print_text(menu_font, menu_font_size," ", -1, -1);
     if (active) {
         g_env.graphics.colour(255, 255, 255);
     } else {
         g_env.graphics.colour(160, 160, 160);
     }
-    g_env.graphics.print_text(menu_font, function, -1, -1);
-    g_env.graphics.print_text(menu_font, "    ", -1, -1);
+    g_env.graphics.print_text(menu_font, menu_font_size,function, -1, -1);
+    g_env.graphics.print_text(menu_font, menu_font_size,"    ", -1, -1);
 }

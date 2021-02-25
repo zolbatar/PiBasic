@@ -15,7 +15,7 @@ antlrcpp::Any Compiler::visitWhen(DARICParser::WhenContext* context)
         s.end_pc = 0;
         if (phase == CompilerPhase::COMPILE) {
             auto f = if_statements.find(start_pc);
-            s.end_pc = (*f).second.end_pc;
+            s.end_pc = f->second.end_pc;
         }
 
         // Duplicate expression on stack, then do compare
@@ -94,7 +94,7 @@ antlrcpp::Any Compiler::visitStmtCASE(DARICParser::StmtCASEContext* context)
     IfStatement s;
     if (phase == CompilerPhase::COMPILE) {
         auto f = if_statements.find(start_pc);
-        case_end_pc = (*f).second.end_pc;
+        case_end_pc = f->second.end_pc;
     }
 
     // Clear case condition
@@ -117,7 +117,7 @@ antlrcpp::Any Compiler::visitStmtCASE(DARICParser::StmtCASEContext* context)
         s_oth.end_pc = 0;
         if (phase == CompilerPhase::COMPILE) {
             auto f = if_statements.find(start_pc);
-            s_oth.end_pc = (*f).second.end_pc;
+            s_oth.end_pc = f->second.end_pc;
         }
 
         // We don't know the amount to jump ahead yet
@@ -158,8 +158,8 @@ antlrcpp::Any Compiler::visitStmtIF(DARICParser::StmtIFContext* context)
     s.false_pc = 0;
     if (phase == CompilerPhase::COMPILE) {
         auto f = if_statements.find(start_pc);
-        s.false_pc = (*f).second.false_pc;
-        s.end_pc = (*f).second.end_pc;
+        s.false_pc = f->second.false_pc;
+        s.end_pc = f->second.end_pc;
     }
 
     // Condition
@@ -204,8 +204,8 @@ antlrcpp::Any Compiler::visitStmtIFMultiline(DARICParser::StmtIFMultilineContext
     s.false_pc = 0;
     if (phase == CompilerPhase::COMPILE) {
         auto f = if_statements.find(start_pc);
-        s.false_pc = (*f).second.false_pc;
-        s.end_pc = (*f).second.end_pc;
+        s.false_pc = f->second.false_pc;
+        s.end_pc = f->second.end_pc;
     }
 
     // Condition

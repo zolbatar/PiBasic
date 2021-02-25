@@ -219,7 +219,7 @@ antlrcpp::Any Compiler::visitStmtWHILE(DARICParser::StmtWHILEContext* context)
     s.end_pc = 0;
     if (phase == CompilerPhase::COMPILE) {
         auto f = if_statements.find(start_pc);
-        s.end_pc = (*f).second.end_pc;
+        s.end_pc = f->second.end_pc;
     }
 
     // This is the condition

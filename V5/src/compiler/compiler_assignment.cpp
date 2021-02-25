@@ -134,7 +134,7 @@ void Compiler::save_to_variable(Type type, VarReference saved)
                 find_variable(false, true);
                 auto t = (*custom_types.find(current_var.custom_type_name)).second;
                 for (auto it = t.members.begin(); it != t.members.end(); ++it) {
-                    auto m = (*it).second;
+                    auto m = it->second;
                     switch (m.get_type()) {
                     case Type::INTEGER:
                         insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);

@@ -391,7 +391,9 @@
     <ClCompile Include="..\src\graphics\graphics_barycentric.cpp" />
     <ClCompile Include="..\src\graphics\graphics_circle.cpp" />
     <ClCompile Include="..\src\graphics\graphics_clippedline.cpp" />
+    <ClCompile Include="..\src\graphics\graphics_fonts.cpp" />
     <ClCompile Include="..\src\graphics\graphics_input.cpp" />
+    <ClCompile Include="..\src\graphics\graphics_pixel.cpp" />
     <ClCompile Include="..\src\graphics\graphics_sprites.cpp" />
     <ClCompile Include="..\src\graphics\graphics_text.cpp" />
     <ClCompile Include="..\src\graphics\graphics_triangle.cpp" />
@@ -623,8 +625,11 @@
     <ClInclude Include="..\src\engine\engine.h" />
     <ClInclude Include="..\src\environment.h" />
     <ClInclude Include="..\src\exception.h" />
+    <ClInclude Include="..\src\graphics\colour.h" />
+    <ClInclude Include="..\src\graphics\fonts.h" />
     <ClInclude Include="..\src\graphics\graphics.h" />
     <ClInclude Include="..\src\graphics\lodepng.h" />
+    <ClInclude Include="..\src\graphics\sprite.h" />
     <ClInclude Include="..\src\graphics\stb_truetype.h" />
     <ClInclude Include="..\src\interactive\interactive.h" />
     <ClInclude Include="..\src\jit\asmjit\core.h" />

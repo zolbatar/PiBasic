@@ -118,7 +118,7 @@ antlrcpp::Any Compiler::visitNumVarFloat(DARICParser::NumVarFloatContext* contex
     if (custom_types.count(current_var.name) == 1) {
         current_var.type = Type::TYPE;
         auto f = custom_types.find(current_var.name);
-        last_type_num_dimensions = static_cast<UINT32>((*f).second.members.size());
+        last_type_num_dimensions = static_cast<UINT32>(f->second.members.size());
         return NULL;
     }
 
@@ -181,43 +181,43 @@ bool Compiler::find_variable(bool field, bool fire_error)
     // Search locals first (if valid), then globals
     if (inside_function() && current_function->locals.count(current_var.name) == 1) {
         auto g = current_function->locals.find(current_var.name);
-        auto var_id = (*g).second.get_index();
+        auto var_id = g->second.get_index();
         current_var.id = var_id | LocalVariableFlag;
-        current_var.custom_type_name = (*g).second.get_custom_type_name();
-        current_var.type = (*g).second.get_type();
+        current_var.custom_type_name = g->second.get_custom_type_name();
+        current_var.type = g->second.get_type();
 
         if (field) {
             if (custom_types.count(current_var.custom_type_name) == 0) {
                 error("Type '" + current_var.custom_type_name + "' for variable '" + current_var.name + "' not found");
             }
             auto f = custom_types.find(current_var.custom_type_name);
-            if ((*f).second.members.count(current_var.field_name) == 0) {
+            if (f->second.members.count(current_var.field_name) == 0) {
                 error("Field '" + current_var.field_name + "' for variable '" + current_var.name + "' not found");
             }
-            auto field = (*f).second.members.find(current_var.field_name);
-            current_var.field_type = (*field).second.get_type();
-            current_var.field_index = (*field).second.get_index();
+            auto field = f->second.members.find(current_var.field_name);
+            current_var.field_type = field->second.get_type();
+            current_var.field_index = field->second.get_index();
         }
         //std::cout << current_var.name << " 3- " << current_var.id << std::endl;
         return true;
     } else if (globals.count(current_var.name) == 1) {
         auto g = globals.find(current_var.name);
-        auto var_id = (*g).second.get_index();
+        auto var_id = g->second.get_index();
         current_var.id = var_id;
-        current_var.custom_type_name = (*g).second.get_custom_type_name();
-        current_var.type = (*g).second.get_type();
+        current_var.custom_type_name = g->second.get_custom_type_name();
+        current_var.type = g->second.get_type();
 
         if (field) {
             if (custom_types.count(current_var.custom_type_name) == 0) {
                 error("Type '" + current_var.custom_type_name + "' for variable '" + current_var.name + "' not found");
             }
             auto f = custom_types.find(current_var.custom_type_name);
-            if ((*f).second.members.count(current_var.field_name) == 0) {
+            if (f->second.members.count(current_var.field_name) == 0) {
                 error("Field '" + current_var.field_name + "' for variable '" + current_var.name + "' not found");
             }
-            auto field = (*f).second.members.find(current_var.field_name);
-            current_var.field_type = (*field).second.get_type();
-            current_var.field_index = (*field).second.get_index();
+            auto field = f->second.members.find(current_var.field_name);
+            current_var.field_type = field->second.get_type();
+            current_var.field_index = field->second.get_index();
         }
 
         return true;
@@ -234,10 +234,10 @@ void Compiler::find_or_create_variable_in_scope(VariableScope scope)
     if (scope == VariableScope::GLOBAL) {
         if (globals.count(current_var.name) == 1) {
             auto g = globals.find(current_var.name);
-            auto var_id = (*g).second.get_index();
+            auto var_id = g->second.get_index();
             current_var.id = var_id;
-            current_var.custom_type_name = (*g).second.get_custom_type_name();
-            current_var.type = (*g).second.get_type();
+            current_var.custom_type_name = g->second.get_custom_type_name();
+            current_var.type = g->second.get_type();
         } else {
             Boxed var;
             var.set_type_default(current_var.type);
@@ -249,10 +249,10 @@ void Compiler::find_or_create_variable_in_scope(VariableScope scope)
     } else if (inside_function()) {
         if (current_function->locals.count(current_var.name) == 1) {
             auto g = current_function->locals.find(current_var.name);
-            auto var_id = (*g).second.get_index();
+            auto var_id = g->second.get_index();
             current_var.id = var_id | LocalVariableFlag;
-            current_var.custom_type_name = (*g).second.get_custom_type_name();
-            current_var.type = (*g).second.get_type();
+            current_var.custom_type_name = g->second.get_custom_type_name();
+            current_var.type = g->second.get_type();
             //std::cout << current_var.name << " 1- " << current_var.id << std::endl;
         } else {
             Boxed var;

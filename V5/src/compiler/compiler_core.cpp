@@ -54,15 +54,14 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
     // Now we MOVE the variables into the VM class
     vm->helper_variables().set_variables_size(global_var_index);
     for (auto g = globals.begin(); g != globals.end(); ++g) {
-        auto glob = (*g).second;
+        auto glob = g->second;
         if (vm->helper_variables().get_variable_by_int_checkless(glob.get_index())->get_type() == Type::NOTYPE) {
-            vm->helper_variables().add_variable((*g).second, glob.get_index());
+            vm->helper_variables().add_variable(g->second, glob.get_index());
         }
     }
     for (auto g = constants.begin(); g != constants.end(); ++g) {
-        auto glob = (*g);
-        if (vm->helper_variables().get_variable_by_int_checkless(glob.get_index())->get_type() == Type::NOTYPE) {
-            vm->helper_variables().add_variable(glob, glob.get_index());
+        if (vm->helper_variables().get_variable_by_int_checkless(g->get_index())->get_type() == Type::NOTYPE) {
+            vm->helper_variables().add_variable(*g, g->get_index());
         }
     }
 
@@ -71,7 +70,7 @@ void Compiler::compile(VM* vm, DARICParser::ProgContext* tree, std::string filen
 
     // Setup each function locals now
     for (auto g = functions.begin(); g != functions.end(); ++g) {
-        auto func = (*g).second;
+        auto func = g->second;
 
         // Create VM func reference
         VMFunction b;

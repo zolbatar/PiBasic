@@ -64,7 +64,7 @@ void Graphics::poll()
 #endif
 
 	// Cursor blink?
-	#ifdef WINDOWS
+#ifdef WINDOWS
 	if (cursor_enabled) {
 		auto t = std::chrono::high_resolution_clock::now();
 		auto time_span = std::chrono::duration_cast<std::chrono::milliseconds>(t - last_cursor_blink);
@@ -81,25 +81,25 @@ void Graphics::poll()
 			blink_state = !blink_state;
 		}
 	}
-	#endif
+#endif
 }
 
 void Graphics::draw_cursor() {
 	if (!is_banked()) {
-		auto font_row_height = (*font_heights.find(console_font)).second;
+		auto font_row_height = fonts.get_font_height(console_font, console_font_size);
 		auto saved_colour = g_env.graphics.current_colour;
 		current_colour = Colour(255, 255, 255);
-		Font* f = get_glyph(0, console_font, ' ', 0);
+		auto f = fonts.get_glyph_x(console_font, console_font_size, ' ');
 		rectangle(get_cursor_x(), get_cursor_y(), get_cursor_x() + f->sc_width, get_cursor_y() + font_row_height);
 		g_env.graphics.current_colour = saved_colour;
 	}
 }
 
 void Graphics::undraw_cursor() {
-	auto font_row_height = (*font_heights.find(console_font)).second;
+	auto font_row_height = fonts.get_font_height(console_font, console_font_size);
 	auto saved_colour = g_env.graphics.current_colour;
 	current_colour = current_bg_colour;
-	Font* f = get_glyph(0, console_font, ' ', 0);
+	auto f = fonts.get_glyph_x(console_font, console_font_size, ' ');
 	rectangle(get_cursor_x(), get_cursor_y(), get_cursor_x() + f->sc_width, get_cursor_y() + font_row_height);
 	g_env.graphics.current_colour = saved_colour;
 }
@@ -114,19 +114,19 @@ VM_STRING Graphics::input()
 			switch (c) {
 			case 8:
 				if (out.length() >= 1) {
-					delete_character(console_font);
+					delete_character(console_font, console_font_size);
 					out.pop_back();
 				}
 				break;
 			case 13:
-				print_text(console_font, "\r", -1, -1);
+				print_text(console_font, console_font_size, "\r", -1, -1);
 				return out;
 			}
 		}
 		else {
 			auto t = VM_STRING(1, cc);
 			out += t;
-			print_text(console_font, t, -1, -1);
+			print_text(console_font, console_font_size, t, -1, -1);
 		}
 	}
 }
@@ -275,7 +275,7 @@ VM_INT Graphics::inkey(VM_INT timeout_or_keycode)
 		} while (get_clock() - clock < timeout_or_keycode);
 		return -1;
 #endif
-}
+	}
 }
 
 VM_STRING Graphics::inkeys(VM_INT timeout_or_keycode)

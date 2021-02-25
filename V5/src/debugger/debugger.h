@@ -15,9 +15,12 @@ const int debugger_height = 30;
 const int open_height = 300;
 const int debugger_lines = 11;
 const int log_lines = 14;
-const int disassembly_font = 1;
-const int prop_font = 10;
-const int menu_font = 11;
+const int disassembly_font = 0;
+const int disassembly_font_size = 1;
+const int prop_font = 1;
+const int prop_font_size = 30;
+const int menu_font = 1;
+const int menu_font_size = 25;
 
 enum class KeywordCategory {
     OPERATORS,
