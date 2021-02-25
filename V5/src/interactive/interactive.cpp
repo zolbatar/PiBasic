@@ -33,7 +33,7 @@ void Interactive::welcome_prompt()
 	g_env.graphics.cls();
 	g_env.text.set_margin(50);
 	g_env.graphics.colour(255, 0, 0);
-	g_env.text.print_console("D");
+	g_env.text.print_console("\rD");
 	g_env.graphics.colour(255, 255, 0);
 	g_env.text.print_console("A");
 	g_env.graphics.colour(0, 255, 0);

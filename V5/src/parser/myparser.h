@@ -8,6 +8,6 @@
 
 class MyParser {
 public:
-//	bool check_if_installs(std::string line, std::string filename, std::set<std::string>* installs);
+	void load_stream(std::string filename, bool interactive, std::stringstream* ss);
 	void parse_and_compile(Compiler* compiler, bool interactive, std::stringstream *input, std::string filename);
 };

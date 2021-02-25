@@ -17,6 +17,7 @@ int error_count = 0;
 std::vector<ParserFiles> parsed_files;
 std::vector<std::string> concat_file_cache;
 std::vector<std::string> source;
+UINT32 current_line = 0;
 
 LineFileLookup file_and_line_lookup(UINT32 line_number)
 {
@@ -133,34 +134,65 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
 	}
 	i++;
 }
+*/
+void MyParser::load_stream(std::string filename, bool interactive, std::stringstream* ss) {
+	ParserFiles pf;
+	pf.filename = filename;
+	pf.line_start = current_line;
+	parsed_files.push_back(pf);
 
-std::set<std::string> MyParser::load_file(std::string filename, bool interactive) {
+	// Always add a new line to keep the parser happy
+	*ss << std::endl;
 
-	// Load source into a concatenated stringstream
-	std::stringstream ss;
-	std::ifstream stream;
-#ifdef WINDOWS
-	if (!interactive) {
-		filename += ".daric";
-	}
-#endif
-	stream.open(filename);
-	if (!stream.is_open()) {
-		throw std::runtime_error("File '" + filename + "'not found\n");
-	}
-	ss << stream.rdbuf();
-	stream.close();
-
-	// Parse file, checking for INSTALLs
+	// Save lines for debugging purposes
 	std::string line;
-	while (std::getline(ss, line)) {
-		check_if_installs(line, filename, &installs);
+	source.clear();
+	int i = 0;
+	std::set<std::string> installs;
+	while (std::getline(*ss, line)) {
+		if (line.length() > 10 && line.substr(0, 7).compare("INSTALL") == 0) {
+			auto f = line.find_first_of('"');
+			auto l = line.find_last_of('"');
+			if (f == std::string::npos || l == std::string::npos) {
+				throw DARICException(ErrorLocation::PARSER, filename, static_cast<UINT32>(i), static_cast<UINT32>(i), static_cast<short>(0), "Error processing INSTALL statements");
+			}
+			auto file = line.substr(f + 1, l - f - 1);
+			installs->insert(file);
+		}
+		source.push_back(line);
+		i++;
 	}
-}*/
 
-void MyParser::parse_and_compile(Compiler* compiler, bool interactive, std::stringstream *ss, std::string filename)
+	// Recursively add new installs
+
+
+	/*	// Load source into a concatenated stringstream
+		std::stringstream ss;
+		std::ifstream stream;
+	#ifdef WINDOWS
+		if (!interactive) {
+			filename += ".daric";
+		}
+	#endif
+		stream.open(filename);
+		if (!stream.is_open()) {
+			throw std::runtime_error("File '" + filename + "'not found\n");
+		}
+		ss << stream.rdbuf();
+		stream.close();
+
+		// Parse file, checking for INSTALLs
+		std::string line;
+		while (std::getline(ss, line)) {
+			check_if_installs(line, filename, &installs);
+		}*/
+}
+
+void MyParser::parse_and_compile(Compiler* compiler, bool interactive, std::stringstream* ss, std::string filename)
 {
-	UINT32 current_line = 0;
+	current_line = 0;
+	parsed_files.clear();
+
 	/*	parse_errors = false;
 		error_count = 0;
 		line_number_mapping.clear();
@@ -204,41 +236,27 @@ void MyParser::parse_and_compile(Compiler* compiler, bool interactive, std::stri
 				current_line += static_cast<UINT32>(lc);
 			}*/
 
-/*	ParserFiles pf;
-	pf.filename = filename;
-	pf.line_start = current_line;
-	parsed_files.push_back(pf);
-	ss.clear();
-	ss.seekg(0);
-	ss_install << ss.rdbuf();
-	ss = std::move(ss_install);
+			/*	ParserFiles pf;
+				pf.filename = filename;
+				pf.line_start = current_line;
+				parsed_files.push_back(pf);
+				ss.clear();
+				ss.seekg(0);
+				ss_install << ss.rdbuf();
+				ss = std::move(ss_install);
 
-	// Save for disassembly purposes
-	concat_file_cache.clear();
-	while (std::getline(ss, line)) {
-		concat_file_cache.push_back(std::move(line));
-	}
-	ss.clear();*/
-	
-	// List of parsed files for exception purposes
-	ParserFiles pf;
-	pf.filename = filename;
-	pf.line_start = current_line;
-	parsed_files.push_back(pf);
+				// Save for disassembly purposes
+				concat_file_cache.clear();
+				while (std::getline(ss, line)) {
+					concat_file_cache.push_back(std::move(line));
+				}
+				ss.clear();*/
 
-	// Always add a new line to keep the parser happy
-	*ss << std::endl;
-
-	// Save lines for debugging purposes
-	std::string line;
-	source.clear();
-	while (std::getline(*ss, line)) {
-		source.push_back(line);
-	}
-	ss->clear();
-	ss->seekg(0);
+	load_stream(filename, interactive, ss);
 
 	// Setup stream
+	ss->clear();
+	ss->seekg(0);
 	ANTLRInputStream input(*ss);
 
 	// Tokeniser
