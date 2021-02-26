@@ -7,6 +7,7 @@
 #include <string.h>
 
 extern Environment g_env;
+extern int console_font_size;
 
 #ifdef _DEBUG
 const int DEBUGWINDOW = 1;
@@ -93,6 +94,7 @@ UINT32 Graphics::get_screen_width()
 		SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
 		return 1;
 	}
+
 	if (DEBUGWINDOW) {
 		return dm.w * 0.75;
 	}
@@ -141,13 +143,14 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 	maxY = screen_height - 1;
 
 	// Load standard fonts
-	if (!reinit) {
+	if (!default_fonts_loaded) {
 		std::string fp = cwd + "/RobotoMono-Regular.ttf";
 		g_env.fonts.load_typeface(fp.c_str());
 		fp = std::string(cwd) + "/Roboto-Regular.ttf";
 		g_env.fonts.load_typeface(fp.c_str());
 		fp = std::string(cwd) + "/RobotoSlab-Regular.ttf";
 		g_env.fonts.load_typeface(fp.c_str());
+		default_fonts_loaded = true;
 	}
 
 #ifdef RISCOS
@@ -249,12 +252,13 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 			exit(1);
 		}
 
-		// Get real resolution
-/*		int real_w, real_h;
-		SDL_GL_GetDrawableSize(window, &real_w, &real_h);
-		std::cout << real_w << std::endl;
-		std::cout << real_h << std::endl;
-		exit(0);*/
+		float ddpi, hdpi, vdpi;
+		if (SDL_GetDisplayDPI(0, &ddpi, &hdpi, &vdpi) != 0) {
+			fprintf(stderr, "Failed to obtain DPI information for display 0: %s\n", SDL_GetError());
+			exit(1);
+		}
+		dpi_ratio = ddpi / 96;
+		console_font_size = static_cast<int>(static_cast<double>(console_font_size) * dpi_ratio);
 
 		screen = SDL_GetWindowSurface(window);
 		SDL_StopTextInput();

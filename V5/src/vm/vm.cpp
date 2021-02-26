@@ -3372,7 +3372,6 @@ std::string VM::run()
 
 			case Bytecodes::CHAIN: {
 				VM_STRING file = stack.pop_string(bc);
-				//variables.store_chained_variables(stack);
 				return file;
 			}
 			default:

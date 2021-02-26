@@ -42,10 +42,10 @@ antlrcpp::Any Compiler::visitDefaultFonts(DARICParser::DefaultFontsContext* cont
 		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);
 	}
 	else if (context->PROP() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0);
+		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 1);
 	}
 	else if (context->SERIF() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 18);
+		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 2);
 	}
 	stack_push(Type::INTEGER);
 	return NULL;

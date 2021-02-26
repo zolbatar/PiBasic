@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
     // Get program directory
     std::string path(argv[0]);
     g_env.cwd = path.substr(0, path.find_last_of("\\/"));
+    g_env.pwd = g_env.cwd;
 
     // Set up logfile
     g_env.log("Debug Output");
@@ -87,7 +88,7 @@ int main(int argc, char *argv[])
             ss << stream.rdbuf();
             stream.close();
             MyParser parser;
-            parser.parse_and_compile(compiler, false, &ss, filename);
+            parser.parse_and_compile(compiler, false, ss, filename);
         }
         catch (const DARICException &ex)
         {

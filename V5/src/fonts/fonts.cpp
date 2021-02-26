@@ -2,6 +2,8 @@
 #include <iostream>
 #include "fonts.h"
 
+int console_font_size = 25;
+
 VM_INT Fonts::load_typeface(const char* filename)
 {
 	std::cout << "Loading font '" << filename << "',";
@@ -9,14 +11,14 @@ VM_INT Fonts::load_typeface(const char* filename)
 	// Load and build the actual font, we're never going to release this memory EVER
 	auto f = (stbtt_fontinfo*)malloc(sizeof(stbtt_fontinfo));
 	if (!f) {
-		std::cerr << "Can't allocate memory for TTF font\n";
+		std::cout << "Can't allocate memory for TTF font\n";
 		exit(1);
 	}
 
 	// Open file and calculate size
 	FILE* fp = fopen(filename, "rb");
 	if (!fp) {
-		std::cerr << "Error opening font file\n";
+		std::cout << "Error opening font file\n";
 		exit(0);
 	}
 	fseek(fp, 0L, SEEK_END);

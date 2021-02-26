@@ -120,12 +120,6 @@ void World::render()
         }
     }
 
-#ifdef render_svg
-    outfile << "</svg>" << std::endl;
-    outfile.close();
-    exit(0);
-#endif
-
     // Clear for next time
     render_list.clear();
 

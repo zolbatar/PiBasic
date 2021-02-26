@@ -5,6 +5,7 @@
 struct ParserFiles {
     std::string filename;
     UINT32 line_start;
+    UINT32 local_line;
 };
 
 struct LineFileLookup {

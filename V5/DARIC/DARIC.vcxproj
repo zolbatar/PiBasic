@@ -153,6 +153,9 @@
       <Command>
       </Command>
     </PreLinkEvent>
+    <Manifest>
+      <EnableDpiAwareness>true</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -183,6 +186,9 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <Manifest>
+      <EnableDpiAwareness>true</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\antlr4\ANTLRErrorListener.cpp" />

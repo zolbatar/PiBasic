@@ -133,6 +133,7 @@ public:
 	Colour current_colour = Colour(255, 255, 255);
 	Colour current_bg_colour = Colour(0, 0, 0);
 private:
+	bool default_fonts_loaded = false;
 	std::chrono::high_resolution_clock::time_point last_render;
 	bool showfps = false;
 	int fps_count = 0;
@@ -143,6 +144,7 @@ private:
 	size_t bank_x1, bank_y1, bank_x2, bank_y2;
 	std::vector<Colour>* render_bank = nullptr;
 	RasterMode raster_mode = RasterMode::BLIT;
+	double dpi_ratio = 1.0;
 
 	// Fast line lookup
 	std::vector<size_t> line_address;

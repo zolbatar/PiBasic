@@ -2,58 +2,58 @@ c1%=-300,ys%=25,ms%=100
 
 DEF PROCLabel(number$, text$, y%)
 	COLOUR BLUE
-	TEXT PROP25, w%/2+c1%, y%, number$
+	TEXT PROP, 25, w%/2+c1%, y%, number$
 
 	COLOUR WHITE
-	TEXT PROP25, w%/2+c1% + 60, -1, text$
+	TEXT PROP, 25, w%/2+c1% + 60, -1, text$
 ENDPROC
 
 DEF PROCTitle(title$)
 	COLOUR YELLOW
-	TEXTCENTRE PROP40, w%/2, 20, title$
+	TEXTCENTRE PROP, 40, w%/2, 20, title$
 ENDPROC
 
 DEF PROCDescription(desc$)
 	COLOUR WHITE
-	TEXT PROP30, 100, ms%, desc$
+	TEXT PROP, 30, 100, ms%, desc$
 ENDPROC
 
 DEF PROCSubTitle(title$)
 	COLOUR &808080
-	TEXT PROP25, 100, -1, title$
+	TEXT PROP, 25, 100, -1, title$
 ENDPROC
 
 DEF PROCSyntax1(syntax$)
 	COLOUR YELLOW
-	TEXT MONO25, 100, -1, syntax$
+	TEXT MONO, 25, 100, -1, syntax$
 ENDPROC
 
 DEF PROCSyntax1Hidden(syntax$)
 	COLOUR BLACK
-	TEXT MONO25, 100, -1, syntax$
+	TEXT MONO, 25, 100, -1, syntax$
 ENDPROC
 
 DEF PROCSyntax2(syntax$)
 	COLOUR BLUE
-	TEXT MONO25, -1, -1, syntax$
+	TEXT MONO, 25, -1, -1, syntax$
 ENDPROC
 
 DEF PROCSyntax2Yellow(syntax$)
 	COLOUR YELLOW
-	TEXT MONO25, -1, -1, syntax$
+	TEXT MONO, 25, -1, -1, syntax$
 ENDPROC
 
 DEF PROCSyntax2White(syntax$)
 	COLOUR WHITE
-	TEXT MONO25, -1, -1, syntax$
+	TEXT MONO, 25, -1, -1, syntax$
 ENDPROC
 
 DEF PROCLowText(syntax$)
 	COLOUR WHITE
-	TEXT PROP25, 100, -1, syntax$
+	TEXT PROP, 25, 100, -1, syntax$
 ENDPROC
 
 DEF PROCExample(syntax$)
 	COLOUR WHITE
-	TEXT MONO25, 100, -1, syntax$
+	TEXT MONO, 25, 100, -1, syntax$
 ENDPROC

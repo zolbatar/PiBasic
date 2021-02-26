@@ -17,9 +17,9 @@ private:
 
 	void welcome_prompt();
 	UINT32 add_line(std::string s, UINT32 auto_line);
+	void set_examples_directory();
 	void execute_line(std::string s);
 	void run_file(std::string s);
-	void run_demo_file(std::string filename);
 	void run_all_lines();
 	void load(std::string filename);
 	void save(std::string filename);

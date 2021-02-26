@@ -15,8 +15,8 @@ size_t error_line;
 short error_position;
 int error_count = 0;
 std::vector<ParserFiles> parsed_files;
-std::vector<std::string> concat_file_cache;
 std::vector<std::string> source;
+std::set<std::string> installed_files;
 UINT32 current_line = 0;
 
 LineFileLookup file_and_line_lookup(UINT32 line_number)
@@ -28,7 +28,7 @@ LineFileLookup file_and_line_lookup(UINT32 line_number)
 		if (i.line_start < line_number) {
 			flp.file_number = ii;
 			flp.filename = i.filename;
-			flp.line = line_number - i.line_start;
+			flp.line = line_number - i.line_start + i.local_line;
 		}
 		ii++;
 	}
@@ -117,147 +117,130 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
 	}
 };
 
-/*std::set<std::string> MyParser::check_if_installs(std::string line, std::string filename) {
-	std::set<std::string> installs;
-	int i = 0;
-	if (line.length() > 10 && line.substr(0, 7).compare("INSTALL") == 0) {
-		auto f = line.find_first_of('"');
-		auto l = line.find_last_of('"');
-		if (f == std::string::npos || l == std::string::npos) {
-			throw DARICException(ErrorLocation::PARSER, filename, static_cast<UINT32>(i), static_cast<short>(0), "Error processing INSTALL statements");
-		}
-		auto file = line.substr(f + 1, l - f - 1);
-		installs->insert(file);
-	}
-	else {
-		break;
-	}
-	i++;
-}
-*/
-void MyParser::load_stream(std::string filename, bool interactive, std::stringstream* ss) {
+void MyParser::load_stream(std::string filename, bool interactive, std::stringstream& ss) {
 	ParserFiles pf;
 	pf.filename = filename;
 	pf.line_start = current_line;
+	pf.local_line = 0;
 	parsed_files.push_back(pf);
-
-	// Always add a new line to keep the parser happy
-	*ss << std::endl;
 
 	// Save lines for debugging purposes
 	std::string line;
-	source.clear();
-	int i = 0;
-	std::set<std::string> installs;
-	while (std::getline(*ss, line)) {
-		if (line.length() > 10 && line.substr(0, 7).compare("INSTALL") == 0) {
+	int i = 1;
+	while (std::getline(ss, line)) {
+
+		// Save to main input stream
+		final_ss << line << std::endl;
+		source.push_back(line);
+		current_line++;
+
+		// So an INSTALL has to be at the beginning of a line, but it may have a line number
+		if (isdigit(line[0])) {
+			// Scan for first space (i.e after line number)
+			auto found = line.find_first_of(" ", 0);
+			if (line.substr(found, found + 6).compare("INSTALL") == 0) {
+				auto f = line.find_first_of('"');
+				auto l = line.find_last_of('"');
+				if (f == std::string::npos || l == std::string::npos) {
+					throw DARICException(ErrorLocation::PARSER, filename, static_cast<UINT32>(i), static_cast<UINT32>(i), static_cast<short>(0), "Error processing INSTALL statements");
+				}
+				auto new_filename = line.substr(f + 1, l - f - 1);
+#ifdef WINDOWS
+				if (!endsWith(new_filename, ".daric")) {
+					new_filename += ".daric";
+				}
+#endif
+
+				// Have we already processed it?
+				if (installed_files.count(new_filename) == 0) {
+
+					// Add to installed list
+					installed_files.insert(new_filename);
+
+					// Load into a stringstream
+					std::stringstream ss_new;
+					std::ifstream stream;
+					stream.open(new_filename);
+					if (!stream.is_open()) {
+						throw std::runtime_error("File '" + new_filename + "'not found\n");
+					}
+					ss_new << stream.rdbuf();
+					stream.close();
+
+					// Now recursively add it
+					load_stream(new_filename, interactive, ss_new);
+
+					ParserFiles pf;
+					pf.filename = filename;
+					pf.line_start = current_line;
+					pf.local_line = i;
+					parsed_files.push_back(pf);
+				}
+			}
+		}
+		else if (line.length() > 10 && line.substr(0, 7).compare("INSTALL") == 0) {
 			auto f = line.find_first_of('"');
 			auto l = line.find_last_of('"');
 			if (f == std::string::npos || l == std::string::npos) {
 				throw DARICException(ErrorLocation::PARSER, filename, static_cast<UINT32>(i), static_cast<UINT32>(i), static_cast<short>(0), "Error processing INSTALL statements");
 			}
-			auto file = line.substr(f + 1, l - f - 1);
-			installs->insert(file);
+			auto new_filename = line.substr(f + 1, l - f - 1);
+
+#ifdef WINDOWS
+			if (!endsWith(new_filename, ".daric")) {
+				new_filename += ".daric";
+			}
+#endif
+
+			// Have we already processed it?
+			if (installed_files.count(new_filename) == 0) {
+
+				// Add to installed list
+				installed_files.insert(new_filename);
+
+				// Load into a stringstream
+				std::stringstream ss_new;
+				std::ifstream stream;
+				stream.open(new_filename);
+				if (!stream.is_open()) {
+					throw std::runtime_error("File '" + new_filename + "'not found\n");
+				}
+				ss_new << stream.rdbuf();
+				stream.close();
+
+				// Now recursively add it
+				load_stream(new_filename, interactive, ss_new);
+
+				ParserFiles pf;
+				pf.filename = filename;
+				pf.line_start = current_line;
+				pf.local_line = i;
+				parsed_files.push_back(pf);
+			}
 		}
-		source.push_back(line);
+
 		i++;
 	}
-
-	// Recursively add new installs
-
-
-	/*	// Load source into a concatenated stringstream
-		std::stringstream ss;
-		std::ifstream stream;
-	#ifdef WINDOWS
-		if (!interactive) {
-			filename += ".daric";
-		}
-	#endif
-		stream.open(filename);
-		if (!stream.is_open()) {
-			throw std::runtime_error("File '" + filename + "'not found\n");
-		}
-		ss << stream.rdbuf();
-		stream.close();
-
-		// Parse file, checking for INSTALLs
-		std::string line;
-		while (std::getline(ss, line)) {
-			check_if_installs(line, filename, &installs);
-		}*/
 }
 
-void MyParser::parse_and_compile(Compiler* compiler, bool interactive, std::stringstream* ss, std::string filename)
+void MyParser::parse_and_compile(Compiler* compiler, bool interactive, std::stringstream& ss, std::string filename)
 {
 	current_line = 0;
 	parsed_files.clear();
+	source.clear();
+	installed_files.clear();
 
-	/*	parse_errors = false;
-		error_count = 0;
-		line_number_mapping.clear();
-
-		// We loop around adding all the installs as we go, but not duplicating obviously
-		do {
-			std::string line;
-			while (std::getline(ss, line)) {
-				check_if_installs(line, filename, &installs);
-			}
-
-			// Now include these files
-	/*		UINT32 current_line = 0;
-			std::stringstream ss_install;
-			parsed_files.clear();
-			for (auto it = installs.rbegin(); it != installs.rend(); ++it) {
-				std::string file = (*it);
-	#ifdef WINDOWS
-				file += ".daric";
-	#endif
-				stream.open(file);
-				if (!stream.is_open()) {
-					throw std::runtime_error("File '" + file + "' not found\r");
-				}
-
-				// Count lines
-				std::stringstream ssl;
-				ssl << stream.rdbuf();
-				auto s = ssl.str();
-				auto lc = std::count(s.begin(), s.end(), '\n') + 1;
-
-				// Add to stream
-				ss_install << s << std::endl;
-				stream.close();
-
-				// And add an entry so we can do line and file lookup
-				ParserFiles pf;
-				pf.filename = file;
-				pf.line_start = current_line;
-				parsed_files.push_back(pf);
-				current_line += static_cast<UINT32>(lc);
-			}*/
-
-			/*	ParserFiles pf;
-				pf.filename = filename;
-				pf.line_start = current_line;
-				parsed_files.push_back(pf);
-				ss.clear();
-				ss.seekg(0);
-				ss_install << ss.rdbuf();
-				ss = std::move(ss_install);
-
-				// Save for disassembly purposes
-				concat_file_cache.clear();
-				while (std::getline(ss, line)) {
-					concat_file_cache.push_back(std::move(line));
-				}
-				ss.clear();*/
-
+	// Load first file and recursively load more
 	load_stream(filename, interactive, ss);
 
+	// Always add a new line to keep the parser happy
+	final_ss << std::endl;
+	current_line++;
+
 	// Setup stream
-	ss->clear();
-	ss->seekg(0);
-	ANTLRInputStream input(*ss);
+	final_ss.clear();
+	final_ss.seekg(0);
+	ANTLRInputStream input(final_ss);
 
 	// Tokeniser
 	DARICLexer lexer(&input);

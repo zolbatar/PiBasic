@@ -3048,7 +3048,9 @@ public:
     NumFuncLOADTYPEFACEContext(NumFuncContext *ctx);
 
     antlr4::tree::TerminalNode *LOADTYPEFACE();
+    antlr4::tree::TerminalNode *LPAREN();
     StrExprContext *strExpr();
+    antlr4::tree::TerminalNode *RPAREN();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };

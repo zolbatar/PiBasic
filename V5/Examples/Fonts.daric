@@ -17,8 +17,7 @@ NEXT
 CLIPOFF
 
 REM Load a custom TTF/OTF font
-coolfont%   = LOADTYPEFACE "FXMatrix105MonoPicaRegular.otf"
-coolfont10% = CREATEFONT coolfont%, 25
+coolfont% = LOADTYPEFACE("FXMatrix105MonoPicaRegular.otf")
 
 COLOUR YELLOW
 TEXTCENTRE PROP, 40, w%/2, 0, "Standard inbuilt fonts"+CHR$(13)+CHR$(13)
@@ -31,7 +30,7 @@ TEXTCENTRE PROP, 40, w%/2, -1, "Loadable TTF/OTF typefaces"+CHR$(13)+CHR$(13)
 COLOUR WHITE
 TEXTCENTRE coolfont%, 25, w%/2, -1, "The quick brown fox jumps over the lazy dog (FXMatrix105MonoPicaRegular.otf)"+CHR$(13)+CHR$(13)
 COLOUR YELLOW
-TEXTCENTRE PROP40, w%/2, -1, "Inbuilt sizes"+CHR$(13)+CHR$(13)
+TEXTCENTRE PROP, 40, w%/2, -1, "Inbuilt sizes"+CHR$(13)+CHR$(13)
 COLOUR WHITE
 TEXT MONO, 15, 10, -1, "MONO 15":TEXTCENTRE PROP, 15, w% / 2, -1, "PROP 15":TEXTRIGHT SERIF, 15, w%-1-10, -1, "SERIF 15"+CHR$(13)
 TEXT MONO, 20, 10, -1, "MONO 20":TEXTCENTRE PROP, 20, w% / 2, -1, "PROP 20":TEXTRIGHT SERIF, 20, w%-1-10, -1, "SERIF 20"+CHR$(13)

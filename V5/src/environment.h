@@ -9,7 +9,8 @@
 class Environment {
 public:
 	std::string version = __DATE__;
-	std::string cwd; // Program directory
+	std::string pwd; // Program directory
+	std::string cwd; // Current directory
 	std::vector<std::string> log_list; // Runtime log
 	std::string sol;
 	Graphics graphics;

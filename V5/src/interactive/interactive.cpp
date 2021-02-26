@@ -147,36 +147,22 @@ void Interactive::run()
 				g_env.graphics.current_colour = saved_colour;
 			}
 			else if (upper.compare("WELCOME") == 0) {
-				run_demo_file("Welcome");
-				/*                lines.clear();
-				create_empty_vm();
+				set_examples_directory();
+				run_file("Welcome");
+				clear();
 				g_env.graphics.cls();
-				welcome_prompt();*/
+				welcome_prompt();
 			}
 			else if (upper.compare("EXAMPLES") == 0) {
-				// Directory for source files
-				std::string path(g_env.cwd);
-
-				path += "/Examples";
-#ifdef WINDOWS
-				_chdir(path.c_str());
-#endif
-#ifdef RISCOS
-				_kernel_swi_regs regs;
-				regs.r[0] = (int)path.c_str();
-				_kernel_swi(DDEUtils_Prefix, &regs, &regs);
-#endif
-				g_env.text.print_console("Set directory to '" + path + "'\r");
-				g_env.cwd = path;
+				set_examples_directory();
 			}
 			else if (upper.compare("TEST") == 0) {
-				run_demo_file("Tester");
+				set_examples_directory();
+				run_file("Tester");
 			}
 			else if (upper.substr(0, 6).compare("CHAIN ") == 0) {
 				auto filename = s.substr(6, s.length() - 6);
-				load(filename);
-				run_all_lines();
-				//run_file(s);
+				run_file(filename);
 			}
 			else if (upper.substr(0, 5).compare("LOAD ") == 0) {
 				auto filename = s.substr(5, s.length() - 5);
@@ -199,12 +185,31 @@ void Interactive::run()
 	}
 }
 
+void Interactive::set_examples_directory() {
+	// Directory for source files
+	std::string path(g_env.pwd);
+
+	path += "/Examples";
+#ifdef WINDOWS
+	_chdir(path.c_str());
+#endif
+#ifdef RISCOS
+	_kernel_swi_regs regs;
+	regs.r[0] = (int)path.c_str();
+	_kernel_swi(DDEUtils_Prefix, &regs, &regs);
+#endif
+	g_env.text.print_console("Set directory to '" + path + "'\r");
+	g_env.cwd = path;
+}
+
 void Interactive::load(std::string filename)
 {
 	replaceAll(filename, " ", "");
 	replaceAll(filename, "\"", "");
 #ifdef WINDOWS
-	filename += ".daric";
+	if (!endsWith(filename, ".daric")) {
+		filename += ".daric";
+	}
 #endif
 	lines.clear();
 	char line[1024];
@@ -280,7 +285,7 @@ void Interactive::execute_line(std::string s)
 	ss.seekg(0);
 	try {
 		MyParser parser;
-		parser.parse_and_compile(compiler, true, &ss, "");
+		parser.parse_and_compile(compiler, true, ss, "");
 	}
 	catch (const DARICException& ex) {
 		ex.pretty_print();
@@ -308,7 +313,7 @@ void Interactive::run_all_lines()
 	while (chain.length() > 0) {
 		try {
 			MyParser parser;
-			parser.parse_and_compile(compiler, true, &ss, "");
+			parser.parse_and_compile(compiler, true, ss, "");
 		}
 		catch (const DARICException& ex) {
 			ex.pretty_print();
@@ -341,89 +346,30 @@ void Interactive::run_all_lines()
 	}
 }
 
-void Interactive::run_file(std::string s)
+void Interactive::run_file(std::string filename)
 {
-	auto filename = s.substr(5, s.length() - 5);
-	replaceAll(filename, "\"", "");
-
-	// Load into a stringstream
-	std::stringstream ss;
-	std::ifstream stream;
-#ifdef WINDOWS
-	filename += ".daric";
-#endif
-	stream.open(filename);
-	if (!stream.is_open()) {
-		throw std::runtime_error("File '" + filename + "'not found\n");
-	}
-	ss << stream.rdbuf();
-	stream.close();
-
 	while (filename.length() > 0) {
+		// Load into a stringstream
+		std::stringstream ss;
+		std::ifstream stream;
+#ifdef WINDOWS
+		if (!endsWith(filename, ".daric")) {
+			filename += ".daric";
+		}
+#endif
+		stream.open(filename);
+		if (!stream.is_open()) {
+			throw std::runtime_error("File '" + filename + "'not found\n");
+		}
+		ss << stream.rdbuf();
+		stream.close();
+
 		try {
 			MyParser parser;
-			parser.parse_and_compile(compiler, false, &ss, filename);
+			parser.parse_and_compile(compiler, false, ss, filename);
 		}
 		catch (const DARICException& ex) {
-			ex.pretty_print();
-			return;
-		}
-		catch (const std::runtime_error& ex) {
-			g_env.text.print_console(ex.what());
-			return;
-		}
-
-		// Run!
-		filename = g_vm->run();
-
-		// Reset PC
-		g_vm->helper_bytecodes().pc = 0;
-	}
-	if (g_env.graphics.is_banked()) {
-		g_env.graphics.open(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height(), Mode::CLASSIC, g_env.cwd);
-	}
-}
-
-void Interactive::run_demo_file(std::string filename)
-{
-	// Directory for source files
-	std::string path(g_env.cwd);
-	path += "/Examples";
-
-#ifdef WINDOWS
-	// Set current directory
-	_chdir(path.c_str());
-	char* buffer;
-	buffer = _getcwd(NULL, 0);
-#endif
-
-#ifdef RISCOS
-	// Set current directory
-	_kernel_swi_regs regs;
-	regs.r[0] = (int)path.c_str();
-	_kernel_swi(DDEUtils_Prefix, &regs, &regs);
-#endif
-
-	// Load into a stringstream
-	std::stringstream ss;
-	std::ifstream stream;
-#ifdef WINDOWS
-	filename += ".daric";
-#endif
-	stream.open(filename);
-	if (!stream.is_open()) {
-		throw std::runtime_error("File '" + filename + "'not found\n");
-	}
-	ss << stream.rdbuf();
-	stream.close();
-
-	while (filename.length() > 0) {
-		try {
-			MyParser parser;
-			parser.parse_and_compile(compiler, false, &ss, filename);
-		}
-		catch (const DARICException& ex) {
-			ex.pretty_print();
+				ex.pretty_print();
 			return;
 		}
 		catch (const std::runtime_error& ex) {

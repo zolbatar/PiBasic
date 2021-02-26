@@ -189,9 +189,9 @@ stmtTRIANGLE:       TRIANGLE        numExpr COMMA numExpr COMMA numExpr COMMA nu
 stmtPLOT:           PLOT numExpr COMMA numExpr ;
 stmtCLIPON:         CLIPON numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
 stmtCLIPOFF:        CLIPOFF ;
-stmtTEXT:           TEXT numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
-stmtTEXTRIGHT:      TEXTRIGHT numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
-stmtTEXTCENTRE:     (TEXTCENTRE|TEXTCENTER) numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
+stmtTEXT:           TEXT numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
+stmtTEXTRIGHT:      TEXTRIGHT numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
+stmtTEXTCENTRE:     (TEXTCENTRE|TEXTCENTER) numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
 stmtSHOWFPS:        SHOWFPS ;
 
 /* Sprites */
@@ -404,7 +404,7 @@ numFunc
     | SCREENHEIGHT                                                  #numFuncSCREENHEIGHT
     | POINT LPAREN numExpr COMMA numExpr RPAREN                     #numFuncPOINT
     | COLOUR LPAREN numExpr COMMA numExpr COMMA numExpr RPAREN      #numFuncCOLOUR
-    | LOADTYPEFACE strExpr                                          #numFuncLOADTYPEFACE
+    | LOADTYPEFACE LPAREN strExpr RPAREN                            #numFuncLOADTYPEFACE
 
     /* Sprites */
     | CREATESPRITE LPAREN numExpr COMMA numExpr COMMA numExpr RPAREN    #numFuncCREATESPRITE
