@@ -258,7 +258,9 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 			exit(1);
 		}
 		dpi_ratio = ddpi / 96;
-		console_font_size = static_cast<int>(static_cast<double>(console_font_size) * dpi_ratio);
+		if (initial) {
+			console_font_size = static_cast<int>(static_cast<double>(console_font_size) * dpi_ratio);
+		}
 
 		screen = SDL_GetWindowSurface(window);
 		SDL_StopTextInput();

@@ -27,6 +27,6 @@ For Y%=0 To MAXY%
 	IF INKEY(0) <> -1 CHAIN "Welcome"
 Next
 COLOUR BLUE
-TEXT PROP40,0,0,STR$(TIME-T%) + " centiseconds"
+TEXT PROP, 40,0,0,STR$(TIME-T%) + " centiseconds"
 INKEY(1000)
 CHAIN "Welcome"

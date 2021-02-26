@@ -17,14 +17,18 @@ ENDPROC
 
 DEF PROCSun()
     radius = h% / 2
-    FOR LOCAL angle=180 TO 270 STEP 0.1
+    ys=radius * SIN(RAD(180))
+    ye=radius * SIN(RAD(270))
+    ym = ye-ys 
+    PRINT ys
+    PRINT ye
+    PRINT ym
+    FOR LOCAL angle=180 TO 270 STEP 0.05
         x=radius * COS(RAD(angle))
         y=radius * SIN(RAD(angle))
-        shade=-y
-        shade=shade / (h% * 0.7)
-        IF shade < 0 shade=0
-        IF shade > 1.0 shade=1.0
-        COLOUR &80*shade,&80*shade,&00
+        ratio=(y-ys) / ym * 0.4
+        r_ratio=1.0-ratio
+        COLOUR (&80*ratio)+(&F0*r_ratio),(&80*ratio)+(&A5*ratio),&00
         LINE (w% / 2) - x, y + (h% * 0.7), (w% / 2) + x, y + (h% * 0.7)
     NEXT
 ENDPROC
@@ -62,8 +66,7 @@ DEF PROCLinesBlackenLogo()
 ENDPROC
 
 PROCInitPerlin()
-coolfont%    = LOADTYPEFACE "edunline.ttf"
-coolfont200% = CREATEFONT coolfont%, 150
+coolfont%    = LOADTYPEFACE("edunline.ttf")
 terrainsize%=70
 PROCCreateTerrain(terrainsize%, terrainsize%, 1.0, 8.0, 1.0, &000060, &000030, &000030, 10.0, 10.0)
 terrain1%=OBJECT terrain%, 0, 30, -250, 270, 0, 0, 500, FILLEDWIREFRAME
@@ -76,11 +79,11 @@ COLOUR &004080
 ROTATE terrain1%, 355, 0, 0
 RENDER
 PROCLinesBlackenLogo()
-COLOUR WHITE:TEXTCENTRE coolfont200%, w%/2-250, h%/2-100, "D"
-COLOUR WHITE:TEXTCENTRE coolfont200%, w%/2-125, h%/2-100, "A"
-COLOUR WHITE:TEXTCENTRE coolfont200%, w%/2, h%/2-100, "R"
-COLOUR WHITE:TEXTCENTRE coolfont200%, w%/2+125, h%/2-100, "I"    
-COLOUR WHITE:TEXTCENTRE coolfont200%, w%/2+250, h%/2-100, "C"
+COLOUR WHITE:TEXTCENTRE coolfont%, 150, w%/2-250, h%/2-100, "D"
+COLOUR WHITE:TEXTCENTRE coolfont%, 150, w%/2-125, h%/2-100, "A"
+COLOUR WHITE:TEXTCENTRE coolfont%, 150, w%/2, h%/2-100, "R"
+COLOUR WHITE:TEXTCENTRE coolfont%, 150, w%/2+125, h%/2-100, "I"    
+COLOUR WHITE:TEXTCENTRE coolfont%, 150, w%/2+250, h%/2-100, "C"
 COLOUR RED:RECTANGLE FILL w%/2-300,h%/2+40,w%/2-110,h%/2+50
 COLOUR GREEN:RECTANGLE FILL w%/2-100,h%/2+40,w%/2+100,h%/2+50
 COLOUR BLUE:RECTANGLE FILL w%/2+110,h%/2+40,w%/2+300,h%/2+50
