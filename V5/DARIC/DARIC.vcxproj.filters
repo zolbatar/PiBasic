@@ -1663,6 +1663,9 @@
     <None Include="..\DaricOO\Mandelbrot.daricoo">
       <Filter>Resource Files\DaricOO</Filter>
     </None>
+    <None Include="..\Grammar\DARICOO.g4">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="..\src\jit\asmjit.natvis">

@@ -252,13 +252,13 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 			exit(1);
 		}
 
-		float ddpi, hdpi, vdpi;
+/*		float ddpi, hdpi, vdpi;
 		if (SDL_GetDisplayDPI(0, &ddpi, &hdpi, &vdpi) != 0) {
 			fprintf(stderr, "Failed to obtain DPI information for display 0: %s\n", SDL_GetError());
 			exit(1);
 		}
 		dpi_ratio = ddpi / 96;
-		console_font_size = static_cast<int>(25.0 * dpi_ratio);
+		console_font_size = static_cast<int>(25.0 * dpi_ratio);*/
 
 		screen = SDL_GetWindowSurface(window);
 		SDL_StopTextInput();

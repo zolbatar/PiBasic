@@ -14,7 +14,8 @@ PROCLabel("H", "Travelling Salesman Benchmark", ms%+(7*ys%))
 PROCLabel("I", "World in Lines", ms%+(8*ys%))
 PROCLabel("J", "Sierpinski Triangles", ms%+(9*ys%))
 PROCLabel("K", "'Fake Windows'", ms%+(10*ys%))
-PROCLabel("Z", "Quit", ms%+(12*ys%))
+PROCLabel("L", "Sprites", ms%+(11*ys%))
+PROCLabel("Z", "Quit", ms%+(13*ys%))
 REPEAT
 	A$=GET$
 	CASE A$ OF
@@ -29,6 +30,7 @@ REPEAT
 		WHEN "I","i":CHAIN "WorldInLines"
 		WHEN "J","j":CHAIN "Sierpinski"
 		WHEN "K","k":CHAIN "FakeWindows"
+		WHEN "L","l":CHAIN "Sprites"
 		WHEN "Z","z":END
 	ENDCASE
 	REPEAT UNTIL INKEY(0)=-1

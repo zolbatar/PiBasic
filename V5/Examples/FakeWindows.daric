@@ -5,7 +5,7 @@ INSTALL "Perlin"
 PROCInitPerlin():terrainsize%=250:PROCCreateTerrain(terrainsize%, terrainsize%, 1.0, 15.0, 1.0, &008000, &444444, &EEEEEE, 0.4, 0.7)
 terrain1%=OBJECT terrain%, 0, 0, -300, 330, 0, 0, 250, SHADED
 
-GRAPHICS BANKED
+GRAPHICS BANKED w%, h%
 segw%=w%*0.05
 segh%=h%*0.05
 
