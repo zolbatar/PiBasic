@@ -9,13 +9,6 @@
 extern Environment g_env;
 extern int console_font_size;
 
-#ifdef _DEBUG
-const int DEBUGWINDOW = 1;
-#else
-const int DEBUGWINDOW = 0;
-#endif
-const int FRAMETIME = 50;
-
 #ifdef RISCOS
 void Graphics::graphics_shadow_state_on()
 {
@@ -252,30 +245,37 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 			exit(1);
 		}
 
-/*		float ddpi, hdpi, vdpi;
-		if (SDL_GetDisplayDPI(0, &ddpi, &hdpi, &vdpi) != 0) {
-			fprintf(stderr, "Failed to obtain DPI information for display 0: %s\n", SDL_GetError());
-			exit(1);
+		/*		float ddpi, hdpi, vdpi;
+				if (SDL_GetDisplayDPI(0, &ddpi, &hdpi, &vdpi) != 0) {
+					fprintf(stderr, "Failed to obtain DPI information for display 0: %s\n", SDL_GetError());
+					exit(1);
+				}
+				dpi_ratio = ddpi / 96;
+				console_font_size = static_cast<int>(25.0 * dpi_ratio);*/
+
+		if (HWACCEL) {
 		}
-		dpi_ratio = ddpi / 96;
-		console_font_size = static_cast<int>(25.0 * dpi_ratio);*/
+		else {
 
-		screen = SDL_GetWindowSurface(window);
-		SDL_StopTextInput();
+			screen = SDL_GetWindowSurface(window);
+			SDL_StopTextInput();
 
-		// Format
-		SDL_PixelFormat* pixelFormat = screen->format;
-		Uint32 pixelFormatEnum = pixelFormat->format;
-		const char* surfacePixelFormatName = SDL_GetPixelFormatName(pixelFormatEnum);
-		std::cout << "Pixel format: " << surfacePixelFormatName << std::endl;
+			// Format
+			SDL_PixelFormat* pixelFormat = screen->format;
+			Uint32 pixelFormatEnum = pixelFormat->format;
+			const char* surfacePixelFormatName = SDL_GetPixelFormatName(pixelFormatEnum);
+			std::cout << "Pixel format: " << surfacePixelFormatName << std::endl;
 
-		// Fast lookup of line addresses
-		line_address.resize(screen_height);
-		UINT32 offset = 0;
-		for (int i = 0; i < screen_height; i++) {
-			line_address[i] = offset;
-			offset += screen->w;
+			// Fast lookup of line addresses
+			line_address.resize(screen_height);
+			UINT32 offset = 0;
+			for (int i = 0; i < screen_height; i++) {
+				line_address[i] = offset;
+				offset += screen->w;
+			}
 		}
+
+		// DOes this work in hwaccel mode?
 		if (bank_cache != nullptr)
 			delete bank_cache;
 		bank_cache = new UINT32[screen->pitch * screen_height];
@@ -418,7 +418,7 @@ void Graphics::flip(bool user_specified)
 #else
 	SDL_UpdateWindowSurface(window);
 #endif
-	}
+}
 
 void Graphics::draw_horz_line(int x1, int x2, int y)
 {

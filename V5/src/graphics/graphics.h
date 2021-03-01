@@ -18,6 +18,16 @@
 #include "colour.h"
 #include "sprite.h"
 
+#ifdef _DEBUG
+const bool DEBUGWINDOW = true;
+#else
+const bool DEBUGWINDOW = true;
+#endif
+
+const bool HWACCEL = false;
+
+const int FRAMETIME = 50;
+
 typedef int OutCode;
 
 const int INSIDE = 0; // 0000
@@ -161,6 +171,7 @@ private:
 #ifndef RISCOS
 	SDL_Window* window = NULL;
 	SDL_Surface* screen;
+	SDL_Renderer* renderer;
 #else
 	int size;
 	int desktop_screen_width = 0;

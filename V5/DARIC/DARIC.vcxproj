@@ -668,7 +668,6 @@
     <None Include="..\Examples\FakeWindows.daric" />
     <None Include="..\Examples\Sprites.daric" />
     <None Include="..\Examples\StructuredTypes.daric" />
-    <None Include="..\Grammar\DARICOO.g4" />
     <None Include="..\Manual.json" />
     <None Include="..\Test.daric" />
     <None Include="..\build-grammar.bat" />
