@@ -80,7 +80,7 @@ bool Graphics::draw_sprite(VM_INT handle, VM_INT bank, VM_INT sx, VM_INT sy) {
 	int height = s.height - clip_top - clip_bottom;
 
 	auto saved_raster = raster_mode;
-	raster_mode = RasterMode::BLEND;
+	raster_mode = RasterMode::MASK;
 	if (width > 0 && height > 0) {
 		for (size_t y = clip_top; y < s.height - clip_bottom; y++) {
 			size_t src_offset = (y * s.width) + clip_left;

@@ -258,9 +258,7 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 			exit(1);
 		}
 		dpi_ratio = ddpi / 96;
-		if (initial) {
-			console_font_size = static_cast<int>(static_cast<double>(console_font_size) * dpi_ratio);
-		}
+		console_font_size = static_cast<int>(25.0 * dpi_ratio);
 
 		screen = SDL_GetWindowSurface(window);
 		SDL_StopTextInput();
@@ -420,7 +418,7 @@ void Graphics::flip(bool user_specified)
 #else
 	SDL_UpdateWindowSurface(window);
 #endif
-}
+	}
 
 void Graphics::draw_horz_line(int x1, int x2, int y)
 {

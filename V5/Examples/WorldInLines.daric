@@ -103,9 +103,9 @@ DEF PROCRender()
 		ENDIF
 	NEXT
 	COLOUR YELLOW
-	TEXTCENTRE PROP25, w% / 2, 0, "Press left mouse button to drag"+CHR$(13)
-	TEXTCENTRE PROP25, w% / 2, -1, "z - Zoom In, x - Zoom Out, p - Animate, q - Quit"+CHR$(13)
-	TEXTCENTRE PROP25, w% / 2, -1, STR$(points%) + "/401667 points"
+	TEXTCENTRE PROP,25, w% / 2, 0, "Press left mouse button to drag"+CHR$(13)
+	TEXTCENTRE PROP,25, w% / 2, -1, "z - Zoom In, x - Zoom Out, p - Animate, q - Quit"+CHR$(13)
+	TEXTCENTRE PROP,25, w% / 2, -1, STR$(points%) + "/401667 points"
 ENDPROC
 
 DEF PROCLoadPolygon(filename$, RETURN points%, phase%)

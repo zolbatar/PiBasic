@@ -65,29 +65,34 @@ void Text::print_character(int typeface, int size, char c, int* cursor_x, int* c
 	}
 	auto f = g_env.fonts.get_glyph_x(typeface, size, c);
 	if (f->bitmap != NULL) {
-		auto saved_colour = g_env.graphics.current_colour;
+#ifdef WINDOWS
+		SDL_LockSurface(g_env.graphics.get_screen());
+		auto pixels = (UINT32*)g_env.graphics.get_screen()->pixels;
+#endif
+		auto saved_raster = g_env.graphics.get_raster_mode();
+		g_env.graphics.set_raster_mode(RasterMode::BLEND);
+		auto xs = *cursor_x + f->ix0 + margin;
+		auto ys = *cursor_y + f->iy0 + f->baseline;
+		auto idx = 0;
 		for (int j = 0; j < f->height; ++j) {
 			for (int i = 0; i < f->width; ++i) {
-				auto idx = j * f->width + i;
-				auto v = f->bitmap[idx];
+				auto v = f->bitmap[idx++];
 				if (v > 0) {
-					Colour c;
-
-					// X/Y
-					auto x = *cursor_x + i + f->ix0 + margin;
-					auto y = *cursor_y + j + f->iy0 + f->baseline;
-
-					// Get current pixel colour, a little expensive but worth it for quality
-					auto bg = g_env.graphics.point(x, y);
-					Colour bgC((bg & 0xFF0000) >> 16, (bg & 0xFF00) >> 8, bg & 0xFF);
-
-					g_env.graphics.alpha(bgC, saved_colour, c, v);
-					g_env.graphics.set_colour(c);
+					auto x = xs + i;
+					auto y = ys + j;
+					g_env.graphics.current_colour.set_a(v);
+#ifdef WINDOWS
+					g_env.graphics.plot_sdl(x, y, pixels);
+#else
 					g_env.graphics.plot(x, y);
+#endif
 				}
 			}
 		}
-		g_env.graphics.current_colour = saved_colour;
+		g_env.graphics.set_raster_mode(saved_raster);
+#ifdef WINDOWS
+		SDL_UnlockSurface(g_env.graphics.get_screen());
+#endif
 	}
 	*cursor_x += f->sc_width;
 

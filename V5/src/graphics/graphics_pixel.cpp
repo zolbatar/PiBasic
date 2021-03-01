@@ -1,5 +1,27 @@
 #include "graphics.h"
 
+void Graphics::plot_sdl(int x, int y, UINT32* pixels) {
+	if (x < minX || x > maxX || y < minY || y > maxY)
+		return;
+	int offset = line_address[y] + x;
+	switch (raster_mode) {
+	case RasterMode::BLIT:
+		pixels[offset] = current_colour.get_hex();
+		break;
+	case RasterMode::BLEND: {
+		Colour c = current_colour;
+
+		// Get current pixel colour, a little expensive but worth it for quality
+		auto bg = point(x, y);
+		Colour bgC((bg & 0xFF0000) >> 16, (bg & 0xFF00) >> 8, bg & 0xFF);
+
+		alpha(bgC, current_colour, c, current_colour.get_a());
+		pixels[offset] = c.get_hex();
+		break;
+	}
+	}
+}
+
 void Graphics::plot(int x, int y)
 {
 	if (render_bank != nullptr) {
@@ -16,14 +38,52 @@ void Graphics::plot(int x, int y)
 #ifdef RISCOS
 		UINT32* addr = get_bank_address();
 		int offset = line_address[y] + x;
-		addr[offset] = current_colour.get_hex();
+		switch (raster_mode) {
+		case RasterMode::BLIT:
+			addr[offset] = current_colour.get_hex();
+		case RasterMode::BLEND: {
+			Colour c = current_colour;
+
+			// Get current pixel colour, a little expensive but worth it for quality
+			auto bg = point(x, y);
+			Colour bgC((bg & 0xFF0000) >> 16, (bg & 0xFF00) >> 8, bg & 0xFF);
+
+			alpha(bgC, current_colour, c, current_colour.get_a());
+			pixels[offset] = c.get_hex();
+			break;
+		}
+		}
 #else
 		SDL_LockSurface(screen);
 		auto pixels = (UINT32*)screen->pixels;
 		int offset = line_address[y] + x;
-		pixels[offset] = current_colour.get_hex();
+		switch (raster_mode) {
+		case RasterMode::BLIT:
+			pixels[offset] = current_colour.get_hex();
+			break;
+		case RasterMode::BLEND: {
+			Colour c = current_colour;
+
+			// Get current pixel colour, a little expensive but worth it for quality
+			auto bg = point(x, y);
+			Colour bgC((bg & 0xFF0000) >> 16, (bg & 0xFF00) >> 8, bg & 0xFF);
+
+			alpha(bgC, current_colour, c, current_colour.get_a());
+			pixels[offset] = c.get_hex();
+			break;
+		}
+		}
 		SDL_UnlockSurface(screen);
 #endif
+	}
+	}
+
+void Graphics::plot_multiple(size_t count, UINT32* dest) {
+	for (auto c = 0; c < count; c++) {
+		switch (raster_mode) {
+		case RasterMode::BLIT:
+			break;
+		}
 	}
 }
 
@@ -33,14 +93,14 @@ void Graphics::blit_fast(size_t count, std::vector<Colour>* source, size_t sourc
 		case RasterMode::BLIT:
 			dest[c] = (*source)[source_index + c].get_hex();
 			break;
-		case RasterMode::BLEND: {
+		case RasterMode::MASK: {
 			auto col = (*source)[source_index + c].get_hex();
 			if (col != 0) {
 				dest[c] = col;
 			}
 			break;
-		}
-		}
+}
+}
 	}
 }
 

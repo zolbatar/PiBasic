@@ -20,9 +20,6 @@ DEF PROCSun()
     ys=radius * SIN(RAD(180))
     ye=radius * SIN(RAD(270))
     ym = ye-ys 
-    PRINT ys
-    PRINT ye
-    PRINT ym
     FOR LOCAL angle=180 TO 270 STEP 0.05
         x=radius * COS(RAD(angle))
         y=radius * SIN(RAD(angle))

@@ -39,6 +39,7 @@ enum class EventType {
 
 enum class RasterMode {
 	BLIT,
+	MASK,
 	BLEND
 };
 
@@ -77,7 +78,11 @@ public:
 	void colour_bg(int r, int g, int b);
 	void colour_bg_hex(UINT32 c);
 	void cls();
+#ifdef WINDOWS
+	void plot_sdl(int x, int y, UINT32* pixels);
+#endif
 	void plot(int x, int y);
+	void plot_multiple(size_t count, UINT32* dest);
 	void blit_fast(size_t count, std::vector<Colour>* source, size_t source_index, UINT32* dest);
 	VM_INT point(int x, int y);
 	void flip(bool user_specified);
@@ -93,6 +98,11 @@ public:
 	void cache();
 	void restore();
 	void scroll(VM_INT font_row_height);
+#ifndef RISCOS
+	SDL_Surface* get_screen() { return screen; }
+#endif
+	RasterMode get_raster_mode() { return raster_mode; }
+	void set_raster_mode(RasterMode rm) { raster_mode = rm; }
 	UINT32 get_screen_width();
 	UINT32 get_screen_height();
 	UINT32 get_actual_width() { return screen_width; }

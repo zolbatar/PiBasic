@@ -1,11 +1,13 @@
 INSTALL "SetupGraphics"
+T%=TIME
+REM 64
 
 FOR I% = 0 TO 499
 	COLOUR RND(255), RND(255), RND(255)
 	LINE RND(w%), RND(h%), RND(w%), RND(h%)
 NEXT
 
-FOR I% = 0 TO 99
+FOR I% = 0 TO 999
 	COLOUR RND(255), RND(255), RND(255)
 	TRIANGLE FILL	RND(w%), RND(h%), RND(w%), RND(h%), RND(w%), RND(h%)
 NEXT
@@ -23,5 +25,6 @@ FOR I% = 0 TO 99
 	CIRCLE FILL RND(w%), RND(h%), RND(50)+20
 NEXT
 
+PRINT TIME-T%
 INKEY(1000)
 CHAIN "Welcome"

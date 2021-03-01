@@ -33,10 +33,16 @@ public:
 	BYTE get_r() { return r; }
 	BYTE get_g() { return g; }
 	BYTE get_b() { return b; }
+	BYTE get_a() { return a; }
+	void set_a(BYTE a) {
+		this->a = a;
+	}
 private:
 	BYTE r;
 	BYTE g;
 	BYTE b;
+	BYTE a;
+
 	UINT32 encoded_hex;
 
 	void encode_hex() {

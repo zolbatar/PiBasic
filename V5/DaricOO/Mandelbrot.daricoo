@@ -3,7 +3,7 @@ Const cols:Int = 256,iters:Int = 16,XRange:Real = -2.5,YRange:Real = -1.5
 Local 
 
 Fn Run()
-	Local MaxX = ScreenWidth, MaxY = ScreenHeight
+	Local MaxX = w%, MaxY = h%
 	Local x:Int,y:Int
 
 	For y=0 To MaxY
