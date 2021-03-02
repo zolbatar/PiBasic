@@ -254,12 +254,7 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 				console_font_size = static_cast<int>(25.0 * dpi_ratio);*/
 
 		screen = SDL_GetWindowSurface(window);
-		if (HWACCEL) {
-			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-		}
-		else {
-			renderer = SDL_CreateSoftwareRenderer(screen);
-		}
+		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 		SDL_StopTextInput();
 
 		// Format
@@ -267,14 +262,6 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 		Uint32 pixelFormatEnum = pixelFormat->format;
 		const char* surfacePixelFormatName = SDL_GetPixelFormatName(pixelFormatEnum);
 		std::cout << "Pixel format: " << surfacePixelFormatName << std::endl;
-
-		// Fast lookup of line addresses
-		line_address.resize(screen_height);
-		UINT32 offset = 0;
-		for (int i = 0; i < screen_height; i++) {
-			line_address[i] = offset;
-			offset += screen->w;
-		}
 
 		// DOes this work in hwaccel mode?
 		if (bank_cache != nullptr)
@@ -365,7 +352,8 @@ void Graphics::cls()
 	auto addr = get_bank_address();
 	memset((void*)addr, bg, size);
 #else
-	SDL_FillRect(screen, 0, current_bg_colour.get_hex());
+	SDL_SetRenderDrawColor(renderer, current_bg_colour.get_r(), current_bg_colour.get_g(), current_bg_colour.get_b(), SDL_ALPHA_OPAQUE);
+	SDL_RenderClear(renderer);
 #endif
 	if (!banked)
 		flip(false);
@@ -417,17 +405,13 @@ void Graphics::flip(bool user_specified)
 		graphics_set_vdu_bank(bank);
 	}
 #else
-	if (HWACCEL) {
-		SDL_RenderPresent(renderer);
-	}
-	else {
-		SDL_UpdateWindowSurface(window);
-	}
+	SDL_RenderPresent(renderer);
 #endif
 }
 
 void Graphics::draw_horz_line(int x1, int x2, int y)
 {
+#ifdef RISCOS
 	// Off screen?
 	if (x1 < minX && x2 < minX)
 		return;
@@ -446,29 +430,69 @@ void Graphics::draw_horz_line(int x1, int x2, int y)
 	for (int x = x1; x <= x2; x++) {
 		plot(x, y);
 	}
+#else	
+	set_sdl_colour();
+	SDL_RenderDrawLine(renderer, x1, y, x2, y);
+#endif
 }
+
+#ifndef RISCOS
+void Graphics::set_sdl_colour() {
+	switch (raster_mode) {
+	case RasterMode::BLIT:
+		SDL_SetRenderDrawColor(renderer, current_colour.get_r(), current_colour.get_g(), current_colour.get_b(), SDL_ALPHA_OPAQUE);
+		break;
+	case RasterMode::BLEND:
+		SDL_SetRenderDrawColor(renderer, current_colour.get_r(), current_colour.get_g(), current_colour.get_b(), current_colour.get_a());
+		break;
+	}
+}
+#endif
 
 void Graphics::rectangle(int x1, int y1, int x2, int y2)
 {
+#ifndef RISCOS
+	SDL_Rect rect;
+	rect.x = x1;
+	rect.y = y1;
+	rect.w = x2 - x1;
+	rect.h = y2 - y1;
+	set_sdl_colour();
+	SDL_RenderFillRect(renderer, &rect);
+#else
 	for (int y = y1; y <= y2; y++) {
 		draw_horz_line(x1, x2, y);
 	}
+#endif
 }
 
 void Graphics::clip(int x1, int y1, int x2, int y2)
 {
+#ifndef RISCOS
+	SDL_Rect clip;
+	clip.x = x1;
+	clip.y = y1;
+	clip.w = x2 - x1;
+	clip.h = y2 - y1;
+	SDL_RenderSetClipRect(renderer, &clip);
+#else
 	minX = x1;
 	maxX = x2;
 	minY = y1;
 	maxY = y2;
+#endif
 }
 
 void Graphics::clipoff()
 {
+#ifndef RISCOS
+	SDL_RenderSetClipRect(renderer, NULL);
+#else
 	minX = 0;
 	maxX = screen_width - 1;
 	minY = 0;
 	maxY = screen_height - 1;
+#endif
 }
 
 void Graphics::poll()
@@ -500,17 +524,26 @@ void Graphics::scroll(VM_INT font_row_height) {
 		memset((void*)&addr[offset], bg, screen_width * 4);
 	}
 #else
-	UINT32 bg_hex = current_bg_colour.get_hex();
-	SDL_LockSurface(screen);
-	auto pixels = (UINT32*)screen->pixels;
-	auto offset = (screen->pitch * font_row_height) / 4;
-	auto size = (screen->pitch * (screen_height - font_row_height)) / 4;
-	for (int i = 0; i < size; i++) {
-		pixels[i] = pixels[i + offset];
-	}
-	for (int i = 0; i < offset; i++) {
-		pixels[size + i] = bg_hex;
-	}
-	SDL_UnlockSurface(screen);
+	auto surface = SDL_CreateRGBSurfaceWithFormat(0, screen_width, screen_height, 32, SDL_PIXELFORMAT_RGBA8888);
+	SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_RGBA8888, surface->pixels, surface->pitch);
+	auto tex = SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_Rect SourceR;
+	SourceR.x = 0;
+	SourceR.y = font_row_height;
+	SourceR.w = screen_width;
+	SourceR.h = screen_height - font_row_height;
+	SDL_Rect DestR;
+	DestR.x = 0;
+	DestR.y = 0;
+	DestR.w = screen_width;
+	DestR.h = screen_height - font_row_height;
+	SDL_RenderCopy(g_env.graphics.get_renderer(), tex, &SourceR, &DestR);
+	SDL_SetRenderDrawColor(renderer, current_bg_colour.get_r(), current_bg_colour.get_g(), current_bg_colour.get_b(), SDL_ALPHA_OPAQUE);
+	SDL_Rect rect;
+	rect.x = 0;
+	rect.y = screen_height - font_row_height;
+	rect.w = screen_width;
+	rect.h = font_row_height;
+	SDL_RenderFillRect(renderer, &rect);
 #endif
 }

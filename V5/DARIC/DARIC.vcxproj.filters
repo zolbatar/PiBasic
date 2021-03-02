@@ -174,9 +174,6 @@
     <ClCompile Include="..\src\graphics\graphics_clippedline.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\graphics\graphics_text.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\graphics\graphics_triangle.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>

@@ -73,6 +73,7 @@ void Text::print_character(int typeface, int size, char c, int* cursor_x, int* c
 		DestR.y = ys;
 		DestR.w = f->width;
 		DestR.h = f->height;
+		SDL_SetTextureColorMod(f->tex, g_env.graphics.current_colour.get_r(), g_env.graphics.current_colour.get_g(), g_env.graphics.current_colour.get_b());
 		SDL_RenderCopy(g_env.graphics.get_renderer(), f->tex, NULL, &DestR);
 #else
 		auto saved_raster = g_env.graphics.get_raster_mode();
@@ -90,9 +91,9 @@ void Text::print_character(int typeface, int size, char c, int* cursor_x, int* c
 					g_env.graphics.plot(x, y);
 				}
 			}
-		}
-#endif
 	}
+#endif
+}
 	*cursor_x += f->sc_width;
 
 	// End of line?

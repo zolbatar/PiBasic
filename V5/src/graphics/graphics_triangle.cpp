@@ -32,11 +32,6 @@ void draw_triangle_line(int x1, int y1, int x2, int y2, std::vector<int>& x_left
 
 void Graphics::triangle(int x1, int y1, int x2, int y2, int x3, int y3)
 {
- /*   if (USE_RENDERER) {
-        SDL_SetRenderDrawColor(renderer, current_colour.get_r(), current_colour.get_g(), current_colour.get_b(), SDL_ALPHA_OPAQUE);
-        SDL_RenderDrawLine(renderer, x0, y0, x1, y1);
-        return;
-    }*/
     int minx = std::min(std::min(x1, x2), x3);
     int maxx = std::max(std::max(x1, x2), x3);
     int miny = std::min(std::min(y1, y2), y3);

@@ -24,9 +24,6 @@ const bool DEBUGWINDOW = true;
 const bool DEBUGWINDOW = true;
 #endif
 
-const bool HWACCEL = true;
-const bool USE_RENDERER = true;
-
 const int FRAMETIME = 50;
 
 typedef int OutCode;
@@ -89,10 +86,10 @@ public:
 	void colour_bg(int r, int g, int b);
 	void colour_bg_hex(UINT32 c);
 	void cls();
-#ifdef WINDOWS
-	void plot_sdl(int x, int y, UINT32* pixels);
-#endif
 	void plot(int x, int y);
+#ifndef RISCOS
+	void set_sdl_colour();
+#endif
 	void plot_multiple(size_t count, UINT32* dest);
 	void blit_fast(size_t count, std::vector<Colour>* source, size_t source_index, UINT32* dest);
 	VM_INT point(int x, int y);

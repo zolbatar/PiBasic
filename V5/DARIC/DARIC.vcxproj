@@ -401,7 +401,6 @@
     <ClCompile Include="..\src\graphics\graphics_clippedline.cpp" />
     <ClCompile Include="..\src\graphics\graphics_pixel.cpp" />
     <ClCompile Include="..\src\graphics\graphics_sprites.cpp" />
-    <ClCompile Include="..\src\graphics\graphics_text.cpp" />
     <ClCompile Include="..\src\graphics\graphics_triangle.cpp" />
     <ClCompile Include="..\src\graphics\lodepng.cpp" />
     <ClCompile Include="..\src\input\input.cpp" />

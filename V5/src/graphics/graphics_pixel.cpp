@@ -1,27 +1,5 @@
 #include "graphics.h"
 
-void Graphics::plot_sdl(int x, int y, UINT32* pixels) {
-	if (x < minX || x > maxX || y < minY || y > maxY)
-		return;
-	int offset = line_address[y] + x;
-	switch (raster_mode) {
-	case RasterMode::BLIT:
-		pixels[offset] = current_colour.get_hex();
-		break;
-	case RasterMode::BLEND: {
-		Colour c = current_colour;
-
-		// Get current pixel colour, a little expensive but worth it for quality
-		auto bg = point(x, y);
-		Colour bgC((bg & 0xFF0000) >> 16, (bg & 0xFF00) >> 8, bg & 0xFF);
-
-		alpha(bgC, current_colour, c, current_colour.get_a());
-		pixels[offset] = c.get_hex();
-		break;
-	}
-	}
-}
-
 void Graphics::plot(int x, int y)
 {
 	if (render_bank != nullptr) {
@@ -33,9 +11,9 @@ void Graphics::plot(int x, int y)
 		(*render_bank)[loc] = current_colour;
 	}
 	else {
+#ifdef RISCOS
 		if (x < minX || x > maxX || y < minY || y > maxY)
 			return;
-#ifdef RISCOS
 		UINT32* addr = get_bank_address();
 		int offset = line_address[y] + x;
 		switch (raster_mode) {
@@ -54,29 +32,11 @@ void Graphics::plot(int x, int y)
 		}
 		}
 #else
-		SDL_LockSurface(screen);
-		auto pixels = (UINT32*)screen->pixels;
-		int offset = line_address[y] + x;
-		switch (raster_mode) {
-		case RasterMode::BLIT:
-			pixels[offset] = current_colour.get_hex();
-			break;
-		case RasterMode::BLEND: {
-			Colour c = current_colour;
-
-			// Get current pixel colour, a little expensive but worth it for quality
-			auto bg = point(x, y);
-			Colour bgC((bg & 0xFF0000) >> 16, (bg & 0xFF00) >> 8, bg & 0xFF);
-
-			alpha(bgC, current_colour, c, current_colour.get_a());
-			pixels[offset] = c.get_hex();
-			break;
-		}
-		}
-		SDL_UnlockSurface(screen);
+		set_sdl_colour();
+		SDL_RenderDrawPoint(renderer, x, y);
 #endif
 	}
-	}
+}
 
 void Graphics::plot_multiple(size_t count, UINT32* dest) {
 	for (auto c = 0; c < count; c++) {
@@ -99,8 +59,8 @@ void Graphics::blit_fast(size_t count, std::vector<Colour>* source, size_t sourc
 				dest[c] = col;
 			}
 			break;
-}
-}
+		}
+		}
 	}
 }
 
