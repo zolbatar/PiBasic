@@ -1,6 +1,14 @@
 #pragma once
 #define STBTT_STATIC
 #define STB_TRUETYPE_IMPLEMENTATION
+#ifdef __unix__
+#include <SDL2/SDL.h>
+#elif RISCOS
+#include "kernel.h"
+#include "swis.h"
+#else
+#include <SDL.h>
+#endif
 #include "stb_truetype.h"
 #include "../types.h"
 #include <vector>
@@ -15,6 +23,9 @@ struct Glyph {
 	float scale;
 	int baseline;
 	unsigned char* bitmap;
+#ifndef RISCOS
+	SDL_Texture* tex;
+#endif
 	int ix0, iy0, ix1, iy1;
 	int advance, lsb;
 	int sc_width;

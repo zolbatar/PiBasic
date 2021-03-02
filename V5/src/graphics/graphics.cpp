@@ -253,26 +253,27 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 				dpi_ratio = ddpi / 96;
 				console_font_size = static_cast<int>(25.0 * dpi_ratio);*/
 
+		screen = SDL_GetWindowSurface(window);
 		if (HWACCEL) {
+			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 		}
 		else {
+			renderer = SDL_CreateSoftwareRenderer(screen);
+		}
+		SDL_StopTextInput();
 
-			screen = SDL_GetWindowSurface(window);
-			SDL_StopTextInput();
+		// Format
+		SDL_PixelFormat* pixelFormat = screen->format;
+		Uint32 pixelFormatEnum = pixelFormat->format;
+		const char* surfacePixelFormatName = SDL_GetPixelFormatName(pixelFormatEnum);
+		std::cout << "Pixel format: " << surfacePixelFormatName << std::endl;
 
-			// Format
-			SDL_PixelFormat* pixelFormat = screen->format;
-			Uint32 pixelFormatEnum = pixelFormat->format;
-			const char* surfacePixelFormatName = SDL_GetPixelFormatName(pixelFormatEnum);
-			std::cout << "Pixel format: " << surfacePixelFormatName << std::endl;
-
-			// Fast lookup of line addresses
-			line_address.resize(screen_height);
-			UINT32 offset = 0;
-			for (int i = 0; i < screen_height; i++) {
-				line_address[i] = offset;
-				offset += screen->w;
-			}
+		// Fast lookup of line addresses
+		line_address.resize(screen_height);
+		UINT32 offset = 0;
+		for (int i = 0; i < screen_height; i++) {
+			line_address[i] = offset;
+			offset += screen->w;
 		}
 
 		// DOes this work in hwaccel mode?
@@ -416,7 +417,12 @@ void Graphics::flip(bool user_specified)
 		graphics_set_vdu_bank(bank);
 	}
 #else
-	SDL_UpdateWindowSurface(window);
+	if (HWACCEL) {
+		SDL_RenderPresent(renderer);
+	}
+	else {
+		SDL_UpdateWindowSurface(window);
+	}
 #endif
 }
 

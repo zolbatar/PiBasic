@@ -65,10 +65,16 @@ void Text::print_character(int typeface, int size, char c, int* cursor_x, int* c
 	}
 	auto f = g_env.fonts.get_glyph_x(typeface, size, c);
 	if (f->bitmap != NULL) {
-#ifdef WINDOWS
-		SDL_LockSurface(g_env.graphics.get_screen());
-		auto pixels = (UINT32*)g_env.graphics.get_screen()->pixels;
-#endif
+#ifndef RISCOS
+		auto xs = *cursor_x + f->ix0 + margin;
+		auto ys = *cursor_y + f->iy0 + f->baseline;
+		SDL_Rect DestR;
+		DestR.x = xs;
+		DestR.y = ys;
+		DestR.w = f->width;
+		DestR.h = f->height;
+		SDL_RenderCopy(g_env.graphics.get_renderer(), f->tex, NULL, &DestR);
+#else
 		auto saved_raster = g_env.graphics.get_raster_mode();
 		g_env.graphics.set_raster_mode(RasterMode::BLEND);
 		auto xs = *cursor_x + f->ix0 + margin;
@@ -81,17 +87,10 @@ void Text::print_character(int typeface, int size, char c, int* cursor_x, int* c
 					auto x = xs + i;
 					auto y = ys + j;
 					g_env.graphics.current_colour.set_a(v);
-#ifdef WINDOWS
-					g_env.graphics.plot_sdl(x, y, pixels);
-#else
 					g_env.graphics.plot(x, y);
-#endif
 				}
 			}
 		}
-		g_env.graphics.set_raster_mode(saved_raster);
-#ifdef WINDOWS
-		SDL_UnlockSurface(g_env.graphics.get_screen());
 #endif
 	}
 	*cursor_x += f->sc_width;

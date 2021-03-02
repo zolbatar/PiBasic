@@ -45,6 +45,14 @@ OutCode Graphics::ComputeOutCode(int x, int y) {
 // diagonal from (minX, minY) to (maxX, maxY).
 void Graphics::line(int x0, int y0, int x1, int y1) {
 
+#ifdef WINDOWS
+    if (USE_RENDERER) {
+        SDL_SetRenderDrawColor(renderer, current_colour.get_r(), current_colour.get_g(), current_colour.get_b(), SDL_ALPHA_OPAQUE);
+        SDL_RenderDrawLine(renderer, x0, y0, x1, y1);
+        return;
+    }
+#endif
+
     // compute outcodes for P0, P1, and whatever point lies outside the clip rectangle
     OutCode outcode0 = ComputeOutCode(x0, y0);
     OutCode outcode1 = ComputeOutCode(x1, y1);

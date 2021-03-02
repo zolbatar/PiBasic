@@ -1,8 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include "fonts.h"
+#include "../environment.h"
 
 int console_font_size = 25;
+extern Environment g_env;
 
 VM_INT Fonts::load_typeface(const char* filename)
 {
@@ -61,6 +63,22 @@ Glyph* Fonts::get_glyph_x(VM_INT typeface, VM_INT size, BYTE ascii)
 	// Create the glpyh
 	Glyph f;
 	f.bitmap = stbtt_GetCodepointBitmap(ff, 0, stbtt_ScaleForPixelHeight(ff, static_cast<float>(size)), ascii, &f.width, &f.height, 0, 0);
+
+	// Create texture?
+#ifndef RISCOS
+	f.tex = SDL_CreateTexture(g_env.graphics.get_renderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STATIC | SDL_TEXTUREACCESS_TARGET, f.width, f.height);
+	SDL_SetRenderTarget(g_env.graphics.get_renderer(), f.tex);
+	int idx = 0;
+	for (int j = 0; j < f.height; ++j) {
+		for (int i = 0; i < f.width; ++i) {
+			auto v = f.bitmap[idx++];
+			SDL_SetRenderDrawColor(g_env.graphics.get_renderer(), 0xFF, 0xFF, 0xFF, v);
+			SDL_RenderDrawPoint(g_env.graphics.get_renderer(), i, j);
+		}
+	}
+	SDL_SetRenderTarget(g_env.graphics.get_renderer(), NULL);
+	SDL_SetTextureBlendMode(f.tex, SDL_BLENDMODE_BLEND);
+#endif
 
 	// Baseline
 	f.scale = stbtt_ScaleForPixelHeight(ff, static_cast<float>(size));

@@ -24,7 +24,8 @@ const bool DEBUGWINDOW = true;
 const bool DEBUGWINDOW = true;
 #endif
 
-const bool HWACCEL = false;
+const bool HWACCEL = true;
+const bool USE_RENDERER = true;
 
 const int FRAMETIME = 50;
 
@@ -110,6 +111,7 @@ public:
 	void scroll(VM_INT font_row_height);
 #ifndef RISCOS
 	SDL_Surface* get_screen() { return screen; }
+	SDL_Renderer* get_renderer() { return renderer; }
 #endif
 	RasterMode get_raster_mode() { return raster_mode; }
 	void set_raster_mode(RasterMode rm) { raster_mode = rm; }
