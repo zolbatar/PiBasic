@@ -1,14 +1,24 @@
 #include "graphics.h"
+#include "../environment.h"
+
+extern Environment g_env;
 
 void Graphics::plot(int x, int y)
 {
 	if (render_bank != nullptr) {
-		if (x < bank_x1 || x > bank_x2 || y < bank_y1 || y > bank_y2)
+		if (x < g_env.sprite.bank_x1 || x > g_env.sprite.bank_x2 || y < g_env.sprite.bank_y1 || y > g_env.sprite.bank_y2)
 			return;
-		auto yb = y - bank_y1;
-		auto xb = x - bank_x1;
-		auto loc = (yb * bank_width) + xb;
+		auto yb = y - g_env.sprite.bank_y1;
+		auto xb = x - g_env.sprite.bank_x1;
+#ifndef RISCOS
+		SDL_SetRenderTarget(g_env.graphics.get_renderer(), render_bank);
+		set_sdl_colour();
+		SDL_RenderDrawPoint(g_env.graphics.get_renderer(), xb, yb);
+		SDL_SetRenderTarget(g_env.graphics.get_renderer(), NULL);
+#else
+		auto loc = (yb * g_env.sprite.bank_width) + xb;
 		(*render_bank)[loc] = current_colour;
+#endif
 	}
 	else {
 #ifdef RISCOS
@@ -79,11 +89,12 @@ VM_INT Graphics::point(int x, int y)
 	auto r = (v & 0x0000FF);
 	return (r << 16) + (g << 8) + b;
 #else
+/*	SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_RGBA8888, screen->pixels, screen->pitch);
 	SDL_LockSurface(screen);
 	auto pixels = (UINT32*)screen->pixels;
 	int offset = line_address[y] + x;
 	VM_INT v = pixels[offset];
-	SDL_UnlockSurface(screen);
-	return v;
+	SDL_UnlockSurface(screen);*/
+	return 0;
 #endif
 }

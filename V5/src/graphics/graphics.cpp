@@ -68,6 +68,12 @@ void Graphics::shutdown()
 	graphics_set_display_bank(1);
 	graphics_set_vdu_bank(1);
 #else
+	if (renderer != nullptr) {
+		SDL_DestroyRenderer(renderer);
+	}
+	if (window != nullptr) {
+		SDL_DestroyWindow(window);
+	}
 	SDL_Quit();
 #endif
 }
@@ -229,45 +235,55 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 		bank_cache = new UINT32[size];
 	}
 #else
-	if (reinit || initial) {
-		int params = SDL_WINDOW_ALLOW_HIGHDPI;
-		if (!DEBUGWINDOW) {
+	int params = SDL_WINDOW_ALLOW_HIGHDPI;
+	if (!DEBUGWINDOW) {
 #ifdef _DEBUG
-			params |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+		params |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 #else
-			params |= SDL_WINDOW_FULLSCREEN;
+		params |= SDL_WINDOW_FULLSCREEN;
 #endif
-		}
-
-		window = SDL_CreateWindow("DARIC", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, params);
-		if (!window) {
-			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
-			exit(1);
-		}
-
-		/*		float ddpi, hdpi, vdpi;
-				if (SDL_GetDisplayDPI(0, &ddpi, &hdpi, &vdpi) != 0) {
-					fprintf(stderr, "Failed to obtain DPI information for display 0: %s\n", SDL_GetError());
-					exit(1);
-				}
-				dpi_ratio = ddpi / 96;
-				console_font_size = static_cast<int>(25.0 * dpi_ratio);*/
-
-		screen = SDL_GetWindowSurface(window);
-		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-		SDL_StopTextInput();
-
-		// Format
-		SDL_PixelFormat* pixelFormat = screen->format;
-		Uint32 pixelFormatEnum = pixelFormat->format;
-		const char* surfacePixelFormatName = SDL_GetPixelFormatName(pixelFormatEnum);
-		std::cout << "Pixel format: " << surfacePixelFormatName << std::endl;
-
-		// DOes this work in hwaccel mode?
-		if (bank_cache != nullptr)
-			delete bank_cache;
-		bank_cache = new UINT32[screen->pitch * screen_height];
 	}
+
+	if (reinit) {
+		g_env.fonts.clear_all();
+	}
+
+	// Do we have previous stuff?
+	if (renderer != nullptr) {
+		SDL_DestroyRenderer(renderer);
+	}
+	if (window != nullptr) {
+		SDL_DestroyWindow(window);
+	}
+
+	window = SDL_CreateWindow("DARIC", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, params);
+	if (!window) {
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
+		exit(1);
+	}
+
+	/*		float ddpi, hdpi, vdpi;
+			if (SDL_GetDisplayDPI(0, &ddpi, &hdpi, &vdpi) != 0) {
+				fprintf(stderr, "Failed to obtain DPI information for display 0: %s\n", SDL_GetError());
+				exit(1);
+			}
+			dpi_ratio = ddpi / 96;
+			console_font_size = static_cast<int>(25.0 * dpi_ratio);*/
+
+	screen = SDL_GetWindowSurface(window);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	SDL_StopTextInput();
+
+	// Format
+	SDL_PixelFormat* pixelFormat = screen->format;
+	Uint32 pixelFormatEnum = pixelFormat->format;
+	const char* surfacePixelFormatName = SDL_GetPixelFormatName(pixelFormatEnum);
+	std::cout << "Pixel format: " << surfacePixelFormatName << std::endl;
+
+	// DOes this work in hwaccel mode?
+	if (bank_cache != nullptr)
+		delete bank_cache;
+	bank_cache = new UINT32[screen->pitch * screen_height];
 #endif
 	current_colour = Colour(255, 255, 255);
 	opened = true;
@@ -538,6 +554,8 @@ void Graphics::scroll(VM_INT font_row_height) {
 	DestR.w = screen_width;
 	DestR.h = screen_height - font_row_height;
 	SDL_RenderCopy(g_env.graphics.get_renderer(), tex, &SourceR, &DestR);
+	SDL_DestroyTexture(tex);
+	SDL_FreeSurface(surface);
 	SDL_SetRenderDrawColor(renderer, current_bg_colour.get_r(), current_bg_colour.get_g(), current_bg_colour.get_b(), SDL_ALPHA_OPAQUE);
 	SDL_Rect rect;
 	rect.x = 0;

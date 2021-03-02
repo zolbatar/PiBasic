@@ -51,9 +51,14 @@ antlrcpp::Any Compiler::visitStmtDRAWSPRITE(DARICParser::StmtDRAWSPRITEContext* 
 	set_pos(context->start);
 	if (phase == CompilerPhase::LOOKAHEAD)
 		return NULL;
-	for (auto i = 0; i < context->numExpr().size(); i++) {
+	for (auto i = 0; i < 4; i++) {
 		visit(context->numExpr(i));
 		ensure_stack_is_integer();
+		stack_pop();
+	}
+	for (auto i = 4; i < 6; i++) {
+		visit(context->numExpr(i));
+		ensure_stack_is_float();
 		stack_pop();
 	}
 	insert_bytecode_notype(Bytecodes::DRAWSPRITE);

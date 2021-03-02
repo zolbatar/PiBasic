@@ -17,7 +17,9 @@
 const int console_font = 0;
 extern int console_font_size;
 
-struct Glyph {
+class Glyph {
+public:
+	~Glyph() { SDL_DestroyTexture(tex); }
 	int width;
 	int height;
 	float scale;
@@ -33,6 +35,7 @@ struct Glyph {
 
 class Fonts {
 public:
+	void clear_all();
 	VM_INT load_typeface(const char* filename);
 	VM_INT get_font_height(VM_INT typeface, VM_INT size);
 	Glyph* get_glyph_x(VM_INT typeface, VM_INT size, BYTE ascii);

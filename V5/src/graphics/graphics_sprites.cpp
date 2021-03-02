@@ -2,73 +2,82 @@
 #include "lodepng.h"
 #include <iostream>
 #include <stdlib.h>
+#include "../environment.h"
 
-VM_INT Graphics::create_sprite(VM_INT w, VM_INT h, VM_INT banks) {
+extern Environment g_env;
+
+VM_INT Sprites::create_sprite(VM_INT w, VM_INT h, VM_INT banks) {
 	Sprite s;
 	s.width = w;
 	s.height = h;
 	for (auto i = 0; i < banks; i++) {
+#ifdef RISCOS
 		std::vector<Colour> bank(s.width * s.height);
 		s.banks.push_back(std::move(bank));
+#else
+		auto texture = SDL_CreateTexture(g_env.graphics.get_renderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STATIC | SDL_TEXTUREACCESS_TARGET, w, h);
+		s.banks.push_back(std::move(texture));
+#endif
 	}
 	auto index = sprites.size();
 	sprites.insert(std::make_pair<VM_INT, Sprite>(static_cast<VM_INT>(index), std::move(s)));
 	return static_cast<VM_INT>(index);
 }
 
-void Graphics::delete_sprite(VM_INT handle) {
+void Sprites::delete_sprite(VM_INT handle) {
 	sprites.erase(handle);
 }
 
-bool Graphics::render_to_sprite(VM_INT handle, VM_INT bank, VM_INT offset_x, VM_INT offset_y) {
+bool Sprites::render_to_sprite(VM_INT handle, VM_INT bank, VM_INT offset_x, VM_INT offset_y) {
 	auto sprite = sprites.find(handle);
 
 	// Does sprite exist?
 	if (sprite == sprites.end()) {
 		return false;
 	}
-	auto s = &((*sprite).second);
+	auto s = &(sprite->second);
 
 	// Does bank exist?
 	if (bank >= s->banks.size()) {
 		return false;
 	}
-	render_bank = &s->banks[bank];
-	bank_x1 = offset_x;
-	bank_y1 = offset_y;
-	bank_x2 = s->width + offset_x - 1;
-	bank_y2 = s->height + offset_y - 1;
-	bank_width = s->width;
-	bank_height = s->height;
+#ifdef RISCOS
+	g_env.graphics.set_render_bank(&s->banks[bank]);
+#else
+	g_env.graphics.set_render_bank(s->banks[bank]);
+	SDL_SetTextureBlendMode(s->banks[bank], SDL_BLENDMODE_NONE);
+#endif
+	g_env.sprite.bank_x1 = offset_x;
+	g_env.sprite.bank_y1 = offset_y;
+	g_env.sprite.bank_x2 = s->width + offset_x - 1;
+	g_env.sprite.bank_y2 = s->height + offset_y - 1;
+	g_env.sprite.bank_width = s->width;
+	g_env.sprite.bank_height = s->height;
 	return true;
 }
 
-void Graphics::render_to_screen() {
-	render_bank = nullptr;
+void Sprites::render_to_screen() {
+	g_env.graphics.set_render_bank(nullptr);
 }
 
-bool Graphics::draw_sprite(VM_INT handle, VM_INT bank, VM_INT sx, VM_INT sy) {
+bool Sprites::draw_sprite(VM_INT handle, VM_INT bank, VM_INT sx, VM_INT sy, VM_FLOAT rot) {
 	auto sprite = sprites.find(handle);
 
 	// Does sprite exist?
 	if (sprite == sprites.end()) {
 		return false;
 	}
-	auto s = (*sprite).second;
+	auto s = sprite->second;
 
 	// Does bank exist?
 	if (bank >= s.banks.size()) {
 		return false;
 	}
-	auto b = s.banks[bank];
 
 	// Render!!
 #ifdef RISCOS
+	auto b = s.banks[bank];
 	UINT32* pixels = get_bank_address();
-#else
-	SDL_LockSurface(screen);
-	UINT32* pixels = (UINT32*)screen->pixels;
-#endif
 
 	// Work out how much to clip 
 	size_t clip_left = sx < minX ? minX - sx : 0;
@@ -90,15 +99,19 @@ bool Graphics::draw_sprite(VM_INT handle, VM_INT bank, VM_INT sx, VM_INT sy) {
 		}
 	}
 	raster_mode = saved_raster;
-
-#ifdef RISCOS
 #else
-	SDL_UnlockSurface(screen);
+	auto b = s.banks[bank];
+	SDL_Rect DestR;
+	DestR.x = sx;
+	DestR.y = sy;
+	DestR.w = s.width;
+	DestR.h = s.height;
+	SDL_RenderCopy(g_env.graphics.get_renderer(), b, NULL, &DestR);
 #endif
 	return true;
 }
 
-VM_INT Graphics::create_sprite_from_image(std::string filename) {
+VM_INT Sprites::create_sprite_from_image(std::string filename) {
 	std::vector<unsigned char> image; //the raw pixels
 	UINT32 width, height;
 	UINT32 error = lodepng::decode(image, width, height, filename);
@@ -111,7 +124,11 @@ VM_INT Graphics::create_sprite_from_image(std::string filename) {
 	Sprite s;
 	s.width = width;
 	s.height = height;
+#ifdef RISCOS
 	std::vector<Colour> bank(s.width * s.height);
+#else
+	std::vector<Colour> bank(s.width * s.height);
+#endif
 
 	// Populate with data
 	auto size = image.size() / 4;
@@ -119,12 +136,31 @@ VM_INT Graphics::create_sprite_from_image(std::string filename) {
 		std::cout << "Size mismatch on PNG load" << std::endl;
 		exit(0);
 	}
+#ifdef RISCOS
 	for (auto i = 0; i < size; i++) {
 		size_t index = i * 4;
 		Colour c = Colour(image[index], image[index + 1], image[index + 2]);
 		bank[i] = c;
 	}
 	s.banks.push_back(std::move(bank));
+#else
+	auto texture = SDL_CreateTexture(g_env.graphics.get_renderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STATIC | SDL_TEXTUREACCESS_TARGET, width, height);
+	SDL_SetRenderTarget(g_env.graphics.get_renderer(), texture);
+	int idx = 0;
+	for (int y = 0; y < height; ++y) {
+		for (int x = 0; x < width; ++x) {
+			auto r = image[idx++];
+			auto g = image[idx++];
+			auto b = image[idx++];
+			auto a = image[idx++];
+			SDL_SetRenderDrawColor(g_env.graphics.get_renderer(), r, g, b, a);
+			SDL_RenderDrawPoint(g_env.graphics.get_renderer(), x, y);
+		}
+	}
+	SDL_SetRenderTarget(g_env.graphics.get_renderer(), NULL);
+	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
+	s.banks.push_back(std::move(texture));
+#endif
 
 	// And save and return
 	auto index = sprites.size();

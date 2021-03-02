@@ -196,7 +196,7 @@ stmtSHOWFPS:        SHOWFPS ;
 /* Sprites */
 stmtRENDERTOSPRITE: DRAWTOSPRITE numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
 stmtRENDERTOSCREEN: DRAWTOSCREEN ;
-stmtDRAWSPRITE:     DRAWSPRITE numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtDRAWSPRITE:     DRAWSPRITE numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
 stmtDELETESPRITE:   DELETESPRITE numExpr ;
 
 /* 3D */

@@ -2470,7 +2470,7 @@ void VM::opcode_TEXTCENTRE()
 
 void VM::opcode_LOADSPRITE() {
 	VM_STRING filename = stack.pop_string(bc);
-	VM_INT handle = g_env.graphics.create_sprite_from_image(filename);
+	VM_INT handle = g_env.sprite.create_sprite_from_image(filename);
 	stack.push_int(handle);
 	if (!performance_build && runtime_debug)
 		g_env.log("Loaded sprite at '" + filename + "', handle is " + std::to_string(handle));
@@ -2480,7 +2480,7 @@ void VM::opcode_CREATESPRITE() {
 	VM_INT banks = stack.pop_int(bc);
 	VM_INT h = stack.pop_int(bc);
 	VM_INT w = stack.pop_int(bc);
-	VM_INT handle = g_env.graphics.create_sprite(w, h, banks);
+	VM_INT handle = g_env.sprite.create_sprite(w, h, banks);
 	stack.push_int(handle);
 	if (!performance_build && runtime_debug)
 		g_env.log("Creating sprite of " + std::to_string(w) + "x" + std::to_string(h) + " of " + std::to_string(banks) + "banks, handle is " + std::to_string(handle));
@@ -2488,7 +2488,7 @@ void VM::opcode_CREATESPRITE() {
 
 void VM::opcode_DELETESPRITE() {
 	VM_INT handle = stack.pop_int(bc);
-	g_env.graphics.delete_sprite(handle);
+	g_env.sprite.delete_sprite(handle);
 	if (!performance_build && runtime_debug)
 		g_env.log("Deleting sprite " + std::to_string(handle));
 }
@@ -2498,26 +2498,28 @@ void VM::opcode_RENDERTOSPRITE() {
 	VM_INT x = stack.pop_int(bc);
 	VM_INT bank = stack.pop_int(bc);
 	VM_INT handle = stack.pop_int(bc);
-	g_env.graphics.render_to_sprite(handle, bank, x, y);
+	g_env.sprite.render_to_sprite(handle, bank, x, y);
 	if (!performance_build && runtime_debug)
 		g_env.log("Render to sprite " + std::to_string(handle) + ":" + std::to_string(bank) + " offset " + std::to_string(x) + "," + std::to_string(y));
 }
 
 void VM::opcode_RENDERTOSCREEN() {
-	g_env.graphics.render_to_screen();
+	g_env.sprite.render_to_screen();
 }
 
 void VM::opcode_DRAWSPRITE() {
+	VM_FLOAT scale = stack.pop_float(bc);
+	VM_FLOAT rot = stack.pop_float(bc);
 	VM_INT y = stack.pop_int(bc);
 	VM_INT x = stack.pop_int(bc);
 	VM_INT bank = stack.pop_int(bc);
 	VM_INT handle = stack.pop_int(bc);
-	auto r = g_env.graphics.draw_sprite(handle, bank, x, y);
+	auto r = g_env.sprite.draw_sprite(handle, bank, x, y, rot);
 	if (!r) {
 		error("Sprite " + std::to_string(handle) + ", error drawing");
 	}
 	if (!performance_build && runtime_debug)
-		g_env.log("Render to sprite " + std::to_string(handle) + ":" + std::to_string(bank) + " offset " + std::to_string(x) + "," + std::to_string(y));
+		g_env.log("Draw sprite " + std::to_string(handle) + ":" + std::to_string(bank) + " offset " + std::to_string(x) + "," + std::to_string(y) + "," + std::to_string(rot) + "," + std::to_string(scale));
 }
 
 void VM::opcode_CREATEVERTEX()

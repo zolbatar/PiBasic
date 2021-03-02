@@ -117,14 +117,6 @@ public:
 	UINT32 get_actual_width() { return screen_width; }
 	UINT32 get_actual_height() { return screen_height; }
 
-	// Sprites
-	VM_INT create_sprite(VM_INT w, VM_INT h, VM_INT banks);
-	void delete_sprite(VM_INT handle);
-	bool render_to_sprite(VM_INT handle, VM_INT bank, VM_INT offset_x, VM_INT offset_y);
-	void render_to_screen();
-	bool draw_sprite(VM_INT handle, VM_INT bank, VM_INT x, VM_INT y);
-	VM_INT create_sprite_from_image(std::string filename);
-
 #ifdef RISCOS
 	void graphics_shadow_state_on();
 	void graphics_shadow_state_off();
@@ -151,6 +143,13 @@ public:
 
 	Colour current_colour = Colour(255, 255, 255);
 	Colour current_bg_colour = Colour(0, 0, 0);
+
+#ifdef RISCOS
+	void set_render_bank(std::vector<Colour>* b) { render_bank = b }
+#else
+	void set_render_bank(SDL_Texture* b) { render_bank = b; }
+#endif
+
 private:
 	bool default_fonts_loaded = false;
 	std::chrono::high_resolution_clock::time_point last_render;
@@ -158,20 +157,20 @@ private:
 	int fps_count = 0;
 	std::string fps_text = "0 FPS";
 	VM_INT fps_clock = get_clock();
-	std::map<VM_INT, Sprite> sprites;
-	size_t bank_width, bank_height;
-	size_t bank_x1, bank_y1, bank_x2, bank_y2;
+#ifdef RISCOS
 	std::vector<Colour>* render_bank = nullptr;
+#else
+	SDL_Texture* render_bank = nullptr;
+#endif
 	RasterMode raster_mode = RasterMode::BLIT;
 	double dpi_ratio = 1.0;
 
-	// Fast line lookup
-	std::vector<size_t> line_address;
 #ifndef RISCOS
-	SDL_Window* window = NULL;
-	SDL_Surface* screen;
-	SDL_Renderer* renderer;
+	SDL_Window* window = nullptr;
+	SDL_Surface* screen = nullptr;
+	SDL_Renderer* renderer = nullptr;
 #else
+	std::vector<size_t> line_address;
 	int size;
 	int desktop_screen_width = 0;
 	int desktop_screen_height = 0;
