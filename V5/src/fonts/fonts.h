@@ -1,6 +1,7 @@
 #pragma once
 #define STBTT_STATIC
 #define STB_TRUETYPE_IMPLEMENTATION
+#include "stb_truetype.h"
 #ifdef __unix__
 #include <SDL2/SDL.h>
 #elif RISCOS
@@ -9,7 +10,6 @@
 #else
 #include <SDL.h>
 #endif
-#include "stb_truetype.h"
 #include "../types.h"
 #include <vector>
 #include <map>

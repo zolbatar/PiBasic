@@ -66,7 +66,8 @@ Glyph* Fonts::get_glyph_x(VM_INT typeface, VM_INT size, BYTE ascii)
 
 	// Create the glpyh
 	Glyph f;
-	f.bitmap = stbtt_GetCodepointBitmap(ff, 0, stbtt_ScaleForPixelHeight(ff, static_cast<float>(size)), ascii, &f.width, &f.height, 0, 0);
+	auto sc = stbtt_ScaleForPixelHeight(ff, static_cast<float>(size));
+	f.bitmap = stbtt_GetCodepointBitmap(ff, 0, sc, ascii, &f.width, &f.height, 0, 0);
 
 	// Create texture?
 #ifndef RISCOS
