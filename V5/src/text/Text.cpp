@@ -97,7 +97,7 @@ void Text::print_character(int typeface, int size, char c, int* cursor_x, int* c
 	*cursor_x += f->sc_width;
 
 	// End of line?
-	while (*cursor_x + f->sc_width + (margin * 2) >= g_env.graphics.get_screen_width()) {
+	while (*cursor_x + f->sc_width + (margin * 2) >= g_env.graphics.get_actual_width()) {
 		*cursor_y += font_row_height;
 		*cursor_x = 0;
 	}
@@ -114,7 +114,7 @@ void Text::cursor_back(int typeface, int size)
 	auto font_row_height = g_env.fonts.get_font_height(console_font, console_font_size);
 	last_cursor_x -= f->sc_width;
 	if (last_cursor_x < 0) {
-		auto max_chars = (g_env.graphics.get_screen_width() - (margin * 2)) / f->sc_width;
+		auto max_chars = (g_env.graphics.get_actual_width() - (margin * 2)) / f->sc_width;
 		last_cursor_x = (max_chars - 1) * f->sc_width + margin;
 		last_cursor_y -= font_row_height;
 	}
@@ -129,7 +129,7 @@ void Text::delete_character(int typeface, int size)
 	last_cursor_x -= f->sc_width;
 	auto font_row_height = g_env.fonts.get_font_height(console_font, console_font_size);
 	if (last_cursor_x < 0) {
-		auto max_chars = (g_env.graphics.get_screen_width() - (margin * 2)) / f->sc_width;
+		auto max_chars = (g_env.graphics.get_actual_width() - (margin * 2)) / f->sc_width;
 		last_cursor_x = (max_chars - 1) * f->sc_width;
 		last_cursor_y -= font_row_height;
 	}
@@ -146,7 +146,7 @@ void Text::delete_character(int typeface, int size)
 
 void Text::set_margin(int margin)
 {
-	this->margin = margin;
+//	this->margin = margin;
 }
 
 void Text::print_text(int typeface, int size, VM_STRING text, int cursor_x, int cursor_y)

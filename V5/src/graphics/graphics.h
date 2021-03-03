@@ -21,7 +21,7 @@
 #ifdef _DEBUG
 const bool DEBUGWINDOW = true;
 #else
-const bool DEBUGWINDOW = true;
+const bool DEBUGWINDOW = false;
 #endif
 
 const int FRAMETIME = 10;

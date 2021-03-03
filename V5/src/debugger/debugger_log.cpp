@@ -12,7 +12,7 @@ void Debugger::debugger_log()
             g_env.text.print_text(disassembly_font, disassembly_font_size, "\r\r", -1, -1);
 
             g_env.graphics.colour(255, 255, 255);
-            int chars = g_env.fonts.max_horz_chars(disassembly_font, disassembly_font_size, g_env.graphics.get_screen_width());
+            int chars = g_env.fonts.max_horz_chars(disassembly_font, disassembly_font_size, g_env.graphics.get_actual_width());
             for (UINT32 i = 0; i < log_lines; i++) {
                 auto index = i + pos;
                 if (index < g_env.log_list.size()) {
