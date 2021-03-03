@@ -35,7 +35,7 @@ VM_INT Fonts::load_typeface(const char* filename)
 	// Allocate memory (we don't deallocate, so will leave a memory leak)
 	char* ttf_buffer = (char*)malloc(sz);
 	if (!ttf_buffer) {
-		std::cerr << "Can't allocate memory for TTF font\n";
+		std::cout << "Can't allocate memory for TTF font\n";
 		exit(1);
 	}
 
@@ -46,7 +46,11 @@ VM_INT Fonts::load_typeface(const char* filename)
 
 	// Now create font
 	auto index = fonts.size();
-	stbtt_InitFont(f, (const unsigned char*)ttf_buffer, stbtt_GetFontOffsetForIndex((const unsigned char*)ttf_buffer, 0));
+	auto f_o = stbtt_GetFontOffsetForIndex((const unsigned char*)ttf_buffer, 0);
+	if (stbtt_InitFont(f, (const unsigned char*)ttf_buffer, f_o) == 0) {
+		std::cout << "Failure creating TTF font\n";
+		exit(1);
+	}
 	fonts.push_back(f);
 	return index;
 }
@@ -66,8 +70,18 @@ Glyph* Fonts::get_glyph_x(VM_INT typeface, VM_INT size, BYTE ascii)
 
 	// Create the glpyh
 	Glyph f;
-	auto sc = stbtt_ScaleForPixelHeight(ff, static_cast<float>(size));
-	f.bitmap = stbtt_GetCodepointBitmap(ff, 0, sc, ascii, &f.width, &f.height, 0, 0);
+	f.scale = stbtt_ScaleForPixelHeight(ff, static_cast<float>(size));
+	f.bitmap = stbtt_GetCodepointBitmap(ff, 0, f.scale, ascii, &f.width, &f.height, 0, 0);
+
+	// Baseline
+	int ascent;
+	stbtt_GetFontVMetrics(ff, &ascent, 0, 0);
+	f.baseline = (int)(ascent * f.scale);
+
+	// Font adjust
+	stbtt_GetCodepointHMetrics(ff, ascii, &f.advance, &f.lsb);
+	stbtt_GetCodepointBitmapBox(ff, ascii, f.scale, f.scale, &f.ix0, &f.iy0, &f.ix1, &f.iy1);
+	f.sc_width = static_cast<int>(f.advance * f.scale);
 
 	// Create texture?
 #ifndef RISCOS
@@ -85,19 +99,8 @@ Glyph* Fonts::get_glyph_x(VM_INT typeface, VM_INT size, BYTE ascii)
 	SDL_SetTextureBlendMode(f.tex, SDL_BLENDMODE_BLEND);
 #endif
 
-	// Baseline
-	f.scale = stbtt_ScaleForPixelHeight(ff, static_cast<float>(size));
-	int ascent;
-	stbtt_GetFontVMetrics(ff, &ascent, 0, 0);
-	f.baseline = (int)(ascent * f.scale);
-
-	// Font adjust
-	stbtt_GetCodepointHMetrics(ff, ascii, &f.advance, &f.lsb);
-	stbtt_GetCodepointBitmapBox(ff, ascii, f.scale, f.scale, &f.ix0, &f.iy0, &f.ix1, &f.iy1);
-	f.sc_width = static_cast<int>(f.advance * f.scale);
-
-	font_glyphs.insert(std::make_pair(index, std::move(f)));
-	return &(font_glyphs.find(index)->second);
+	auto g = font_glyphs.insert(std::make_pair(index, std::move(f))).first;
+	return &g->second;
 }
 
 int Fonts::max_horz_chars(int typeface, int size, UINT32 screen_width)

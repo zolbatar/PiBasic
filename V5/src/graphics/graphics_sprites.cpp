@@ -60,7 +60,7 @@ void Sprites::render_to_screen() {
 	g_env.graphics.set_render_bank(nullptr);
 }
 
-bool Sprites::draw_sprite(VM_INT handle, VM_INT bank, VM_INT sx, VM_INT sy, VM_FLOAT rot) {
+bool Sprites::draw_sprite(VM_INT handle, VM_INT bank, VM_INT sx, VM_INT sy, VM_FLOAT rot, VM_FLOAT scale) {
 	auto sprite = sprites.find(handle);
 
 	// Does sprite exist?
@@ -104,9 +104,9 @@ bool Sprites::draw_sprite(VM_INT handle, VM_INT bank, VM_INT sx, VM_INT sy, VM_F
 	SDL_Rect DestR;
 	DestR.x = sx;
 	DestR.y = sy;
-	DestR.w = s.width;
-	DestR.h = s.height;
-	SDL_RenderCopy(g_env.graphics.get_renderer(), b, NULL, &DestR);
+	DestR.w = s.width * scale;
+	DestR.h = s.height * scale;
+	SDL_RenderCopyEx(g_env.graphics.get_renderer(), b, NULL, &DestR, rot, NULL, SDL_FLIP_NONE);
 #endif
 	return true;
 }

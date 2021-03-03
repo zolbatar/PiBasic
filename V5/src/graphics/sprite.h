@@ -26,7 +26,7 @@ public:
 	void delete_sprite(VM_INT handle);
 	bool render_to_sprite(VM_INT handle, VM_INT bank, VM_INT offset_x, VM_INT offset_y);
 	void render_to_screen();
-	bool draw_sprite(VM_INT handle, VM_INT bank, VM_INT x, VM_INT y, VM_FLOAT rot);
+	bool draw_sprite(VM_INT handle, VM_INT bank, VM_INT x, VM_INT y, VM_FLOAT rot, VM_FLOAT scale);
 	VM_INT create_sprite_from_image(std::string filename);
 
 	size_t bank_width, bank_height;

@@ -79,7 +79,7 @@ class MyParserErrorListener : public antlr4::BaseErrorListener {
 			std::cout << msg << std::endl;
 			auto s = offendingSymbol->getInputStream();
 			auto l = getLineFromStream(s->toString(), offendingSymbol->getStartIndex(), offendingSymbol->getStopIndex());
-			replaceAll(l, "\n", "\r");
+			replaceAll(l, "\n", "");
 
 			// File, line char etc.
 			auto saved_colour = g_env.graphics.current_colour;
@@ -229,6 +229,7 @@ void MyParser::parse_and_compile(Compiler* compiler, bool interactive, std::stri
 	parsed_files.clear();
 	source.clear();
 	installed_files.clear();
+	parse_errors = false;
 
 	// Load first file and recursively load more
 	load_stream(filename, interactive, ss);

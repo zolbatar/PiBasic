@@ -1,5 +1,5 @@
 INSTALL "SetupGraphics"
-sw%=128,sh%=128,sprites%=1000
+sw%=128,sh%=128,sprites%=100
 T%=TIME
 GRAPHICS BANKED w%, h%
 CURSOROFF
@@ -8,11 +8,11 @@ drone%=LOADSPRITE("BATTLESHIP-TOP.png")
 DIM sx%(sprites%),sy%(sprites%),sdx%(sprites%),sdy%(sprites%)
 FOR I%=0 TO sprites%-1:sx%(I%)=RND(w%):sy%(I%)=RND(h%):sdx%(I%)=1:sdy%(I%)=1:NEXT
 REM CLIPON 200,200,w%-200,h%-200
-FOR loop%=0 TO 1000
+FOR loop=0 TO 360 STEP 0.1
     CLS
-    DRAWSPRITE bg%,0,0,0
+    DRAWSPRITE bg%,0,0,0,0,1.0
     FOR I%=0 TO sprites%-1
-        DRAWSPRITE drone%,0,sx%(I%),sy%(I%)
+        DRAWSPRITE drone%,0,sx%(I%),sy%(I%),loop,loop/400+0.25
 
         REM Move
         sx%(I%)=sx%(I%)+sdx%(I%)

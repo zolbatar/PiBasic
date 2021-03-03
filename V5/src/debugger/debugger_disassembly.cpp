@@ -78,7 +78,7 @@ void Debugger::debugger_disassembly()
 							g_env.text.print_text(disassembly_font, disassembly_font_size, s.operand, -1, -1);
 						}
 
-						g_env.text.print_text(prop_font, prop_font_size, "\r", -1, -1);
+						g_env.text.print_text(disassembly_font, disassembly_font_size, "\r", -1, -1);
 					}
 				}
 			}
@@ -117,7 +117,7 @@ void Debugger::debugger_disassembly()
 			pos += debugger_lines;
 			rerender = true;
 		}
-		else if (g_env.input.inkey(-115) || g_env.input.inkey(-116) || g_env.input.inkey(-31) || g_env.input.inkey(-120)) {
+		else if (g_env.input.inkey(-115) || g_env.input.inkey(-116) || g_env.input.inkey(-31)) {
 			return;
 		}
 		if (pos > g_vm->helper_bytecodes().get_size()) {

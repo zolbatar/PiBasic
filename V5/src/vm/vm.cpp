@@ -2514,7 +2514,7 @@ void VM::opcode_DRAWSPRITE() {
 	VM_INT x = stack.pop_int(bc);
 	VM_INT bank = stack.pop_int(bc);
 	VM_INT handle = stack.pop_int(bc);
-	auto r = g_env.sprite.draw_sprite(handle, bank, x, y, rot);
+	auto r = g_env.sprite.draw_sprite(handle, bank, x, y, rot, scale);
 	if (!r) {
 		error("Sprite " + std::to_string(handle) + ", error drawing");
 	}
@@ -2841,7 +2841,6 @@ std::string VM::run()
 			if (!performance_build && runtime_debug) {
 				auto flp = file_and_line_lookup(bc.line_number);
 				char c[128];
-				g_env.log("[File :     Line :       PC : Op]  Description");
 				sprintf(c, "[%4X : %8d : %8X : %2X] ", flp.file_number, flp.line, helper_bytecodes().pc - 1, (int)bc.opcode);
 				g_env.log_sol(std::string(c));
 			}

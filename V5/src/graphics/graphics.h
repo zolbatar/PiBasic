@@ -24,7 +24,7 @@ const bool DEBUGWINDOW = true;
 const bool DEBUGWINDOW = true;
 #endif
 
-const int FRAMETIME = 50;
+const int FRAMETIME = 10;
 
 typedef int OutCode;
 
@@ -75,7 +75,12 @@ public:
 	bool is_banked() { return banked; }
 	~Graphics()
 	{
+#ifdef RISCOS
 		delete bank_cache;
+#else
+		if (bank_cache != nullptr)
+			SDL_FreeSurface(bank_cache);
+#endif
 	}
 	void init();
 	void shutdown();
@@ -112,8 +117,8 @@ public:
 #endif
 	RasterMode get_raster_mode() { return raster_mode; }
 	void set_raster_mode(RasterMode rm) { raster_mode = rm; }
-	UINT32 get_screen_width();
-	UINT32 get_screen_height();
+	UINT32 get_screen_width() { return desktop_screen_width; }
+	UINT32 get_screen_height() { return desktop_screen_height; }
 	UINT32 get_actual_width() { return screen_width; }
 	UINT32 get_actual_height() { return screen_height; }
 
@@ -126,7 +131,12 @@ public:
 	BYTE* get_bank_address_byte();
 #endif
 
+#ifdef RISCOS
 	UINT32* bank_cache = nullptr;
+#else
+	Uint32 pixelFormatEnum;
+	SDL_Surface* bank_cache = nullptr;
+#endif
 
 	// Triangle
 	void triangle(int x1, int y1, int x2, int y2, int x3, int y3);
@@ -172,8 +182,6 @@ private:
 #else
 	std::vector<size_t> line_address;
 	int size;
-	int desktop_screen_width = 0;
-	int desktop_screen_height = 0;
 	int eigen_x;
 	int eigen_y;
 
@@ -182,6 +190,8 @@ private:
 	UINT32 bank_address[3];
 	int bank = 1;
 #endif
+	int desktop_screen_width = 0;
+	int desktop_screen_height = 0;
 	bool opened = false;
 	bool banked = false;
 	Mode mode;

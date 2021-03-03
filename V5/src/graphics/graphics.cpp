@@ -55,6 +55,27 @@ void Graphics::init()
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		std::cout << "SDL initialization failed. SDL Error: " << SDL_GetError() << std::endl;
 	}
+
+	// Set virtual res
+	float ddpi, hdpi, vdpi;
+	if (SDL_GetDisplayDPI(0, &ddpi, &hdpi, &vdpi) != 0) {
+		fprintf(stderr, "Failed to obtain DPI information for display 0: %s\n", SDL_GetError());
+		exit(1);
+	}
+	dpi_ratio = ddpi / 96;
+
+	SDL_DisplayMode dm;
+	if (SDL_GetDesktopDisplayMode(0, &dm) != 0) {
+		SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
+		exit(1);
+	}
+	desktop_screen_width = dm.w / dpi_ratio;
+	desktop_screen_height = dm.h / dpi_ratio;
+
+	if (DEBUGWINDOW) {
+		screen_width *= 0.9;
+		screen_height *= 0.9;
+	}
 #endif
 }
 
@@ -78,55 +99,20 @@ void Graphics::shutdown()
 #endif
 }
 
-#ifdef RISCOS
-UINT32 Graphics::get_screen_width()
-{
-	return desktop_screen_width;
-}
-
-UINT32 Graphics::get_screen_height() { return desktop_screen_height; }
-#else
-UINT32 Graphics::get_screen_width()
-{
-	SDL_DisplayMode dm;
-	if (SDL_GetDesktopDisplayMode(0, &dm) != 0) {
-		SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
-		return 1;
-	}
-
-	if (DEBUGWINDOW) {
-		return dm.w * 0.75;
-	}
-	else {
-		return dm.w;
-	}
-}
-
-UINT32 Graphics::get_screen_height()
-{
-	SDL_DisplayMode dm;
-	if (SDL_GetDesktopDisplayMode(0, &dm) != 0) {
-		SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
-		return 1;
-	}
-	if (DEBUGWINDOW) {
-		return dm.h * 0.75;
-	}
-	else {
-		return dm.h;
-	}
-}
-#endif
-
 void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 {
+	if (width == 0 || height == 0) {
+	}
+
 	showfps = false;
 	bool reinit = false;
 	bool initial = !is_open();
 	if (is_open()) {
 		// Is this different?
 		if (width != screen_width || height != screen_height || mode != this->mode) {
+#ifdef RISCOS
 			shutdown();
+#endif
 			reinit = true;
 		}
 	}
@@ -237,53 +223,46 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 #else
 	int params = SDL_WINDOW_ALLOW_HIGHDPI;
 	if (!DEBUGWINDOW) {
-#ifdef _DEBUG
 		params |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-#else
-		params |= SDL_WINDOW_FULLSCREEN;
+	}
+
+	// Dump some debug stuff with available modes
+#ifdef _DEBUG
+	static int display_in_use = 0; /* Only using first display */
+	int i, display_mode_count;
+	SDL_DisplayMode m;
+	Uint32 f;
+	display_mode_count = SDL_GetNumDisplayModes(display_in_use);
+	SDL_Log("SDL_GetNumDisplayModes: %i", display_mode_count);
+	for (i = 0; i < display_mode_count; ++i) {
+		if (SDL_GetDisplayMode(display_in_use, i, &m) != 0) {
+			SDL_Log("SDL_GetDisplayMode failed: %s", SDL_GetError());
+		}
+		f = m.format;
+		SDL_Log("Mode %i\tbpp %i\t%s\t%i x %i", i, SDL_BITSPERPIXEL(f), SDL_GetPixelFormatName(f), m.w, m.h);
+	}
 #endif
-	}
 
-	if (reinit) {
-		g_env.fonts.clear_all();
-	}
+	// Create window (in full screen if needed)
+	if (initial) {
+		window = SDL_CreateWindow("DARIC", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, params);
+		if (!window) {
+			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
+			exit(1);
+		}
+		screen = SDL_GetWindowSurface(window);
+		renderer = SDL_CreateRenderer(window, -1, NULL);
+		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
-	// Do we have previous stuff?
-	if (renderer != nullptr) {
-		SDL_DestroyRenderer(renderer);
+		// Format
+		SDL_PixelFormat* pixelFormat = screen->format;
+		pixelFormatEnum = pixelFormat->format;
+		const char* surfacePixelFormatName = SDL_GetPixelFormatName(pixelFormatEnum);
+		std::cout << "Pixel format: " << surfacePixelFormatName << std::endl;
 	}
-	if (window != nullptr) {
-		SDL_DestroyWindow(window);
-	}
-
-	window = SDL_CreateWindow("DARIC", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, params);
-	if (!window) {
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
-		exit(1);
-	}
-
-	/*		float ddpi, hdpi, vdpi;
-			if (SDL_GetDisplayDPI(0, &ddpi, &hdpi, &vdpi) != 0) {
-				fprintf(stderr, "Failed to obtain DPI information for display 0: %s\n", SDL_GetError());
-				exit(1);
-			}
-			dpi_ratio = ddpi / 96;
-			console_font_size = static_cast<int>(25.0 * dpi_ratio);*/
-
-	screen = SDL_GetWindowSurface(window);
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	std::cout << "Set logical screen size to " << screen_width << "x" << screen_height << std::endl;
+	SDL_RenderSetLogicalSize(renderer, screen_width, screen_height);
 	SDL_StopTextInput();
-
-	// Format
-	SDL_PixelFormat* pixelFormat = screen->format;
-	Uint32 pixelFormatEnum = pixelFormat->format;
-	const char* surfacePixelFormatName = SDL_GetPixelFormatName(pixelFormatEnum);
-	std::cout << "Pixel format: " << surfacePixelFormatName << std::endl;
-
-	// DOes this work in hwaccel mode?
-	if (bank_cache != nullptr)
-		delete bank_cache;
-	bank_cache = new UINT32[screen->pitch * screen_height];
 #endif
 	current_colour = Colour(255, 255, 255);
 	opened = true;
@@ -299,15 +278,8 @@ void Graphics::cache()
 	UINT32* addr = get_bank_address();
 	memcpy(bank_cache, addr, size);
 #else
-	SDL_LockSurface(screen);
-	auto pixels = (UINT32*)screen->pixels;
-	if (DEBUGWINDOW) {
-		memcpy(bank_cache, pixels, get_actual_width() * get_actual_height() * 4);
-	}
-	else {
-		memcpy(bank_cache, pixels, screen->pitch * screen_height);
-	}
-	SDL_UnlockSurface(screen);
+	bank_cache = SDL_CreateRGBSurfaceWithFormat(0, screen_width * dpi_ratio, screen_height * dpi_ratio, 32, pixelFormatEnum);
+	SDL_RenderReadPixels(renderer, NULL, 0, bank_cache->pixels, bank_cache->pitch);
 #endif
 }
 
@@ -317,15 +289,16 @@ void Graphics::restore()
 	UINT32* addr = get_bank_address();
 	memcpy(addr, bank_cache, size);
 #else
-	SDL_LockSurface(screen);
-	auto pixels = (UINT32*)screen->pixels;
-	if (DEBUGWINDOW) {
-		memcpy(pixels, bank_cache, get_actual_width() * get_actual_height() * 4);
-	}
-	else {
-		memcpy(pixels, bank_cache, screen->pitch * screen_height);
-	}
-	SDL_UnlockSurface(screen);
+	SDL_BlitSurface(bank_cache, NULL, screen, NULL);
+	SDL_FreeSurface(bank_cache);
+	/*	auto texture = SDL_CreateTextureFromSurface(renderer, bank_cache);
+	SDL_Rect DestR;
+	DestR.x = 0;
+	DestR.y = 0;
+	DestR.w = desktop_screen_width;
+	DestR.h = desktop_screen_height;
+	SDL_RenderCopy(renderer, texture, NULL, &DestR);
+	SDL_DestroyTexture(texture);*/
 #endif
 }
 
@@ -540,19 +513,30 @@ void Graphics::scroll(VM_INT font_row_height) {
 		memset((void*)&addr[offset], bg, screen_width * 4);
 	}
 #else
-	auto surface = SDL_CreateRGBSurfaceWithFormat(0, screen_width, screen_height, 32, SDL_PIXELFORMAT_RGBA8888);
-	SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_RGBA8888, surface->pixels, surface->pitch);
+	auto surface = SDL_CreateRGBSurfaceWithFormat(0, desktop_screen_width * dpi_ratio, desktop_screen_height * dpi_ratio, 32, SDL_PIXELFORMAT_RGB888);
+	SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_RGB888, surface->pixels, surface->pitch);
 	auto tex = SDL_CreateTextureFromSurface(renderer, surface);
 	SDL_Rect SourceR;
 	SourceR.x = 0;
-	SourceR.y = font_row_height;
-	SourceR.w = screen_width;
-	SourceR.h = screen_height - font_row_height;
+	if (!DEBUGWINDOW) {
+		SourceR.y = (font_row_height * dpi_ratio);
+	}
+	else {
+		SourceR.y = font_row_height;
+	}
+	SourceR.w = desktop_screen_width * dpi_ratio;
+	SourceR.h = desktop_screen_height * dpi_ratio - (font_row_height * dpi_ratio);
 	SDL_Rect DestR;
 	DestR.x = 0;
 	DestR.y = 0;
-	DestR.w = screen_width;
-	DestR.h = screen_height - font_row_height;
+	if (!DEBUGWINDOW) {
+		DestR.w = screen_width;
+		DestR.h = screen_height - font_row_height;
+	}
+	else {
+		DestR.w = desktop_screen_width * dpi_ratio;
+		DestR.h = desktop_screen_height * dpi_ratio - (font_row_height * dpi_ratio);
+	}
 	SDL_RenderCopy(g_env.graphics.get_renderer(), tex, &SourceR, &DestR);
 	SDL_DestroyTexture(tex);
 	SDL_FreeSurface(surface);

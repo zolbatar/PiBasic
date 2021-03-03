@@ -4,12 +4,14 @@ void Debugger::debugger_log()
 {
     bool rerender = true;
     g_env.process_log();
-    UINT32 pos = (g_env.log_list.size() / log_lines) * log_lines;
+    UINT32 pos = g_env.log_list.size() - log_lines;
+    if (pos < 0) { pos = 0; }
     while (true) {
         if (rerender) {
             debugger_options(2, 1);
             g_env.text.print_text(disassembly_font, disassembly_font_size, "\r\r", -1, -1);
 
+            g_env.graphics.colour(255, 255, 255);
             int chars = g_env.fonts.max_horz_chars(disassembly_font, disassembly_font_size, g_env.graphics.get_screen_width());
             for (UINT32 i = 0; i < log_lines; i++) {
                 auto index = i + pos;
@@ -19,9 +21,8 @@ void Debugger::debugger_log()
                     auto s = g_env.log_list[index];
                     s.resize(chars);
 
-                    g_env.graphics.colour(255, 255, 255);
-                    g_env.text.print_text(disassembly_font, disassembly_font_size, s, -1, -1);
-                    g_env.text.print_text(disassembly_font, disassembly_font_size, "\r", -1, -1);
+                    g_env.text.print_text(disassembly_font, disassembly_font_size, s, 0, -1);
+                    //g_env.text.print_text(disassembly_font, disassembly_font_size, "\r", -1, -1);
                 }
             }
 
@@ -43,7 +44,7 @@ void Debugger::debugger_log()
                 g_env.graphics.poll();
             pos += log_lines;
             rerender = true;
-        } else if (g_env.input.inkey(-114) || g_env.input.inkey(-115) || g_env.input.inkey(-31) || g_env.input.inkey(-120)) {
+        } else if (g_env.input.inkey(-114) || g_env.input.inkey(-115) || g_env.input.inkey(-31)) {
             return;
         }
     }

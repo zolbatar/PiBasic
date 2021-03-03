@@ -35,7 +35,6 @@ int main(int argc, char *argv[])
     std::cout << "Program Directory: " << g_env.cwd << std::endl;
 
     // RISC OS/SDL graphics
-    g_env.graphics = Graphics();
     g_env.graphics.init();
 
     // Interactive or not?

@@ -19,7 +19,33 @@ extern int console_font_size;
 
 class Glyph {
 public:
-	~Glyph() { SDL_DestroyTexture(tex); }
+	Glyph() {};
+	Glyph(Glyph&& g)
+	{
+		scale = g.scale;
+		width = g.width;
+		height = g.height;
+		baseline = g.baseline;
+		bitmap = g.bitmap;
+		tex = g.tex;
+		ix0 = g.ix0;
+		iy0 = g.iy0;
+		ix1 = g.ix1;
+		iy1 = g.iy1;
+		advance = g.advance;
+		lsb = g.lsb;
+		sc_width = g.sc_width;
+#ifndef RISCOS
+		tex = g.tex;
+#endif
+		g.tex = nullptr;
+		g.bitmap = nullptr;
+	};
+	~Glyph() {
+		if (tex != nullptr) {
+//			SDL_DestroyTexture(tex);
+		}
+	}
 	int width;
 	int height;
 	float scale;
