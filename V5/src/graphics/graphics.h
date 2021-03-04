@@ -179,6 +179,7 @@ private:
 	SDL_Window* window = nullptr;
 	SDL_Surface* screen = nullptr;
 	SDL_Renderer* renderer = nullptr;
+	SDL_Cursor* cursor = nullptr;
 #else
 	std::vector<size_t> line_address;
 	int size;

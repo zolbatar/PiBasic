@@ -48,7 +48,7 @@ void Text::print_character(int typeface, int size, char c, int* cursor_x, int* c
 	auto font_row_height = g_env.fonts.get_font_height(typeface, size);
 
 	// End of page, need to scroll?
-	while (*cursor_y + font_row_height >= g_env.graphics.get_screen_height()) {
+	while (*cursor_y + font_row_height >= g_env.graphics.get_actual_height()) {
 		g_env.graphics.scroll(font_row_height);
 		*cursor_y -= font_row_height;
 	}
