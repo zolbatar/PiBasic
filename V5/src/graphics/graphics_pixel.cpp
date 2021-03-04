@@ -95,6 +95,7 @@ VM_INT Graphics::point(int x, int y)
 	int offset = line_address[y] + x;
 	VM_INT v = pixels[offset];
 	SDL_UnlockSurface(screen);*/
+	dsafv;l,jknasdfl,jhn
 	return 0;
 #endif
 }

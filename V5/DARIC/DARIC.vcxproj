@@ -89,7 +89,7 @@
     <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
     <OutDir>$(SolutionDir)..\</OutDir>
     <EmbedManifest>true</EmbedManifest>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
