@@ -104,8 +104,8 @@ bool Sprites::draw_sprite(VM_INT handle, VM_INT bank, VM_INT sx, VM_INT sy, VM_F
 	SDL_Rect DestR;
 	DestR.x = sx;
 	DestR.y = sy;
-	DestR.w = s.width * scale;
-	DestR.h = s.height * scale;
+	DestR.w = static_cast<int>(s.width) * static_cast<int>(scale);
+	DestR.h = static_cast<int>(s.height) * static_cast<int>(scale);
 	SDL_RenderCopyEx(g_env.graphics.get_renderer(), b, NULL, &DestR, rot, NULL, SDL_FLIP_NONE);
 #endif
 	return true;
@@ -147,8 +147,8 @@ VM_INT Sprites::create_sprite_from_image(std::string filename) {
 	auto texture = SDL_CreateTexture(g_env.graphics.get_renderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STATIC | SDL_TEXTUREACCESS_TARGET, width, height);
 	SDL_SetRenderTarget(g_env.graphics.get_renderer(), texture);
 	int idx = 0;
-	for (int y = 0; y < height; ++y) {
-		for (int x = 0; x < width; ++x) {
+	for (UINT32 y = 0; y < height; ++y) {
+		for (UINT32 x = 0; x < width; ++x) {
 			auto r = image[idx++];
 			auto g = image[idx++];
 			auto b = image[idx++];

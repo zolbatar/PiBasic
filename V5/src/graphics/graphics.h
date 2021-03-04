@@ -19,7 +19,7 @@
 #include "sprite.h"
 
 #ifdef _DEBUG
-const bool DEBUGWINDOW = true;
+const bool DEBUGWINDOW = false;
 #else
 const bool DEBUGWINDOW = false;
 #endif
@@ -193,6 +193,7 @@ private:
 #endif
 	int desktop_screen_width = 0;
 	int desktop_screen_height = 0;
+	double desktop_screen_ratio = 0;
 	bool opened = false;
 	bool banked = false;
 	Mode mode;

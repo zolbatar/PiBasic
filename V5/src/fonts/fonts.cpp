@@ -52,7 +52,7 @@ VM_INT Fonts::load_typeface(const char* filename)
 		exit(1);
 	}
 	fonts.push_back(f);
-	return index;
+	return static_cast<VM_INT>(index);
 }
 
 Glyph* Fonts::get_glyph_x(VM_INT typeface, VM_INT size, BYTE ascii)

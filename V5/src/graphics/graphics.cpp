@@ -150,12 +150,13 @@ void Graphics::init()
 		SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
 		exit(1);
 	}
-	desktop_screen_width = dm.w / dpi_ratio;
-	desktop_screen_height = dm.h / dpi_ratio;
+	desktop_screen_width = static_cast<int>(dm.w / dpi_ratio);
+	desktop_screen_height = static_cast<int>(dm.h / dpi_ratio);
+	desktop_screen_ratio = static_cast<double>(desktop_screen_width) / static_cast<double>(desktop_screen_height);
 
 	if (DEBUGWINDOW) {
-		screen_width *= 0.9;
-		screen_height *= 0.9;
+		screen_width = static_cast <int>(screen_width * 0.9);
+		screen_height = static_cast <int>(screen_height * 0.9);
 	}
 #endif
 }
@@ -361,7 +362,7 @@ void Graphics::cache()
 	UINT32* addr = get_bank_address();
 	memcpy(bank_cache, addr, size);
 #else
-	bank_cache = SDL_CreateRGBSurfaceWithFormat(0, screen_width * dpi_ratio, screen_height * dpi_ratio, 32, pixelFormatEnum);
+	bank_cache = SDL_CreateRGBSurfaceWithFormat(0, static_cast<int>(screen_width * dpi_ratio), static_cast<int>(screen_height * dpi_ratio), 32, pixelFormatEnum);
 	SDL_RenderReadPixels(renderer, NULL, 0, bank_cache->pixels, bank_cache->pitch);
 #endif
 }
@@ -596,29 +597,33 @@ void Graphics::scroll(VM_INT font_row_height) {
 		memset((void*)&addr[offset], bg, screen_width * 4);
 	}
 #else
-	auto surface = SDL_CreateRGBSurfaceWithFormat(0, desktop_screen_width * dpi_ratio, desktop_screen_height * dpi_ratio, 32, SDL_PIXELFORMAT_RGB888);
+	auto surface = SDL_CreateRGBSurfaceWithFormat(0, static_cast<int>(desktop_screen_width * dpi_ratio), static_cast<int>(desktop_screen_height * dpi_ratio), 32, SDL_PIXELFORMAT_RGB888);
 	SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_RGB888, surface->pixels, surface->pitch);
 	auto tex = SDL_CreateTextureFromSurface(renderer, surface);
 	SDL_Rect SourceR;
 	SourceR.x = 0;
 	if (!DEBUGWINDOW) {
-		SourceR.y = (font_row_height * dpi_ratio);
+		SourceR.y = static_cast<int>(font_row_height * dpi_ratio);
 	}
 	else {
 		SourceR.y = font_row_height;
 	}
-	SourceR.w = desktop_screen_width * dpi_ratio;
-	SourceR.h = desktop_screen_height * dpi_ratio - (font_row_height * dpi_ratio);
+	SourceR.w = static_cast<int>(desktop_screen_width * dpi_ratio);
+	SourceR.h = static_cast<int>(desktop_screen_height * dpi_ratio - (font_row_height * dpi_ratio));
 	SDL_Rect DestR;
 	DestR.x = 0;
 	DestR.y = 0;
 	if (!DEBUGWINDOW) {
+		double ratio = static_cast<double>(screen_width) / static_cast<double>(screen_height);
+		std::cout << ratio << std::endl;
+		std::cout << desktop_screen_ratio << std::endl;
 		DestR.w = screen_width;
+		DestR.w = static_cast<int>(std::round(static_cast<double>(screen_height) * desktop_screen_ratio));
 		DestR.h = screen_height - font_row_height;
 	}
 	else {
-		DestR.w = desktop_screen_width * dpi_ratio;
-		DestR.h = desktop_screen_height * dpi_ratio - (font_row_height * dpi_ratio);
+		DestR.w = static_cast<int>(desktop_screen_width * dpi_ratio);
+		DestR.h = static_cast<int>(desktop_screen_height * dpi_ratio - (font_row_height * dpi_ratio));
 	}
 	SDL_RenderCopy(g_env.graphics.get_renderer(), tex, &SourceR, &DestR);
 	SDL_DestroyTexture(tex);

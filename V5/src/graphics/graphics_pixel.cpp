@@ -8,8 +8,8 @@ void Graphics::plot(int x, int y)
 	if (render_bank != nullptr) {
 		if (x < g_env.sprite.bank_x1 || x > g_env.sprite.bank_x2 || y < g_env.sprite.bank_y1 || y > g_env.sprite.bank_y2)
 			return;
-		auto yb = y - g_env.sprite.bank_y1;
-		auto xb = x - g_env.sprite.bank_x1;
+		int yb = y - static_cast<int>(g_env.sprite.bank_y1);
+		int xb = x - static_cast<int>(g_env.sprite.bank_x1);
 #ifndef RISCOS
 		SDL_SetRenderTarget(g_env.graphics.get_renderer(), render_bank);
 		set_sdl_colour();
