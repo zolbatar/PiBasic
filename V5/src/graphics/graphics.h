@@ -19,7 +19,7 @@
 #include "sprite.h"
 
 #ifdef _DEBUG
-const bool DEBUGWINDOW = false;
+const bool DEBUGWINDOW = true;
 #else
 const bool DEBUGWINDOW = false;
 #endif
@@ -78,11 +78,10 @@ public:
 #ifdef RISCOS
 		delete bank_cache;
 #else
-		if (bank_cache != nullptr)
-			SDL_FreeSurface(bank_cache);
 #endif
 	}
 	void init();
+	void init_glfw();
 	void shutdown();
 	void open(int width, int height, Mode mode, std::string& cwd);
 	void colour(BYTE r, BYTE g, BYTE b);

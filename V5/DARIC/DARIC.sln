@@ -8,19 +8,31 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|ARM64 = Debug|ARM64
+		Debug|Emscripten = Debug|Emscripten
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|ARM64 = Release|ARM64
+		Release|Emscripten = Release|Emscripten
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{1C7776AF-4121-4AA2-8914-F07F3532811F}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{1C7776AF-4121-4AA2-8914-F07F3532811F}.Debug|ARM.ActiveCfg = Debug|Win32
+		{1C7776AF-4121-4AA2-8914-F07F3532811F}.Debug|ARM64.ActiveCfg = Debug|Win32
+		{1C7776AF-4121-4AA2-8914-F07F3532811F}.Debug|Emscripten.ActiveCfg = Debug|Win32
 		{1C7776AF-4121-4AA2-8914-F07F3532811F}.Debug|x64.ActiveCfg = Debug|x64
 		{1C7776AF-4121-4AA2-8914-F07F3532811F}.Debug|x64.Build.0 = Debug|x64
 		{1C7776AF-4121-4AA2-8914-F07F3532811F}.Debug|x86.ActiveCfg = Debug|Win32
 		{1C7776AF-4121-4AA2-8914-F07F3532811F}.Debug|x86.Build.0 = Debug|Win32
 		{1C7776AF-4121-4AA2-8914-F07F3532811F}.Release|Any CPU.ActiveCfg = Release|Win32
+		{1C7776AF-4121-4AA2-8914-F07F3532811F}.Release|ARM.ActiveCfg = Release|Win32
+		{1C7776AF-4121-4AA2-8914-F07F3532811F}.Release|ARM64.ActiveCfg = Release|Win32
+		{1C7776AF-4121-4AA2-8914-F07F3532811F}.Release|Emscripten.ActiveCfg = Release|Win32
 		{1C7776AF-4121-4AA2-8914-F07F3532811F}.Release|x64.ActiveCfg = Release|x64
 		{1C7776AF-4121-4AA2-8914-F07F3532811F}.Release|x64.Build.0 = Release|x64
 		{1C7776AF-4121-4AA2-8914-F07F3532811F}.Release|x86.ActiveCfg = Release|Win32

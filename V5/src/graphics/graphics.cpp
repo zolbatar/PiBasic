@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+	#define _CRT_SECURE_NO_WARNINGS
 #include "../environment.h"
 #include "graphics.h"
 #include "../debugger/debugger.h"
@@ -306,6 +306,7 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 	int params = SDL_WINDOW_ALLOW_HIGHDPI;
 	if (!DEBUGWINDOW) {
 		params |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+		//params |= SDL_WINDOW_FULLSCREEN;
 	}
 
 	// Dump some debug stuff with available modes
@@ -327,6 +328,7 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 
 	// Create window (in full screen if needed)
 	if (initial) {
+		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 		window = SDL_CreateWindow("DARIC", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, params);
 		if (!window) {
 			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
@@ -334,7 +336,13 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 		}
 		screen = SDL_GetWindowSurface(window);
 		renderer = SDL_CreateRenderer(window, -1, NULL);
-		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
+
+		// Output some info for debugging
+		std::cout << "Driver: " << SDL_GetCurrentVideoDriver() << std::endl;
+		std::cout << "Available drivers: " << SDL_GetNumVideoDrivers() << std::endl;
+		for (auto i = 0; i < SDL_GetNumVideoDrivers(); i++) {
+			std::cout << "  " << SDL_GetVideoDriver(i) << std::endl;
+		}
 
 		// Format
 		SDL_PixelFormat* pixelFormat = screen->format;
@@ -345,8 +353,8 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 	std::cout << "Set logical screen size to " << screen_width << "x" << screen_height << std::endl;
 	SDL_RenderSetLogicalSize(renderer, screen_width, screen_height);
 	SDL_StopTextInput();
-	SDL_ShowCursor(1);
-	cursor = init_system_cursor(arrow);
+	//SDL_ShowCursor(1);
+	//cursor = init_system_cursor(arrow);
 #endif
 	current_colour = Colour(255, 255, 255);
 	opened = true;
@@ -362,8 +370,9 @@ void Graphics::cache()
 	UINT32* addr = get_bank_address();
 	memcpy(bank_cache, addr, size);
 #else
-	bank_cache = SDL_CreateRGBSurfaceWithFormat(0, static_cast<int>(screen_width * dpi_ratio), static_cast<int>(screen_height * dpi_ratio), 32, pixelFormatEnum);
-	SDL_RenderReadPixels(renderer, NULL, 0, bank_cache->pixels, bank_cache->pitch);
+	bank_cache = SDL_CreateRGBSurfaceWithFormat(0, static_cast<int>(desktop_screen_width * dpi_ratio), static_cast<int>(desktop_screen_height * dpi_ratio), 32, SDL_PIXELFORMAT_RGB888);
+	SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_RGB888, bank_cache->pixels, bank_cache->pitch);
+
 #endif
 }
 
@@ -373,16 +382,26 @@ void Graphics::restore()
 	UINT32* addr = get_bank_address();
 	memcpy(addr, bank_cache, size);
 #else
-	SDL_BlitSurface(bank_cache, NULL, screen, NULL);
-	SDL_FreeSurface(bank_cache);
-	/*	auto texture = SDL_CreateTextureFromSurface(renderer, bank_cache);
+	auto tex = SDL_CreateTextureFromSurface(renderer, bank_cache);
+	SDL_Rect SourceR;
+	SourceR.x = 0;
+	SourceR.y = 0;
+	SourceR.w = static_cast<int>(desktop_screen_width * dpi_ratio);
+	SourceR.h = static_cast<int>(desktop_screen_height * dpi_ratio);
 	SDL_Rect DestR;
 	DestR.x = 0;
 	DestR.y = 0;
-	DestR.w = desktop_screen_width;
-	DestR.h = desktop_screen_height;
-	SDL_RenderCopy(renderer, texture, NULL, &DestR);
-	SDL_DestroyTexture(texture);*/
+	if (!DEBUGWINDOW) {
+		DestR.w = static_cast<int>(std::round(static_cast<double>(screen_height) * desktop_screen_ratio));
+		DestR.h = screen_height;
+	}
+	else {
+		DestR.w = static_cast<int>(desktop_screen_width * dpi_ratio);
+		DestR.h = static_cast<int>(desktop_screen_height * dpi_ratio);
+	}
+	SDL_RenderCopy(g_env.graphics.get_renderer(), tex, &SourceR, &DestR);
+	SDL_DestroyTexture(tex);
+	SDL_FreeSurface(bank_cache);
 #endif
 }
 
@@ -614,7 +633,6 @@ void Graphics::scroll(VM_INT font_row_height) {
 	DestR.x = 0;
 	DestR.y = 0;
 	if (!DEBUGWINDOW) {
-		DestR.w = screen_width;
 		DestR.w = static_cast<int>(std::round(static_cast<double>(screen_height) * desktop_screen_ratio));
 		DestR.h = screen_height - font_row_height;
 	}

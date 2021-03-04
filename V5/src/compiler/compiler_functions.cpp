@@ -201,7 +201,7 @@ antlrcpp::Any Compiler::visitFunctionVar(DARICParser::FunctionVarContext* contex
     set_pos(context->start);
     visit(context->justVar());
     FunctionParameter b;
-    b.index = current_function->parameters.size();
+    b.index = static_cast<UINT32>(current_function->parameters.size());
     b.name = current_var.name;
     b.type = current_var.type;
     auto ret = context->RETURN() != NULL;

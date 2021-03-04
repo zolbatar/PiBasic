@@ -18,6 +18,8 @@ V4/buildriscos/
 V4/buildriscosvfp/
 V5/buildriscos/
 V5/buildriscosvfp/
+V5/DARICWebAssembly/bin
+V5/DARICWebAssembly/obj
 
 V5/DARIC.exe
 V5/DARIC.ilk
@@ -41,3 +43,5 @@ V5/antlr4-runtime.dll
 V5/DARICInstaller/Release/DARICInstaller.msi
 *.lib
 *.exp
+*.cache
+*.sarif

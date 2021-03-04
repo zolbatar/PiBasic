@@ -104,8 +104,8 @@ bool Sprites::draw_sprite(VM_INT handle, VM_INT bank, VM_INT sx, VM_INT sy, VM_F
 	SDL_Rect DestR;
 	DestR.x = sx;
 	DestR.y = sy;
-	DestR.w = static_cast<int>(s.width) * static_cast<int>(scale);
-	DestR.h = static_cast<int>(s.height) * static_cast<int>(scale);
+	DestR.w = static_cast<int>(s.width * scale);
+	DestR.h = static_cast<int>(s.height * scale);
 	SDL_RenderCopyEx(g_env.graphics.get_renderer(), b, NULL, &DestR, rot, NULL, SDL_FLIP_NONE);
 #endif
 	return true;
