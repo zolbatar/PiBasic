@@ -614,9 +614,6 @@ void Graphics::scroll(VM_INT font_row_height) {
 	DestR.x = 0;
 	DestR.y = 0;
 	if (!DEBUGWINDOW) {
-		double ratio = static_cast<double>(screen_width) / static_cast<double>(screen_height);
-		std::cout << ratio << std::endl;
-		std::cout << desktop_screen_ratio << std::endl;
 		DestR.w = screen_width;
 		DestR.w = static_cast<int>(std::round(static_cast<double>(screen_height) * desktop_screen_ratio));
 		DestR.h = screen_height - font_row_height;
