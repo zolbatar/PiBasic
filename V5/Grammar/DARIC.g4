@@ -166,10 +166,10 @@ graphicsStmt
     ;
     
 stmtCLS:            CLS ;
-stmtCOLOUR:         COLOUR numExpr
-                  | COLOUR numExpr COMMA numExpr COMMA numExpr ;
-stmtCOLOURBG:       COLOURBG numExpr
-                  | COLOURBG numExpr COMMA numExpr COMMA numExpr ; 
+stmtCOLOUR:         COLOUR numExpr COMMA numExpr COMMA numExpr 
+                  | COLOUR numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
+stmtCOLOURBG:       COLOURBG numExpr COMMA numExpr COMMA numExpr
+                  | COLOURBG numExpr COMMA numExpr COMMA numExpr COMMA numExpr ; 
 stmtCURSORON:       CURSORON ; 
 stmtCURSOROFF:      CURSOROFF ;
 stmtGRAPHICS:       GRAPHICS
@@ -399,11 +399,12 @@ numFunc
     | FLOAT_TOKEN LPAREN numExpr RPAREN     #numFuncFLOAT
 
     /* Graphics */
-    | SCREENWIDTH                                                   #numFuncSCREENWIDTH
-    | SCREENHEIGHT                                                  #numFuncSCREENHEIGHT
-    | POINT LPAREN numExpr COMMA numExpr RPAREN                     #numFuncPOINT
-    | COLOUR LPAREN numExpr COMMA numExpr COMMA numExpr RPAREN      #numFuncCOLOUR
-    | LOADTYPEFACE LPAREN strExpr RPAREN                            #numFuncLOADTYPEFACE
+    | SCREENWIDTH                                                               #numFuncSCREENWIDTH
+    | SCREENHEIGHT                                                              #numFuncSCREENHEIGHT
+    | POINT LPAREN numExpr COMMA numExpr RPAREN                                 #numFuncPOINT
+    | COLOUR LPAREN numExpr COMMA numExpr COMMA numExpr RPAREN                  #numFuncCOLOUR
+    | COLOUR LPAREN numExpr COMMA numExpr COMMA numExpr COMMA numExpr RPAREN    #numFuncCOLOUR
+    | LOADTYPEFACE LPAREN strExpr RPAREN                                        #numFuncLOADTYPEFACE
 
     /* Sprites */
     | CREATESPRITE LPAREN numExpr COMMA numExpr COMMA numExpr RPAREN    #numFuncCREATESPRITE

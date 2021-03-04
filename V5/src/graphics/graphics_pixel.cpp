@@ -89,13 +89,12 @@ VM_INT Graphics::point(int x, int y)
 	auto r = (v & 0x0000FF);
 	return (r << 16) + (g << 8) + b;
 #else
-/*	SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_RGBA8888, screen->pixels, screen->pitch);
-	SDL_LockSurface(screen);
-	auto pixels = (UINT32*)screen->pixels;
-	int offset = line_address[y] + x;
-	VM_INT v = pixels[offset];
-	SDL_UnlockSurface(screen);*/
-	dsafv;l,jknasdfl,jhn
-	return 0;
+	auto surface = SDL_CreateRGBSurfaceWithFormat(0, static_cast<int>(desktop_screen_width * dpi_ratio), static_cast<int>(desktop_screen_height * dpi_ratio), 32, SDL_PIXELFORMAT_RGB888);
+	SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_RGB888, surface->pixels, surface->pitch);
+	size_t offset = (y * surface->pitch) + x;
+	auto ss = (UINT32*)surface->pixels;
+	UINT32 p = ss[offset];
+	SDL_FreeSurface(surface);
+	return p;
 #endif
 }

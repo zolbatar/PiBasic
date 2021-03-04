@@ -5,13 +5,13 @@ INSTALL "Perlin"
 DEF PROCSky()
     level=1.0
     sky%=&002040
-    FOR LOCAL y%=0 TO (h% / 2) STEP 4
+    FOR LOCAL y%=0 TO (h% / 2)
         COLOUR 0,&6 * level,&30 * level
         LINE 0, y%, w%-1, y%
         LINE 0, y%+1, w%-1, y%+1
         LINE 0, y%+2, w%-1, y%+2
         LINE 0, y%+3, w%-1, y%+3
-        level=level+0.01
+        level=level+0.0025
     NEXT
 ENDPROC
 
@@ -33,7 +33,7 @@ ENDPROC
 DEF PROCLines()
     FOR LOCAL y%=0 TO h%-1 STEP 3
         FOR LOCAL x%=0 TO w%-1
-            c%=POINT(x%,y%)
+            c%=0:REMPOINT(x%,y%)
             LOCAL r%=(c% AND &FF0000) >> 16
             LOCAL g%=(c% AND &00FF00) >> 8
             LOCAL b%=c% AND &0000FF
@@ -51,7 +51,7 @@ DEF PROCLinesBlackenLogo()
     COLOUR BLACK
     FOR LOCAL y%=h%/2-100 TO h%/2+70
         FOR LOCAL x%=0 TO w%-1
-            c%=POINT(x%,y%)
+            c%=0:REMPOINT(x%,y%)
             LOCAL r%=(c% AND &FF0000) >> 16
             LOCAL g%=(c% AND &00FF00) >> 8
             LOCAL b%=c% AND &0000FF
@@ -72,6 +72,8 @@ CLS
 PROCSky()
 PROCSun()
 PROCLines()
+INKEY(1000)
+END
 COLOUR &004080
 ROTATE terrain1%, 355, 0, 0
 RENDER
