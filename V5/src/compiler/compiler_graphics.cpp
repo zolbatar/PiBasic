@@ -90,6 +90,7 @@ antlrcpp::Any Compiler::visitStmtCOLOUR(DARICParser::StmtCOLOURContext* context)
 		insert_bytecode_notype(Bytecodes::COLOURHEX);
 	}
 	else {
+		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(context->numExpr().size()));
 		insert_bytecode_notype(Bytecodes::COLOURRGB);
 	}
 	return NULL;
@@ -109,6 +110,7 @@ antlrcpp::Any Compiler::visitStmtCOLOURBG(DARICParser::StmtCOLOURBGContext* cont
 		insert_bytecode_notype(Bytecodes::COLOURBGHEX);
 	}
 	else {
+		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(context->numExpr().size()));
 		insert_bytecode_notype(Bytecodes::COLOURBGRGB);
 	}
 	return NULL;
@@ -347,6 +349,7 @@ antlrcpp::Any Compiler::visitNumFuncCOLOUR(DARICParser::NumFuncCOLOURContext* co
 		ensure_stack_is_integer();
 		stack_pop();
 	}
+	insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, static_cast<int>(context->numExpr().size()));
 	insert_bytecode_notype(Bytecodes::COLOUREXPRESSION);
 	stack_push(Type::INTEGER);
 	return NULL;

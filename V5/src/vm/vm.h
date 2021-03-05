@@ -227,8 +227,8 @@ private:
     void opcode_CLS();
     void opcode_CURSORON();
     void opcode_CURSOROFF();
-    void opcode_COLOURRGB();
     void opcode_COLOURHEX();
+    void opcode_COLOURRGB();
     void opcode_COLOURBGRGB();
     void opcode_COLOURBGHEX();
     void opcode_COLOUREXPRESSION();

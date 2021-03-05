@@ -1,4 +1,4 @@
-	#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include "../environment.h"
 #include "graphics.h"
 #include "../debugger/debugger.h"
@@ -412,29 +412,41 @@ void Graphics::alpha(Colour bg, Colour fg, Colour& out, BYTE a)
 		((fg.get_b() * a) >> 8) + ((bg.get_b() * (255 - a)) >> 8));
 }
 
+void Graphics::colour_hex(UINT32 c) {
+	current_colour.set_rgb((c & 0xFF0000) >> 16, (c & 0xFF00) >> 8, (c & 0xFF));
+	current_colour.set_a((c & 0xFF000000) >> 24);
+}
+
 void Graphics::colour(BYTE r, BYTE g, BYTE b)
 {
 	current_colour.set_rgb(r, g, b);
 }
 
-void Graphics::colour_bg(int r, int g, int b)
+void Graphics::coloura(BYTE r, BYTE g, BYTE b, BYTE a)
+{
+	current_colour.set_rgb(r, g, b);
+	current_colour.set_a(a);
+}
+
+void Graphics::colour_bg_hex(UINT32 c) {
+	current_bg_colour.set_rgb((c & 0xFF0000) >> 16, (c & 0xFF00) >> 8, (c & 0xFF));
+	current_bg_colour.set_a((c & 0xFF000000) >> 24);
+}
+
+void Graphics::colour_bg(BYTE r, BYTE g, BYTE b)
 {
 	current_bg_colour.set_rgb(r, g, b);
 }
 
-void Graphics::colour_hex(UINT32 c)
+void Graphics::colour_bga(BYTE r, BYTE g, BYTE b, BYTE a)
 {
-	current_colour.set_rgb((c & 0xFF0000) >> 16, (c & 0xFF00) >> 8, (c & 0xFF));
+	current_bg_colour.set_rgb(r, g, b);
+	current_bg_colour.set_a(a);
 }
 
 void Graphics::set_colour(Colour c)
 {
 	current_colour = c;
-}
-
-void Graphics::colour_bg_hex(UINT32 c)
-{
-	current_bg_colour.set_rgb((c & 0xFF0000) >> 16, (c & 0xFF00) >> 8, (c & 0xFF));
 }
 
 void Graphics::cls()
@@ -484,7 +496,7 @@ void Graphics::flip(bool user_specified)
 			fps_clock = t;
 		}
 		auto saved_colour = current_colour;
-		colour_hex(0xFFFFFF);
+		coloura(255, 255, 255, 255);
 		g_env.text.print_text_right(0, 20, fps_text, screen_width - 1, 0);
 		current_colour = saved_colour;
 	}
@@ -554,7 +566,7 @@ void Graphics::rectangle(int x1, int y1, int x2, int y2)
 #else
 	for (int y = y1; y <= y2; y++) {
 		draw_horz_line(x1, x2, y);
-	}
+}
 #endif
 }
 

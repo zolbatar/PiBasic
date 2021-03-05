@@ -166,9 +166,11 @@ graphicsStmt
     ;
     
 stmtCLS:            CLS ;
-stmtCOLOUR:         COLOUR numExpr COMMA numExpr COMMA numExpr 
+stmtCOLOUR:         COLOUR numExpr
+                  | COLOUR numExpr COMMA numExpr COMMA numExpr 
                   | COLOUR numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
-stmtCOLOURBG:       COLOURBG numExpr COMMA numExpr COMMA numExpr
+stmtCOLOURBG:       COLOURBG numExpr
+                  | COLOURBG numExpr COMMA numExpr COMMA numExpr
                   | COLOURBG numExpr COMMA numExpr COMMA numExpr COMMA numExpr ; 
 stmtCURSORON:       CURSORON ; 
 stmtCURSOROFF:      CURSOROFF ;

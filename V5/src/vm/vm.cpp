@@ -2294,16 +2294,6 @@ void VM::opcode_CURSOROFF() {
 		g_env.log("Text cursor off");
 }
 
-void VM::opcode_COLOURRGB()
-{
-	VM_INT b = stack.pop_int(bc);
-	VM_INT g = stack.pop_int(bc);
-	VM_INT r = stack.pop_int(bc);
-	g_env.graphics.colour(r, g, b);
-	if (!performance_build && runtime_debug)
-		g_env.log("Set RGB graphics colour to " + std::to_string(r) + "," + std::to_string(g) + "," + std::to_string(b));
-}
-
 void VM::opcode_COLOURHEX()
 {
 	VM_INT c = stack.pop_int(bc);
@@ -2312,26 +2302,60 @@ void VM::opcode_COLOURHEX()
 		g_env.log("Set HEX graphics colour to " + std::to_string(c));
 }
 
-void VM::opcode_COLOURBGRGB()
+void VM::opcode_COLOURRGB()
 {
+	VM_INT size = stack.pop_int(bc);
+	VM_INT a;
+	if (size == 4) {
+		a = stack.pop_int(bc);
+	}
 	VM_INT b = stack.pop_int(bc);
 	VM_INT g = stack.pop_int(bc);
 	VM_INT r = stack.pop_int(bc);
-	g_env.graphics.colour_bg(r, g, b);
+	if (size == 4) {
+		g_env.graphics.coloura(r, g, b, a);
+	}
+	else {
+		g_env.graphics.colour(r, g, b);
+	}
 	if (!performance_build && runtime_debug)
-		g_env.log("Set RGB graphics background colour to " + std::to_string(r) + "," + std::to_string(g) + "," + std::to_string(b));
+		g_env.log("Set RGB graphics colour to " + std::to_string(r) + "," + std::to_string(g) + "," + std::to_string(b));
 }
 
-void VM::opcode_COLOURBGHEX()
-{
+void VM::opcode_COLOURBGHEX() {
 	VM_INT c = stack.pop_int(bc);
 	g_env.graphics.colour_bg_hex(c);
 	if (!performance_build && runtime_debug)
 		g_env.log("Set HEX graphics background colour to " + std::to_string(c));
 }
 
+void VM::opcode_COLOURBGRGB()
+{
+	VM_INT size = stack.pop_int(bc);
+	VM_INT a;
+	if (size == 4) {
+		a = stack.pop_int(bc);
+	}
+	VM_INT b = stack.pop_int(bc);
+	VM_INT g = stack.pop_int(bc);
+	VM_INT r = stack.pop_int(bc);
+	if (size == 4) {
+		g_env.graphics.colour_bga(r, g, b, a);
+	}
+	else {
+		g_env.graphics.colour_bg(r, g, b);
+	}
+	if (!performance_build && runtime_debug)
+		g_env.log("Set RGB graphics background colour to " + std::to_string(r) + "," + std::to_string(g) + "," + std::to_string(b));
+}
+
 void VM::opcode_COLOUREXPRESSION()
 {
+	VM_INT size = stack.pop_int(bc);
+	VM_INT a;
+	if (size == 4) {
+		a = stack.pop_int(bc);
+	}
 	VM_INT b = stack.pop_int(bc);
 	VM_INT g = stack.pop_int(bc);
 	VM_INT r = stack.pop_int(bc);

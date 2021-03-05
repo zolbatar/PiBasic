@@ -85,9 +85,11 @@ public:
 	void shutdown();
 	void open(int width, int height, Mode mode, std::string& cwd);
 	void colour(BYTE r, BYTE g, BYTE b);
+	void coloura(BYTE r, BYTE g, BYTE b, BYTE a);
 	void colour_hex(UINT32 c);
 	void set_colour(Colour c);
-	void colour_bg(int r, int g, int b);
+	void colour_bg(BYTE r, BYTE g, BYTE b);
+	void colour_bga(BYTE r, BYTE g, BYTE b, BYTE a);
 	void colour_bg_hex(UINT32 c);
 	void cls();
 	void plot(int x, int y);

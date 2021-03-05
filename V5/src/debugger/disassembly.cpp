@@ -488,17 +488,9 @@ Disassembly Debugger::disassemble_instruction(Bytecode& bc, UINT32 i)
         ret.opcode = "2D/3D";
         ret.operand = "COLOUR RGB";
         break;
-    case Bytecodes::COLOURHEX:
-        ret.opcode = "2D/3D";
-        ret.operand = "COLOUR HEX";
-        break;
     case Bytecodes::COLOURBGRGB:
         ret.opcode = "2D/3D";
         ret.operand = "COLOUR BACKGROUND RGB";
-        break;
-    case Bytecodes::COLOURBGHEX:
-        ret.opcode = "2D/3D";
-        ret.operand = "COLOUR BACKGROUND HEX";
         break;
     case Bytecodes::COLOUREXPRESSION:
         ret.opcode = "2D/3D";
