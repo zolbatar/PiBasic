@@ -9,13 +9,14 @@
     <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <CommandBar HorizontalAlignment="Center">
             <CommandBar.Content>
-                <TextBlock Text="No DARIC file" Margin="12,8"/>
+                <TextBlock Text="No DARIC file" Margin="12,10"/>
             </CommandBar.Content>
-            <AppBarToggleButton x:Name="toggleFullScreen" Label="Full Screen" IsChecked="False" Icon="FullScreen" Checked="toggleFullScreen_Checked" Unchecked="toggleFullScreen_Unchecked" />
+            <AppBarToggleButton x:Name="toggleFullScreen" Label="Full Screen" IsChecked="{x:Bind IsFullScreen}" Icon="FullScreen" Checked="toggleFullScreen_Checked" Unchecked="toggleFullScreen_Unchecked" />
             <AppBarButton Icon="Play" Label="Run" />
-            <AppBarButton Icon="Clear" Label="New" />
+            <AppBarButton Icon="Delete" Label="New" />
             <AppBarButton Icon="OpenLocal" Label="Load" />
             <AppBarButton Icon="SaveLocal" Label="Save" />
+            <AppBarButton x:Name="buttonQuit" Icon="Cancel" Label="Quit" Click="buttonQuit_Click"  />
         </CommandBar>
     </StackPanel>
 </Page>

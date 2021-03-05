@@ -18,11 +18,6 @@ namespace winrt::DARIC::implementation
 		auto view = ApplicationView::GetForCurrentView();
 		return view.IsFullScreenMode();
 	}
-
-/*	void MainPage::IsFullScreen(bool value)
-	{
-		throw hresult_not_implemented();
-	}*/
 }
 
 void winrt::DARIC::implementation::MainPage::toggleFullScreen_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
@@ -44,4 +39,11 @@ void winrt::DARIC::implementation::MainPage::toggleFullScreen_Unchecked(winrt::W
 		view.ExitFullScreenMode();
 		ApplicationView::PreferredLaunchWindowingMode(ApplicationViewWindowingMode::Auto);
 	}
+}
+
+
+void winrt::DARIC::implementation::MainPage::buttonQuit_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	auto app = Application::Current();
+	app.Exit();
 }
