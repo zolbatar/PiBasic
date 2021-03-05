@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="DARIC.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DARIC"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Background="#FF202020">
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <CommandBar HorizontalAlignment="Center">
+            <CommandBar.Content>
+                <TextBlock Text="No DARIC file" Margin="12,8"/>
+            </CommandBar.Content>
+            <AppBarToggleButton x:Name="toggleFullScreen" Label="Full Screen" IsChecked="False" Icon="FullScreen" Checked="toggleFullScreen_Checked" Unchecked="toggleFullScreen_Unchecked" />
+            <AppBarButton Icon="Play" Label="Run" />
+            <AppBarButton Icon="Clear" Label="New" />
+            <AppBarButton Icon="OpenLocal" Label="Load" />
+            <AppBarButton Icon="SaveLocal" Label="Save" />
+        </CommandBar>
+    </StackPanel>
+</Page>

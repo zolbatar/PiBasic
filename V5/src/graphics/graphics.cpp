@@ -10,86 +10,6 @@
 extern Environment g_env;
 extern int console_font_size;
 
-#ifndef RISCOS
-static const char* arrow[] = {
-	/* width height num_colors chars_per_pixel */
-	"    32    32        3            1",
-	/* colors */
-	"X c #000000",
-	". c #ffffff",
-	"  c None",
-	/* pixels */
-	"X                               ",
-	"XX                              ",
-	"X.X                             ",
-	"X..X                            ",
-	"X...X                           ",
-	"X....X                          ",
-	"X.....X                         ",
-	"X......X                        ",
-	"X.......X                       ",
-	"X........X                      ",
-	"X.....XXXXX                     ",
-	"X..X..X                         ",
-	"X.X X..X                        ",
-	"XX  X..X                        ",
-	"X    X..X                       ",
-	"     X..X                       ",
-	"      X..X                      ",
-	"      X..X                      ",
-	"       XX                       ",
-	"                                ",
-	"                                ",
-	"                                ",
-	"                                ",
-	"                                ",
-	"                                ",
-	"                                ",
-	"                                ",
-	"                                ",
-	"                                ",
-	"                                ",
-	"                                ",
-	"                                ",
-	"0,0"
-};
-
-SDL_Cursor* init_system_cursor(const char* image[])
-{
-	int i, row, col;
-	Uint8 data[4 * 32];
-	Uint8 mask[4 * 32];
-	int hot_x, hot_y;
-
-	i = -1;
-	for (row = 0; row < 32; ++row) {
-		for (col = 0; col < 32; ++col) {
-			if (col % 8) {
-				data[i] <<= 1;
-				mask[i] <<= 1;
-			}
-			else {
-				++i;
-				data[i] = mask[i] = 0;
-			}
-			switch (image[4 + row][col]) {
-			case 'X':
-				data[i] |= 0x01;
-				mask[i] |= 0x01;
-				break;
-			case '.':
-				mask[i] |= 0x01;
-				break;
-			case ' ':
-				break;
-			}
-		}
-	}
-	sscanf(image[4 + row], "%d,%d", &hot_x, &hot_y);
-	return SDL_CreateCursor(data, mask, 32, 32, hot_x, hot_y);
-}
-#endif
-
 #ifdef RISCOS
 void Graphics::graphics_shadow_state_on()
 {
@@ -328,14 +248,14 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 
 	// Create window (in full screen if needed)
 	if (initial) {
-		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
+		//SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 		window = SDL_CreateWindow("DARIC", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, params);
 		if (!window) {
 			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
 			exit(1);
 		}
 		screen = SDL_GetWindowSurface(window);
-		renderer = SDL_CreateRenderer(window, -1, NULL);
+		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
 		// Output some info for debugging
 		std::cout << "Driver: " << SDL_GetCurrentVideoDriver() << std::endl;
@@ -354,8 +274,6 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 	SDL_RenderSetLogicalSize(renderer, screen_width, screen_height);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_StopTextInput();
-	//SDL_ShowCursor(1);
-	//cursor = init_system_cursor(arrow);
 #endif
 	current_colour = Colour(255, 255, 255);
 	opened = true;
@@ -421,6 +339,7 @@ void Graphics::colour_hex(UINT32 c) {
 void Graphics::colour(BYTE r, BYTE g, BYTE b)
 {
 	current_colour.set_rgb(r, g, b);
+	current_colour.set_a(255);
 }
 
 void Graphics::coloura(BYTE r, BYTE g, BYTE b, BYTE a)
@@ -437,6 +356,7 @@ void Graphics::colour_bg_hex(UINT32 c) {
 void Graphics::colour_bg(BYTE r, BYTE g, BYTE b)
 {
 	current_bg_colour.set_rgb(r, g, b);
+	current_bg_colour.set_a(255);
 }
 
 void Graphics::colour_bga(BYTE r, BYTE g, BYTE b, BYTE a)

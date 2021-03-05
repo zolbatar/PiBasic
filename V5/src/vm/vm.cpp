@@ -2331,7 +2331,7 @@ void VM::opcode_COLOURBGHEX() {
 
 void VM::opcode_COLOURBGRGB()
 {
-	VM_INT size = stack.pop_int(bc);
+		VM_INT size = stack.pop_int(bc);
 	VM_INT a;
 	if (size == 4) {
 		a = stack.pop_int(bc);
@@ -2352,14 +2352,14 @@ void VM::opcode_COLOURBGRGB()
 void VM::opcode_COLOUREXPRESSION()
 {
 	VM_INT size = stack.pop_int(bc);
-	VM_INT a;
+	VM_INT a = 255;
 	if (size == 4) {
 		a = stack.pop_int(bc);
 	}
 	VM_INT b = stack.pop_int(bc);
 	VM_INT g = stack.pop_int(bc);
 	VM_INT r = stack.pop_int(bc);
-	VM_INT c = (r << 16) | (g << 8) | b;
+	VM_INT c = (a << 24) | (r << 16) | (g << 8) | b;
 	stack.push_int(c);
 	if (!performance_build && runtime_debug)
 		g_env.log("Convert RGB colour " + std::to_string(r) + "," + std::to_string(g) + "," + std::to_string(b) + " to " + std::to_string(c));

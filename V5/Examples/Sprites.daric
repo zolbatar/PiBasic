@@ -1,5 +1,5 @@
 INSTALL "SetupGraphics"
-sw%=128,sh%=128,sprites%=100
+sw%=128,sh%=128,sprites%=25
 T%=TIME
 GRAPHICS BANKED w%, h%
 CURSOROFF
@@ -23,6 +23,8 @@ FOR loop=0 TO 360 STEP 0.1
         IF sx%(I%)>w%-sw%-1 sdx%(I%)=-1
         IF sy%(I%)<0 sdy%(I%)=1
         IF sy%(I%)>h%-sh%-1 sdy%(I%)=-1
+
+        IF INKEY(0) <> -1 DELETESPRITE drone%:DELETESPRITE bg%:CURSORON:CLIPOFF:CHAIN "Welcome"
     NEXT
     FLIP
 NEXT
@@ -31,5 +33,4 @@ GRAPHICS
 PRINT TIME-T%
 DELETESPRITE drone%:DELETESPRITE bg%
 CURSORON
-
-
+CHAIN "Welcome"

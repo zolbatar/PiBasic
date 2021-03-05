@@ -20,6 +20,11 @@ V5/buildriscos/
 V5/buildriscosvfp/
 V5/DARICWebAssembly/bin
 V5/DARICWebAssembly/obj
+V6/Generated Files/
+V6/x64/
+V6/.vs/
+V6/Debug/
+V6/Packages/
 
 V5/DARIC.exe
 V5/DARIC.ilk

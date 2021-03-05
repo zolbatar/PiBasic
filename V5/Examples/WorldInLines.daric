@@ -80,7 +80,7 @@ ENDPROC
 
 DEF PROCRender()
 	CLS
-	C%=&FF0000
+	C%=COLOUR(255,0,0)
 	COLOUR C%
 	lx%=0
 	ly%=0

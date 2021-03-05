@@ -1,5 +1,6 @@
 DEF PROCTriangle(l,x,y,s)
 	IF l > 0 THEN
+		COLOUR RND(255),RND(255),RND(255)
 		TRIANGLE x,y,x+s,y,x,y+s
 		LOCAL s2=s/2
 		PROCTriangle(l-1,x,y,s2)

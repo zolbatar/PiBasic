@@ -7,10 +7,7 @@ DEF PROCSky()
     sky%=&002040
     FOR LOCAL y%=0 TO (h% / 2)
         COLOUR 0,&6 * level,&30 * level
-        LINE 0, y%, w%-1, y%
-        LINE 0, y%+1, w%-1, y%+1
-        LINE 0, y%+2, w%-1, y%+2
-        LINE 0, y%+3, w%-1, y%+3
+        RECTANGLE FILL 0, y%, w%-1, y%+3
         level=level+0.0025
     NEXT
 ENDPROC
@@ -34,7 +31,7 @@ DEF PROCLines()
     FOR LOCAL y%=0 TO h%-1 STEP 3
         COLOUR 255, 255, 255, 40
         LINE 0,y%,w%-1,y%
-        COLOUR 0, 0, 0
+        COLOUR 0, 0, 0, 40
         LINE 0,y%+1,w%-1,y%+1
     NEXT
 ENDPROC
@@ -56,10 +53,10 @@ COLOURBG BLACK
 CLS
 PROCSky()
 PROCSun()
-PROCLines()
 COLOUR &00, &40, &80
 ROTATE terrain1%, 355, 0, 0
 RENDER
+PROCLines()
 PROCLinesBlackenLogo()
 COLOUR WHITE:TEXTCENTRE coolfont%, 150, w%/2-250, h%/2-100, "D"
 COLOUR WHITE:TEXTCENTRE coolfont%, 150, w%/2-125, h%/2-100, "A"

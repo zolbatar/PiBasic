@@ -6,28 +6,28 @@ antlrcpp::Any Compiler::visitNumColours(DARICParser::NumColoursContext* context)
 	if (phase == CompilerPhase::LOOKAHEAD)
 		return NULL;
 	if (context->RED() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0xFF0000);
+		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0xFFFF0000);
 	}
 	else if (context->GREEN() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0x00FF00);
+		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0xFF00FF00);
 	}
 	else if (context->YELLOW() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0xFFFF00);
+		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0xFFFFFF00);
 	}
 	else if (context->BLUE() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0x0000FF);
+		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0xFF0000FF);
 	}
 	else if (context->MAGENTA() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0xFF00FF);
+		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0xFFFF00FF);
 	}
 	else if (context->CYAN() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0x00FFFF);
+		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0xFF00FFFF);
 	}
 	else if (context->WHITE() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0xFFFFFF);
+		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0xFFFFFFFF);
 	}
 	else if (context->BLACK() != NULL) {
-		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0x000000);
+		insert_instruction(Bytecodes::FASTCONST, Type::INTEGER, 0xFF000000);
 	}
 	stack_push(Type::INTEGER);
 	return NULL;

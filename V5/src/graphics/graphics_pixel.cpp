@@ -11,10 +11,10 @@ void Graphics::plot(int x, int y)
 		int yb = y - static_cast<int>(g_env.sprite.bank_y1);
 		int xb = x - static_cast<int>(g_env.sprite.bank_x1);
 #ifndef RISCOS
-		SDL_SetRenderTarget(g_env.graphics.get_renderer(), render_bank);
+		SDL_SetRenderTarget(renderer, render_bank);
 		set_sdl_colour();
-		SDL_RenderDrawPoint(g_env.graphics.get_renderer(), xb, yb);
-		SDL_SetRenderTarget(g_env.graphics.get_renderer(), NULL);
+		SDL_RenderDrawPoint(renderer, xb, yb);
+		SDL_SetRenderTarget(renderer, NULL);
 #else
 		auto loc = (yb * g_env.sprite.bank_width) + xb;
 		(*render_bank)[loc] = current_colour;
