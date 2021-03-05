@@ -31,26 +31,19 @@ DEF PROCSun()
 ENDPROC
 
 DEF PROCLines()
-    RASTERMODE BLEND
     FOR LOCAL y%=0 TO h%-1 STEP 3
-        COLOUR 255, 255, 255, 20
+        COLOUR 255, 255, 255, 40
         LINE 0,y%,w%-1,y%
+        COLOUR 0, 0, 0
+        LINE 0,y%+1,w%-1,y%+1
     NEXT
-    RASTERMODE BLIT
 ENDPROC
 
 DEF PROCLinesBlackenLogo()
     COLOUR BLACK
     FOR LOCAL y%=h%/2-100 TO h%/2+70
-        FOR LOCAL x%=0 TO w%-1
-            c%=0:REMPOINT(x%,y%)
-            LOCAL r%=(c% AND &FF0000) >> 16
-            LOCAL g%=(c% AND &00FF00) >> 8
-            LOCAL b%=c% AND &0000FF
-            ratio=ABS(w%/2-x%)
-            COLOUR r%/3,g%/3,b%/3
-            PLOT x%,y%
-        NEXT
+        COLOUR 0, 0, 0, 150
+        LINE 0,y%,w%-1,y%
     NEXT
 ENDPROC
 
@@ -64,9 +57,7 @@ CLS
 PROCSky()
 PROCSun()
 PROCLines()
-INKEY(1000)
-END
-COLOUR &004080
+COLOUR &00, &40, &80
 ROTATE terrain1%, 355, 0, 0
 RENDER
 PROCLinesBlackenLogo()

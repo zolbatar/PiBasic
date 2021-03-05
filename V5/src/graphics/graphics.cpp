@@ -352,6 +352,7 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 	}
 	std::cout << "Set logical screen size to " << screen_width << "x" << screen_height << std::endl;
 	SDL_RenderSetLogicalSize(renderer, screen_width, screen_height);
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_StopTextInput();
 	//SDL_ShowCursor(1);
 	//cursor = init_system_cursor(arrow);
@@ -542,14 +543,7 @@ void Graphics::draw_horz_line(int x1, int x2, int y)
 
 #ifndef RISCOS
 void Graphics::set_sdl_colour() {
-	switch (raster_mode) {
-	case RasterMode::BLIT:
-		SDL_SetRenderDrawColor(renderer, current_colour.get_r(), current_colour.get_g(), current_colour.get_b(), SDL_ALPHA_OPAQUE);
-		break;
-	case RasterMode::BLEND:
-		SDL_SetRenderDrawColor(renderer, current_colour.get_r(), current_colour.get_g(), current_colour.get_b(), current_colour.get_a());
-		break;
-	}
+	SDL_SetRenderDrawColor(renderer, current_colour.get_r(), current_colour.get_g(), current_colour.get_b(), current_colour.get_a());
 }
 #endif
 
@@ -566,7 +560,7 @@ void Graphics::rectangle(int x1, int y1, int x2, int y2)
 #else
 	for (int y = y1; y <= y2; y++) {
 		draw_horz_line(x1, x2, y);
-}
+	}
 #endif
 }
 

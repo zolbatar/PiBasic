@@ -46,7 +46,7 @@ OutCode Graphics::ComputeOutCode(int x, int y) {
 void Graphics::line(int x0, int y0, int x1, int y1) {
 
 #ifdef WINDOWS
-	SDL_SetRenderDrawColor(renderer, current_colour.get_r(), current_colour.get_g(), current_colour.get_b(), SDL_ALPHA_OPAQUE);
+	set_sdl_colour();
 	SDL_RenderDrawLine(renderer, x0, y0, x1, y1);
 	return;
 #endif

@@ -2495,8 +2495,13 @@ void VM::opcode_TEXTCENTRE()
 void VM::opcode_RASTERMODE()
 {
 	VM_INT type = stack.pop_int(bc);
-	if (!performance_build && runtime_debug)
-		g_env.log("Raster mode " + std::to_string(type));
+	switch (type) {
+	case 0:
+		g_env.graphics.set_raster_mode(RasterMode::NONE);
+		if (!performance_build && runtime_debug)
+			g_env.log("Raster mode: NONE");
+		break;
+	}
 }
 
 void VM::opcode_LOADSPRITE() {

@@ -21,7 +21,7 @@
 #ifdef _DEBUG
 const bool DEBUGWINDOW = true;
 #else
-const bool DEBUGWINDOW = false;
+const bool DEBUGWINDOW = true;
 #endif
 
 const int FRAMETIME = 10;
@@ -34,6 +34,10 @@ const int RIGHT = 2; // 0010
 const int BOTTOM = 4; // 0100
 const int TOP = 8; // 1000
 
+enum class RasterMode {
+	NONE
+};
+
 extern bool debugger_open;
 
 enum class Mode {
@@ -43,12 +47,6 @@ enum class Mode {
 
 enum class EventType {
 	Text
-};
-
-enum class RasterMode {
-	BLIT,
-	MASK,
-	BLEND
 };
 
 struct Event {
@@ -96,8 +94,6 @@ public:
 #ifndef RISCOS
 	void set_sdl_colour();
 #endif
-	void plot_multiple(size_t count, UINT32* dest);
-	void blit_fast(size_t count, std::vector<Colour>* source, size_t source_index, UINT32* dest);
 	VM_INT point(int x, int y);
 	void flip(bool user_specified);
 	void poll();
@@ -106,6 +102,7 @@ public:
 	void circle(int x, int y, int r, bool fill);
 	void rectangle(int x1, int y1, int x2, int y2);
 	void clipoff();
+	void blit_fast(size_t count, std::vector<Colour>* source, size_t source_index, UINT32* dest);
 	void clip(int x1, int y1, int x2, int y2);
 	void alpha(Colour bg, Colour fg, Colour& out, BYTE a);
 	void show_fps() { showfps = true; }
@@ -173,7 +170,7 @@ private:
 #else
 	SDL_Texture* render_bank = nullptr;
 #endif
-	RasterMode raster_mode = RasterMode::BLIT;
+	RasterMode raster_mode = RasterMode::NONE;
 	double dpi_ratio = 1.0;
 
 #ifndef RISCOS

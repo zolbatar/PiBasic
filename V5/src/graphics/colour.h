@@ -7,18 +7,21 @@ public:
 		r = 0;
 		g = 0;
 		b = 0;
+		a = 255;
 		encode_hex();
 	};
 	Colour(const Colour& c)
 		: r(c.r)
 		, g(c.g)
-		, b(c.b) {
+		, b(c.b)
+		, a(c.a) {
 		encode_hex();
 	};
 	Colour(BYTE r, BYTE g, BYTE b)
 		: r(r)
 		, g(g)
 		, b(b) {
+		a = 255;
 		encode_hex();
 	};
 	UINT32 get_hex() {
@@ -28,6 +31,7 @@ public:
 		this->r = r;
 		this->g = g;
 		this->b = b;
+		this->a = 255;
 		encode_hex();
 	}
 	BYTE get_r() { return r; }
@@ -51,6 +55,6 @@ private:
 #else
 		encoded_hex = (r << 16) + (g << 8) + b;
 #endif
-	}
+}
 };
 
