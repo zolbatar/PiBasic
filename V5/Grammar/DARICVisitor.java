@@ -430,6 +430,12 @@ public interface DARICVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStmtSHOWFPS(DARICParser.StmtSHOWFPSContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link DARICParser#stmtRASTERMODE}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmtRASTERMODE(DARICParser.StmtRASTERMODEContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link DARICParser#stmtRENDERTOSPRITE}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

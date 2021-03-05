@@ -76,6 +76,18 @@ antlrcpp::Any Compiler::visitStmtCURSOROFF(DARICParser::StmtCURSOROFFContext* co
 	return NULL;
 }
 
+antlrcpp::Any Compiler::visitStmtRASTERMODE(DARICParser::StmtRASTERMODEContext* context) {
+	set_pos(context->start);
+	if (context->BLIT() != NULL) {
+		insert_instruction(Bytecodes::RASTERMODE, Type::INTEGER, 0);
+	}
+	else if (context->BLEND() != NULL)
+	{
+		insert_instruction(Bytecodes::RASTERMODE, Type::INTEGER, 1);
+	}
+	return NULL;
+}
+
 antlrcpp::Any Compiler::visitStmtCOLOUR(DARICParser::StmtCOLOURContext* context)
 {
 	set_pos(context->start);

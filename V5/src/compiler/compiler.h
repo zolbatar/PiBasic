@@ -287,6 +287,7 @@ protected:
     antlrcpp::Any visitStmtTEXTRIGHT(DARICParser::StmtTEXTRIGHTContext* context);
     antlrcpp::Any visitStmtTEXTCENTRE(DARICParser::StmtTEXTCENTREContext* context);
     antlrcpp::Any visitStmtSHOWFPS(DARICParser::StmtSHOWFPSContext* context);
+    antlrcpp::Any visitStmtRASTERMODE(DARICParser::StmtRASTERMODEContext* context);    
     antlrcpp::Any visitNumFuncPOINT(DARICParser::NumFuncPOINTContext* context);
     antlrcpp::Any visitNumFuncCOLOUR(DARICParser::NumFuncCOLOURContext* context);
     antlrcpp::Any visitNumFuncLOADTYPEFACE(DARICParser::NumFuncLOADTYPEFACEContext* context);

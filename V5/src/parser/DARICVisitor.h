@@ -159,6 +159,8 @@ public:
 
     virtual antlrcpp::Any visitStmtSHOWFPS(DARICParser::StmtSHOWFPSContext *context) = 0;
 
+    virtual antlrcpp::Any visitStmtRASTERMODE(DARICParser::StmtRASTERMODEContext *context) = 0;
+
     virtual antlrcpp::Any visitStmtRENDERTOSPRITE(DARICParser::StmtRENDERTOSPRITEContext *context) = 0;
 
     virtual antlrcpp::Any visitStmtRENDERTOSCREEN(DARICParser::StmtRENDERTOSCREENContext *context) = 0;

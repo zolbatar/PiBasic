@@ -254,6 +254,7 @@ private:
     void opcode_TEXT();
     void opcode_TEXTRIGHT();
     void opcode_TEXTCENTRE();
+    void opcode_RASTERMODE();
 
     /* Sprites */   
     void opcode_LOADSPRITE();

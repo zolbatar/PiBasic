@@ -148,6 +148,7 @@ graphicsStmt
     | stmtTEXTRIGHT
     | stmtTEXTCENTRE
     | stmtSHOWFPS
+    | stmtRASTERMODE
 
     /* Sprites */
     | stmtRENDERTOSPRITE
@@ -194,6 +195,7 @@ stmtTEXT:           TEXT numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA
 stmtTEXTRIGHT:      TEXTRIGHT numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
 stmtTEXTCENTRE:     (TEXTCENTRE|TEXTCENTER) numExpr COMMA numExpr COMMA numExpr COMMA numExpr COMMA strExpr ;
 stmtSHOWFPS:        SHOWFPS ;
+stmtRASTERMODE:     RASTERMODE (BLIT | BLEND) ;
 
 /* Sprites */
 stmtRENDERTOSPRITE: DRAWTOSPRITE numExpr COMMA numExpr COMMA numExpr COMMA numExpr ;
@@ -595,6 +597,9 @@ TEXTRIGHT       : 'TEXTRIGHT' | 'textright' | 'TextRight' ;
 TEXTCENTRE      : 'TEXTCENTRE' | 'textcentre' | 'TextCentre' ;
 TEXTCENTER      : 'TEXTCENTER' | 'textcenter' | 'TextCenter' ;
 TRIANGLE        : 'TRIANGLE' | 'triangle' | 'Triangle' ;
+RASTERMODE      : 'RASTERMODE' | 'rastermode' | 'RasterMode' ;
+BLIT            : 'BLIT' | 'blit' | 'Blit' ;
+BLEND           : 'BLEND' | 'blend' | 'Blend' ;
 
 LOADSPRITE      : 'LOADSPRITE' | 'loadsprite' | 'LoadSprite' ;
 DRAWSPRITE      : 'DRAWSPRITE' | 'drawsprite' | 'DrawSprite' ;

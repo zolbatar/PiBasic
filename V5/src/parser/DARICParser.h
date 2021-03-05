@@ -32,23 +32,24 @@ public:
     CURSOROFF = 102, FILL = 103, FLIP = 104, SHOWFPS = 105, GRAPHICS = 106, 
     LINE = 107, LOADTYPEFACE = 108, RECTANGLE = 109, PLOT = 110, POINT = 111, 
     SCREENWIDTH = 112, SCREENHEIGHT = 113, TEXT = 114, TEXTRIGHT = 115, 
-    TEXTCENTRE = 116, TEXTCENTER = 117, TRIANGLE = 118, LOADSPRITE = 119, 
-    DRAWSPRITE = 120, DELETESPRITE = 121, CREATESPRITE = 122, DRAWTOSPRITE = 123, 
-    DRAWTOSCREEN = 124, TIME = 125, PI = 126, SQR = 127, LN = 128, LOG = 129, 
-    EXP = 130, ATN = 131, TAN = 132, COS = 133, SIN = 134, ABS = 135, ACS = 136, 
-    ASN = 137, DEG = 138, RAD = 139, SGN = 140, ASC = 141, LEN = 142, INSTR = 143, 
-    VAL = 144, TIMES = 145, STRS = 146, STRINGS = 147, CHRS = 148, LEFTS = 149, 
-    MIDS = 150, RIGHTS = 151, RND = 152, RND0 = 153, RND1 = 154, EQ = 155, 
-    NE = 156, GT = 157, GE = 158, LT = 159, LE = 160, NOT = 161, AND = 162, 
-    OR = 163, EOR = 164, MOD = 165, DIV = 166, HAT = 167, PLUS = 168, MINUS = 169, 
-    MULTIPLY = 170, DIVIDE = 171, SHL = 172, SHR = 173, PLUS_E = 174, MINUS_E = 175, 
-    MULTIPLY_E = 176, DIVIDE_E = 177, SHL_E = 178, SHR_E = 179, NEWLINE = 180, 
-    TICK = 181, TILDE = 182, HASH = 183, COLON = 184, COMMA = 185, DOLLAR = 186, 
-    PERCENT = 187, LPAREN = 188, RPAREN = 189, SEMICOLON = 190, UNDERSCORE = 191, 
-    COMMENT = 192, STRINGLITERAL = 193, PROC_NAME = 194, FN_INTEGER = 195, 
-    FN_FLOAT = 196, FN_STRING = 197, VARIABLE_FLOAT = 198, VARIABLE_INTEGER = 199, 
-    VARIABLE_STRING = 200, VARIABLE_TYPE = 201, HEXNUMBER = 202, BINARYNUMBER = 203, 
-    NUMBER = 204, FLOAT = 205, WS = 206
+    TEXTCENTRE = 116, TEXTCENTER = 117, TRIANGLE = 118, RASTERMODE = 119, 
+    BLIT = 120, BLEND = 121, LOADSPRITE = 122, DRAWSPRITE = 123, DELETESPRITE = 124, 
+    CREATESPRITE = 125, DRAWTOSPRITE = 126, DRAWTOSCREEN = 127, TIME = 128, 
+    PI = 129, SQR = 130, LN = 131, LOG = 132, EXP = 133, ATN = 134, TAN = 135, 
+    COS = 136, SIN = 137, ABS = 138, ACS = 139, ASN = 140, DEG = 141, RAD = 142, 
+    SGN = 143, ASC = 144, LEN = 145, INSTR = 146, VAL = 147, TIMES = 148, 
+    STRS = 149, STRINGS = 150, CHRS = 151, LEFTS = 152, MIDS = 153, RIGHTS = 154, 
+    RND = 155, RND0 = 156, RND1 = 157, EQ = 158, NE = 159, GT = 160, GE = 161, 
+    LT = 162, LE = 163, NOT = 164, AND = 165, OR = 166, EOR = 167, MOD = 168, 
+    DIV = 169, HAT = 170, PLUS = 171, MINUS = 172, MULTIPLY = 173, DIVIDE = 174, 
+    SHL = 175, SHR = 176, PLUS_E = 177, MINUS_E = 178, MULTIPLY_E = 179, 
+    DIVIDE_E = 180, SHL_E = 181, SHR_E = 182, NEWLINE = 183, TICK = 184, 
+    TILDE = 185, HASH = 186, COLON = 187, COMMA = 188, DOLLAR = 189, PERCENT = 190, 
+    LPAREN = 191, RPAREN = 192, SEMICOLON = 193, UNDERSCORE = 194, COMMENT = 195, 
+    STRINGLITERAL = 196, PROC_NAME = 197, FN_INTEGER = 198, FN_FLOAT = 199, 
+    FN_STRING = 200, VARIABLE_FLOAT = 201, VARIABLE_INTEGER = 202, VARIABLE_STRING = 203, 
+    VARIABLE_TYPE = 204, HEXNUMBER = 205, BINARYNUMBER = 206, NUMBER = 207, 
+    FLOAT = 208, WS = 209
   };
 
   enum {
@@ -69,20 +70,20 @@ public:
     RuleStmtCURSOROFF = 56, RuleStmtGRAPHICS = 57, RuleStmtFLIP = 58, RuleStmtCIRCLE = 59, 
     RuleStmtLINE = 60, RuleStmtRECTANGLE = 61, RuleStmtTRIANGLE = 62, RuleStmtPLOT = 63, 
     RuleStmtCLIPON = 64, RuleStmtCLIPOFF = 65, RuleStmtTEXT = 66, RuleStmtTEXTRIGHT = 67, 
-    RuleStmtTEXTCENTRE = 68, RuleStmtSHOWFPS = 69, RuleStmtRENDERTOSPRITE = 70, 
-    RuleStmtRENDERTOSCREEN = 71, RuleStmtDRAWSPRITE = 72, RuleStmtDELETESPRITE = 73, 
-    RuleStmtRENDERFRAME = 74, RuleStmtCREATEVERTEX = 75, RuleStmtCREATETRIANGLE = 76, 
-    RuleStmtTRANSLATE = 77, RuleStmtROTATE = 78, RuleStmtSCALE = 79, RuleStmtDELETEOBJECT = 80, 
-    RuleWhen = 81, RuleFnName = 82, RuleLiteral = 83, RuleVar = 84, RuleTypeVar = 85, 
-    RuleNumVar = 86, RuleStrVar = 87, RuleJustVar = 88, RuleJustNumberVar = 89, 
-    RuleVarName = 90, RuleVarNameInteger = 91, RuleVarNameString = 92, RuleVarNameType = 93, 
-    RuleVarDecl = 94, RuleVarDeclWithDimension = 95, RuleVarList = 96, RuleFunctionVar = 97, 
-    RuleFunctionVarList = 98, RuleFunctionParList = 99, RuleExprList = 100, 
-    RulePrintListItem = 101, RulePrintListTick = 102, RulePrintListSeparator = 103, 
-    RulePrintList = 104, RuleExpr = 105, RuleNumber = 106, RuleNumberInteger = 107, 
-    RuleNumberHex = 108, RuleNumberBinary = 109, RuleNumberFloat = 110, 
-    RuleStrFunc = 111, RuleString = 112, RuleStrExpr = 113, RuleNumFunc = 114, 
-    RuleNumExpr = 115, RuleNumColours = 116, RuleDefaultFonts = 117
+    RuleStmtTEXTCENTRE = 68, RuleStmtSHOWFPS = 69, RuleStmtRASTERMODE = 70, 
+    RuleStmtRENDERTOSPRITE = 71, RuleStmtRENDERTOSCREEN = 72, RuleStmtDRAWSPRITE = 73, 
+    RuleStmtDELETESPRITE = 74, RuleStmtRENDERFRAME = 75, RuleStmtCREATEVERTEX = 76, 
+    RuleStmtCREATETRIANGLE = 77, RuleStmtTRANSLATE = 78, RuleStmtROTATE = 79, 
+    RuleStmtSCALE = 80, RuleStmtDELETEOBJECT = 81, RuleWhen = 82, RuleFnName = 83, 
+    RuleLiteral = 84, RuleVar = 85, RuleTypeVar = 86, RuleNumVar = 87, RuleStrVar = 88, 
+    RuleJustVar = 89, RuleJustNumberVar = 90, RuleVarName = 91, RuleVarNameInteger = 92, 
+    RuleVarNameString = 93, RuleVarNameType = 94, RuleVarDecl = 95, RuleVarDeclWithDimension = 96, 
+    RuleVarList = 97, RuleFunctionVar = 98, RuleFunctionVarList = 99, RuleFunctionParList = 100, 
+    RuleExprList = 101, RulePrintListItem = 102, RulePrintListTick = 103, 
+    RulePrintListSeparator = 104, RulePrintList = 105, RuleExpr = 106, RuleNumber = 107, 
+    RuleNumberInteger = 108, RuleNumberHex = 109, RuleNumberBinary = 110, 
+    RuleNumberFloat = 111, RuleStrFunc = 112, RuleString = 113, RuleStrExpr = 114, 
+    RuleNumFunc = 115, RuleNumExpr = 116, RuleNumColours = 117, RuleDefaultFonts = 118
   };
 
   explicit DARICParser(antlr4::TokenStream *input);
@@ -165,6 +166,7 @@ public:
   class StmtTEXTRIGHTContext;
   class StmtTEXTCENTREContext;
   class StmtSHOWFPSContext;
+  class StmtRASTERMODEContext;
   class StmtRENDERTOSPRITEContext;
   class StmtRENDERTOSCREENContext;
   class StmtDRAWSPRITEContext;
@@ -1105,6 +1107,7 @@ public:
     StmtTEXTRIGHTContext *stmtTEXTRIGHT();
     StmtTEXTCENTREContext *stmtTEXTCENTRE();
     StmtSHOWFPSContext *stmtSHOWFPS();
+    StmtRASTERMODEContext *stmtRASTERMODE();
     StmtRENDERTOSPRITEContext *stmtRENDERTOSPRITE();
     StmtRENDERTOSCREENContext *stmtRENDERTOSCREEN();
     StmtDRAWSPRITEContext *stmtDRAWSPRITE();
@@ -1412,6 +1415,21 @@ public:
   };
 
   StmtSHOWFPSContext* stmtSHOWFPS();
+
+  class  StmtRASTERMODEContext : public antlr4::ParserRuleContext {
+  public:
+    StmtRASTERMODEContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *RASTERMODE();
+    antlr4::tree::TerminalNode *BLIT();
+    antlr4::tree::TerminalNode *BLEND();
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  StmtRASTERMODEContext* stmtRASTERMODE();
 
   class  StmtRENDERTOSPRITEContext : public antlr4::ParserRuleContext {
   public:

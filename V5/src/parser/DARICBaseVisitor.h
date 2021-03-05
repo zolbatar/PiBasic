@@ -295,6 +295,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitStmtRASTERMODE(DARICParser::StmtRASTERMODEContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitStmtRENDERTOSPRITE(DARICParser::StmtRENDERTOSPRITEContext *ctx) override {
     return visitChildren(ctx);
   }

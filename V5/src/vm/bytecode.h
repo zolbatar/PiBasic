@@ -168,6 +168,7 @@ enum class Bytecodes {
 	TEXT, // Render text
 	TEXTRIGHT, // Render text (right aligned)
 	TEXTCENTRE, // Render text (centred)
+	RASTERMODE, // Blit, blend etc.
 
 	// Sprites
 	LOADSPRITE, // Load a sprite

@@ -2492,6 +2492,13 @@ void VM::opcode_TEXTCENTRE()
 		g_env.log("Showing text '" + text + "', font ID " + std::to_string(index) + " at " + std::to_string(x) + "," + std::to_string(y));
 }
 
+void VM::opcode_RASTERMODE()
+{
+	VM_INT type = stack.pop_int(bc);
+	if (!performance_build && runtime_debug)
+		g_env.log("Raster mode " + std::to_string(type));
+}
+
 void VM::opcode_LOADSPRITE() {
 	VM_STRING filename = stack.pop_string(bc);
 	VM_INT handle = g_env.sprite.create_sprite_from_image(filename);
@@ -3221,7 +3228,11 @@ std::string VM::run()
 			case Bytecodes::TEXTCENTRE:
 				opcode_TEXTCENTRE();
 				break;
+			case Bytecodes::RASTERMODE:
+				opcode_RASTERMODE();
+				break;
 
+				/* Sprites */
 			case Bytecodes::LOADSPRITE:
 				opcode_LOADSPRITE();
 				break;

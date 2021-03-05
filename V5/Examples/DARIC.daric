@@ -31,20 +31,12 @@ DEF PROCSun()
 ENDPROC
 
 DEF PROCLines()
+    RASTERMODE BLEND
     FOR LOCAL y%=0 TO h%-1 STEP 3
-        FOR LOCAL x%=0 TO w%-1
-            c%=0:REMPOINT(x%,y%)
-            LOCAL r%=(c% AND &FF0000) >> 16
-            LOCAL g%=(c% AND &00FF00) >> 8
-            LOCAL b%=c% AND &0000FF
-            r%+=&20:g%+=&20:b%+=&20
-            IF r%>&FF r%=&FF
-            IF g%>&FF g%=&FF
-            IF b%>&FF b%=&FF
-            COLOUR r%,g%,b%
-            PLOT x%,y%
-        NEXT
+        COLOUR 255, 255, 255, 20
+        LINE 0,y%,w%-1,y%
     NEXT
+    RASTERMODE BLIT
 ENDPROC
 
 DEF PROCLinesBlackenLogo()
