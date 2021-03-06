@@ -18,5 +18,6 @@
             <AppBarButton Icon="SaveLocal" Label="Save" />
             <AppBarButton x:Name="buttonQuit" Icon="Cancel" Label="Quit" Click="buttonQuit_Click"  />
         </CommandBar>
+        <local:Output Width="640" Height="480" />
     </StackPanel>
 </Page>
