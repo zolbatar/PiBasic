@@ -9,7 +9,7 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::ViewManagement;
 //using namespace winrt::Microsoft::Graphics::Canvas;
 //using namespace Microsoft::Graphics::Canvas::UI::Xaml;
-//using namespace winrt::Microsoft::Graphics::Canvas;
+using namespace winrt::Microsoft::Graphics::Canvas;
 
 namespace winrt::DARIC::implementation
 {
