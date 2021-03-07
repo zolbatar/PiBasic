@@ -1,8 +1,0 @@
-namespace DARIC
-{
-    [default_interface]
-    runtimeclass Output : Windows.UI.Xaml.Controls.UserControl
-    {
-        Output();
-    }
-}

@@ -14,8 +14,3 @@
 #include <winrt/Windows.UI.Xaml.Markup.h>
 #include <winrt/Windows.UI.Xaml.Navigation.h>
 #include "winrt/Windows.UI.ViewManagement.h"
-
-/* Win2D */
-#include <winrt/Microsoft.Graphics.Canvas.h> //This defines the C++/WinRT interfaces for the Win2D Windows Runtime Components
-//#include <Microsoft.Graphics.Canvas.h> //This defines the low-level ABI interfaces for the Win2D Windows Runtime Components
-//#include <Microsoft.Graphics.Canvas.native.h> //This is for interop
