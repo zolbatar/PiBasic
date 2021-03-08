@@ -157,6 +157,12 @@
     <Filter Include="Header Files\Text">
       <UniqueIdentifier>{fa4f4e92-c800-42f7-9935-3a9a6890c9fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\SDL2 Gfx">
+      <UniqueIdentifier>{8e90371a-b920-480c-b84e-357d1349d420}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SDL2 Gfx">
+      <UniqueIdentifier>{19940b15-c4cc-4b59-ae12-028d6b563ce5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -978,6 +984,18 @@
     <ClCompile Include="..\src\text\Text.cpp">
       <Filter>Source Files\Text</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\sdl2_gfx\SDL2_gfxPrimitives.c">
+      <Filter>Source Files\SDL2 Gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sdl2_gfx\SDL2_framerate.c">
+      <Filter>Source Files\SDL2 Gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sdl2_gfx\SDL2_imageFilter.c">
+      <Filter>Source Files\SDL2 Gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sdl2_gfx\SDL2_rotozoom.c">
+      <Filter>Source Files\SDL2 Gfx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\environment.h">
@@ -1561,6 +1579,21 @@
     </ClInclude>
     <ClInclude Include="..\src\text\text.h">
       <Filter>Header Files\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sdl2_gfx\SDL2_gfxPrimitives.h">
+      <Filter>Header Files\SDL2 Gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sdl2_gfx\SDL2_framerate.h">
+      <Filter>Header Files\SDL2 Gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sdl2_gfx\SDL2_gfxPrimitives_font.h">
+      <Filter>Header Files\SDL2 Gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sdl2_gfx\SDL2_imageFilter.h">
+      <Filter>Header Files\SDL2 Gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sdl2_gfx\SDL2_rotozoom.h">
+      <Filter>Header Files\SDL2 Gfx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

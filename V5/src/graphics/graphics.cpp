@@ -65,6 +65,16 @@ void Graphics::init()
 	}
 	dpi_ratio = ddpi / 96;
 
+	// List drivers
+#ifdef _DEBUG
+	for (int i = 0; i < SDL_GetNumRenderDrivers(); ++i)
+	{
+		SDL_RendererInfo rendererInfo = {};
+		SDL_GetRenderDriverInfo(i, &rendererInfo);
+		SDL_Log("Driver: %d=%s", i, rendererInfo.name);
+	}
+#endif
+
 	SDL_DisplayMode dm;
 	if (SDL_GetDesktopDisplayMode(0, &dm) != 0) {
 		SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
@@ -99,7 +109,7 @@ void Graphics::shutdown()
 	}
 	SDL_Quit();
 #endif
-}
+	}
 
 void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 {
@@ -256,13 +266,6 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 		}
 		screen = SDL_GetWindowSurface(window);
 		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
-		// Output some info for debugging
-		std::cout << "Driver: " << SDL_GetCurrentVideoDriver() << std::endl;
-		std::cout << "Available drivers: " << SDL_GetNumVideoDrivers() << std::endl;
-		for (auto i = 0; i < SDL_GetNumVideoDrivers(); i++) {
-			std::cout << "  " << SDL_GetVideoDriver(i) << std::endl;
-		}
 
 		// Format
 		SDL_PixelFormat* pixelFormat = screen->format;
@@ -459,7 +462,7 @@ void Graphics::draw_horz_line(int x1, int x2, int y)
 	set_sdl_colour();
 	SDL_RenderDrawLine(renderer, x1, y, x2, y);
 #endif
-}
+		}
 
 #ifndef RISCOS
 void Graphics::set_sdl_colour() {

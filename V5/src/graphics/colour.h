@@ -53,7 +53,7 @@ private:
 #ifdef RISCOS
 		encoded_hex = (b << 16) + (g << 8) + r;
 #else
-		encoded_hex = (r << 16) + (g << 8) + b;
+		encoded_hex = (a << 24) + (r << 16) + (g << 8) + b;
 #endif
 }
 };

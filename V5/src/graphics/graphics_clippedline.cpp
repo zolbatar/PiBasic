@@ -1,6 +1,7 @@
 #include "graphics.h"
 #include <iostream>
 #include <cmath>
+#include "../sdl2_gfx/SDL2_gfxPrimitives.h"
 
 void Graphics::draw_line_raw(int x1, int y1, int x2, int y2) {
 	int dx = std::abs(x2 - x1), sx = x1 < x2 ? 1 : -1;
@@ -46,8 +47,12 @@ OutCode Graphics::ComputeOutCode(int x, int y) {
 void Graphics::line(int x0, int y0, int x1, int y1) {
 
 #ifdef WINDOWS
-	set_sdl_colour();
-	SDL_RenderDrawLine(renderer, x0, y0, x1, y1);
+	if (USE_AA) {
+		aalineColor(renderer, x0, y0, x1, y1, current_colour.get_hex());
+	}
+	else {
+		lineColor(renderer, x0, y0, x1, y1, current_colour.get_hex());
+	}
 	return;
 #endif
 

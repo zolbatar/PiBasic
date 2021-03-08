@@ -5,6 +5,9 @@
 using namespace winrt;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::ViewManagement;
+using namespace Microsoft::Graphics::Canvas;
+using namespace Microsoft::Graphics::Canvas::Text;
+using namespace Microsoft::Graphics::Canvas::Brushes;
 
 namespace winrt::DARIC::implementation
 {

@@ -18,10 +18,12 @@
 #include "colour.h"
 #include "sprite.h"
 
+const bool USE_AA = false;
+
 #ifdef _DEBUG
 const bool DEBUGWINDOW = true;
 #else
-const bool DEBUGWINDOW = false;
+const bool DEBUGWINDOW = true;
 #endif
 
 const int FRAMETIME = 10;

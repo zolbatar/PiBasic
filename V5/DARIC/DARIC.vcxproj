@@ -190,7 +190,7 @@
       </Command>
     </PostBuildEvent>
     <Manifest>
-      <EnableDpiAwareness>false</EnableDpiAwareness>
+      <EnableDpiAwareness>true</EnableDpiAwareness>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -465,6 +465,10 @@
     <ClCompile Include="..\src\parser\DARICParser.cpp" />
     <ClCompile Include="..\src\parser\DARICVisitor.cpp" />
     <ClCompile Include="..\src\parser\myparser.cpp" />
+    <ClCompile Include="..\src\sdl2_gfx\SDL2_framerate.c" />
+    <ClCompile Include="..\src\sdl2_gfx\SDL2_gfxPrimitives.c" />
+    <ClCompile Include="..\src\sdl2_gfx\SDL2_imageFilter.c" />
+    <ClCompile Include="..\src\sdl2_gfx\SDL2_rotozoom.c" />
     <ClCompile Include="..\src\text\Text.cpp" />
     <ClCompile Include="..\src\vm\vm.cpp" />
   </ItemGroup>
@@ -653,6 +657,11 @@
     <ClInclude Include="..\src\parser\DARICParser.h" />
     <ClInclude Include="..\src\parser\DARICVisitor.h" />
     <ClInclude Include="..\src\parser\myparser.h" />
+    <ClInclude Include="..\src\sdl2_gfx\SDL2_framerate.h" />
+    <ClInclude Include="..\src\sdl2_gfx\SDL2_gfxPrimitives.h" />
+    <ClInclude Include="..\src\sdl2_gfx\SDL2_gfxPrimitives_font.h" />
+    <ClInclude Include="..\src\sdl2_gfx\SDL2_imageFilter.h" />
+    <ClInclude Include="..\src\sdl2_gfx\SDL2_rotozoom.h" />
     <ClInclude Include="..\src\text\text.h" />
     <ClInclude Include="..\src\types.h" />
     <ClInclude Include="..\src\vm\boxed.h" />
