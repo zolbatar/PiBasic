@@ -110,8 +110,8 @@ private:
     UINT32 last_type_num_dimensions = 0;
 
     // Locals and functions
-    Function* current_function = nullptr;
     std::map<std::string, Function> functions;
+    Function* current_function = nullptr;
     bool inside_function() { return current_function != nullptr; }
     std::string called_fnproc;
 

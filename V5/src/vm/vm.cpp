@@ -2855,10 +2855,6 @@ std::string VM::run()
 	world.set_screen_size(g_env.graphics.get_actual_width(), g_env.graphics.get_actual_height());
 	try {
 		while (!quit) {
-			if (!performance_build && runtime_debug) {
-				g_env.process_log();
-			}
-
 			poll_count++;
 			if (poll_count % 64 == 0) {
 				g_env.graphics.poll();

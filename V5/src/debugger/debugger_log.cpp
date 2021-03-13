@@ -3,7 +3,6 @@
 void Debugger::debugger_log()
 {
     bool rerender = true;
-    g_env.process_log();
     UINT32 pos = g_env.log_list.size() - log_lines;
     if (pos < 0) { pos = 0; }
     while (true) {

@@ -218,7 +218,6 @@ void MyParser::load_stream(std::string filename, bool interactive, std::stringst
 				parsed_files.push_back(pf);
 			}
 		}
-
 		i++;
 	}
 }

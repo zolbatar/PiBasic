@@ -82,7 +82,7 @@ const void DARICException::pretty_print() const throw()
 	if (location == ErrorLocation::COMPILER)
 	{
 		g_env.graphics.colour(0, 255, 255);
-		g_env.text.print_console(source[raw_line_number]);
+		g_env.text.print_console(source[raw_line_number - 1]);
 		g_env.text.print_console("\r");
 		g_env.graphics.colour(0, 255, 0);
 		for (auto i = 0; i < char_position; i++)

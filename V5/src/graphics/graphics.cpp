@@ -109,7 +109,7 @@ void Graphics::shutdown()
 	}
 	SDL_Quit();
 #endif
-	}
+}
 
 void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 {
@@ -259,7 +259,7 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 	// Create window (in full screen if needed)
 	if (initial) {
 		//SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
-		window = SDL_CreateWindow("DARIC", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, params);
+		window = SDL_CreateWindow("DARIC", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width * 1.75, screen_height * 1.75, params);
 		if (!window) {
 			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
 			exit(1);
@@ -292,9 +292,10 @@ void Graphics::cache()
 	UINT32* addr = get_bank_address();
 	memcpy(bank_cache, addr, size);
 #else
-	bank_cache = SDL_CreateRGBSurfaceWithFormat(0, static_cast<int>(desktop_screen_width * dpi_ratio), static_cast<int>(desktop_screen_height * dpi_ratio), 32, SDL_PIXELFORMAT_RGB888);
+	int w, h;
+	SDL_GetWindowSize(window, &w, &h);
+	bank_cache = SDL_CreateRGBSurfaceWithFormat(0, w, h, 32, SDL_PIXELFORMAT_RGB888);
 	SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_RGB888, bank_cache->pixels, bank_cache->pitch);
-
 #endif
 }
 
@@ -305,23 +306,12 @@ void Graphics::restore()
 	memcpy(addr, bank_cache, size);
 #else
 	auto tex = SDL_CreateTextureFromSurface(renderer, bank_cache);
-	SDL_Rect SourceR;
-	SourceR.x = 0;
-	SourceR.y = 0;
-	SourceR.w = static_cast<int>(desktop_screen_width * dpi_ratio);
-	SourceR.h = static_cast<int>(desktop_screen_height * dpi_ratio);
 	SDL_Rect DestR;
 	DestR.x = 0;
 	DestR.y = 0;
-	if (!DEBUGWINDOW) {
-		DestR.w = static_cast<int>(std::round(static_cast<double>(screen_height) * desktop_screen_ratio));
-		DestR.h = screen_height;
-	}
-	else {
-		DestR.w = static_cast<int>(desktop_screen_width * dpi_ratio);
-		DestR.h = static_cast<int>(desktop_screen_height * dpi_ratio);
-	}
-	SDL_RenderCopy(g_env.graphics.get_renderer(), tex, &SourceR, &DestR);
+	DestR.w = screen_width;
+	DestR.h = screen_height;
+	SDL_RenderCopy(g_env.graphics.get_renderer(), tex, NULL, &DestR);
 	SDL_DestroyTexture(tex);
 	SDL_FreeSurface(bank_cache);
 #endif
@@ -462,7 +452,7 @@ void Graphics::draw_horz_line(int x1, int x2, int y)
 	set_sdl_colour();
 	SDL_RenderDrawLine(renderer, x1, y, x2, y);
 #endif
-		}
+}
 
 #ifndef RISCOS
 void Graphics::set_sdl_colour() {
@@ -545,33 +535,21 @@ void Graphics::scroll(VM_INT font_row_height) {
 		memset((void*)&addr[offset], bg, screen_width * 4);
 	}
 #else
-	auto surface = SDL_CreateRGBSurfaceWithFormat(0, static_cast<int>(desktop_screen_width * dpi_ratio), static_cast<int>(desktop_screen_height * dpi_ratio), 32, SDL_PIXELFORMAT_RGB888);
+	int w, h;
+	SDL_GetWindowSize(window, &w, &h);
+	auto surface = SDL_CreateRGBSurfaceWithFormat(0, w, h, 32, SDL_PIXELFORMAT_RGB888);
 	SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_RGB888, surface->pixels, surface->pitch);
 	auto tex = SDL_CreateTextureFromSurface(renderer, surface);
-	SDL_Rect SourceR;
-	SourceR.x = 0;
-	if (!DEBUGWINDOW) {
-		SourceR.y = static_cast<int>(font_row_height * dpi_ratio);
-	}
-	else {
-		SourceR.y = font_row_height;
-	}
-	SourceR.w = static_cast<int>(desktop_screen_width * dpi_ratio);
-	SourceR.h = static_cast<int>(desktop_screen_height * dpi_ratio - (font_row_height * dpi_ratio));
 	SDL_Rect DestR;
 	DestR.x = 0;
-	DestR.y = 0;
-	if (!DEBUGWINDOW) {
-		DestR.w = static_cast<int>(std::round(static_cast<double>(screen_height) * desktop_screen_ratio));
-		DestR.h = screen_height - font_row_height;
-	}
-	else {
-		DestR.w = static_cast<int>(desktop_screen_width * dpi_ratio);
-		DestR.h = static_cast<int>(desktop_screen_height * dpi_ratio - (font_row_height * dpi_ratio));
-	}
-	SDL_RenderCopy(g_env.graphics.get_renderer(), tex, &SourceR, &DestR);
+	DestR.y = -font_row_height;
+	DestR.w = screen_width;
+	DestR.h = screen_height;
+	SDL_RenderCopy(g_env.graphics.get_renderer(), tex, NULL, &DestR);
 	SDL_DestroyTexture(tex);
 	SDL_FreeSurface(surface);
+
+	// Black box at bottom
 	SDL_SetRenderDrawColor(renderer, current_bg_colour.get_r(), current_bg_colour.get_g(), current_bg_colour.get_b(), SDL_ALPHA_OPAQUE);
 	SDL_Rect rect;
 	rect.x = 0;

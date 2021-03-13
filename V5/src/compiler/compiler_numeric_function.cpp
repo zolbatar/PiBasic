@@ -222,7 +222,7 @@ antlrcpp::Any Compiler::visitNumFuncSGN(DARICParser::NumFuncSGNContext* context)
     visit(context->numExpr());
     ensure_stack_is_float();
     stack_pop();
-    insert_bytecode(Bytecodes::SGN, Type::INTEGER);
+    insert_bytecode(Bytecodes::SGN, Type::FLOAT);
     stack_push(Type::INTEGER);
     return NULL;
 }

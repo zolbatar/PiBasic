@@ -32,8 +32,4 @@ public:
 	void log_sol(std::string msg) {
 		sol = msg;
 	}
-
-	void process_log()
-	{
-	}
 };

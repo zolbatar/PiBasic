@@ -110,14 +110,6 @@ void Interactive::run()
 			if (upper.compare("RUN") == 0) {
 				run_all_lines();
 			}
-			/*#ifdef WINDOWS
-						else if (upper.compare("NATIVE") == 0) {
-							if (!jit) {
-								jit = true;
-								g_env.text.print_console("Native compiler enabled\r");
-							}
-						}
-			#endif	*/
 			else if (upper.compare("QUIT") == 0) {
 				return;
 			}
