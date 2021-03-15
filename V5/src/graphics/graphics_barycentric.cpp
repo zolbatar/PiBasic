@@ -2,7 +2,9 @@
 #include "graphics.h"
 #include <algorithm>
 #include <iostream>
+#ifndef RISCOS
 #include "../sdl2_gfx/SDL2_gfxPrimitives.h"
+#endif
 
 int orient2d(const int xa, const int ya, const int xb, const int yb, const int xc, const int yc) {
 	return (xb - xa) * (yc - ya) - (yb - ya) * (xc - xa);

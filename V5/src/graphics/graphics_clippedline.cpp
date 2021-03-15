@@ -1,7 +1,9 @@
 #include "graphics.h"
 #include <iostream>
 #include <cmath>
+#ifndef RISCOS
 #include "../sdl2_gfx/SDL2_gfxPrimitives.h"
+#endif
 
 void Graphics::draw_line_raw(int x1, int y1, int x2, int y2) {
 	int dx = std::abs(x2 - x1), sx = x1 < x2 ? 1 : -1;

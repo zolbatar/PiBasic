@@ -77,13 +77,12 @@ void Text::print_character(int typeface, int size, char c, int* cursor_x, int* c
 		SDL_RenderCopy(g_env.graphics.get_renderer(), f->tex, NULL, &DestR);
 #else
 		auto saved_raster = g_env.graphics.get_raster_mode();
-		g_env.graphics.set_raster_mode(RasterMode::BLEND);
-		auto xs = *cursor_x + f.ix0 + margin;
-		auto ys = *cursor_y + f.iy0 + f.baseline;
+		auto xs = *cursor_x + f->ix0 + margin;
+		auto ys = *cursor_y + f->iy0 + f->baseline;
 		auto idx = 0;
 		for (int j = 0; j < f->height; ++j) {
 			for (int i = 0; i < f->width; ++i) {
-				auto v = f.bitmap[idx++];
+				auto v = f->bitmap[idx++];
 				if (v > 0) {
 					auto x = xs + i;
 					auto y = ys + j;

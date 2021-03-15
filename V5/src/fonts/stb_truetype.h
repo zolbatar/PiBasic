@@ -1,5 +1,7 @@
 #pragma once
+#ifdef WINDOWS
 #pragma warning(disable : 4068)
+#endif
 #pragma GCC system_header
 // stb_truetype.h - v1.24 - public domain
 // authored from 2009-2020 by Sean Barrett / RAD Game Tools

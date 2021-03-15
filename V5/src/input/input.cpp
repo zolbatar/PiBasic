@@ -90,8 +90,8 @@ void Input::mouse(VM_INT* x, VM_INT* y, VM_INT* state)
 #ifdef RISCOS
 	_kernel_swi_regs regs;
 	_kernel_swi(OS_Mouse, &regs, &regs);
-	*x = regs.r[0] / eigen_x / 2;
-	*y = screen_height - (regs.r[1] / eigen_y / 2);
+	*x = regs.r[0] / g_env.graphics.get_eigen_x()  / 2;
+	*y = g_env.graphics.get_screen_height() - (regs.r[1] / g_env.graphics.get_eigen_y() / 2);
 	*state = regs.r[2];
 #else
 	int xl, yl;

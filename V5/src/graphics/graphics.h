@@ -155,9 +155,22 @@ public:
 	Colour current_bg_colour = Colour(0, 0, 0);
 
 #ifdef RISCOS
-	void set_render_bank(std::vector<Colour>* b) { render_bank = b }
+	void set_render_bank(std::vector<Colour>* b) { render_bank = b; }
 #else
 	void set_render_bank(SDL_Texture* b) { render_bank = b; }
+#endif
+
+	int getMinX() { return minX; }
+	int getMaxX() { return maxX; }
+	int getMinY() { return minY; }
+	int getMaxY() { return maxY; }
+
+	size_t get_line_address(size_t y) { return line_address[y] ;}
+
+#ifdef RISCOS
+	int get_eigen_x() { return eigen_x;}
+	int get_eigen_y() { return eigen_y;}
+
 #endif
 
 private:

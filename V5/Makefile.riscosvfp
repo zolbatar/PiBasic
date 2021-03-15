@@ -1,5 +1,5 @@
 CXX=~/gccsdk/cross/bin/arm-riscos-gnueabihf-g++
-CXX_FLAGS=-DRISCOS -DANTLR4CPP_STATIC -DUSE_UTF8_INSTEAD_OF_CODECVT -I$$GCCSDK_INSTALL_ENV/include -march=armv6+fp -mfloat-abi=hard -Wall -Wno-attributes -Wno-switch -std=c++11 -Isrc/antlr4 -Ofast -funsafe-math-optimizations
+CXX_FLAGS=-DRISCOS -DANTLR4CPP_STATIC -DUSE_UTF8_INSTEAD_OF_CODECVT -I$$GCCSDK_INSTALL_ENV/include -mfloat-abi=hard -mfpu=vfpv3 -march=armv7-a -Wall -Wno-attributes -Wno-switch -std=c++11 -Isrc/antlr4 -Ofast -funsafe-math-optimizations
 LIBS=-lm -L$$GCCSDK_INSTALL_ENV/lib
 BIN=daricvfp
 BUILD_DIR=./buildriscosvfp
@@ -15,6 +15,9 @@ CPP =	$(wildcard src/*.cpp) \
 		$(wildcard src/libs/*.cpp) \
 		$(wildcard src/parser/*.cpp) \
 		$(wildcard src/vm/*.cpp) \
+		$(wildcard src/input/*.cpp) \
+		$(wildcard src/text/*.cpp) \
+		$(wildcard src/fonts/*.cpp) \
 		$(wildcard src/antlr4/*.cpp) \
 		$(wildcard src/antlr4/atn/*.cpp) \
 		$(wildcard src/antlr4/dfa/*.cpp) \

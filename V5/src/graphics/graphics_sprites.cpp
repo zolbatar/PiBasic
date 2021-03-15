@@ -77,28 +77,25 @@ bool Sprites::draw_sprite(VM_INT handle, VM_INT bank, VM_INT sx, VM_INT sy, VM_F
 	// Render!!
 #ifdef RISCOS
 	auto b = s.banks[bank];
-	UINT32* pixels = get_bank_address();
+	UINT32* pixels = g_env.graphics.get_bank_address();
 
 	// Work out how much to clip 
-	size_t clip_left = sx < minX ? minX - sx : 0;
-	size_t clip_right = (sx + s.width) > maxX ? (sx + s.width) - maxX : 0;
-	size_t clip_top = sy < minY ? minY - sy : 0;
-	size_t clip_bottom = (sy + s.height) > maxY ? (sy + s.height) - maxY : 0;
+	size_t clip_left = sx < g_env.graphics.getMinX() ? g_env.graphics.getMinX() - sx : 0;
+	size_t clip_right = (sx + s.width) > g_env.graphics.getMaxX() ? (sx + s.width) - g_env.graphics.getMaxX() : 0;
+	size_t clip_top = sy < g_env.graphics.getMinY() ? g_env.graphics.getMinY() - sy : 0;
+	size_t clip_bottom = (sy + s.height) > g_env.graphics.getMaxY() ? (sy + s.height) - g_env.graphics.getMaxY() : 0;
 
 	int width = s.width - clip_left - clip_right;
 	int height = s.height - clip_top - clip_bottom;
 
-	auto saved_raster = raster_mode;
-	raster_mode = RasterMode::MASK;
 	if (width > 0 && height > 0) {
 		for (size_t y = clip_top; y < s.height - clip_bottom; y++) {
 			size_t src_offset = (y * s.width) + clip_left;
-			size_t dest_offset = line_address[y + sy] + clip_left + sx;
+			size_t dest_offset = g_env.graphics.get_line_address(y + sy) + clip_left + sx;
 			size_t count = s.width - clip_right - clip_left;
-			blit_fast(count, &b, src_offset, &pixels[dest_offset]);
+			g_env.graphics.blit_fast(count, &b, src_offset, &pixels[dest_offset]);
 		}
 	}
-	raster_mode = saved_raster;
 #else
 	auto b = s.banks[bank];
 	SDL_Rect DestR;

@@ -3,7 +3,9 @@
 #include <cmath>
 #include <iostream>
 #include <vector>
+#ifndef RISCOS
 #include "../sdl2_gfx/SDL2_gfxPrimitives.h"
+#endif
 
 void draw_triangle_line(int x1, int y1, int x2, int y2, std::vector<int>& x_left, std::vector<int>& x_right, int miny)
 {

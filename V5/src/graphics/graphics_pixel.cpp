@@ -37,7 +37,7 @@ void Graphics::plot(int x, int y)
 			Colour bgC((bg & 0xFF0000) >> 16, (bg & 0xFF00) >> 8, bg & 0xFF);
 
 			alpha(bgC, current_colour, c, a);
-			pixels[offset] = c.get_hex();
+			addr[offset] = c.get_hex(); 
 		}
 #else
 		set_sdl_colour();

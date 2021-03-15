@@ -167,7 +167,7 @@ void Graphics::open(int width, int height, Mode mode, std::string& cwd)
 		const char* s = mode_string_c.c_str();
 		regs.r[1] = (int)s;
 		_kernel_swi(OS_ScreenMode, &regs, &regs);
-		hide_cursors();
+		g_env.text.hide_cursors();
 
 		// Get current screen mode
 		vars[0] = 150; // &96 = total screen size

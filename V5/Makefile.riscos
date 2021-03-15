@@ -15,6 +15,9 @@ CPP =	$(wildcard src/*.cpp) \
 		$(wildcard src/libs/*.cpp) \
 		$(wildcard src/parser/*.cpp) \
 		$(wildcard src/vm/*.cpp) \
+		$(wildcard src/input/*.cpp) \
+		$(wildcard src/text/*.cpp) \
+		$(wildcard src/fonts/*.cpp) \
 		$(wildcard src/antlr4/*.cpp) \
 		$(wildcard src/antlr4/atn/*.cpp) \
 		$(wildcard src/antlr4/dfa/*.cpp) \
